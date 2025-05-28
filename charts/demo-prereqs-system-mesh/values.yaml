@@ -1,0 +1,50 @@
+accessApi:
+  serviceAccountName: access-api
+appsGateway: istio-system/gateways-apps
+appsHost: change.me.to.the.apps.host
+authnGateway: istio-system/gateways-authn
+authnHost: change.me.to.the.authn.host
+coreNamespace: tc-core
+
+keycloak:
+  instance: keycloak
+  name: keycloak
+  port: 8080
+  serviceName: keycloak
+
+dex:
+  instance: dex
+  name: dex
+  port: 5556
+  serviceAccountName: dex
+  serviceName: dex
+fullnameOverride: ""
+ingress:
+  namespace: istio-system
+  serviceAccountName: istio-ingress
+nameOverride: ""
+oauth2proxy:
+  external:
+    instance: external-oauth2-proxy
+    name: external-oauth2-proxy
+    port: 4080
+    serviceAccountName: external-oauth2-proxy
+    serviceName: external-oauth2-proxy
+  internal:
+    instance: internal-oauth2-proxy
+    name: internal-oauth2-proxy
+    serviceAccountName: internal-oauth2-proxy
+openldap:
+  instance: openldap
+  name: openldap
+postgresql:
+  instance: postgresql
+  name: postgesql
+strimziOperator:
+  enabled: true
+  kafkaClusterName: core
+  namespace: kafka
+  serviceAccountName: strimzi-cluster-operator
+  smartcachegraph:
+    namespace: tc-core
+    serviceAccountName: smart-cache-graph-server

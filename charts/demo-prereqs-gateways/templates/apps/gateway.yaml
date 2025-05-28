@@ -1,0 +1,28 @@
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: {{ include "gateways.fullname" . }}-apps
+  labels:
+  {{- include "gateways.labels" . | nindent 4 }}
+spec:
+  selector:
+  {{- .Values.ingressSelectors | toYaml | nindent 4 }}
+  servers:
+  - hosts:
+    - {{ .Values.appsHost }}
+    port:
+      name: http
+      number: 80
+      protocol: HTTP
+    tls:
+      httpsRedirect: true
+  - hosts:
+    - {{ .Values.appsHost }}
+    port:
+      name: https
+      number: 443
+      protocol: HTTPS
+    tls:
+      credentialName: {{ include "gateways.appsTlsCredentialName" . }}
+      mode: SIMPLE

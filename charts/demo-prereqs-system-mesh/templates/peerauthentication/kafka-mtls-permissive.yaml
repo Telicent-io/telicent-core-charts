@@ -1,0 +1,22 @@
+{{/*
+
+The Strimzi Kafka Operator pod is not injected with an Istio proxy container so currently cannot perform mTLS to the Kafka cluster it manages. 
+It needs to connect to the broker when assessing KafkaUser and KafkaTopic CRDs.
+We cannot have a catchall STRICT policy as that would also match and override this police. 
+This is why the other STRICT PeerAuthentication CRDs are required for each app in the system namespace.
+
+*/}}
+{{- if .Values.strimziOperator.enabled -}}
+apiVersion: security.istio.io/v1
+kind: PeerAuthentication
+metadata:
+  name: {{ include "system-mesh.fullname" . }}-kafka-mtls
+  labels:
+    {{- include "system-mesh.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "system-mesh.kafkaSelectors" . | nindent 6 }}
+  mtls:
+    mode: PERMISSIVE
+{{- end }}

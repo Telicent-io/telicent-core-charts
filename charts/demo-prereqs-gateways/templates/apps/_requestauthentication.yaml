@@ -1,0 +1,11 @@
+apiVersion: security.istio.io/v1
+kind: RequestAuthentication
+metadata:
+  name: {{ include "gateways.fullname" . }}-users
+  labels:
+  {{- include "gateways.labels" . | nindent 4 }}
+spec:
+  jwtRules:
+  - forwardOriginalToken: true
+    issuer: {{ include "gateways.jwtIssuer" . }}
+    jwksUri: {{ include "gateways.jwksUri" . }}

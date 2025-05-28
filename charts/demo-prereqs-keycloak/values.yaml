@@ -1,0 +1,55 @@
+authHost: localhost
+
+containerSecurityContext:
+  {}
+  # allowPrivilegeEscalation: false
+  # capabilities:
+  #   drop:
+  #     - ALL
+  # runAsGroup: 10101
+  # runAsNonRoot: true
+  # runAsUser: 10101
+  # seccompProfile:
+  #   type: RuntimeDefault
+
+dbVolume:
+  size: 1Gi
+  storageClass: gp3-enc
+
+fullnameOverride: ""
+
+image:
+  pullPolicy: Always
+  repository: quay.io/keycloak/keycloak
+  tag: ""
+
+nameOverride: ""
+
+podSecurityContext:
+  {}
+  # fsGroup: 10101
+  # runAsGroup: 10101
+  # runAsNonRoot: true
+  # runAsUser: 10101
+  # seccompProfile:
+  #   type: RuntimeDefault
+
+replicas: 1
+
+resources: {}
+
+revisionHistoryLimit: 3
+
+service:
+  port: 8080
+  type: ClusterIP
+
+serviceAccount:
+  annotations: {}
+  name: null
+
+strategy:
+  rollingUpdate:
+    maxSurge: 1
+    maxUnavailable: 0
+  type: RollingUpdate

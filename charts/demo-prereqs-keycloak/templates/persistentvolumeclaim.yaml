@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "keycloak.fullname" . }}
+  labels:
+    {{- include "keycloak.selectorLabels" . | nindent 4 }}
+spec:
+  {{- if (lookup "v1" "PersistentVolumeClaim" .Release.Namespace (include "keycloak.fullname" .)) }}
+  volumeName: {{ (lookup "v1" "PersistentVolumeClaim" .Release.Namespace (include "keycloak.fullname" .)).spec.volumeName }}
+  {{- end }}
+  storageClassName: {{ .Values.dbVolume.storageClass }}
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.dbVolume.size }}
+# ---
+# apiVersion: v1
+# kind: PersistentVolume
+# metadata:
+#   name: {{ include "keycloak.fullname" . }}
+# spec:
+#   claimRef:
+#     namespace: {{ .Release.Namespace }}
+#     name: {{ include "keycloak.fullname" . }}
+#   storageClassName: {{ .Values.dbVolume.storageClass }}
+#   capacity:
+#     storage: {{ .Values.dbVolume.size }}
+#   accessModes:
+#     - ReadWriteOnce
+#   local: {}

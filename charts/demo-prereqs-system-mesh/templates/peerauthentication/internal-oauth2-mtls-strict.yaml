@@ -1,0 +1,12 @@
+apiVersion: security.istio.io/v1
+kind: PeerAuthentication
+metadata:
+  name: {{ include "system-mesh.fullname" . }}-internal-oauth2-mtls-strict
+  labels:
+    {{- include "system-mesh.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "system-mesh.internalOauth2ProxySelectors" . | nindent 6 }}
+  mtls:
+    mode: STRICT

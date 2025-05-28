@@ -1,0 +1,16 @@
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  name: {{ include "system-mesh.fullname" . }}-access-api-to-mongodb
+  labels:
+  {{- include "system-mesh.labels" . | nindent 4 }}
+spec:
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        principals:
+        - {{ include "system-mesh.accessApiPrincipal" . }}
+  selector:
+    matchLabels:
+    {{- include "system-mesh.mongodbSelectors" . | nindent 6 }}
