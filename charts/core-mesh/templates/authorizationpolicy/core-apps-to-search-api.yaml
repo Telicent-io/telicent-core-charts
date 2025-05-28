@@ -1,0 +1,40 @@
+{{- if .Values.closedSourceDeployment }}
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  name: {{ include "core-mesh.fullname" . }}-core-apps-to-search-api
+  labels:
+  {{- include "core-mesh.labels" . | nindent 4 }}
+spec:
+  action: ALLOW
+  rules:
+    - from:
+      - source:
+          principals:
+          - {{ include "core-mesh.graphServerPrincipal" . }}
+      to:
+        - operation:
+            paths:
+              - /documents
+              - /documents/*
+              - /facets
+              - /facets/*
+              - /list
+              - /list/*
+              - /states
+              - /states/*
+              - /typeahead
+              - /typeahead/*
+              - /healthz
+              - /healthz/*
+              - /version-info
+              - /version-info/*
+            methods: ["GET", "POST"]
+      when:
+        - key: request.auth.claims[groups]
+          values:
+            - tc_read
+  selector:
+    matchLabels:
+    {{- include "core-mesh.searchApiSelectors" . | nindent 6 }}
+{{- end }}

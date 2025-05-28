@@ -1,0 +1,11 @@
+apiVersion: security.istio.io/v1
+kind: RequestAuthentication
+metadata:
+  name: {{ include "core-mesh.fullname" . }}-users
+  labels:
+  {{- include "core-mesh.labels" . | nindent 4 }}
+spec:
+  jwtRules:
+  - forwardOriginalToken: true
+    issuer: {{ include "core-mesh.jwtIssuer" . }}
+    jwksUri: {{ include "core-mesh.jwksUri" . }}

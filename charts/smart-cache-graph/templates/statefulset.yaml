@@ -1,0 +1,146 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "smart-cache-graph.fullname" . }}-server
+  labels:
+    {{- include "smart-cache-graph.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.statefulset.replicas }}
+  revisionHistoryLimit: {{ .Values.statefulset.revisionHistoryLimit }}
+  selector:
+    matchLabels:
+    {{- include "smart-cache-graph.selectorLabels" . | nindent 6 }}
+  updateStrategy: {}
+  serviceName: ""
+  template:
+    metadata:
+      annotations:
+        prometheus.io/path: /
+        prometheus.io/port: "9464"
+        prometheus.io/scrape: "true"
+      {{- range $key, $value := .Values.statefulset.annotations }}
+        {{ $key }}: {{ $value | quote }}
+      {{- end }}
+      labels:
+        {{- include "smart-cache-graph.labels" . | nindent 8 }}
+    spec:
+      containers:
+      - args:
+          - --config
+          - /fuseki/config/config.ttl
+        env:
+        - name: ATTRIBUTE_HIERARCHY_URL
+          value: {{ .Values.configuration.attributeHierarchyUrl | quote }}
+        - name: ENABLE_BACKUPS
+          value: "false"
+        - name: ENABLE_LABELS_QUERY
+          value: "false"
+        - name: JAVA_OPTIONS
+          value: {{ .Values.configuration.javaOptions | quote }}
+        - name: JWKS_URL
+          value: {{ .Values.configuration.jwksUrl | quote }}
+        - name: KAFKA_CONFIG_FILE_PATH
+          value: /app/config/kafka-auth/kafka-config.properties
+        - name: OTEL_METRICS_EXPORTER
+          value: {{ .Values.configuration.otelMetricsExporter | quote }}
+        - name: OTEL_TRACES_EXPORTER
+          value: {{ .Values.configuration.otelTracesExporter | quote }}
+        {{- if .Values.configuration.searchApiUrl }}
+        - name: SEARCH_API_URL
+          value: {{ .Values.configuration.searchApiUrl | quote }}
+        {{- end }}
+        - name: USER_ATTRIBUTES_URL
+          value: {{ .Values.configuration.userAttributesUrl | quote }}
+        envFrom:
+        - secretRef:
+            name: {{ include "smart-cache-graph.envSecretName" . }}
+            optional: true
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        livenessProbe:
+          httpGet:
+            path: /$/ping
+            port: 3030
+            scheme: HTTP
+          initialDelaySeconds: 120
+          periodSeconds: 30
+          timeoutSeconds: 2
+        name: graph-server
+        ports:
+        - containerPort: 3030
+          name: http
+          protocol: TCP
+        - containerPort: 9464
+          name: metrics
+          protocol: TCP
+        readinessProbe:
+          httpGet:
+            path: /$/ping
+            port: 3030
+            scheme: HTTP
+          initialDelaySeconds: 120
+          periodSeconds: 30
+          timeoutSeconds: 2
+        resources: {{- toYaml .Values.statefulset.resources | nindent 10 }}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+                - ALL
+          runAsGroup: 185
+          runAsNonRoot: true
+          runAsUser: 185
+          seccompProfile:
+              type: RuntimeDefault
+        volumeMounts:
+        - mountPath: /fuseki/config
+          name: graph-config-volume
+        - mountPath: /fuseki/databases
+          name: datasets-volume
+        - mountPath: /fuseki/backups
+          name: backups-volume
+        - mountPath: /app/config/kafka-auth/
+          name: kafka-auth-config
+      securityContext: 
+        fsGroup: 185
+        runAsGroup: 185
+        runAsNonRoot: true
+        runAsUser: 185
+        seccompProfile:
+          type: RuntimeDefault
+      serviceAccountName: {{ include "smart-cache-graph.serviceAccountName" . }}
+      volumes:
+      - configMap:
+          name: {{ include "smart-cache-graph.serverConfigmapName" . }}
+        name: graph-config-volume
+      - name: kafka-auth-config
+        secret:
+          secretName: {{ include "smart-cache-graph.kafkaAuthSecretName" . }}
+
+  volumeClaimTemplates:
+  - metadata:
+      creationTimestamp: null
+      labels:
+        app.kubernetes.io/name: {{ include "smart-cache-graph.name" . }}
+        telicent.io/resource: "true"
+      name: datasets-volume
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources: 
+        requests:
+            storage: {{ .Values.persistentVolumeClaims.datasetsVolume.size }}
+      storageClassName: {{ .Values.persistentVolumeClaims.datasetsVolume.storageClass }}
+  - metadata:
+      creationTimestamp: null
+      labels:
+        app.kubernetes.io/name: {{ include "smart-cache-graph.name" . }}
+        telicent.io/resource: "true"
+      name: backups-volume
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+            storage: {{ .Values.persistentVolumeClaims.backupsVolume.size }}
+      storageClassName: {{ .Values.persistentVolumeClaims.backupsVolume.storageClass }}

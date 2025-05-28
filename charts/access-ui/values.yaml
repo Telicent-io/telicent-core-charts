@@ -1,0 +1,32 @@
+containerSecurityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+      - ALL
+  runAsGroup: 185
+  runAsNonRoot: true
+  runAsUser: 185
+  seccompProfile:
+    type: RuntimeDefault
+fullnameOverride: ""
+image:
+  pullPolicy: Always
+  repository: telicent/telicent-access
+  tag: "1.5.6"
+nameOverride: ""
+podSecurityContext:
+  fsGroup: 185
+  runAsGroup: 185
+  runAsNonRoot: true
+  runAsUser: 185
+  seccompProfile:
+    type: RuntimeDefault
+replicas: 1
+resources: {}
+revisionHistoryLimit: 3
+service:
+  port: 8080
+  type: ClusterIP
+serviceAccount:
+  annotations: {}
+  name: ""

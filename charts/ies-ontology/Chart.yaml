@@ -1,0 +1,6 @@
+apiVersion: v2
+name: ies-ontology
+description: A generic chart that creates single run producer jobs as defined in the values
+type: application
+version: 0.1.0
+appVersion: "0.1.0"

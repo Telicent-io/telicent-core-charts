@@ -1,0 +1,20 @@
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  name: {{ include "core-mesh.fullname" . }}-ingress-to-access-ui
+  labels:
+  {{- include "core-mesh.labels" . | nindent 4 }}
+spec:
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        principals:
+        - {{ include "core-mesh.ingressPrincipal" . }}
+    to:
+    - operation:
+        methods:
+        - GET
+  selector:
+    matchLabels:
+    {{- include "core-mesh.accessUiSelectors" . | nindent 6 }}

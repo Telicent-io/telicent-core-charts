@@ -1,0 +1,18 @@
+{{- if not .Values.existingConfigMap -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "access-api.envConfigmapName" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "access-api.labels" . | nindent 4 }}
+data:
+  DEBUG: {{ .Values.config.debug }}
+  DEPLOYED_DOMAIN: {{ .Values.config.appsHost }}
+  MONGO_COLLECTION: {{ .Values.config.mongoCollection }}
+  MONGO_URL: {{ .Values.config.mongodbUrl }}
+  MONGO_USER: {{ .Values.config.mongodbUser }}
+  OPENID_PROVIDER_URL: {{ .Values.config.openidProviderUrl }}
+  PORT: {{ .Values.service.port }}
+  SCIM_ENABLED: {{ .Values.config.scimEnabled }}
+{{- end -}}
