@@ -92,6 +92,6 @@ Create the name of environment variable secrets
 {{ include "smart-cache-search.fullname" . }}-projector
 {{- end }}
 
-{{- define "smart-cache-search.kafkaAuthSecretName" -}}
-{{ include "smart-cache-search.fullname" . }}-kafka-auth-config
-{{- end }}
+# {{- define "smart-cache-search.kafkaAuthSecretName" -}}
+# {{ include "smart-cache-search.fullname" . }}-kafka-auth-config
+# {{- end }}

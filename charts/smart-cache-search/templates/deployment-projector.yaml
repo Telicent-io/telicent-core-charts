@@ -28,31 +28,16 @@ spec:
       {{- end }}
       containers:
       - name: search-projector
+        envFrom:
+        - configMapRef:
+            name: {{ include "smart-cache-search.fullname" . }}-projector
         env:
-        - name: BOOTSTRAP_SERVERS
-          value: {{ .Values.projector.configuration.bootstrapServers | quote }}
-        - name: DLQ_TOPIC
-          value: {{ .Values.projector.configuration.dlqTopic | quote }}
-        - name: ELASTIC_HOST
-          value: {{ .Values.projector.configuration.elasticHost | quote }}
-        - name: ELASTIC_INDEX
-          value: {{ .Values.projector.configuration.elasticIndex | quote }}
-        - name: ELASTIC_PORT
-          value: {{ .Values.projector.configuration.elasticPort | quote }}
-        - name: INDEX_BATCH_SIZE
-          value: {{ .Values.projector.configuration.indexBatchSize | quote }}
-        - name: JAVA_OPTIONS
-          value: {{ .Values.projector.configuration.javaOptions | quote }}
-        - name: KAFKA_CONFIG_FILE_PATH
-          value: /app/config/kafka-auth/kafka-config.properties
-        - name: OPENSEARCH_COMPATIBILITY
-          value: {{ .Values.projector.configuration.opensearchCompatibility | quote }}
-        - name: OTEL_METRICS_EXPORTER
-          value: {{ .Values.projector.configuration.otelMetricsExporter | quote }}
-        - name: OTEL_TRACES_EXPORTER
-          value: {{ .Values.projector.configuration.otelTracesExporter | quote }}
-        - name: TOPIC
-          value: {{ .Values.projector.configuration.topic | quote }}
+        {{- with .Values.projector.extraEnvs }}
+        {{- range . }}
+        - name: {{ .name }}
+          value: {{ .value | quote }}
+        {{- end }}
+        {{- end }}
         {{- if .Values.projector.existingEnvironmentSecret }}
         envFrom:
         - secretRef:
@@ -99,7 +84,7 @@ spec:
         - mountPath: /app/config/kafka-auth/
           name: kafka-auth-config
         {{- if .Values.cacertExistingSecret }}
-        - mountPath: {{ .Values.cacertContainerLocation }}
+        - mountPath: /opt/jre-21/lib/security/cacerts
           name: java-truststore
           subPath: truststore.jks
         {{- end }}
@@ -112,9 +97,11 @@ spec:
           type: RuntimeDefault
       serviceAccountName: {{ include "smart-cache-search.serviceAccountName" . }}-projector
       volumes:
+      {{- if .Values.projector.existingKafkaConfigSecret }}
       - name: kafka-auth-config
         secret:
-          secretName: {{ include "smart-cache-search.kafkaAuthSecretName" . }}
+          secretName: {{ .Values.projector.existingKafkaConfigSecret.name}}
+      {{- end }}
       {{- if .Values.cacertExistingSecret }}
       - name: java-truststore
         secret:

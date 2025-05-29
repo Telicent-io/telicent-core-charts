@@ -14,7 +14,8 @@ api:
   metrics:
     service:
       port: 9464
-  existingEnvironmentSecret:
+
+  extraEnvs: []
   configuration:
     attributeHierarchyUrl: http://access-api.tc-system.svc.cluster.local:8080/hierarchies/lookup/{name}
     elasticHost: https://opensearch.tc-system.svc.cluster.local
@@ -44,6 +45,9 @@ projector:
   metrics:
     service:
       port: 9464
+  extraEnvs: []
+  existingKafkaConfigSecret:
+    name: kafka-auth-config
   existingEnvironmentSecret:
   configuration:
     bootstrapServers: your.kafka.bootstrap.servers:9092
@@ -59,8 +63,11 @@ projector:
     otelTracesExporter: none
 
 # Private CA used for Opensearch and OIDC endpoint requires existing configmap containing jks truststore content
-cacertExistingSecret:
-cacertContainerLocation: /opt/jre-21/lib/security/cacerts
+
+# existingCacertSecret: 
+#   name: "" 
+# existingEnvironmentSecret:
+#   name: ""
 
 serviceAccount:
   annotations: {}
