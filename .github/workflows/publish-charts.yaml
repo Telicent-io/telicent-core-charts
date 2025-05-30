@@ -27,5 +27,5 @@ jobs:
           charts_dir: charts
           config: .github/cr.yaml
           skip_existing: false
-
-        
+          packages_with_index: true
+          skip_upload: true
