@@ -1,0 +1,11 @@
+{
+    "charts/access-ui": "0.1.0",
+    "charts/access-api": "0.1.0",
+    "charts/core-mesh": "0.1.0",
+    "charts/graph-ui": "0.1.0",
+    "charts/ies-ontology": "0.1.0",
+    "charts/query-ui": "0.1.0",
+    "charts/search-ui": "0.1.0",
+    "charts/smart-cache-graph": "0.1.0",
+    "charts/smart-cache-search": "0.1.0"
+}
