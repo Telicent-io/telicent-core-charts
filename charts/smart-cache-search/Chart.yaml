@@ -25,11 +25,5 @@ icon: "https://avatars.githubusercontent.com/u/65304240?s=200&v=4"
 # Required for CT lint to pass.
 # Question: Too much information for a community chart? currently repo is private, but with the addition of gituhb pages it'll need to transition to public.
 maintainers:
-  - name: abester
-    url: https://github.com/abester
-  - name: rob-telicent
-    url: https://github.com/rob-telicent
-  - name: Greg-teli100
-    url: https://github.com/Greg-teli100
-  - name: robf-telicent
-    url: https://github.com/robf-telicent
+  - name: telicent
+    url: https://github.com/Telicent-IO
