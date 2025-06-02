@@ -25,22 +25,21 @@ jobs:
       - name: Package changed charts
         run: for chart in $(ct list-changed --config .github/ct.yaml); do helm package -d .cr-release-packages $chart; done
 
-      - name: index charts
-        run: helm repo index .cr-release-packages
-
       - name: checkout pages branch
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           ref: gh-pages
           path: deploy
-    
+
+      - name: index charts
+        run: helm repo index .cr-release-packages --merge deploy/index.yaml
+
       - name: Copy packages to deployment directory
         run: |
           mkdir -p deploy/packages
           cp .cr-release-packages/*.tgz deploy/packages/
           cp .cr-release-packages/index.yaml deploy/
-
 
       - name: Set up Git
         working-directory: deploy
@@ -51,7 +50,8 @@ jobs:
       - name: Commit and push changes
         working-directory: deploy
         run: |
-            git add -A
-            git commit -m "Update Helm charts: $(ct list-changed --config .github/ct.yaml | tr , '\n')"
-            git branch -a
-            git push origin gh-pages
+          git add -A
+          git commit -m "Update Helm charts: $(ct list-changed --config .github/ct.yaml | tr , '\n')"
+          git branch -a
+          git push origin gh-pages
+
