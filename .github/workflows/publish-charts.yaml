@@ -33,8 +33,7 @@ jobs:
           path: deploy
 
       - name: index charts
-        run: |
-          helm repo index .cr-release-packages --merge deploy/index.yaml
+        run: helm repo index .cr-release-packages --merge deploy/index.yaml
 
       - name: Copy packages to deployment directory
         run: |
