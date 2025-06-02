@@ -38,11 +38,19 @@ spec:
           value: {{ .value | quote }}
         {{- end }}
         {{- end }}
-        {{- if .Values.projector.existingEnvironmentSecret }}
         envFrom:
+        {{- if .Values.projector.existingEnvironmentSecret }}
         - secretRef:
             name: {{ .Values.projector.existingEnvironmentSecret | quote }}
             optional: true
+        {{- else }}
+        - secretRef:
+            name: {{ include "smart-cache-search.fullname" . }}-projector
+            optional: true
+        {{- end }}
+        
+        {{- if .Values.projector.extraEnvs }}
+        {{- range $key, $value := .Values.projector.extraEnvs }}
         {{- end }}
         image: {{ .Values.projector.image.repository }}:{{ .Values.projector.image.tag | default .Chart.AppVersion }}
         imagePullPolicy: {{ .Values.projector.image.pullPolicy }}

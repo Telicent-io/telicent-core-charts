@@ -38,10 +38,19 @@ spec:
           value: {{ .value | quote }}
         {{- end }}
         {{- end }}
-        {{- if .Values.api.existingEnvironmentSecret }}
         envFrom:
+        {{- if .Values.api.existingEnvironmentSecret }}
         - secretRef:
             name: {{ .Values.api.existingEnvironmentSecret.name | quote }}
+            optional: true
+        {{- else }}
+        - secretRef:
+            name: {{ include "smart-cache-search.fullname" . }}-api
+            optional: true
+        {{- end }}
+        
+        {{- if .Values.api.extraEnvs }}
+        {{- range $key, $value := .Values.api.extraEnvs }}
             optional: true
         {{- end }}
         image: {{ .Values.api.image.repository }}:{{ .Values.api.image.tag | default .Chart.AppVersion }}

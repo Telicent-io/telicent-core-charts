@@ -32,10 +32,12 @@ api:
   service:
     port: 8181
     type: ClusterIP
-  kafkaAuthConfig:
+  elasticSecrets:
     elasticPassword: ""
     elasticUser: ""
     truststorePass: ""
+  # existingEnvironmentSecret:
+  #   name: environment
 
 projector:
   annotations: {}
@@ -50,13 +52,14 @@ projector:
     service:
       port: 9464
   extraEnvs: []
-  # existingKafkaConfigSecret:
-  #   name: kafka-auth-config
-  kafkaAuthConfig:
+  existingKafkaConfigSecret:
+    name: kafka-auth-config
+  elasticSecrets:
     elasticPassword: ""
     elasticUser: ""
     truststorePass: ""
-  existingEnvironmentSecret:
+  # existingEnvironmentSecret:
+  #   name: environment
   configuration:
     bootstrapServers: your.kafka.bootstrap.servers:9092
     topic: knowledge
