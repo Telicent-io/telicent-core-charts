@@ -3,9 +3,9 @@ entries:
   smart-cache-search:
   - apiVersion: v2
     appVersion: 0.1.1
-    created: "2025-06-02T08:47:03.249265959Z"
+    created: "2025-06-02T08:48:40.747855582Z"
     description: A Helm chart for Kubernetes
-    digest: 7368353cd4b2737d482a40265af1f0837c2cf7c80f0081bc82f19beac7e5759e
+    digest: e26c1afbf1063f1a009e7a979c63767040f1c6c502edcf7a887be5c5f5cb1ccd
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: abester
@@ -21,4 +21,4 @@ entries:
     urls:
     - smart-cache-search-0.1.1.tgz
     version: 0.1.1
-generated: "2025-06-02T08:47:03.247908626Z"
+generated: "2025-06-02T08:48:40.746587246Z"
