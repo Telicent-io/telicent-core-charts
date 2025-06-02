@@ -1,0 +1,57 @@
+name: Publish Charts
+
+on:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  publish:
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v4.3.0
+
+      - name: Set up chart-testing
+        uses: helm/chart-testing-action@v2.7.0
+
+      - name: Package changed charts
+        run: for chart in $(find ./charts -maxdepth 1 -mindepth 1 -type d -not -name telicent-core); do echo "packaging chart - $chart" && helm package -d .cr-release-packages $chart; done
+
+      - name: checkout pages branch
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: gh-pages
+          path: deploy
+
+      - name: index charts
+        run: helm repo index .cr-release-packages --merge deploy/index.yaml
+
+      - name: Copy packages to deployment directory
+        run: |
+          mkdir -p deploy/packages
+          cp .cr-release-packages/*.tgz deploy/packages/
+          cp .cr-release-packages/index.yaml deploy/
+
+      - name: Set up Git
+        working-directory: deploy
+        run: |
+          git config --global user.name "$GITHUB_ACTOR"
+          git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com"
+
+      - name: Commit and push changes
+        working-directory: deploy
+        run: |
+          git add -A
+          git commit -m "Update Helm charts: $(ct list-changed --config .github/ct.yaml | tr , '\n')"
+          git branch -a
+          git push origin gh-pages
+
