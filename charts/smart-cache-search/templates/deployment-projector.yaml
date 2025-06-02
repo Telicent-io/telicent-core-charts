@@ -48,9 +48,9 @@ spec:
             name: {{ include "smart-cache-search.fullname" . }}-projector
             optional: true
         {{- end }}
-        
         {{- if .Values.projector.extraEnvs }}
         {{- range $key, $value := .Values.projector.extraEnvs }}
+        {{- end }}
         {{- end }}
         image: {{ .Values.projector.image.repository }}:{{ .Values.projector.image.tag | default .Chart.AppVersion }}
         imagePullPolicy: {{ .Values.projector.image.pullPolicy }}
@@ -105,10 +105,12 @@ spec:
           type: RuntimeDefault
       serviceAccountName: {{ include "smart-cache-search.serviceAccountName" . }}-projector
       volumes:
-      {{- if .Values.projector.existingKafkaConfigSecret }}
       - name: kafka-auth-config
         secret:
+      {{- if .Values.projector.existingKafkaConfigSecret }}
           secretName: {{ .Values.projector.existingKafkaConfigSecret.name}}
+      {{- else }}
+          secretName: {{ include "smart-cache-search.fullname" . }}-kafka-auth-config
       {{- end }}
       {{- if .Values.cacertExistingSecret }}
       - name: java-truststore
