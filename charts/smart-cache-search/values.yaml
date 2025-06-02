@@ -70,7 +70,7 @@ projector:
     bootstrapServers: your.kafka.bootstrap.servers:9092
     topic: knowledge
     dlqTopic: knowledge.dlq
-    elasticHost: https://opensearch.tc-system.svc.cluster.local
+    elasticHost: https://your.opensearch.host.here:443
     elasticIndex: search
     elasticPort: "443"
     javaOptions: -XX:MaxRAMPercentage=70.0
