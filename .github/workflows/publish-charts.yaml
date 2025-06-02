@@ -23,7 +23,7 @@ jobs:
         uses: helm/chart-testing-action@v2.7.0
 
       - name: Package changed charts
-        run: for chart in $(find charts -depth 1 -type d); do echo "packaging chart - $chart" && helm package -d .cr-release-packages $chart; done
+        run: for chart in $(find ./charts -maxdepth 1 -mindepth 1 -type d -not -name telicent-core); do echo "packaging chart - $chart" && helm package -d .cr-release-packages $chart; done
 
       - name: checkout pages branch
         uses: actions/checkout@v4
