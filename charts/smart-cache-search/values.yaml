@@ -18,7 +18,7 @@ api:
   extraEnvs: []
   configuration:
     attributeHierarchyUrl: http://access-api.tc-system.svc.cluster.local:8080/hierarchies/lookup/{name}
-    elasticHost: https://opensearch.tc-system.svc.cluster.local
+    elasticHost: https://your.opensearch.host.here:443
     elasticIndexNames: search,doc-content
     elasticPort: "443"
     elasticClusterPort: "9200"
