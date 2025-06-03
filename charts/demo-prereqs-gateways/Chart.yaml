@@ -1,0 +1,5 @@
+apiVersion: v2
+name: gateways
+description: Create Istio gateways and authn configuration for Telicent CORE demo
+type: application
+version: 0.1.0

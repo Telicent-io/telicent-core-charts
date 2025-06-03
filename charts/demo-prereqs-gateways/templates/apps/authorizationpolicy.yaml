@@ -1,0 +1,26 @@
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: {{ include "gateways.fullname" . }}-apps
+  labels:
+  {{- include "gateways.labels" . | nindent 4 }}
+spec:
+  action: CUSTOM
+  provider:
+    name: {{ include "gateways.customAuthzProviderName" . }}
+  rules:
+  - to:
+    - operation:
+        hosts:
+        - {{ .Values.appsHost }}
+        - {{ .Values.appsHost }}:*
+        notPaths:
+        - /oauth2/*
+        - /oauth2
+        paths:
+        - /*
+        - /
+  selector:
+    matchLabels:
+      {{- .Values.ingressSelectors | toYaml | nindent 6 }}
