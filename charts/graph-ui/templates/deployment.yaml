@@ -80,7 +80,7 @@ spec:
         name: app-config-volume
       {{- if .Values.existingMapConfigSecret }}
       - secret:
-          secretName: {{ include "search.fullname" . }}-secret-config-js
+          secretName: {{ include "graph.fullname" . }}-secret-config-js
         name: secret-config-js-volume
       {{- end }}
       {{- with .Values.nodeSelector }}
