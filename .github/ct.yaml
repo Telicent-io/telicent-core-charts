@@ -5,4 +5,5 @@ chart-dirs:
   - charts
 helm-extra-args: --timeout 600s
 validate-maintainers: true
-check-version-increment: false
+check-version-increment: false # Probably want to enable this in the future
+# This is disabled for now to allow for easier development and testing of the chart
