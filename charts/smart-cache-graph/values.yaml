@@ -53,7 +53,7 @@ kafkaConfig: |-
       password="your.kafka.password.here";
 
 # TODO: This is awful
-graphConfig: |-
+graphConfig: |
   PREFIX :        <#>
   PREFIX fuseki:  <http://jena.apache.org/fuseki#>
   PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>

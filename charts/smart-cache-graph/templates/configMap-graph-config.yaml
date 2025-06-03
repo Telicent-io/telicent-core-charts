@@ -8,4 +8,5 @@ metadata:
         app.kubernetes.io/instance: {{ .Release.Name }}
         app.kubernetes.io/managed-by: {{ .Release.Service }}
 data:
-    config.ttl: {{ .Values.graphConfig }}
+    config.ttl: |
+{{ .Values.graphConfig | nindent 6 }}
