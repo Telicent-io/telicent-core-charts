@@ -28,36 +28,31 @@ spec:
       {{- end }}
       containers:
       - name: search-api
-        env:
-        - name: ATTRIBUTE_HIERARCHY_URL
-          value: {{ .Values.api.configuration.attributeHierarchyUrl | quote }}
-        - name: ELASTIC_HOST
-          value: {{ .Values.api.configuration.elasticHost | quote }}
-        - name: ELASTIC_INDEX
-          value: {{ .Values.api.configuration.elasticIndexNames | quote }}
-        - name: ELASTIC_PORT
-          value: {{ .Values.api.configuration.elasticPort | quote }}
-        - name: ES_CLUSTER_PORT
-          value: {{ .Values.api.configuration.elasticClusterPort | quote }}
-        - name: FIELD_OPTIONS
-          value: {{ .Values.api.configuration.searchFieldOptions | quote }}
-        - name: JAVA_OPTIONS
-          value: {{ .Values.api.configuration.javaOptions | quote }}
-        - name: JWKS_URL
-          value: {{ .Values.api.configuration.jwksUrl | quote }}
-        - name: OPENSEARCH_COMPATIBILITY
-          value: {{ .Values.api.configuration.opensearchCompatibility | quote }}
-        - name: OTEL_METRICS_EXPORTER
-          value: {{ .Values.api.configuration.otelMetricsExporter | quote }}
-        - name: OTEL_TRACES_EXPORTER
-          value: {{ .Values.api.configuration.otelTracesExporter | quote }}
-        - name: USER_ATTRIBUTES_URL
-          value: {{ .Values.api.configuration.userAttributesUrl | quote }}
-        {{- if .Values.api.existingEnvironmentSecret }}
         envFrom:
+        - configMapRef:
+            name: {{ include "smart-cache-search.fullname" . }}-api
+        env:
+        {{- with .Values.projector.extraEnvs }}
+        {{- range . }}
+        - name: {{ .name }}
+          value: {{ .value | quote }}
+        {{- end }}
+        {{- end }}
+        envFrom:
+        {{- if .Values.api.existingEnvironmentSecret }}
         - secretRef:
-            name: {{ .Values.api.existingEnvironmentSecret | quote }}
+            name: {{ .Values.api.existingEnvironmentSecret.name | quote }}
             optional: true
+        {{- else }}
+        - secretRef:
+            name: {{ include "smart-cache-search.fullname" . }}-api
+            optional: true
+        {{- end }}
+        
+        {{- if .Values.api.extraEnvs }}
+        {{- range $key, $value := .Values.api.extraEnvs }}
+            optional: true
+        {{- end }}
         {{- end }}
         image: {{ .Values.api.image.repository }}:{{ .Values.api.image.tag | default .Chart.AppVersion }}
         imagePullPolicy: {{ .Values.api.image.pullPolicy }}
@@ -95,13 +90,11 @@ spec:
           runAsUser: 185
           seccompProfile:
               type: RuntimeDefault
-        {{- if .Values.cacertExistingSecret }}
         volumeMounts:
+        {{- if .Values.existingCacertSecret }}
         - mountPath: /opt/jre-21/lib/security/cacerts
           name: java-truststore
           subPath: truststore.jks
-        {{- else }}
-        volumeMounts: []
         {{- end }}
       securityContext: 
         fsGroup: 185
@@ -111,11 +104,9 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       serviceAccountName: {{ include "smart-cache-search.serviceAccountName" . }}-api
-      {{- if .Values.cacertExistingSecret }}
       volumes:
+      {{- if .Values.existingCacertSecret }}
       - name: java-truststore
         secret:
-          secretName: {{ .Values.cacertExistingSecret }}
-      {{- else }}
-      volumes: []
+          secretName: {{ .Values.existingCacertSecret.name }}
       {{- end }}

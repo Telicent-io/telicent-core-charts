@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: {{ include "smart-cache-search.fullname" . }}-projector
+    labels:
+        app.kubernetes.io/name: {{ include "smart-cache-search.name" . }}
+        helm.sh/chart: {{ include "smart-cache-search.chart" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/managed-by: {{ .Release.Service }}
+data:
+    # Environment variables for the projector container
+    # These values are used to configure the search projector service
+    # Ensure that these values are set correctly in your values.yaml file
+    BOOTSTRAP_SERVERS: {{ .Values.projector.configuration.bootstrapServers | quote }}
+    DLQ_TOPIC: {{ .Values.projector.configuration.dlqTopic | quote }}
+    ELASTIC_HOST: {{ .Values.projector.configuration.elasticHost | quote }}
+    ELASTIC_INDEX: {{ .Values.projector.configuration.elasticIndex | quote }}
+    ELASTIC_PORT: {{ .Values.projector.configuration.elasticPort | quote }}
+    INDEX_BATCH_SIZE: {{ .Values.projector.configuration.indexBatchSize | quote }}
+    JAVA_OPTIONS: {{ .Values.projector.configuration.javaOptions | quote }}
+    KAFKA_CONFIG_FILE_PATH: /app/config/kafka-auth/kafka-config.properties
+    OPENSEARCH_COMPATIBILITY: {{ .Values.projector.configuration.opensearchCompatibility | quote }}
+    OTEL_METRICS_EXPORTER: {{ .Values.projector.configuration.otelMetricsExporter | quote }}
+    OTEL_TRACES_EXPORTER: {{ .Values.projector.configuration.otelTracesExporter | quote }}
+    TOPIC: {{ .Values.projector.configuration.topic | quote }}
+{{- with .Values.extraEnvs }}
+{{- toYaml . | nindent 2 }}
+{{- end }}

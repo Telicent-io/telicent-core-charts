@@ -14,10 +14,11 @@ api:
   metrics:
     service:
       port: 9464
-  existingEnvironmentSecret:
+
+  extraEnvs: []
   configuration:
     attributeHierarchyUrl: http://access-api.tc-system.svc.cluster.local:8080/hierarchies/lookup/{name}
-    elasticHost: https://opensearch.tc-system.svc.cluster.local
+    elasticHost: https://your.opensearch.host.here:443
     elasticIndexNames: search,doc-content
     elasticPort: "443"
     elasticClusterPort: "9200"
@@ -31,6 +32,12 @@ api:
   service:
     port: 8181
     type: ClusterIP
+  elasticSecrets:
+    elasticPassword: ""
+    elasticUser: ""
+    truststorePass: ""
+  # existingEnvironmentSecret:
+  #   name: environment
 
 projector:
   annotations: {}
@@ -44,12 +51,26 @@ projector:
   metrics:
     service:
       port: 9464
-  existingEnvironmentSecret:
+  extraEnvs: []
+  # existingKafkaConfigSecret:
+  #   name: kafka-auth-config
+  kafkaConfig: |-
+    security.protocol=SASL_SSL
+    sasl.mechanism=SCRAM-SHA-512
+    sasl.jaas.config=org.apache.kafka.common.security.scram.ScramLoginModule required \
+        username="your.kafka.username.here" \
+        password="your.kafka.password.here";
+  elasticSecrets:
+    elasticPassword: ""
+    elasticUser: ""
+    truststorePass: ""
+  # existingEnvironmentSecret:
+  #   name: environment
   configuration:
     bootstrapServers: your.kafka.bootstrap.servers:9092
     topic: knowledge
     dlqTopic: knowledge.dlq
-    elasticHost: https://opensearch.tc-system.svc.cluster.local
+    elasticHost: https://your.opensearch.host.here:443
     elasticIndex: search
     elasticPort: "443"
     javaOptions: -XX:MaxRAMPercentage=70.0
@@ -59,8 +80,11 @@ projector:
     otelTracesExporter: none
 
 # Private CA used for Opensearch and OIDC endpoint requires existing configmap containing jks truststore content
-cacertExistingSecret:
-cacertContainerLocation: /opt/jre-21/lib/security/cacerts
+
+# existingCacertSecret:
+#   name: ""
+# existingEnvironmentSecret:
+#   name: ""
 
 serviceAccount:
   annotations: {}
