@@ -91,11 +91,15 @@ spec:
       serviceAccountName: {{ include "smart-cache-graph.serviceAccountName" . }}
       volumes:
       - configMap:
-          name: {{ include "smart-cache-graph.serverConfigmapName" . }}
+          name: {{ include "smart-cache-graph.fullname" . }}-server-config
         name: graph-config-volume
       - name: kafka-auth-config
         secret:
-          secretName: {{ include "smart-cache-graph.kafkaAuthSecretName" . }}
+        {{- if .Values.existingKafkaConfigSecret }}
+          secretName: {{ .Values.existingKafkaConfigSecret.name }}
+        {{- else }}
+          secretName: {{ include "smart-cache-graph.fullname" . }}-kafka-auth-config
+        {{- end }}
 
   volumeClaimTemplates:
   - metadata:

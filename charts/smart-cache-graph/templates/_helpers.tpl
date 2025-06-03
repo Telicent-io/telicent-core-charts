@@ -68,11 +68,3 @@ Create the name of the service to use
 {{- define "smart-cache-graph.envSecretName" -}}
 {{ include "smart-cache-graph.fullname" . }}-server
 {{- end }}
-
-{{- define "smart-cache-graph.serverConfigmapName" -}}
-{{ include "smart-cache-graph.fullname" . }}-server-config
-{{- end }}
-
-{{- define "smart-cache-graph.kafkaAuthSecretName" -}}
-{{ include "smart-cache-graph.fullname" . }}-kafka-auth-config
-{{- end }}

@@ -8,9 +8,6 @@ metadata:
         app.kubernetes.io/instance: {{ .Release.Name }}
         app.kubernetes.io/managed-by: {{ .Release.Service }}
 data:
-    # Environment variables for the projector container
-    # These values are used to configure the search projector service
-    # Ensure that these values are set correctly in your values.yaml file
     ATTRIBUTE_HIERARCHY_URL: {{ .Values.configuration.attributeHierarchyUrl | quote }}
     ENABLE_BACKUPS: "false"
     ENABLE_LABELS_QUERY: "false"
@@ -23,28 +20,3 @@ data:
     SEARCH_API_URL: {{ .Values.configuration.searchApiUrl | quote }}
     {{- end }}
     USER_ATTRIBUTES_URL: {{ .Values.configuration.userAttributesUrl | quote }}
-
-
-
-#  - name: ATTRIBUTE_HIERARCHY_URL
-#           value: {{ .Values.configuration.attributeHierarchyUrl | quote }}
-#         - name: ENABLE_BACKUPS
-#           value: "false"
-#         - name: ENABLE_LABELS_QUERY
-#           value: "false"
-#         - name: JAVA_OPTIONS
-#           value: {{ .Values.configuration.javaOptions | quote }}
-#         - name: JWKS_URL
-#           value: {{ .Values.configuration.jwksUrl | quote }}
-#         - name: KAFKA_CONFIG_FILE_PATH
-#           value: /app/config/kafka-auth/kafka-config.properties
-#         - name: OTEL_METRICS_EXPORTER
-#           value: {{ .Values.configuration.otelMetricsExporter | quote }}
-#         - name: OTEL_TRACES_EXPORTER
-#           value: {{ .Values.configuration.otelTracesExporter | quote }}
-#         {{- if .Values.configuration.searchApiUrl }}
-#         - name: SEARCH_API_URL
-#           value: {{ .Values.configuration.searchApiUrl | quote }}
-#         {{- end }}
-#         - name: USER_ATTRIBUTES_URL
-#           value: {{ .Values.configuration.userAttributesUrl | quote }}

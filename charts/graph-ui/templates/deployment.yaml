@@ -78,9 +78,11 @@ spec:
       - configMap:
           name: {{ include "graph.configMapName" . }}
         name: app-config-volume
+      {{- if .Values.existingMapConfigSecret }}
       - secret:
-          secretName: {{ include "graph.configSecretName" . }}
+          secretName: {{ include "search.fullname" . }}-secret-config-js
         name: secret-config-js-volume
+      {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: {{ include "access-ui.configMapName" . }}
+    labels:
+        app.kubernetes.io/name: {{ include "access-ui.name" . }}
+        helm.sh/chart: {{ include "access-ui.chart" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/managed-by: {{ .Release.Service }}
+data:
+  env-config.js: |
+    window.ACCESS_API_URL = "{{ .Values.configuration.accessUiApiEndpoint }}";
+    window.SIGN_OUT_URL = "{{ .Values.configuration.signOutUrl }}";
