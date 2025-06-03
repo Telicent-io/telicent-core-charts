@@ -1,0 +1,4 @@
+owner: telicent-io
+git-repo: telicent-core-charts
+git-base-url: https://api.github.com/
+git-upload-url: https://uploads.github.com/

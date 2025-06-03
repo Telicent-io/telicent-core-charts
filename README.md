@@ -1,14 +1,30 @@
 # Telicent CORE Helm 
----
-Points for discussion: 
-- The secrets created will not create a working install as they are created empty
-    - Inclusion of the Strimzi cluster creation would allow for the user secrets to be populated and shared?
-- Added values that must be commented out else the charts will look for secrets that don't exist, I don't believe this is an anti-pattern, but potential discussion point?
+## Installation
 
+To install the Telicent CORE Helm chart, use the following commands:
 
+```sh
+helm repo add telicent https://charts.telicent.io 
+helm repo update
+helm install my-release telicent/core
+```
 
+Replace `my-release` with your desired release name.
 
+## Upgrading
 
+To upgrade an existing release:
 
+```sh
+helm upgrade my-release telicent/core
+```
 
+## Uninstalling
 
+To uninstall the chart:
+
+```sh
+helm uninstall my-release
+```
+
+For more configuration options, see the [values.yaml](./values.yaml) file.
