@@ -51,6 +51,8 @@ spec:
         
         {{- if .Values.api.extraEnvs }}
         {{- range $key, $value := .Values.api.extraEnvs }}
+          - name: {{ $key }}
+            value: {{ $value | quote }}
             optional: true
         {{- end }}
         {{- end }}

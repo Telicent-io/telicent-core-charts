@@ -56,15 +56,30 @@ Create the name of the service account to use
 */}}
 {{- define "smart-cache-graph.serviceAccountName" -}}
 {{- default (include "smart-cache-graph.fullname" .) .Values.serviceAccount.name }}
-{{- end }}
+{{ end }}
 
 {{/*
 Create the name of the service to use
 */}}
 {{- define "smart-cache-graph.serviceName" -}}
-{{- include "smart-cache-graph.fullname" . }}
+{{ include "smart-cache-graph.fullname" . }}
 {{- end }}
 
 {{- define "smart-cache-graph.envSecretName" -}}
 {{ include "smart-cache-graph.fullname" . }}-server
 {{- end }}
+
+{{/*
+Create Server config name to use
+*/}}
+{{- define "smart-cache-graph.serverConfig" -}}
+{{ include "smart-cache-graph.fullname" . }}-server-config
+{{- end }}
+
+{{/* 
+Create Kafka Auth Config name to use
+*/}}
+{{- define "smart-cache-graph.kafkaAuthConfig" -}}
+{{ include "smart-cache-graph.fullname" . }}-kafka-auth-config
+{{- end }}
+
