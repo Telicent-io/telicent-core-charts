@@ -2,6 +2,7 @@
     "charts/access-ui": "0.1.0",
     "charts/access-api": "0.1.0",
     "charts/core-mesh": "0.1.0",
+    "charts/demo-prereqs-gateways": "0.1.0",
     "charts/graph-ui": "0.1.0",
     "charts/ies-ontology": "0.1.0",
     "charts/query-ui": "0.1.0",

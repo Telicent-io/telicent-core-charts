@@ -38,7 +38,8 @@ jobs:
       - name: Copy packages to deployment directory
         run: |
           mkdir -p deploy/packages
-          cp .cr-release-packages/*.tgz deploy/packages/
+          cp README.md deploy/
+          cp .cr-release-packages/*.tgz deploy/
           cp .cr-release-packages/index.yaml deploy/
 
       - name: Set up Git
