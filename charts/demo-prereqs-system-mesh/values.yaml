@@ -2,7 +2,6 @@ appsGateway: istio-system/gateways-apps
 appsHost: change.me.to.the.apps.host
 authnGateway: istio-system/gateways-authn
 authnHost: change.me.to.the.authn.host
-coreNamespace: tc-core
 
 keycloak:
   instance: keycloak
