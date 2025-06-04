@@ -1,0 +1,30 @@
+dependencies:
+- name: access-api
+  repository: https://raw.githubusercontent.com/Telicent-io/telicent-core-charts/gh-pages
+  version: 0.1.0
+- name: access-ui
+  repository: https://raw.githubusercontent.com/Telicent-io/telicent-core-charts/gh-pages/
+  version: 0.1.0
+- name: core-mesh
+  repository: https://raw.githubusercontent.com/Telicent-io/telicent-core-charts/gh-pages/
+  version: 0.1.0
+- name: graph-ui
+  repository: https://raw.githubusercontent.com/Telicent-io/telicent-core-charts/gh-pages/
+  version: 0.1.0
+- name: ies-ontology
+  repository: https://raw.githubusercontent.com/Telicent-io/telicent-core-charts/gh-pages/
+  version: 0.1.0
+- name: query-ui
+  repository: https://raw.githubusercontent.com/Telicent-io/telicent-core-charts/gh-pages/
+  version: 0.1.0
+- name: search-ui
+  repository: https://raw.githubusercontent.com/Telicent-io/telicent-core-charts/gh-pages/
+  version: 0.1.0
+- name: smart-cache-graph
+  repository: https://raw.githubusercontent.com/Telicent-io/telicent-core-charts/gh-pages/
+  version: 0.1.0
+- name: smart-cache-search
+  repository: https://raw.githubusercontent.com/Telicent-io/telicent-core-charts/gh-pages/
+  version: 0.1.1
+digest: sha256:51b7ea41d23f9ad827d77281e52b2441738a2202189f127a431629086fd18473
+generated: "2025-06-04T14:04:56.467885+01:00"
