@@ -3,9 +3,9 @@ entries:
   access-api:
   - apiVersion: v2
     appVersion: 1.5.3
-    created: "2025-06-04T08:07:49.906558Z"
+    created: "2025-06-04T12:29:19.696969815Z"
     description: A Helm chart for Kubernetes
-    digest: 69a6fdcc9bd8662f3f82eae3499bdf9729779207e6b151698ee93f631fd1735e
+    digest: 27e23aaa8966e25c212f64eb6d68efd655bdceba47993e7bf86521b80278f912
     name: access-api
     type: application
     urls:
@@ -14,9 +14,9 @@ entries:
   access-ui:
   - apiVersion: v2
     appVersion: 1.5.3
-    created: "2025-06-04T08:07:49.907088362Z"
+    created: "2025-06-04T12:29:19.697214134Z"
     description: A Helm chart for Kubernetes
-    digest: 3a6aa2a3cf3d7bce8599af81eaf9bc1fd84febc05efc07fc7334eadf3e0b912a
+    digest: 8e9898a2c958322e58d3c9dfa8f4bc9767b84f084aad108dfbdfc32a34a125c8
     name: access-ui
     type: application
     urls:
@@ -25,10 +25,10 @@ entries:
   core-mesh:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2025-06-04T08:07:49.908004845Z"
+    created: "2025-06-04T12:29:19.697741173Z"
     description: Prerequisite Istio policy permitting ingress and service-to-service
       access for Telicent apps within the existing Istio service core-mesh
-    digest: 390826c76fb3c597b59c0ee248a67d0afcc8115dbdab43082b03a4c2611cd1d6
+    digest: f84cf465376c62334b9f9492a31a7d8cdeff33aecac30479797c7cb82f0c97ff
     name: core-mesh
     type: application
     urls:
@@ -36,9 +36,9 @@ entries:
     version: 0.1.0
   gateways:
   - apiVersion: v2
-    created: "2025-06-04T08:07:49.908609184Z"
+    created: "2025-06-04T12:29:19.69853892Z"
     description: Create Istio gateways and authn configuration for Telicent CORE demo
-    digest: 877ad1423703f8e4c8ee593b9a3473eea1a619c472d8c96d7ee7bfb139e2ab8e
+    digest: 56383846996778a3002b1db7ab639444afea232dad40de475b4222ea27b15ac9
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -51,9 +51,9 @@ entries:
   graph-ui:
   - apiVersion: v2
     appVersion: x.x.x
-    created: "2025-06-04T08:07:49.908936987Z"
+    created: "2025-06-04T12:29:19.699048777Z"
     description: Telicent Graph UI
-    digest: 832674a7aea0e895f1edfe748a4dad9487613fecb36003bd01277b48662aa249
+    digest: 70137b2584b761edec82f2da012874b4a9ca57f7b0052bd77fafd90a4c154fcc
     name: graph-ui
     type: application
     urls:
@@ -62,10 +62,10 @@ entries:
   ies-ontology:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2025-06-04T08:07:49.909351071Z"
+    created: "2025-06-04T12:29:19.700065625Z"
     description: A generic chart that creates single run producer jobs as defined
       in the values
-    digest: 89ee7b1bfe7316b835565de6dd20737312c0ff7b2e2cc54c6db1f48df57de1c2
+    digest: b413c44861734e8b24a1c1639c73d7f182b6b64e5ccc95b152de3a9e5c0cd6af
     name: ies-ontology
     type: application
     urls:
@@ -74,10 +74,10 @@ entries:
   query-ui:
   - apiVersion: v2
     appVersion: 1.1.7
-    created: "2025-06-04T08:07:49.909643047Z"
+    created: "2025-06-04T12:29:19.700388722Z"
     description: Telicent Query UI is a basic free to use app that provides a UI interface
       to run SparQL and GraphQL (via GraphiQL) queries.
-    digest: acdc20470bcfbc55451c89b6798a586cb4ad7fc5832026a37a6f3568bd871878
+    digest: 84763b26eb68fbc2e51261819d631123ef7aa13c4264940e79e765ddfaf76237
     name: query-ui
     type: application
     urls:
@@ -86,9 +86,9 @@ entries:
   search-ui:
   - apiVersion: v2
     appVersion: x.x.x
-    created: "2025-06-04T08:07:49.909882494Z"
+    created: "2025-06-04T12:29:19.700658929Z"
     description: Telicent Search UI
-    digest: 019d39eb1a912918a5beab4a3ba0f1bdf6d2d34045c5f6328bf5f045f76196f1
+    digest: 5d808cfce2a52af2da67541989ad87236043e4f93198c1ba08b4792a504c7fe4
     name: search-ui
     type: application
     urls:
@@ -97,9 +97,9 @@ entries:
   smart-cache-graph:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2025-06-04T08:07:49.910159853Z"
+    created: "2025-06-04T12:29:19.700981524Z"
     description: A Helm chart for Kubernetes
-    digest: df11ba2b1a78137166c363470aa2a64aabfa8fe909e2afe90c3027f7d6d2187f
+    digest: 3a14030c324d2be977769155cb77d17c8850169da40e8751c06a6fc375ae0bbd
     name: smart-cache-graph
     type: application
     urls:
@@ -108,9 +108,9 @@ entries:
   smart-cache-search:
   - apiVersion: v2
     appVersion: 0.1.1
-    created: "2025-06-04T08:07:49.91064508Z"
+    created: "2025-06-04T12:29:19.70143247Z"
     description: A Helm chart for Kubernetes
-    digest: 4efa030d7ef1cbcb4d0d148d8945007ebd907fcb24c05c11c008138fe1d092e2
+    digest: 1230623e62680c53ad3651e49a2c681c7f85ffc07e9c24d2f43f6cc3633efee9
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -120,4 +120,4 @@ entries:
     urls:
     - smart-cache-search-0.1.1.tgz
     version: 0.1.1
-generated: "2025-06-04T08:07:49.905961505Z"
+generated: "2025-06-04T12:29:19.69648708Z"
