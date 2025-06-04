@@ -1,0 +1,21 @@
+appsHost: apps.127.0.0.1.nip.io
+authnHost: auth.127.0.0.1.nip.io
+
+appsTlsCredentialName: ""
+appsTls:
+  key: ""
+  crt: ""
+authnTlsCredentialName: ""
+authnTls:
+  key: ""
+  crt: ""
+
+fullnameOverride: ""
+ingressSelectors:
+  istio: ingress
+
+jwksUri: ""
+jwtIssuer: ""
+
+nameOverride: ""
+tenantName: change-me
