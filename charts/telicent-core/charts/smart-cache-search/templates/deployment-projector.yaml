@@ -107,10 +107,10 @@ spec:
       volumes:
       - name: kafka-auth-config
         secret:
-      {{- if .Values.projector.existingKafkaConfigSecret }}
-          secretName: {{ .Values.projector.existingKafkaConfigSecret.name}}
+      {{- if .Values.globals.existingKafkaConfigSecret }}
+          secretName: {{ .Values.globals.existingKafkaConfigSecret.name }}
       {{- else }}
-          secretName: {{ include "smart-cache-search.fullname" . }}-kafka-auth-config
+          secretName: {{ include "telicent-core.kafkaAuthConfigSecretName" . }}
       {{- end }}
       {{- if .Values.cacertExistingSecret }}
       - name: java-truststore

@@ -89,9 +89,3 @@ serviceAccount:
 # TODO is this okay out of the range? Presumably each job will need a kafka auth secret, why not share?
 existingKafkaConfigSecret:
   name: kafka-auth-config
-kafkaConfig: |-
-  security.protocol=SASL_SSL
-  sasl.mechanism=SCRAM-SHA-512
-  sasl.jaas.config=org.apache.kafka.common.security.scram.ScramLoginModule required \
-      username="your.kafka.username.here" \
-      password="your.kafka.password.here";
