@@ -1,0 +1,58 @@
+adminUsername: admin
+adminPassword: "CHANGE-ADMIN-PASSWORD"
+
+authHost: auth.127.0.0.1.nip.io
+
+containerSecurityContext:
+  {}
+  # allowPrivilegeEscalation: false
+  # capabilities:
+  #   drop:
+  #     - ALL
+  # runAsGroup: 10101
+  # runAsNonRoot: true
+  # runAsUser: 10101
+  # seccompProfile:
+  #   type: RuntimeDefault
+
+dbVolume:
+  size: 1Gi
+  storageClass: local-path
+
+existingEnvSecret: ""
+
+fullnameOverride: ""
+
+image:
+  pullPolicy: Always
+  repository: quay.io/keycloak/keycloak
+  tag: ""
+
+nameOverride: ""
+
+podSecurityContext:
+  {}
+  # fsGroup: 10101
+  # runAsGroup: 10101
+  # runAsNonRoot: true
+  # runAsUser: 10101
+  # seccompProfile:
+  #   type: RuntimeDefault
+
+resources: {}
+
+revisionHistoryLimit: 3
+
+service:
+  port: 8080
+  type: ClusterIP
+
+serviceAccount:
+  annotations: {}
+  name: null
+
+strategy:
+  rollingUpdate:
+    maxSurge: 1
+    maxUnavailable: 0
+  type: RollingUpdate
