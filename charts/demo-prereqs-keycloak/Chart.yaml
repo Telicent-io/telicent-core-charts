@@ -1,5 +1,5 @@
 apiVersion: v2
-name: keycloak
+name: demo-prereqs-keycloak
 description: Provisions a dev mode instance of keycloak
 type: application
 version: 0.1.0
