@@ -49,6 +49,18 @@
             "initial-version": "0.1.0",
             "bump-minor-pre-major": true
         },
+        "charts/demo-prereqs-system-mesh": {
+            "labels": [
+                "autorelease: pending"
+            ],
+            "bumpPatchForMinorPreMajor": true,
+            "release-type": "helm",
+            "include-component-in-tag": true,
+            "prerelease": false,
+            "manifest-file": ".github/release-please-manifest.json",
+            "initial-version": "0.1.0",
+            "bump-minor-pre-major": true
+        },
         "charts/graph-ui": {
             "labels": [
                 "autorelease: pending"

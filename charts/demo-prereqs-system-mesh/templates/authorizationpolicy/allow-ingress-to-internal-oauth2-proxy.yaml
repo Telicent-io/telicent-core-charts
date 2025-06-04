@@ -1,0 +1,20 @@
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  name: {{ include "system-mesh.fullname" . }}-ingress-to-oauth2-int
+  labels:
+  {{- include "system-mesh.labels" . | nindent 4 }}
+spec:
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        principals:
+        - {{ include "system-mesh.ingressPrincipal" . }}
+    to:
+    - operation:
+        methods:
+        - '*'
+  selector:
+    matchLabels:
+      {{- include "system-mesh.internalOauth2ProxySelectors" . | nindent 6 }}
