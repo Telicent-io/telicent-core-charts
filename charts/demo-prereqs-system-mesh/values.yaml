@@ -1,0 +1,31 @@
+appsGateway: istio-system/gateways-apps
+appsHost: change.me.to.the.apps.host
+authnGateway: istio-system/gateways-authn
+authnHost: change.me.to.the.authn.host
+coreNamespace: tc-core
+
+keycloak:
+  instance: keycloak
+  name: keycloak
+  port: 8080
+  serviceName: keycloak
+
+fullnameOverride: ""
+
+ingress:
+  namespace: istio-system
+  serviceAccountName: istio-ingress
+
+nameOverride: ""
+
+oauth2proxy:
+  external:
+    instance: external-oauth2-proxy
+    name: external-oauth2-proxy
+    port: 4080
+    serviceAccountName: external-oauth2-proxy
+    serviceName: external-oauth2-proxy
+  internal:
+    instance: internal-oauth2-proxy
+    name: internal-oauth2-proxy
+    serviceAccountName: internal-oauth2-proxy

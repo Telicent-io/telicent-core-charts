@@ -1,0 +1,9 @@
+apiVersion: v2
+name: demo-prereqs-system-mesh
+description: A Helm chart for Kubernetes
+type: application
+version: 0.1.0
+icon: "https://avatars.githubusercontent.com/u/65304240?s=200&v=4"
+maintainers:
+  - name: telicent
+    url: https://github.com/Telicent-IO
