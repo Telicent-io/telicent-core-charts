@@ -1,24 +1,123 @@
 apiVersion: v1
 entries:
+  access-api:
+  - apiVersion: v2
+    appVersion: 1.5.3
+    created: "2025-06-04T08:07:49.906558Z"
+    description: A Helm chart for Kubernetes
+    digest: 69a6fdcc9bd8662f3f82eae3499bdf9729779207e6b151698ee93f631fd1735e
+    name: access-api
+    type: application
+    urls:
+    - access-api-0.1.0.tgz
+    version: 0.1.0
+  access-ui:
+  - apiVersion: v2
+    appVersion: 1.5.3
+    created: "2025-06-04T08:07:49.907088362Z"
+    description: A Helm chart for Kubernetes
+    digest: 3a6aa2a3cf3d7bce8599af81eaf9bc1fd84febc05efc07fc7334eadf3e0b912a
+    name: access-ui
+    type: application
+    urls:
+    - access-ui-0.1.0.tgz
+    version: 0.1.0
+  core-mesh:
+  - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2025-06-04T08:07:49.908004845Z"
+    description: Prerequisite Istio policy permitting ingress and service-to-service
+      access for Telicent apps within the existing Istio service core-mesh
+    digest: 390826c76fb3c597b59c0ee248a67d0afcc8115dbdab43082b03a4c2611cd1d6
+    name: core-mesh
+    type: application
+    urls:
+    - core-mesh-0.1.0.tgz
+    version: 0.1.0
+  gateways:
+  - apiVersion: v2
+    created: "2025-06-04T08:07:49.908609184Z"
+    description: Create Istio gateways and authn configuration for Telicent CORE demo
+    digest: 877ad1423703f8e4c8ee593b9a3473eea1a619c472d8c96d7ee7bfb139e2ab8e
+    icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
+    maintainers:
+    - name: telicent
+      url: https://github.com/Telicent-IO
+    name: gateways
+    type: application
+    urls:
+    - gateways-0.1.0.tgz
+    version: 0.1.0
+  graph-ui:
+  - apiVersion: v2
+    appVersion: x.x.x
+    created: "2025-06-04T08:07:49.908936987Z"
+    description: Telicent Graph UI
+    digest: 832674a7aea0e895f1edfe748a4dad9487613fecb36003bd01277b48662aa249
+    name: graph-ui
+    type: application
+    urls:
+    - graph-ui-0.1.0.tgz
+    version: 0.1.0
+  ies-ontology:
+  - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2025-06-04T08:07:49.909351071Z"
+    description: A generic chart that creates single run producer jobs as defined
+      in the values
+    digest: 89ee7b1bfe7316b835565de6dd20737312c0ff7b2e2cc54c6db1f48df57de1c2
+    name: ies-ontology
+    type: application
+    urls:
+    - ies-ontology-0.1.0.tgz
+    version: 0.1.0
+  query-ui:
+  - apiVersion: v2
+    appVersion: 1.1.7
+    created: "2025-06-04T08:07:49.909643047Z"
+    description: Telicent Query UI is a basic free to use app that provides a UI interface
+      to run SparQL and GraphQL (via GraphiQL) queries.
+    digest: acdc20470bcfbc55451c89b6798a586cb4ad7fc5832026a37a6f3568bd871878
+    name: query-ui
+    type: application
+    urls:
+    - query-ui-0.1.0.tgz
+    version: 0.1.0
+  search-ui:
+  - apiVersion: v2
+    appVersion: x.x.x
+    created: "2025-06-04T08:07:49.909882494Z"
+    description: Telicent Search UI
+    digest: 019d39eb1a912918a5beab4a3ba0f1bdf6d2d34045c5f6328bf5f045f76196f1
+    name: search-ui
+    type: application
+    urls:
+    - search-ui-0.1.0.tgz
+    version: 0.1.0
+  smart-cache-graph:
+  - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2025-06-04T08:07:49.910159853Z"
+    description: A Helm chart for Kubernetes
+    digest: df11ba2b1a78137166c363470aa2a64aabfa8fe909e2afe90c3027f7d6d2187f
+    name: smart-cache-graph
+    type: application
+    urls:
+    - smart-cache-graph-0.1.0.tgz
+    version: 0.1.0
   smart-cache-search:
   - apiVersion: v2
     appVersion: 0.1.1
-    created: "2025-05-30T15:09:17.158971648Z"
+    created: "2025-06-04T08:07:49.91064508Z"
     description: A Helm chart for Kubernetes
-    digest: b73e1afb78e18b2565ee4ebe30d7d50a9dbab00ac180b046b62cb1d2cb172765
+    digest: 4efa030d7ef1cbcb4d0d148d8945007ebd907fcb24c05c11c008138fe1d092e2
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
-    - name: abester
-      url: https://github.com/abester
-    - name: rob-telicent
-      url: https://github.com/rob-telicent
-    - name: Greg-teli100
-      url: https://github.com/Greg-teli100
-    - name: robf-telicent
-      url: https://github.com/robf-telicent
+    - name: telicent
+      url: https://github.com/Telicent-IO
     name: smart-cache-search
     type: application
     urls:
     - smart-cache-search-0.1.1.tgz
     version: 0.1.1
-generated: "2025-05-30T15:09:17.158411927Z"
+generated: "2025-06-04T08:07:49.905961505Z"
