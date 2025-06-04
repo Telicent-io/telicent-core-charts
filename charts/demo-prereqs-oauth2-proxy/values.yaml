@@ -1,0 +1,51 @@
+cacert: |
+  foo
+  bar
+  baz
+
+containerSecurityContext:
+  {}
+  # allowPrivilegeEscalation: false
+  # capabilities:
+  #   drop:
+  #     - ALL
+  # runAsGroup: 10101
+  # runAsNonRoot: true
+  # runAsUser: 10101
+  # seccompProfile:
+  #   type: RuntimeDefault
+existingCacertConfigmap: ""
+existingEnvConfigmap: ""
+existingEnvSecret: ""
+fullnameOverride: ""
+image:
+  pullPolicy: Always
+  repository: quay.io/oauth2-proxy/oauth2-proxy
+  tag: v7.8.1
+internal: false
+nameOverride: ""
+podSecurityContext:
+  {}
+  # fsGroup: 10101
+  # runAsGroup: 10101
+  # runAsNonRoot: true
+  # runAsUser: 10101
+  # seccompProfile:
+  #   type: RuntimeDefault
+replicas: 1
+revisionHistoryLimit: 3
+service:
+  port: 4080
+  type: ClusterIP
+serviceAccount:
+  annotations: {}
+  name: ""
+
+cookieDomain: "https://127.0.0.1.nip.io"
+cookieExpire: "15m"
+cookieRefresh: "10m"
+cookieSecret: "provide-cookie-secret"
+oidcIssuerUrl: "https://127.0.0.1.nip.io/realms/core"
+oidcRedirectUrl: "https://127.0.0.1.nip.io/oauth2/callback"
+clientId: "change-client-id"
+clientSecret: "provide-client-secret"

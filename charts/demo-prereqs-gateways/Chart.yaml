@@ -1,5 +1,5 @@
 apiVersion: v2
-name: gateways
+name: demo-prereqs-gateways
 description: Create Istio gateways and authn configuration for Telicent CORE demo
 type: application
 version: 0.1.0
