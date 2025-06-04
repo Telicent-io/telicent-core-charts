@@ -34,3 +34,12 @@ serviceAccount:
   annotations: {}
   name: ""
 tolerations: []
+
+configuration:
+  appHostUrl: "apps.telicent.com"
+  accessApiEndpoint: "https://access-api.tc-core.svc.cluster.local"
+  userPortalUiDeployed: true
+  graphUiDeployed: true
+  dataCatalogUiDeployed: true
+  graphqlApiEndpoint: your.graphql.host.here
+  sparqlApiEndpoint: your.sparql.host.here

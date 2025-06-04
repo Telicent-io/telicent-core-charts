@@ -28,32 +28,12 @@ spec:
       - args:
           - --config
           - /fuseki/config/config.ttl
-        env:
-        - name: ATTRIBUTE_HIERARCHY_URL
-          value: {{ .Values.configuration.attributeHierarchyUrl | quote }}
-        - name: ENABLE_BACKUPS
-          value: "false"
-        - name: ENABLE_LABELS_QUERY
-          value: "false"
-        - name: JAVA_OPTIONS
-          value: {{ .Values.configuration.javaOptions | quote }}
-        - name: JWKS_URL
-          value: {{ .Values.configuration.jwksUrl | quote }}
-        - name: KAFKA_CONFIG_FILE_PATH
-          value: /app/config/kafka-auth/kafka-config.properties
-        - name: OTEL_METRICS_EXPORTER
-          value: {{ .Values.configuration.otelMetricsExporter | quote }}
-        - name: OTEL_TRACES_EXPORTER
-          value: {{ .Values.configuration.otelTracesExporter | quote }}
-        {{- if .Values.configuration.searchApiUrl }}
-        - name: SEARCH_API_URL
-          value: {{ .Values.configuration.searchApiUrl | quote }}
-        {{- end }}
-        - name: USER_ATTRIBUTES_URL
-          value: {{ .Values.configuration.userAttributesUrl | quote }}
         envFrom:
         - secretRef:
             name: {{ include "smart-cache-graph.envSecretName" . }}
+            optional: true
+        - configMapRef:
+            name: {{ include "smart-cache-graph.name" . }}
             optional: true
         image: {{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
@@ -111,11 +91,15 @@ spec:
       serviceAccountName: {{ include "smart-cache-graph.serviceAccountName" . }}
       volumes:
       - configMap:
-          name: {{ include "smart-cache-graph.serverConfigmapName" . }}
+          name: {{ include "smart-cache-graph.fullname" . }}-server-config
         name: graph-config-volume
       - name: kafka-auth-config
         secret:
-          secretName: {{ include "smart-cache-graph.kafkaAuthSecretName" . }}
+        {{- if .Values.existingKafkaConfigSecret }}
+          secretName: {{ .Values.existingKafkaConfigSecret.name }}
+        {{- else }}
+          secretName: {{ include "smart-cache-graph.fullname" . }}-kafka-auth-config
+        {{- end }}
 
   volumeClaimTemplates:
   - metadata:

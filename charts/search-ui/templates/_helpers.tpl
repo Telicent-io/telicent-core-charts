@@ -72,9 +72,3 @@ Create the name of the config map
 {{- printf "%s-%s" (include "search.fullname" .) "env-configjs" }}
 {{- end }}
 
-{{/*
-Create the name of the config secret
-*/}}
-{{- define "search.configSecretName" -}}
-{{- printf "%s-%s" (include "search.fullname" .) "secret-config-js" }}
-{{- end }}
