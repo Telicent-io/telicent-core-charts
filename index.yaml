@@ -3,9 +3,9 @@ entries:
   access-api:
   - apiVersion: v2
     appVersion: 1.5.3
-    created: "2025-06-04T14:29:38.32800228Z"
+    created: "2025-06-04T14:34:53.201454336Z"
     description: A Helm chart for Kubernetes
-    digest: d6fc530cb7e47bc4ff045e500683ea7f804e8c678e0087d619f3aa63d095e8d1
+    digest: 5e45e16177cf32051c4a1b9a95274586c3ad33a4d15ee6fa23afb08bba4d1826
     name: access-api
     type: application
     urls:
@@ -14,9 +14,9 @@ entries:
   access-ui:
   - apiVersion: v2
     appVersion: 1.5.3
-    created: "2025-06-04T14:29:38.32866078Z"
+    created: "2025-06-04T14:34:53.201802377Z"
     description: A Helm chart for Kubernetes
-    digest: 670e3d77300ec99aa7b2784fdb951498f32daaca74fca7376ff128c7363f8989
+    digest: d699f2c9e71332934862457d2ff64d892cced05d51fc5f434c079da046d74b07
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -29,10 +29,10 @@ entries:
   core-mesh:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2025-06-04T14:29:38.329545455Z"
+    created: "2025-06-04T14:34:53.20220518Z"
     description: Prerequisite Istio policy permitting ingress and service-to-service
       access for Telicent apps within the existing Istio service core-mesh
-    digest: d9545a39790c3c92ddda95d5a404c886df4d30de2209e90e8a72f66e5fec299b
+    digest: 7d3b14469bfd4d66f78b3ef8a30d0edd16ca10f715710396a817bd1faef5dc09
     name: core-mesh
     type: application
     urls:
@@ -40,9 +40,9 @@ entries:
     version: 0.1.0
   demo-prereqs-system-mesh:
   - apiVersion: v2
-    created: "2025-06-04T14:29:38.329803813Z"
+    created: "2025-06-04T14:34:53.202465116Z"
     description: A Helm chart for Kubernetes
-    digest: e035e4a415d5360e8e90d6536be94a5c1fd8d22cd19698f46beb163ae4dc9aa7
+    digest: 95851152bbf80ea943e1e40b057ed780ffd64f17ceac7682df5c86f514456c54
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -54,9 +54,9 @@ entries:
     version: 0.1.0
   gateways:
   - apiVersion: v2
-    created: "2025-06-04T14:29:38.330033115Z"
+    created: "2025-06-04T14:34:53.202688474Z"
     description: Create Istio gateways and authn configuration for Telicent CORE demo
-    digest: 8ea9229789546cb0d6c70a1c3df5ee529a1c8925e4088e7c6c904ac09f713e8e
+    digest: 021c47f10a7092a586b661d308656580c6d67900bc756c86bd4e216f56ba18d5
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -69,9 +69,9 @@ entries:
   graph-ui:
   - apiVersion: v2
     appVersion: x.x.x
-    created: "2025-06-04T14:29:38.330427847Z"
+    created: "2025-06-04T14:34:53.203114861Z"
     description: Telicent Graph UI
-    digest: e63771b00494f52aa784db53e14487082d72cca0e180b6ae914252d30c8441be
+    digest: 6fb972b7316b113d7bdeb00a0c7e177ff0e7d944a343c1aaa343a1c60622e7fd
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -84,10 +84,10 @@ entries:
   ies-ontology:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2025-06-04T14:29:38.330898795Z"
+    created: "2025-06-04T14:34:53.203586794Z"
     description: A generic chart that creates single run producer jobs as defined
       in the values
-    digest: a812c50a8686b9228dfe6b19111301be59fe7787509b310d045c5a2cc79db29c
+    digest: 0c8e09ee07b16133f77e8b2f3bbde97fc041a2a577755d42cf52bab39c54ad71
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -97,13 +97,28 @@ entries:
     urls:
     - ies-ontology-0.1.0.tgz
     version: 0.1.0
+  keycloak:
+  - apiVersion: v2
+    appVersion: 26.2.3
+    created: "2025-06-04T14:34:53.203907844Z"
+    description: Provisions a dev mode instance of keycloak
+    digest: 4c9d1b1550f775de5de28baa7789ff120ff6fbf46ea1c4288dd79054037b87c8
+    icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
+    maintainers:
+    - name: telicent
+      url: https://github.com/Telicent-IO
+    name: keycloak
+    type: application
+    urls:
+    - keycloak-0.1.0.tgz
+    version: 0.1.0
   query-ui:
   - apiVersion: v2
     appVersion: 1.1.7
-    created: "2025-06-04T14:29:38.331209404Z"
+    created: "2025-06-04T14:34:53.204207384Z"
     description: Telicent Query UI is a basic free to use app that provides a UI interface
       to run SparQL and GraphQL (via GraphiQL) queries.
-    digest: 0ebd3cae1fa019c3bd70d9f4467150868bfcd0e0890895fa84b45228fe2b8f8e
+    digest: d96766a6affcefde63dc71a7d488b1047c18259ba64bbf45cb49aeaee837ca9c
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -116,9 +131,9 @@ entries:
   search-ui:
   - apiVersion: v2
     appVersion: x.x.x
-    created: "2025-06-04T14:29:38.331635536Z"
+    created: "2025-06-04T14:34:53.204597504Z"
     description: Telicent Search UI
-    digest: 54ecaf2572d78ebeb69e282328ca1ebf39d3ca51ddb074668558dcd0ff636f0b
+    digest: 302129299551b0a157cde8672b9d73cb0020070a9053394322c579b9e40ef54b
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -131,9 +146,9 @@ entries:
   smart-cache-graph:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2025-06-04T14:29:38.332268416Z"
+    created: "2025-06-04T14:34:53.205298394Z"
     description: A Helm chart for Kubernetes
-    digest: eab1168aec8e83a891297eaf7577b5f1984cc746d8e13392462fc72d62aa5cf1
+    digest: a86b3ff978132bbed8d44a6808219beb1cb2c93df62c1be205324fe9cf5167e9
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -146,9 +161,9 @@ entries:
   smart-cache-search:
   - apiVersion: v2
     appVersion: 0.1.1
-    created: "2025-06-04T14:29:38.332735537Z"
+    created: "2025-06-04T14:34:53.205887857Z"
     description: A Helm chart for Kubernetes
-    digest: 791142ee956e4f9dc692957e866eb2b97d3347b5b8011bd7e3d9b7501855db90
+    digest: c1dcb6c6458f28e89862278b3437cbfe1b595dcdcf7ffadf7d4dde207b347102
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -158,4 +173,4 @@ entries:
     urls:
     - smart-cache-search-0.1.1.tgz
     version: 0.1.1
-generated: "2025-06-04T14:29:38.327136751Z"
+generated: "2025-06-04T14:34:53.200332406Z"
