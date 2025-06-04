@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "keycloak.fullname" . }}
+  labels:
+  {{- include "keycloak.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  selector:
+    matchLabels:
+    {{- include "keycloak.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+      {{- include "keycloak.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - args:
+        - start-dev
+        - --http-enabled=true
+        - --proxy-headers=xforwarded
+        - --hostname={{ .Values.authHost }}
+        - --hostname-strict=false
+        env:
+        - name: KC_HTTP_ENABLED
+          value: "true"
+        - name: KC_HEALTH_ENABLED
+          value: "true"
+        envFrom:
+        - secretRef:
+            name: {{ include "keycloak.envSecretName" . }}
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        name: keycloak
+        ports:
+        - containerPort: {{ .Values.service.port }}
+          name: http
+          protocol: TCP
+        readinessProbe:
+          httpGet:
+            path: /health/ready
+            port: 9000
+            scheme: HTTP
+          initialDelaySeconds: 30
+        resources: {{- toYaml .Values.resources | nindent 10 }}
+        securityContext: {{- toYaml .Values.containerSecurityContext | nindent
+          10 }}
+        volumeMounts:
+        - mountPath: /opt/keycloak/data/h2
+          name: db-volume
+      securityContext: {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      serviceAccountName: {{ include "keycloak.serviceAccountName" . }}
+      volumes:
+      - name: db-volume
+        persistentVolumeClaim:
+         claimName: {{ include "keycloak.fullname" . }}

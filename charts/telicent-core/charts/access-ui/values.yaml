@@ -30,3 +30,7 @@ service:
 serviceAccount:
   annotations: {}
   name: ""
+
+configuration:
+  accessUiApiUrl: "https://your.host.here/api/access"
+  signOutUrl: "https://your.host.here/logout"

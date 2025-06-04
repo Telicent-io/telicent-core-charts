@@ -50,9 +50,14 @@ spec:
           type: RuntimeDefault
       serviceAccountName: {{ $jobvalues.serviceAccountName }}
       volumes:
+      
       - name: kafka-auth-config
         secret:
-          secretName: {{ $jobvalues.kafkaAuthSecretName }}
+        {{- if $.Values.existingKafkaConfigSecret }}
+          secretName: {{ $.Values.existingKafkaConfigSecret.name }}
+        {{- else }}
+          secretName: {{ include "smart-cache-search.fullname" . }}-kafka-auth-config
+        {{- end }}
       {{- with $.Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

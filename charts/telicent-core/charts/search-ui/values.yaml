@@ -34,3 +34,18 @@ serviceAccount:
   annotations: {}
   name: ""
 tolerations: []
+
+# existingMapConfigSecret:
+#   name: search-ui-secret-config-js
+
+configuration:
+  appHostUrl: "apps.telicent.com"
+  accessApiEndpoint: "https://access-api.telicent.com"
+  userPortalUiDeployed: true
+  graphUiDeployed: true
+  dataCatalogUiDeployed: true
+
+  map:
+    searchUiMaptilerToken: "your.maptiler.token.here"
+    searchUiMapboxStyleSpecUrl: "https://your.mapbox.style.spec.url.here"
+    searchUiArcgisToken: "your.arcgis.token.here"
