@@ -1,0 +1,65 @@
+apiVersion: mongodbcommunity.mongodb.com/v1
+kind: MongoDBCommunity
+metadata:
+  name: {{ include "mongodb.fullname" . }}
+  labels:
+  {{- include "mongodb.labels" . | nindent 4 }}
+spec:
+  additionalMongodConfig:
+    storage.wiredTiger.engineConfig.journalCompressor: zlib
+  members: 1
+  security:
+    authentication:
+      modes:
+        - SCRAM
+  type: ReplicaSet
+  users:
+    - db: admin
+      name: admin
+      passwordSecretRef:
+        name: {{ include "mongodb.adminPwdSecretName" . }}
+      roles:
+        - db: admin
+          name: clusterAdmin
+        - db: admin
+          name: userAdminAnyDatabase
+      scramCredentialsSecretName: {{ include "mongodb.adminScramSecretName" . }}
+    - db: access
+      name: telicent-access
+      passwordSecretRef:
+        name: {{ include "mongodb.accessPwdSecretName" . }}
+      roles:
+        - db: access
+          name: readWrite
+      scramCredentialsSecretName: {{ include "mongodb.accessScramSecretName" . }}
+  version: 7.0.12
+  statefulSet:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: mongod
+              resources:
+                limits:
+                  cpu: 200m
+                  memory: 256Mi
+                requests:
+                  cpu: 100m
+                  memory: 128Mi
+            - name: mongodb-agent
+              resources:
+                limits:
+                  cpu: 200m
+                  memory: 256Mi
+                requests:
+                  cpu: 100m
+                  memory: 128Mi
+          initContainers:
+            - name: mongodb-agent-readinessprobe
+              resources:
+                limits:
+                  cpu: 200m
+                  memory: 256Mi
+                requests:
+                  cpu: 100m
+                  memory: 128Mi

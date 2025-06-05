@@ -1,0 +1,10 @@
+fullnameOverride: ""
+nameOverride: ""
+
+existingAdminPwdSecretName: ""
+adminPassword: ""
+
+existingAccessPwdSecretName: ""
+accessPassword: ""
+
+serviceAccountName: ""
