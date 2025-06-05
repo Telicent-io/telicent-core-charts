@@ -1,8 +1,15 @@
 {{/*
+Trim the chart name prefix
+*/}}
+{{- define "keycloak.ChartShortName" -}}
+{{- .Chart.Name | trimPrefix "demo-prereqs-" }}
+{{- end }}
+
+{{/*
 Expand the name of the chart.
 */}}
 {{- define "keycloak.name" -}}
-{{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
+{{- default (include "keycloak.ChartShortName" .) .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
@@ -14,7 +21,7 @@ If release name contains chart name it will be used as a full name.
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
-{{- $name := default .Chart.Name .Values.nameOverride }}
+{{- $name := default (include "keycloak.ChartShortName" .) .Values.nameOverride }}
 {{- if contains $name .Release.Name }}
 {{- .Release.Name | trunc 63 | trimSuffix "-" }}
 {{- else }}
