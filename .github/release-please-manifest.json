@@ -4,7 +4,7 @@
     "charts/core-mesh": "0.1.0",
     "charts/demo-prereqs-gateways": "0.1.0",
     "charts/demo-prereqs-keycloak": "0.1.0",
-    "charts/demo-prereqs-oauth2-proxy": "0.1.0",
+    "charts/demo-prereqs-oauth2-proxy": "0.2.0",
     "charts/demo-prereqs-system-mesh": "0.1.0",
     "charts/graph-ui": "0.1.0",
     "charts/ies-ontology": "0.1.0",
