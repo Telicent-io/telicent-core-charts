@@ -37,10 +37,6 @@ dependencies:
     version: 0.1.0
     repository: https://raw.githubusercontent.com/Telicent-io/telicent-core-charts/gh-pages/
     condition: enterprise
-  - name: ies-ontology
-    version: 0.1.0
-    repository: https://raw.githubusercontent.com/Telicent-io/telicent-core-charts/gh-pages/
-    condition: enterprise
   - name: query-ui
     version: 0.1.0
     repository: https://raw.githubusercontent.com/Telicent-io/telicent-core-charts/gh-pages/
