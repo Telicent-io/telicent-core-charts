@@ -1,6 +1,6 @@
 enterprise: false
 global:
-  #TODO Docs on Secret structure for roll your own Kafka config
+  # TODO Docs on Secret structure for roll your own Kafka config
   # existingKafkaConfigSecretName: ""
   kafkaConfigProtocol: "SASL_SSL"
   kafkaConfigMechanism: "SCRAM-SHA-512"
