@@ -1,0 +1,14 @@
+fullnameOverride: ""
+nameOverride: ""
+
+storageCapacity: "10G"
+existingUserPwdSecretName: ""
+pipelinePassword: ""
+smartCachePassword: ""
+topics: []
+# topics:
+#   - name
+#     partitions
+#     replicas
+#     retentionMs
+#     retentionBytes

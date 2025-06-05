@@ -1,0 +1,62 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaUser
+metadata:
+  name: pipeline
+  labels:
+    {{- include "kafka.labels" . | nindent 4 }}
+    strimzi.io/cluster: {{ include "kafka.fullname" . }}
+spec:
+  authentication:
+    type: scram-sha-512
+    password: 
+      valueFrom:
+        secretKeyRef: 
+          name: {{ include "kafka.userPwdSecretName" . }}
+          key: pipeline
+  authorization:
+    type: simple
+    acls:
+      - resource:
+          type: topic
+          name: "*"
+          patternType: literal
+        operations:
+          - All
+      - resource:
+          type: group
+          name: "*"
+          patternType: literal
+        operations:
+          - All
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaUser
+metadata:
+  name: smart-cache
+  labels:
+    {{- include "kafka.labels" . | nindent 4 }}
+    strimzi.io/cluster: {{ include "kafka.fullname" . }}
+spec:
+  authentication:
+    type: scram-sha-512
+    password: 
+      valueFrom:
+        secretKeyRef: 
+          name: {{ include "kafka.userPwdSecretName" . }}
+          key: smart-cache
+  authorization:
+    type: simple
+    acls:
+      - resource:
+          type: topic
+          name: "*"
+          patternType: literal
+        operations:
+          - All
+      - resource:
+          type: group
+          name: "*"
+          patternType: literal
+        operations:
+          - All
+
