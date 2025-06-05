@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "query.configMapName" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "query.name" . }}
+    helm.sh/chart: {{ include "query.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+data:
+  env-config.js: |
+    // This configuration allows you to configure the Smart Cache Graph GraphQL API endpoint as used by the client browser.
+    window.GRAPHQL_URL = "https://{{ .Values.global.appHostDomain }}/api/graphql/knowledge/graphql";
+    // This configuration allows you to configure the Smart Cache Graph SPARQL API endpoint as used by the client browser.
+    window.SPARQL_URL = "https://{{ .Values.global.appHostDomain }}/api/sparql/knowledge/sparql";
+    // This configuration allows you to configure the Access API endpoint as used by the client browser.
+    window.ACCESS_URL = "https://{{ .Values.global.appHostDomain }}/api/access";

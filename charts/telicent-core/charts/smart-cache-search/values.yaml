@@ -1,0 +1,85 @@
+fullnameOverride: ""
+nameOverride: ""
+imagePullSecrets:
+
+api:
+  annotations: {}
+  replicas: 1
+  resources: {}
+  revisionHistoryLimit: 3
+  image:
+    pullPolicy: IfNotPresent
+    repository: 098669589541.dkr.ecr.eu-west-2.amazonaws.com/search-api-server
+    tag: 0.15.11
+  metrics:
+    service:
+      port: 9464
+
+  extraEnvs: []
+  configuration:
+    attributeHierarchyUrl: http://access-api.tc-system.svc.cluster.local:8080/hierarchies/lookup/{name}
+    elasticHost: https://your.opensearch.host.here:443
+    elasticIndexNames: search,doc-content
+    elasticPort: "443"
+    elasticClusterPort: "9200"
+    searchFieldOptions: primaryName^2,*
+    javaOptions: -XX:MaxRAMPercentage=70.0
+    Url: https://your.oidc.public.key.endpoint/keys
+    opensearchCompatibility: "true"
+    otelMetricsExporter: prometheus
+    otelTracesExporter: none
+    userAttributesUrl: http://access-api.tc-system.svc.cluster.local:8080/users/lookup/{user}
+  service:
+    port: 8181
+    type: ClusterIP
+  elasticSecrets:
+    elasticPassword: ""
+    elasticUser: ""
+    truststorePass: ""
+  # existingEnvironmentSecret:
+  #   name: environment
+
+projector:
+  annotations: {}
+  replicas: 1
+  resources: {}
+  revisionHistoryLimit: 3
+  image:
+    pullPolicy: IfNotPresent
+    repository: 098669589541.dkr.ecr.eu-west-2.amazonaws.com/smart-cache-elastic-index
+    tag: 0.15.11
+  metrics:
+    service:
+      port: 9464
+  extraEnvs: []
+  # existingKafkaConfigSecret:
+  #   name: kafka-auth-config
+  elasticSecrets:
+    elasticPassword: ""
+    elasticUser: ""
+    truststorePass: ""
+  # existingEnvironmentSecret:
+  #   name: environment
+  configuration:
+    bootstrapServers: your.kafka.bootstrap.servers:9092
+    topic: knowledge
+    dlqTopic: knowledge.dlq
+    elasticHost: https://your.opensearch.host.here:443
+    elasticIndex: search
+    elasticPort: "443"
+    javaOptions: -XX:MaxRAMPercentage=70.0
+    indexBatchSize: "500"
+    opensearchCompatibility: "true"
+    otelMetricsExporter: prometheus
+    otelTracesExporter: none
+
+# Private CA used for Opensearch and OIDC endpoint requires existing configmap containing jks truststore content
+
+# existingCacertSecret:
+#   name: ""
+# existingEnvironmentSecret:
+#   name: ""
+
+serviceAccount:
+  annotations: {}
+  name: ""

@@ -26,33 +26,37 @@ appVersion: "1.16.0"
 dependencies:
   - name: access-api
     version: 0.1.0
-    repository: TBC/access-api
+    repository: https://raw.githubusercontent.com/Telicent-io/telicent-core-charts/gh-pages
   - name: access-ui
     version: 0.1.0
-    repository: TBC/access-ui
+    repository: https://raw.githubusercontent.com/Telicent-io/telicent-core-charts/gh-pages/
   - name: core-mesh
     version: 0.1.0
-    repository: TBC/core-mesh
+    repository: https://raw.githubusercontent.com/Telicent-io/telicent-core-charts/gh-pages/
   - name: graph-ui
     version: 0.1.0
-    repository: TBC/graph-ui
-    condition: enterprise
-  - name: ies-ontology
-    version: 0.1.0
-    repository: TBC/ies-ontology
+    repository: https://raw.githubusercontent.com/Telicent-io/telicent-core-charts/gh-pages/
     condition: enterprise
   - name: query-ui
     version: 0.1.0
-    repository: TBC/query-ui
+    repository: https://raw.githubusercontent.com/Telicent-io/telicent-core-charts/gh-pages/
   - name: search-ui
     version: 0.1.0
-    repository: TBC/search-ui
+    repository: https://raw.githubusercontent.com/Telicent-io/telicent-core-charts/gh-pages/
     condition: enterprise
   - name: smart-cache-graph
     version: 0.1.0
-    repository: TBC/smart-cache-graph
+    repository: https://raw.githubusercontent.com/Telicent-io/telicent-core-charts/gh-pages/
     condition: enterprise
   - name: smart-cache-search
-    version: 0.1.0
-    repository: TBC/smart-cache-search
+    version: 0.1.1
+    repository: https://raw.githubusercontent.com/Telicent-io/telicent-core-charts/gh-pages/
     condition: enterprise
+
+icon: "https://avatars.githubusercontent.com/u/65304240?s=200&v=4"
+
+# The name of the chart's maintainers.
+# Required for CT lint to pass.
+maintainers:
+  - name: telicent
+    url: https://github.com/Telicent-IO

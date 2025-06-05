@@ -1,1 +1,46 @@
 enterprise: false
+global:
+  # TODO Docs on Secret structure for roll your own Kafka config
+  # existingKafkaConfigSecretName: ""
+  kafkaConfigProtocol: "SASL_SSL"
+  kafkaConfigMechanism: "SCRAM-SHA-512"
+  kafkaConfigUsername: "your.kafka.username.here"
+  kafkaConfigPassword: "your.kafka.password.here"
+  appHostDomain: "apps.yourdomain.com"
+  jwksUrl: "https://yourdomain.com/.well-known/jwks.json"
+
+access-api:
+  image:
+    repository: "telicent/access-api"
+
+access-ui:
+  image:
+    repository: "telicent/access-ui"
+
+core-mesh:
+  image:
+    repository: "telicent/core-mesh"
+
+graph-ui:
+  image:
+    repository: "telicent/graph-ui"
+
+ies-ontology:
+  image:
+    repository: "telicent/ies-ontology"
+
+query-ui:
+  image:
+    repository: "telicent/query-ui"
+
+search-ui:
+  image:
+    repository: "telicent/search-ui"
+
+smart-cache-graph:
+  image:
+    repository: "telicent/smart-cache-graph"
+
+smart-cache-search:
+  image:
+    repository: "telicent/smart-cache-search"

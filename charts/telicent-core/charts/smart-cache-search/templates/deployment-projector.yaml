@@ -1,0 +1,119 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "smart-cache-search.fullname" . }}-projector
+  labels:
+    {{- include "smart-cache-search.projectorLabels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.projector.replicas }}
+  revisionHistoryLimit: {{ .Values.projector.revisionHistoryLimit }}
+  selector:
+    matchLabels:
+    {{- include "smart-cache-search.projectorSelectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        prometheus.io/path: /
+        prometheus.io/port: "9464"
+        prometheus.io/scrape: "true"
+      {{- range $key, $value := .Values.projector.annotations }}
+        {{ $key }}: {{ $value | quote }}
+      {{- end }}
+      labels:
+        {{- include "smart-cache-search.projectorLabels" . | nindent 8 }}
+    spec:
+      {{- if .Values.imagePullSecrets }}
+      imagePullSecrets:
+        - name: {{ .Values.imagePullSecrets }}
+      {{- end }}
+      containers:
+      - name: search-projector
+        envFrom:
+        - configMapRef:
+            name: {{ include "smart-cache-search.fullname" . }}-projector
+        env:
+        {{- with .Values.projector.extraEnvs }}
+        {{- range . }}
+        - name: {{ .name }}
+          value: {{ .value | quote }}
+        {{- end }}
+        {{- end }}
+        envFrom:
+        {{- if .Values.projector.existingEnvironmentSecret }}
+        - secretRef:
+            name: {{ .Values.projector.existingEnvironmentSecret | quote }}
+            optional: true
+        {{- else }}
+        - secretRef:
+            name: {{ include "smart-cache-search.fullname" . }}-projector
+            optional: true
+        {{- end }}
+        {{- if .Values.projector.extraEnvs }}
+        {{- range $key, $value := .Values.projector.extraEnvs }}
+        {{- end }}
+        {{- end }}
+        image: {{ .Values.projector.image.repository }}:{{ .Values.projector.image.tag | default .Chart.AppVersion }}
+        imagePullPolicy: {{ .Values.projector.image.pullPolicy }}
+        livenessProbe:
+          httpGet:
+            path: /version-info
+            port: 10101
+            scheme: HTTP
+          initialDelaySeconds: 45
+          periodSeconds: 60
+          timeoutSeconds: 5
+        ports:
+        - containerPort: 9464
+          name: metrics
+          protocol: TCP
+        - containerPort: 10101
+          name: health-probes
+          protocol: TCP
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 10101
+            scheme: HTTP
+          initialDelaySeconds: 45
+          periodSeconds: 60
+          timeoutSeconds: 10
+        resources: {{- toYaml .Values.projector.resources | nindent 10 }}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+                - ALL
+          runAsGroup: 185
+          runAsNonRoot: true
+          runAsUser: 185
+          seccompProfile:
+              type: RuntimeDefault
+        volumeMounts:
+        - mountPath: /app/config/kafka-auth/
+          name: kafka-auth-config
+        {{- if .Values.cacertExistingSecret }}
+        - mountPath: /opt/jre-21/lib/security/cacerts
+          name: java-truststore
+          subPath: truststore.jks
+        {{- end }}
+      securityContext:
+        fsGroup: 185
+        runAsGroup: 185
+        runAsNonRoot: true
+        runAsUser: 185
+        seccompProfile:
+          type: RuntimeDefault
+      serviceAccountName: {{ include "smart-cache-search.serviceAccountName" . }}-projector
+      volumes:
+      - name: kafka-auth-config
+        secret:
+      {{- if .Values.global.existingKafkaConfigSecretName }}
+          secretName: {{ .Values.global.existingKafkaConfigSecretName }}
+      {{- else }}
+          secretName: {{ include "telicent-core.kafkaAuthConfigSecretName" . }}
+      {{- end }}
+      {{- if .Values.cacertExistingSecret }}
+      - name: java-truststore
+        secret:
+          secretName: {{ .Values.cacertExistingSecret }}
+      {{- end }}

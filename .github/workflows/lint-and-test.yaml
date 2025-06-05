@@ -18,7 +18,7 @@ jobs:
 
       - uses: actions/setup-python@v5.3.0
         with:
-          python-version: '3.x'
+          python-version: "3.x"
           check-latest: true
 
       - name: Set up chart-testing
@@ -34,10 +34,12 @@ jobs:
 
       - name: Run chart-testing (lint)
         if: steps.list-changed.outputs.changed == 'true'
-        run: ct lint --config .github/ct.yaml
-        
+        run: |
+          helm repo add --username robf-telicent --password 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 telicent-core-charts 'https://raw.githubusercontent.com/Telicent-io/telicent-core-charts/gh-pages'
+          ct lint --config .github/ct.yaml
+
       # Uncomment the following lines if you want to create a kind cluster and run chart-testing install
-      # TODO: need to sort the prerequisite charts first 
+      # TODO: need to sort the prerequisite charts first
 
       # - name: Create kind cluster
       #   if: steps.list-changed.outputs.changed == 'true'
@@ -46,3 +48,4 @@ jobs:
       # - name: Run chart-testing (install)
       #   if: steps.list-changed.outputs.changed == 'true'
       #   run: ct install --target-branch ${{ github.event.repository.default_branch }}
+
