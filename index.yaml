@@ -40,9 +40,9 @@ entries:
     version: 0.1.0
   demo-prereqs-gateways:
   - apiVersion: v2
-    created: "2025-06-05T14:27:06.581504121Z"
+    created: "2025-06-05T17:51:22.505292291Z"
     description: Create Istio gateways and authn configuration for Telicent CORE demo
-    digest: e7a9df105a94f62f2c0cd824b746d659c28d6c61f3d0a933c89061b66598a203
+    digest: 50b849015db74a6b79c195364ea5d58dfb16bcc58fc013c2401d02e068ac20f1
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -52,12 +52,26 @@ entries:
     urls:
     - demo-prereqs-gateways-0.1.0.tgz
     version: 0.1.0
+  demo-prereqs-kafka:
+  - apiVersion: v2
+    created: "2025-06-05T17:51:22.50554997Z"
+    description: Create a kafka cluster and associated configuration
+    digest: 4e21c4f859161d10a428905565fd2439667b711437e81773db10634026d1597b
+    icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
+    maintainers:
+    - name: telicent
+      url: https://github.com/Telicent-IO
+    name: demo-prereqs-kafka
+    type: application
+    urls:
+    - demo-prereqs-kafka-0.1.0.tgz
+    version: 0.1.0
   demo-prereqs-keycloak:
   - apiVersion: v2
     appVersion: 26.2.3
-    created: "2025-06-05T14:27:06.58182772Z"
+    created: "2025-06-05T17:51:22.505850319Z"
     description: Provisions a dev mode instance of keycloak
-    digest: 5d2388560f5d6a410c5821a259a5be8163c30b37de76887b9eb2bce2d9309d6b
+    digest: 3dc63da0354a555b8dcd578b328397c4dab99c28fdd4927866d02fea3f3e49bf
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -69,9 +83,9 @@ entries:
     version: 0.1.0
   demo-prereqs-mongodb:
   - apiVersion: v2
-    created: "2025-06-05T14:27:06.582077851Z"
+    created: "2025-06-05T17:51:22.506054919Z"
     description: Create a mongodb instance and associated configuration
-    digest: d5dcbad7d285bca3b55a017088a324de3f908724bf4f7c737a1fdeeaae1e0975
+    digest: adc68a8c49473184c2a6523485dd7f3a919aff95d7dc6b168f8897808aa3b601
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -84,9 +98,9 @@ entries:
   demo-prereqs-oauth2-proxy:
   - apiVersion: v2
     appVersion: v7.8.1
-    created: "2025-06-05T14:27:06.582383566Z"
+    created: "2025-06-05T17:51:22.507034128Z"
     description: A Helm chart for Kubernetes
-    digest: 83d2f9b4ffe7688de3d64fbff13823541c7f4caddca821a4b7181dc86056b0c9
+    digest: 5dee094f76907bf164c42256278e7bd6cabb9f913b1d2c9a20cf9c9c7b7fb6e4
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -98,9 +112,9 @@ entries:
     version: 0.2.0
   demo-prereqs-system-mesh:
   - apiVersion: v2
-    created: "2025-06-05T14:27:06.582626614Z"
+    created: "2025-06-05T17:51:22.507542013Z"
     description: A Helm chart for Kubernetes
-    digest: 7112f203dfbda4defee5b3181bd51d95425bdb5e34d735bccd9bf37d546dbe40
+    digest: c5afc2dac8b35c43bc899b389b959e5a37f092413195bbeb1555f51b761da24b
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -234,7 +248,7 @@ entries:
   telicent-core:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-06-05T14:27:06.589220275Z"
+    created: "2025-06-05T17:51:22.513511855Z"
     dependencies:
     - name: access-api
       repository: https://raw.githubusercontent.com/Telicent-io/telicent-core-charts/gh-pages
@@ -265,7 +279,7 @@ entries:
       repository: https://raw.githubusercontent.com/Telicent-io/telicent-core-charts/gh-pages/
       version: 0.1.1
     description: A Helm chart for Kubernetes
-    digest: 14ee239f3bc173c06e516c5d53efbea515bf5fe4a6be6dbfe017960c6e264e61
+    digest: 27012a74696d5abc8a719177f99c78b117d08effc51afcfc52ecd654302ef99c
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -275,4 +289,4 @@ entries:
     urls:
     - telicent-core-0.1.0.tgz
     version: 0.1.0
-generated: "2025-06-05T14:27:06.581106613Z"
+generated: "2025-06-05T17:51:22.504905592Z"
