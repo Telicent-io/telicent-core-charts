@@ -37,6 +37,18 @@
       "initial-version": "0.1.0",
       "bump-minor-pre-major": true
     },
+    "charts/demo-prereqs-kafka": {
+      "labels": [
+        "autorelease: pending"
+      ],
+      "bumpPatchForMinorPreMajor": true,
+      "release-type": "helm",
+      "include-component-in-tag": true,
+      "prerelease": false,
+      "manifest-file": ".github/release-please-manifest.json",
+      "initial-version": "0.1.0",
+      "bump-minor-pre-major": true
+    },
     "charts/demo-prereqs-keycloak": {
       "labels": [
         "autorelease: pending"
