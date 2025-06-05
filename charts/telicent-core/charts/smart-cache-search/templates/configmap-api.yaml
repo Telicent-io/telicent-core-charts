@@ -18,7 +18,7 @@ data:
     ES_CLUSTER_PORT: {{ .Values.api.configuration.elasticClusterPort | quote }}
     FIELD_OPTIONS: {{ .Values.api.configuration.searchFieldOptions | quote }}
     JAVA_OPTIONS: {{ .Values.api.configuration.javaOptions | quote }}
-    JWKS_URL: {{ .Values.api.configuration.jwksUrl | quote }}
+    JWKS_URL: {{ .Values.global.jwksUrl | quote }}
     OPENSEARCH_COMPATIBILITY: {{ .Values.api.configuration.opensearchCompatibility | quote }}
     OTEL_METRICS_EXPORTER: {{ .Values.api.configuration.otelMetricsExporter | quote }}
     OTEL_TRACES_EXPORTER: {{ .Values.api.configuration.otelTracesExporter | quote }}

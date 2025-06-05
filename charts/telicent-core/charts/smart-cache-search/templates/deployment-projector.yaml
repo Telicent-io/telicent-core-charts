@@ -107,8 +107,8 @@ spec:
       volumes:
       - name: kafka-auth-config
         secret:
-      {{- if .Values.globals.existingKafkaConfigSecret }}
-          secretName: {{ .Values.globals.existingKafkaConfigSecret.name }}
+      {{- if .Values.global.existingKafkaConfigSecretName }}
+          secretName: {{ .Values.global.existingKafkaConfigSecretName }}
       {{- else }}
           secretName: {{ include "telicent-core.kafkaAuthConfigSecretName" . }}
       {{- end }}

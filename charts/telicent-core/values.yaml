@@ -1,9 +1,55 @@
-enterprise: false
+enterprise: true
 global:
+  #TODO Docs on Secret structure for roll your own Kafka config
   # existingKafkaConfigSecretName: ""
-  kafkaConfig: |-
-    security.protocol=SASL_SSL
-    sasl.mechanism=SCRAM-SHA-512
-    sasl.jaas.config=org.apache.kafka.common.security.scram.ScramLoginModule required \
-        username="your.kafka.username.here" \
-        password="your.kafka.password.here";
+  kafkaConfigProtocol: "SASL_SSL"
+  kafkaConfigMechanism: "SCRAM-SHA-512"
+  kafkaConfigUsername: "your.kafka.username.here"
+  kafkaConfigPassword: "your.kafka.password.here"
+  appHostDomain: "apps.yourdomain.com"
+  jwksUrl: "https://yourdomain.com/.well-known/jwks.json"
+
+access-api:
+  image:
+    repository: "telicent/access-api"
+    tag: "latest"
+
+access-ui:
+  image:
+    repository: "telicent/access-ui"
+    tag: "latest"
+
+core-mesh:
+  image:
+    repository: "telicent/core-mesh"
+    tag: "latest"
+
+graph-ui:
+  image:
+    repository: "telicent/graph-ui"
+    tag: "latest"
+
+ies-ontology:
+  image:
+    repository: "telicent/ies-ontology"
+    tag: "latest"
+
+query-ui:
+  image:
+    repository: "telicent/query-ui"
+    tag: "latest"
+
+search-ui:
+  image:
+    repository: "telicent/search-ui"
+    tag: "latest"
+
+smart-cache-graph:
+  image:
+    repository: "telicent/smart-cache-graph"
+    tag: "latest"
+
+smart-cache-search:
+  image:
+    repository: "telicent/smart-cache-search"
+    tag: "latest"

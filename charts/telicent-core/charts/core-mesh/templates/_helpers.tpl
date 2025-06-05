@@ -109,8 +109,8 @@ app.kubernetes.io/name: {{ .Values.searchApi.name }}
 Jwks URI
 */}}
 {{- define "core-mesh.jwksUri" -}}
-{{- if .Values.jwksUri -}}
-{{- .Values.jwksUri -}}
+{{- if .Values.global.jwksUrl -}}
+{{- .Values.global.jwksUrl -}}
 {{- else -}}
 {{- printf "https://%s/realms/core/protocol/openid-connect/certs" .Values.authnHost -}}
 {{- end -}}

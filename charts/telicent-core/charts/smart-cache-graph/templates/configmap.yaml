@@ -12,7 +12,7 @@ data:
     ENABLE_BACKUPS: "false"
     ENABLE_LABELS_QUERY: "false"
     JAVA_OPTIONS: {{ .Values.configuration.javaOptions | quote }}
-    JWKS_URL: {{ .Values.configuration.jwksUrl | quote }}
+    JWKS_URL: {{ .Values.global.jwksUrl | quote }}
     KAFKA_CONFIG_FILE_PATH: /app/config/kafka-auth/kafka-config.properties
     OTEL_METRICS_EXPORTER: {{ .Values.configuration.otelMetricsExporter | quote }}
     OTEL_TRACES_EXPORTER: {{ .Values.configuration.otelTracesExporter | quote }}

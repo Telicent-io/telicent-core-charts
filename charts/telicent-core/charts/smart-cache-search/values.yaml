@@ -24,7 +24,7 @@ api:
     elasticClusterPort: "9200"
     searchFieldOptions: primaryName^2,*
     javaOptions: -XX:MaxRAMPercentage=70.0
-    jwksUrl: https://your.oidc.public.key.endpoint/keys
+    Url: https://your.oidc.public.key.endpoint/keys
     opensearchCompatibility: "true"
     otelMetricsExporter: prometheus
     otelTracesExporter: none

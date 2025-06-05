@@ -9,7 +9,7 @@ spec:
   gateways:
   - {{ .Values.appsGateway }}
   hosts:
-  - {{ .Values.appsHost }}
+  - {{ .Values.global.appHostDomain }}
   http:
   - match:
     - uri:
