@@ -1,4 +1,4 @@
-enterprise: true
+enterprise: false
 global:
   #TODO Docs on Secret structure for roll your own Kafka config
   # existingKafkaConfigSecretName: ""
