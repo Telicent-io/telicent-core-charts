@@ -11,9 +11,6 @@ dependencies:
 - name: graph-ui
   repository: https://raw.githubusercontent.com/Telicent-io/telicent-core-charts/gh-pages/
   version: 0.1.0
-- name: ies-ontology
-  repository: https://raw.githubusercontent.com/Telicent-io/telicent-core-charts/gh-pages/
-  version: 0.1.0
 - name: query-ui
   repository: https://raw.githubusercontent.com/Telicent-io/telicent-core-charts/gh-pages/
   version: 0.1.0
@@ -26,5 +23,5 @@ dependencies:
 - name: smart-cache-search
   repository: https://raw.githubusercontent.com/Telicent-io/telicent-core-charts/gh-pages/
   version: 0.1.1
-digest: sha256:51b7ea41d23f9ad827d77281e52b2441738a2202189f127a431629086fd18473
-generated: "2025-06-04T14:04:56.467885+01:00"
+digest: sha256:9db384d2b21898d51138359efb8f7ab1cd1d146179eac6fc9514dc93605f0c78
+generated: "2025-06-05T14:37:20.703646+01:00"
