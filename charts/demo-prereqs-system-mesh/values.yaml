@@ -19,12 +19,12 @@ nameOverride: ""
 
 oauth2proxy:
   external:
-    instance: external-oauth2-proxy
-    name: external-oauth2-proxy
+    instance: external
+    name: oauth2-proxy
     port: 4080
     serviceAccountName: external-oauth2-proxy
     serviceName: external-oauth2-proxy
   internal:
-    instance: internal-oauth2-proxy
-    name: internal-oauth2-proxy
+    instance: internal
+    name: oauth2-proxy
     serviceAccountName: internal-oauth2-proxy
