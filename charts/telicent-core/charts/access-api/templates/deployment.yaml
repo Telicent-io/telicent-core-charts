@@ -26,7 +26,7 @@ spec:
             name: {{ include "access-api.envConfigmapName" . }}
         - secretRef:
             name: {{ include "access-api.envSecretName" . }}
-        {{- if .Values.cacertExistingConfigmap }}
+        {{- if or .Values.existingCacertConfigmap .Values.cacert }}
         env:
         - name: NODE_EXTRA_CA_CERTS
           value: "/certs/ca.crt"
@@ -41,16 +41,16 @@ spec:
         resources: {{- toYaml .Values.resources | nindent 10 }}
         securityContext: {{- toYaml .Values.containerSecurityContext
           | nindent 10 }}
-        {{- if .Values.cacertExistingConfigmap }}
+        {{- if or .Values.existingCacertConfigmap .Values.cacert }}
         volumeMounts:
         - name: cert-volume
           mountPath: /certs
         {{- end }}
-      {{- if .Values.cacertExistingConfigmap }}
+      {{- if or .Values.existingCacertConfigmap .Values.cacert }}
       volumes:
       - name: cert-volume
         configMap:
-          name: {{ .Values.cacertExistingConfigmap }}
+          name: {{ include "access-api.cacertConfigmapName" . }}
       {{- end }}
       securityContext: {{- toYaml .Values.podSecurityContext | nindent 8 }}
       serviceAccountName: {{ include "access-api.serviceAccountName" . }}

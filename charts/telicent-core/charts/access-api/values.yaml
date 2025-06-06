@@ -1,10 +1,10 @@
 # Configmap containing extra certificates to be trusted
-cacertExistingConfigmap: ""
+cacert: ""
 
 # Configuration
 config:
   # The host the api is being served from
-  appsHost: change.to.host.of.instance
+  appsUrl: change.to.url.of.instance
   # Enable debug logging
   debug: false
   # MongoDB configuration
@@ -34,6 +34,8 @@ existingConfigmap: ""
 
 # Use existing secret for configuration (config.mongodbPassword will be ignored)
 existingSecret: ""
+
+existingCacertConfigmap: ""
 
 fullnameOverride: ""
 
