@@ -1,0 +1,110 @@
+{{- define "graph.secretConfigJs"  -}}
+// Config values
+
+{{- if .Values.configuration.map.searchUiMaptilerToken }}
+const MAP_TILER_TOKEN = {{ .Values.configuration.map.searchUiMaptilerToken | quote }};
+{{- end }}
+
+{{- if .Values.configuration.map.searchUiMapboxStyleSpecUrl }}
+const VECTOR_STYLE_URI = `{{ .Values.configuration.map.searchUiMapboxStyleSpecUrl }}`;
+{{- end }}
+
+{{- if .Values.configuration.map.searchUiArcgisToken }}
+// ArcGIS API token
+const ARC_GIS_API_TOKEN = `{{ .Values.configuration.map.searchUiArcgisToken }}`;
+// Utility values
+const VECTOR_STYLE_URI = `https://basemapstyles-api.arcgis.com/arcgis/rest/services/styles/v2/styles/arcgis/streets-night?token=${ARC_GIS_API_TOKEN}`;
+
+// These are src values for <image /> tag.
+// Can be regular image urls e.g. https://www.domain.com/satellite.png
+// Or base64 strings to avoid hosting requirements
+// How to encode images as base64 strings 
+// 1. Open image in https://www.photopea.com/
+// 2. Image -> reduce colors
+// 3. Select "Reduce noise", Select "Photo", Select min acceptable "colors", Press "OK"
+// 4. File -> Export as.. -> PNG
+// 5. Set width/height 64 pixels, Set quality to ~2%, Press "Save"
+// 6. Drag exported image in https://www.base64-image.de/
+// 7. Once uploaded, press "Copy image", and paste below
+const mapImgSrc = {}
+mapImgSrc.DEFAULT = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAAA2BAMAAACFPIIxAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAB5QTFRFJykmGl6uKnHDNIvgNEJcLDZCLk95G0+UgWGNv7/AmD1M/gAAA7lJREFUeJxVlUFzm0gQhdsKoD16wDFXAbF8DYysvZI1UD4SSSg6IglwjsZOFVcf5Kr9CZt/u6+nkdc7B4zMR/eb190D5RnRNtKJGlcYhsOMqCCiWIW4/vP7h04CeegPsq6rCoAVq68Afm8uzi8rHQqkuq4j+qTcGUew9vzM1QlesDfFowp9RABwrzxi4DueRnpekkQkmvo3RB1LiEoDuDpuyaScGeCCRRpgWUuEiP/SKnDnXZZV1UoAJ1A3zZhiyQBSNgXUdQcBPinvaZsSVWulvNKh7sia7Kaq+v6JgTVesDiErZW6c9LNiwGg5va5ZOBZhUVZsMxprDxsIlCBARzfN1pjdbdNHZZnw+ZoyaKbEsBkuOHnNnZttRyR7KMxKlYLKKxpzxKw2cC9RKKODTiK0TB203W5kcBGeyVt0y0DnvKkFHMUdj9KWLNmq3Vw64QqRAIsT9e0Gr6YCCFrps4WYE4HQ8DUv4Z5PW4CV8M6fD8JlOmZ6M++HSsjpcPa8j18fNTcN7fPvDVnpdynjwBegKYjB7kj2I2deeUZKADcQyFSHxIGuJ9epFvOwIIl6iu7nSbcqDDYVUFNdm6Ax1ihXsiv4SO2nzIQqEVeWl1dAdgHLhREbHcKA6EYAHaWv1pt2lGTHQJXqWTCZi+5RksBFgBqqqCIS+HNLgbo8BZw0ENFWgDpm2Us46gqQZVDJu7WyISFQOnJarJMABRyMlzeMxHG4xQt0wfLDBAqr1w0NdrgiK1EI+DO0x33rESA7d96JPSC9xnWVrbLxMzEuLrvGY+kMbQOf+3e/jih6YnryHPRm0aytAm/ILvITlnGGsqjDLH/bMJNTAjvqaTNLq/Yxy6WstwKgLMAvsJ1os3b2HtqYYD+DETrgD2lVgA4x51h3/pjCiT02FprBAJzEJHlX4975mbmUepS2/xHSe85/tV/AE0gIyZLAGmtqT/n0ZcZR/Nxh50BETecPTS/eV4v/wdMxhNw4LpIkroQwNjE1ZZ1btajSo+ViDQH0Le+aSr0+/oMWHF5iLsmpzHpvs9bamUXlqnyutp7X1ALJfv0eaAaAXYmhJ31OChtYk9MKdCADTvppSdJkgUmPeS6N1wKAaaBm72yhBOdInacMGTKu4TTjgGcwH0wzj38/caOh2JrVPifBbDi6zEDqj2RVuA208PMSfnEsuOrV3pfcJyEcIckSkINo+Kf2fvc85zhut28f494NfdaB80IhAwU1Sr+ALTyAcF3qss3RwZQ5JcPRP19vHFDHsF/AYsR46pD0q4VAAAAAElFTkSuQmCC';
+mapImgSrc.SATELLITE = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkAgMAAAANjH3HAAAAAXNSR0IB2cksfwAAAAlwSFlzAAAWJQAAFiUBSVIk8AAAAAlQTFRFYF5FeHFaTVA2A6+sBQAABGJJREFUeJxllr+L3EYUx98sFgS5cbHbX3ls8h9cYf0HFkSSNw4G3UEgHLi00y2Tq8zViUujKgjtOiwHe4WrTUrXZ9kYAq69l+BKObJGm/d9b0aru5tiJe1n5v2eN2OCmGaEMbo/p5TWK6J0Ozffzk1H+BvkTWMST/ifPnlxyCR4MDeYAWCSzYJGkSPpZmGIf0CCmJ9BPJM5y3i9MjT6eqVr1vKE3Nko2iw7wt/4vfeZzIMFm0WGhpfUG8NLKFRyfdz5MorY6IS2Hdn76LXQ9vzfhDZCwobCop2QWsLkpwtam5htHrzMw4KyWyRdr4odcdJYV/QHnGdpVFsa1+Ly64YlGdLwDEqsqXQd6yUhLtg8qrqq5WFvkEFZV7Y9KqjJb5CwqE8LfW0nSkYRfb67ALGsUEYt5MsdfmU7KtoRlsbzdcwqguWVJwgrxuXwVUnX1qR+RXJegITFLUJjdqIed/nwRPQTTcpbZLOAgs4dEDYa/swQ03YS9gghu4iVtZm10NURLTiWhaQKaY4LJeb+J0vWIorqpmqTOpCZiLy6mUFbK0RnWsksOTuYhEXmk61TmjxUaWNoYDH18yu12cXOFCFmg4xdADIaPN9jUnnVWXlUqDAa2H0hqJdByd44/c5ER6R41c2chv84Amn8Z9aRFNn1pIJisZnXdkSNpqyrml/XjvBs6M58nJvDLV5BiCuTiS8altERFe9JO4k/9MhODROUUWZ8fjVdMh4mS3bPDHbVIoaNlTS56cQ7Sfz57mLJpW+iVa9e2C5HMuId3JcngXAkmbskqzCpx4vaZgOQYON11VJw+GUiLeuD7QljwqkJhWzr6+SkBEnmvOne2l2IJiXCwSReMFkWPpZVOylRb9mYK5GlnRfOAKqavMixZmwGvz2OoefjHpNftD9KjZmq/S6ZjW37CGnlLsoj+b2kq6+YTFAGSmRFEL/S2tFCa450AxH0/v2jIwgOfFDCDWJ9TFqJEpFT7VDSUTaPQIrjpuLG1ZxaXjf9OaGOwEZ4CHdOX/wgvWarnU9boEisnj2NHLHWBBvpq0qmTxyZnljjDhnY14StEo4wr0mlT9z7TyLXPvlmiCcizH1HkBYDeyRmO6INtuoT5EuINwEEPVKtRuuttCNQvd8nfELMilwV4Q9IczFAb3Nmg6R0k0APR0kM0CwQH8Teauxr7053AvouIWqkMD1xnU1ME2G7U1M9vTrEMVd0BFcDV/QPEydMCWLnusG7C60CvybqE1WjBPcKt7uy1JFMCMdu/UZIk6ckdZg521LanOk3jQ7OtPKU8LYDkWYuFZt7wufumcQalwXXoW8Q7HS2konh7sKPIF7/KQTbRDonBVzXkuIZ6clInqRKKFrROKtspha0jw9G5Ihkyd0RuHejID2BPGcU7+Knke+wekUSMpja8NlbciR8af/ii5ccAcSbvk0dyTlk38fkbk+43nDON2aXMXdb238vwe8I58VdIFDKCHGfQFxw8Ck7mVom/wNsjINq1k8DowAAAABJRU5ErkJggg==';
+mapImgSrc.STREET = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkAgMAAAANjH3HAAAAAXNSR0IB2cksfwAAAAlwSFlzAAAWJQAAFiUBSVIk8AAAAAlQTFRF2NO23K6X0tPiB+vR7AAAA+VJREFUeJx1lkGL20YUx99orSA2XVamEZQ9BOHT4l5caE4ORKa7pyTUS2XjUzE5lX6A4O7BzKmYfoBScgghJ2NvGmdDoNQp1ibbUw/d07InI3pYSr3BalMWUW2kvhlJXs1YmYOR9eO9+b+n994MgYbzsQM5ixQI3B7lEvvACvJJw7GivXwyX4skm80T/FHI9geHVZGUTv2Y6I5EqPLQZd5qkTETVGsUfFq8NSJ1aRPFRHi8UxgvkdLpxpX2NzZ6sxzR5ApzZtzyCJGi0DbCNlXvPL/7Wial8I8QLYroTbbZ7YL97tCavJEJgFp/uVJZe6pIhFLj5luiY4QD2aawM/lEH//zsC0Tw5qTo+p+P2yJhNhw8boW/PQYREKuVeC3G/rsVR+QlBekODes4N/ixPoRQdaGfFgD3KKyvtdXGNnVUlLcYqDqMVeMnCy8NWD86Voh+PlR8r+5ysh2cICi3hZhuJqC8ITtQz7D/L1cqXnjMl0IbTKifg7vnJUazP66BNBk+9ge2unB6DszE3Rzk8BWETz9ItrvZ7MRthRiWOMbOgxLPSF/046GNUp0Z7YQFa9O6ALZWoOJN4AloJBiAUtU2Nz9AQGr+GC/S7M2042uyzO5PR6ctwdZ8GX8QGDAUn4JzFbyRDAjGcIslDAm+DLsrCZ5mf7XXVgzgunjzz7lokw3Q3iS/W9blNLUWUxaGqZgqnz/J/ggeps+6F2qFffRHpx+1IYcckxheWVJIkrwlmPCyf32e7yd3wvfY9PU/HxyrEEnl2g0k0WBmO1H4EovuXyi+YokoOx/dZ8Ry1WmInms8dBxIomhw6pJUyJtovA2Ze0sj1dex01Wb0OJ8ELOJcxbTJbm+OY9M5+Ybq903mZEmvAYd5lybTKJJXBvIEpQrn9tutdPKCPiIMe8UV4ZS6S32/e1PKL0Oz1KEyLITvolViCIi0kHPwzOgyxJup9HaliC7AFuAj4rfokwAQBddpwRtS6IK6cmOKS2BXED1+QjhHW9KBttpnFlEpDFNXs+TYmU07S38VQB+YPjqo/yCOsN+4ywY0I6UFnTNALChrj8hRiJOFm+BhhgEZBkJyaezokoQcU7Bt4nUqJ7KSB29MR2KlfZ9Gc5rf2eIvIFPKvD2TrhpxuuhT719q/sLz+DG+zFQh+pF57ueONLstCH3p7YF3OHEZSQIdCYH+h4OZKJWj2wh2odfTOC4nDFMRnVUWNI7LEnkcLdFdjDzrWOYhLLHvI8/r2+l/S0TH7ZSjOVJeqFDZNaQuIbCgsoOnMaMwO/StaGy0bV9ptreSTwCsWIRM9uTpbIizuHllM98ipJav8HsPGonvTJflwAAAAASUVORK5CYII=';
+
+// Examples of MAP_CONFIG values
+const mapConfigExamples = {};
+// MAP_CONFIG example with 3 sources (1 styled, and 2 tile sets)
+mapConfigExamples.VECTOR_AND_TILE_SETS = {
+    vectorStyles: {
+        label: 'default',
+        uri: VECTOR_STYLE_URI,
+        image: mapImgSrc.DEFAULT,
+    },
+    tileSets: [{
+        label: 'Satellite',
+        uri: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+        image: mapImgSrc.SATELLITE,
+    }, {
+        label: 'Street',
+        uri: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
+        image: mapImgSrc.STREET,
+    }, ],
+};
+// MAP_CONFIG example with 2 tile sets source
+mapConfigExamples.ONLY_TILE_SETS = {
+    tileSets: [{
+        label: 'Satellite',
+        uri: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+        image: mapImgSrc.SATELLITE,
+    }, {
+        label: 'Street',
+        uri: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
+        image: mapImgSrc.STREET,
+    }, ],
+};
+// MAP_CONFIG example with 1 style source
+mapConfigExamples.ONLY_VECTOR_STYLES = {
+    vectorStyles: {
+        label: 'default',
+        uri: VECTOR_STYLE_URI,
+        image: mapImgSrc.DEFAULT,
+    },
+};
+
+{{- end }}
+
+// Map configuration options
+// -------------------------
+
+
+{{- if .Values.configuration.map.searchUiArcgisToken }}
+// [BEST] 
+// IF set, can generate multiple layers from ANY map service that adheres to the map-box SPEC
+window.MAP_CONFIG = mapConfigExamples['VECTOR_AND_TILE_SETS']
+{{ else }}
+// [BEST] 
+// IF set, can generate multiple layers from ANY map service that adheres to the map-box SPEC
+//window.MAP_CONFIG = mapConfigExamples['VECTOR_AND_TILE_SETS']
+{{ end }}
+
+{{- if .Values.configuration.map.searchUiMapboxStyleSpecUrl }}
+// [LIMITED] 
+// ELSE IF set will default to single vector style from ANY map service
+window.MAP_BOX_SPEC_STYLE_OVERRIDE = VECTOR_STYLE_URI;
+{{ else }}
+// [LIMITED] 
+// ELSE IF set will default to single vector style from ANY map service
+// window.MAP_BOX_SPEC_STYLE_OVERRIDE = VECTOR_STYLE_URI;
+{{ end }}
+
+{% if search_ui_maptiler_token is defined %}
+{{- if .Values.configuration.map.search_ui_maptiler_token }}
+// [LIMITED]
+// ELSE will default to mapbox service's streets-v2-dark styled source
+window.MAP_TILER_TOKEN = MAP_TILER_TOKEN;
+{{ else}}
+// [LIMITED]
+// ELSE will default to mapbox service's streets-v2-dark styled source
+//window.MAP_TILER_TOKEN = MAP_TILER_TOKEN;
+{{ end }}
+{{- end  -}}
