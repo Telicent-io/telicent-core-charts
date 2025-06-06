@@ -69,8 +69,8 @@ Create the name of the service to use
 Create the name of the environment secrets
 */}}
 {{- define "access-api.envSecretName" -}}
-{{- if .Values.envSecretName }}
-{{- .Values.envSecretName }}
+{{- if .Values.existingSecret }}
+{{- .Values.existingSecret }}
 {{- else }}
 {{- printf "%s-%s" (include "access-api.fullname" .) "env" }}
 {{- end }}
@@ -84,5 +84,16 @@ Create the name of the config map
 {{- .Values.existingConfigmap }}
 {{- else }}
 {{- printf "%s-%s" (include "access-api.fullname" .) "env" }}
+{{- end }}
+{{- end }}
+
+{{/*
+Create the name of the config map
+*/}}
+{{- define "access-api.cacertConfigmapName" -}}
+{{- if .Values.existingCacertConfigmap -}}
+{{- .Values.existingCacertConfigmap }}
+{{- else }}
+{{- printf "%s-%s" (include "access-api.fullname" .) "cacert" }}
 {{- end }}
 {{- end }}
