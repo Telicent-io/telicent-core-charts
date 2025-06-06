@@ -8,7 +8,7 @@ metadata:
     {{- include "access-api.labels" . | nindent 4 }}
 data:
   DEBUG: {{ .Values.config.debug | quote }}
-  DEPLOYED_DOMAIN: {{ .Values.config.appsHost | quote }}
+  DEPLOYED_DOMAIN: {{ .Values.config.appsUrl | quote }}
   MONGO_COLLECTION: {{ .Values.config.mongoCollection | quote }}
   MONGO_URL: {{ .Values.config.mongodbUrl | quote }}
   MONGO_USER: {{ .Values.config.mongodbUser | quote }}
