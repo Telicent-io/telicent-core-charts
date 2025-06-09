@@ -43,67 +43,123 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 
 {{/*
-Service principals
+Service names
 */}}
-{{- define "core-mesh.accessApiPrincipal" -}}
-{{- printf "cluster.local/ns/%s/sa/%s" .Release.Namespace .Values.accessApi.serviceAccountName }}
+
+{{- define "core-mesh.accessApiServiceName" -}}
+{{- .Values.accessApi.serviceName | default (printf "%s-%s" .Release.Name "access-api") | quote }}
+{{- end -}}
+
+{{- define "core-mesh.accessUiServiceName" -}}
+{{- .Values.accessUi.serviceName | default (printf "%s-%s" .Release.Name "access-ui") | quote }}
+{{- end -}}
+
+{{- define "core-mesh.queryUiServiceName" -}}
+{{- .Values.queryUi.serviceName | default (printf "%s-%s" .Release.Name "query-ui") | quote }}
+{{- end -}}
+
+{{- define "core-mesh.searchUiServiceName" -}}
+{{- .Values.searchUi.serviceName | default (printf "%s-%s" .Release.Name "search-ui") | quote }}
+{{- end -}}
+
+{{- define "core-mesh.graphUiServiceName" -}}
+{{- .Values.graphUi.serviceName | default (printf "%s-%s" .Release.Name "graph-ui") | quote }}
+{{- end -}}
+
+{{- define "core-mesh.graphServerServiceName" -}}
+{{- .Values.graphServer.serviceName | default (printf "%s-%s" $.Release.Name "smart-cache-graph") | quote }}
 {{- end }}
 
+{{- define "core-mesh.searchApiServiceName" -}}
+{{- .Values.searchApi.serviceName | default (printf "%s-%s" $.Release.Name "smart-cache-search-api") | quote }}
+{{- end }}
+
+{{/*
+Service principals
+*/}}
 {{- define "core-mesh.ingressPrincipal" -}}
-{{- printf "cluster.local/ns/%s/sa/%s" .Values.ingress.namespace .Values.ingress.serviceAccountName }}
+{{- .Values.ingress.principal | default (printf "cluster.local/ns/%s/sa/%s" .Values.ingress.namespace "istio-ingress") | quote }}
 {{- end }}
 
 {{- define "core-mesh.graphServerPrincipal" -}}
-{{- printf "cluster.local/ns/%s/sa/%s" .Release.Namespace .Values.graphServer.serviceAccountName }}
+{{- .Values.graphServer.principal | default (printf "cluster.local/ns/%s/sa/%s-%s" .Release.Namespace .Release.Name "smart-cache-graph") quote }}
 {{- end }}
 
 {{- define "core-mesh.searchApiPrincipal" -}}
-{{- printf "cluster.local/ns/%s/sa/%s" .Release.Namespace .Values.searchApi.serviceAccountName }}
+{{- .Values.searchApi.principal | default (printf "cluster.local/ns/%s/sa/%s-%s" .Release.Namespace .Release.Name "smart-cache-search") | quote }}
 {{- end }}
 
 {{/*
 Selectors
 */}}
 {{- define "core-mesh.accessApiSelectors" -}}
-app.kubernetes.io/instance: {{ .Values.accessApi.instance }}
-app.kubernetes.io/name: {{ .Values.accessApi.name }}
-{{- end }}
+{{- if .Values.accessApi.selectors -}}
+{{ .Values.accessApi.selectors | toYaml }}
+{{- else -}}
+app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/name: access-api
+{{- end -}}
+{{- end -}}
 
 {{- define "core-mesh.accessUiSelectors" -}}
-app.kubernetes.io/instance: {{ .Values.accessUi.instance }}
-app.kubernetes.io/name: {{ .Values.accessUi.name }}
-{{- end }}
+{{- if .Values.accessUi.selectors -}}
+{{ .Values.accessUi.selectors | toYaml }}
+{{- else -}}
+app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/name: access-ui
+{{- end -}}
+{{- end -}}
 
 {{- define "core-mesh.graphServerSelectors" -}}
-app.kubernetes.io/instance: {{ .Values.graphServer.instance }}
-app.kubernetes.io/name: {{ .Values.graphServer.name }}
-{{- end }}
+{{- if .Values.graphServer.selectors -}}
+{{ .Values.graphServer.selectors | toYaml }}
+{{- else -}}
+app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/name: smart-cache-graph
+{{- end -}}
+{{- end -}}
 
-{{- define "core-mesh.querySelectors" -}}
-app.kubernetes.io/instance: {{ .Values.query.instance }}
-app.kubernetes.io/name: {{ .Values.query.name }}
-{{- end }}
+{{- define "core-mesh.queryUiSelectors" -}}
+{{- if .Values.queryUi.selectors -}}
+{{ .Values.queryUi.selectors | toYaml }}
+{{- else -}}
+app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/name: query-ui
+{{- end -}}
+{{- end -}}
 
 {{- define "core-mesh.searchUiSelectors" -}}
-{{- if .Values.closedSourceDeployment }}
-app.kubernetes.io/instance: {{ .Values.searchUi.instance }}
-app.kubernetes.io/name: {{ .Values.searchUi.name }}
-{{- end }}
-{{- end }}
+{{- if .Values.enterprise }}
+{{- if .Values.searchUi.selectors -}}
+{{ .Values.searchUi.selectors | toYaml }}
+{{- else -}}
+app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/name: search-ui
+{{- end -}}
+{{- end -}}
+{{- end -}}
 
 {{- define "core-mesh.graphUiSelectors" -}}
-{{- if .Values.closedSourceDeployment }}
-app.kubernetes.io/instance: {{ .Values.graphUi.instance }}
-app.kubernetes.io/name: {{ .Values.graphUi.name }}
-{{- end }}
-{{- end }}
+{{- if .Values.enterprise }}
+{{- if .Values.graphUi.selectors -}}
+{{ .Values.graphUi.selectors | toYaml }}
+{{- else -}}
+app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/name: graph-ui
+{{- end -}}
+{{- end -}}
+{{- end -}}
 
 {{- define "core-mesh.searchApiSelectors" -}}
-{{- if .Values.closedSourceDeployment }}
-app.kubernetes.io/instance: {{ .Values.searchApi.instance }}
-app.kubernetes.io/name: {{ .Values.searchApi.name }}
-{{- end }}
-{{- end }}
+{{- if .Values.enterprise }}
+{{- if .Values.searchApi.selectors -}}
+{{ .Values.searchApi.selectors | toYaml }}
+{{- else -}}
+app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/name: search-api
+{{- end -}}
+{{- end -}}
+{{- end -}}
 
 {{/*
 Jwks URI

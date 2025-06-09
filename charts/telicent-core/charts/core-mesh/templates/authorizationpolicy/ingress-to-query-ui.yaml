@@ -17,4 +17,4 @@ spec:
               - GET
   selector:
     matchLabels:
-    {{- include "core-mesh.querySelectors" . | nindent 6 }}
+    {{- include "core-mesh.queryUiSelectors" . | nindent 6 }}

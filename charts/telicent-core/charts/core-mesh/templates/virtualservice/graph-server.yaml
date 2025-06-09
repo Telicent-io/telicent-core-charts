@@ -17,7 +17,7 @@ spec:
       uri: /knowledge/sparql
     route:
     - destination:
-        host: {{ .Values.graphServer.serviceName }}
+        host: {{ include "core-mesh.graphServerServiceName" . }}
         port:
           number: {{ .Values.graphServer.port }}
   - match:
@@ -27,7 +27,7 @@ spec:
       uri: /knowledge/query
     route:
     - destination:
-        host: {{ .Values.graphServer.serviceName }}
+        host: {{ include "core-mesh.graphServerServiceName" . }}
         port:
           number: {{ .Values.graphServer.port }}
   - match:
@@ -37,7 +37,7 @@ spec:
       uri: /knowledge/graphql
     route:
     - destination:
-        host: {{ .Values.graphServer.serviceName }}
+        host: {{ include "core-mesh.graphServerServiceName" . }}
         port:
           number: {{ .Values.graphServer.port }}
   - match:
@@ -47,7 +47,7 @@ spec:
       uri: /ontology/sparql
     route:
     - destination:
-        host: {{ .Values.graphServer.serviceName }}
+        host: {{ include "core-mesh.graphServerServiceName" . }}
         port:
           number: {{ .Values.graphServer.port }}
   - match:
@@ -57,7 +57,7 @@ spec:
       uri: /ontology/query
     route:
     - destination:
-        host: {{ .Values.graphServer.serviceName }}
+        host: {{ include "core-mesh.graphServerServiceName" . }}
         port:
           number: {{ .Values.graphServer.port }}
   - match:
@@ -67,7 +67,7 @@ spec:
       uri: /catalog/sparql
     route:
     - destination:
-        host: {{ .Values.graphServer.serviceName }}
+        host: {{ include "core-mesh.graphServerServiceName" . }}
         port:
           number: {{ .Values.graphServer.port }}
   - match:
@@ -77,6 +77,6 @@ spec:
       uri: /catalog/query
     route:
     - destination:
-        host: {{ .Values.graphServer.serviceName }}
+        host: {{ include "core-mesh.graphServerServiceName" . }}
         port:
           number: {{ .Values.graphServer.port }}

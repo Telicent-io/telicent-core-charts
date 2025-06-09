@@ -1,4 +1,4 @@
-{{- if .Values.closedSourceDeployment }}
+{{- if .Values.enterprise }}
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
@@ -21,7 +21,7 @@ spec:
         prefix: /search/
     route:
     - destination:
-          host: {{ .Values.searchUi.serviceName }}
+          host: {{ include "core-mesh.searchUiServiceName" . }}
           port:
             number: {{ .Values.searchUi.port }}
 {{- end }}
