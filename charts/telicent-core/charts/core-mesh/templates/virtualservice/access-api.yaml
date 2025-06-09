@@ -19,6 +19,6 @@ spec:
         rewrite: /\2
     route:
     - destination:
-        host: {{ .Values.accessApi.serviceName }}
+        host: {{ include "core-mesh.accessApiServiceName" . }}
         port:
           number: {{ .Values.accessApi.port }}

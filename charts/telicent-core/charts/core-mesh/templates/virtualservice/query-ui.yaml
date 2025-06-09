@@ -20,6 +20,6 @@ spec:
         prefix: /query/
     route:
     - destination:
-        host: {{ .Values.query.serviceName }}
+        host: {{ include "core-mesh.queryUiServiceName" . }}
         port:
-          number: {{ .Values.query.port }}
+          number: {{ .Values.queryUi.port }}

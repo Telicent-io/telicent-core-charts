@@ -20,6 +20,6 @@ spec:
         prefix: /access/
     route:
     - destination:
-        host: {{ .Values.accessUi.serviceName }}
+        host: {{ include "core-mesh.accessUiServiceName" . }}
         port:
           number: {{ .Values.accessUi.port }}

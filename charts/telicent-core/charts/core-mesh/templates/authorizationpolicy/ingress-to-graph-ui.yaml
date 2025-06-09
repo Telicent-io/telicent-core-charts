@@ -1,4 +1,4 @@
-{{- if .Values.closedSourceDeployment }}
+{{- if .Values.enterprise }}
 apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
 metadata:
