@@ -18,10 +18,10 @@ dependencies:
   repository: https://raw.githubusercontent.com/Telicent-io/telicent-core-charts/gh-pages/
   version: 0.1.0
 - name: smart-cache-graph
-  repository: file://charts/smart-cache-graph/
+  repository: https://raw.githubusercontent.com/Telicent-io/telicent-core-charts/gh-pages/
   version: 0.1.0
 - name: smart-cache-search
   repository: https://raw.githubusercontent.com/Telicent-io/telicent-core-charts/gh-pages/
   version: 0.1.1
-digest: sha256:ff2970b4ee7aa53888a24d1ec7ecb1143bcd7c8a67ce16aa5fb2d61b619c6212
-generated: "2025-06-09T11:55:50.861045+01:00"
+digest: sha256:55ecb4533d7b5f05ead99cbb6b601fcf05f1bcccc455e5a87230e395f16c3765
+generated: "2025-06-10T10:58:04.950123+01:00"
