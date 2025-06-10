@@ -1,3 +1,4 @@
+{{- if not .Values.existingGraphConfigMapName }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -9,3 +10,4 @@ metadata:
         app.kubernetes.io/managed-by: {{ .Release.Service }}
 data:
     config.ttl: {{- (include "smart-cache-graph.graphConfig" . ) | toYaml | indent 6 }}
+{{- end }}

@@ -76,7 +76,11 @@ spec:
       serviceAccountName: {{ include "graph.serviceAccountName" . }}
       volumes:
       - configMap:
+          {{- if .Values.existingGraphUIConfigName }}
+          name: {{ .Values.existingGraphUIConfigName }}
+          {{- else }}
           name: {{ include "graph.configMapName" . }}
+          {{- end }}
         name: app-config-volume
       {{- if .Values.existingMapConfigSecret }}
       - secret:
