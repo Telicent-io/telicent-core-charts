@@ -8,3 +8,4 @@ global:
   kafkaConfigPassword: "your.kafka.password.here"
   appHostDomain: "apps.yourdomain.com"
   jwksUrl: "https://yourdomain.com/.well-known/jwks.json"
+  kafkaBootstrapUrls: "kafka-kafka-bootstrap.kafka-dev.svc.cluster.local:9092"

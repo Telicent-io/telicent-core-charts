@@ -33,7 +33,7 @@ spec:
             name: {{ include "smart-cache-graph.envSecretName" . }}
             optional: true
         - configMapRef:
-            name: {{ include "smart-cache-graph.name" . }}
+            name: {{ include "smart-cache-graph.fullname" . }}
             optional: true
         image: {{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
@@ -95,10 +95,10 @@ spec:
         name: graph-config-volume
       - name: kafka-auth-config
         secret:
-        {{- if .Values.existingKafkaConfigSecret }}
-          secretName: {{ .Values.existingKafkaConfigSecret.name }}
+        {{- if .Values.global.existingKafkaConfigSecretName }}
+          secretName: {{ .Values.global.existingKafkaConfigSecretName }}
         {{- else }}
-          secretName: {{ include "smart-cache-graph.fullname" . }}-kafka-auth-config
+          secretName: {{ include "telicent-core.kafkaAuthConfigSecretName" . }}
         {{- end }}
 
   volumeClaimTemplates:

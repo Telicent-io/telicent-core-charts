@@ -47,7 +47,6 @@ dependencies:
   - name: smart-cache-graph
     version: 0.1.0
     repository: https://raw.githubusercontent.com/Telicent-io/telicent-core-charts/gh-pages/
-    condition: enterprise
   - name: smart-cache-search
     version: 0.1.1
     repository: https://raw.githubusercontent.com/Telicent-io/telicent-core-charts/gh-pages/
