@@ -32,7 +32,7 @@ spec:
       serviceAccountName: {{ include "query.serviceAccountName" . }}
       containers:
       - name: query-ui
-        image: {{ .Values.image.repository }}:{{ include "query.version" . }}"
+        image: {{ .Values.image.repository }}:{{ include "query.version" . }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         ports:
         - containerPort: 8080
@@ -63,9 +63,9 @@ spec:
           capabilities:
             drop:
             - ALL
-          runAsGroup: 10101
+          runAsGroup: 185
           runAsNonRoot: true
-          runAsUser: 10101
+          runAsUser: 185
           seccompProfile:
             type: RuntimeDefault
 
@@ -75,10 +75,10 @@ spec:
           subPath: env-config.js
 
       securityContext:
-        fsGroup: 10101
-        runAsGroup: 10101
+        fsGroup: 185
+        runAsGroup: 185
         runAsNonRoot: true
-        runAsUser: 10101
+        runAsUser: 185
         seccompProfile:
           type: RuntimeDefault
 
