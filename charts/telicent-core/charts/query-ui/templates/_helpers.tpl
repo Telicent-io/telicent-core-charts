@@ -48,7 +48,6 @@ Selector labels
 */}}
 {{- define "query.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "query.name" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
