@@ -11,11 +11,11 @@
 {{- end  -}}
 
 {{- define "telicent-core.kafka-config-toml" -}}
-      bootstrap.servers={{ .Values.global.kafkaBootstrapUrls }}
-      security.protocol={{ .Values.global.kafkaConfigProtocol }}
-      sasl.mechanism={{ .Values.global.kafkaConfigMechanism }}
-      sasl.username={{ .Values.global.kafkaConfigUsername | quote }}
-      sasl.password={{ .Values.global.kafkaConfigPassword | quote }}
+bootstrap.servers={{ .Values.global.kafkaBootstrapUrls }}
+security.protocol={{ .Values.global.kafkaConfigProtocol }}
+sasl.mechanism={{ .Values.global.kafkaConfigMechanism }}
+sasl.username={{ .Values.global.kafkaConfigUsername | replace "\"" "" }}
+sasl.password={{ .Values.global.kafkaConfigPassword | replace "\"" "" }}
 {{- end  -}}
 
 {{- define "telicent-core.application-properties" -}}

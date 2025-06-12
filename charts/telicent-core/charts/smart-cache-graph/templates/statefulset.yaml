@@ -24,6 +24,10 @@ spec:
       labels:
         {{- include "smart-cache-graph.labels" . | nindent 8 }}
     spec:
+      {{- if .Values.imagePullSecretName }}
+      imagePullSecrets:
+      - name: {{ .Values.imagePullSecretName }}
+      {{- end }}
       containers:
       - args:
           - --config
@@ -94,7 +98,7 @@ spec:
           {{- if .Values.existingGraphConfigMapName }}
             name: {{ .Values.existingGraphConfigMapName }}
           {{- else }}
-            name: {{ include "smart-cache-graph.configMapName" . }}
+            name: {{ include "smart-cache-graph.serverConfig" . }}
           {{- end }}
         name: graph-config-volume
       - name: kafka-auth-config
