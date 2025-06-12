@@ -4,7 +4,7 @@ description: Telicent Query UI is a basic free to use app that provides a UI
   interface to run SparQL and GraphQL (via GraphiQL) queries.
 type: application
 version: 0.1.0
-appVersion: "1.1.7"
+appVersion: "1.2.0"
 
 icon: "https://avatars.githubusercontent.com/u/65304240?s=200&v=4"
 
