@@ -48,7 +48,6 @@ Selector labels
 */}}
 {{- define "query.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "query.name" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
@@ -64,6 +63,14 @@ Create the name of the service to use
 {{- define "query.serviceName" -}}
 {{- include "query.fullname" . }}
 {{- end }}
+
+{{/*
+Returns the version
+*/}}
+{{- define "query.version" -}}
+{{ .Values.image.tag | default .Chart.AppVersion }}
+{{- end -}}
+
 
 {{/*
 Create the name of the config map

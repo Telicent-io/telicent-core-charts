@@ -1,10 +1,11 @@
 apiVersion: v1
 kind: Service
+
 metadata:
   name: {{ include "query.serviceName" . }}
   labels:
     {{- include "query.labels" . | nindent 4 }}
-    {{- include "query.selectorLabels" . | nindent 4 }}
+
 spec:
   type: {{ .Values.service.type }}
   selector:
