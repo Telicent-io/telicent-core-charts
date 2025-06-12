@@ -1,2 +1,17 @@
 .event.json
 .cr-release-packages/
+
+# intellij
+.idea/*
+*.iml
+*.iws
+
+# vscode
+.vscode/
+
+# macos
+.DS_Store
+
+#dev area
+_dev/
+telicent.yaml
