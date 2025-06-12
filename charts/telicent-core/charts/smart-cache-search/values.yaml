@@ -1,6 +1,6 @@
 fullnameOverride: ""
 nameOverride: ""
-imagePullSecrets:
+imagePullSecrets: ""
 
 api:
   annotations: {}
@@ -61,7 +61,6 @@ projector:
   # existingEnvironmentSecret:
   #   name: environment
   configuration:
-    bootstrapServers: your.kafka.bootstrap.servers:9092
     topic: knowledge
     dlqTopic: knowledge.dlq
     elasticHost: https://your.opensearch.host.here:443

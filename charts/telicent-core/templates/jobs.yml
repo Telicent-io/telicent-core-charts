@@ -1,0 +1,89 @@
+{{- range $jobname, $jobvalues := .Values.jobs }}
+{{- if not $jobvalues.enabled }}
+{{- continue }}
+{{- end }}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ $jobname }}
+  labels:
+    app.kubernetes.io/name: {{ $jobname }}
+    telicent.io/resource: "true"
+    telicent.io/run-once: "true"
+spec:
+  ttlSecondsAfterFinished: 20
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "false"
+        {{- range $key, $value := $.Values.annotations }}
+          {{ $key }}: {{ $value | quote }}
+        {{- end }}
+        helm.sh/hook: post-install
+        helm.sh/hook-weight: "1"
+        helm.sh/hook-delete-policy: hook-succeeded
+      labels:
+        app.kubernetes.io/name: {{ $jobname }}
+        telicent.io/resource: "true"
+        telicent.io/run-once: "true"
+    spec:
+      {{- if $.Values.global.imagePullSecrets }}
+      imagePullSecrets:
+      - name: {{ $.Values.global.imagePullSecrets }}
+      {{- end }}
+      containers:
+      - image: {{ $jobvalues.image.repository }}:{{ $jobvalues.image.tag }}
+        imagePullPolicy: {{ $jobvalues.image.pullPolicy }}
+        name: {{ $jobname }}
+        env: 
+        - name: BOOTSTRAP_SERVERS
+          value: {{ $.Values.global.kafkaBootstrapUrls | quote }}
+        {{- toYaml $jobvalues.config | nindent 8 }}
+        {{- if $.Values.resources }}
+        resources: 
+        {{- toYaml $jobvalues.resources | nindent 10 }}
+        {{- end }}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          runAsGroup: 185
+          runAsNonRoot: true
+          runAsUser: 185
+          seccompProfile:
+            type: RuntimeDefault
+        volumeMounts:
+        - mountPath: /app/config/kafka-auth
+          name: kafka-auth-config
+      restartPolicy: Never
+      securityContext:
+        fsGroup: 185
+        runAsGroup: 185
+        runAsNonRoot: true
+        runAsUser: 185
+        seccompProfile:
+          type: RuntimeDefault
+      serviceAccountName: {{ $jobvalues.serviceAccountName }}
+      volumes:
+      - name: kafka-auth-config
+        secret:
+      {{- if $.Values.global.existingKafkaConfigSecretName }}
+          secretName: {{ $.Values.global.existingKafkaConfigSecretName }}
+      {{- else }}
+          secretName: {{ include "telicent-core.kafkaAuthConfigSecretName" $ }}
+      {{- end }}
+      {{- with $.Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with $.Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with $.Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}

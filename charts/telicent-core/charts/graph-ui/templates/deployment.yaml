@@ -24,6 +24,10 @@ spec:
       labels:
         {{- include "graph.labels" . | nindent 8 }}
     spec:
+      {{- if .Values.imagePullSecrets }}
+      imagePullSecrets:
+        - name: {{ .Values.imagePullSecrets }}
+      {{- end }}
       containers:
       - image: {{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
@@ -76,9 +80,17 @@ spec:
       serviceAccountName: {{ include "graph.serviceAccountName" . }}
       volumes:
       - configMap:
+          {{- if .Values.existingGraphUIConfigName }}
+          name: {{ .Values.existingGraphUIConfigName }}
+          {{- else }}
           name: {{ include "graph.configMapName" . }}
+          {{- end }}
         name: app-config-volume
       {{- if .Values.existingMapConfigSecret }}
+      - secret:
+          secretName: .Values.existingMapConfigSecret.name
+        name: secret-config-js-volume
+      {{- else }}
       - secret:
           secretName: {{ include "graph.fullname" . }}-secret-config-js
         name: secret-config-js-volume

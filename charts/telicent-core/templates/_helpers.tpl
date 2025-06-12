@@ -52,5 +52,5 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{- define "telicent-core.kafkaAuthConfigSecretName" -}}
-{{ include "telicent-core.fullname" . }}-kafka-auth-config
+{{ .Release.Name }}-kafka-auth-config
 {{- end }}

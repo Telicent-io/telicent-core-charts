@@ -28,9 +28,6 @@ spec:
       {{- end }}
       containers:
       - name: search-api
-        envFrom:
-        - configMapRef:
-            name: {{ include "smart-cache-search.fullname" . }}-api
         env:
         {{- with .Values.projector.extraEnvs }}
         {{- range . }}
@@ -48,7 +45,8 @@ spec:
             name: {{ include "smart-cache-search.fullname" . }}-api
             optional: true
         {{- end }}
-        
+        - configMapRef:
+            name: {{ include "smart-cache-search.fullname" . }}-api
         {{- if .Values.api.extraEnvs }}
         {{- range $key, $value := .Values.api.extraEnvs }}
           - name: {{ $key }}

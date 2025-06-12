@@ -11,7 +11,7 @@ data:
     # Environment variables for the projector container
     # These values are used to configure the search projector service
     # Ensure that these values are set correctly in your values.yaml file
-    BOOTSTRAP_SERVERS: {{ .Values.projector.configuration.bootstrapServers | quote }}
+    BOOTSTRAP_SERVERS: {{ .Values.global.kafkaBootstrapUrls | quote }}
     DLQ_TOPIC: {{ .Values.projector.configuration.dlqTopic | quote }}
     ELASTIC_HOST: {{ .Values.projector.configuration.elasticHost | quote }}
     ELASTIC_INDEX: {{ .Values.projector.configuration.elasticIndex | quote }}

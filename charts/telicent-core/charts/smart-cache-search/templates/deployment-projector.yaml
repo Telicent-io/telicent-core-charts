@@ -28,9 +28,6 @@ spec:
       {{- end }}
       containers:
       - name: search-projector
-        envFrom:
-        - configMapRef:
-            name: {{ include "smart-cache-search.fullname" . }}-projector
         env:
         {{- with .Values.projector.extraEnvs }}
         {{- range . }}
@@ -48,6 +45,8 @@ spec:
             name: {{ include "smart-cache-search.fullname" . }}-projector
             optional: true
         {{- end }}
+        - configMapRef:
+            name: {{ include "smart-cache-search.fullname" . }}-projector
         {{- if .Values.projector.extraEnvs }}
         {{- range $key, $value := .Values.projector.extraEnvs }}
         {{- end }}
@@ -91,7 +90,7 @@ spec:
         volumeMounts:
         - mountPath: /app/config/kafka-auth/
           name: kafka-auth-config
-        {{- if .Values.cacertExistingSecret }}
+        {{- if .Values.existingCacertSecret }}
         - mountPath: /opt/jre-21/lib/security/cacerts
           name: java-truststore
           subPath: truststore.jks
@@ -112,8 +111,8 @@ spec:
       {{- else }}
           secretName: {{ include "telicent-core.kafkaAuthConfigSecretName" . }}
       {{- end }}
-      {{- if .Values.cacertExistingSecret }}
+      {{- if .Values.existingCacertSecret  }}
       - name: java-truststore
         secret:
-          secretName: {{ .Values.cacertExistingSecret }}
+          secretName: {{ .Values.existingCacertSecret.name }}
       {{- end }}
