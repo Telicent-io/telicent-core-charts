@@ -66,6 +66,14 @@ Create the name of the service to use
 {{- end }}
 
 {{/*
+Returns the version
+*/}}
+{{- define "query.version" -}}
+{{ .Values.image.tag | default .Chart.AppVersion }}
+{{- end -}}
+
+
+{{/*
 Create the name of the config map
 */}}
 {{- define "query.configMapName" -}}
