@@ -67,11 +67,9 @@ spec:
         - mountPath: /usr/local/nginx/html/env-config.js
           name: app-config-volume
           subPath: env-config.js
-        {{- if .Values.existingMapConfigSecret }}
         - name: secret-config-js-volume
           mountPath: /usr/local/nginx/html/secret-config.js
           subPath: secret-config.js
-        {{- end }}
       securityContext:
         fsGroup: 185
         runAsGroup: 185
@@ -84,11 +82,13 @@ spec:
       - configMap:
           name: {{ include "search.configMapName" . }}
         name: app-config-volume
-      {{- if .Values.existingMapConfigSecret }}
       - secret:
+      {{- if .Values.existingMapConfigSecretName }}
+          secretName: {{ .Values.existingMapConfigSecretName }}
+      {{- else }}
           secretName: {{ include "search.fullname" . }}-secret-config-js
-        name: secret-config-js-volume
       {{- end }}
+        name: secret-config-js-volume
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

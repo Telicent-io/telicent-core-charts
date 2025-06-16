@@ -83,3 +83,9 @@ Create Kafka Auth Config name to use
 {{ include "smart-cache-graph.fullname" . }}-kafka-auth-config
 {{- end }}
 
+{{/*
+Create Truststore Secret name to use
+*/}}
+{{- define "smart-cache-graph.truststoreSecretName" -}}
+{{ include "smart-cache-graph.fullname" . }}-truststore
+{{- end }}

@@ -1,5 +1,5 @@
-enterprise: false
 global:
+  enterprise: false
   # TODO Docs on Secret structure for roll your own Kafka config
   # existingKafkaConfigSecretName: ""
   kafkaConfigProtocol: "SASL_SSL"

@@ -24,7 +24,8 @@ data:
 
     // APIs
     window.ACCESS_URL = "{{ .Values.configuration.accessApiEndpoint }}";
-    window.GRAPHQL_API_URL = "https://{{ .Values.global.appHostDomain }}/api/graphql/knowledge";
+    window.GRAPHQL_URL = "https://{{ .Values.global.appHostDomain }}/api/graphql/knowledge";
+    window.SPARQL_URL = 'https://{{ .Values.global.appHostDomain }}/api/sparql/knowledge/sparql';
     window.ONTOLOGY_SERVICE_URL = "https://{{ .Values.global.appHostDomain }}/api/sparql";
     window.SEARCH_API_URL = "https://{{ .Values.global.appHostDomain }}/api/search";
     // window.USER_PREF_API_URL = "https://{{ .Values.global.appHostDomain }}/api/user-preferences";
@@ -41,12 +42,6 @@ data:
     // Extra APIs - deprecated?
     window.IMAGE_API_URL;
     window.ENTITY_EXTRACTION_API_URL;
-
-
-    window.TEXT_AI_API_URL = "https://{{ .Values.global.appHostDomain }}/api/barry";
-    window.featureFlags = {
-        FF_AI_TRANSLATE: false,
-    };
 
     // `appList` configures the menu that allows users to switch between different apps
     window.appList = [

@@ -85,6 +85,8 @@ spec:
           name: backups-volume
         - mountPath: /app/config/kafka-auth/
           name: kafka-auth-config
+        - mountPath: /app/config/truststore/
+          name: truststore-volume
       securityContext: 
         fsGroup: 185
         runAsGroup: 185
@@ -108,6 +110,16 @@ spec:
         {{- else }}
           secretName: {{ include "telicent-core.kafkaAuthConfigSecretName" . }}
         {{- end }}
+        # Secret is created outside of Helm by using Ansible. WOuld potentially need cert-manager to remove this dependency.
+
+      - name: truststore-volume
+        secret:
+        {{- if .Values.global.existingTruststoreSecretName }}
+          secretName: {{ .Values.global.existingTruststoreSecretName }}
+        {{- else }}
+          secretName: {{ include "telicent-core.truststoreSecretName" . }}
+        {{- end }}
+          optional: true
 
   volumeClaimTemplates:
   - metadata:

@@ -41,11 +41,12 @@ data:
     window.IMAGE_API_URL;
     window.ENTITY_EXTRACTION_API_URL;
 
-
+    {{ if .Values.configuration.textAiApiDeployed | default false }}
     window.TEXT_AI_API_URL = "https://{{ .Values.global.appHostDomain }}/api/barry";
     window.featureFlags = {
         FF_AI_TRANSLATE: false,
     };
+    {{ end }}
 
     // `appList` configures the menu that allows users to switch between different apps
     window.appList = [

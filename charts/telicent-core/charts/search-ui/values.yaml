@@ -35,8 +35,7 @@ serviceAccount:
   name: ""
 tolerations: []
 
-# existingMapConfigSecret:
-#   name: search-ui-secret-config-js
+# existingMapConfigSecretName: search-ui-secret-config-js
 
 configuration:
   appHostUrl: "apps.telicent.com"
@@ -46,6 +45,6 @@ configuration:
   dataCatalogUiDeployed: true
 
   map:
-    searchUiMaptilerToken: "your.maptiler.token.here"
-    searchUiMapboxStyleSpecUrl: "https://your.mapbox.style.spec.url.here"
-    searchUiArcgisToken: "your.arcgis.token.here"
+    # searchUiMaptilerToken: "your.maptiler.token.here"
+    # searchUiMapboxStyleSpecUrl: "https://your.mapbox.style.spec.url.here"
+    # searchUiArcgisToken: "your.arcgis.token.here"

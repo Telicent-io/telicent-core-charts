@@ -43,6 +43,6 @@ configuration:
   dataCatalogUiDeployed: true
 
   map:
-    searchUiMaptilerToken: "your.maptiler.token.here"
-    searchUiMapboxStyleSpecUrl: "https://your.mapbox.style.spec.url.here"
-    searchUiArcgisToken: "your.arcgis.token.here"
+    # searchUiMaptilerToken: "your.maptiler.token.here"
+    # searchUiMapboxStyleSpecUrl: "https://your.mapbox.style.spec.url.here"
+    # searchUiArcgisToken: "your.arcgis.token.here"

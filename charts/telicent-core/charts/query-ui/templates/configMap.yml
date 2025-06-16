@@ -13,8 +13,9 @@ data:
   env-config.js: |
     const DOMAIN = "{{  coalesce ((.Values.global).appHostDomain) .Values.configuration.appHostDomain }}"; 
     // Configure the Smart Cache Graph GraphQL API endpoint as used by the client browser.
-    window.GRAPHQL_URL = `${DOMAIN}/api/graphql/knowledge/graphql`;
+    window.GRAPHQL_URL = `https://${DOMAIN}/api/graphql/knowledge/graphql`;
     // Configure the Smart Cache Graph SPARQL API endpoint as used by the client browser.
-    window.SPARQL_URL = `${DOMAIN}/api/sparql/knowledge/sparql`;
+    window.SPARQL_URL = `https://${DOMAIN}/api/sparql/knowledge/sparql`;
     // Configure the Access API endpoint as used by the client browser.
-    window.ACCESS_URL = `${DOMAIN}/api/access`;
+    window.ACCESS_URL = `https://${DOMAIN}/api/access`;
+    window.BETA = false;

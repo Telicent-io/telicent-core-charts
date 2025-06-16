@@ -1,4 +1,4 @@
-{{- if .Values.enterprise }}
+{{- if .Values.global.enterprise }}
 apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
 metadata:

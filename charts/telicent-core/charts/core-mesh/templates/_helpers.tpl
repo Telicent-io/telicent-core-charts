@@ -129,7 +129,7 @@ app.kubernetes.io/name: query-ui
 {{- end -}}
 
 {{- define "core-mesh.searchUiSelectors" -}}
-{{- if .Values.enterprise }}
+{{- if .Values.global.enterprise }}
 {{- if .Values.searchUi.selectors -}}
 {{ .Values.searchUi.selectors | toYaml }}
 {{- else -}}
@@ -140,7 +140,7 @@ app.kubernetes.io/name: search-ui
 {{- end -}}
 
 {{- define "core-mesh.graphUiSelectors" -}}
-{{- if .Values.enterprise }}
+{{- if .Values.global.enterprise }}
 {{- if .Values.graphUi.selectors -}}
 {{ .Values.graphUi.selectors | toYaml }}
 {{- else -}}
@@ -151,12 +151,12 @@ app.kubernetes.io/name: graph-ui
 {{- end -}}
 
 {{- define "core-mesh.searchApiSelectors" -}}
-{{- if .Values.enterprise }}
+{{- if .Values.global.enterprise }}
 {{- if .Values.searchApi.selectors -}}
 {{ .Values.searchApi.selectors | toYaml }}
 {{- else -}}
 app.kubernetes.io/instance: {{ .Release.Name }}
-app.kubernetes.io/name: search-api
+app.kubernetes.io/name: smart-cache-search-api
 {{- end -}}
 {{- end -}}
 {{- end -}}
