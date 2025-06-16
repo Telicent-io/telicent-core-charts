@@ -1,6 +1,6 @@
 configuration:
     attributeHierarchyUrl: http://access-api.tc-system.svc.cluster.local:8080/hierarchies/lookup/{name}
-    javaOptions: -Xmx5120m -Xms2048m
+    javaOptions: -Xmx5120m -Xms2048m -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks
     jwksUrl: https://your.oidc.public.key.endpoint/keys
     otelMetricsExporter: prometheus
     otelTracesExporter: none

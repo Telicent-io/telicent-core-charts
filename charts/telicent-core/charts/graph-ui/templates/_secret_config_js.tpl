@@ -97,8 +97,7 @@ window.MAP_BOX_SPEC_STYLE_OVERRIDE = VECTOR_STYLE_URI;
 // window.MAP_BOX_SPEC_STYLE_OVERRIDE = VECTOR_STYLE_URI;
 {{ end }}
 
-{% if search_ui_maptiler_token is defined %}
-{{- if .Values.configuration.map.search_ui_maptiler_token }}
+{{- if .Values.configuration.map.searchUiMaptilerToken }}
 // [LIMITED]
 // ELSE will default to mapbox service's streets-v2-dark styled source
 window.MAP_TILER_TOKEN = MAP_TILER_TOKEN;
