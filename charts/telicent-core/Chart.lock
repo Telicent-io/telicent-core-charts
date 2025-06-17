@@ -23,5 +23,8 @@ dependencies:
 - name: smart-cache-search
   repository: https://raw.githubusercontent.com/Telicent-io/telicent-core-charts/gh-pages/
   version: 0.1.1
-digest: sha256:3781a804701c00acba9fd9c38eec6262350ca76e624e249d71beab6172ee36ad
-generated: "2025-06-12T14:48:41.276151+01:00"
+- name: user-preferences-api
+  repository: file://charts/user-preferences-api
+  version: 0.1.0
+digest: sha256:3c69aaefbf6c4de2f891bbb991aa5783f3deb8fb341b5c1bf448cf1578334b7c
+generated: "2025-06-16T16:12:17.488633+01:00"

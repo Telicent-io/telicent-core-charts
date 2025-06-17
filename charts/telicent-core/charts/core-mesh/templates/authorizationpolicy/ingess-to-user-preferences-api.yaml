@@ -1,0 +1,31 @@
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  labels:
+    {{- include "core-mesh.labels" . | nindent 4 }}
+  name: {{ include "core-mesh.fullname" . }}-ingress-to-pref-api
+spec:
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        principals:
+        - {{ include "core-mesh.ingressPrincipal" . }}
+
+    to:
+    - operation:
+        methods:
+        - GET
+        - POST
+        - DELETE
+        - HEAD
+        - OPTIONS
+        - PUT
+        - PATCH
+    when:
+    - key: request.auth.claims[groups]
+      values:
+      - tc_read
+  selector:
+    matchLabels:
+    {{- include "core-mesh.userPreferencesApiSelectors" . | nindent 6 }}

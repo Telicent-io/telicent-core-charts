@@ -74,6 +74,10 @@ Service names
 {{- .Values.searchApi.serviceName | default (printf "%s-%s" $.Release.Name "smart-cache-search-api") | quote }}
 {{- end }}
 
+{{- define "core-mesh.userPreferencesApiServiceName" -}}
+{{- .Values.userPreferencesApi.serviceName | default (printf "%s-%s" $.Release.Name "user-preferences-api") | quote }}
+{{- end }}
+
 {{/*
 Service principals
 */}}
@@ -157,6 +161,17 @@ app.kubernetes.io/name: graph-ui
 {{- else -}}
 app.kubernetes.io/instance: {{ .Release.Name }}
 app.kubernetes.io/name: smart-cache-search-api
+{{- end -}}
+{{- end -}}
+{{- end -}}
+
+{{- define "core-mesh.userPreferencesApiSelectors" -}}
+{{- if .Values.global.enterprise }}
+{{- if .Values.userPreferencesApi.selectors -}}
+{{ .Values.userPreferencesApi.selectors | toYaml }}
+{{- else -}}
+app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/name: user-preferences-api
 {{- end -}}
 {{- end -}}
 {{- end -}}

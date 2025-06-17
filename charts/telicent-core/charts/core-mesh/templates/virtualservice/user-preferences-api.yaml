@@ -1,0 +1,24 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: {{ include "core-mesh.fullname" . }}-user-preferences
+  labels:
+  {{- include "core-mesh.labels" . | nindent 4 }}
+spec:
+  gateways:
+  - {{ .Values.appsGateway }}
+  hosts:
+  - {{ .Values.global.appHostDomain }}
+  http:
+  - match:
+    - uri:
+        prefix: /api/user-preferences
+    rewrite:
+      uriRegexRewrite:
+        match: ^/api/user-preferences(/|$)(.*)
+        rewrite: /\2
+    route:
+    - destination:
+        host: {{ include "core-mesh.userPreferencesApiServiceName" . }}
+        port:
+          number: 11111

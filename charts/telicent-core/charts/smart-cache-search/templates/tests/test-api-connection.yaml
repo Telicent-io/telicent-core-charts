@@ -11,5 +11,5 @@ spec:
     - name: wget
       image: busybox
       command: ['wget']
-      args: ['{{ include "smart-cache-search.fullname" . }}-api:{{ .Values.api.service.port }}']
+      args: ['{{ include "smart-cache-search.fullname" . }}-api:{{ .Values.api.service.port }}/healthz']
   restartPolicy: Never

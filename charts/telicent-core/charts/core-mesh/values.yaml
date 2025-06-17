@@ -48,3 +48,7 @@ graphUi:
 searchApi:
   port: 8181
   # serviceName: smart-cache-search-api
+
+userPreferencesApi:
+  port: 11111
+  # serviceName: user-preferences-api

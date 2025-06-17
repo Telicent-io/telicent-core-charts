@@ -32,6 +32,14 @@ spec:
         - db: access
           name: readWrite
       scramCredentialsSecretName: {{ include "mongodb.accessScramSecretName" . }}
+    - db: user-preferences
+      name: telicent-user-preferences
+      passwordSecretRef:
+        name: {{ include "mongodb.userPreferencesPwdSecretName" . }}
+      roles:
+        - db: user-preferences
+          name: readWrite
+      scramCredentialsSecretName: {{ include "mongodb.userPreferencesScramSecretName" . }}
   version: 7.0.12
   statefulSet:
     spec:

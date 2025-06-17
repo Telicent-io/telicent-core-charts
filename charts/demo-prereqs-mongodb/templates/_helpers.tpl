@@ -84,3 +84,21 @@ Access scram credential
 {{- define "mongodb.accessScramSecretName" -}}
 {{- printf "%s-%s" (include "mongodb.accessPwdSecretName" .) "scram" }}
 {{- end }}
+
+{{/*
+UserPreferences password
+*/}}
+{{- define "mongodb.userPreferencesPwdSecretName" -}}
+{{- if .Values.existingUserPreferencesPwdSecretName -}}
+{{- .Values.existingUserPreferencesPwdSecretName -}}
+{{- else -}}
+{{- printf "%s-%s" .Release.Name "user-pref-pwd" -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+UserPreferences scram credential
+*/}}
+{{- define "mongodb.userPreferencesScramSecretName" -}}
+{{- printf "%s-%s" (include "mongodb.userPreferencesPwdSecretName" .) "scram" }}
+{{- end }}
