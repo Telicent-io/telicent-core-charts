@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "smart-cache-graph.name" -}}
+{{- define "user-preferences-api.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "smart-cache-graph.fullname" -}}
+{{- define "user-preferences-api.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -26,17 +26,17 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "smart-cache-graph.chart" -}}
+{{- define "user-preferences-api.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "smart-cache-graph.labels" -}}
+{{- define "user-preferences-api.labels" -}}
 telicent.io/resource: "true"
-helm.sh/chart: {{ include "smart-cache-graph.chart" . }}
-{{ include "smart-cache-graph.selectorLabels" . }}
+helm.sh/chart: {{ include "user-preferences-api.chart" . }}
+{{ include "user-preferences-api.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -46,40 +46,46 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "smart-cache-graph.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "smart-cache-graph.name" . }}
+{{- define "user-preferences-api.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "user-preferences-api.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "smart-cache-graph.serviceAccountName" -}}
-{{- default (include "smart-cache-graph.fullname" .) .Values.serviceAccount.name }}
+{{- define "user-preferences-api.serviceAccountName" -}}
+{{- default (include "user-preferences-api.fullname" .) .Values.serviceAccount.name }}
 {{ end }}
 
 {{/*
 Create the name of the service to use
 */}}
-{{- define "smart-cache-graph.serviceName" -}}
-{{ include "smart-cache-graph.fullname" . }}
+{{- define "user-preferences-api.serviceName" -}}
+{{ include "user-preferences-api.fullname" . }}
 {{- end }}
 
-{{- define "smart-cache-graph.envSecretName" -}}
-{{ include "smart-cache-graph.fullname" . }}-server
+{{- define "user-preferences-api.envSecretName" -}}
+{{ include "user-preferences-api.fullname" . }}-server
 {{- end }}
 
 {{/*
 Create Server config name to use
 */}}
-{{- define "smart-cache-graph.serverConfig" -}}
-{{ include "smart-cache-graph.fullname" . }}-server-config
+{{- define "user-preferences-api.serverConfig" -}}
+{{ include "user-preferences-api.fullname" . }}-server-config
 {{- end }}
 
 {{/* 
 Create Kafka Auth Config name to use
 */}}
-{{- define "smart-cache-graph.kafkaAuthConfig" -}}
-{{ include "smart-cache-graph.fullname" . }}-kafka-auth-config
+{{- define "user-preferences-api.kafkaAuthConfig" -}}
+{{ include "user-preferences-api.fullname" . }}-kafka-auth-config
 {{- end }}
 
+{{/* 
+Create MongoPassword name to use
+*/}}
+{{- define "user-preferences-api.secret" -}}
+{{ include "user-preferences-api.fullname" . }}-secret
+{{- end }}

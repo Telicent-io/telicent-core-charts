@@ -77,7 +77,7 @@ mapConfigExamples.ONLY_VECTOR_STYLES = {
 // -------------------------
 
 
-{{- if .Values.configuration.map.searchUiArcgisToken }}
+{{- if .Values.configuration.map.graphUiArcgisToken }}
 // [BEST] 
 // IF set, can generate multiple layers from ANY map service that adheres to the map-box SPEC
 window.MAP_CONFIG = mapConfigExamples['VECTOR_AND_TILE_SETS']
@@ -87,7 +87,7 @@ window.MAP_CONFIG = mapConfigExamples['VECTOR_AND_TILE_SETS']
 //window.MAP_CONFIG = mapConfigExamples['VECTOR_AND_TILE_SETS']
 {{ end }}
 
-{{- if .Values.configuration.map.searchUiMapboxStyleSpecUrl }}
+{{- if .Values.configuration.map.graphUiMapboxStyleSpecUrl }}
 // [LIMITED] 
 // ELSE IF set will default to single vector style from ANY map service
 window.MAP_BOX_SPEC_STYLE_OVERRIDE = VECTOR_STYLE_URI;
@@ -97,7 +97,7 @@ window.MAP_BOX_SPEC_STYLE_OVERRIDE = VECTOR_STYLE_URI;
 // window.MAP_BOX_SPEC_STYLE_OVERRIDE = VECTOR_STYLE_URI;
 {{ end }}
 
-{{- if .Values.configuration.map.searchUiMaptilerToken }}
+{{- if .Values.configuration.map.graphUiMaptilerToken }}
 // [LIMITED]
 // ELSE will default to mapbox service's streets-v2-dark styled source
 window.MAP_TILER_TOKEN = MAP_TILER_TOKEN;

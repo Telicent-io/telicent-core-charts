@@ -28,8 +28,7 @@ data:
     window.SPARQL_URL = 'https://{{ .Values.global.appHostDomain }}/api/sparql/knowledge/sparql';
     window.ONTOLOGY_SERVICE_URL = "https://{{ .Values.global.appHostDomain }}/api/sparql";
     window.SEARCH_API_URL = "https://{{ .Values.global.appHostDomain }}/api/search";
-    // window.USER_PREF_API_URL = "https://{{ .Values.global.appHostDomain }}/api/user-preferences";
-    window.USER_PREF_API_URL;
+    window.USER_PREF_API_URL = "https://{{ .Values.global.appHostDomain }}/api/user-preferences";
 
     // Signout
     // window.SIGN_OUT_URL = "https://{{ .Values.global.appHostDomain }}/oauth2/sign_out?rd=/oauth2/authorize";

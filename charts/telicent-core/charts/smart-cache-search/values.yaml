@@ -82,3 +82,8 @@ projector:
 serviceAccount:
   annotations: {}
   name: ""
+
+map:
+  searchUiMaptilerToken: "your.maptiler.token.here"
+  # searchUiMapboxStyleSpecUrl: "https://your.mapbox.style.spec.url.here"
+  # searchUiArcgisToken: "your.arcgis.token.here"

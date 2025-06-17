@@ -11,6 +11,13 @@ global:
   kafkaBootstrapUrls: "kafka-kafka-bootstrap.kafka-dev.svc.cluster.local:9092"
   imagePullSecrets: "regcred"
 jobServiceAccountName: producers
+graph-ui:
+  configuration:
+    map:
+      graphUiMaptilerToken: "your.maptiler.token.here"
+      # graphUiMapboxStyleSpecUrl: "https://your.mapbox.style.spec.url.here"
+      # graphUiArcgisToken: "your.arcgis.token.here"
+
 jobs:
   ontology-ies:
     enabled: true
@@ -99,3 +106,9 @@ jobs:
       - name: KAFKA_CONFIG_FILE_PATH
         value: /app/config/kafka-auth/kafka-config.toml
     resources: null
+user-preferences-api:
+  mongo:
+    url: mongodb://mongo.telicent.svc.cluster.local:27017/user-preferences?authSource=admin
+    username: user-preferences
+    password: "your.mongo.password.here"
+    database: user-preferences

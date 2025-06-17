@@ -50,6 +50,9 @@ dependencies:
   - name: smart-cache-search
     version: 0.1.1
     repository: https://raw.githubusercontent.com/Telicent-io/telicent-core-charts/gh-pages/
+  - name: user-preferences-api
+    version: 0.1.0
+    repository: file://charts/user-preferences-api
 
 icon: "https://avatars.githubusercontent.com/u/65304240?s=200&v=4"
 

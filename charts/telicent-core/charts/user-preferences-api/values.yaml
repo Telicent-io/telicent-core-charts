@@ -1,0 +1,31 @@
+fullnameOverride: ""
+nameOverride: ""
+imagePullSecrets: ""
+
+annotations: {}
+replicas: 1
+resources: {}
+revisionHistoryLimit: 3
+image:
+  pullPolicy: IfNotPresent
+  repository: 098669589541.dkr.ecr.eu-west-2.amazonaws.com/telicent-user-preferences-service
+  tag: 0.5.0
+metrics:
+  service:
+    port: 9464
+
+serviceAccount:
+  annotations: {}
+  name: ""
+  create: true
+
+service:
+  port: 11111
+  type: ClusterIP
+mongo:
+  url: mongodb://mongodb-demo-prereqs-mongodb-svc.mongodb-dev.svc.cluster.local:27017/user-preferences?authSource=admin
+  username: user-preferences
+  password: "your.mongo.password.here"
+  database: user-preferences
+configuration:
+  javaOptions: "-Xms512m -Xmx512m"

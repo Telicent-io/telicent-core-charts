@@ -1,0 +1,92 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "user-preferences-api.fullname" . }}
+  labels:
+    {{- include "user-preferences-api.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicas }}
+  revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
+  selector:
+    matchLabels:
+    {{- include "user-preferences-api.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+      {{- range $key, $value := .Values.annotations }}
+        {{ $key }}: {{ $value | quote }}
+      {{- end }}
+      labels:
+        {{- include "user-preferences-api.labels" . | nindent 8 }}
+    spec:
+      {{- if .Values.imagePullSecrets }}
+      imagePullSecrets:
+        - name: {{ .Values.imagePullSecrets }}
+      {{- end }}
+      containers:
+      - name: user-preferences-api
+        envFrom:    
+        - configMapRef:
+            name: {{ include "user-preferences-api.fullname" . }}
+        env:
+        - name: MONGO_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: password
+              name: {{ include "user-preferences-api.secret" . }}
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        livenessProbe:
+          httpGet:
+            path: /version-info
+            port: 11111
+            scheme: HTTP
+          initialDelaySeconds: 30
+          periodSeconds: 60
+          timeoutSeconds: 5
+        ports:
+        - containerPort: 11111
+          name: http
+          protocol: TCP
+        - containerPort: 9464
+          name: metrics
+          protocol: TCP
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 11111
+            scheme: HTTP
+          initialDelaySeconds: 30
+          periodSeconds: 60
+          timeoutSeconds: 10
+        resources: {{- toYaml .Values.resources | nindent 10 }}
+        volumeMounts:
+        - name: truststore-volume
+          mountPath: /app/config/truststore
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+                - ALL
+          runAsGroup: 185
+          runAsNonRoot: true
+          runAsUser: 185
+          seccompProfile:
+              type: RuntimeDefault
+      volumes:
+        - name: truststore-volume
+          secret:
+          {{- if .Values.global.existingTruststoreSecretName }}
+            secretName: {{ .Values.global.existingTruststoreSecretName }}
+          {{- else }}
+            secretName: {{ include "telicent-core.truststoreSecretName" . }}
+          {{- end }}
+            optional: true
+      securityContext: 
+        fsGroup: 185
+        runAsGroup: 185
+        runAsNonRoot: true
+        runAsUser: 185
+        seccompProfile:
+          type: RuntimeDefault
+      serviceAccountName: {{ include "user-preferences-api.serviceAccountName" . }}
