@@ -27,5 +27,6 @@ mongo:
   username: user-preferences
   password: "your.mongo.password.here"
   database: user-preferences
+  # existingMongoPasswordSecret:
 configuration:
   javaOptions: "-Xms512m -Xmx512m"

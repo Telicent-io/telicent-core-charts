@@ -87,5 +87,9 @@ Create Kafka Auth Config name to use
 Create MongoPassword name to use
 */}}
 {{- define "user-preferences-api.secret" -}}
+{{- if .Values.mongo.existingMongoPasswordSecret }}
+{{- .Values.mongo.existingMongoPasswordSecret }}
+{{- else }}
 {{ include "user-preferences-api.fullname" . }}-secret
+{{- end }}
 {{- end }}

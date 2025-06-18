@@ -33,7 +33,7 @@ containerSecurityContext:
 existingConfigmap: ""
 
 # Use existing secret for configuration (config.mongodbPassword will be ignored)
-existingSecret: ""
+# existingSecret: ""
 
 existingCacertConfigmap: ""
 

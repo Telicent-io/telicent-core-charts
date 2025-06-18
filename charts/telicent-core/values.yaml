@@ -9,7 +9,7 @@ global:
   appHostDomain: "apps.yourdomain.com"
   jwksUrl: "https://yourdomain.com/.well-known/jwks.json"
   kafkaBootstrapUrls: "kafka-kafka-bootstrap.kafka-dev.svc.cluster.local:9092"
-  imagePullSecrets: "regcred"
+  # imagePullSecrets: "regcred"
 jobServiceAccountName: producers
 graph-ui:
   configuration:

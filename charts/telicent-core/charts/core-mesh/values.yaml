@@ -26,9 +26,11 @@ fullnameOverride: ""
 graphServer:
   port: 3030
   # serviceName: smart-cache-graph
+  # principal: cluster.local/ns/tc-core/sa/smart-cache-graph
 
 ingress:
   namespace: istio-system
+  # principal: cluster.local/ns/istio-system/sa/istio-ingress
 
 nameOverride: ""
 queryUi:
@@ -48,6 +50,7 @@ graphUi:
 searchApi:
   port: 8181
   # serviceName: smart-cache-search-api
+  # principal: cluster.local/ns/tc-core/sa/smart-cache-search
 
 userPreferencesApi:
   port: 11111

@@ -24,13 +24,16 @@ spec:
       - envFrom:
         - configMapRef:
             name: {{ include "access-api.envConfigmapName" . }}
-        - secretRef:
-            name: {{ include "access-api.envSecretName" . }}
-        {{- if or .Values.existingCacertConfigmap .Values.cacert }}
         env:
+        {{- if or .Values.existingCacertConfigmap .Values.cacert }}
         - name: NODE_EXTRA_CA_CERTS
           value: "/certs/ca.crt"
         {{ end }}
+        - name: MONGO_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: password
+              name: {{ include "access-api.mongoPasswordSecretName" . }}
         image: {{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         name: access-api

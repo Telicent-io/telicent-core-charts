@@ -68,7 +68,7 @@ Create the name of the service to use
 {{/*
 Create the name of the environment secrets
 */}}
-{{- define "access-api.envSecretName" -}}
+{{- define "access-api.mongoPasswordSecretName" -}}
 {{- if .Values.existingSecret }}
 {{- .Values.existingSecret }}
 {{- else }}
