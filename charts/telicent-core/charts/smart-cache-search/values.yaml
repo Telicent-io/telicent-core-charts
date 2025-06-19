@@ -36,8 +36,7 @@ api:
     elasticPassword: ""
     elasticUser: ""
     truststorePass: ""
-  # existingEnvironmentSecret:
-  #   name: environment
+  # existingEnvironmentSecretName: environment
 
 projector:
   annotations: {}
@@ -72,11 +71,10 @@ projector:
     otelMetricsExporter: prometheus
     otelTracesExporter: none
 
+  # existingEnvironmentSecretName: ""
 # Private CA used for Opensearch and OIDC endpoint requires existing configmap containing jks truststore content
 
 # existingCacertSecret:
-#   name: ""
-# existingEnvironmentSecret:
 #   name: ""
 
 serviceAccount:

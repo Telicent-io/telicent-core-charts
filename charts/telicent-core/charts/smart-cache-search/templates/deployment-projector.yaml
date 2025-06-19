@@ -36,9 +36,9 @@ spec:
         {{- end }}
         {{- end }}
         envFrom:
-        {{- if .Values.projector.existingEnvironmentSecret }}
+        {{- if .Values.projector.existingEnvironmentSecretName }}
         - secretRef:
-            name: {{ .Values.projector.existingEnvironmentSecret | quote }}
+            name: {{ .Values.projector.existingEnvironmentSecretName | quote }}
             optional: true
         {{- else }}
         - secretRef:

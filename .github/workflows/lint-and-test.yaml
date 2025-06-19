@@ -36,6 +36,7 @@ jobs:
         if: steps.list-changed.outputs.changed == 'true'
         run: |
           helm repo add --username robf-telicent --password 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 telicent-core-charts 'https://raw.githubusercontent.com/Telicent-io/telicent-core-charts/gh-pages'
+          helm dependency update ./charts/telicent-core
           ct lint --config .github/ct.yaml
 
       # Uncomment the following lines if you want to create a kind cluster and run chart-testing install
