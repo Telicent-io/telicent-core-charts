@@ -25,6 +25,7 @@ jobs:
       - name: Package changed charts
         run: | 
           helm repo add --username ${{ secrets.GITHUB_TOKEN }} telicent-core-charts --password ${{ secrets.GITHUB_TOKEN }} 'https://raw.githubusercontent.com/Telicent-io/telicent-core-charts/gh-pages'
+          helm dependency update
           for chart in $(find ./charts -maxdepth 1 -mindepth 1 -type d); do echo "packaging chart - $chart" && helm package -u -d .cr-release-packages $chart; done
 
       - name: checkout pages branch
