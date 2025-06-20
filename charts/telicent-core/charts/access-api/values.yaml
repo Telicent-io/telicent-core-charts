@@ -16,6 +16,8 @@ config:
   mongoConnectionStringOptions: "authMechanism=SCRAM-SHA-1&retryWrites=false"
   # The URL of the OIDC provider
   openidProviderUrl: change.to.oidc.provider.url
+  mongoRetryRewrites: "false"
+
   # Enable SCIM user management
   scimEnabled: false
 
