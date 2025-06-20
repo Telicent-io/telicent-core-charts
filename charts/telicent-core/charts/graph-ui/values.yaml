@@ -41,7 +41,7 @@ configuration:
   userPortalUiDeployed: true
   graphUiDeployed: true
   dataCatalogUiDeployed: true
-
+  # existingGraphUIConfigName: ""
   map:
     # searchUiMaptilerToken: "your.maptiler.token.here"
     # searchUiMapboxStyleSpecUrl: "https://your.mapbox.style.spec.url.here"
