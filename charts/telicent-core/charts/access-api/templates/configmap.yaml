@@ -16,4 +16,5 @@ data:
   PORT: {{ .Values.service.port | quote }}
   SCIM_ENABLED: {{ .Values.config.scimEnabled | quote }}
   MONGO_CONNECTION_STRING_OPTIONS: {{ .Values.config.mongoConnectionStringOptions | quote }}
+  MONGO_RETRY_REWRITES: {{ .Values.config.mongoRetryRewrites | quote }}
 {{- end -}}
