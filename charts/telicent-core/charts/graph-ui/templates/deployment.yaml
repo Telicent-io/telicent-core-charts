@@ -88,7 +88,7 @@ spec:
         name: app-config-volume
       {{- if .Values.existingMapConfigSecretName }}
       - secret:
-          secretName: .Values.existingMapConfigSecretName
+          secretName: {{ .Values.existingMapConfigSecretName }}
         name: secret-config-js-volume
       {{- else }}
       - secret:
