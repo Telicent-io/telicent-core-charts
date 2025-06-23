@@ -33,7 +33,11 @@ spec:
           valueFrom:
             secretKeyRef:
               key: password
+              {{- if .Values.mongo.existingMongoPasswordSecret }}
+              name: {{ .Values.mongo.existingMongoPasswordSecret }}
+              {{- else }}
               name: {{ include "user-preferences-api.secret" . }}
+              {{- end }}
         image: {{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         livenessProbe:
