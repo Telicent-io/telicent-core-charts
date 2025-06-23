@@ -5,8 +5,6 @@ configuration:
     otelMetricsExporter: prometheus
     otelTracesExporter: none
     userAttributesUrl: http://access-api.tc-system.svc.cluster.local:8080/users/lookup/{user}
-    # Configure searchApiUrl in closed source deployment only:
-    # searchApiUrl: http://smart-cache-search-api.tc-core.svc.cluster.local:8181
 
 fullnameOverride: ""
 

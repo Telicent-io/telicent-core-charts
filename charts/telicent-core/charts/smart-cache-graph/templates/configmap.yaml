@@ -16,7 +16,7 @@ data:
     KAFKA_CONFIG_FILE_PATH: /app/config/kafka-auth/kafka-config.properties
     OTEL_METRICS_EXPORTER: {{ .Values.configuration.otelMetricsExporter | quote }}
     OTEL_TRACES_EXPORTER: {{ .Values.configuration.otelTracesExporter | quote }}
-    {{- if .Values.configuration.searchApiUrl }}
-    SEARCH_API_URL: {{ .Values.configuration.searchApiUrl | quote }}
-    {{- end }}
+    {{- if .Values.global.enterprise}}
+    SEARCH_API_URL: {{ include "smart-cache-graph.searchApiUrl" . | quote }}
+    {{- end}}
     USER_ATTRIBUTES_URL: {{ .Values.configuration.userAttributesUrl | quote }}
