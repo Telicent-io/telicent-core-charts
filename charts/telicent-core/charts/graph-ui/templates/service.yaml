@@ -4,7 +4,6 @@ metadata:
   name: {{ include "graph.serviceName" . }}
   labels:
     {{- include "graph.labels" . | nindent 4 }}
-    {{- include "graph.selectorLabels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   selector:
