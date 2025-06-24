@@ -1,12 +1,42 @@
-name: Publish Charts
-
+###############################################################################
+# Note release-please-config.json should reflect the same number of packages as
+# /configure/charts
+###############################################################################
+name: Create PRs for helm chart releases
 on:
+  workflow_dispatch:
   push:
     branches:
       - "main"
 
+permissions:
+  contents: write
+  # Release please dependency
+  pull-requests: write
+  # Release please dependency? (attempts to fix: "You do not have permission to create labels on this repository" - PR write should be enough!)
+  issues: write
+  # AWS OIDC Dependency 
+  id-token: write
+
 jobs:
+  create-release-pr-or-tag-release:
+    runs-on: ubuntu-latest
+    outputs:
+      releases_created: ${{ steps.release.outputs.releases_created }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: googleapis/release-please-action@v4
+        id: release
+        with:
+          config-file: .github/release-please-config.json
+          manifest-file: .github/release-please-manifest.json
+
   publish:
+    if: needs.create-release-pr-or-tag-release.outputs.releases_created == 'true'
+    name: Publish Charts
+    needs: create-release-pr-or-tag-release
     permissions:
       contents: write
     runs-on: ubuntu-latest
