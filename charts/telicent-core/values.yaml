@@ -20,7 +20,8 @@ graph-ui:
 
 jobs:
   ontology-ies:
-    enabled: true
+    enabled: false
+    # This job is disabled by default, set enabled to true to enable it
     completedTtl: 30
     serviceAccountName: producers
     kafkaAuthSecretName: kafka-auth-config
@@ -41,7 +42,8 @@ jobs:
         value: /app/config/kafka-auth/kafka-config.toml
     resources: null
   ontology-rdf:
-    enabled: true
+    enabled: false
+    # This job is disabled by default, set enabled to true to enable it
     completedTtl: 30
     serviceAccountName: producers
     kafkaAuthSecretName: kafka-auth-config
@@ -63,7 +65,8 @@ jobs:
     resources: null
 
   ies-regions:
-    enabled: true
+    enabled: false
+    # This job is disabled by default, set enabled to true to enable it
     serviceAccountName: producers
     kafkaAuthSecretName: kafka-auth-config
     image:
@@ -86,7 +89,8 @@ jobs:
     resources: null
 
   ontology-ies-regions:
-    enabled: true
+    enabled: false
+    # This job is disabled by default, set enabled to true to enable it
     completedTtl: 30
     serviceAccountName: producers
     kafkaAuthSecretName: kafka-auth-config
