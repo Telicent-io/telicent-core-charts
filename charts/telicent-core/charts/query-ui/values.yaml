@@ -7,7 +7,6 @@ image:
   repository: docker.io/telicent/telicent-query
   pullPolicy: IfNotPresent
   # appVersion is used by default
-  tag: ""
 
 nameOverride: ""
 

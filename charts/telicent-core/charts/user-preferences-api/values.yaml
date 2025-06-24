@@ -9,7 +9,6 @@ revisionHistoryLimit: 3
 image:
   pullPolicy: IfNotPresent
   repository: 098669589541.dkr.ecr.eu-west-2.amazonaws.com/telicent-user-preferences-service
-  tag: 0.5.0
 metrics:
   service:
     port: 9464
