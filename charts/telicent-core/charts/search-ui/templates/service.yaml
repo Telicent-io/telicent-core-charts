@@ -4,7 +4,6 @@ metadata:
   name: {{ include "search.serviceName" . }}
   labels:
     {{- include "search.labels" . | nindent 4 }}
-    {{- include "search.selectorLabels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   selector:
