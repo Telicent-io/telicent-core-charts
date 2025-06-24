@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.1](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v0.2.0...telicent-core-v0.2.1) (2025-06-24)
+
+
+### Bug Fixes
+
+* duplicate keys ([e00e784](https://github.com/Telicent-io/telicent-core-charts/commit/e00e784056a7646732941a4dc5a52ff421fd52ec))
+* duplicate keys ([03f517f](https://github.com/Telicent-io/telicent-core-charts/commit/03f517fb123c2c3b4ef79f8d674794c22a572c95))
+
 ## [0.2.0](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v0.1.1...telicent-core-v0.2.0) (2025-06-24)
 
 
