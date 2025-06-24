@@ -83,3 +83,11 @@ Create Kafka Auth Config name to use
 {{ include "smart-cache-graph.fullname" . }}-kafka-auth-config
 {{- end }}
 
+{{/*
+Search API URL
+*/}}
+{{- define "smart-cache-graph.searchApiUrl" -}}
+{{- printf "http://%s-smart-cache-search-api:8181" (.Release.Name) }}
+{{- end }}
+{{/*
+*/}}

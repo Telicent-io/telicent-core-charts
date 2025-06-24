@@ -36,9 +36,9 @@ spec:
         {{- end }}
         {{- end }}
         envFrom:
-        {{- if .Values.api.existingEnvironmentSecret }}
+        {{- if .Values.api.existingEnvironmentSecretName }}
         - secretRef:
-            name: {{ .Values.api.existingEnvironmentSecret.name | quote }}
+            name: {{ .Values.api.existingEnvironmentSecretName | quote }}
             optional: true
         {{- else }}
         - secretRef:
