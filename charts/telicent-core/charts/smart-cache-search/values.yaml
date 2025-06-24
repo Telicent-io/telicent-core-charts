@@ -10,7 +10,6 @@ api:
   image:
     pullPolicy: IfNotPresent
     repository: 098669589541.dkr.ecr.eu-west-2.amazonaws.com/search-api-server
-    tag: 0.15.11
   metrics:
     service:
       port: 9464

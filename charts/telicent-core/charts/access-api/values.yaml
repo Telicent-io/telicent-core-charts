@@ -46,7 +46,6 @@ fullnameOverride: ""
 image:
   pullPolicy: Always
   repository: telicent/telicent-access-api
-  tag: "1.5.6"
 
 podSecurityContext:
   fsGroup: 185
