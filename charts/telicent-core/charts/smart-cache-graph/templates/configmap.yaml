@@ -8,7 +8,7 @@ metadata:
         app.kubernetes.io/instance: {{ .Release.Name }}
         app.kubernetes.io/managed-by: {{ .Release.Service }}
 data:
-    ATTRIBUTE_HIERARCHY_URL: {{ .Values.configuration.attributeHierarchyUrl | quote }}
+    ATTRIBUTE_HIERARCHY_URL: {{ .Values.configuration.attributeHierarchyUrl | default (include "smart-cache-graph.attributeHeirachyUrl" .) | quote }}
     ENABLE_BACKUPS: "false"
     ENABLE_LABELS_QUERY: "false"
     JAVA_OPTIONS: {{ .Values.configuration.javaOptions | quote }}
@@ -19,4 +19,4 @@ data:
     {{- if .Values.global.enterprise}}
     SEARCH_API_URL: {{ include "smart-cache-graph.searchApiUrl" . | quote }}
     {{- end}}
-    USER_ATTRIBUTES_URL: {{ .Values.configuration.userAttributesUrl | quote }}
+    USER_ATTRIBUTES_URL: {{ .Values.configuration.userAttributesUrl | default (include "smart-cache-graph.userPreferencesUrl" .) | quote }}
