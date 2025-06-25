@@ -32,3 +32,9 @@ helm uninstall my-release
 For more configuration options, see the [values.yaml](./values.yaml) file.
 
 \*For details [see here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) (PAT must have read access to this repo)
+
+## Values
+
+| Key                          | Type     | Default Value                          | Description                                                                 |
+|------------------------------|----------|----------------------------------------|-----------------------------------------------------------------------------|
+| `access-api`                 | object  | {}     | [See access-api README](./charts/telicent-core/charts/access-api/README.md)                                  |
