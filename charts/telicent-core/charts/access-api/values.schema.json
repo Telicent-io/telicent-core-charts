@@ -40,7 +40,7 @@
         "url",
         "username",
         "password",
-        "database"
+        "collection"
       ]
     },
     "configuration": {
@@ -273,7 +273,7 @@
   "required": [
     "cacert",
     "mongo",
-    "config",
+    "configuration",
     "image",
     "replicas",
     "service"
