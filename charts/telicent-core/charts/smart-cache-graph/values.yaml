@@ -11,7 +11,8 @@ fullnameOverride: ""
 image:
     pullPolicy: IfNotPresent
     repository: telicent/smart-cache-graph
-    tag: 0.83.6
+    # appVersion is used by default when defining an empty string
+    tag: ""
 
 metrics:
     service:

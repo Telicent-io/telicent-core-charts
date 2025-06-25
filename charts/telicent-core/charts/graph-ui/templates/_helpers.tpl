@@ -31,14 +31,19 @@ Create chart name and version as used by the chart label.
 {{- end }}
 
 {{/*
+Returns the version
+*/}}
+{{- define "graph.version" -}}
+{{ .Values.image.tag | default .Chart.AppVersion }}
+{{- end -}}
+
+{{/*
 Common labels
 */}}
 {{- define "graph.labels" -}}
 helm.sh/chart: {{ include "graph.chart" . }}
 {{ include "graph.selectorLabels" . }}
-{{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
-{{- end }}
+app.kubernetes.io/version: {{ include "graph.version" . | quote }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 telicent.io/resource: "true"
 {{- end }}

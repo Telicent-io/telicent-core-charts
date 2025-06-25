@@ -31,15 +31,20 @@ Create chart name and version as used by the chart label.
 {{- end }}
 
 {{/*
+Returns the version
+*/}}
+{{- define "access-api.version" -}}
+{{ .Values.image.tag | default .Chart.AppVersion }}
+{{- end -}}
+
+{{/*
 Common labels
 */}}
 {{- define "access-api.labels" -}}
 telicent.io/resource: "true"
 helm.sh/chart: {{ include "access-api.chart" . }}
 {{ include "access-api.selectorLabels" . }}
-{{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
-{{- end }}
+app.kubernetes.io/version: {{ include "access-api.version" . | quote }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 

@@ -31,14 +31,19 @@ Create chart name and version as used by the chart label.
 {{- end }}
 
 {{/*
+Returns the version
+*/}}
+{{- define "query.version" -}}
+{{ .Values.image.tag | default .Chart.AppVersion }}
+{{- end -}}
+
+{{/*
 Common labels
 */}}
 {{- define "query.labels" -}}
 helm.sh/chart: {{ include "query.chart" . }}
 {{ include "query.selectorLabels" . }}
-{{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
-{{- end }}
+app.kubernetes.io/version: {{ include "query.version" . | quote }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 telicent.io/resource: "true"
 {{- end }}
@@ -65,14 +70,6 @@ Create the name of the service to use
 {{- define "query.serviceName" -}}
 {{- include "query.fullname" . }}
 {{- end }}
-
-{{/*
-Returns the version
-*/}}
-{{- define "query.version" -}}
-{{ .Values.image.tag | default .Chart.AppVersion }}
-{{- end -}}
-
 
 {{/*
 Create the name of the config map

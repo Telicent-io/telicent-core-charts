@@ -46,6 +46,8 @@ fullnameOverride: ""
 image:
   pullPolicy: Always
   repository: telicent/telicent-access-api
+  # appVersion is used by default when defining an empty string
+  tag: ""
 
 podSecurityContext:
   fsGroup: 185

@@ -1,5 +1,6 @@
 affinity: {}
 annotations: {}
+
 containerSecurityContext:
   allowPrivilegeEscalation: false
   capabilities:
@@ -10,12 +11,18 @@ containerSecurityContext:
   runAsUser: 185
   seccompProfile:
     type: RuntimeDefault
+
 fullnameOverride: ""
+
 image:
   pullPolicy: IfNotPresent
   repository: 098669589541.dkr.ecr.eu-west-2.amazonaws.com/telicent-search
+  # appVersion is used by default when defining an empty string
+  tag: ""
+
 nameOverride: ""
 nodeSelector: {}
+
 podSecurityContext:
   fsGroup: 185
   runAsGroup: 185
