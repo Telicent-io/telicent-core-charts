@@ -11,7 +11,6 @@ fullnameOverride: ""
 image:
   pullPolicy: IfNotPresent
   repository: telicent/smart-cache-graph
-  tag: 0.83.6
 
 metrics:
   service:
