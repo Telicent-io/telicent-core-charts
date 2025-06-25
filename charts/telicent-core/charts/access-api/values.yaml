@@ -54,7 +54,7 @@ image:
   # repository is the Docker repository for the image
   repository: telicent/telicent-access-api
   # tag is the image tag to use
-  tag: "latest"
+  tag: ""
 
 # mongo configuration
 mongo:
