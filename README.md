@@ -38,3 +38,4 @@ For more configuration options, see the [values.yaml](./values.yaml) file.
 | Key                          | Type     | Default Value                          | Description                                                                 |
 |------------------------------|----------|----------------------------------------|-----------------------------------------------------------------------------|
 | `access-api`                 | object  | {}     | [See access-api README](./charts/telicent-core/charts/access-api/README.md)                                  |
+| `access-ui`                  | object  | {}     | [See access-ui README](./charts/telicent-core/charts/access-ui/README.md)                                  |
