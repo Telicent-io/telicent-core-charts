@@ -314,6 +314,9 @@
         fk:topic               "knowledge";
         ## This should refer to an authz:upload endpoint
         fk:fusekiServiceName   "/knowledge/upload";
+        ## From 0.90.0 onwards this is mandatory if defining more than one connector
+        ## and each connector MUST have a unique Group ID
+        fk:groupId "smart-cache-graph-knowledge";
         ## fk:replayTopic -- true for in-memory storage / false for TDB2 storage
         fk:replayTopic      false;
         fk:stateFile        "/fuseki/databases/Replay-RDF.state";
@@ -326,8 +329,11 @@
     <#ontologyConnector> rdf:type fk:Connector ;
         fk:bootstrapServers    {{ .Values.global.kafkaBootstrapUrls | quote }};
         fk:topic               "ontology";
-        ## This should refer to an authz:upload endpoint
+        ## This should refer to the target dataset
         fk:fusekiServiceName   "/ontology/upload";
+        ## From 0.90.0 onwards this is mandatory if defining more than one connector
+        ## and each connector MUST have a unique Group ID
+        fk:groupId "smart-cache-graph-ontology";
         ## fk:replayTopic -- true for in-memory storage / false for TDB2 storage
         fk:replayTopic      false;
         fk:stateFile        "/fuseki/databases/Replay-Ontology-RDF.state";
@@ -340,8 +346,11 @@
     <#catalogConnector> rdf:type fk:Connector ;
         fk:bootstrapServers    {{ .Values.global.kafkaBootstrapUrls | quote }};
         fk:topic               "catalog";
-        ## This should refer to an authz:upload endpoint
+        ## This should refer to the target dataset
         fk:fusekiServiceName   "/catalog/upload";
+        ## From 0.90.0 onwards this is mandatory if defining more than one connector
+        ## and each connector MUST have a unique Group ID
+        fk:groupId "smart-cache-graph-catalog";
         ## fk:replayTopic -- true for in-memory storage / false for TDB2 storage
         fk:replayTopic      false;
         fk:stateFile        "/fuseki/databases/Replay-Catalog-RDF.state";
