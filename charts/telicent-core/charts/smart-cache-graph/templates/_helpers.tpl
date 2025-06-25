@@ -97,3 +97,17 @@ Search API URL
 {{- end }}
 {{/*
 */}}
+
+{{/*
+Default User Preferences URL
+*/}}
+{{- define "smart-cache-graph.userPreferencesUrl" -}}
+{{- printf "http://%s-access-api:8080/users/lookup/{user}" (.Release.Name) }}
+{{- end }}
+
+{{/*
+Default Atrribute Heirarchy URL
+*/}}
+{{- define "smart-cache-graph.attributeHeirachyUrl" -}}
+{{- printf "http://%s-access-api:8080/hierarchies/lookup/{name}" (.Release.Name) }}
+{{- end }}

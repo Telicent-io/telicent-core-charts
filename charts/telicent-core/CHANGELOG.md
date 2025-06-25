@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.2](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v0.2.1...telicent-core-v0.2.2) (2025-06-25)
+
+
+### Bug Fixes
+
+* adds sane default heirachy urls ([b66c30e](https://github.com/Telicent-io/telicent-core-charts/commit/b66c30e4de9716f3daad33f177c1053dcd3c8991))
+* adds sane default heirachy urls ([acecf99](https://github.com/Telicent-io/telicent-core-charts/commit/acecf99cefb2d1eba52eb0d02b81175647ba2804))
+
 ## [0.2.1](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v0.2.0...telicent-core-v0.2.1) (2025-06-24)
 
 
