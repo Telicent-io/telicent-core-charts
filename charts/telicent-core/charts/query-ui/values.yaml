@@ -6,7 +6,8 @@ fullnameOverride: ""
 image:
   repository: docker.io/telicent/telicent-query
   pullPolicy: IfNotPresent
-  # appVersion is used by default
+  # appVersion is used by default when defining an empty string
+  tag: ""
 
 nameOverride: ""
 

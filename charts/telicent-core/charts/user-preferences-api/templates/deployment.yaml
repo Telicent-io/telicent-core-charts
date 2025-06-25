@@ -38,7 +38,7 @@ spec:
               {{- else }}
               name: {{ include "user-preferences-api.secret" . }}
               {{- end }}
-        image: {{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}
+        image: {{ .Values.image.repository }}:{{ include "user-preferences-api.version" . }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         livenessProbe:
           httpGet:

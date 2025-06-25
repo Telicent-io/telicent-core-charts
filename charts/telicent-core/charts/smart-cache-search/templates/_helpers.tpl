@@ -31,14 +31,25 @@ Create chart name and version as used by the chart label.
 {{- end }}
 
 {{/*
+Returns the version of the api
+*/}}
+{{- define "smart-cache-search-api.version" -}}
+{{ .Values.api.image.tag | default .Chart.AppVersion }}
+{{- end -}}
+
+{{/*
+Returns the version of the projector
+*/}}
+{{- define "smart-cache-search-projector.version" -}}
+{{ .Values.projector.image.tag | default .Chart.AppVersion }}
+{{- end -}}
+
+{{/*
 Common labels
 */}}
 {{- define "smart-cache-search.commonLabels" -}}
 telicent.io/resource: "true"
 helm.sh/chart: {{ include "smart-cache-search.chart" . }}
-{{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
-{{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 
@@ -48,11 +59,13 @@ Application specific labels
 {{- define "smart-cache-search.apiLabels" -}}
 {{ include "smart-cache-search.apiSelectorLabels" . }}
 {{ include "smart-cache-search.commonLabels" . }}
+app.kubernetes.io/version: {{ include "smart-cache-search-api.version" . | quote }}
 {{- end }}
 
 {{- define "smart-cache-search.projectorLabels" -}}
 {{ include "smart-cache-search.projectorSelectorLabels" . }}
 {{ include "smart-cache-search.commonLabels" . }}
+app.kubernetes.io/version: {{ include "smart-cache-search-projector.version" . | quote }}
 {{- end }}
 
 {{/*

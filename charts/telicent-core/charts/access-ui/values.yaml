@@ -9,9 +9,13 @@ containerSecurityContext:
   seccompProfile:
     type: RuntimeDefault
 fullnameOverride: ""
+
 image:
   pullPolicy: Always
   repository: telicent/telicent-access
+  # appVersion is used by default when defining an empty string
+  tag: ""
+
 nameOverride: ""
 podSecurityContext:
   fsGroup: 185

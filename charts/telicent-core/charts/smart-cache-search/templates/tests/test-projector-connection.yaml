@@ -3,7 +3,7 @@ kind: Pod
 metadata:
   name: "{{ include "smart-cache-search.fullname" . }}-projector-test-connection"
   labels:
-    {{- include "smart-cache-search.apiLabels" . | nindent 4 }}
+    {{- include "smart-cache-search.projectorLabels" . | nindent 4 }}
   annotations:
     "helm.sh/hook": test
 spec:

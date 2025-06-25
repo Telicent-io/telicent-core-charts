@@ -10,6 +10,8 @@ api:
   image:
     pullPolicy: IfNotPresent
     repository: 098669589541.dkr.ecr.eu-west-2.amazonaws.com/search-api-server
+    # appVersion is used by default when defining an empty string
+    tag: ""
   metrics:
     service:
       port: 9464

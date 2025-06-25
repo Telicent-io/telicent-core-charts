@@ -31,15 +31,20 @@ Create chart name and version as used by the chart label.
 {{- end }}
 
 {{/*
+Returns the version
+*/}}
+{{- define "smart-cache-graph.version" -}}
+{{ .Values.image.tag | default .Chart.AppVersion }}
+{{- end -}}
+
+{{/*
 Common labels
 */}}
 {{- define "smart-cache-graph.labels" -}}
 telicent.io/resource: "true"
 helm.sh/chart: {{ include "smart-cache-graph.chart" . }}
 {{ include "smart-cache-graph.selectorLabels" . }}
-{{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
-{{- end }}
+app.kubernetes.io/version: {{ include "smart-cache-graph.version" . | quote }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 
@@ -50,6 +55,7 @@ Selector labels
 app.kubernetes.io/name: {{ include "smart-cache-graph.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
+
 
 {{/*
 Create the name of the service account to use

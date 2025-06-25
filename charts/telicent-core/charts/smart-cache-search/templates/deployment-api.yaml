@@ -54,7 +54,7 @@ spec:
             optional: true
         {{- end }}
         {{- end }}
-        image: {{ .Values.api.image.repository }}:{{ .Values.api.image.tag | default .Chart.AppVersion }}
+        image: {{ .Values.api.image.repository }}:{{ include "smart-cache-search-api.version" . }}
         imagePullPolicy: {{ .Values.api.image.pullPolicy }}
         livenessProbe:
           httpGet:

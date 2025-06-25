@@ -51,7 +51,7 @@ spec:
         {{- range $key, $value := .Values.projector.extraEnvs }}
         {{- end }}
         {{- end }}
-        image: {{ .Values.projector.image.repository }}:{{ .Values.projector.image.tag | default .Chart.AppVersion }}
+        image: {{ .Values.projector.image.repository }}:{{ include "smart-cache-search-projector.version" . }}
         imagePullPolicy: {{ .Values.projector.image.pullPolicy }}
         livenessProbe:
           httpGet:
