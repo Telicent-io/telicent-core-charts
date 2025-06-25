@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.3](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v0.2.2...telicent-core-v0.2.3) (2025-06-25)
+
+
+### Bug Fixes
+
+* updage scg config to include groupId ([acf0076](https://github.com/Telicent-io/telicent-core-charts/commit/acf0076384655f3969f1893e5f14c5c76da7c70b))
+* update scg config to include groupId ([83f6fb3](https://github.com/Telicent-io/telicent-core-charts/commit/83f6fb3005b08f2b087d7ad96fe2ab689b59025a))
+
 ## [0.2.2](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v0.2.1...telicent-core-v0.2.2) (2025-06-25)
 
 
