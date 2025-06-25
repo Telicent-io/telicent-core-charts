@@ -1,51 +1,51 @@
 configuration:
-    attributeHierarchyUrl: http://access-api.tc-system.svc.cluster.local:8080/hierarchies/lookup/{name}
-    javaOptions: -Xmx5120m -Xms2048m -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks
-    jwksUrl: https://your.oidc.public.key.endpoint/keys
-    otelMetricsExporter: prometheus
-    otelTracesExporter: none
-    userAttributesUrl: http://access-api.tc-system.svc.cluster.local:8080/users/lookup/{user}
+  # attributeHierarchyUrl: http://access-api.tc-system.svc.cluster.local:8080/hierarchies/lookup/{name}
+  javaOptions: -Xmx5120m -Xms2048m -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks
+  jwksUrl: https://your.oidc.public.key.endpoint/keys
+  otelMetricsExporter: prometheus
+  otelTracesExporter: none
+  # userAttributesUrl: http://access-api.tc-system.svc.cluster.local:8080/users/lookup/{user}
 
 fullnameOverride: ""
 
 image:
-    pullPolicy: IfNotPresent
-    repository: telicent/smart-cache-graph
-    tag: 0.83.6
+  pullPolicy: IfNotPresent
+  repository: telicent/smart-cache-graph
+  tag: 0.83.6
 
 metrics:
-    service:
-        port: 9464
+  service:
+    port: 9464
 
 nameOverride: ""
 
 persistentVolumeClaims:
-    backupsVolume:
-        size: 100Gi
-        storageClass: gp3-enc
-    datasetsVolume:
-        size: 25Gi
-        storageClass: gp3-enc
+  backupsVolume:
+    size: 100Gi
+    storageClass: gp3-enc
+  datasetsVolume:
+    size: 25Gi
+    storageClass: gp3-enc
 
 service:
-    port: 3030
-    type: ClusterIP
+  port: 3030
+  type: ClusterIP
 
 serviceAccount:
-    annotations: {}
-    name: ""
+  annotations: {}
+  name: ""
 
 statefulset:
-    annotations: {}
-    replicas: 1
-    resources: {}
-    revisionHistoryLimit: 3
+  annotations: {}
+  replicas: 1
+  resources: {}
+  revisionHistoryLimit: 3
 
 # existingKafkaConfigSecret:
 #   name: kafka-auth-config
 kafkaConfig: |-
-    security.protocol=SASL_SSL
-    sasl.mechanism=SCRAM-SHA-512
-    sasl.jaas.config=org.apache.kafka.common.security.scram.ScramLoginModule required \
-        username="your.kafka.username.here" \
-        password="your.kafka.password.here";
+  security.protocol=SASL_SSL
+  sasl.mechanism=SCRAM-SHA-512
+  sasl.jaas.config=org.apache.kafka.common.security.scram.ScramLoginModule required \
+      username="your.kafka.username.here" \
+      password="your.kafka.password.here";
