@@ -1,0 +1,281 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "title": "Access API Helm Chart Values",
+  "type": "object",
+  "properties": {
+    "cacert": {
+      "type": "string",
+      "description": "Path to the extra certificates to be trusted."
+    },
+    "mongo": {
+      "type": "object",
+      "description": "MongoDB configuration.",
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "MongoDB connection URL."
+        },
+        "username": {
+          "type": "string",
+          "description": "MongoDB username."
+        },
+        "password": {
+          "type": "string",
+          "description": "MongoDB password."
+        },
+        "database": {
+          "type": "string",
+          "description": "MongoDB database name."
+        },
+        "connectionStringOptions": {
+          "type": "string",
+          "description": "Additional connection string options for MongoDB."
+        },
+        "retryRewrites": {
+          "type": "string",
+          "description": "Retry rewrites option for MongoDB."
+        }
+      },
+      "required": [
+        "url",
+        "username",
+        "password",
+        "database"
+      ]
+    },
+    "config": {
+      "type": "object",
+      "description": "General configuration for the application.",
+      "properties": {
+        "appsUrl": {
+          "type": "string",
+          "description": "The host the API is being served from."
+        },
+        "debug": {
+          "type": "boolean",
+          "description": "Enable debug logging."
+        },
+        "openidProviderUrl": {
+          "type": "string",
+          "description": "The URL of the OIDC provider."
+        },
+        "scimEnabled": {
+          "type": "boolean",
+          "description": "Enable SCIM user management."
+        }
+      },
+      "required": [
+        "appsUrl",
+        "openidProviderUrl"
+      ]
+    },
+    "containerSecurityContext": {
+      "type": "object",
+      "description": "Container security context configuration.",
+      "properties": {
+        "allowPrivilegeEscalation": {
+          "type": "boolean",
+          "description": "Allow privilege escalation."
+        },
+        "capabilities": {
+          "type": "object",
+          "properties": {
+            "drop": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Capabilities to drop."
+            }
+          }
+        },
+        "runAsGroup": {
+          "type": "integer",
+          "description": "Group ID to run as."
+        },
+        "runAsNonRoot": {
+          "type": "boolean",
+          "description": "Run as non-root user."
+        },
+        "runAsUser": {
+          "type": "integer",
+          "description": "User ID to run as."
+        },
+        "seccompProfile": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "description": "Seccomp profile type."
+            }
+          }
+        }
+      },
+      "required": [
+        "allowPrivilegeEscalation",
+        "runAsGroup",
+        "runAsNonRoot",
+        "runAsUser"
+      ]
+    },
+    "existingConfigmap": {
+      "type": "string",
+      "description": "Name of the existing configmap for configuration."
+    },
+    "existingSecret": {
+      "type": "string",
+      "description": "Name of the existing secret for configuration."
+    },
+    "existingCacertConfigmap": {
+      "type": "string",
+      "description": "Name of the existing configmap for extra certificates."
+    },
+    "fullnameOverride": {
+      "type": "string",
+      "description": "Override the full name of the chart."
+    },
+    "image": {
+      "type": "object",
+      "description": "Image configuration.",
+      "properties": {
+        "pullPolicy": {
+          "type": "string",
+          "description": "Image pull policy."
+        },
+        "repository": {
+          "type": "string",
+          "description": "Image repository."
+        },
+        "tag": {
+          "type": "string",
+          "description": "Image tag."
+        }
+      },
+      "required": [
+        "pullPolicy",
+        "repository",
+        "tag"
+      ]
+    },
+    "podSecurityContext": {
+      "type": "object",
+      "description": "Pod security context configuration.",
+      "properties": {
+        "fsGroup": {
+          "type": "integer",
+          "description": "Filesystem group ID."
+        },
+        "runAsGroup": {
+          "type": "integer",
+          "description": "Group ID to run as."
+        },
+        "runAsNonRoot": {
+          "type": "boolean",
+          "description": "Run as non-root user."
+        },
+        "runAsUser": {
+          "type": "integer",
+          "description": "User ID to run as."
+        },
+        "seccompProfile": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "description": "Seccomp profile type."
+            }
+          }
+        }
+      },
+      "required": [
+        "fsGroup",
+        "runAsGroup",
+        "runAsNonRoot",
+        "runAsUser"
+      ]
+    },
+    "replicas": {
+      "type": "integer",
+      "description": "Number of replicas."
+    },
+    "resources": {
+      "type": "object",
+      "description": "Resource requests and limits.",
+      "properties": {
+        "requests": {
+          "type": "object",
+          "properties": {
+            "cpu": {
+              "type": "string",
+              "description": "CPU request."
+            },
+            "memory": {
+              "type": "string",
+              "description": "Memory request."
+            }
+          }
+        },
+        "limits": {
+          "type": "object",
+          "properties": {
+            "cpu": {
+              "type": "string",
+              "description": "CPU limit."
+            },
+            "memory": {
+              "type": "string",
+              "description": "Memory limit."
+            }
+          }
+        }
+      }
+    },
+    "revisionHistoryLimit": {
+      "type": "integer",
+      "description": "Revision history limit."
+    },
+    "service": {
+      "type": "object",
+      "description": "Service configuration.",
+      "properties": {
+        "port": {
+          "type": "integer",
+          "description": "Service port."
+        },
+        "type": {
+          "type": "string",
+          "description": "Service type."
+        }
+      },
+      "required": [
+        "port",
+        "type"
+      ]
+    },
+    "serviceAccount": {
+      "type": "object",
+      "description": "Service account configuration.",
+      "properties": {
+        "annotations": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Annotations for the service account."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the service account."
+        }
+      }
+    }
+  },
+  "required": [
+    "cacert",
+    "mongo",
+    "config",
+    "image",
+    "replicas",
+    "service"
+  ]
+}

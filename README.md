@@ -7,7 +7,7 @@ To install the Telicent CORE Helm chart, use the following commands:
 ```sh
 helm repo add --username <GithubUsername> --password <GithubPAT*> telicent-core-charts 'https://raw.githubusercontent.com/Telicent-io/telicent-core-charts/gh-pages'
 helm repo update
-helm search repo telicent-core-charts
+helm search repo telicent-charts
 helm install my-release telicent-core --values <path-to-your-values-file.yaml>
 ```
 

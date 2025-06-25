@@ -1,25 +1,23 @@
-# Configmap containing extra certificates to be trusted
-cacert: ""
+# MongoDB configuration
+mongo:
+  url: "mongodb://example.mongodb.net"
+  username: root
+  password: "your.mongo.password.here"
+  database: access
+  connectionStringOptions: "authMechanism=SCRAM-SHA-1&retryWrites=false"
+  retryRewrites: "false"
+  # existingMongoPasswordSecret: telicent-access-db-password
 
-# Configuration
+# Configuration
 config:
-  # The host the api is being served from
-  appsUrl: change.to.url.of.instance
+  # The host the API is being served from
+  appsUrl: "https://example.com"
   # Enable debug logging
-  debug: false
-  # MongoDB configuration
-  mongoCollection: access
-  mongodbPassword: change.to.mongodb.password
-  mongodbUser: change.to.mongodb.username
-  mongodbUrl: change.to.mongodb.url
-  # MongoDB connection string options
-  mongoConnectionStringOptions: "authMechanism=SCRAM-SHA-1&retryWrites=false"
+  debug: true
   # The URL of the OIDC provider
-  openidProviderUrl: change.to.oidc.provider.url
-  mongoRetryRewrites: "false"
-
-  # Enable SCIM user management
-  scimEnabled: false
+  openidProviderUrl: "https://oidc.example.com"
+  # Enable SCIM user management
+  scimEnabled: true
 
 # Container security context
 containerSecurityContext:
@@ -34,21 +32,27 @@ containerSecurityContext:
     type: RuntimeDefault
 
 # Use existing configmap for configuration (config.* will be ignored)
-existingConfigmap: ""
+existingConfigmap: "existing-configmap-name"
 
 # Use existing secret for configuration (config.mongodbPassword will be ignored)
-existingSecret: ""
+existingSecret: "existing-secret-name"
 
-existingCacertConfigmap: ""
+# Use existing configmap for extra certificates
+existingCacertConfigmap: "existing-cacert-configmap-name"
 
-fullnameOverride: ""
+# Override the full name of the chart
+fullnameOverride: "custom-fullname"
 
+# Configmap containing extra certificates to be trusted
+cacert: "path/to/cacert.pem"
+
+# Image configuration
 image:
   pullPolicy: Always
   repository: telicent/telicent-access-api
-  # appVersion is used by default when defining an empty string
-  tag: ""
+  tag: "latest"
 
+# Pod security context
 podSecurityContext:
   fsGroup: 185
   runAsGroup: 185
@@ -57,16 +61,28 @@ podSecurityContext:
   seccompProfile:
     type: RuntimeDefault
 
-replicas: 1
+# Replica count
+replicas: 3
 
-resources: {}
+# Resource requests and limits
+resources:
+  requests:
+    cpu: "500m"
+    memory: "512Mi"
+  limits:
+    cpu: "1"
+    memory: "1Gi"
 
-revisionHistoryLimit: 3
+# Revision history limit
+revisionHistoryLimit: 5
 
+# Service configuration
 service:
   port: 8080
   type: ClusterIP
 
+# Service account configuration
 serviceAccount:
-  annotations: {}
-  name: ""
+  annotations:
+    example.annotation/key: "value"
+  name: "custom-service-account-name"
