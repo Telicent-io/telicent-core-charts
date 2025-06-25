@@ -23,9 +23,9 @@
           "type": "string",
           "description": "MongoDB password."
         },
-        "database": {
+        "collection": {
           "type": "string",
-          "description": "MongoDB database name."
+          "description": "MongoDB collection name."
         },
         "connectionStringOptions": {
           "type": "string",
@@ -43,7 +43,7 @@
         "database"
       ]
     },
-    "config": {
+    "configuration": {
       "type": "object",
       "description": "General configuration for the application.",
       "properties": {
