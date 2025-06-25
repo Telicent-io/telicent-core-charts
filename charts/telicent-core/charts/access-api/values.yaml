@@ -10,16 +10,16 @@ mongo:
 
 # Configuration
 config:
-  # The host the API is being served from
+  # appsUrl is the host the API is being served from
   appsUrl: "https://example.com"
-  # Enable debug logging
+  # debug enables debug logging
   debug: true
-  # The URL of the OIDC provider
+  # openidProviderUrl is the URL of the OIDC provider
   openidProviderUrl: "https://oidc.example.com"
-  # Enable SCIM user management
+  # scimEnabled enables SCIM user management
   scimEnabled: true
 
-# Container security context
+# containerSecurityContext sets the container security context
 containerSecurityContext:
   allowPrivilegeEscalation: false
   capabilities:
@@ -31,58 +31,80 @@ containerSecurityContext:
   seccompProfile:
     type: RuntimeDefault
 
-# Use existing configmap for configuration (config.* will be ignored)
+# existingConfigmap is the name of the existing configmap for configuration
 existingConfigmap: "existing-configmap-name"
 
-# Use existing secret for configuration (config.mongodbPassword will be ignored)
+# existingSecret is the name of the existing secret for configuration
 existingSecret: "existing-secret-name"
 
-# Use existing configmap for extra certificates
+# existingCacertConfigmap is the name of the existing configmap for extra certificates
 existingCacertConfigmap: "existing-cacert-configmap-name"
 
-# Override the full name of the chart
+# fullnameOverride sets the full name of the chart
 fullnameOverride: "custom-fullname"
 
-# Configmap containing extra certificates to be trusted
+# cacert is the path to the CA certificate file
 cacert: "path/to/cacert.pem"
 
 # Image configuration
 image:
+  # imagePullSecrets is a list of secrets to use for pulling the image
+  imagePullSecrets: []
+  # pullPolicy defines the image pull policy
   pullPolicy: Always
+  # repository is the Docker repository for the image
   repository: telicent/telicent-access-api
+  # tag is the image tag to use
   tag: "latest"
 
 # Pod security context
 podSecurityContext:
+  # fsGroup sets the filesystem group ID for the pod
   fsGroup: 185
+  # runAsGroup sets the group ID for the pod
   runAsGroup: 185
+  # runAsNonRoot ensures the pod runs as a non-root user
   runAsNonRoot: true
+  # runAsUser sets the user ID for the pod
   runAsUser: 185
+  # seccompProfile sets the seccomp profile for the pod
   seccompProfile:
     type: RuntimeDefault
 
-# Replica count
+# replicas sets the replica count
 replicas: 3
 
-# Resource requests and limits
+# resources sets the resource requests and limits for the pod
 resources:
+  # requests define the minimum resources required
   requests:
+    # cpu is the minimum CPU required unit is milliCPU
     cpu: "500m"
+    # memory is the minimum memory required
     memory: "512Mi"
+  # limits define the maximum resources allowed
   limits:
+    # cpu is the maximum CPU allowed unit is milliCPU
     cpu: "1"
+    # memory is the maximum memory allowed
     memory: "1Gi"
 
-# Revision history limit
+# revisionHistoryLimit sets the number of old ReplicaSets to retain
 revisionHistoryLimit: 5
 
-# Service configuration
+# service configuration
 service:
+  # port is the port the service will listen on
   port: 8080
+  # type defines the service type
   type: ClusterIP
 
-# Service account configuration
+# serviceAccount configuration
 serviceAccount:
+  # annotations are additional annotations for the service account
   annotations:
-    example.annotation/key: "value"
-  name: "custom-service-account-name"
+    {}
+    # example.annotation/key: "value"
+  # name is the name of the service account
+  # If not set, the chart will generate a name based on the release name
+  name: ""
