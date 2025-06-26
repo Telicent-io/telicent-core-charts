@@ -58,29 +58,14 @@ spec:
           timeoutSeconds: 2
         resources: {{- toYaml .Values.resources | nindent 10 }}
 
-        securityContext:
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-            - ALL
-          runAsGroup: 185
-          runAsNonRoot: true
-          runAsUser: 185
-          seccompProfile:
-            type: RuntimeDefault
+        securityContext: {{- toYaml .Values.containerSecurityContext |
+          nindent 10 }}
 
         volumeMounts:
         - mountPath: /usr/local/nginx/html/env-config.js
           name: app-config-volume
           subPath: env-config.js
-
-      securityContext:
-        fsGroup: 185
-        runAsGroup: 185
-        runAsNonRoot: true
-        runAsUser: 185
-        seccompProfile:
-          type: RuntimeDefault
+      securityContext: {{- toYaml .Values.podSecurityContext | nindent 8 }}
 
       volumes:
       - configMap:
