@@ -25,17 +25,12 @@
       "type": "object",
       "description": "Telicent-specific configuration settings.",
       "properties": {
-        "accessUiApiUrl": {
-          "type": "string",
-          "description": "The URL for the Access API."
-        },
         "signOutUrl": {
           "type": "string",
           "description": "The URL for signing out."
         }
       },
       "required": [
-        "accessUiApiUrl",
         "signOutUrl"
       ]
     },
