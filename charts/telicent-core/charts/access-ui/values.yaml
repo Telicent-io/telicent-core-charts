@@ -2,9 +2,13 @@
 # This section contains configuration options specific to the Telicent application.
 # See: https://docs.telicent.io/en/latest/helm-charts/access-ui.html#configuration // TODO get proper link
 # for full documentation
+global:
+  # authHostDomain is the domain for the authentication host
+  authHostDomain: "auth.telicent.io"
+  # appHostDomain is the domain for the application host
+  appHostDomain: "apps.telicent.io"
+
 configuration:
-  # accessUiApiUrl is the URL for the Access API
-  accessUiApiUrl: "https://your.host.here/api/access"
   # signOutUrl is the URL for signing out
   signOutUrl: "https://your.host.here/logout"
 

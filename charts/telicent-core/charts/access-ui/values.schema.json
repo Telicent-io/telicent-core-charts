@@ -3,21 +3,34 @@
   "title": "Access UI Helm Chart Values",
   "type": "object",
   "properties": {
+    "global": {
+      "type": "object",
+      "description": "Global configuration settings.",
+      "properties": {
+        "appHostDomain": {
+          "type": "string",
+          "description": "Domain for the Telicent applications."
+        },
+        "authHostDomain": {
+          "type": "string",
+          "description": "Domain for the Telicent authentication service."
+        }
+      },
+      "required": [
+        "appHostDomain",
+        "authHostDomain"
+      ]
+    },
     "configuration": {
       "type": "object",
       "description": "Telicent-specific configuration settings.",
       "properties": {
-        "accessUiApiUrl": {
-          "type": "string",
-          "description": "The URL for the Access API."
-        },
         "signOutUrl": {
           "type": "string",
           "description": "The URL for signing out."
         }
       },
       "required": [
-        "accessUiApiUrl",
         "signOutUrl"
       ]
     },
