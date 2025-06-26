@@ -71,8 +71,8 @@ spec:
           name: {{ include "search.configMapName" . }}
         name: app-config-volume
       - secret:
-      {{- if .Values.existingMapConfigSecretName }}
-          secretName: {{ .Values.existingMapConfigSecretName }}
+      {{- if .Values.map.existingMapConfigSecretName }}
+          secretName: {{ .Values.map.existingMapConfigSecretName }}
       {{- else }}
           secretName: {{ include "search.fullname" . }}-secret-config-js
       {{- end }}
