@@ -58,8 +58,7 @@ spec:
           timeoutSeconds: 2
         resources: {{- toYaml .Values.resources | nindent 10 }}
 
-        securityContext: {{- toYaml .Values.containerSecurityContext |
-          nindent 10 }}
+        securityContext: {{- toYaml .Values.containerSecurityContext | nindent 10 }}
 
         volumeMounts:
         - mountPath: /usr/local/nginx/html/env-config.js

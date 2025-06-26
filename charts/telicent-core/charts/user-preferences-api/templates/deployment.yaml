@@ -67,30 +67,16 @@ spec:
         volumeMounts:
         - name: truststore-volume
           mountPath: /app/config/truststore
-        securityContext:
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-                - ALL
-          runAsGroup: 185
-          runAsNonRoot: true
-          runAsUser: 185
-          seccompProfile:
-              type: RuntimeDefault
+        securityContext: {{- toYaml .Values.containerSecurityContext | nindent 10 }}
+
       volumes:
         - name: truststore-volume
           secret:
           {{- if .Values.global.existingTruststoreSecretName }}
             secretName: {{ .Values.global.existingTruststoreSecretName }}
           {{- else }}
-            secretName: {{ include "telicent-core.truststoreSecretName" . }}
+            secretName: {{ .Values.global.existingTruststoreSecretName }}
           {{- end }}
             optional: true
-      securityContext: 
-        fsGroup: 185
-        runAsGroup: 185
-        runAsNonRoot: true
-        runAsUser: 185
-        seccompProfile:
-          type: RuntimeDefault
+      securityContext: {{- toYaml .Values.podSecurityContext | nindent 8 }}
       serviceAccountName: {{ include "user-preferences-api.serviceAccountName" . }}

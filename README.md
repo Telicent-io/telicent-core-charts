@@ -43,3 +43,5 @@ For more configuration options, see the [values.yaml](./values.yaml) file.
 | `query-ui`                   | object  | {}     | [See query-ui README](./charts/telicent-core/charts/query-ui/README.md)    |
 | `search-ui`                  | object  | {}     | [See search-ui README](./charts/telicent-core/charts/search-ui/README.md)  |
 | `smart-cache-graph`          | object  | {}     | [See smart-cache-graph README](./charts/telicent-core/charts/smart-cache-graph/README.md)|
+| `smart-cache-search`          | object  | {}     | [See smart-cache-search README](./charts/telicent-core/charts/smart-cache-search/README.md)|
+| `user-preferences-api`          | object  | {}     | [See user-preferences-api README](./charts/telicent-core/charts/user-preferences-api/README.md)|
