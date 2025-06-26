@@ -53,16 +53,9 @@ spec:
           periodSeconds: 30
           timeoutSeconds: 2
         resources: {{- toYaml .Values.resources | nindent 10 }}
-        securityContext:
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-            - ALL
-          runAsGroup: 185
-          runAsNonRoot: true
-          runAsUser: 185
-          seccompProfile:
-            type: RuntimeDefault
+        securityContext: {{- toYaml .Values.containerSecurityContext |
+          nindent 10 }}
+
         volumeMounts:
         - mountPath: /usr/local/nginx/html/env-config.js
           name: app-config-volume
@@ -70,21 +63,16 @@ spec:
         - name: secret-config-js-volume
           mountPath: /usr/local/nginx/html/secret-config.js
           subPath: secret-config.js
-      securityContext:
-        fsGroup: 185
-        runAsGroup: 185
-        runAsNonRoot: true
-        runAsUser: 185
-        seccompProfile:
-          type: RuntimeDefault
+      securityContext: {{- toYaml .Values.podSecurityContext | nindent 8 }}
+
       serviceAccountName: {{ include "search.serviceAccountName" . }}
       volumes:
       - configMap:
           name: {{ include "search.configMapName" . }}
         name: app-config-volume
       - secret:
-      {{- if .Values.existingMapConfigSecretName }}
-          secretName: {{ .Values.existingMapConfigSecretName }}
+      {{- if .Values.map.existingMapConfigSecretName }}
+          secretName: {{ .Values.map.existingMapConfigSecretName }}
       {{- else }}
           secretName: {{ include "search.fullname" . }}-secret-config-js
       {{- end }}

@@ -11,7 +11,7 @@ metadata:
 
 data:
   env-config.js: |
-    const DOMAIN = "{{  coalesce ((.Values.global).appHostDomain) .Values.configuration.appHostDomain }}"; 
+    const DOMAIN = "{{ .Values.global.appHostDomain }}"; 
     // Configure the Smart Cache Graph GraphQL API endpoint as used by the client browser.
     window.GRAPHQL_URL = `https://${DOMAIN}/api/graphql/knowledge/graphql`;
     // Configure the Smart Cache Graph SPARQL API endpoint as used by the client browser.

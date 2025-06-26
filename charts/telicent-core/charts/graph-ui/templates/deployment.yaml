@@ -86,9 +86,9 @@ spec:
           name: {{ include "graph.configMapName" . }}
           {{- end }}
         name: app-config-volume
-      {{- if .Values.existingMapConfigSecretName }}
+      {{- if .Values.map.existingMapConfigSecretName }}
       - secret:
-          secretName: {{ .Values.existingMapConfigSecretName }}
+          secretName: {{ .Values.map.existingMapConfigSecretName }}
         name: secret-config-js-volume
       {{- else }}
       - secret:
