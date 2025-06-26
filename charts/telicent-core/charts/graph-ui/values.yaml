@@ -1,57 +1,128 @@
-global:
-  appHostDomain: "apps.telicent.io"
-  authHostDomain: "auth.telicent.io"
-  jwksUrl: "https://auth.telicent.io/realms/core/protocol/openid-connect/certs"
+# Default values for Telicent Graph UI Helm Chart
 
+# global configuration
+# This section contains global values that are used across the charts inherited from the telicent core umbrella chart, will override these values. These are included to allow this chart to be standalone.
+global:
+  # appHostDomain is the domain for the Telicent applications
+  # This is used to construct URLs for the applications.
+  appHostDomain: "apps.telicent.io"
+  # authHostDomain is the domain for the Telicent authentication service
+  # This is used for the OIDC provider and other authentication-related URLs.
+  authHostDomain: "auth.telicent.io"
+
+# configuration is for Telicent specific settings
+# This section contains configuration options specific to the Telicent application.
+# See: https://docs.telicent.io/en/latest/helm-charts/graph-ui.html#configuration // TODO get proper link
+# for full documentation
 configuration:
-  appHostUrl: "apps.telicent.io"
+  # accessApiEndpoint is the URL for the Access API
   accessApiEndpoint: "https://access-api.telicent.io"
+  # userPortalUiDeployed indicates if the user portal UI is deployed (boolean)
   userPortalUiDeployed: true
+  # graphUiDeployed indicates if the graph UI is deployed (boolean)
   graphUiDeployed: true
+  # dataCatalogUiDeployed indicates if the data catalog UI is deployed (boolean)
   dataCatalogUiDeployed: true
 
 map:
+  # searchUiMaptilerToken is the MapTiler token for the search UI
   searchUiMaptilerToken: "your.maptiler.token.here"
+
+  # For examples of the map configuration, see: _secret_config_js.tpl
+  # searchUiMapboxStyleSpecUrl is the Mapbox style spec URL for the search UI can be specified if using Mapbox styles
   # searchUiMapboxStyleSpecUrl: "https://your.mapbox.style.spec.url.here"
+
+  # searchUiArcgisToken is the ArcGIS token for the search UI can be specified if using ArcGIS styles
   # searchUiArcgisToken: "your.arcgis.token.here"
+
+  # existingMapConfigSecretName is the name of an existing secret containing map configuration
   # existingMapConfigSecretName: "your-existing-map-config-secret-name"
 
+# affinity sets the pod affinity rules
 affinity: {}
+
+# annotations are additional annotations to add to the pod
 annotations: {}
+
+# containerSecurityContext sets the container security context
 containerSecurityContext:
+  # allowPrivilegeEscalation prevents privilege escalation
   allowPrivilegeEscalation: false
+  # capabilities sets the capabilities for the container
   capabilities:
+    # drop all capabilities
     drop:
       - ALL
+  # runAsGroup sets the group ID for the container
   runAsGroup: 185
+  # runAsNonRoot ensures the container runs as a non-root user
   runAsNonRoot: true
+  # runAsUser sets the user ID for the container
   runAsUser: 185
+  # seccompProfile sets the seccomp profile for the container
   seccompProfile:
+    # type defines the seccomp profile type
+    # RuntimeDefault uses the default runtime seccomp profile
     type: RuntimeDefault
+
+# fullnameOverride sets the full name of the chart
 fullnameOverride: ""
 
+# Image configuration
 image:
+  # imagePullSecrets is a list of secrets to use for pulling the image
+  imagePullSecrets: []
+  # pullPolicy defines the image pull policy
   pullPolicy: IfNotPresent
+  # repository is the Docker repository for the image
   repository: 098669589541.dkr.ecr.eu-west-2.amazonaws.com/telicent-graph
-  # appVersion is used by default when defining an empty string
+
+  # appVersion is used by default when defining an empty string for tag
+  # tag is the image tag to use
   tag: ""
 
 nameOverride: ""
 nodeSelector: {}
+
+# Pod security context
 podSecurityContext:
+  # fsGroup sets the filesystem group ID for the pod
   fsGroup: 185
+  # runAsGroup sets the group ID for the pod
   runAsGroup: 185
+  # runAsNonRoot ensures the pod runs as a non-root user
   runAsNonRoot: true
+  # runAsUser sets the user ID for the pod
   runAsUser: 185
+  # seccompProfile sets the seccomp profile for the pod
   seccompProfile:
     type: RuntimeDefault
+
+# replicas sets the replica count
 replicas: 1
+
+# resources sets the resource requests and limits for the pod
 resources: {}
+
+# revisionHistoryLimit sets the number of old ReplicaSets to retain
 revisionHistoryLimit: 3
+
+# service configuration
 service:
+  # port is the port the service will listen on
   port: 8080
+  # type defines the service type
   type: ClusterIP
+
+# serviceAccount configuration
 serviceAccount:
-  annotations: {}
+  # annotations are additional annotations for the service account
+  annotations:
+    {}
+    # example.annotation/key: "value"
+  # name is the name of the service account
+  # If not set, the chart will generate a name based on the release name
   name: ""
+
+# tolerations sets the tolerations for the pod
 tolerations: []

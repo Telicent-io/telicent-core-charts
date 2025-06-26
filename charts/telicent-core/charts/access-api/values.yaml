@@ -68,6 +68,8 @@ image:
   pullPolicy: Always
   # repository is the Docker repository for the image
   repository: telicent/telicent-access-api
+
+  # appVersion is used by default when defining an empty string for tag
   # tag is the image tag to use
   tag: ""
 
