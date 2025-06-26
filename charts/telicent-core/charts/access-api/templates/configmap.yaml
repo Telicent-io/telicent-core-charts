@@ -8,11 +8,11 @@ metadata:
     {{- include "access-api.labels" . | nindent 4 }}
 data:
   DEBUG: {{ .Values.configuration.debug | quote }}
-  DEPLOYED_DOMAIN: {{ .Values.configuration.appsUrl | quote }}
+  DEPLOYED_DOMAIN: {{ .Values.global.appHostDomain | quote }}
   MONGO_COLLECTION: {{ .Values.mongo.collection | quote }}
   MONGO_URL: {{ .Values.mongo.url | quote }}
   MONGO_USER: {{ .Values.mongo.username | quote }}
-  OPENID_PROVIDER_URL: {{ .Values.configuration.openidProviderUrl | quote }}
+  OPENID_PROVIDER_URL: {{ .Values.global.authHostDomain | quote }}
   PORT: {{ .Values.service.port | quote }}
   SCIM_ENABLED: {{ .Values.configuration.scimEnabled | quote }}
   MONGO_CONNECTION_STRING_OPTIONS: {{ .Values.mongo.connectionStringOptions | quote }}

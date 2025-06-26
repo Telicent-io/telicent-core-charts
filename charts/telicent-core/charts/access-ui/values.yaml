@@ -1,6 +1,6 @@
 # configuration is for Telicent specific settings
 # This section contains configuration options specific to the Telicent application.
-# See: https://docs.telicent.com/en/latest/helm-charts/access-ui.html#configuration // TODO get proper link
+# See: https://docs.telicent.io/en/latest/helm-charts/access-ui.html#configuration // TODO get proper link
 # for full documentation
 configuration:
   # accessUiApiUrl is the URL for the Access API

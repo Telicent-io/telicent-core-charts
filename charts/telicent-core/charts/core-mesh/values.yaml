@@ -1,8 +1,17 @@
+# global values for the core mesh chart
+# These values are used to configure the core mesh and should be set according to your environment
 global:
+  # kafkaConfigProtocol defines the protocol used for Kafka communication
   kafkaConfigProtocol: "SASL_SSL"
+
+  # kafkaConfigMechanism defines the SASL mechanism used for Kafka authentication,
   kafkaConfigMechanism: "SCRAM-SHA-512"
+
+  # kafkaConfigUsername is used for Kafka authentication
   kafkaConfigUsername: "smart-cache"
+  # kafkaConfigPassword is used for Kafka authentication it is recommended to use a Kubernetes secret for sensitive information
   kafkaConfigPassword: "PASSWORD"
+
   appHostDomain: "APPS_DOMAIN"
   authHostDomain: "AUTH_DOMAIN"
   jwksUrl: "https://AUTH_DOMAIN/realms/core/protocol/openid-connect/certs"
@@ -19,7 +28,6 @@ appsGateway: istio-system/gateways-apps
 appsHost: change.me.to.the.apps.host
 authnHost: change.me.to.the.authn.host
 
-jwksUri: ""
 jwtIssuer: ""
 fullnameOverride: ""
 

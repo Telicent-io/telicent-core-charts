@@ -1,3 +1,21 @@
+global:
+  appHostDomain: "apps.telicent.io"
+  authHostDomain: "auth.telicent.io"
+  jwksUrl: "https://auth.telicent.io/realms/core/protocol/openid-connect/certs"
+
+configuration:
+  appHostUrl: "apps.telicent.io"
+  accessApiEndpoint: "https://access-api.telicent.io"
+  userPortalUiDeployed: true
+  graphUiDeployed: true
+  dataCatalogUiDeployed: true
+
+map:
+  searchUiMaptilerToken: "your.maptiler.token.here"
+  # searchUiMapboxStyleSpecUrl: "https://your.mapbox.style.spec.url.here"
+  # searchUiArcgisToken: "your.arcgis.token.here"
+  # existingMapConfigSecretName: "your-existing-map-config-secret-name"
+
 affinity: {}
 annotations: {}
 containerSecurityContext:
@@ -37,16 +55,3 @@ serviceAccount:
   annotations: {}
   name: ""
 tolerations: []
-
-configuration:
-  appHostUrl: "apps.telicent.com"
-  accessApiEndpoint: "https://access-api.telicent.com"
-  userPortalUiDeployed: true
-  graphUiDeployed: true
-  dataCatalogUiDeployed: true
-
-  # existingMapConfigSecretName: "your-existing-map-config-secret-name"
-  map:
-    # searchUiMaptilerToken: "your.maptiler.token.here"
-    # searchUiMapboxStyleSpecUrl: "https://your.mapbox.style.spec.url.here"
-    # searchUiArcgisToken: "your.arcgis.token.here"

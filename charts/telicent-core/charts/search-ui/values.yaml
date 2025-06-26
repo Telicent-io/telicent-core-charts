@@ -44,8 +44,8 @@ tolerations: []
 # existingMapConfigSecretName: search-ui-secret-config-js
 
 configuration:
-  appHostUrl: "apps.telicent.com"
-  accessApiEndpoint: "https://access-api.telicent.com"
+  appHostUrl: "apps.telicent.io"
+  accessApiEndpoint: "https://access-api.telicent.io"
   userPortalUiDeployed: true
   graphUiDeployed: true
   dataCatalogUiDeployed: true

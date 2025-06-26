@@ -1,5 +1,5 @@
 configuration:
-  appHostDomain: "apps.telicent.com"
+  appHostDomain: "apps.telicent.io"
 
 fullnameOverride: ""
 

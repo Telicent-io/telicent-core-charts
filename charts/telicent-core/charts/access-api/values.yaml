@@ -1,4 +1,19 @@
+# Default values for Telicent Access API Helm Chart
+
+# global configuration
+# This section contains global values that are used across the charts inherited from the telicent core umbrella chart, will override these values. These are included to allow this chart to be standalone.
+global:
+  # appHostDomain is the domain for the Telicent applications
+  # This is used to construct URLs for the applications.
+  appHostDomain: "apps.telicent.io"
+  # authHostDomain is the domain for the Telicent authentication service
+  # This is used for the OIDC provider and other authentication-related URLs.
+  authHostDomain: "auth.telicent.io"
+
 # configuration is for Telicent specific settings
+# This section contains configuration options specific to the Telicent application.
+# See: https://docs.telicent.io/en/latest/helm-charts/access-api.html#configuration // TODO get proper link
+# for full documentation
 configuration:
   # appsUrl is the host the API is being served from
   appsUrl: "https://example.com"
