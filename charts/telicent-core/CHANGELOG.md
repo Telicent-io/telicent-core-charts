@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.4](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v0.2.3...telicent-core-v0.2.4) (2025-06-26)
+
+
+### Bug Fixes
+
+* Remove protocol dependency and unneeded values entry ([9f36791](https://github.com/Telicent-io/telicent-core-charts/commit/9f36791543e78d0b56b817ff35e562bbe7d2be7d))
+
 ## [0.2.3](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v0.2.2...telicent-core-v0.2.3) (2025-06-25)
 
 
