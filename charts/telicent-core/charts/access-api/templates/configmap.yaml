@@ -7,14 +7,14 @@ metadata:
   labels:
     {{- include "access-api.labels" . | nindent 4 }}
 data:
-  DEBUG: {{ .Values.config.debug | quote }}
-  DEPLOYED_DOMAIN: {{ .Values.config.appsUrl | quote }}
-  MONGO_COLLECTION: {{ .Values.config.mongoCollection | quote }}
-  MONGO_URL: {{ .Values.config.mongodbUrl | quote }}
-  MONGO_USER: {{ .Values.config.mongodbUser | quote }}
-  OPENID_PROVIDER_URL: {{ .Values.config.openidProviderUrl | quote }}
+  DEBUG: {{ .Values.configuration.debug | quote }}
+  DEPLOYED_DOMAIN: {{ .Values.configuration.appsUrl | quote }}
+  MONGO_COLLECTION: {{ .Values.mongo.collection | quote }}
+  MONGO_URL: {{ .Values.mongo.url | quote }}
+  MONGO_USER: {{ .Values.mongo.username | quote }}
+  OPENID_PROVIDER_URL: {{ .Values.configuration.openidProviderUrl | quote }}
   PORT: {{ .Values.service.port | quote }}
-  SCIM_ENABLED: {{ .Values.config.scimEnabled | quote }}
-  MONGO_CONNECTION_STRING_OPTIONS: {{ .Values.config.mongoConnectionStringOptions | quote }}
-  MONGO_RETRY_REWRITES: {{ .Values.config.mongoRetryRewrites | quote }}
+  SCIM_ENABLED: {{ .Values.configuration.scimEnabled | quote }}
+  MONGO_CONNECTION_STRING_OPTIONS: {{ .Values.mongo.connectionStringOptions | quote }}
+  MONGO_RETRY_REWRITES: {{ .Values.mongo.retryRewrites | quote }}
 {{- end -}}

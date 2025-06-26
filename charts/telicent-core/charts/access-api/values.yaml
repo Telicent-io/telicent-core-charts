@@ -1,72 +1,126 @@
-# Configmap containing extra certificates to be trusted
-cacert: ""
+# configuration is for Telicent specific settings
+configuration:
+  # appsUrl is the host the API is being served from
+  appsUrl: "https://example.com"
+  # debug enables debug logging
+  debug: true
+  # openidProviderUrl is the URL of the OIDC provider
+  openidProviderUrl: "https://oidc.example.com"
+  # scimEnabled enables SCIM user management
+  scimEnabled: true
 
-# Configuration
-config:
-  # The host the api is being served from
-  appsUrl: change.to.url.of.instance
-  # Enable debug logging
-  debug: false
-  # MongoDB configuration
-  mongoCollection: access
-  mongodbPassword: change.to.mongodb.password
-  mongodbUser: change.to.mongodb.username
-  mongodbUrl: change.to.mongodb.url
-  # MongoDB connection string options
-  mongoConnectionStringOptions: "authMechanism=SCRAM-SHA-1&retryWrites=false"
-  # The URL of the OIDC provider
-  openidProviderUrl: change.to.oidc.provider.url
-  mongoRetryRewrites: "false"
-
-  # Enable SCIM user management
-  scimEnabled: false
-
-# Container security context
+# containerSecurityContext sets the container security context
 containerSecurityContext:
+  # allowPrivilegeEscalation prevents privilege escalation
   allowPrivilegeEscalation: false
+  # capabilities sets the capabilities for the container
   capabilities:
+    # drop all capabilities
     drop:
       - ALL
+  # runAsGroup sets the group ID for the container
   runAsGroup: 185
+  # runAsNonRoot ensures the container runs as a non-root user
   runAsNonRoot: true
+  # runAsUser sets the user ID for the container
   runAsUser: 185
+  # seccompProfile sets the seccomp profile for the container
   seccompProfile:
+    # type defines the seccomp profile type
+    # RuntimeDefault uses the default runtime seccomp profile
     type: RuntimeDefault
 
-# Use existing configmap for configuration (config.* will be ignored)
-existingConfigmap: ""
+# existingConfigmap is the name of the existing configmap for configuration
+existingConfigmap: "existing-configmap-name"
 
-# Use existing secret for configuration (config.mongodbPassword will be ignored)
-existingSecret: ""
+# existingSecret is the name of the existing secret for configuration
+existingSecret: "existing-secret-name"
 
-existingCacertConfigmap: ""
+# existingCacertConfigmap is the name of the existing configmap for extra certificates
+existingCacertConfigmap: "existing-cacert-configmap-name"
 
-fullnameOverride: ""
+# fullnameOverride sets the full name of the chart
+fullnameOverride: "custom-fullname"
 
+# cacert is the path to the CA certificate file
+cacert: "path/to/cacert.pem"
+
+# Image configuration
 image:
+  # imagePullSecrets is a list of secrets to use for pulling the image
+  imagePullSecrets: []
+  # pullPolicy defines the image pull policy
   pullPolicy: Always
+  # repository is the Docker repository for the image
   repository: telicent/telicent-access-api
-  # appVersion is used by default when defining an empty string
+  # tag is the image tag to use
   tag: ""
 
+# mongo configuration
+mongo:
+  # url is the MongoDB connection URL
+  url: "mongodb://example.mongodb.net"
+  # username is the MongoDB username
+  username: root
+  # password is the MongoDB password
+  password: "your.mongo.password.here"
+  # collection is the MongoDB collection to use
+  collection: access
+  # connectionStringOptions are additional options for the MongoDB connection string
+  connectionStringOptions: "authMechanism=SCRAM-SHA-1&retryWrites=false"
+  # retryRewrites enables or disables retryable writes
+  retryRewrites: "false"
+  # existingMongoPasswordSecret is the name of the existing secret containing the MongoDB password
+  # existingMongoPasswordSecret: telicent-access-db-password
+
+# Pod security context
 podSecurityContext:
+  # fsGroup sets the filesystem group ID for the pod
   fsGroup: 185
+  # runAsGroup sets the group ID for the pod
   runAsGroup: 185
+  # runAsNonRoot ensures the pod runs as a non-root user
   runAsNonRoot: true
+  # runAsUser sets the user ID for the pod
   runAsUser: 185
+  # seccompProfile sets the seccomp profile for the pod
   seccompProfile:
     type: RuntimeDefault
 
+# replicas sets the replica count
 replicas: 1
 
-resources: {}
+# resources sets the resource requests and limits for the pod
+resources:
+  # requests define the minimum resources required
+  requests:
+    # cpu is the minimum CPU required unit is milliCPU
+    cpu: "500m"
+    # memory is the minimum memory required
+    memory: "512Mi"
+  # limits define the maximum resources allowed
+  limits:
+    # cpu is the maximum CPU allowed unit is milliCPU
+    cpu: "1"
+    # memory is the maximum memory allowed
+    memory: "1Gi"
 
-revisionHistoryLimit: 3
+# revisionHistoryLimit sets the number of old ReplicaSets to retain
+revisionHistoryLimit: 5
 
+# service configuration
 service:
+  # port is the port the service will listen on
   port: 8080
+  # type defines the service type
   type: ClusterIP
 
+# serviceAccount configuration
 serviceAccount:
-  annotations: {}
+  # annotations are additional annotations for the service account
+  annotations:
+    {}
+    # example.annotation/key: "value"
+  # name is the name of the service account
+  # If not set, the chart will generate a name based on the release name
   name: ""
