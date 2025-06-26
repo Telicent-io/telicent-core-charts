@@ -15,8 +15,6 @@ global:
 # See: https://docs.telicent.io/en/latest/helm-charts/access-api.html#configuration // TODO get proper link
 # for full documentation
 configuration:
-  # appsUrl is the host the API is being served from
-  appsUrl: "https://example.com"
   # debug enables debug logging
   debug: true
   # openidProviderUrl is the URL of the OIDC provider

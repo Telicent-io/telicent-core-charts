@@ -15,8 +15,6 @@ global:
 # See: https://docs.telicent.io/en/latest/helm-charts/graph-ui.html#configuration // TODO get proper link
 # for full documentation
 configuration:
-  # accessApiEndpoint is the URL for the Access API
-  accessApiEndpoint: "https://access-api.telicent.io"
   # userPortalUiDeployed indicates if the user portal UI is deployed (boolean)
   userPortalUiDeployed: true
   # graphUiDeployed indicates if the graph UI is deployed (boolean)

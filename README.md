@@ -40,3 +40,4 @@ For more configuration options, see the [values.yaml](./values.yaml) file.
 | `access-api`                 | object  | {}     | [See access-api README](./charts/telicent-core/charts/access-api/README.md)|
 | `access-ui`                  | object  | {}     | [See access-ui README](./charts/telicent-core/charts/access-ui/README.md)  |
 | `graph-ui`                   | object  | {}     | [See graph-ui README](./charts/telicent-core/charts/graph-ui/README.md)    |
+| `query-ui`                   | object  | {}     | [See query-ui README](./charts/telicent-core/charts/query-ui/README.md)    |

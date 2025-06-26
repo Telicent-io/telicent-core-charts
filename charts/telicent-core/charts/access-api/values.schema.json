@@ -25,10 +25,6 @@
       "type": "object",
       "description": "Telicent-specific configuration settings.",
       "properties": {
-        "appsUrl": {
-          "type": "string",
-          "description": "The host the API is being served from."
-        },
         "debug": {
           "type": "boolean",
           "description": "Enable debug logging."
@@ -43,7 +39,6 @@
         }
       },
       "required": [
-        "appsUrl",
         "openidProviderUrl"
       ]
     },

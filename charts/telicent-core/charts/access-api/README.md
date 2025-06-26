@@ -12,7 +12,6 @@ This Helm chart deploys the Access API application. Below is a list of all confi
 | `mongo.database`             | string   | `"access"`                             | MongoDB database name.                                                     |
 | `mongo.connectionStringOptions` | string | `"authMechanism=SCRAM-SHA-1&retryWrites=false"` | Additional connection string options for MongoDB.                          |
 | `mongo.retryRewrites`        | string   | `"false"`                              | Retry rewrites option for MongoDB.                                         |
-| `config.appsUrl`             | string   | `"https://example.com"`                | The host the API is being served from.                                     |
 | `config.debug`               | boolean  | `true`                                 | Enable debug logging.                                                      |
 | `config.openidProviderUrl`   | string   | `"https://oidc.example.com"`           | The URL of the OIDC provider.                                              |
 | `config.scimEnabled`         | boolean  | `true`                                 | Enable SCIM user management.                                               |
