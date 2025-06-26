@@ -1,52 +1,95 @@
+# Default values for Telicent Smart Cache Graph Helm Chart
+
+# global configuration
+# This section contains global values that are used across the charts inherited from the telicent core umbrella chart, will override these values. These are included to allow this chart to be standalone.
+global:
+  jwksUrl: "https://AUTH_DOMAIN/realms/core/protocol/openid-connect/certs"
+
+# configuration is for Telicent specific settings
+# This section contains configuration options specific to the Telicent application.
+# See: https://docs.telicent.io/en/latest/helm-charts/smart-cache-graph.html#configuration // TODO get proper link
+# for full documentation
 configuration:
+  # attributeHierarchyUrl is the URL for the attribute hierarchy endpoint
   # attributeHierarchyUrl: http://access-api.tc-system.svc.cluster.local:8080/hierarchies/lookup/{name}
+
+  # javaOptions are the JVM options for the application
   javaOptions: -Xmx5120m -Xms2048m -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks
-  jwksUrl: https://your.oidc.public.key.endpoint/keys
+  # otelMetricsExporter is the OpenTelemetry metrics exporter
+  # Options: prometheus, otlp, none
   otelMetricsExporter: prometheus
+  # otelTracesExporter is the OpenTelemetry traces exporter
+  # Options: otlp, none
   otelTracesExporter: none
+  # userAttributesUrl is the URL for the user attributes endpoint
   # userAttributesUrl: http://access-api.tc-system.svc.cluster.local:8080/users/lookup/{user}
 
+# fullnameOverride sets the full name of the chart
 fullnameOverride: ""
 
+# Image configuration
 image:
-    pullPolicy: IfNotPresent
-    repository: telicent/smart-cache-graph
-    # appVersion is used by default when defining an empty string
-    tag: ""
+  # imagePullSecrets is a list of secrets to use for pulling the image
+  imagePullSecrets: []
+  # pullPolicy defines the image pull policy
+  pullPolicy: IfNotPresent
+  # repository is the Docker repository for the image
+  repository: telicent/smart-cache-graph
+  # appVersion is used by default when defining an empty string
+  # tag is the image tag to use
+  tag: ""
 
+# metrics configuration
 metrics:
+  # service is the configuration for the Prometheus service
   service:
+    # port is the port for the Prometheus service
     port: 9464
 
+# nameOverride sets a custom name for the chart it differs from fullnameOverride as it is not fully qualified
 nameOverride: ""
 
+# persistentVolumeClaims are the persistent volume claims for the application
+# This section defines the storage requirements for the application.
 persistentVolumeClaims:
+  # backupsVolume is the persistent volume claim for backups
   backupsVolume:
+    # size is the size of the backups volume
     size: 100Gi
+    # storageClass is the storage class for the backups volume
     storageClass: gp3-enc
+  # datasetsVolume is the persistent volume claim for datasets
   datasetsVolume:
+    # size is the size of the datasets volume
     size: 25Gi
+    # storageClass is the storage class for the datasets volume
     storageClass: gp3-enc
 
+# annotations are additional annotations to add to the pod
+annotations: {}
+
+# replicas sets the replica count
+replicas: 1
+
+# resources sets the resource requests and limits for the pod
+resources: {}
+
+# revisionHistoryLimit sets the number of old ReplicaSets to retain
+revisionHistoryLimit: 3
+
+# service configuration
 service:
-  port: 3030
+  # port is the port the service will listen on
+  port: 8080
+  # type defines the service type
   type: ClusterIP
 
+# serviceAccount configuration
 serviceAccount:
-  annotations: {}
+  # annotations are additional annotations for the service account
+  annotations:
+    {}
+    # example.annotation/key: "value"
+  # name is the name of the service account
+  # If not set, the chart will generate a name based on the release name
   name: ""
-
-statefulset:
-  annotations: {}
-  replicas: 1
-  resources: {}
-  revisionHistoryLimit: 3
-
-# existingKafkaConfigSecret:
-#   name: kafka-auth-config
-kafkaConfig: |-
-  security.protocol=SASL_SSL
-  sasl.mechanism=SCRAM-SHA-512
-  sasl.jaas.config=org.apache.kafka.common.security.scram.ScramLoginModule required \
-      username="your.kafka.username.here" \
-      password="your.kafka.password.here";
