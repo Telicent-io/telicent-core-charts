@@ -5,8 +5,8 @@ metadata:
   labels:
     {{- include "smart-cache-graph.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.statefulset.replicas }}
-  revisionHistoryLimit: {{ .Values.statefulset.revisionHistoryLimit }}
+  replicas: {{ .Values.replicas }}
+  revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
   selector:
     matchLabels:
     {{- include "smart-cache-graph.selectorLabels" . | nindent 6 }}
@@ -18,7 +18,7 @@ spec:
         prometheus.io/path: /
         prometheus.io/port: "9464"
         prometheus.io/scrape: "true"
-      {{- range $key, $value := .Values.statefulset.annotations }}
+      {{- range $key, $value := .Values.annotations }}
         {{ $key }}: {{ $value | quote }}
       {{- end }}
       labels:
@@ -65,17 +65,9 @@ spec:
           initialDelaySeconds: 120
           periodSeconds: 30
           timeoutSeconds: 2
-        resources: {{- toYaml .Values.statefulset.resources | nindent 10 }}
-        securityContext:
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-                - ALL
-          runAsGroup: 185
-          runAsNonRoot: true
-          runAsUser: 185
-          seccompProfile:
-              type: RuntimeDefault
+        resources: {{- toYaml .Values.resources | nindent 10 }}
+        securityContext: {{- toYaml .Values.containerSecurityContext |
+          nindent 10 }}
         volumeMounts:
         - mountPath: /fuseki/config
           name: graph-config-volume
@@ -87,13 +79,8 @@ spec:
           name: kafka-auth-config
         - mountPath: /app/config/truststore/
           name: truststore-volume
-      securityContext: 
-        fsGroup: 185
-        runAsGroup: 185
-        runAsNonRoot: true
-        runAsUser: 185
-        seccompProfile:
-          type: RuntimeDefault
+      securityContext: {{- toYaml .Values.podSecurityContext | nindent 8 }}
+
       serviceAccountName: {{ include "smart-cache-graph.serviceAccountName" . }}
       volumes:
       - configMap:
@@ -108,7 +95,7 @@ spec:
         {{- if .Values.global.existingKafkaConfigSecretName }}
           secretName: {{ .Values.global.existingKafkaConfigSecretName }}
         {{- else }}
-          secretName: {{ include "telicent-core.kafkaAuthConfigSecretName" . }}
+          secretName: {{ .Values.global.existingKafkaAuthConfigSecretName }}
         {{- end }}
         # Secret is created outside of Helm by using Ansible. WOuld potentially need cert-manager to remove this dependency.
 
@@ -117,7 +104,7 @@ spec:
         {{- if .Values.global.existingTruststoreSecretName }}
           secretName: {{ .Values.global.existingTruststoreSecretName }}
         {{- else }}
-          secretName: {{ include "telicent-core.truststoreSecretName" . }}
+          secretName: {{ .Values.global.existingTruststoreSecretName }}
         {{- end }}
           optional: true
 

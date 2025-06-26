@@ -36,9 +36,9 @@ spec:
         {{- end }}
         {{- end }}
         envFrom:
-        {{- if .Values.api.existingEnvironmentSecretName }}
+        {{- if .Values.api.elasticSecrets.existingEnvironmentSecretName }}
         - secretRef:
-            name: {{ .Values.api.existingEnvironmentSecretName | quote }}
+            name: {{ .Values.api.elasticSecrets.existingEnvironmentSecretName | quote }}
             optional: true
         {{- else }}
         - secretRef:
@@ -80,29 +80,15 @@ spec:
           periodSeconds: 60
           timeoutSeconds: 10
         resources: {{- toYaml .Values.api.resources | nindent 10 }}
-        securityContext:
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-                - ALL
-          runAsGroup: 185
-          runAsNonRoot: true
-          runAsUser: 185
-          seccompProfile:
-              type: RuntimeDefault
+        securityContext: {{- toYaml .Values.containerSecurityContext | nindent 10 }}
         volumeMounts:
         {{- if .Values.existingCacertSecret }}
         - mountPath: /opt/jre-21/lib/security/cacerts
           name: java-truststore
           subPath: truststore.jks
         {{- end }}
-      securityContext: 
-        fsGroup: 185
-        runAsGroup: 185
-        runAsNonRoot: true
-        runAsUser: 185
-        seccompProfile:
-          type: RuntimeDefault
+      securityContext: {{- toYaml .Values.podSecurityContext | nindent 8 }}
+
       serviceAccountName: {{ include "smart-cache-search.serviceAccountName" . }}-api
       volumes:
       {{- if .Values.existingCacertSecret }}

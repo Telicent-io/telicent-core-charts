@@ -78,8 +78,9 @@ image:
   # appVersion is used by default when defining an empty string for tag
   # tag is the image tag to use
   tag: ""
-
+# nameOverride sets a custom name for the chart it differs from fullnameOverride as it is not fully qualified
 nameOverride: ""
+# nodeSelector sets the node selector for the pod
 nodeSelector: {}
 
 # Pod security context

@@ -1,88 +1,267 @@
-fullnameOverride: ""
-nameOverride: ""
-imagePullSecrets: ""
+# Default values for Telicent Smart Cache Search Helm Chart
 
+# global configuration
+# This section contains global values that are used across the charts inherited from the telicent core umbrella chart, will override these values. These are included to allow this chart to be standalone.
+global:
+  # jwksUrl is the URL for the JWKS endpoint
+  jwksUrl: https://your.auth.host.here/realms/core/protocol/openid-connect/certs
+
+# api configuration
+# This section contains configuration options specific to the Telicent Search API.
 api:
+  # annotations are additional annotations to add to the pod
   annotations: {}
+  # replicas sets the number of replicas for the Search API
   replicas: 1
+  # resources sets the resource requests and limits for the pod
   resources: {}
+  # revisionHistoryLimit sets the number of old ReplicaSets to retain
   revisionHistoryLimit: 3
+
+  # image configuration
   image:
+    # imagePullSecrets is a list of secrets to use for pulling the image
+    imagePullSecrets: []
+    # pullPolicy defines the image pull policy
     pullPolicy: IfNotPresent
+    # repository is the Docker repository for the image
     repository: 098669589541.dkr.ecr.eu-west-2.amazonaws.com/search-api-server
     # appVersion is used by default when defining an empty string
+    # tag is the image tag to use
     tag: ""
-  metrics:
-    service:
-      port: 9464
 
+  # containerSecurityContext sets the container security context
+  containerSecurityContext:
+    # allowPrivilegeEscalation prevents privilege escalation
+    allowPrivilegeEscalation: false
+    # capabilities sets the capabilities for the container
+    capabilities:
+      # drop all capabilities
+      drop:
+        - ALL
+    # runAsGroup sets the group ID for the container
+    runAsGroup: 185
+    # runAsNonRoot ensures the container runs as a non-root user
+    runAsNonRoot: true
+    # runAsUser sets the user ID for the container
+    runAsUser: 185
+    # seccompProfile sets the seccomp profile for the container
+    seccompProfile:
+      # type defines the seccomp profile type
+      # RuntimeDefault uses the default runtime seccomp profile
+      type: RuntimeDefault
+
+  # podSecurityContext sets the security context for the pod
+  podSecurityContext:
+  # fsGroup sets the filesystem group ID for the pod
+  fsGroup: 185
+  # runAsGroup sets the group ID for the pod
+  runAsGroup: 185
+  # runAsNonRoot ensures the pod runs as a non-root user
+  runAsNonRoot: true
+  # runAsUser sets the user ID for the pod
+  runAsUser: 185
+  # seccompProfile sets the seccomp profile for the pod
+  seccompProfile:
+    type: RuntimeDefault
+
+  # metrics configuration
+  metrics:
+    # service is the configuration for the Prometheus service
+    service:
+      # port is the port for the Prometheus service
+      port: 9464
+  # extraEnvs is a list of additional environment variables to set in the pod
   extraEnvs: []
+  # configuration is for Telicent specific settings
+  # This section contains configuration options specific to the Telicent application.
+  # See: https://docs.telicent.io/en/latest/helm-charts/smart-cache-search.html#configuration // TODO get proper link
+  # for full documentation
   configuration:
+    # attributeHierarchyUrl is the URL for the attribute hierarchy endpoint
     attributeHierarchyUrl: http://access-api.tc-system.svc.cluster.local:8080/hierarchies/lookup/{name}
+    # elasticHost is the host for the OpenSearch instance
+    # Note: This should be the URL of your OpenSearch instance, including the protocol (http or https)
     elasticHost: https://your.opensearch.host.here:443
+    # elasticIndexNames is the name of the index in OpenSearch
     elasticIndexNames: search,doc-content
+    # elasticPort is the port for the OpenSearch instance
+    # Note: This should be the port of your OpenSearch instance, typically 443 for HTTPS
     elasticPort: "443"
+    # elasticClusterPort is the port for the OpenSearch cluster
+    # Note: This should be the port of your OpenSearch cluster, typically 9200
     elasticClusterPort: "9200"
+    # searchFieldOptions is the field options for search
+    # This is a comma-separated list of fields to be used for search, with optional weights
     searchFieldOptions: primaryName^2,*
+    # javaOptions are the JVM options for the application
     javaOptions: -XX:MaxRAMPercentage=70.0
-    Url: https://your.oidc.public.key.endpoint/keys
+    # opensearchCompatibility indicates if the application is compatible with OpenSearch
+    # This should be set to "true" if the application is compatible with OpenSearch
     opensearchCompatibility: "true"
+    # otelMetricsExporter is the OpenTelemetry metrics exporter
+    # Options: prometheus, otlp, none
     otelMetricsExporter: prometheus
+    # otelTracesExporter is the OpenTelemetry traces exporter
+    # Options: otlp, none
     otelTracesExporter: none
+
+    # userAttributesUrl is the URL for the user attributes endpoint
     userAttributesUrl: http://access-api.tc-system.svc.cluster.local:8080/users/lookup/{user}
-  service:
-    port: 8181
-    type: ClusterIP
-  elasticSecrets:
-    elasticPassword: ""
-    elasticUser: ""
-    truststorePass: ""
-  # existingEnvironmentSecretName: environment
 
-projector:
-  annotations: {}
-  replicas: 1
-  resources: {}
-  revisionHistoryLimit: 3
-  image:
-    pullPolicy: IfNotPresent
-    repository: 098669589541.dkr.ecr.eu-west-2.amazonaws.com/smart-cache-elastic-index
-    tag: 0.15.11
-  metrics:
-    service:
-      port: 9464
-  extraEnvs: []
-  # existingKafkaConfigSecret:
-  #   name: kafka-auth-config
+  # service configuration
+  service:
+    # port is the port the service will listen on
+    port: 8181
+    # type is the type of service to create
+    type: ClusterIP
+  # elasticSecrets is a section for OpenSearch secrets
+  # note: It is recommended to use a Kubernetes secret for sensitive information like passwords
   elasticSecrets:
+    # elasticPassword is the password for the OpenSearch user
     elasticPassword: ""
+    # elasticUser is the username for the OpenSearch user
     elasticUser: ""
+    # truststorePass is the password for the truststore
     truststorePass: ""
-  # existingEnvironmentSecret:
-  #   name: environment
+    # existingEnvironmentSecret is a section for an existing environment secret
+    # existingEnvironmentSecretName: environment
+
+# projector configuration
+# This section contains configuration options for the Smart Cache Search Projector.
+# The projector is responsible for indexing data into the search engine. // TODO check wording
+projector:
+  # annotations are additional annotations to add to the pod
+  annotations: {}
+  # replicas sets the number of replicas for the Search API
+  replicas: 1
+  # resources sets the resource requests and limits for the pod
+  resources: {}
+  # revisionHistoryLimit sets the number of old ReplicaSets to retain
+  revisionHistoryLimit: 3
+  # image configuration
+  image:
+    # imagePullSecrets is a list of secrets to use for pulling the image
+    imagePullSecrets: []
+    # pullPolicy defines the image pull policy
+    pullPolicy: IfNotPresent
+    # repository is the Docker repository for the image
+    repository: 098669589541.dkr.ecr.eu-west-2.amazonaws.com/smart-cache-elastic-index
+    # appVersion is used by default when defining an empty string
+    # tag is the image tag to use
+    tag: ""
+
+  # containerSecurityContext sets the container security context
+  containerSecurityContext:
+    # allowPrivilegeEscalation prevents privilege escalation
+    allowPrivilegeEscalation: false
+    # capabilities sets the capabilities for the container
+    capabilities:
+      # drop all capabilities
+      drop:
+        - ALL
+    # runAsGroup sets the group ID for the container
+    runAsGroup: 185
+    # runAsNonRoot ensures the container runs as a non-root user
+    runAsNonRoot: true
+    # runAsUser sets the user ID for the container
+    runAsUser: 185
+    # seccompProfile sets the seccomp profile for the container
+    seccompProfile:
+      # type defines the seccomp profile type
+      # RuntimeDefault uses the default runtime seccomp profile
+      type: RuntimeDefault
+
+  # podSecurityContext sets the security context for the pod
+  podSecurityContext:
+  # fsGroup sets the filesystem group ID for the pod
+  fsGroup: 185
+  # runAsGroup sets the group ID for the pod
+  runAsGroup: 185
+  # runAsNonRoot ensures the pod runs as a non-root user
+  runAsNonRoot: true
+  # runAsUser sets the user ID for the pod
+  runAsUser: 185
+  # seccompProfile sets the seccomp profile for the pod
+  seccompProfile:
+    type: RuntimeDefault
+
+  metrics:
+    # service is the configuration for the Prometheus service
+    service:
+      # port is the port for the Prometheus service
+      port: 9464
+  # extraEnvs is a list of additional environment variables to set in the pod
+  extraEnvs: []
+  # elasticSecrets is a section for OpenSearch secrets
+  # note: It is recommended to use a Kubernetes secret for sensitive information like passwords
+  elasticSecrets:
+    # elasticPassword is the password for the OpenSearch user
+    elasticPassword: ""
+    # elasticUser is the username for the OpenSearch user
+    elasticUser: ""
+    # truststorePass is the password for the truststore
+    truststorePass: ""
+    # existingEnvironmentSecret is a section for an existing environment secret
+    # existingEnvironmentSecretName: environment
+  # configuration is for Telicent specific settings
+  # This section contains configuration options specific to the Telicent application.
   configuration:
+    # topic is the topic to consume from the message broker
     topic: knowledge
+    # dlqTopic is the dead-letter queue topic for failed messages
     dlqTopic: knowledge.dlq
+    # elasticHost is the host for the OpenSearch instance
+    # Note: This should be the URL of your OpenSearch instance, including the protocol (http or https)
     elasticHost: https://your.opensearch.host.here:443
+    # elasticIndex is the name of the index in OpenSearch
     elasticIndex: search
+    # elasticPort is the port for the OpenSearch instance
     elasticPort: "443"
+    # javaOptions are the Java options to use for the OpenSearch instance
     javaOptions: -XX:MaxRAMPercentage=70.0
+    # indexBatchSize is the batch size for indexing documents
+    # this defines how many documents to index in a single batch
     indexBatchSize: "500"
+    # opensearchCompatibility indicates if the application is compatible with OpenSearch
+    # This should be set to "true" if the application is compatible with OpenSearch
     opensearchCompatibility: "true"
+    # otelMetricsExporter is the OpenTelemetry metrics exporter
+    # Options: prometheus, otlp, none
     otelMetricsExporter: prometheus
+    # otelTracesExporter is the OpenTelemetry traces exporter
+    # Options: otlp, none
     otelTracesExporter: none
 
-  # existingEnvironmentSecretName: ""
-# Private CA used for Opensearch and OIDC endpoint requires existing configmap containing jks truststore content
-
+# existingCacertSecret is a section for an existing secret containing the CA certificate
 # existingCacertSecret:
 #   name: ""
 
+# serviceAccount configuration
 serviceAccount:
-  annotations: {}
+  # annotations are additional annotations for the service account
+  annotations:
+    {}
+    # example.annotation/key: "value"
+  # name is the name of the service account
+  # If not set, the chart will generate a name based on the release name
   name: ""
 
 map:
+  # searchUiMaptilerToken is the MapTiler token for the search UI
   searchUiMaptilerToken: "your.maptiler.token.here"
+
+  # For examples of the map configuration, see: _secret_config_js.tpl
+  # searchUiMapboxStyleSpecUrl is the Mapbox style spec URL for the search UI can be specified if using Mapbox styles
   # searchUiMapboxStyleSpecUrl: "https://your.mapbox.style.spec.url.here"
+
+  # searchUiArcgisToken is the ArcGIS token for the search UI can be specified if using ArcGIS styles
   # searchUiArcgisToken: "your.arcgis.token.here"
+
+  # existingMapConfigSecretName is the name of an existing secret containing map configuration
+  # existingMapConfigSecretName: "your-existing-map-config-secret-name"
+
+# fullnameOverride sets the full name of the chart
+fullnameOverride: ""
+# nameOverride sets a custom name for the chart it differs from fullnameOverride as it is not fully qualified
+nameOverride: ""

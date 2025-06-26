@@ -36,9 +36,9 @@ spec:
         {{- end }}
         {{- end }}
         envFrom:
-        {{- if .Values.projector.existingEnvironmentSecretName }}
+        {{- if .Values.projector.elasticSecrets.existingEnvironmentSecretName }}
         - secretRef:
-            name: {{ .Values.projector.existingEnvironmentSecretName | quote }}
+            name: {{ .Values.projector.elasticSecrets.existingEnvironmentSecretName | quote }}
             optional: true
         {{- else }}
         - secretRef:
@@ -77,16 +77,7 @@ spec:
           periodSeconds: 60
           timeoutSeconds: 10
         resources: {{- toYaml .Values.projector.resources | nindent 10 }}
-        securityContext:
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-                - ALL
-          runAsGroup: 185
-          runAsNonRoot: true
-          runAsUser: 185
-          seccompProfile:
-              type: RuntimeDefault
+        securityContext: {{- toYaml .Values.containerSecurityContext | nindent 10 }}
         volumeMounts:
         - mountPath: /app/config/kafka-auth/
           name: kafka-auth-config
@@ -95,13 +86,7 @@ spec:
           name: java-truststore
           subPath: truststore.jks
         {{- end }}
-      securityContext:
-        fsGroup: 185
-        runAsGroup: 185
-        runAsNonRoot: true
-        runAsUser: 185
-        seccompProfile:
-          type: RuntimeDefault
+      securityContext: {{- toYaml .Values.podSecurityContext | nindent 8 }}
       serviceAccountName: {{ include "smart-cache-search.serviceAccountName" . }}-projector
       volumes:
       - name: kafka-auth-config
@@ -109,7 +94,7 @@ spec:
       {{- if .Values.global.existingKafkaConfigSecretName }}
           secretName: {{ .Values.global.existingKafkaConfigSecretName }}
       {{- else }}
-          secretName: {{ include "telicent-core.kafkaAuthConfigSecretName" . }}
+          secretName: {{ .Values.global.existingKafkaConfigSecretName }}
       {{- end }}
       {{- if .Values.existingCacertSecret  }}
       - name: java-truststore
