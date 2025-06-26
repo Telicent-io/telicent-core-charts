@@ -9,5 +9,5 @@ metadata:
       app.kubernetes.io/managed-by: {{ .Release.Service }}
 data:
   env-config.js: |
-    window.ACCESS_API_URL = "{{ .Values.configuration.accessUiApiUrl }}";
+    window.ACCESS_API_URL = "https://{{ .Values.global.appHostDomain }}/api/access";
     window.SIGN_OUT_URL = "{{ .Values.configuration.signOutUrl }}";
