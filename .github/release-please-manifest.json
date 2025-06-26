@@ -1,5 +1,5 @@
 {
-    "charts/telicent-core": "0.2.3",
+    "charts/telicent-core": "0.2.4",
     "charts/demo-prereqs-gateways": "0.1.0",
     "charts/demo-prereqs-kafka": "0.1.0",
     "charts/demo-prereqs-keycloak": "0.1.0",
