@@ -39,7 +39,7 @@ spec:
         env: 
         - name: BOOTSTRAP_SERVERS
           value: {{ $.Values.global.kafkaBootstrapUrls | quote }}
-        {{- toYaml $jobvalues.config | nindent 8 }}
+        {{- toYaml $jobvalues.configuration | nindent 8 }}
         {{- if $.Values.resources }}
         resources: 
         {{- toYaml $jobvalues.resources | nindent 10 }}
