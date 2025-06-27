@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.5](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v0.2.4...telicent-core-v0.2.5) (2025-06-27)
+
+
+### Bug Fixes
+
+* access-api populated defaults ([e9703ee](https://github.com/Telicent-io/telicent-core-charts/commit/e9703ee76def6c8aef4b022607d564934a02ed42))
+* access-api populated defaults ([7daa341](https://github.com/Telicent-io/telicent-core-charts/commit/7daa3418606d32967d47f7f6dd597c107bb8407a))
+
 ## [0.2.4](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v0.2.3...telicent-core-v0.2.4) (2025-06-26)
 
 
