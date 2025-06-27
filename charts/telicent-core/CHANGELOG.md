@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.7](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v0.2.6...telicent-core-v0.2.7) (2025-06-27)
+
+
+### Bug Fixes
+
+* existing secret logic ([e74b49f](https://github.com/Telicent-io/telicent-core-charts/commit/e74b49f7f388bbbaa718857cec8032c3c9c1b252))
+
 ## [0.2.6](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v0.2.5...telicent-core-v0.2.6) (2025-06-27)
 
 
