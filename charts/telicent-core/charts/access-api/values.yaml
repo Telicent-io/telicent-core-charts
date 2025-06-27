@@ -46,9 +46,6 @@ containerSecurityContext:
 # existingConfigmap is the name of the existing configmap for configuration
 existingConfigmap: ""
 
-# existingSecret is the name of the existing secret for configuration
-existingSecret: ""
-
 # existingCacertConfigmap is the name of the existing configmap for extra certificates
 existingCacertConfigmap: ""
 
@@ -86,7 +83,7 @@ mongo:
   # retryRewrites enables or disables retryable writes
   retryRewrites: "false"
   # existingMongoPasswordSecret is the name of the existing secret containing the MongoDB password
-  # existingMongoPasswordSecret: telicent-access-db-password
+  existingMongoPasswordSecret: ""
 
 # Pod security context
 podSecurityContext:

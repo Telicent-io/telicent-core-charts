@@ -74,8 +74,8 @@ Create the name of the service to use
 Create the name of the environment secrets
 */}}
 {{- define "access-api.envSecretName" -}}
-{{- if .Values.existingSecret }}
-{{- .Values.existingSecret }}
+{{- if .Values.mongo.existingMongoPasswordSecret }}
+{{- .Values.mongo.existingMongoPasswordSecret }}
 {{- else }}
 {{- printf "%s-%s" (include "access-api.fullname" .) "env" }}
 {{- end }}
