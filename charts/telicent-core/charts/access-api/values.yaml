@@ -83,7 +83,7 @@ mongo:
   # retryRewrites enables or disables retryable writes
   retryRewrites: "false"
   # existingMongoPasswordSecret is the name of the existing secret containing the MongoDB password
-  # existingMongoPasswordSecret: telicent-access-db-password
+  existingMongoPasswordSecret: ""
 
 # Pod security context
 podSecurityContext:
