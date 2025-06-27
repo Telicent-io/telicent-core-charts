@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.6](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v0.2.5...telicent-core-v0.2.6) (2025-06-27)
+
+
+### Bug Fixes
+
+* Allow openidProviderUrl to be specified ([3ca4fe7](https://github.com/Telicent-io/telicent-core-charts/commit/3ca4fe7589d84399f917937ff366156ee131bbff))
+
 ## [0.2.5](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v0.2.4...telicent-core-v0.2.5) (2025-06-27)
 
 
