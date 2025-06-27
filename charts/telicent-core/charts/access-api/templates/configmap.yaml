@@ -12,7 +12,7 @@ data:
   MONGO_COLLECTION: {{ .Values.mongo.collection | quote }}
   MONGO_URL: {{ .Values.mongo.url | quote }}
   MONGO_USER: {{ .Values.mongo.username | quote }}
-  OPENID_PROVIDER_URL: {{ .Values.global.authHostDomain | quote }}
+  OPENID_PROVIDER_URL: {{ .Values.configuration.openidProviderUrl | quote }}
   PORT: {{ .Values.service.port | quote }}
   SCIM_ENABLED: {{ .Values.configuration.scimEnabled | quote }}
   MONGO_CONNECTION_STRING_OPTIONS: {{ .Values.mongo.connectionStringOptions | quote }}
