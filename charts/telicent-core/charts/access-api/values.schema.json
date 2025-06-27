@@ -95,10 +95,6 @@
       "type": "string",
       "description": "Name of the existing configmap for configuration."
     },
-    "existingSecret": {
-      "type": "string",
-      "description": "Name of the existing secret for configuration."
-    },
     "existingCacertConfigmap": {
       "type": "string",
       "description": "Name of the existing configmap for extra certificates."
@@ -167,13 +163,18 @@
         "retryRewrites": {
           "type": "string",
           "description": "Retry rewrites option for MongoDB."
+        },
+        "existingMongoPasswordSecret": {
+          "type": "string",
+          "description": "Name of the existing secret containing the MongoDB password."
         }
       },
       "required": [
         "url",
         "username",
         "password",
-        "collection"
+        "collection",
+        "existingMongoPasswordSecret"
       ]
     },
     "podSecurityContext": {

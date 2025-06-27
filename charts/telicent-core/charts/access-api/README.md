@@ -12,6 +12,7 @@ This Helm chart deploys the Access API application. Below is a list of all confi
 | `mongo.database`             | string   | `"access"`                             | MongoDB database name.                                                     |
 | `mongo.connectionStringOptions` | string | `"authMechanism=SCRAM-SHA-1&retryWrites=false"` | Additional connection string options for MongoDB.                          |
 | `mongo.retryRewrites`        | string   | `"false"`                              | Retry rewrites option for MongoDB.                                         |
+| `mongo.existingMongoPasswordSecret`             | string   | `""`               | Name of the existing secret for configuration.                             |
 | `config.debug`               | boolean  | `true`                                 | Enable debug logging.                                                      |
 | `config.openidProviderUrl`   | string   | `"https://oidc.example.com"`           | The URL of the OIDC provider.                                              |
 | `config.scimEnabled`         | boolean  | `true`                                 | Enable SCIM user management.                                               |
@@ -22,7 +23,6 @@ This Helm chart deploys the Access API application. Below is a list of all confi
 | `containerSecurityContext.runAsUser` | integer | `185` | User ID to run as.                                                         |
 | `containerSecurityContext.seccompProfile.type` | string | `"RuntimeDefault"` | Seccomp profile type.                                                      |
 | `existingConfigmap`          | string   | `"existing-configmap-name"`            | Name of the existing configmap for configuration.                          |
-| `existingSecret`             | string   | `"existing-secret-name"`               | Name of the existing secret for configuration.                             |
 | `existingCacertConfigmap`    | string   | `"existing-cacert-configmap-name"`     | Name of the existing configmap for extra certificates.                     |
 | `fullnameOverride`           | string   | `"custom-fullname"`                    | Override the full name of the chart.                                       |
 | `cacert`                     | string   | `"path/to/cacert.pem"`                 | Path to the extra certificates to be trusted.                              |

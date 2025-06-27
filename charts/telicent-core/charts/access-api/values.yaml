@@ -46,9 +46,6 @@ containerSecurityContext:
 # existingConfigmap is the name of the existing configmap for configuration
 existingConfigmap: ""
 
-# existingSecret is the name of the existing secret for configuration
-existingSecret: ""
-
 # existingCacertConfigmap is the name of the existing configmap for extra certificates
 existingCacertConfigmap: ""
 
