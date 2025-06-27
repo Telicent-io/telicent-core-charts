@@ -44,19 +44,19 @@ containerSecurityContext:
     type: RuntimeDefault
 
 # existingConfigmap is the name of the existing configmap for configuration
-existingConfigmap: "existing-configmap-name"
+existingConfigmap: ""
 
 # existingSecret is the name of the existing secret for configuration
-existingSecret: "existing-secret-name"
+existingSecret: ""
 
 # existingCacertConfigmap is the name of the existing configmap for extra certificates
-existingCacertConfigmap: "existing-cacert-configmap-name"
+existingCacertConfigmap: ""
 
 # fullnameOverride sets the full name of the chart
-fullnameOverride: "custom-fullname"
+fullnameOverride: ""
 
 # cacert is the path to the CA certificate file
-cacert: "path/to/cacert.pem"
+cacert: ""
 
 # Image configuration
 image:
