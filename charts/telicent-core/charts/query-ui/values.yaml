@@ -1,90 +1,107 @@
-# Default values for Telicent Query UI Helm Chart
+# Copyright (C) 2025 Telicent Limited
+# Telicent Query UI stand-alone chart
 
-# global configuration
-# This section contains global values that are used across the charts inherited from the telicent core umbrella chart, will override these values. These are included to allow this chart to be standalone.
+# @section Global Parameters
+# @descStart
+# Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
+# @descEnd
+## Please, note that this will override the image parameters
+## Current available global image parameters: imageRegistry and imagePullSecrets
+
+#
 global:
-  # appHostDomain is the domain for the Telicent applications
-  # This is used to construct URLs for the applications.
+  # @key global.imageRegistry Global image registry
+  imageRegistry: ""
+  # E.g.
+  # imagePullSecrets:
+  #   - myRegistryKeySecretName
+  #
+  # @key global.imagePullSecrets Global registry secret names as an array
+  imagePullSecrets: [ ]
+  # @key global.appHostDomain Domain name associated with Query UI
   appHostDomain: "apps.telicent.io"
-  # authHostDomain is the domain for the Telicent authentication service
-  # This is used for the OIDC provider and other authentication-related URLs.
+  # @key global.authHostDomain Domain to be used for interacting with Telicent authentication services, including OIDC providers
   authHostDomain: "auth.telicent.io"
 
-# fullnameOverride sets the full name of the chart
+# @section Common Parameters
+
+#@key fullnameOverride String to fully override the generated release name
 fullnameOverride: ""
-
-# Image configuration
-image:
-  # imagePullSecrets is a list of secrets to use for pulling the image
-  imagePullSecrets: []
-  # pullPolicy defines the image pull policy
-  pullPolicy: IfNotPresent
-  # repository is the Docker repository for the image
-  repository: docker.io/telicent/telicent-query
-  # appVersion is used by default when defining an empty string
-  # tag is the image tag to use
-  tag: ""
-
-# nameOverride sets a custom name for the chart it differs from fullnameOverride as it is not fully qualified
+#@key nameOverride String to replace the name of the chart in the Chart.yaml file
 nameOverride: ""
 
-# replicas sets the replica count
+# @section Query UI Deployment Parameters
+
+# @key replicas Number of Query UI replicas to deploy
 replicas: 1
+# @key revisionHistoryLimit Number of controller revisions to keep
+revisionHistoryLimit: 5
 
-# resources sets the resource requests and limits for the pod
-resources: {}
+image:
+  # @key image.registry [default: REGISTRY_NAME] Query UI image registry
+  registry: docker.io
+  # @key image.repository [default: REPOSITORY_NAME/telicent-query] Query UI image name
+  repository: telicent/telicent-query
+  # @key image.tag Query UI image tag. If not set, a tag is generated using the appVersion
+  tag: ""
+  # @key image.pullPolicy Query UI image pull policy
+  pullPolicy: IfNotPresent
+  # @key image.pullSecrets Specify registry secret names as an array
+  pullSecrets: [ ]
 
-# revisionHistoryLimit sets the number of old ReplicaSets to retain
-revisionHistoryLimit: 3
+resources:
+  requests:
+    # @key resources.requests.cpu Set containers' CPU request
+    cpu: "500m"
+    # @key resources.requests.memory Set containers' memory request
+    memory: "512Mi"
+  limits:
+    # @key resources.limits.cpu Set containers' CPU limit
+    cpu: "1"
+    # @key resources.limits.memory Set containers' memory limit
+    memory: "1Gi"
 
-# containerSecurityContext sets the container security context
 containerSecurityContext:
-  # allowPrivilegeEscalation prevents privilege escalation
+  # @key containerSecurityContext.runAsUser Set containers' Security Context runAsUser User ID
+  runAsUser: 185
+  # @key containerSecurityContext.runAsGroup Set containers' Security Context runAsGroup Group ID
+  runAsGroup: 185
+  # @key containerSecurityContext.runAsNonRoot Set container's Security Context runAsNonRoot
+  runAsNonRoot: true
+  # @key containerSecurityContext.allowPrivilegeEscalation Set container's Security Context allowPrivilegeEscalation
   allowPrivilegeEscalation: false
-  # capabilities sets the capabilities for the container
   capabilities:
-    # drop all capabilities
+    #@key containerSecurityContext.capabilities.drop List of capabilities to be dropped
     drop:
       - ALL
-  # runAsGroup sets the group ID for the container
-  runAsGroup: 185
-  # runAsNonRoot ensures the container runs as a non-root user
-  runAsNonRoot: true
-  # runAsUser sets the user ID for the container
-  runAsUser: 185
-  # seccompProfile sets the seccomp profile for the container
   seccompProfile:
-    # type defines the seccomp profile type
-    # RuntimeDefault uses the default runtime seccomp profile
+    # @key containerSecurityContext.seccompProfile.type Set container's Security Context seccomp profile
     type: RuntimeDefault
 
-# Pod security context
 podSecurityContext:
-  # fsGroup sets the filesystem group ID for the pod
-  fsGroup: 185
-  # runAsGroup sets the group ID for the pod
-  runAsGroup: 185
-  # runAsNonRoot ensures the pod runs as a non-root user
-  runAsNonRoot: true
-  # runAsUser sets the user ID for the pod
+  # @key podSecurityContext.runAsUser Set the provisioning pod's Security Context runAsUser User ID
   runAsUser: 185
-  # seccompProfile sets the seccomp profile for the pod
+  # @key podSecurityContext.runAsGroup Set the provisioning pod's Security Context runAsGroup Group ID
+  runAsGroup: 185
+  # @key podSecurityContext.runAsNonRoot Set the provisioning pod's Security Context runAsNonRoot
+  runAsNonRoot: true
+  # @key podSecurityContext.fsGroup Set the provisioning pod's Group ID for the mounted volumes' filesystem
+  fsGroup: 185
   seccompProfile:
+    # @key podSecurityContext.seccompProfile.type Set the provisioning pod's Security Context seccomp profile
     type: RuntimeDefault
 
-# service configuration
+# @section Traffic Exposure Parameters
 service:
-  # port is the port the service will listen on
+  # @key service.port Query UI service port
   port: 8080
-  # type defines the service type
+  # @key service.type Query UI service type
   type: ClusterIP
 
-# serviceAccount configuration
+# @section Other Parameters
 serviceAccount:
-  # annotations are additional annotations for the service account
-  annotations:
-    {}
-    # example.annotation/key: "value"
-  # name is the name of the service account
-  # If not set, the chart will generate a name based on the release name
+  # @key serviceAccount.name Name of the created ServiceAccount. If not set, a name is generated using the fullname template
   name: ""
+  #@key serviceAccount.annotations Additional custom annotations for the ServiceAccount
+  annotations:
+    { }
