@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.8](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v0.2.7...telicent-core-v0.2.8) (2025-06-30)
+
+
+### Bug Fixes
+
+* password logic ([a824aee](https://github.com/Telicent-io/telicent-core-charts/commit/a824aeeebc9d5f599f4087f153fe96fc76ba09d1))
+* password logic ([cf4296b](https://github.com/Telicent-io/telicent-core-charts/commit/cf4296b7ed4cdb3ef75764515aead57949461878))
+
 ## [0.2.7](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v0.2.6...telicent-core-v0.2.7) (2025-06-27)
 
 
