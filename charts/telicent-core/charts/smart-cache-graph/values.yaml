@@ -115,7 +115,7 @@ revisionHistoryLimit: 3
 # service configuration
 service:
   # port is the port the service will listen on
-  port: 8080
+  port: 3030
   # type defines the service type
   type: ClusterIP
 
