@@ -3,8 +3,11 @@
 
 # @section Global Parameters
 # @descStart
-# Contains global values that are used across the charts inherited from the telicent core umbrella chart,
+# Contains global parameters, these parameters are mirrored in the Telicent core umbrella chart
 # @descEnd
+## Please, note that this will override the image parameters
+## Current available global image parameters: imageRegistry and imagePullSecrets
+
 #
 global:
   # @key global.imageRegistry Global image registry
@@ -22,7 +25,7 @@ global:
 
 # @section Configuration Parameters
 # @descStart
-# Contains configuration options specific to the Access API application
+# Contains configuration parameters specific to the Access API application
 # @descEnd
 configuration:
   # @key configuration.debug Enable debug logging

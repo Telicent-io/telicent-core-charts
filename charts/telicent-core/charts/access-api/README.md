@@ -45,7 +45,7 @@ _dev/readme-generator-for-helm --config=charts/telicent-core/readme.config \
 
 ### Global Parameters
 
-Contains global values that are used across the charts inherited from the telicent core umbrella chart,
+Contains global parameters, these parameters are mirrored in the Telicent core umbrella chart
 
 | Name                      | Description                                                                                       | Value              |
 | ------------------------- | ------------------------------------------------------------------------------------------------- | ------------------ |
@@ -56,7 +56,7 @@ Contains global values that are used across the charts inherited from the telice
 
 ### Configuration Parameters
 
-Contains configuration options specific to the Access API application
+Contains configuration parameters specific to the Access API application
 
 | Name                              | Description                  | Value                      |
 | --------------------------------- | ---------------------------- | -------------------------- |
