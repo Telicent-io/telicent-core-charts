@@ -1,42 +1,111 @@
-# Access UI Helm Chart
+# Telicent Package for Access UI
 
-This Helm chart deploys the Access UI application. Below is a list of all configurable values in the `values.yaml` file.
+Telicent Access UI allows for testing and demonstrating of Attribute-Based Access Control (ABAC) capabilities within
+Telicent CORE.
 
-## Values
+## Introduction
 
-| Key                          | Type     | Default Value                          | Description                                                                 |
-|------------------------------|----------|----------------------------------------|-----------------------------------------------------------------------------|
-| `configuration.accessUiApiUrl` | string | `"https://your.host.here/api/access"`  | The URL for the Access API.                                                |
-| `configuration.signOutUrl`   | string   | `"https://your.host.here/logout"`      | The URL for signing out.                                                   |
-| `containerSecurityContext.allowPrivilegeEscalation` | boolean | `false` | Prevent privilege escalation.                                              |
-| `containerSecurityContext.capabilities.drop` | array | `["ALL"]` | Capabilities to drop.                                                      |
-| `containerSecurityContext.runAsGroup` | integer | `185`                                | Group ID for the container.                                                |
-| `containerSecurityContext.runAsNonRoot` | boolean | `true`                               | Ensure the container runs as a non-root user.                              |
-| `containerSecurityContext.runAsUser` | integer | `185`                                 | User ID for the container.                                                 |
-| `containerSecurityContext.seccompProfile.type` | string | `"RuntimeDefault"`                   | Seccomp profile type.                                                      |
-| `fullnameOverride`           | string   | `""`                                  | Override the full name of the chart.                                       |
-| `image.imagePullSecrets`     | array    | `[]`                                  | List of secrets to use for pulling the image.                              |
-| `image.pullPolicy`           | string   | `"Always"`                             | Image pull policy.                                                         |
-| `image.repository`           | string   | `"telicent/telicent-access"`           | Docker repository for the image.                                           |
-| `image.tag`                  | string   | `""`                                  | Image tag to use.                                                          |
-| `nameOverride`               | string   | `""`                                  | Custom name for the chart, not fully qualified.                            |
-| `podSecurityContext.fsGroup` | integer  | `185`                                  | Filesystem group ID for the pod.                                           |
-| `podSecurityContext.runAsGroup` | integer | `185`                                | Group ID for the pod.                                                      |
-| `podSecurityContext.runAsNonRoot` | boolean | `true`                              | Ensure the pod runs as a non-root user.                                    |
-| `podSecurityContext.runAsUser` | integer | `185`                                 | User ID for the pod.                                                       |
-| `podSecurityContext.seccompProfile.type` | string | `"RuntimeDefault"`                  | Seccomp profile type.                                                      |
-| `replicas`                   | integer  | `1`                                   | Number of replicas.                                                        |
-| `resources.requests`         | object   | `{}`                                  | Resource requests for the pod.                                             |
-| `resources.limits`           | object   | `{}`                                  | Resource limits for the pod.                                               |
-| `revisionHistoryLimit`       | integer  | `3`                                   | Number of old ReplicaSets to retain.                                       |
-| `service.port`               | integer  | `8080`                                | Port the service will listen on.                                           |
-| `service.type`               | string   | `"ClusterIP"`                         | Service type.                                                              |
-| `serviceAccount.annotations` | object   | `{}`                                  | Additional annotations for the service account.                            |
-| `serviceAccount.name`        | string   | `""`                                  | Name of the service account.                                               |
+This chart bootstraps Telicent Access UI deployment on a [Kubernetes](https://kubernetes.io) cluster using
+the [Helm](https://helm.sh) package manager.
 
-## Usage
+## Prerequisites
 
-To customize the values, create a `values.yaml` file and override the default values as needed.
+- Kubernetes 1.23+
+- Helm 3.8.0+
+
+## Installing the Chart
+
+To install the chart with the release name `my-release`:
+
+```console
+helm install my-release ./charts/telicent-core/charts/access-ui
+```
+
+## Uninstalling the Chart
+
+To uninstall/delete the `my-release` deployment:
+
+```console
+helm delete my-release
+```
+The command removes all the Kubernetes components associated with the chart and deletes the release.
+
+## Automating README and schema generation
 
 ```bash
-helm install my-release ./access-ui -f [values.yaml](http://_vscodecontentref_/1)
+.dev/readme-generator-for-helm --config=charts/telicent-core/readme.config \
+ --values=charts/telicent-core/charts/access-ui/values.yaml \
+ --readme=charts/telicent-core/charts/access-ui/README.md \
+ --schema=charts/telicent-core/charts/access-ui/values.schema.json
+```
+
+## Configuration and installation details
+
+## Parameters
+
+### Global Parameters
+
+Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
+
+| Name                      | Description                                                                                       | Value              |
+| ------------------------- | ------------------------------------------------------------------------------------------------- | ------------------ |
+| `global.imageRegistry`    | Global image registry                                                                             | `""`               |
+| `global.imagePullSecrets` | Global registry secret names as an array                                                          | `[]`               |
+| `global.appHostDomain`    | Domain name associated with Access UI                                                             | `apps.telicent.io` |
+| `global.authHostDomain`   | Domain to be used for interacting with Telicent authentication services, including OIDC providers | `auth.telicent.io` |
+
+### Configuration Parameters
+
+Contains configuration parameters specific to the Access UI application
+
+| Name                       | Description                        | Value                           |
+| -------------------------- | ---------------------------------- | ------------------------------- |
+| `configuration.signOutUrl` | The URL to be used for signing out | `https://your.host.here/logout` |
+
+### Common Parameters
+
+| Name               | Description                                                    | Value |
+| ------------------ | -------------------------------------------------------------- | ----- |
+| `fullnameOverride` | String to fully override the generated release name            | `""`  |
+| `nameOverride`     | String to replace the name of the chart in the Chart.yaml file | `""`  |
+
+### Access UI Deployment Parameters
+
+| Name                                                | Description                                                              | Value                             |
+| --------------------------------------------------- | ------------------------------------------------------------------------ | --------------------------------- |
+| `replicas`                                          | Number of Access UI replicas to deploy                                   | `1`                               |
+| `revisionHistoryLimit`                              | Number of controller revisions to keep                                   | `5`                               |
+| `image.registry`                                    | Access UI image registry                                                 | `REGISTRY_NAME`                   |
+| `image.repository`                                  | Access UI image name                                                     | `REPOSITORY_NAME/telicent-access` |
+| `image.tag`                                         | Access UI image tag. If not set, a tag is generated using the appVersion | `""`                              |
+| `image.pullPolicy`                                  | Access UI image pull policy                                              | `IfNotPresent`                    |
+| `image.pullSecrets`                                 | Specify registry secret names as an array                                | `[]`                              |
+| `resources.requests.cpu`                            | Set containers' CPU request                                              | `500m`                            |
+| `resources.requests.memory`                         | Set containers' memory request                                           | `512Mi`                           |
+| `resources.limits.cpu`                              | Set containers' CPU limit                                                | `1`                               |
+| `resources.limits.memory`                           | Set containers' memory limit                                             | `1Gi`                             |
+| `containerSecurityContext.runAsUser`                | Set containers' Security Context runAsUser User ID                       | `185`                             |
+| `containerSecurityContext.runAsGroup`               | Set containers' Security Context runAsGroup Group ID                     | `185`                             |
+| `containerSecurityContext.runAsNonRoot`             | Set container's Security Context runAsNonRoot                            | `true`                            |
+| `containerSecurityContext.allowPrivilegeEscalation` | Set container's Security Context allowPrivilegeEscalation                | `false`                           |
+| `containerSecurityContext.capabilities.drop`        | List of capabilities to be dropped                                       | `["ALL"]`                         |
+| `containerSecurityContext.seccompProfile.type`      | Set container's Security Context seccomp profile                         | `RuntimeDefault`                  |
+| `podSecurityContext.runAsUser`                      | Set the provisioning pod's Security Context runAsUser User ID            | `185`                             |
+| `podSecurityContext.runAsGroup`                     | Set the provisioning pod's Security Context runAsGroup Group ID          | `185`                             |
+| `podSecurityContext.runAsNonRoot`                   | Set the provisioning pod's Security Context runAsNonRoot                 | `true`                            |
+| `podSecurityContext.fsGroup`                        | Set the provisioning pod's Group ID for the mounted volumes' filesystem  | `185`                             |
+| `podSecurityContext.seccompProfile.type`            | Set the provisioning pod's Security Context seccomp profile              | `RuntimeDefault`                  |
+
+### Traffic Exposure Parameters
+
+| Name           | Description            | Value       |
+| -------------- | ---------------------- | ----------- |
+| `service.port` | Access UI service port | `8080`      |
+| `service.type` | Access UI service type | `ClusterIP` |
+
+### Other Parameters
+
+| Name                         | Description                                                                                     | Value |
+| ---------------------------- | ----------------------------------------------------------------------------------------------- | ----- |
+| `serviceAccount.name`        | Name of the created ServiceAccount. If not set, a name is generated using the fullname template | `""`  |
+| `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                            | `{}`  |
