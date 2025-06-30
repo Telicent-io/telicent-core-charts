@@ -69,14 +69,12 @@ spec:
           mountPath: /app/config/truststore
         securityContext: {{- toYaml .Values.containerSecurityContext | nindent 10 }}
 
+      {{- if .Values.global.existingTruststoreSecretName }}
       volumes:
-        - name: truststore-volume
-          secret:
-          {{- if .Values.global.existingTruststoreSecretName }}
-            secretName: {{ .Values.global.existingTruststoreSecretName }}
-          {{- else }}
-            secretName: {{ .Values.global.existingTruststoreSecretName }}
-          {{- end }}
-            optional: true
+      - name: truststore-volume
+        secret:
+          secretName: {{ .Values.global.existingTruststoreSecretName }}
+          optional: true
+      {{- end }}
       securityContext: {{- toYaml .Values.podSecurityContext | nindent 8 }}
       serviceAccountName: {{ include "user-preferences-api.serviceAccountName" . }}

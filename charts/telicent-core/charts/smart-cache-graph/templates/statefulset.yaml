@@ -99,14 +99,12 @@ spec:
         {{- end }}
         # Secret is created outside of Helm by using Ansible. WOuld potentially need cert-manager to remove this dependency.
 
+      {{- if .Values.global.existingTruststoreSecretName }}
       - name: truststore-volume
         secret:
-        {{- if .Values.global.existingTruststoreSecretName }}
           secretName: {{ .Values.global.existingTruststoreSecretName }}
-        {{- else }}
-          secretName: {{ .Values.global.existingTruststoreSecretName }}
-        {{- end }}
           optional: true
+      {{- end }}
 
   volumeClaimTemplates:
   - metadata:
