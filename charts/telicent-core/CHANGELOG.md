@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.10](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v0.2.9...telicent-core-v0.2.10) (2025-06-30)
+
+
+### Bug Fixes
+
+* make volumemounts optional ([de86da6](https://github.com/Telicent-io/telicent-core-charts/commit/de86da612d71bdc6e1051fe85a8924e5623a1c9f))
+
 ## [0.2.9](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v0.2.8...telicent-core-v0.2.9) (2025-06-30)
 
 
