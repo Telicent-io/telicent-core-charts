@@ -25,17 +25,22 @@ spec:
         - configMapRef:
             name: {{ include "access-api.envConfigmapName" . }}
         - secretRef:
+            {{- if .Values.mongo.existingMongoPasswordSecret }}
+            name: {{ .Values.mongo.existingMongoPasswordSecret }}
+            {{ else }}
             name: {{ include "access-api.envSecretName" . }}
+            {{ end }}
         {{- if or .Values.existingCacertConfigmap .Values.cacert }}
         env:
         - name: NODE_EXTRA_CA_CERTS
           value: "/certs/ca.crt"
         {{ end }}
+        
         image: {{ .Values.image.repository }}:{{ include "access-api.version" . }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         name: access-api
         ports:
-        - containerPort: {{ .Values.service.port }}
+        - containerPort: {{ .Values.service.port }} 
           name: http
           protocol: TCP
         resources: {{- toYaml .Values.resources | nindent 10 }}
