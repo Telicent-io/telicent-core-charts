@@ -24,6 +24,8 @@ global:
   jwksUrl: "https://yourdomain.com/.well-known/jwks.json"
   # kafkaBootstrapUrls is the list of Kafka bootstrap URLs
   kafkaBootstrapUrls: "kafka-kafka-bootstrap.kafka-dev.svc.cluster.local:9092"
+  # appsGateway is the name of the Istio gateway for applications
+  appsGateway: istio-system/gateways-apps
 
 # job service account name
 # This is the service account used for running jobs in Kubernetes.

@@ -2,12 +2,12 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: {{ include "core-mesh.fullname" . }}-graph-ui
+  name: {{ include "graph.fullname" . }}
   labels:
-  {{- include "core-mesh.labels" . | nindent 4 }}
+  {{- include "graph.labels" . | nindent 4 }}
 spec:
   gateways:
-  - {{ .Values.appsGateway }}
+  - {{ .Values.global.appsGateway }}
   hosts:
   - {{ .Values.global.appHostDomain }}
   http:
@@ -21,7 +21,7 @@ spec:
         prefix: /graph/
     route:
     - destination:
-        host: {{ include "core-mesh.graphUiServiceName" . }}
+        host: {{ include "graph.serviceName" . }}
         port:
-          number: {{ .Values.graphUi.port }}
+          number: {{ .Values.service.port }}
 {{- end }}
