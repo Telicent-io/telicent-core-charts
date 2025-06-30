@@ -45,7 +45,7 @@ _dev/readme-generator-for-helm --config=charts/telicent-core/readme.config \
 
 ### Global Parameters
 
-Contains global parameters, these parameters are mirrored in the Telicent core umbrella chart
+Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
 
 | Name                      | Description                                                                                       | Value              |
 | ------------------------- | ------------------------------------------------------------------------------------------------- | ------------------ |
