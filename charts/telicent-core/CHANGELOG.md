@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.9](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v0.2.8...telicent-core-v0.2.9) (2025-06-30)
+
+
+### Bug Fixes
+
+* Move if for volumes ([1230ddf](https://github.com/Telicent-io/telicent-core-charts/commit/1230ddf33ae2e8cd23cc7a9dec9a87b721d43ede))
+* Move if for volumes ([6618880](https://github.com/Telicent-io/telicent-core-charts/commit/66188805870547839540887ff1aa88416e47fae0))
+
 ## [0.2.8](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v0.2.7...telicent-core-v0.2.8) (2025-06-30)
 
 
