@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.11](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v0.2.10...telicent-core-v0.2.11) (2025-06-30)
+
+
+### Bug Fixes
+
+* service port ([c02fe57](https://github.com/Telicent-io/telicent-core-charts/commit/c02fe57478d4744248c188ebd1a42be34ccc529f))
+
 ## [0.2.10](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v0.2.9...telicent-core-v0.2.10) (2025-06-30)
 
 
