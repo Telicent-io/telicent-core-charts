@@ -33,7 +33,7 @@ The command removes all the Kubernetes components associated with the chart and 
 ## Automating README and schema generation
 
 ```bash
-_dev/readme-generator-for-helm --config=charts/telicent-core/readme.config \
+.dev/readme-generator-for-helm --config=charts/telicent-core/readme.config \
  --values=charts/telicent-core/charts/access-api/values.yaml \
  --readme=charts/telicent-core/charts/access-api/README.md \
  --schema=charts/telicent-core/charts/access-api/values.schema.json
