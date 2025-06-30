@@ -75,7 +75,7 @@ mongo:
   # username is the MongoDB username
   username: root
   # password is the MongoDB password
-  password: "your.mongo.password.here"
+  password: ""
   # collection is the MongoDB collection to use
   collection: access
   # connectionStringOptions are additional options for the MongoDB connection string
