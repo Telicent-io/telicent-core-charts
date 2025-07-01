@@ -91,6 +91,17 @@ podSecurityContext:
     # @key podSecurityContext.seccompProfile.type Set the provisioning pod's Security Context seccomp profile
     type: RuntimeDefault
 
+# @key affinity Affinity for pod assignment
+# Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+affinity: { }
+# @key nodeSelector Node labels for pod assignment
+# Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
+nodeSelector: { }
+# @key tolerations Tolerations for pod assignment
+# Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+tolerations: [ ]
+
+
 # @section Traffic Exposure Parameters
 service:
   # @key service.port Query UI service port
