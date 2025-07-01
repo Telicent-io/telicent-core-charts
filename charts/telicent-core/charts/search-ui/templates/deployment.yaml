@@ -85,6 +85,7 @@ spec:
           secretName: {{ include "search.fullname" . }}-secret-config-js
       {{- end }}
         name: secret-config-js-volume
+      
       {{- with .Values.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
