@@ -18,13 +18,43 @@
                 },
                 "appHostDomain": {
                     "type": "string",
-                    "description": "Domain name associated with Query UI",
+                    "description": "Domain name associated with Search UI",
                     "default": "apps.telicent.io"
                 },
                 "authHostDomain": {
                     "type": "string",
                     "description": "Domain to be used for interacting with Telicent authentication services, including OIDC providers",
                     "default": "auth.telicent.io"
+                }
+            }
+        },
+        "configuration": {
+            "type": "object",
+            "properties": {
+                "userPortalUiDeployed": {
+                    "type": "boolean",
+                    "description": "If set to true, User Portal links will be available within Search UI",
+                    "default": true
+                },
+                "graphUiDeployed": {
+                    "type": "boolean",
+                    "description": "If set to true, Graph UI links will be available within Search UI",
+                    "default": true
+                },
+                "dataCatalogUiDeployed": {
+                    "type": "boolean",
+                    "description": "If set to true, Data Catalog UI links will be available within Search UI",
+                    "default": true
+                },
+                "signOutUrl": {
+                    "type": "string",
+                    "description": "The URL to be used for signing out",
+                    "default": "https://your.host.here/logout"
+                },
+                "searchUiMaptilerToken": {
+                    "type": "string",
+                    "description": "MapTiler token for Search UI",
+                    "default": "your.maptiler.token.here"
                 }
             }
         },
@@ -40,7 +70,7 @@
         },
         "replicas": {
             "type": "number",
-            "description": "Number of Query UI replicas to deploy",
+            "description": "Number of Search UI replicas to deploy",
             "default": 1
         },
         "revisionHistoryLimit": {
@@ -53,22 +83,22 @@
             "properties": {
                 "registry": {
                     "type": "string",
-                    "description": "Query UI image registry",
+                    "description": "Search UI image registry",
                     "default": "REGISTRY_NAME"
                 },
                 "repository": {
                     "type": "string",
-                    "description": "Query UI image name",
-                    "default": "REPOSITORY_NAME/telicent-query"
+                    "description": "Search UI image name",
+                    "default": "REPOSITORY_NAME/telicent-search"
                 },
                 "tag": {
                     "type": "string",
-                    "description": "Query UI image tag. If not set, a tag is generated using the appVersion",
+                    "description": "Seearch UI image tag. If not set, a tag is generated using the appVersion",
                     "default": ""
                 },
                 "pullPolicy": {
                     "type": "string",
-                    "description": "Query UI image pull policy",
+                    "description": "Search UI image pull policy",
                     "default": "IfNotPresent"
                 },
                 "pullSecrets": {
@@ -220,12 +250,12 @@
             "properties": {
                 "port": {
                     "type": "number",
-                    "description": "Query UI service port",
+                    "description": "Search UI service port",
                     "default": 8080
                 },
                 "type": {
                     "type": "string",
-                    "description": "Query UI service type",
+                    "description": "Search UI service type",
                     "default": "ClusterIP"
                 }
             }

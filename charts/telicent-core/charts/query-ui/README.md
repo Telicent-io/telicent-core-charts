@@ -86,6 +86,9 @@ Contains global parameters, these parameters are mirrored within the Telicent co
 | `podSecurityContext.runAsNonRoot`                   | Set the provisioning pod's Security Context runAsNonRoot                | `true`                           |
 | `podSecurityContext.fsGroup`                        | Set the provisioning pod's Group ID for the mounted volumes' filesystem | `185`                            |
 | `podSecurityContext.seccompProfile.type`            | Set the provisioning pod's Security Context seccomp profile             | `RuntimeDefault`                 |
+| `affinity`                                          | Affinity for pod assignment                                             | `{}`                             |
+| `nodeSelector`                                      | Node labels for pod assignment                                          | `{}`                             |
+| `tolerations`                                       | Tolerations for pod assignment                                          | `[]`                             |
 
 ### Traffic Exposure Parameters
 
