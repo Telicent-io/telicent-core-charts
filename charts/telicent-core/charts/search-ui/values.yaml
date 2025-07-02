@@ -1,13 +1,22 @@
-# Default values for Telicent Search UI Helm Chart
+# Copyright (C) 2025 Telicent Limited
+# Telicent Search UI stand-alone chart
 
-# global configuration
-# This section contains global values that are used across the charts inherited from the telicent core umbrella chart, will override these values. These are included to allow this chart to be standalone.
+# @section Global Parameters
+# @descStart
+# Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
+# @descEnd
 global:
-  # appHostDomain is the domain for the Telicent applications
-  # This is used to construct URLs for the applications.
+  # @key global.imageRegistry Global image registry
+  imageRegistry: ""
+  # E.g.
+  # imagePullSecrets:
+  #   - myRegistryKeySecretName
+  #
+  # @key global.imagePullSecrets Global registry secret names as an array
+  imagePullSecrets: []
+  # @key global.appHostDomain Domain name associated with Search UI
   appHostDomain: "apps.telicent.io"
-  # authHostDomain is the domain for the Telicent authentication service
-  # This is used for the OIDC provider and other authentication-related URLs.
+  # @key global.authHostDomain Domain to be used for interacting with Telicent authentication services, including OIDC providers
   authHostDomain: "auth.telicent.io"
   # appsGateway is the name of the Istio gateway for applications
   appsGateway: istio-system/gateways-apps
@@ -16,109 +25,124 @@ global:
   # @key global.istioNamespace The namespace where Istio is installed
   istioNamespace: istio-system
 
+# @section Configuration Parameters
+# @descStart
+# Contains configuration parameters specific to the Search UI application
+# @descEnd
 configuration:
+  # @key configuration.userPortalUiDeployed If set to true, User Portal links will be available within Search UI
   userPortalUiDeployed: true
+  # @key configuration.graphUiDeployed If set to true, Graph UI links will be available within Search UI
   graphUiDeployed: true
+  # @key configuration.dataCatalogUiDeployed If set to true, Data Catalog UI links will be available within Search UI
   dataCatalogUiDeployed: true
+  # @key configuration.signOutUrl The URL to be used for signing out
+  signOutUrl: "https://your.host.here/logout"
 
-map:
-  # searchUiMaptilerToken is the MapTiler token for the search UI
+  # @key configuration.searchUiMaptilerToken MapTiler token for Search UI
   searchUiMaptilerToken: "your.maptiler.token.here"
 
   # For examples of the map configuration, see: _secret_config_js.tpl
   # searchUiMapboxStyleSpecUrl is the Mapbox style spec URL for the search UI can be specified if using Mapbox styles
   # searchUiMapboxStyleSpecUrl: "https://your.mapbox.style.spec.url.here"
 
-  # searchUiArcgisToken is the ArcGIS token for the search UI can be specified if using ArcGIS styles
+  # searchUiArcgisToken is the ArcGIS token for  Search UI can be specified if using ArcGIS styles
   # searchUiArcgisToken: "your.arcgis.token.here"
 
   # existingMapConfigSecretName is the name of an existing secret containing map configuration
   # existingMapConfigSecretName: "your-existing-map-config-secret-name"
 
-# affinity sets the pod affinity rules
-affinity: {}
+# @section Common Parameters
 
-# annotations are additional annotations to add to the pod
-annotations: {}
-
-# containerSecurityContext sets the container security context
-containerSecurityContext:
-  # allowPrivilegeEscalation prevents privilege escalation
-  allowPrivilegeEscalation: false
-  # capabilities sets the capabilities for the container
-  capabilities:
-    # drop all capabilities
-    drop:
-      - ALL
-  # runAsGroup sets the group ID for the container
-  runAsGroup: 185
-  # runAsNonRoot ensures the container runs as a non-root user
-  runAsNonRoot: true
-  # runAsUser sets the user ID for the container
-  runAsUser: 185
-  # seccompProfile sets the seccomp profile for the container
-  seccompProfile:
-    # type defines the seccomp profile type
-    # RuntimeDefault uses the default runtime seccomp profile
-    type: RuntimeDefault
-
-# fullnameOverride sets the full name of the chart
+#@key fullnameOverride String to fully override the generated release name
 fullnameOverride: ""
-
-# Image configuration
-image:
-  # imagePullSecrets is a list of secrets to use for pulling the image
-  imagePullSecrets: []
-  # pullPolicy defines the image pull policy
-  pullPolicy: IfNotPresent
-  # repository is the Docker repository for the image
-  repository: 098669589541.dkr.ecr.eu-west-2.amazonaws.com/telicent-search
-  # appVersion is used by default when defining an empty string
-  # tag is the image tag to use
-  tag: ""
-
-# nameOverride sets a custom name for the chart it differs from fullnameOverride as it is not fully qualified
+#@key nameOverride String to replace the name of the chart in the Chart.yaml file
 nameOverride: ""
 
-# Pod security context
-podSecurityContext:
-  # fsGroup sets the filesystem group ID for the pod
-  fsGroup: 185
-  # runAsGroup sets the group ID for the pod
-  runAsGroup: 185
-  # runAsNonRoot ensures the pod runs as a non-root user
-  runAsNonRoot: true
-  # runAsUser sets the user ID for the pod
+# @section Search UI Deployment Parameters
+
+# @key replicas Number of Search UI replicas to deploy
+replicas: 1
+# @key revisionHistoryLimit Number of controller revisions to keep
+revisionHistoryLimit: 5
+
+image:
+  # @key image.registry [default: REGISTRY_NAME] Search UI image registry
+  registry: ""
+  # @key image.repository [default: REPOSITORY_NAME/telicent-search] Search UI image name
+  repository: 098669589541.dkr.ecr.eu-west-2.amazonaws.com/telicent-search
+  # @key image.tag Seearch UI image tag. If not set, a tag is generated using the appVersion
+  tag: ""
+  # @key image.pullPolicy Search UI image pull policy
+  pullPolicy: IfNotPresent
+  # @key image.pullSecrets Specify registry secret names as an array
+  pullSecrets: []
+
+resources:
+  requests:
+    # @key resources.requests.cpu Set containers' CPU request
+    cpu: "500m"
+    # @key resources.requests.memory Set containers' memory request
+    memory: "512Mi"
+  limits:
+    # @key resources.limits.cpu Set containers' CPU limit
+    cpu: "1"
+    # @key resources.limits.memory Set containers' memory limit
+    memory: "1Gi"
+
+containerSecurityContext:
+  # @key containerSecurityContext.runAsUser Set containers' Security Context runAsUser User ID
   runAsUser: 185
-  # seccompProfile sets the seccomp profile for the pod
+  # @key containerSecurityContext.runAsGroup Set containers' Security Context runAsGroup Group ID
+  runAsGroup: 185
+  # @key containerSecurityContext.runAsNonRoot Set container's Security Context runAsNonRoot
+  runAsNonRoot: true
+  # @key containerSecurityContext.allowPrivilegeEscalation Set container's Security Context allowPrivilegeEscalation
+  allowPrivilegeEscalation: false
+  capabilities:
+    #@key containerSecurityContext.capabilities.drop List of capabilities to be dropped
+    drop:
+      - ALL
   seccompProfile:
+    # @key containerSecurityContext.seccompProfile.type Set container's Security Context seccomp profile
     type: RuntimeDefault
 
-# replicas sets the replica count
-replicas: 1
+podSecurityContext:
+  # @key podSecurityContext.runAsUser Set the provisioning pod's Security Context runAsUser User ID
+  runAsUser: 185
+  # @key podSecurityContext.runAsGroup Set the provisioning pod's Security Context runAsGroup Group ID
+  runAsGroup: 185
+  # @key podSecurityContext.runAsNonRoot Set the provisioning pod's Security Context runAsNonRoot
+  runAsNonRoot: true
+  # @key podSecurityContext.fsGroup Set the provisioning pod's Group ID for the mounted volumes' filesystem
+  fsGroup: 185
+  seccompProfile:
+    # @key podSecurityContext.seccompProfile.type Set the provisioning pod's Security Context seccomp profile
+    type: RuntimeDefault
 
-# resources sets the resource requests and limits for the pod
-resources: {}
+# @key affinity Affinity for pod assignment
+# Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+affinity: {}
+# @key nodeSelector Node labels for pod assignment
+# Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
+nodeSelector: {}
+# @key tolerations Tolerations for pod assignment
+# Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+tolerations: []
 
-# revisionHistoryLimit sets the number of old ReplicaSets to retain
-revisionHistoryLimit: 3
-
-# service configuration
+# @section Traffic Exposure Parameters
 service:
-  # port is the port the service will listen on
+  # @key service.port Search UI service port
   port: 8080
-  # type defines the service type
+  # @key service.type Search UI service type
   type: ClusterIP
 
-# serviceAccount configuration
+# @section Other Parameters
 serviceAccount:
-  # annotations are additional annotations for the service account
-  annotations:
-    {}
-    # example.annotation/key: "value"
-  # name is the name of the service account
-  # If not set, the chart will generate a name based on the release name
+  # @key serviceAccount.name Name of the created ServiceAccount. If not set, a name is generated using the fullname template
   name: ""
+  #@key serviceAccount.annotations Additional custom annotations for the ServiceAccount
+  annotations: {}
 
 ingress:
   # @ key ingress.principal is the principal to use for ingress traffic

@@ -1,9 +1,15 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
 apiVersion: v1
 kind: Service
+
 metadata:
   name: {{ include "search.serviceName" . }}
   labels:
     {{- include "search.labels" . | nindent 4 }}
+
 spec:
   type: {{ .Values.service.type }}
   selector:
@@ -11,5 +17,6 @@ spec:
   ports:
     - name: http
       port: {{ .Values.service.port }}
+      appProtocol: http
       protocol: TCP
       targetPort: 8080

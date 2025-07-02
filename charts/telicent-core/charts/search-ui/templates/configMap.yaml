@@ -1,12 +1,14 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ include "search.configMapName" . }}
   labels:
-    app.kubernetes.io/name: {{ include "search.name" . }}
-    helm.sh/chart: {{ include "search.chart" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    {{- include "search.labels" . | nindent 4 }}
+
 data:
   env-config.js: |
     // UIs
@@ -19,7 +21,7 @@ data:
     window.SEARCH_APP_URL = "https://{{ .Values.global.appHostDomain }}/search";
     {{ if .Values.configuration.userPortalUiDeployed }}
     window.USER_PORTAL_URL = "https://{{ .Values.global.appHostDomain }}/user-portal/";
-    {{ end}}
+    {{ end }}
 
     // APIs
     window.ACCESS_URL = "https://{{ .Values.global.appHostDomain }}/api/access";

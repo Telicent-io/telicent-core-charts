@@ -18,7 +18,7 @@
                 },
                 "appHostDomain": {
                     "type": "string",
-                    "description": "Domain name associated with Access UI",
+                    "description": "Domain name associated with Search UI",
                     "default": "apps.telicent.io"
                 },
                 "authHostDomain": {
@@ -31,10 +31,30 @@
         "configuration": {
             "type": "object",
             "properties": {
+                "userPortalUiDeployed": {
+                    "type": "boolean",
+                    "description": "If set to true, User Portal links will be available within Search UI",
+                    "default": true
+                },
+                "graphUiDeployed": {
+                    "type": "boolean",
+                    "description": "If set to true, Graph UI links will be available within Search UI",
+                    "default": true
+                },
+                "dataCatalogUiDeployed": {
+                    "type": "boolean",
+                    "description": "If set to true, Data Catalog UI links will be available within Search UI",
+                    "default": true
+                },
                 "signOutUrl": {
                     "type": "string",
                     "description": "The URL to be used for signing out",
                     "default": "https://your.host.here/logout"
+                },
+                "searchUiMaptilerToken": {
+                    "type": "string",
+                    "description": "MapTiler token for Search UI",
+                    "default": "your.maptiler.token.here"
                 }
             }
         },
@@ -50,7 +70,7 @@
         },
         "replicas": {
             "type": "number",
-            "description": "Number of Access UI replicas to deploy",
+            "description": "Number of Search UI replicas to deploy",
             "default": 1
         },
         "revisionHistoryLimit": {
@@ -63,22 +83,22 @@
             "properties": {
                 "registry": {
                     "type": "string",
-                    "description": "Access UI image registry",
+                    "description": "Search UI image registry",
                     "default": "REGISTRY_NAME"
                 },
                 "repository": {
                     "type": "string",
-                    "description": "Access UI image name",
-                    "default": "REPOSITORY_NAME/telicent-access"
+                    "description": "Search UI image name",
+                    "default": "REPOSITORY_NAME/telicent-search"
                 },
                 "tag": {
                     "type": "string",
-                    "description": "Access UI image tag. If not set, a tag is generated using the appVersion",
+                    "description": "Seearch UI image tag. If not set, a tag is generated using the appVersion",
                     "default": ""
                 },
                 "pullPolicy": {
                     "type": "string",
-                    "description": "Access UI image pull policy",
+                    "description": "Search UI image pull policy",
                     "default": "IfNotPresent"
                 },
                 "pullSecrets": {
@@ -209,17 +229,33 @@
                 }
             }
         },
+        "affinity": {
+            "type": "object",
+            "description": "Affinity for pod assignment",
+            "default": {}
+        },
+        "nodeSelector": {
+            "type": "object",
+            "description": "Node labels for pod assignment",
+            "default": {}
+        },
+        "tolerations": {
+            "type": "array",
+            "description": "Tolerations for pod assignment",
+            "default": [],
+            "items": {}
+        },
         "service": {
             "type": "object",
             "properties": {
                 "port": {
                     "type": "number",
-                    "description": "Access UI service port",
+                    "description": "Search UI service port",
                     "default": 8080
                 },
                 "type": {
                     "type": "string",
-                    "description": "Access UI service type",
+                    "description": "Search UI service type",
                     "default": "ClusterIP"
                 }
             }

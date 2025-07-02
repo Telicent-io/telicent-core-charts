@@ -18,23 +18,13 @@
                 },
                 "appHostDomain": {
                     "type": "string",
-                    "description": "Domain name associated with Access UI",
+                    "description": "Domain name associated with Query UI",
                     "default": "apps.telicent.io"
                 },
                 "authHostDomain": {
                     "type": "string",
                     "description": "Domain to be used for interacting with Telicent authentication services, including OIDC providers",
                     "default": "auth.telicent.io"
-                }
-            }
-        },
-        "configuration": {
-            "type": "object",
-            "properties": {
-                "signOutUrl": {
-                    "type": "string",
-                    "description": "The URL to be used for signing out",
-                    "default": "https://your.host.here/logout"
                 }
             }
         },
@@ -50,7 +40,7 @@
         },
         "replicas": {
             "type": "number",
-            "description": "Number of Access UI replicas to deploy",
+            "description": "Number of Query UI replicas to deploy",
             "default": 1
         },
         "revisionHistoryLimit": {
@@ -63,22 +53,22 @@
             "properties": {
                 "registry": {
                     "type": "string",
-                    "description": "Access UI image registry",
+                    "description": "Query UI image registry",
                     "default": "REGISTRY_NAME"
                 },
                 "repository": {
                     "type": "string",
-                    "description": "Access UI image name",
-                    "default": "REPOSITORY_NAME/telicent-access"
+                    "description": "Query UI image name",
+                    "default": "REPOSITORY_NAME/telicent-query"
                 },
                 "tag": {
                     "type": "string",
-                    "description": "Access UI image tag. If not set, a tag is generated using the appVersion",
+                    "description": "Query UI image tag. If not set, a tag is generated using the appVersion",
                     "default": ""
                 },
                 "pullPolicy": {
                     "type": "string",
-                    "description": "Access UI image pull policy",
+                    "description": "Query UI image pull policy",
                     "default": "IfNotPresent"
                 },
                 "pullSecrets": {
@@ -209,17 +199,33 @@
                 }
             }
         },
+        "affinity": {
+            "type": "object",
+            "description": "Affinity for pod assignment",
+            "default": {}
+        },
+        "nodeSelector": {
+            "type": "object",
+            "description": "Node labels for pod assignment",
+            "default": {}
+        },
+        "tolerations": {
+            "type": "array",
+            "description": "Tolerations for pod assignment",
+            "default": [],
+            "items": {}
+        },
         "service": {
             "type": "object",
             "properties": {
                 "port": {
                     "type": "number",
-                    "description": "Access UI service port",
+                    "description": "Query UI service port",
                     "default": 8080
                 },
                 "type": {
                     "type": "string",
-                    "description": "Access UI service type",
+                    "description": "Query UI service type",
                     "default": "ClusterIP"
                 }
             }
