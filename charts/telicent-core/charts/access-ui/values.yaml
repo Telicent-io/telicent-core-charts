@@ -118,6 +118,8 @@ serviceAccount:
   annotations: {}
 
 ingress:
-  # @ key ingress.principal is the principal to use for ingress traffic
+  # @key ingress.principal is the principal to use for ingress traffic
+  # @descStart
   # If not set, it defaults to the Istio service account in the istio-system
+  # @descEnd
   principal: ""

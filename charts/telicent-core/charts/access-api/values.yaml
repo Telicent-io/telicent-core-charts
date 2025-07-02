@@ -136,7 +136,7 @@ service:
   # @key service.type Access API service type
   type: ClusterIP
 
-# @section Other Parameters
+# @section Service Account Parameters
 serviceAccount:
   # @key serviceAccount.name Name of the created ServiceAccount. If not set, a name is generated using the fullname template
   name: ""
@@ -144,17 +144,23 @@ serviceAccount:
   annotations: {}
 # @section Istio ingress Parameters
 ingress:
-  # @ key ingress.principal is the principal to use for ingress traffic
+  # @key ingress.principal is the principal to use for ingress traffic
+  # @descStart
   # If not set, it defaults to the Istio service account in the istio-system
+  # @descEnd
   principal: ""
 # @section API Principals
 searchApi:
-  # @ key searchApi.principal is the principal to use for search API traffic
+  # @key searchApi.principal is the principal to use for search API traffic
+  # @descStart
   # If not set, it defaults to the search api name in the current namespace
+  # @descEnd
   principal: ""
 
 # @section Graph Server Parameters
 graphServer:
-  # @ key graphServer.principal is the principal to use for graph server traffic
+  # @key graphServer.principal is the principal to use for graph server traffic
+  # @descStart
   # If not set, it defaults to the graph server name in the current namespace
+  # @descEnd
   principal: ""

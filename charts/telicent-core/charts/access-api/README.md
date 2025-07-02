@@ -47,12 +47,15 @@ The command removes all the Kubernetes components associated with the chart and 
 
 Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
 
-| Name                      | Description                                                                                       | Value              |
-| ------------------------- | ------------------------------------------------------------------------------------------------- | ------------------ |
-| `global.imageRegistry`    | Global image registry                                                                             | `""`               |
-| `global.imagePullSecrets` | Global registry secret names as an array                                                          | `[]`               |
-| `global.appHostDomain`    | Domain name associated with Access API                                                            | `apps.telicent.io` |
-| `global.authHostDomain`   | Domain to be used for interacting with Telicent authentication services, including OIDC providers | `auth.telicent.io` |
+| Name                             | Description                                                                                       | Value                        |
+| -------------------------------- | ------------------------------------------------------------------------------------------------- | ---------------------------- |
+| `global.imageRegistry`           | Global image registry                                                                             | `""`                         |
+| `global.imagePullSecrets`        | Global registry secret names as an array                                                          | `[]`                         |
+| `global.appHostDomain`           | Domain name associated with Access API                                                            | `apps.telicent.io`           |
+| `global.authHostDomain`          | Domain to be used for interacting with Telicent authentication services, including OIDC providers | `auth.telicent.io`           |
+| `global.appsGateway`             | is the name of the Istio gateway for applications                                                 | `istio-system/gateways-apps` |
+| `global.istioServiceAccountName` | The name of the Istio service account to use for the Access API                                   | `istio-ingress`              |
+| `global.istioNamespace`          | The namespace where Istio is installed                                                            | `istio-system`               |
 
 ### Configuration Parameters
 
@@ -119,10 +122,34 @@ Contains configuration parameters specific to the Access API application
 | `service.port` | Access API service port | `8080`      |
 | `service.type` | Access API service type | `ClusterIP` |
 
-### Other Parameters
+### Service Account Parameters
 
 | Name                         | Description                                                                                     | Value |
 | ---------------------------- | ----------------------------------------------------------------------------------------------- | ----- |
 | `serviceAccount.name`        | Name of the created ServiceAccount. If not set, a name is generated using the fullname template | `""`  |
 | `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                            | `{}`  |
+
+### Istio ingress Parameters
+
+If not set, it defaults to the Istio service account in the istio-system
+
+| Name                | Description                                 | Value |
+| ------------------- | ------------------------------------------- | ----- |
+| `ingress.principal` | is the principal to use for ingress traffic | `""`  |
+
+### API Principals
+
+If not set, it defaults to the search api name in the current namespace
+
+| Name                  | Description                                    | Value |
+| --------------------- | ---------------------------------------------- | ----- |
+| `searchApi.principal` | is the principal to use for search API traffic | `""`  |
+
+### Graph Server Parameters
+
+If not set, it defaults to the graph server name in the current namespace
+
+| Name                    | Description                                      | Value |
+| ----------------------- | ------------------------------------------------ | ----- |
+| `graphServer.principal` | is the principal to use for graph server traffic | `""`  |
 

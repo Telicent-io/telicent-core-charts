@@ -25,6 +25,21 @@
                     "type": "string",
                     "description": "Domain to be used for interacting with Telicent authentication services, including OIDC providers",
                     "default": "auth.telicent.io"
+                },
+                "appsGateway": {
+                    "type": "string",
+                    "description": "is the name of the Istio gateway for applications",
+                    "default": "istio-system/gateways-apps"
+                },
+                "istioServiceAccountName": {
+                    "type": "string",
+                    "description": "The name of the Istio service account to use for the Access API",
+                    "default": "istio-ingress"
+                },
+                "istioNamespace": {
+                    "type": "string",
+                    "description": "The namespace where Istio is installed",
+                    "default": "istio-system"
                 }
             }
         },
@@ -296,6 +311,36 @@
                     "type": "object",
                     "description": "Additional custom annotations for the ServiceAccount",
                     "default": {}
+                }
+            }
+        },
+        "ingress": {
+            "type": "object",
+            "properties": {
+                "principal": {
+                    "type": "string",
+                    "description": "is the principal to use for ingress traffic",
+                    "default": ""
+                }
+            }
+        },
+        "searchApi": {
+            "type": "object",
+            "properties": {
+                "principal": {
+                    "type": "string",
+                    "description": "is the principal to use for search API traffic",
+                    "default": ""
+                }
+            }
+        },
+        "graphServer": {
+            "type": "object",
+            "properties": {
+                "principal": {
+                    "type": "string",
+                    "description": "is the principal to use for graph server traffic",
+                    "default": ""
                 }
             }
         }

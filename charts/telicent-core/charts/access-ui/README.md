@@ -47,12 +47,14 @@ The command removes all the Kubernetes components associated with the chart and 
 
 Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
 
-| Name                      | Description                                                                                       | Value              |
-| ------------------------- | ------------------------------------------------------------------------------------------------- | ------------------ |
-| `global.imageRegistry`    | Global image registry                                                                             | `""`               |
-| `global.imagePullSecrets` | Global registry secret names as an array                                                          | `[]`               |
-| `global.appHostDomain`    | Domain name associated with Access UI                                                             | `apps.telicent.io` |
-| `global.authHostDomain`   | Domain to be used for interacting with Telicent authentication services, including OIDC providers | `auth.telicent.io` |
+| Name                             | Description                                                                                       | Value              |
+| -------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------ |
+| `global.imageRegistry`           | Global image registry                                                                             | `""`               |
+| `global.imagePullSecrets`        | Global registry secret names as an array                                                          | `[]`               |
+| `global.appHostDomain`           | Domain name associated with Access UI                                                             | `apps.telicent.io` |
+| `global.authHostDomain`          | Domain to be used for interacting with Telicent authentication services, including OIDC providers | `auth.telicent.io` |
+| `global.istioServiceAccountName` | The name of the Istio service account to use for the Access API                                   | `istio-ingress`    |
+| `global.istioNamespace`          | The namespace where Istio is installed                                                            | `istio-system`     |
 
 ### Configuration Parameters
 
@@ -105,7 +107,10 @@ Contains configuration parameters specific to the Access UI application
 
 ### Other Parameters
 
+If not set, it defaults to the Istio service account in the istio-system
+
 | Name                         | Description                                                                                     | Value |
 | ---------------------------- | ----------------------------------------------------------------------------------------------- | ----- |
 | `serviceAccount.name`        | Name of the created ServiceAccount. If not set, a name is generated using the fullname template | `""`  |
 | `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                            | `{}`  |
+| `ingress.principal`          | is the principal to use for ingress traffic                                                     | `""`  |
