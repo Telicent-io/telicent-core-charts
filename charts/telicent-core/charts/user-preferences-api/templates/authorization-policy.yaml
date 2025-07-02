@@ -4,15 +4,15 @@ apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
 metadata:
   labels:
-    {{- include "core-mesh.labels" . | nindent 4 }}
-  name: {{ include "core-mesh.fullname" . }}-ingress-to-pref-api
+    {{- include "user-preferences-api.labels" . | nindent 4 }}
+  name: {{ include "user-preferences-api.fullname" . }}-ingress
 spec:
   action: ALLOW
   rules:
   - from:
     - source:
         principals:
-        - {{ include "core-mesh.ingressPrincipal" . }}
+        - {{ include "user-preferences-api.ingressPrincipal" . }}
 
     to:
     - operation:
@@ -30,5 +30,5 @@ spec:
       - tc_read
   selector:
     matchLabels:
-    {{- include "core-mesh.userPreferencesApiSelectors" . | nindent 6 }}
+    {{- include "user-preferences-api.selectorLabels" . | nindent 6 }}
 {{- end }}

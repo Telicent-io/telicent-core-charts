@@ -76,3 +76,7 @@ Create the name of the config map
 {{- define "access-ui.configMapName" -}}
 {{- printf "%s-%s" (include "access-ui.fullname" .) "env-config" }}
 {{- end }}
+
+{{- define "access-ui.ingressPrincipal" -}}
+{{- .Values.ingress.principal | default (printf "cluster.local/ns/%s/sa/%s" .Values.global.istioNamespace .Values.global.istioServiceAccountName) | quote }}
+{{- end }}

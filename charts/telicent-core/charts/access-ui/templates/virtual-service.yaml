@@ -22,4 +22,4 @@ spec:
     - destination:
         host: {{ include "access-ui.serviceName" . }}
         port:
-          number: {{ .Values.accessUi.port }}
+          number: {{ .Values.service.port }}

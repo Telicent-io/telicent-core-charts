@@ -1,16 +1,16 @@
 apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
 metadata:
-  name: {{ include "core-mesh.fullname" . }}-ingress-to-graph-server
+  name: {{ include "smart-cache-graph.fullname" . }}-ingress
   labels:
-  {{- include "core-mesh.labels" . | nindent 4 }}
+  {{- include "smart-cache-graph.labels" . | nindent 4 }}
 spec:
   action: ALLOW
   rules:
     - from:
         - source:
             principals:
-            - {{ include "core-mesh.ingressPrincipal" . }}
+            - {{ include "smart-cache-graph.ingressPrincipal" . }}
       to:
         - operation:
             methods:
@@ -43,4 +43,4 @@ spec:
             - tc_read
   selector:
     matchLabels:
-    {{- include "core-mesh.graphServerSelectors" . | nindent 6 }}
+    {{- include "smart-cache-graph.selectorLabels" . | nindent 6 }}

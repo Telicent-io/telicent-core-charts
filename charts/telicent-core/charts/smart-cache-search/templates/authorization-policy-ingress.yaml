@@ -2,16 +2,16 @@
 apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
 metadata:
-  name: {{ include "core-mesh.fullname" . }}-ingress-to-search-api
+  name: {{ include "smart-cache-search.fullname" . }}-ingress
   labels:
-  {{- include "core-mesh.labels" . | nindent 4 }}
+  {{- include "smart-cache-search.labels" . | nindent 4 }}
 spec:
   action: ALLOW
   rules:
     - from:
         - source:
             principals:
-            - {{ include "core-mesh.ingressPrincipal" . }}
+            - {{ include "smart-cache-search.ingressPrincipal" . }}
       to:
         - operation:
             paths:
@@ -36,5 +36,5 @@ spec:
             - tc_read
   selector:
     matchLabels:
-    {{- include "core-mesh.searchApiSelectors" . | nindent 6 }}
+    {{- include "smart-cache-search.selectorLabels" . | nindent 6 }}
 {{- end }}

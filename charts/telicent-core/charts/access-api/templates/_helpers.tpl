@@ -102,3 +102,15 @@ Create the name of the config map
 {{- printf "%s-%s" (include "access-api.fullname" .) "cacert" }}
 {{- end }}
 {{- end }}
+
+{{- define "access-api.ingressPrincipal" -}}
+{{- .Values.ingress.principal | default (printf "cluster.local/ns/%s/sa/%s" .Values.global.istioNamespace .Values.global.istioServiceAccountName) | quote }}
+{{- end }}
+
+{{- define "access-api.graphServerPrincipal" -}}
+{{- .Values.graphServer.principal | default (printf "cluster.local/ns/%s/sa/%s-%s" .Release.Namespace .Release.Name "smart-cache-graph") | quote }}
+{{- end }}
+
+{{- define "access-api.searchApiPrincipal" -}}
+{{- .Values.searchApi.principal | default (printf "cluster.local/ns/%s/sa/%s-%s" .Release.Namespace .Release.Name "smart-cache-search") | quote }}
+{{- end }}

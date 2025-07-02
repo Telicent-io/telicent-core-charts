@@ -4,6 +4,12 @@
 # This section contains global values that are used across the charts inherited from the telicent core umbrella chart, will override these values. These are included to allow this chart to be standalone.
 global:
   jwksUrl: "https://AUTH_DOMAIN/realms/core/protocol/openid-connect/certs"
+  # appsGateway is the name of the Istio gateway for applications
+  appsGateway: istio-system/gateways-apps
+  # @key global.istioServiceAccountName The name of the Istio service account to use for the Access API
+  istioServiceAccountName: istio-ingress
+  # @key global.istioNamespace The namespace where Istio is installed
+  istioNamespace: istio-system
 
 # configuration is for Telicent specific settings
 # This section contains configuration options specific to the Telicent application.
@@ -128,3 +134,8 @@ serviceAccount:
   # name is the name of the service account
   # If not set, the chart will generate a name based on the release name
   name: ""
+
+ingress:
+  # @ key ingress.principal is the principal to use for ingress traffic
+  # If not set, it defaults to the Istio service account in the istio-system
+  principal: ""

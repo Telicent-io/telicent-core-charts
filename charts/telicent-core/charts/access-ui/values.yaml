@@ -7,6 +7,12 @@ global:
   authHostDomain: "auth.telicent.io"
   # appHostDomain is the domain for the application host
   appHostDomain: "apps.telicent.io"
+  # appsGateway is the name of the Istio gateway for applications
+  appsGateway: istio-system/gateways-apps
+  # @key global.istioServiceAccountName The name of the Istio service account to use for the Access API
+  istioServiceAccountName: istio-ingress
+  # @key global.istioNamespace The namespace where Istio is installed
+  istioNamespace: istio-system
 
 configuration:
   # signOutUrl is the URL for signing out
@@ -89,3 +95,8 @@ serviceAccount:
   # name is the name of the service account
   # If not set, the chart will generate a name based on the release name
   name: ""
+
+ingress:
+  # @ key ingress.principal is the principal to use for ingress traffic
+  # If not set, it defaults to the Istio service account in the istio-system
+  principal: ""

@@ -9,6 +9,12 @@ global:
   # authHostDomain is the domain for the Telicent authentication service
   # This is used for the OIDC provider and other authentication-related URLs.
   authHostDomain: "auth.telicent.io"
+  # appsGateway is the name of the Istio gateway for applications
+  appsGateway: istio-system/gateways-apps
+  # @key global.istioServiceAccountName The name of the Istio service account to use for the Access API
+  istioServiceAccountName: istio-ingress
+  # @key global.istioNamespace The namespace where Istio is installed
+  istioNamespace: istio-system
 
 # configuration is for Telicent specific settings
 # This section contains configuration options specific to the Telicent application.
@@ -125,3 +131,8 @@ serviceAccount:
 
 # tolerations sets the tolerations for the pod
 tolerations: []
+
+ingress:
+  # @ key ingress.principal is the principal to use for ingress traffic
+  # If not set, it defaults to the Istio service account in the istio-system
+  principal: ""

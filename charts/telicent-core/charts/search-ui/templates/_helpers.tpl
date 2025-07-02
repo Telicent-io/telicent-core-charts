@@ -77,3 +77,6 @@ Create the name of the config map
 {{- printf "%s-%s" (include "search.fullname" .) "env-configjs" }}
 {{- end }}
 
+{{- define "search.ingressPrincipal" -}}
+{{- .Values.ingress.principal | default (printf "cluster.local/ns/%s/sa/%s" .Values.global.istioNamespace .Values.global.istioServiceAccountName) | quote }}
+{{- end }}

@@ -5,6 +5,12 @@
 global:
   # jwksUrl is the URL for the JWKS endpoint
   jwksUrl: https://your.auth.host.here/realms/core/protocol/openid-connect/certs
+  # appsGateway is the name of the Istio gateway for applications
+  appsGateway: istio-system/gateways-apps
+  # @key global.istioServiceAccountName The name of the Istio service account to use for the Access API
+  istioServiceAccountName: istio-ingress
+  # @key global.istioNamespace The namespace where Istio is installed
+  istioNamespace: istio-system
 
 # api configuration
 # This section contains configuration options specific to the Telicent Search API.
@@ -265,3 +271,13 @@ map:
 fullnameOverride: ""
 # nameOverride sets a custom name for the chart it differs from fullnameOverride as it is not fully qualified
 nameOverride: ""
+
+ingress:
+  # @ key ingress.principal is the principal to use for ingress traffic
+  # If not set, it defaults to the Istio service account in the istio-system
+  principal: ""
+
+graphServer:
+  # @ key graphServer.principal is the principal to use for graph server traffic
+  # If not set, it defaults to the graph server name in the current namespace
+  principal: ""

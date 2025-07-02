@@ -2,16 +2,16 @@
 apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
 metadata:
-  name: {{ include "core-mesh.fullname" . }}-core-apps-to-search-api
+  name: {{ include "smart-cache-search.fullname" . }}-core-apps
   labels:
-  {{- include "core-mesh.labels" . | nindent 4 }}
+  {{- include "smart-cache-search.labels" . | nindent 4 }}
 spec:
   action: ALLOW
   rules:
     - from:
       - source:
           principals:
-          - {{ include "core-mesh.graphServerPrincipal" . }}
+          - {{ include "smart-cache-search.graphServerPrincipal" . }}
       to:
         - operation:
             paths:
@@ -36,5 +36,5 @@ spec:
             - tc_read
   selector:
     matchLabels:
-    {{- include "core-mesh.searchApiSelectors" . | nindent 6 }}
+    {{- include "smart-cache-search.selectorLabels" . | nindent 6 }}
 {{- end }}

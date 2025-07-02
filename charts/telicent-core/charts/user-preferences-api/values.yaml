@@ -6,6 +6,11 @@
 global:
   # existingTruststoreSecretName is the name of an existing secret containing the truststore
   existingTruststoreSecretName: ""
+  # @key global.istioServiceAccountName The name of the Istio service account to use for the Access API
+  istioServiceAccountName: istio-ingress
+  # @key global.istioNamespace The namespace where Istio is installed
+  istioNamespace: istio-system
+
 # configuration is for Telicent specific settings
 # This section contains configuration options specific to the Telicent application.
 # See: https://docs.telicent.io/en/latest/helm-charts/smart-cache-graph.html#configuration // TODO get proper link
@@ -115,3 +120,8 @@ service:
   port: 11111
   # type defines the service type
   type: ClusterIP
+
+ingress:
+  # @ key ingress.principal is the principal to use for ingress traffic
+  # If not set, it defaults to the Istio service account in the istio-system
+  principal: ""

@@ -1,0 +1,21 @@
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  name: {{ include "access-api.fullname" . }}-core-apps
+  labels:
+  {{- include "access-api.labels" . | nindent 4 }}
+spec:
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        principals: 
+        - {{ include "access-api.graphServerPrincipal" . }}
+        - {{ include "access-api.searchApiPrincipal" . }}
+    to:
+    - operation:
+        methods:
+        - GET
+  selector:
+    matchLabels:
+    {{- include "access-api.selectorLabels" . | nindent 6 }}

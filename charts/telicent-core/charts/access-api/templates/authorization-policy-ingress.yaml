@@ -1,16 +1,16 @@
 apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
 metadata:
-  name: {{ include "core-mesh.fullname" . }}-ingress-to-access-api
+  name: {{ include "access-api.fullname" . }}-ingress
   labels:
-  {{- include "core-mesh.labels" . | nindent 4 }}
+  {{- include "access-api.labels" . | nindent 4 }}
 spec:
   action: ALLOW
   rules:
   - from:
     - source:
         principals:
-        - {{ include "core-mesh.ingressPrincipal" . }}
+        - {{ include "access-api.ingressPrincipal" . }}
     to:
     - operation:
         methods:
@@ -26,7 +26,7 @@ spec:
   - from:
     - source:
         principals:
-        - {{ include "core-mesh.ingressPrincipal" . }}
+        - {{ include "access-api.ingressPrincipal" . }}
     to:
     - operation:
         methods:
@@ -39,4 +39,4 @@ spec:
       - tc_read
   selector:
     matchLabels:
-    {{- include "core-mesh.accessApiSelectors" . | nindent 6 }}
+    {{- include "access-api.selectorLabels" . | nindent 6 }}

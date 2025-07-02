@@ -94,3 +94,8 @@ Create MongoPassword name to use
 {{- define "user-preferences-api.secret" -}}
 {{ include "user-preferences-api.fullname" . }}-secret
 {{- end }}
+
+
+{{- define "user-preferences-api.ingressPrincipal" -}}
+{{- .Values.ingress.principal | default (printf "cluster.local/ns/%s/sa/%s" .Values.global.istioNamespace .Values.global.istioServiceAccountName) | quote }}
+{{- end }}
