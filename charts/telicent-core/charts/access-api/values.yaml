@@ -7,8 +7,6 @@
 # @descEnd
 ## Please, note that this will override the image parameters
 ## Current available global image parameters: imageRegistry and imagePullSecrets
-
-#
 global:
   # @key global.imageRegistry Global image registry
   imageRegistry: ""
@@ -144,17 +142,18 @@ serviceAccount:
   name: ""
   #@key serviceAccount.annotations Additional custom annotations for the ServiceAccount
   annotations: {}
-
+# @section Istio ingress Parameters
 ingress:
   # @ key ingress.principal is the principal to use for ingress traffic
   # If not set, it defaults to the Istio service account in the istio-system
   principal: ""
-
+# @section API Principals
 searchApi:
   # @ key searchApi.principal is the principal to use for search API traffic
   # If not set, it defaults to the search api name in the current namespace
   principal: ""
 
+# @section Graph Server Parameters
 graphServer:
   # @ key graphServer.principal is the principal to use for graph server traffic
   # If not set, it defaults to the graph server name in the current namespace
