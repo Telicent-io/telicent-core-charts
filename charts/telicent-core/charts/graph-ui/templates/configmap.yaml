@@ -1,4 +1,9 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
 {{- if not .Values.existingGraphUIConfigName }}
+
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -75,4 +80,5 @@ data:
         //ENCODE_SEARCH_PARAMS_MODE: "as uri component", // default if unset
         ENCODE_SEARCH_PARAMS_MODE: 'as base64',
     };
+
 {{- end }}
