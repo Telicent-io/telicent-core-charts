@@ -1,0 +1,284 @@
+{
+    "title": "Chart Values",
+    "type": "object",
+    "properties": {
+        "global": {
+            "type": "object",
+            "properties": {
+                "imageRegistry": {
+                    "type": "string",
+                    "description": "Global image registry",
+                    "default": ""
+                },
+                "imagePullSecrets": {
+                    "type": "array",
+                    "description": "Global registry secret names as an array",
+                    "default": [],
+                    "items": {}
+                },
+                "appHostDomain": {
+                    "type": "string",
+                    "description": "Domain name associated with Graph UI",
+                    "default": "apps.telicent.io"
+                },
+                "authHostDomain": {
+                    "type": "string",
+                    "description": "Domain to be used for interacting with Telicent authentication services, including OIDC providers",
+                    "default": "auth.telicent.io"
+                }
+            }
+        },
+        "configuration": {
+            "type": "object",
+            "properties": {
+                "userPortalUiDeployed": {
+                    "type": "boolean",
+                    "description": "If set to true, User Portal links will be available within Graph UI",
+                    "default": true
+                },
+                "graphUiDeployed": {
+                    "type": "boolean",
+                    "description": "If set to true, Graph UI links will be available within Graph UI",
+                    "default": true
+                },
+                "dataCatalogUiDeployed": {
+                    "type": "boolean",
+                    "description": "If set to true, Data Catalog UI links will be available within Graph UI",
+                    "default": true
+                },
+                "signOutUrl": {
+                    "type": "string",
+                    "description": "The URL to be used for signing out",
+                    "default": "https://your.host.here/logout"
+                },
+                "searchUiMaptilerToken": {
+                    "type": "string",
+                    "description": "MapTiler token for Graph UI",
+                    "default": "your.maptiler.token.here"
+                },
+                "existingMapConfigSecretName": {
+                    "type": "string",
+                    "description": "The name of an existing secret containing map configuration",
+                    "default": "your-existing-map-config-secret-name"
+                }
+            }
+        },
+        "fullnameOverride": {
+            "type": "string",
+            "description": "String to fully override the generated release name",
+            "default": ""
+        },
+        "nameOverride": {
+            "type": "string",
+            "description": "String to replace the name of the chart in the Chart.yaml file",
+            "default": ""
+        },
+        "replicas": {
+            "type": "number",
+            "description": "Number of Graph UI replicas to deploy",
+            "default": 1
+        },
+        "revisionHistoryLimit": {
+            "type": "number",
+            "description": "Number of controller revisions to keep",
+            "default": 5
+        },
+        "image": {
+            "type": "object",
+            "properties": {
+                "registry": {
+                    "type": "string",
+                    "description": "Graph UI image registry",
+                    "default": "REGISTRY_NAME"
+                },
+                "repository": {
+                    "type": "string",
+                    "description": "Graph UI image name",
+                    "default": "REPOSITORY_NAME/telicent-graph"
+                },
+                "tag": {
+                    "type": "string",
+                    "description": "Seearch UI image tag. If not set, a tag is generated using the appVersion",
+                    "default": ""
+                },
+                "pullPolicy": {
+                    "type": "string",
+                    "description": "Graph UI image pull policy",
+                    "default": "IfNotPresent"
+                },
+                "pullSecrets": {
+                    "type": "array",
+                    "description": "Specify registry secret names as an array",
+                    "default": [],
+                    "items": {}
+                }
+            }
+        },
+        "resources": {
+            "type": "object",
+            "properties": {
+                "requests": {
+                    "type": "object",
+                    "properties": {
+                        "cpu": {
+                            "type": "string",
+                            "description": "Set containers' CPU request",
+                            "default": "500m"
+                        },
+                        "memory": {
+                            "type": "string",
+                            "description": "Set containers' memory request",
+                            "default": "512Mi"
+                        }
+                    }
+                },
+                "limits": {
+                    "type": "object",
+                    "properties": {
+                        "cpu": {
+                            "type": "string",
+                            "description": "Set containers' CPU limit",
+                            "default": "1"
+                        },
+                        "memory": {
+                            "type": "string",
+                            "description": "Set containers' memory limit",
+                            "default": "1Gi"
+                        }
+                    }
+                }
+            }
+        },
+        "containerSecurityContext": {
+            "type": "object",
+            "properties": {
+                "runAsUser": {
+                    "type": "number",
+                    "description": "Set containers' Security Context runAsUser User ID",
+                    "default": 185
+                },
+                "runAsGroup": {
+                    "type": "number",
+                    "description": "Set containers' Security Context runAsGroup Group ID",
+                    "default": 185
+                },
+                "runAsNonRoot": {
+                    "type": "boolean",
+                    "description": "Set container's Security Context runAsNonRoot",
+                    "default": true
+                },
+                "allowPrivilegeEscalation": {
+                    "type": "boolean",
+                    "description": "Set container's Security Context allowPrivilegeEscalation",
+                    "default": false
+                },
+                "capabilities": {
+                    "type": "object",
+                    "properties": {
+                        "drop": {
+                            "type": "array",
+                            "description": "List of capabilities to be dropped",
+                            "default": [
+                                "ALL"
+                            ],
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "seccompProfile": {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "description": "Set container's Security Context seccomp profile",
+                            "default": "RuntimeDefault"
+                        }
+                    }
+                }
+            }
+        },
+        "podSecurityContext": {
+            "type": "object",
+            "properties": {
+                "runAsUser": {
+                    "type": "number",
+                    "description": "Set the provisioning pod's Security Context runAsUser User ID",
+                    "default": 185
+                },
+                "runAsGroup": {
+                    "type": "number",
+                    "description": "Set the provisioning pod's Security Context runAsGroup Group ID",
+                    "default": 185
+                },
+                "runAsNonRoot": {
+                    "type": "boolean",
+                    "description": "Set the provisioning pod's Security Context runAsNonRoot",
+                    "default": true
+                },
+                "fsGroup": {
+                    "type": "number",
+                    "description": "Set the provisioning pod's Group ID for the mounted volumes' filesystem",
+                    "default": 185
+                },
+                "seccompProfile": {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "description": "Set the provisioning pod's Security Context seccomp profile",
+                            "default": "RuntimeDefault"
+                        }
+                    }
+                }
+            }
+        },
+        "affinity": {
+            "type": "object",
+            "description": "Affinity for pod assignment",
+            "default": {}
+        },
+        "nodeSelector": {
+            "type": "object",
+            "description": "Node labels for pod assignment",
+            "default": {}
+        },
+        "tolerations": {
+            "type": "array",
+            "description": "Tolerations for pod assignment",
+            "default": [],
+            "items": {}
+        },
+        "service": {
+            "type": "object",
+            "properties": {
+                "port": {
+                    "type": "number",
+                    "description": "Graph UI service port",
+                    "default": 8080
+                },
+                "type": {
+                    "type": "string",
+                    "description": "Graph UI service type",
+                    "default": "ClusterIP"
+                }
+            }
+        },
+        "serviceAccount": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Name of the created ServiceAccount. If not set, a name is generated using the fullname template",
+                    "default": ""
+                },
+                "annotations": {
+                    "type": "object",
+                    "description": "Additional custom annotations for the ServiceAccount",
+                    "default": {}
+                }
+            }
+        }
+    }
+}
