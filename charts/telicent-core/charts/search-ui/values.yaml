@@ -38,15 +38,24 @@ configuration:
   dataCatalogUiDeployed: true
   # @key configuration.signOutUrl The URL to be used for signing out
   signOutUrl: "https://your.host.here/logout"
-
-  # @key configuration.searchUiMaptilerToken MapTiler token for Search UI
+# @section Search UI Map Configuration
+# @descStart
+# Contains configuration parameters for the Search UI map service
+# @descEnd
+map:
+  # @key map.searchUiMaptilerToken MapTiler token for Search UI
   searchUiMaptilerToken: "your.maptiler.token.here"
 
   # For examples of the map configuration, see: _secret_config_js.tpl
-  # searchUiMapboxStyleSpecUrl is the Mapbox style spec URL for the search UI can be specified if using Mapbox styles
+  # @key map.searchUiMapboxStyleSpecUrl Mapbox style spec URL for Search UI
+  # @descStart
+  # If set, it will default to a single vector style from any map service that adheres to the Mapbox style spec.
+  # @descEnd
   # searchUiMapboxStyleSpecUrl: "https://your.mapbox.style.spec.url.here"
-
-  # searchUiArcgisToken is the ArcGIS token for  Search UI can be specified if using ArcGIS styles
+  # @key map.searchUiArcgisToken ArcGIS token for Search UI
+  # @descStart
+  # If set, it can generate multiple layers from any map service that adheres to the Mapbox style spec.
+  # @descEnd
   # searchUiArcgisToken: "your.arcgis.token.here"
 
   # existingMapConfigSecretName is the name of an existing secret containing map configuration
@@ -75,21 +84,21 @@ image:
   tag: ""
   # @key image.pullPolicy Search UI image pull policy
   pullPolicy: IfNotPresent
-  # @key image.pullSecrets Specify registry secret names as an array
-  pullSecrets: []
+# @key imagePullSecrets Specify registry secret names as an array
+imagePullSecrets: []
 
 resources:
   requests:
     # @key resources.requests.cpu Set containers' CPU request
-    cpu: "500m"
+    cpu: "10m"
     # @key resources.requests.memory Set containers' memory request
-    memory: "512Mi"
+    memory: "200Mi"
   limits:
     # @key resources.limits.cpu Set containers' CPU limit
-    cpu: "1"
+    cpu: "100m"
     # @key resources.limits.memory Set containers' memory limit
-    memory: "1Gi"
-
+    memory: "1000Mi"
+    
 containerSecurityContext:
   # @key containerSecurityContext.runAsUser Set containers' Security Context runAsUser User ID
   runAsUser: 185

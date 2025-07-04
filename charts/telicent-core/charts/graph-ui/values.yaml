@@ -29,15 +29,15 @@ configuration:
   dataCatalogUiDeployed: true
 
 map:
-  # searchUiMaptilerToken is the MapTiler token for the search UI
-  searchUiMaptilerToken: "your.maptiler.token.here"
+  # graphUiMaptilerToken is the MapTiler token for the graph UI
+  graphUiMaptilerToken: "your.maptiler.token.here"
 
   # For examples of the map configuration, see: _secret_config_js.tpl
-  # searchUiMapboxStyleSpecUrl is the Mapbox style spec URL for the search UI can be specified if using Mapbox styles
-  # searchUiMapboxStyleSpecUrl: "https://your.mapbox.style.spec.url.here"
+  # graphUiMapboxStyleSpecUrl is the Mapbox style spec URL for the graph UI can be specified if using Mapbox styles
+  # graphUiMapboxStyleSpecUrl: "https://your.mapbox.style.spec.url.here"
 
-  # searchUiArcgisToken is the ArcGIS token for the search UI can be specified if using ArcGIS styles
-  # searchUiArcgisToken: "your.arcgis.token.here"
+  # graphUiArcgisToken is the ArcGIS token for the graph UI can be specified if using ArcGIS styles
+  # graphUiArcgisToken: "your.arcgis.token.here"
 
   # existingMapConfigSecretName is the name of an existing secret containing map configuration
   # existingMapConfigSecretName: "your-existing-map-config-secret-name"
@@ -74,8 +74,6 @@ fullnameOverride: ""
 
 # Image configuration
 image:
-  # imagePullSecrets is a list of secrets to use for pulling the image
-  imagePullSecrets: []
   # pullPolicy defines the image pull policy
   pullPolicy: IfNotPresent
   # repository is the Docker repository for the image
@@ -84,6 +82,8 @@ image:
   # appVersion is used by default when defining an empty string for tag
   # tag is the image tag to use
   tag: ""
+
+imagePullSecrets: []
 # nameOverride sets a custom name for the chart it differs from fullnameOverride as it is not fully qualified
 nameOverride: ""
 # nodeSelector sets the node selector for the pod

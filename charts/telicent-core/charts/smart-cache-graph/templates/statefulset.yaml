@@ -24,10 +24,10 @@ spec:
       labels:
         {{- include "smart-cache-graph.labels" . | nindent 8 }}
     spec:
-      {{- if .Values.imagePullSecretName }}
+    {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
-      - name: {{ .Values.imagePullSecretName }}
-      {{- end }}
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
       containers:
       - args:
           - --config
@@ -97,9 +97,9 @@ spec:
         {{- if .Values.global.existingKafkaConfigSecretName }}
           secretName: {{ .Values.global.existingKafkaConfigSecretName }}
         {{- else }}
-          secretName: {{ .Values.global.existingKafkaAuthConfigSecretName }}
+          secretName: {{ include "telicent-core.kafkaAuthConfigSecretName" . }}
         {{- end }}
-        # Secret is created outside of Helm by using Ansible. WOuld potentially need cert-manager to remove this dependency.
+        # TODO: Secret is created outside of Helm by using Ansible. Would potentially need cert-manager to remove this dependency.
 
       {{- if .Values.global.existingTruststoreSecretName }}
       - name: truststore-volume

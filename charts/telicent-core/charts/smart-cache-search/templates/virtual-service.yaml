@@ -26,7 +26,7 @@ spec:
 
     route:
     - destination:
-        host: {{ include "smart-cache-search.serviceName" . }}
+        host: {{ include "smart-cache-search.serviceName" . }}-api
         port:
           number: {{ .Values.api.service.port }}
 {{- end }}

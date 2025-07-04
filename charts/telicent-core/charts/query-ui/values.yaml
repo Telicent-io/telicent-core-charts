@@ -58,14 +58,14 @@ image:
 resources:
   requests:
     # @key resources.requests.cpu Set containers' CPU request
-    cpu: "500m"
+    cpu: "10m"
     # @key resources.requests.memory Set containers' memory request
-    memory: "512Mi"
+    memory: "200Mi"
   limits:
     # @key resources.limits.cpu Set containers' CPU limit
-    cpu: "1"
+    cpu: "100m"
     # @key resources.limits.memory Set containers' memory limit
-    memory: "1Gi"
+    memory: "1000Mi"
 
 containerSecurityContext:
   # @key containerSecurityContext.runAsUser Set containers' Security Context runAsUser User ID

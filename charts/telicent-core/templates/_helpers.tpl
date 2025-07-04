@@ -66,6 +66,6 @@ JWT Issuer
 {{- if .Values.jwtIssuer -}}
 {{- .Values.jwtIssuer -}}
 {{- else -}}
-{{- printf "https://%s/realms/core" .Values.authnHost -}}
+{{- printf "https://%s/realms/core" .Values.global.authHostDomain -}}
 {{- end -}}
 {{- end -}}

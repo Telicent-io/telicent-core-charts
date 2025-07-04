@@ -4,7 +4,7 @@ kind: AuthorizationPolicy
 metadata:
   name: {{ include "smart-cache-search.fullname" . }}-core-apps
   labels:
-  {{- include "smart-cache-search.labels" . | nindent 4 }}
+  {{- include "smart-cache-search.apiLabels" . | nindent 4 }}
 spec:
   action: ALLOW
   rules:
@@ -36,5 +36,5 @@ spec:
             - tc_read
   selector:
     matchLabels:
-    {{- include "smart-cache-search.selectorLabels" . | nindent 6 }}
+    {{- include "smart-cache-search.apiSelectorLabels" . | nindent 6 }}
 {{- end }}

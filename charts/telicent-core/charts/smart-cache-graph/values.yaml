@@ -35,8 +35,6 @@ fullnameOverride: ""
 
 # Image configuration
 image:
-  # imagePullSecrets is a list of secrets to use for pulling the image
-  imagePullSecrets: []
   # pullPolicy defines the image pull policy
   pullPolicy: IfNotPresent
   # repository is the Docker repository for the image
@@ -44,7 +42,8 @@ image:
   # appVersion is used by default when defining an empty string
   # tag is the image tag to use
   tag: ""
-
+# imagePullSecrets is a list of secrets to use for pulling the image
+imagePullSecrets: []
 # metrics configuration
 metrics:
   # service is the configuration for the Prometheus service

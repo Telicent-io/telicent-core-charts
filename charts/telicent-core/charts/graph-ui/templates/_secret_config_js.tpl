@@ -1,17 +1,17 @@
 {{- define "graph.secretConfigJs"  -}}
 // Config values
 
-{{- if .Values.map.searchUiMaptilerToken }}
-const MAP_TILER_TOKEN = {{ .Values.map.searchUiMaptilerToken | quote }};
+{{- if .Values.map.graphUiMaptilerToken }}
+const MAP_TILER_TOKEN = {{ .Values.map.graphUiMaptilerToken | quote }};
 {{- end }}
 
-{{- if .Values.map.searchUiMapboxStyleSpecUrl }}
-const VECTOR_STYLE_URI = `{{ .Values.map.searchUiMapboxStyleSpecUrl }}`;
+{{- if .Values.map.graphUiMapboxStyleSpecUrl }}
+const VECTOR_STYLE_URI = `{{ .Values.map.graphUiMapboxStyleSpecUrl }}`;
 {{- end }}
 
-{{- if .Values.map.searchUiArcgisToken }}
+{{- if .Values.map.graphUiArcgisToken }}
 // ArcGIS API token
-const ARC_GIS_API_TOKEN = `{{ .Values.map.searchUiArcgisToken }}`;
+const ARC_GIS_API_TOKEN = `{{ .Values.map.graphUiArcgisToken }}`;
 // Utility values
 const VECTOR_STYLE_URI = `https://basemapstyles-api.arcgis.com/arcgis/rest/services/styles/v2/styles/arcgis/streets-night?token=${ARC_GIS_API_TOKEN}`;
 

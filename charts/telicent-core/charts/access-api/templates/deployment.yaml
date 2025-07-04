@@ -20,6 +20,10 @@ spec:
       labels:
       {{- include "access-api.selectorLabels" . | nindent 8 }}
     spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
       containers:
       - envFrom:
         - configMapRef:
@@ -35,7 +39,6 @@ spec:
         - name: NODE_EXTRA_CA_CERTS
           value: "/certs/ca.crt"
         {{ end }}
-        
         image: {{ .Values.image.repository }}:{{ include "access-api.version" . }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         name: access-api
