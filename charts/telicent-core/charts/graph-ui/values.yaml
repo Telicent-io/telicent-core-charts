@@ -48,7 +48,7 @@ configuration:
   # graphUiArcgisToken is the ArcGIS token for the graph UI can be specified if using ArcGIS styles
   # graphUiArcgisToken: "your.arcgis.token.here"
   # @key configuration.existingMapConfigSecretName  The name of an existing secret containing map configuration
-  existingMapConfigSecretName: "your-existing-map-config-secret-name"
+  existingMapConfigSecretName: ""
 
 # @section Common Parameters
 

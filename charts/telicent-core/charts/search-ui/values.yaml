@@ -39,7 +39,7 @@ configuration:
   # @key configuration.signOutUrl The URL to be used for signing out
   signOutUrl: "https://your.host.here/logout"
 
-  # @key map.searchUiMaptilerToken MapTiler token for Search UI
+  # @key configuration.searchUiMaptilerToken MapTiler token for Search UI
   searchUiMaptilerToken: "your.maptiler.token.here"
 
   # For examples of the map configuration, see: _secret_config_js.tpl
@@ -47,15 +47,14 @@ configuration:
   # @descStart
   # If set, it will default to a single vector style from any map service that adheres to the Mapbox style spec.
   # @descEnd
-  # searchUiMapboxStyleSpecUrl: "https://your.mapbox.style.spec.url.here"
+  searchUiMapboxStyleSpecUrl: ""
   # @key configuration.searchUiArcgisToken ArcGIS token for Search UI
   # @descStart
   # If set, it can generate multiple layers from any map service that adheres to the Mapbox style spec.
   # @descEnd
-  # searchUiArcgisToken: "your.arcgis.token.here"
-
-  # existingMapConfigSecretName is the name of an existing secret containing map configuration
-  # existingMapConfigSecretName: "your-existing-map-config-secret-name"
+  searchUiArcgisToken: ""
+  # @key configuration.existingMapConfigSecretName The name of an existing secret containing map configuration
+  existingMapConfigSecretName: ""
 
 # @section Common Parameters
 

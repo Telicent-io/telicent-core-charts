@@ -54,8 +54,8 @@ spec:
         - containerPort: 3030
           name: http
           protocol: TCP
-        - containerPort: 9464
-          name: metrics
+        - containerPort: {{ .Values.metrics.service.port }}
+          name: {{ .Values.metrics.service.name | default "metrics" }}
           protocol: TCP
         readinessProbe:
           httpGet:

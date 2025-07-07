@@ -59,14 +59,19 @@ Contains global parameters, these parameters are mirrored within the Telicent co
 ### Configuration Parameters
 
 Contains configuration parameters specific to the Search UI application
+If set, it will default to a single vector style from any map service that adheres to the Mapbox style spec.
+If set, it can generate multiple layers from any map service that adheres to the Mapbox style spec.
 
-| Name                                  | Description                                                              | Value                           |
-| ------------------------------------- | ------------------------------------------------------------------------ | ------------------------------- |
-| `configuration.userPortalUiDeployed`  | If set to true, User Portal links will be available within Search UI     | `true`                          |
-| `configuration.graphUiDeployed`       | If set to true, Graph UI links will be available within Search UI        | `true`                          |
-| `configuration.dataCatalogUiDeployed` | If set to true, Data Catalog UI links will be available within Search UI | `true`                          |
-| `configuration.signOutUrl`            | The URL to be used for signing out                                       | `https://your.host.here/logout` |
-| `configuration.searchUiMaptilerToken` | MapTiler token for Search UI                                             | `your.maptiler.token.here`      |
+| Name                                        | Description                                                              | Value                           |
+| ------------------------------------------- | ------------------------------------------------------------------------ | ------------------------------- |
+| `configuration.userPortalUiDeployed`        | If set to true, User Portal links will be available within Search UI     | `true`                          |
+| `configuration.graphUiDeployed`             | If set to true, Graph UI links will be available within Search UI        | `true`                          |
+| `configuration.dataCatalogUiDeployed`       | If set to true, Data Catalog UI links will be available within Search UI | `true`                          |
+| `configuration.signOutUrl`                  | The URL to be used for signing out                                       | `https://your.host.here/logout` |
+| `configuration.searchUiMaptilerToken`       | MapTiler token for Search UI                                             | `your.maptiler.token.here`      |
+| `configuration.searchUiMapboxStyleSpecUrl`  | Mapbox style spec URL for Search UI                                      | `""`                            |
+| `configuration.searchUiArcgisToken`         | ArcGIS token for Search UI                                               | `""`                            |
+| `configuration.existingMapConfigSecretName` | The name of an existing secret containing map configuration              | `""`                            |
 
 ### Common Parameters
 
@@ -85,11 +90,11 @@ Contains configuration parameters specific to the Search UI application
 | `image.repository`                                  | Search UI image name                                                      | `REPOSITORY_NAME/telicent-search` |
 | `image.tag`                                         | Seearch UI image tag. If not set, a tag is generated using the appVersion | `""`                              |
 | `image.pullPolicy`                                  | Search UI image pull policy                                               | `IfNotPresent`                    |
-| `image.pullSecrets`                                 | Specify registry secret names as an array                                 | `[]`                              |
-| `resources.requests.cpu`                            | Set containers' CPU request                                               | `500m`                            |
-| `resources.requests.memory`                         | Set containers' memory request                                            | `512Mi`                           |
-| `resources.limits.cpu`                              | Set containers' CPU limit                                                 | `1`                               |
-| `resources.limits.memory`                           | Set containers' memory limit                                              | `1Gi`                             |
+| `imagePullSecrets`                                  | Specify registry secret names as an array                                 | `[]`                              |
+| `resources.requests.cpu`                            | Set containers' CPU request                                               | `10m`                             |
+| `resources.requests.memory`                         | Set containers' memory request                                            | `200Mi`                           |
+| `resources.limits.cpu`                              | Set containers' CPU limit                                                 | `100m`                            |
+| `resources.limits.memory`                           | Set containers' memory limit                                              | `1000Mi`                          |
 | `containerSecurityContext.runAsUser`                | Set containers' Security Context runAsUser User ID                        | `185`                             |
 | `containerSecurityContext.runAsGroup`               | Set containers' Security Context runAsGroup Group ID                      | `185`                             |
 | `containerSecurityContext.runAsNonRoot`             | Set container's Security Context runAsNonRoot                             | `true`                            |
