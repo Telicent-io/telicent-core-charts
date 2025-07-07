@@ -1,0 +1,12 @@
+apiVersion: security.istio.io/v1
+kind: RequestAuthentication
+metadata:
+  name: {{ include "telicent-core.fullname" . }}-users
+  labels:
+  {{- include "telicent-core.labels" . | nindent 4 }}
+spec:
+  jwtRules:
+  - forwardOriginalToken: true
+    issuer: {{ include "telicent-core.jwtIssuer" . }}
+    jwksUri: {{ .Values.global.jwksUrl | quote }}
+ 

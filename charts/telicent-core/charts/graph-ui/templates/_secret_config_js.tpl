@@ -5,17 +5,18 @@ Copyright (C) 2025 Telicent Limited
 {{- define "graph.secretConfigJs"  -}}
 // Config values
 
-{{- if .Values.configuration.searchUiMaptilerToken }}
-const MAP_TILER_TOKEN = {{ .Values.configuration.searchUiMaptilerToken | quote }};
+{{- if .Values.configuration.graphUiMaptilerToken }}
+const MAP_TILER_TOKEN = {{ .Values.configuration.graphUiMaptilerToken | quote }};
 {{- end }}
 
-{{- if .Values.configuration.searchUiMapboxStyleSpecUrl }}
-const VECTOR_STYLE_URI = `{{ .Values.configuration.searchUiMapboxStyleSpecUrl }}`;
+{{- if .Values.configuration.graphUiMapboxStyleSpecUrl }}
+const VECTOR_STYLE_URI = `{{ .Values.configuration.graphUiMapboxStyleSpecUrl }}`;
 {{- end }}
 
-{{- if .Values.configuration.searchUiArcgisToken }}
+{{- if .Values.configuration.graphUiArcgisToken }}
 // ArcGIS API token
-const ARC_GIS_API_TOKEN = `{{ .Values.configuration.searchUiArcgisToken }}`;
+const ARC_GIS_API_TOKEN = `{{ .Values.configuration.graphUiArcgisToken }}`;
+
 // Utility values
 const VECTOR_STYLE_URI = `https://basemapstyles-api.arcgis.com/arcgis/rest/services/styles/v2/styles/arcgis/streets-night?token=${ARC_GIS_API_TOKEN}`;
 

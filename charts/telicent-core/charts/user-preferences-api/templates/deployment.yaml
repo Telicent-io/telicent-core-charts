@@ -19,10 +19,10 @@ spec:
       labels:
         {{- include "user-preferences-api.labels" . | nindent 8 }}
     spec:
-      {{- if .Values.imagePullSecrets }}
+    {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
-        - name: {{ .Values.imagePullSecrets }}
-      {{- end }}
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
       containers:
       - name: user-preferences-api
         envFrom:    

@@ -2,13 +2,13 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: {{ include "core-mesh.fullname" . }}-search-api
+  name: {{ include "smart-cache-search.fullname" . }}-api
   labels:
-  {{- include "core-mesh.labels" . | nindent 4 }}
+  {{- include "smart-cache-search.apiLabels" . | nindent 4 }}
 
 spec:
   gateways:
-  - {{ .Values.appsGateway }}
+  - {{ .Values.global.appsGateway }}
   hosts:
   - {{ .Values.global.appHostDomain }}
   http:
@@ -26,7 +26,7 @@ spec:
 
     route:
     - destination:
-        host: {{ include "core-mesh.searchApiServiceName" . }}
+        host: {{ include "smart-cache-search.serviceName" . }}-api
         port:
-          number: {{ .Values.searchApi.port }}
+          number: {{ .Values.api.service.port }}
 {{- end }}

@@ -13,11 +13,17 @@ global:
   #   - myRegistryKeySecretName
   #
   # @key global.imagePullSecrets Global registry secret names as an array
-  imagePullSecrets: [ ]
+  imagePullSecrets: []
   # @key global.appHostDomain Domain name associated with Search UI
   appHostDomain: "apps.telicent.io"
   # @key global.authHostDomain Domain to be used for interacting with Telicent authentication services, including OIDC providers
   authHostDomain: "auth.telicent.io"
+  # @key global.appsGateway is the name of the Istio gateway for applications
+  appsGateway: istio-system/gateways-apps
+  # @key global.istioServiceAccountName The name of the Istio service account to use for the Access API
+  istioServiceAccountName: istio-ingress
+  # @key global.istioNamespace The namespace where Istio is installed
+  istioNamespace: istio-system
 
 # @section Configuration Parameters
 # @descStart
@@ -37,14 +43,18 @@ configuration:
   searchUiMaptilerToken: "your.maptiler.token.here"
 
   # For examples of the map configuration, see: _secret_config_js.tpl
-  # searchUiMapboxStyleSpecUrl is the Mapbox style spec URL for the search UI can be specified if using Mapbox styles
-  # searchUiMapboxStyleSpecUrl: "https://your.mapbox.style.spec.url.here"
-
-  # searchUiArcgisToken is the ArcGIS token for  Search UI can be specified if using ArcGIS styles
-  # searchUiArcgisToken: "your.arcgis.token.here"
-
-  # existingMapConfigSecretName is the name of an existing secret containing map configuration
-  # existingMapConfigSecretName: "your-existing-map-config-secret-name"
+  # @key configuration.searchUiMapboxStyleSpecUrl Mapbox style spec URL for Search UI
+  # @descStart
+  # If set, it will default to a single vector style from any map service that adheres to the Mapbox style spec.
+  # @descEnd
+  searchUiMapboxStyleSpecUrl: ""
+  # @key configuration.searchUiArcgisToken ArcGIS token for Search UI
+  # @descStart
+  # If set, it can generate multiple layers from any map service that adheres to the Mapbox style spec.
+  # @descEnd
+  searchUiArcgisToken: ""
+  # @key configuration.existingMapConfigSecretName The name of an existing secret containing map configuration
+  existingMapConfigSecretName: ""
 
 # @section Common Parameters
 
@@ -69,21 +79,21 @@ image:
   tag: ""
   # @key image.pullPolicy Search UI image pull policy
   pullPolicy: IfNotPresent
-  # @key image.pullSecrets Specify registry secret names as an array
-  pullSecrets: [ ]
+# @key imagePullSecrets Specify registry secret names as an array
+imagePullSecrets: []
 
 resources:
   requests:
     # @key resources.requests.cpu Set containers' CPU request
-    cpu: "500m"
+    cpu: "10m"
     # @key resources.requests.memory Set containers' memory request
-    memory: "512Mi"
+    memory: "200Mi"
   limits:
     # @key resources.limits.cpu Set containers' CPU limit
-    cpu: "1"
+    cpu: "100m"
     # @key resources.limits.memory Set containers' memory limit
-    memory: "1Gi"
-
+    memory: "1000Mi"
+    
 containerSecurityContext:
   # @key containerSecurityContext.runAsUser Set containers' Security Context runAsUser User ID
   runAsUser: 185
@@ -116,13 +126,13 @@ podSecurityContext:
 
 # @key affinity Affinity for pod assignment
 # Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
-affinity: { }
+affinity: {}
 # @key nodeSelector Node labels for pod assignment
 # Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
-nodeSelector: { }
+nodeSelector: {}
 # @key tolerations Tolerations for pod assignment
 # Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
-tolerations: [ ]
+tolerations: []
 
 # @section Traffic Exposure Parameters
 service:
@@ -136,4 +146,9 @@ serviceAccount:
   # @key serviceAccount.name Name of the created ServiceAccount. If not set, a name is generated using the fullname template
   name: ""
   #@key serviceAccount.annotations Additional custom annotations for the ServiceAccount
-  annotations: { }
+  annotations: {}
+
+ingress:
+  # @key ingress.principal is the principal to use for ingress traffic
+  # If not set, it defaults to the Istio service account in the istio-system
+  principal: ""

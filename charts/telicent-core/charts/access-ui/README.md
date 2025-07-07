@@ -47,12 +47,14 @@ The command removes all the Kubernetes components associated with the chart and 
 
 Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
 
-| Name                      | Description                                                                                       | Value              |
-| ------------------------- | ------------------------------------------------------------------------------------------------- | ------------------ |
-| `global.imageRegistry`    | Global image registry                                                                             | `""`               |
-| `global.imagePullSecrets` | Global registry secret names as an array                                                          | `[]`               |
-| `global.appHostDomain`    | Domain name associated with Access UI                                                             | `apps.telicent.io` |
-| `global.authHostDomain`   | Domain to be used for interacting with Telicent authentication services, including OIDC providers | `auth.telicent.io` |
+| Name                             | Description                                                                                       | Value              |
+| -------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------ |
+| `global.imageRegistry`           | Global image registry                                                                             | `""`               |
+| `global.imagePullSecrets`        | Global registry secret names as an array                                                          | `[]`               |
+| `global.appHostDomain`           | Domain name associated with Access UI                                                             | `apps.telicent.io` |
+| `global.authHostDomain`          | Domain to be used for interacting with Telicent authentication services, including OIDC providers | `auth.telicent.io` |
+| `global.istioServiceAccountName` | The name of the Istio service account to use for the Access API                                   | `istio-ingress`    |
+| `global.istioNamespace`          | The namespace where Istio is installed                                                            | `istio-system`     |
 
 ### Configuration Parameters
 
@@ -80,10 +82,10 @@ Contains configuration parameters specific to the Access UI application
 | `image.tag`                                         | Access UI image tag. If not set, a tag is generated using the appVersion | `""`                              |
 | `image.pullPolicy`                                  | Access UI image pull policy                                              | `IfNotPresent`                    |
 | `image.pullSecrets`                                 | Specify registry secret names as an array                                | `[]`                              |
-| `resources.requests.cpu`                            | Set containers' CPU request                                              | `500m`                            |
-| `resources.requests.memory`                         | Set containers' memory request                                           | `512Mi`                           |
-| `resources.limits.cpu`                              | Set containers' CPU limit                                                | `1`                               |
-| `resources.limits.memory`                           | Set containers' memory limit                                             | `1Gi`                             |
+| `resources.requests.cpu`                            | Set containers' CPU request                                              | `10m`                             |
+| `resources.requests.memory`                         | Set containers' memory request                                           | `200Mi`                           |
+| `resources.limits.cpu`                              | Set containers' CPU limit                                                | `100m`                            |
+| `resources.limits.memory`                           | Set containers' memory limit                                             | `1000Mi`                          |
 | `containerSecurityContext.runAsUser`                | Set containers' Security Context runAsUser User ID                       | `185`                             |
 | `containerSecurityContext.runAsGroup`               | Set containers' Security Context runAsGroup Group ID                     | `185`                             |
 | `containerSecurityContext.runAsNonRoot`             | Set container's Security Context runAsNonRoot                            | `true`                            |
@@ -105,7 +107,10 @@ Contains configuration parameters specific to the Access UI application
 
 ### Other Parameters
 
+If not set, it defaults to the Istio service account in the istio-system
+
 | Name                         | Description                                                                                     | Value |
 | ---------------------------- | ----------------------------------------------------------------------------------------------- | ----- |
 | `serviceAccount.name`        | Name of the created ServiceAccount. If not set, a name is generated using the fullname template | `""`  |
 | `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                            | `{}`  |
+| `ingress.principal`          | is the principal to use for ingress traffic                                                     | `""`  |

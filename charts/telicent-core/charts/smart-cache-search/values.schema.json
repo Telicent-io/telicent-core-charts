@@ -1,0 +1,581 @@
+{
+    "title": "Chart Values",
+    "type": "object",
+    "properties": {
+        "global": {
+            "type": "object",
+            "properties": {
+                "imageRegistry": {
+                    "type": "string",
+                    "description": "Global image registry",
+                    "default": ""
+                },
+                "imagePullSecrets": {
+                    "type": "array",
+                    "description": "Global registry secret names as an array",
+                    "default": [],
+                    "items": {}
+                },
+                "appHostDomain": {
+                    "type": "string",
+                    "description": "Domain name associated with Access UI",
+                    "default": "apps.telicent.io"
+                },
+                "authHostDomain": {
+                    "type": "string",
+                    "description": "Domain to be used for interacting with Telicent authentication services, including OIDC providers",
+                    "default": "auth.telicent.io"
+                },
+                "istioServiceAccountName": {
+                    "type": "string",
+                    "description": "The name of the Istio service account to use for the Access API",
+                    "default": "istio-ingress"
+                },
+                "istioNamespace": {
+                    "type": "string",
+                    "description": "The namespace where Istio is installed",
+                    "default": "istio-system"
+                }
+            }
+        },
+        "api": {
+            "type": "object",
+            "properties": {
+                "annotations": {
+                    "type": "object",
+                    "description": "are additional annotations to add to the pod",
+                    "default": {}
+                },
+                "replicas": {
+                    "type": "number",
+                    "description": "sets the number of replicas for the Search API",
+                    "default": 1
+                },
+                "resources": {
+                    "type": "object",
+                    "description": "sets the resource requests and limits for the pod",
+                    "default": {}
+                },
+                "revisionHistoryLimit": {
+                    "type": "number",
+                    "description": "sets the number of old ReplicaSets to retain",
+                    "default": 3
+                },
+                "image": {
+                    "type": "object",
+                    "properties": {
+                        "imagePullSecrets": {
+                            "type": "array",
+                            "description": "is a list of secrets to use for pulling the image",
+                            "default": [],
+                            "items": {}
+                        },
+                        "pullPolicy": {
+                            "type": "string",
+                            "description": "defines the image pull policy",
+                            "default": "IfNotPresent"
+                        },
+                        "repository": {
+                            "type": "string",
+                            "description": "is the Docker repository for the image",
+                            "default": "098669589541.dkr.ecr.eu-west-2.amazonaws.com/search-api-server"
+                        },
+                        "tag": {
+                            "type": "string",
+                            "description": "is the image tag to use",
+                            "default": ""
+                        }
+                    }
+                },
+                "containerSecurityContext": {
+                    "type": "object",
+                    "properties": {
+                        "allowPrivilegeEscalation": {
+                            "type": "boolean",
+                            "description": "prevents privilege escalation",
+                            "default": false
+                        },
+                        "capabilities": {
+                            "type": "object",
+                            "properties": {
+                                "drop": {
+                                    "type": "array",
+                                    "description": "drop all capabilities",
+                                    "default": [
+                                        "ALL"
+                                    ],
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        },
+                        "runAsGroup": {
+                            "type": "number",
+                            "description": "sets the group ID for the container",
+                            "default": 185
+                        },
+                        "runAsNonRoot": {
+                            "type": "boolean",
+                            "description": "ensures the container runs as a non-root user",
+                            "default": true
+                        },
+                        "runAsUser": {
+                            "type": "number",
+                            "description": "sets the user ID for the container",
+                            "default": 185
+                        },
+                        "seccompProfile": {
+                            "type": "object",
+                            "properties": {
+                                "type": {
+                                    "type": "string",
+                                    "description": "defines the seccomp profile type",
+                                    "default": "RuntimeDefault"
+                                }
+                            }
+                        }
+                    }
+                },
+                "podSecurityContext": {
+                    "type": "object",
+                    "properties": {
+                        "fsGroup": {
+                            "type": "number",
+                            "description": "fsGroup sets the filesystem group ID for the pod",
+                            "default": 185
+                        },
+                        "runAsGroup": {
+                            "type": "number",
+                            "description": "runAsGroup sets the group ID for the pod",
+                            "default": 185
+                        },
+                        "runAsNonRoot": {
+                            "type": "boolean",
+                            "description": "runAsNonRoot ensures the pod runs as a non-root user",
+                            "default": true
+                        },
+                        "runAsUser": {
+                            "type": "number",
+                            "description": "runAsUser sets the user ID for the pod",
+                            "default": 185
+                        },
+                        "seccompProfile": {
+                            "type": "object",
+                            "properties": {
+                                "type": {
+                                    "type": "string",
+                                    "description": "defines the seccomp profile type",
+                                    "default": "RuntimeDefault"
+                                }
+                            }
+                        }
+                    }
+                },
+                "metrics": {
+                    "type": "object",
+                    "properties": {
+                        "service": {
+                            "type": "object",
+                            "properties": {
+                                "port": {
+                                    "type": "number",
+                                    "description": "is the port for the Prometheus service",
+                                    "default": 9464
+                                }
+                            }
+                        }
+                    }
+                },
+                "extraEnvs": {
+                    "type": "array",
+                    "description": "is a list of additional environment variables to set in the pod",
+                    "default": [],
+                    "items": {}
+                },
+                "configuration": {
+                    "type": "object",
+                    "properties": {
+                        "attributeHierarchyUrl": {
+                            "type": "string",
+                            "description": "is the URL for the attribute hierarchy endpoint",
+                            "default": "http://access-api.tc-system.svc.cluster.local:8080/hierarchies/lookup/{name}"
+                        },
+                        "elasticHost": {
+                            "type": "string",
+                            "description": "is the host for the OpenSearch instance",
+                            "default": "https://your.opensearch.host.here:443"
+                        },
+                        "elasticIndexNames": {
+                            "type": "string",
+                            "description": "is the name of the index in OpenSearch",
+                            "default": "search,doc-content"
+                        },
+                        "elasticPort": {
+                            "type": "string",
+                            "description": "is the port for the OpenSearch instance",
+                            "default": "443"
+                        },
+                        "elasticClusterPort": {
+                            "type": "string",
+                            "description": "is the port for the OpenSearch cluster",
+                            "default": "9200"
+                        },
+                        "searchFieldOptions": {
+                            "type": "string",
+                            "description": "is the field options for search",
+                            "default": "primaryName^2,*"
+                        },
+                        "javaOptions": {
+                            "type": "string",
+                            "description": "are the JVM options for the application",
+                            "default": "-XX:MaxRAMPercentage=70.0"
+                        },
+                        "opensearchCompatibility": {
+                            "type": "string",
+                            "description": "indicates if the application is compatible with OpenSearch",
+                            "default": "true"
+                        },
+                        "otelMetricsExporter": {
+                            "type": "string",
+                            "description": "is the OpenTelemetry metrics exporter",
+                            "default": "prometheus"
+                        },
+                        "otelTracesExporter": {
+                            "type": "string",
+                            "description": "is the OpenTelemetry traces exporter",
+                            "default": "none"
+                        },
+                        "userAttributesUrl": {
+                            "type": "string",
+                            "description": "is the URL for the user attributes endpoint",
+                            "default": "http://access-api.tc-system.svc.cluster.local:8080/users/lookup/{user}"
+                        }
+                    }
+                },
+                "service": {
+                    "type": "object",
+                    "properties": {
+                        "port": {
+                            "type": "number",
+                            "description": "is the port the service will listen on",
+                            "default": 8181
+                        },
+                        "type": {
+                            "type": "string",
+                            "description": "is the type of service to create",
+                            "default": "ClusterIP"
+                        }
+                    }
+                },
+                "elasticSecrets": {
+                    "type": "object",
+                    "properties": {
+                        "elasticPassword": {
+                            "type": "string",
+                            "description": "is the password for the OpenSearch user",
+                            "default": ""
+                        },
+                        "elasticUser": {
+                            "type": "string",
+                            "description": "is the username for the OpenSearch user",
+                            "default": ""
+                        },
+                        "truststorePass": {
+                            "type": "string",
+                            "description": "is the password for the truststore",
+                            "default": ""
+                        },
+                        "existingEnvironmentSecretName": {
+                            "type": "string",
+                            "description": "is the name of an existing environment secret",
+                            "default": ""
+                        }
+                    }
+                }
+            }
+        },
+        "projector": {
+            "type": "object",
+            "properties": {
+                "annotations": {
+                    "type": "object",
+                    "description": "are additional annotations to add to the pod",
+                    "default": {}
+                },
+                "replicas": {
+                    "type": "number",
+                    "description": "sets the number of replicas for the Search API",
+                    "default": 1
+                },
+                "resources": {
+                    "type": "object",
+                    "description": "sets the resource requests and limits for the pod",
+                    "default": {}
+                },
+                "revisionHistoryLimit": {
+                    "type": "number",
+                    "description": "sets the number of old ReplicaSets to retain",
+                    "default": 3
+                },
+                "image": {
+                    "type": "object",
+                    "properties": {
+                        "imagePullSecrets": {
+                            "type": "array",
+                            "description": "is a list of secrets to use for pulling the image",
+                            "default": [],
+                            "items": {}
+                        },
+                        "pullPolicy": {
+                            "type": "string",
+                            "description": "defines the image pull policy",
+                            "default": "IfNotPresent"
+                        },
+                        "repository": {
+                            "type": "string",
+                            "description": "is the Docker repository for the image",
+                            "default": "098669589541.dkr.ecr.eu-west-2.amazonaws.com/smart-cache-elastic-index"
+                        },
+                        "tag": {
+                            "type": "string",
+                            "description": "is the image tag to use",
+                            "default": ""
+                        }
+                    }
+                },
+                "containerSecurityContext": {
+                    "type": "object",
+                    "properties": {
+                        "allowPrivilegeEscalation": {
+                            "type": "boolean",
+                            "description": "prevents privilege escalation",
+                            "default": false
+                        },
+                        "capabilities": {
+                            "type": "object",
+                            "properties": {
+                                "drop": {
+                                    "type": "array",
+                                    "description": "all capabilities",
+                                    "default": [
+                                        "ALL"
+                                    ],
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        },
+                        "runAsGroup": {
+                            "type": "number",
+                            "description": "sets the group ID for the container",
+                            "default": 185
+                        },
+                        "runAsNonRoot": {
+                            "type": "boolean",
+                            "description": "ensures the container runs as a non-root user",
+                            "default": true
+                        },
+                        "runAsUser": {
+                            "type": "number",
+                            "description": "sets the user ID for the container",
+                            "default": 185
+                        },
+                        "seccompProfile": {
+                            "type": "object",
+                            "properties": {
+                                "type": {
+                                    "type": "string",
+                                    "description": "defines the seccomp profile type RuntimeDefault uses the default runtime seccomp profile",
+                                    "default": "RuntimeDefault"
+                                }
+                            }
+                        }
+                    }
+                },
+                "podSecurityContext": {
+                    "type": "object",
+                    "properties": {
+                        "fsGroup": {
+                            "type": "number",
+                            "description": "sets the filesystem group ID for the pod",
+                            "default": 185
+                        },
+                        "runAsGroup": {
+                            "type": "number",
+                            "description": "sets the group ID for the pod",
+                            "default": 185
+                        },
+                        "runAsNonRoot": {
+                            "type": "boolean",
+                            "description": "ensures the pod runs as a non-root user",
+                            "default": true
+                        },
+                        "runAsUser": {
+                            "type": "number",
+                            "description": "sets the user ID for the pod",
+                            "default": 185
+                        },
+                        "seccompProfile": {
+                            "type": "object",
+                            "properties": {
+                                "type": {
+                                    "type": "string",
+                                    "description": "defines the seccomp profile type RuntimeDefault uses the default runtime seccomp profile",
+                                    "default": "RuntimeDefault"
+                                }
+                            }
+                        }
+                    }
+                },
+                "metrics": {
+                    "type": "object",
+                    "properties": {
+                        "service": {
+                            "type": "object",
+                            "properties": {
+                                "port": {
+                                    "type": "number",
+                                    "description": "is the port for the Prometheus service",
+                                    "default": 9464
+                                }
+                            }
+                        }
+                    }
+                },
+                "extraEnvs": {
+                    "type": "array",
+                    "description": "is a list of additional environment variables to set in the pod",
+                    "default": [],
+                    "items": {}
+                },
+                "elasticSecrets": {
+                    "type": "object",
+                    "properties": {
+                        "elasticPassword": {
+                            "type": "string",
+                            "description": "is the password for the OpenSearch user",
+                            "default": ""
+                        },
+                        "elasticUser": {
+                            "type": "string",
+                            "description": "is the username for the OpenSearch user",
+                            "default": ""
+                        },
+                        "truststorePass": {
+                            "type": "string",
+                            "description": "is the password for the truststore",
+                            "default": ""
+                        },
+                        "existingEnvironmentSecretName": {
+                            "type": "string",
+                            "description": "is a section for an existing environment secret",
+                            "default": ""
+                        }
+                    }
+                },
+                "configuration": {
+                    "type": "object",
+                    "properties": {
+                        "topic": {
+                            "type": "string",
+                            "description": "is the topic to consume from the message broker",
+                            "default": "knowledge"
+                        },
+                        "dlqTopic": {
+                            "type": "string",
+                            "description": "is the dead-letter queue topic for failed messages",
+                            "default": "knowledge.dlq"
+                        },
+                        "elasticHost": {
+                            "type": "string",
+                            "description": "is the host for the OpenSearch instance",
+                            "default": "https://your.opensearch.host.here:443"
+                        },
+                        "elasticIndex": {
+                            "type": "string",
+                            "description": "is the name of the index in OpenSearch",
+                            "default": "search"
+                        },
+                        "elasticPort": {
+                            "type": "string",
+                            "description": "is the port for the OpenSearch instance",
+                            "default": "443"
+                        },
+                        "javaOptions": {
+                            "type": "string",
+                            "description": "are the Java options to use for the OpenSearch instance",
+                            "default": "-XX:MaxRAMPercentage=70.0"
+                        },
+                        "indexBatchSize": {
+                            "type": "string",
+                            "description": "is the batch size for indexing documents",
+                            "default": "500"
+                        },
+                        "opensearchCompatibility": {
+                            "type": "string",
+                            "description": "indicates if the application is compatible with OpenSearch",
+                            "default": "true"
+                        },
+                        "otelMetricsExporter": {
+                            "type": "string",
+                            "description": "is the OpenTelemetry metrics exporter",
+                            "default": "prometheus"
+                        },
+                        "otelTracesExporter": {
+                            "type": "string",
+                            "description": "is the OpenTelemetry traces exporter",
+                            "default": "none"
+                        }
+                    }
+                }
+            }
+        },
+        "serviceAccount": {
+            "type": "object",
+            "properties": {
+                "annotations": {
+                    "type": "object",
+                    "description": "are additional annotations for the service account",
+                    "default": {}
+                },
+                "name": {
+                    "type": "string",
+                    "description": "is the name of the service account",
+                    "default": ""
+                }
+            }
+        },
+        "fullnameOverride": {
+            "type": "string",
+            "description": "sets the full name of the chart",
+            "default": ""
+        },
+        "nameOverride": {
+            "type": "string",
+            "description": "sets a custom name for the chart it differs from fullnameOverride as it is not fully qualified",
+            "default": ""
+        },
+        "ingress": {
+            "type": "object",
+            "properties": {
+                "principal": {
+                    "type": "string",
+                    "description": "is the principal to use for ingress traffic",
+                    "default": ""
+                }
+            }
+        },
+        "graphServer": {
+            "type": "object",
+            "properties": {
+                "principal": {
+                    "type": "string",
+                    "description": "is the principal to use for graph server traffic",
+                    "default": ""
+                }
+            }
+        }
+    }
+}

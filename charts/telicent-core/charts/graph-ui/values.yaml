@@ -18,6 +18,12 @@ global:
   appHostDomain: "apps.telicent.io"
   # @key global.authHostDomain Domain to be used for interacting with Telicent authentication services, including OIDC providers
   authHostDomain: "auth.telicent.io"
+  # appsGateway is the name of the Istio gateway for applications
+  appsGateway: istio-system/gateways-apps
+  # @key global.istioServiceAccountName The name of the Istio service account to use for the Access API
+  istioServiceAccountName: istio-ingress
+  # @key global.istioNamespace The namespace where Istio is installed
+  istioNamespace: istio-system
 
 # @section Configuration Parameters
 # @descStart
@@ -32,19 +38,17 @@ configuration:
   dataCatalogUiDeployed: true
   # @key configuration.signOutUrl The URL to be used for signing out
   signOutUrl: "https://your.host.here/logout"
-
-  # @key configuration.searchUiMaptilerToken MapTiler token for Graph UI
-  searchUiMaptilerToken: "your.maptiler.token.here"
-
+  # @key configuration.graphUiMaptilerToken is the MapTiler token for the graph UI
+  graphUiMaptilerToken: "your.maptiler.token.here"
+  # @key configuration.graphUiMapboxStyleSpecUrl
   # For examples of the map configuration, see: _secret_config_js.tpl
-  # searchUiMapboxStyleSpecUrl is the Mapbox style spec URL for the Graph UI can be specified if using Mapbox styles
-  # searchUiMapboxStyleSpecUrl: "https://your.mapbox.style.spec.url.here"
-
-  # searchUiArcgisToken is the ArcGIS token for Graph UI can be specified if using ArcGIS styles
-  # searchUiArcgisToken: "your.arcgis.token.here"
-
+  # graphUiMapboxStyleSpecUrl is the Mapbox style spec URL for the graph UI can be specified if using Mapbox styles
+  graphUiMapboxStyleSpecUrl: ""
+  # @key configuration.graphUiArcgisToken
+  # graphUiArcgisToken is the ArcGIS token for the graph UI can be specified if using ArcGIS styles
+  graphUiArcgisToken: ""
   # @key configuration.existingMapConfigSecretName  The name of an existing secret containing map configuration
-  existingMapConfigSecretName: "your-existing-map-config-secret-name"
+  existingMapConfigSecretName: ""
 
 # @section Common Parameters
 
@@ -69,8 +73,8 @@ image:
   tag: ""
   # @key image.pullPolicy Graph UI image pull policy
   pullPolicy: IfNotPresent
-  # @key image.pullSecrets Specify registry secret names as an array
-  pullSecrets: [ ]
+# @key imagePullSecrets Specify registry secret names as an array
+imagePullSecrets: [ ]
 
 resources:
   requests:
@@ -100,6 +104,7 @@ containerSecurityContext:
   seccompProfile:
     # @key containerSecurityContext.seccompProfile.type Set container's Security Context seccomp profile
     type: RuntimeDefault
+
 
 podSecurityContext:
   # @key podSecurityContext.runAsUser Set the provisioning pod's Security Context runAsUser User ID
@@ -137,3 +142,12 @@ serviceAccount:
   name: ""
   #@key serviceAccount.annotations Additional custom annotations for the ServiceAccount
   annotations: { }
+
+# tolerations sets the tolerations for the pod
+tolerations: []
+
+ingress:
+  # @ key ingress.principal is the principal to use for ingress traffic
+  # If not set, it defaults to the Istio service account in the istio-system
+  principal: ""
+

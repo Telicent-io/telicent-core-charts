@@ -87,3 +87,7 @@ Create the name of the config secret
 {{- define "graph.configSecretName" -}}
 {{- printf "%s-%s" (include "graph.fullname" .) "secret-config-js" }}
 {{- end }}
+
+{{- define "graph.ingressPrincipal" -}}
+{{- .Values.ingress.principal | default (printf "cluster.local/ns/%s/sa/%s" .Values.global.istioNamespace .Values.global.istioServiceAccountName) | quote }}
+{{- end }}

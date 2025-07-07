@@ -111,3 +111,7 @@ Default Atrribute Heirarchy URL
 {{- define "smart-cache-graph.attributeHeirachyUrl" -}}
 {{- printf "http://%s-access-api:8080/hierarchies/lookup/{name}" (.Release.Name) }}
 {{- end }}
+
+{{- define "smart-cache-graph.ingressPrincipal" -}}
+{{- .Values.ingress.principal | default (printf "cluster.local/ns/%s/sa/%s" .Values.global.istioNamespace .Values.global.istioServiceAccountName) | quote }}
+{{- end }}

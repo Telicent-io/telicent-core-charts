@@ -22,10 +22,10 @@ spec:
       labels:
         {{- include "smart-cache-search.projectorLabels" . | nindent 8 }}
     spec:
-      {{- if .Values.imagePullSecrets }}
+    {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
-        - name: {{ .Values.imagePullSecrets }}
-      {{- end }}
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
       containers:
       - name: search-projector
         env:
@@ -94,7 +94,7 @@ spec:
       {{- if .Values.global.existingKafkaConfigSecretName }}
           secretName: {{ .Values.global.existingKafkaConfigSecretName }}
       {{- else }}
-          secretName: {{ .Values.global.existingKafkaConfigSecretName }}
+          secretName: {{ include "telicent-core.kafkaAuthConfigSecretName" . }}
       {{- end }}
       {{- if .Values.existingCacertSecret  }}
       - name: java-truststore

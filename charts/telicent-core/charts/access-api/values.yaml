@@ -7,8 +7,6 @@
 # @descEnd
 ## Please, note that this will override the image parameters
 ## Current available global image parameters: imageRegistry and imagePullSecrets
-
-#
 global:
   # @key global.imageRegistry Global image registry
   imageRegistry: ""
@@ -17,11 +15,17 @@ global:
   #   - myRegistryKeySecretName
   #
   # @key global.imagePullSecrets Global registry secret names as an array
-  imagePullSecrets: [ ]
+  imagePullSecrets: []
   # @key global.appHostDomain Domain name associated with Access API
   appHostDomain: "apps.telicent.io"
   # @key global.authHostDomain Domain to be used for interacting with Telicent authentication services, including OIDC providers
   authHostDomain: "auth.telicent.io"
+  # @key global.appsGateway is the name of the Istio gateway for applications
+  appsGateway: istio-system/gateways-apps
+  # @key global.istioServiceAccountName The name of the Istio service account to use for the Access API
+  istioServiceAccountName: istio-ingress
+  # @key global.istioNamespace The namespace where Istio is installed
+  istioNamespace: istio-system
 
 # @section Configuration Parameters
 # @descStart
@@ -47,7 +51,6 @@ existingCacertConfigmap: ""
 #@key cacert  Path to the CA certificate file
 cacert: ""
 
-
 # @section MongoDB Parameters
 mongo:
   # @key mongo.url MongoDB connection URL
@@ -64,7 +67,6 @@ mongo:
   retryRewrites: "false"
   # @key mongo.existingMongoPasswordSecret Existing secret containing the MongoDB password
   existingMongoPasswordSecret: ""
-
 
 # @section Access API Deployment Parameters
 
@@ -83,7 +85,7 @@ image:
   # @key image.pullPolicy Access API image pull policy
   pullPolicy: IfNotPresent
   # @key image.pullSecrets Specify registry secret names as an array
-  pullSecrets: [ ]
+  pullSecrets: []
 
 resources:
   requests:
@@ -134,10 +136,31 @@ service:
   # @key service.type Access API service type
   type: ClusterIP
 
-# @section Other Parameters
+# @section Service Account Parameters
 serviceAccount:
   # @key serviceAccount.name Name of the created ServiceAccount. If not set, a name is generated using the fullname template
   name: ""
   #@key serviceAccount.annotations Additional custom annotations for the ServiceAccount
-  annotations:
-    { }
+  annotations: {}
+# @section Istio ingress Parameters
+ingress:
+  # @key ingress.principal is the principal to use for ingress traffic
+  # @descStart
+  # If not set, it defaults to the Istio service account in the istio-system
+  # @descEnd
+  principal: ""
+# @section API Principals
+searchApi:
+  # @key searchApi.principal is the principal to use for search API traffic
+  # @descStart
+  # If not set, it defaults to the search api name in the current namespace
+  # @descEnd
+  principal: ""
+
+# @section Graph Server Parameters
+graphServer:
+  # @key graphServer.principal is the principal to use for graph server traffic
+  # @descStart
+  # If not set, it defaults to the graph server name in the current namespace
+  # @descEnd
+  principal: ""

@@ -58,3 +58,14 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- define "telicent-core.truststoreSecretName" -}}
 {{ .Release.Name }}-truststore
 {{- end }}
+
+{{/*
+JWT Issuer
+*/}}
+{{- define "telicent-core.jwtIssuer" -}}
+{{- if .Values.jwtIssuer -}}
+{{- .Values.jwtIssuer -}}
+{{- else -}}
+{{- printf "https://%s/realms/core" .Values.global.authHostDomain -}}
+{{- end -}}
+{{- end -}}

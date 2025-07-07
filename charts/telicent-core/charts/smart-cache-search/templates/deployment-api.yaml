@@ -22,10 +22,10 @@ spec:
       labels:
         {{- include "smart-cache-search.apiLabels" . | nindent 8 }}
     spec:
-      {{- if .Values.imagePullSecrets }}
+    {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
-        - name: {{ .Values.imagePullSecrets }}
-      {{- end }}
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
       containers:
       - name: search-api
         env:

@@ -104,3 +104,11 @@ Create the name of environment variable secrets
 {{- define "smart-cache-search.projectorEnvSecretName" -}}
 {{ include "smart-cache-search.fullname" . }}-projector
 {{- end }}
+
+{{- define "smart-cache-search.ingressPrincipal" -}}
+{{- .Values.ingress.principal | default (printf "cluster.local/ns/%s/sa/%s" .Values.global.istioNamespace .Values.global.istioServiceAccountName) | quote }}
+{{- end }}
+
+{{- define "smart-cache-search.graphServerPrincipal" -}}
+{{- .Values.graphServer.principal | default (printf "cluster.local/ns/%s/sa/%s-%s" .Release.Namespace .Release.Name "smart-cache-graph") | quote }}
+{{- end }}

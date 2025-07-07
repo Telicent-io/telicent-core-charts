@@ -5,11 +5,11 @@ metadata:
   labels:
     {{- include "smart-cache-search.projectorLabels" . | nindent 4 }}
 spec:
-  type: {{ .Values.api.service.type }}
+  type: {{ .Values.projector.service.type }}
   selector:
     {{- include "smart-cache-search.projectorSelectorLabels" . | nindent 4 }}
   ports:
     - name: metrics
       protocol: TCP
-      port: {{ .Values.api.metrics.service.port }}
+      port: {{ .Values.projector.metrics.service.port }}
       targetPort: 9464

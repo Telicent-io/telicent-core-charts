@@ -17,11 +17,17 @@ global:
   #   - myRegistryKeySecretName
   #
   # @key global.imagePullSecrets Global registry secret names as an array
-  imagePullSecrets: [ ]
+  imagePullSecrets: []
   # @key global.appHostDomain Domain name associated with Query UI
   appHostDomain: "apps.telicent.io"
   # @key global.authHostDomain Domain to be used for interacting with Telicent authentication services, including OIDC providers
   authHostDomain: "auth.telicent.io"
+  # @key global.appsGateway is the name of the Istio gateway for applications
+  appsGateway: istio-system/gateways-apps
+  # @key global.istioServiceAccountName The name of the Istio service account to use for the Access API
+  istioServiceAccountName: istio-ingress
+  # @key global.istioNamespace The namespace where Istio is installed
+  istioNamespace: istio-system
 
 # @section Common Parameters
 
@@ -47,19 +53,19 @@ image:
   # @key image.pullPolicy Query UI image pull policy
   pullPolicy: IfNotPresent
   # @key image.pullSecrets Specify registry secret names as an array
-  pullSecrets: [ ]
+  pullSecrets: []
 
 resources:
   requests:
     # @key resources.requests.cpu Set containers' CPU request
-    cpu: "500m"
+    cpu: "10m"
     # @key resources.requests.memory Set containers' memory request
-    memory: "512Mi"
+    memory: "200Mi"
   limits:
     # @key resources.limits.cpu Set containers' CPU limit
-    cpu: "1"
+    cpu: "100m"
     # @key resources.limits.memory Set containers' memory limit
-    memory: "1Gi"
+    memory: "1000Mi"
 
 containerSecurityContext:
   # @key containerSecurityContext.runAsUser Set containers' Security Context runAsUser User ID
@@ -93,14 +99,13 @@ podSecurityContext:
 
 # @key affinity Affinity for pod assignment
 # Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
-affinity: { }
+affinity: {}
 # @key nodeSelector Node labels for pod assignment
 # Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
-nodeSelector: { }
+nodeSelector: {}
 # @key tolerations Tolerations for pod assignment
 # Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
-tolerations: [ ]
-
+tolerations: []
 
 # @section Traffic Exposure Parameters
 service:
@@ -113,6 +118,10 @@ service:
 serviceAccount:
   # @key serviceAccount.name Name of the created ServiceAccount. If not set, a name is generated using the fullname template
   name: ""
-  #@key serviceAccount.annotations Additional custom annotations for the ServiceAccount
-  annotations:
-    { }
+  # @key serviceAccount.annotations Additional custom annotations for the ServiceAccount
+  annotations: {}
+
+ingress:
+  # @key ingress.principal is the principal to use for ingress traffic
+  # If not set, it defaults to the Istio service account in the istio-system
+  principal: ""

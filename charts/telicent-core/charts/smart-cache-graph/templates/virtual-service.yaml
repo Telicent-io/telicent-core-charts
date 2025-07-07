@@ -1,12 +1,12 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: {{ include "core-mesh.fullname" . }}-graph-server
+  name: {{ include "smart-cache-graph.fullname" . }}-graph-server
   labels:
-  {{- include "core-mesh.labels" . | nindent 4 }}
+  {{- include "smart-cache-graph.labels" . | nindent 4 }}
 spec:
   gateways:
-  - {{ .Values.appsGateway }}
+  - {{ .Values.global.appsGateway }}
   hosts:
   - {{ .Values.global.appHostDomain }}
   http:
@@ -17,9 +17,9 @@ spec:
       uri: /knowledge/sparql
     route:
     - destination:
-        host: {{ include "core-mesh.graphServerServiceName" . }}
+        host: {{ include "smart-cache-graph.serviceName" . }}
         port:
-          number: {{ .Values.graphServer.port }}
+          number: {{ .Values.service.port }}
   - match:
     - uri:
         prefix: /api/sparql/knowledge/query
@@ -27,9 +27,9 @@ spec:
       uri: /knowledge/query
     route:
     - destination:
-        host: {{ include "core-mesh.graphServerServiceName" . }}
+        host: {{ include "smart-cache-graph.serviceName" . }}
         port:
-          number: {{ .Values.graphServer.port }}
+          number: {{ .Values.service.port }}
   - match:
     - uri:
         prefix: /api/graphql/knowledge/graphql
@@ -37,9 +37,9 @@ spec:
       uri: /knowledge/graphql
     route:
     - destination:
-        host: {{ include "core-mesh.graphServerServiceName" . }}
+        host: {{ include "smart-cache-graph.serviceName" . }}
         port:
-          number: {{ .Values.graphServer.port }}
+          number: {{ .Values.service.port }}
   - match:
     - uri:
         prefix: /api/sparql/ontology/sparql
@@ -47,9 +47,9 @@ spec:
       uri: /ontology/sparql
     route:
     - destination:
-        host: {{ include "core-mesh.graphServerServiceName" . }}
+        host: {{ include "smart-cache-graph.serviceName" . }}
         port:
-          number: {{ .Values.graphServer.port }}
+          number: {{ .Values.service.port }}
   - match:
     - uri:
         prefix: /api/sparql/ontology/query
@@ -57,9 +57,9 @@ spec:
       uri: /ontology/query
     route:
     - destination:
-        host: {{ include "core-mesh.graphServerServiceName" . }}
+        host: {{ include "smart-cache-graph.serviceName" . }}
         port:
-          number: {{ .Values.graphServer.port }}
+          number: {{ .Values.service.port }}
   - match:
     - uri:
         prefix: /api/sparql/catalog/sparql
@@ -67,9 +67,9 @@ spec:
       uri: /catalog/sparql
     route:
     - destination:
-        host: {{ include "core-mesh.graphServerServiceName" . }}
+        host: {{ include "smart-cache-graph.serviceName" . }}
         port:
-          number: {{ .Values.graphServer.port }}
+          number: {{ .Values.service.port }}
   - match:
     - uri:
         prefix: /api/sparql/catalog/query
@@ -77,6 +77,6 @@ spec:
       uri: /catalog/query
     route:
     - destination:
-        host: {{ include "core-mesh.graphServerServiceName" . }}
+        host: {{ include "smart-cache-graph.serviceName" . }}
         port:
-          number: {{ .Values.graphServer.port }}
+          number: {{ .Values.service.port }}
