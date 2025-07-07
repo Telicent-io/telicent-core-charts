@@ -1,49 +1,121 @@
-# User Preferences API Helm Chart
+# Telicent Package for User Preferences API
 
-This Helm chart deploys the User Preferences API application. Below is a list of all configurable values in the `values.yaml` file.
+Telicent User Preferences API allows for testing and demonstrating of Attribute-Based Access Control (ABAC) capabilities within
+Telicent CORE.
 
-## Values
+## Introduction
 
-| Key                                   | Type     | Default Value                                           | Description                                                                 |
-|---------------------------------------|----------|-------------------------------------------------------|-----------------------------------------------------------------------------|
-| `global.existingTruststoreSecretName` | string   | `""`                                                   | Existing truststore secret name |
-| `configuration.javaOptions`           | string   | `"-Xms512m -Xmx512m"`                                  | JVM options for the application.                                           |
-| `mongo.url`                           | string   | `"mongodb://mongodb-demo-prereqs-mongodb-svc.mongodb-dev.svc.cluster.local:27017/user-preferences?authSource=admin"` | MongoDB connection string.                                                 |
-| `mongo.username`                      | string   | `"user-preferences"`                                   | Username for MongoDB authentication.                                       |
-| `mongo.password`                      | string   | `"your.mongo.password.here"`                          | Password for MongoDB authentication.                                       |
-| `mongo.database`                      | string   | `"user-preferences"`                                   | Name of the MongoDB database to use.                                       |
-| `mongo.existingMongoPasswordSecret`   | string   | `""`                                                  | Name of an existing secret containing the MongoDB password.                |
-| `fullnameOverride`                    | string   | `""`                                                  | Override the full name of the chart.                                       |
-| `nameOverride`                        | string   | `""`                                                  | Custom name for the chart, not fully qualified.                            |
-| `annotations`                         | object   | `{}`                                                  | Additional annotations for the pod.                                        |
-| `replicas`                            | integer  | `1`                                                   | Number of replicas.                                                        |
-| `resources.requests`                  | object   | `{}`                                                  | Resource requests for the pod.                                             |
-| `resources.limits`                    | object   | `{}`                                                  | Resource limits for the pod.                                               |
-| `revisionHistoryLimit`                | integer  | `3`                                                   | Number of old ReplicaSets to retain.                                       |
-| `image.imagePullSecrets`              | array    | `[]`                                                  | List of secrets to use for pulling the image.                              |
-| `image.pullPolicy`                    | string   | `"IfNotPresent"`                                      | Image pull policy.                                                         |
-| `image.repository`                    | string   | `"098669589541.dkr.ecr.eu-west-2.amazonaws.com/telicent-user-preferences-service"` | Docker repository for the image.                                           |
-| `image.tag`                           | string   | `""`                                                  | Image tag to use.                                                          |
-| `podSecurityContext.fsGroup`          | integer  | `185`                                                 | Filesystem group ID for the pod.                                           |
-| `podSecurityContext.runAsGroup`       | integer  | `185`                                                 | Group ID for the pod.                                                      |
-| `podSecurityContext.runAsNonRoot`     | boolean  | `true`                                                | Ensure the pod runs as a non-root user.                                    |
-| `podSecurityContext.runAsUser`        | integer  | `185`                                                 | User ID for the pod.                                                       |
-| `podSecurityContext.seccompProfile.type` | string | `"RuntimeDefault"`                                    | Seccomp profile type for the pod.                                          |
-| `containerSecurityContext.allowPrivilegeEscalation` | boolean | `false`                                               | Prevent privilege escalation for the container.                            |
-| `containerSecurityContext.capabilities.drop` | array | `["ALL"]`                                             | Capabilities to drop for the container.                                    |
-| `containerSecurityContext.runAsGroup` | integer  | `185`                                                 | Group ID for the container.                                                |
-| `containerSecurityContext.runAsNonRoot` | boolean | `true`                                                | Ensure the container runs as a non-root user.                              |
-| `containerSecurityContext.runAsUser`  | integer  | `185`                                                 | User ID for the container.                                                 |
-| `containerSecurityContext.seccompProfile.type` | string | `"RuntimeDefault"`                                    | Seccomp profile type for the container.                                    |
-| `metrics.service.port`                | integer  | `9464`                                                | Port for the Prometheus service.                                           |
-| `serviceAccount.annotations`          | object   | `{}`                                                  | Additional annotations for the service account.                            |
-| `serviceAccount.name`                 | string   | `""`                                                  | Name of the service account.                                               |
-| `service.port`                        | integer  | `11111`                                               | Port the service will listen on.                                           |
-| `service.type`                        | string   | `"ClusterIP"`                                         | Service type.                                                              |
+This chart bootstraps Telicent User Preferences API deployment on a [Kubernetes](https://kubernetes.io) cluster using
+the [Helm](https://helm.sh) package manager.
 
-## Usage
+## Prerequisites
 
-To customize the values, create a `values.yaml` file and override the default values as needed.
+- Kubernetes 1.23+
+- Helm 3.8.0+
+
+## Installing the Chart
+
+To install the chart with the release name `my-release`:
+
+```console
+helm install my-release ./charts/telicent-core/charts/user-preferences-api
+```
+
+## Uninstalling the Chart
+
+To uninstall/delete the `my-release` deployment:
+
+```console
+helm delete my-release
+```
+The command removes all the Kubernetes components associated with the chart and deletes the release.
+
+## Automating README and schema generation
 
 ```bash
-helm install my-release ./user-preferences-api -f [values.yaml](http://_vscodecontentref_/1)
+.dev/readme-generator-for-helm --config=charts/telicent-core/readme.config \
+ --values=charts/telicent-core/charts/user-preferences-api/values.yaml \
+ --readme=charts/telicent-core/charts/user-preferences-api/README.md \
+ --schema=charts/telicent-core/charts/user-preferences-api/values.schema.json
+```
+
+## Configuration and installation details
+
+## Parameters
+
+### Global Parameters
+
+Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
+
+| Name                                  | Description                                                     | Value           |
+| ------------------------------------- | --------------------------------------------------------------- | --------------- |
+| `global.existingTruststoreSecretName` | is the name of an existing secret containing the truststore     | `""`            |
+| `global.istioServiceAccountName`      | The name of the Istio service account to use for the Access API | `istio-ingress` |
+| `global.istioNamespace`               | The namespace where Istio is installed                          | `istio-system`  |
+
+### Configuration Parameters
+
+Contains configuration parameters specific to the User Preferences API application
+
+| Name                        | Description                             | Value               |
+| --------------------------- | --------------------------------------- | ------------------- |
+| `configuration.javaOptions` | are the JVM options for the application | `-Xms512m -Xmx512m` |
+
+### mongo configuration
+
+This section contains the MongoDB configuration for the user preferences service.
+
+| Name                                | Description                                                                                    | Value                                                                                                              |
+| ----------------------------------- | ---------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| `mongo.url`                         | is the MongoDB connection string                                                               | `mongodb://mongodb-demo-prereqs-mongodb-svc.mongodb-dev.svc.cluster.local:27017/user-preferences?authSource=admin` |
+| `mongo.username`                    | and is used for authentication                                                                 | `user-preferences`                                                                                                 |
+| `mongo.password`                    | is the password for the MongoDB user                                                           | `your.mongo.password.here`                                                                                         |
+| `mongo.database`                    | is the name of the MongoDB database to use                                                     | `user-preferences`                                                                                                 |
+| `mongo.existingMongoPasswordSecret` | If you have an existing secret for the MongoDB password, you can specify it here               | `""`                                                                                                               |
+| `fullnameOverride`                  | sets the full name of the chart                                                                | `""`                                                                                                               |
+| `nameOverride`                      | sets a custom name for the chart it differs from fullnameOverride as it is not fully qualified | `""`                                                                                                               |
+| `annotations`                       | are additional annotations to add to the pod                                                   | `{}`                                                                                                               |
+| `replicas`                          | sets the replica count                                                                         | `1`                                                                                                                |
+| `resources`                         | sets the resource requests and limits for the pod                                              | `{}`                                                                                                               |
+| `revisionHistoryLimit`              | sets the number of old ReplicaSets to retain                                                   | `3`                                                                                                                |
+
+### image configuration
+
+| Name                                                | Description                                                                         | Value                                                                            |
+| --------------------------------------------------- | ----------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| `image.pullPolicy`                                  | defines the image pull policy                                                       | `IfNotPresent`                                                                   |
+| `image.repository`                                  | is the Docker repository for the image                                              | `098669589541.dkr.ecr.eu-west-2.amazonaws.com/telicent-user-preferences-service` |
+| `image.tag`                                         | is the image tag to use appVersion is used by default when defining an empty string | `""`                                                                             |
+| `imagePullSecrets`                                  | is a list of secrets to use for pulling the image                                   | `[]`                                                                             |
+| `podSecurityContext.fsGroup`                        | sets the filesystem group ID for the pod                                            | `185`                                                                            |
+| `podSecurityContext.runAsGroup`                     | sets the group ID for the pod                                                       | `185`                                                                            |
+| `podSecurityContext.runAsNonRoot`                   | ensures the pod runs as a non-root user                                             | `true`                                                                           |
+| `podSecurityContext.runAsUser`                      | sets the user ID for the pod                                                        | `185`                                                                            |
+| `podSecurityContext.seccompProfile.type`            | sets the seccomp profile for the pod                                                | `RuntimeDefault`                                                                 |
+| `containerSecurityContext.allowPrivilegeEscalation` | prevents privilege escalation                                                       | `false`                                                                          |
+| `containerSecurityContext.capabilities.drop`        | drop all capabilities                                                               | `["ALL"]`                                                                        |
+| `containerSecurityContext.runAsGroup`               | sets the group ID for the container                                                 | `185`                                                                            |
+| `containerSecurityContext.runAsNonRoot`             | ensures the container runs as a non-root user                                       | `true`                                                                           |
+| `containerSecurityContext.runAsUser`                | sets the user ID for the container                                                  | `185`                                                                            |
+| `containerSecurityContext.seccompProfile.type`      | defines the seccomp profile type                                                    | `RuntimeDefault`                                                                 |
+
+### metrics configuration
+
+| Name                   | Description                            | Value  |
+| ---------------------- | -------------------------------------- | ------ |
+| `metrics.service.port` | is the port for the Prometheus service | `9464` |
+
+### serviceAccount configuration
+
+| Name                         | Description                                                                                              | Value |
+| ---------------------------- | -------------------------------------------------------------------------------------------------------- | ----- |
+| `serviceAccount.annotations` | are additional annotations for the service account                                                       | `{}`  |
+| `serviceAccount.name`        | is the name of the service account. If not set, the chart will generate a name based on the release name | `""`  |
+
+### service configuration
+
+| Name                | Description                                 | Value       |
+| ------------------- | ------------------------------------------- | ----------- |
+| `service.port`      | is the port the service will listen on      | `11111`     |
+| `service.type`      | defines the service type                    | `ClusterIP` |
+| `ingress.principal` | is the principal to use for ingress traffic | `""`        |

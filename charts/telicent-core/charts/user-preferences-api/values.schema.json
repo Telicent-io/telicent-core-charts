@@ -1,0 +1,262 @@
+{
+    "title": "Chart Values",
+    "type": "object",
+    "properties": {
+        "global": {
+            "type": "object",
+            "properties": {
+                "existingTruststoreSecretName": {
+                    "type": "string",
+                    "description": "is the name of an existing secret containing the truststore",
+                    "default": ""
+                },
+                "istioServiceAccountName": {
+                    "type": "string",
+                    "description": "The name of the Istio service account to use for the Access API",
+                    "default": "istio-ingress"
+                },
+                "istioNamespace": {
+                    "type": "string",
+                    "description": "The namespace where Istio is installed",
+                    "default": "istio-system"
+                }
+            }
+        },
+        "configuration": {
+            "type": "object",
+            "properties": {
+                "javaOptions": {
+                    "type": "string",
+                    "description": "are the JVM options for the application",
+                    "default": "-Xms512m -Xmx512m"
+                }
+            }
+        },
+        "mongo": {
+            "type": "object",
+            "properties": {
+                "url": {
+                    "type": "string",
+                    "description": "is the MongoDB connection string",
+                    "default": "mongodb://mongodb-demo-prereqs-mongodb-svc.mongodb-dev.svc.cluster.local:27017/user-preferences?authSource=admin"
+                },
+                "username": {
+                    "type": "string",
+                    "description": "and is used for authentication",
+                    "default": "user-preferences"
+                },
+                "password": {
+                    "type": "string",
+                    "description": "is the password for the MongoDB user",
+                    "default": "your.mongo.password.here"
+                },
+                "database": {
+                    "type": "string",
+                    "description": "is the name of the MongoDB database to use",
+                    "default": "user-preferences"
+                },
+                "existingMongoPasswordSecret": {
+                    "type": "string",
+                    "description": "If you have an existing secret for the MongoDB password, you can specify it here",
+                    "default": ""
+                }
+            }
+        },
+        "fullnameOverride": {
+            "type": "string",
+            "description": "sets the full name of the chart",
+            "default": ""
+        },
+        "nameOverride": {
+            "type": "string",
+            "description": "sets a custom name for the chart it differs from fullnameOverride as it is not fully qualified",
+            "default": ""
+        },
+        "annotations": {
+            "type": "object",
+            "description": "are additional annotations to add to the pod",
+            "default": {}
+        },
+        "replicas": {
+            "type": "number",
+            "description": "sets the replica count",
+            "default": 1
+        },
+        "resources": {
+            "type": "object",
+            "description": "sets the resource requests and limits for the pod",
+            "default": {}
+        },
+        "revisionHistoryLimit": {
+            "type": "number",
+            "description": "sets the number of old ReplicaSets to retain",
+            "default": 3
+        },
+        "image": {
+            "type": "object",
+            "properties": {
+                "pullPolicy": {
+                    "type": "string",
+                    "description": "defines the image pull policy",
+                    "default": "IfNotPresent"
+                },
+                "repository": {
+                    "type": "string",
+                    "description": "is the Docker repository for the image",
+                    "default": "098669589541.dkr.ecr.eu-west-2.amazonaws.com/telicent-user-preferences-service"
+                },
+                "tag": {
+                    "type": "string",
+                    "description": "is the image tag to use appVersion is used by default when defining an empty string",
+                    "default": ""
+                }
+            }
+        },
+        "imagePullSecrets": {
+            "type": "array",
+            "description": "is a list of secrets to use for pulling the image",
+            "default": [],
+            "items": {}
+        },
+        "podSecurityContext": {
+            "type": "object",
+            "properties": {
+                "fsGroup": {
+                    "type": "number",
+                    "description": "sets the filesystem group ID for the pod",
+                    "default": 185
+                },
+                "runAsGroup": {
+                    "type": "number",
+                    "description": "sets the group ID for the pod",
+                    "default": 185
+                },
+                "runAsNonRoot": {
+                    "type": "boolean",
+                    "description": "ensures the pod runs as a non-root user",
+                    "default": true
+                },
+                "runAsUser": {
+                    "type": "number",
+                    "description": "sets the user ID for the pod",
+                    "default": 185
+                },
+                "seccompProfile": {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "description": "sets the seccomp profile for the pod",
+                            "default": "RuntimeDefault"
+                        }
+                    }
+                }
+            }
+        },
+        "containerSecurityContext": {
+            "type": "object",
+            "properties": {
+                "allowPrivilegeEscalation": {
+                    "type": "boolean",
+                    "description": "prevents privilege escalation",
+                    "default": false
+                },
+                "capabilities": {
+                    "type": "object",
+                    "properties": {
+                        "drop": {
+                            "type": "array",
+                            "description": "drop all capabilities",
+                            "default": [
+                                "ALL"
+                            ],
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "runAsGroup": {
+                    "type": "number",
+                    "description": "sets the group ID for the container",
+                    "default": 185
+                },
+                "runAsNonRoot": {
+                    "type": "boolean",
+                    "description": "ensures the container runs as a non-root user",
+                    "default": true
+                },
+                "runAsUser": {
+                    "type": "number",
+                    "description": "sets the user ID for the container",
+                    "default": 185
+                },
+                "seccompProfile": {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "description": "defines the seccomp profile type",
+                            "default": "RuntimeDefault"
+                        }
+                    }
+                }
+            }
+        },
+        "metrics": {
+            "type": "object",
+            "properties": {
+                "service": {
+                    "type": "object",
+                    "properties": {
+                        "port": {
+                            "type": "number",
+                            "description": "is the port for the Prometheus service",
+                            "default": 9464
+                        }
+                    }
+                }
+            }
+        },
+        "serviceAccount": {
+            "type": "object",
+            "properties": {
+                "annotations": {
+                    "type": "object",
+                    "description": "are additional annotations for the service account",
+                    "default": {}
+                },
+                "name": {
+                    "type": "string",
+                    "description": "is the name of the service account. If not set, the chart will generate a name based on the release name",
+                    "default": ""
+                }
+            }
+        },
+        "service": {
+            "type": "object",
+            "properties": {
+                "port": {
+                    "type": "number",
+                    "description": "is the port the service will listen on",
+                    "default": 11111
+                },
+                "type": {
+                    "type": "string",
+                    "description": "defines the service type",
+                    "default": "ClusterIP"
+                }
+            }
+        },
+        "ingress": {
+            "type": "object",
+            "properties": {
+                "principal": {
+                    "type": "string",
+                    "description": "is the principal to use for ingress traffic",
+                    "default": ""
+                }
+            }
+        }
+    }
+}
