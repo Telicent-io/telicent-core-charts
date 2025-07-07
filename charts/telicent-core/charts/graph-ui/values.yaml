@@ -43,10 +43,10 @@ configuration:
   # @key configuration.graphUiMapboxStyleSpecUrl
   # For examples of the map configuration, see: _secret_config_js.tpl
   # graphUiMapboxStyleSpecUrl is the Mapbox style spec URL for the graph UI can be specified if using Mapbox styles
-  # graphUiMapboxStyleSpecUrl: "https://your.mapbox.style.spec.url.here"
+  graphUiMapboxStyleSpecUrl: ""
   # @key configuration.graphUiArcgisToken
   # graphUiArcgisToken is the ArcGIS token for the graph UI can be specified if using ArcGIS styles
-  # graphUiArcgisToken: "your.arcgis.token.here"
+  graphUiArcgisToken: ""
   # @key configuration.existingMapConfigSecretName  The name of an existing secret containing map configuration
   existingMapConfigSecretName: ""
 
