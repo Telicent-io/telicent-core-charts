@@ -157,6 +157,12 @@ projector:
   resources: {}
   # @key projector.revisionHistoryLimit sets the number of old ReplicaSets to retain
   revisionHistoryLimit: 3
+  
+  # @section service configuration
+  service:
+    # @key service.type is the type of service to create
+    type: ClusterIP
+    
   # @section projector.image is the image configuration
   image:
     # @key projector.image.imagePullSecrets is a list of secrets to use for pulling the image
