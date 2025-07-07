@@ -18,7 +18,7 @@ the [Helm](https://helm.sh) package manager.
 To install the chart with the release name `my-release`:
 
 ```console
-helm install my-release ./charts/telicent-core/charts/access-ui
+helm install my-release ./charts/telicent-core/charts/smart-cache-search
 ```
 
 ## Uninstalling the Chart
@@ -34,9 +34,9 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ```bash
 .dev/readme-generator-for-helm --config=charts/telicent-core/readme.config \
- --values=charts/telicent-core/charts/access-ui/values.yaml \
- --readme=charts/telicent-core/charts/access-ui/README.md \
- --schema=charts/telicent-core/charts/access-ui/values.schema.json
+ --values=charts/telicent-core/charts/smart-cache-search/values.yaml \
+ --readme=charts/telicent-core/charts/smart-cache-search/README.md \
+ --schema=charts/telicent-core/charts/smart-cache-search/values.schema.json
 ```
 
 ## Configuration and installation details
