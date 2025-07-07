@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.3.0](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v0.2.11...telicent-core-v0.3.0) (2025-07-07)
+
+
+### Features
+
+* Move virtual-service to each subchart rather than core mesh ([61cddd9](https://github.com/Telicent-io/telicent-core-charts/commit/61cddd9be105db60359950f4b0f751e6523ddbe0))
+* remove core-mesh as discrete chart ([b71529e](https://github.com/Telicent-io/telicent-core-charts/commit/b71529e4ba198cc2154b6ddc4d17b2b3d16b28e4))
+* tc core-mesh removed ([cb9ac1b](https://github.com/Telicent-io/telicent-core-charts/commit/cb9ac1bf5449d96cabcde7502be7cbee88d48700))
+
 ## [0.2.11](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v0.2.10...telicent-core-v0.2.11) (2025-06-30)
 
 
