@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.1](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v0.3.0...telicent-core-v0.3.1) (2025-07-08)
+
+
+### Bug Fixes
+
+* Add Support for Mongo TLS CA file support ([7492472](https://github.com/Telicent-io/telicent-core-charts/commit/74924721b94d123a6303d2f6ceee913c5ce05d78))
+* Add Support for Mongo TLS CA file support ([6cdf7a1](https://github.com/Telicent-io/telicent-core-charts/commit/6cdf7a14acd86e4331c2aa2f79cb770ed86c4b70))
+
 ## [0.3.0](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v0.2.11...telicent-core-v0.3.0) (2025-07-07)
 
 
