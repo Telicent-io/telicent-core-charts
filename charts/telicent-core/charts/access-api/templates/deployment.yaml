@@ -56,7 +56,7 @@ spec:
         {{- end }}
         {{- if contains "tls=true" .Values.mongo.connectionStringOptions }}
         - name: ca-certificate-volume
-          mountPath: {{ regexReplaceAll ".*tlsCAFile=([^&]*)" .Values.mongo.connectionStringOptions "$1" | default "/app/config/ca-certificate" }}
+          mountPath: {{ regexReplaceAll ".*tlsCAFile=([^&]*).*" .Values.mongo.connectionStringOptions "$1" | default "/app/config/ca-certificate" }}
           readOnly: true
       {{- end }}
 
