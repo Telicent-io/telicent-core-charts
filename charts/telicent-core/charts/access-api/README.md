@@ -155,3 +155,7 @@ If not set, it defaults to the graph server name in the current namespace
 | ----------------------- | ------------------------------------------------ | ----- |
 | `graphServer.principal` | is the principal to use for graph server traffic | `""`  |
 
+
+## License
+
+Copyright &copy; 2025 Telicent Limited

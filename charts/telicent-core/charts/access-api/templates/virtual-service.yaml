@@ -1,9 +1,15 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
+
 metadata:
   name: {{ include "access-api.fullname" . }}
   labels:
   {{- include "access-api.labels" . | nindent 4 }}
+
 spec:
   gateways:
   - {{ .Values.global.appsGateway }}

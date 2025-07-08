@@ -1,10 +1,16 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
 apiVersion: v1
 kind: Service
+
 metadata:
   name: {{ include "access-api.serviceName" . }}
   labels:
     app: access-api
   {{- include "access-api.labels" . | nindent 4 }}
+
 spec:
   type: {{ .Values.service.type }}
   selector:

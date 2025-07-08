@@ -1,11 +1,17 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
 {{- if not .Values.existingConfigMap -}}
 apiVersion: v1
 kind: ConfigMap
+
 metadata:
   name: {{ include "access-api.envConfigmapName" . }}
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "access-api.labels" . | nindent 4 }}
+
 data:
   DEBUG: {{ .Values.configuration.debug | quote }}
   DEPLOYED_DOMAIN: "https://{{ .Values.global.appHostDomain }}"
