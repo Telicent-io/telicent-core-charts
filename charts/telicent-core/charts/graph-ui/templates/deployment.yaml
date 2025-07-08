@@ -28,26 +28,24 @@ spec:
       labels:
         {{- include "graph.labels" . | nindent 8 }}
     spec:
+      serviceAccountName: {{ include "graph.serviceAccountName" . }}
+      securityContext: {{- toYaml .Values.podSecurityContext | nindent 8 }}
     {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
     {{- end }}
       containers:
-      - image: {{ .Values.image.repository }}:{{ include "graph.version" . }}
+      - name: graph-ui
+        image: {{ .Values.image.repository }}:{{ include "graph.version" . }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
-        livenessProbe:
-          httpGet:
-            path: /graph/health
-            port: 8080
-            scheme: HTTP
-          initialDelaySeconds: 60
-          periodSeconds: 30
-          timeoutSeconds: 2
-        name: graph-ui
+        resources: {{- toYaml .Values.resources | nindent 10 }}
+        securityContext: {{- toYaml .Values.containerSecurityContext | nindent 10 }}
+
         ports:
-        - containerPort: 8080
-          name: http
+        - name: http
+          containerPort: 8080
           protocol: TCP
+
         readinessProbe:
           httpGet:
             path: /graph/health
@@ -56,17 +54,15 @@ spec:
           initialDelaySeconds: 60
           periodSeconds: 30
           timeoutSeconds: 2
-        resources: {{- toYaml .Values.resources | nindent 10 }}
-        securityContext:
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-            - ALL
-          runAsGroup: 185
-          runAsNonRoot: true
-          runAsUser: 185
-          seccompProfile:
-            type: RuntimeDefault
+        livenessProbe:
+          httpGet:
+            path: /graph/health
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 60
+          periodSeconds: 30
+          timeoutSeconds: 2   
+
         volumeMounts:
         - mountPath: /usr/local/nginx/html/env-config.js
           name: app-config-volume
@@ -74,14 +70,7 @@ spec:
         - name: secret-config-js-volume
           mountPath: /usr/local/nginx/html/secret-config.js
           subPath: secret-config.js
-      securityContext:
-        fsGroup: 185
-        runAsGroup: 185
-        runAsNonRoot: true
-        runAsUser: 185
-        seccompProfile:
-          type: RuntimeDefault
-      serviceAccountName: {{ include "graph.serviceAccountName" . }}
+   
       volumes:
       - configMap:
           {{- if .Values.existingGraphUIConfigName }}
