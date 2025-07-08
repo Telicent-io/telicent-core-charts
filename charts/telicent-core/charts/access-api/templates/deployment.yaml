@@ -49,16 +49,26 @@ spec:
         resources: {{- toYaml .Values.resources | nindent 10 }}
         securityContext: {{- toYaml .Values.containerSecurityContext
           | nindent 10 }}
-        {{- if or .Values.existingCacertConfigmap .Values.cacert }}
         volumeMounts:
+        {{- if or .Values.existingCacertConfigmap .Values.cacert }}
         - name: cert-volume
           mountPath: /certs
         {{- end }}
-      {{- if or .Values.existingCacertConfigmap .Values.cacert }}
+        {{- if contains "tls=true" .Values.mongo.connectionStringOptions }}
+        - name: ca-certificate-volume
+          mountPath: {{ .Values.mongo.cacertPath | default "/app/config/ca-certificate" }}
+      {{- end }}
+
       volumes:
+      {{- if or .Values.existingCacertConfigmap .Values.cacert }}
       - name: cert-volume
         configMap:
           name: {{ include "access-api.cacertConfigmapName" . }}
+      {{- end }}
+      {{- if .Values.mongo.existingCaSecret }}
+      - name: ca-certificate-volume
+        secret:
+          secretName: {{ .Values.mongo.existingCaSecret }}
       {{- end }}
       securityContext: {{- toYaml .Values.podSecurityContext | nindent 8 }}
       serviceAccountName: {{ include "access-api.serviceAccountName" . }}

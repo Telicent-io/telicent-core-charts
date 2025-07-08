@@ -65,19 +65,26 @@ Contains configuration parameters specific to the User Preferences API applicati
 
 This section contains the MongoDB configuration for the user preferences service.
 
-| Name                                | Description                                                                                                  | Value                                                                                                              |
-| ----------------------------------- | ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ |
-| `mongo.url`                         | url is the MongoDB connection string                                                                         | `mongodb://mongodb-demo-prereqs-mongodb-svc.mongodb-dev.svc.cluster.local:27017/user-preferences?authSource=admin` |
-| `mongo.username`                    | username is used for authentication                                                                          | `user-preferences`                                                                                                 |
-| `mongo.password`                    | password is the password for the MongoDB user                                                                | `your.mongo.password.here`                                                                                         |
-| `mongo.database`                    | database is the name of the MongoDB database to use                                                          | `user-preferences`                                                                                                 |
-| `mongo.existingMongoPasswordSecret` | existingMongoPasswordSecret If you have an existing secret for the MongoDB password, you can specify it here | `""`                                                                                                               |
-| `fullnameOverride`                  | fullnameOverride sets the full name of the chart                                                             | `""`                                                                                                               |
-| `nameOverride`                      | nameOverride sets a custom name for the chart it differs from fullnameOverride as it is not fully qualified  | `""`                                                                                                               |
-| `annotations`                       | annotations are additional annotations to add to the pod                                                     | `{}`                                                                                                               |
-| `replicas`                          | replicas sets the replica count                                                                              | `1`                                                                                                                |
-| `resources`                         | resources sets the resource requests and limits for the pod                                                  | `{}`                                                                                                               |
-| `revisionHistoryLimit`              | revisionHistoryLimit sets the number of old ReplicaSets to retain                                            | `3`                                                                                                                |
+| Name                                | Description                                                                                                                                                                    | Value                                                                                                              |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ |
+| `mongo.url`                         | url is the MongoDB connection string                                                                                                                                           | `mongodb://mongodb-demo-prereqs-mongodb-svc.mongodb-dev.svc.cluster.local:27017/user-preferences?authSource=admin` |
+| `mongo.username`                    | username is used for authentication                                                                                                                                            | `user-preferences`                                                                                                 |
+| `mongo.password`                    | password is the password for the MongoDB user                                                                                                                                  | `your.mongo.password.here`                                                                                         |
+| `mongo.database`                    | database is the name of the MongoDB database to use                                                                                                                            | `user-preferences`                                                                                                 |
+| `mongo.existingMongoPasswordSecret` | existingMongoPasswordSecret If you have an existing secret for the MongoDB password, you can specify it here                                                                   | `""`                                                                                                               |
+| `mongo.existingCaSecret`            | existingCaSecret If you have an existing secret for the CA certificate, you can specify it here. If you've specified to use TLS in the url, you must provide a CA certificate. | `""`                                                                                                               |
+| `mongo.cacertPath`                  | Path to the CA certificate file, must be set if TLS is enabled in the url and mirror the path in the connectionStringOptions                                                   | `""`                                                                                                               |
+
+### common configuration
+
+| Name                   | Description                                                                                                 | Value |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------- | ----- |
+| `fullnameOverride`     | fullnameOverride sets the full name of the chart                                                            | `""`  |
+| `nameOverride`         | nameOverride sets a custom name for the chart it differs from fullnameOverride as it is not fully qualified | `""`  |
+| `annotations`          | annotations are additional annotations to add to the pod                                                    | `{}`  |
+| `replicas`             | replicas sets the replica count                                                                             | `1`   |
+| `resources`            | resources sets the resource requests and limits for the pod                                                 | `{}`  |
+| `revisionHistoryLimit` | revisionHistoryLimit sets the number of old ReplicaSets to retain                                           | `3`   |
 
 ### image configuration
 

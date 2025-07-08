@@ -120,6 +120,16 @@
                     "type": "string",
                     "description": "Existing secret containing the MongoDB password",
                     "default": ""
+                },
+                "existingCaSecret": {
+                    "type": "string",
+                    "description": "existingCaSecret If you have an existing secret for the CA certificate, you can specify it here. If you've specified to use TLS in the url, you must provide a CA certificate.",
+                    "default": ""
+                },
+                "cacertPath": {
+                    "type": "string",
+                    "description": "Path to the CA certificate file, must be set if TLS is enabled in the url and mirror the path in the connectionStringOptions",
+                    "default": ""
                 }
             }
         },
@@ -329,7 +339,7 @@
             "properties": {
                 "principal": {
                     "type": "string",
-                    "description": "is the principal to use for search API traffic",
+                    "description": "is the principal to use for search API traffic. ",
                     "default": ""
                 }
             }
