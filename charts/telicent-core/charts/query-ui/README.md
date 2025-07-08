@@ -107,3 +107,8 @@ Contains global parameters, these parameters are mirrored within the Telicent co
 | `serviceAccount.name`        | Name of the created ServiceAccount. If not set, a name is generated using the fullname template | `""`  |
 | `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                            | `{}`  |
 | `ingress.principal`          | is the principal to use for ingress traffic                                                     | `""`  |
+
+
+## License
+
+Copyright &copy; 2025 Telicent Limited

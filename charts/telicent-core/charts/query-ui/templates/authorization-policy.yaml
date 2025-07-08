@@ -1,9 +1,15 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
 apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
+
 metadata:
   name: {{ include "query.fullname" . }}-ingress
   labels: 
     {{ include "query.labels" . | nindent 4 }}
+
 spec:
   action: ALLOW
   rules:
