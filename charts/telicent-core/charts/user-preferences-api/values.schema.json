@@ -59,6 +59,11 @@
                     "type": "string",
                     "description": "existingMongoPasswordSecret If you have an existing secret for the MongoDB password, you can specify it here",
                     "default": ""
+                },
+                "existingCaSecret": {
+                    "type": "string",
+                    "description": "existingCaSecret If you have an existing secret for the CA certificate, you can specify it here. If you've specified to use TLS in the url, you must provide a CA certificate.",
+                    "default": ""
                 }
             }
         },

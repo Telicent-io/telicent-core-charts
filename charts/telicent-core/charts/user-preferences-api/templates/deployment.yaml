@@ -70,13 +70,25 @@ spec:
           mountPath: /app/config/truststore
         securityContext: {{- toYaml .Values.containerSecurityContext | nindent 10 }}
       {{- end }}
+      {{- if contains "tls=true" .Values.mongo.url }}
+        - name: ca-certificate-volume
+          mountPath: {{ regexReplaceAll ".*tlsCAFile=([^&]*)" .Values.mongo.url "$1" | default "/app/config/ca-certificate" }}
+          readOnly: true
+      {{- end }}
 
-      {{- if .Values.global.existingTruststoreSecretName }}
+
+
       volumes:
+      {{- if .Values.global.existingTruststoreSecretName }}
       - name: truststore-volume
         secret:
           secretName: {{ .Values.global.existingTruststoreSecretName }}
           optional: true
+      {{- end }}
+      {{- if .Values.mongo.existingCaSecret }}
+      - name: ca-certificate-volume
+        secret:
+          secretName: {{ .Values.mongo.existingCaSecret }}
       {{- end }}
       securityContext: {{- toYaml .Values.podSecurityContext | nindent 8 }}
       serviceAccountName: {{ include "user-preferences-api.serviceAccountName" . }}
