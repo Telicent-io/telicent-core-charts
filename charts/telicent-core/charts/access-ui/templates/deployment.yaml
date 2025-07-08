@@ -1,9 +1,15 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
 apiVersion: apps/v1
 kind: Deployment
+
 metadata:
   name: {{ include "access-ui.fullname" . }}
   labels:
   {{- include "access-ui.labels" . | nindent 4 }}
+
 spec:
   replicas: {{ .Values.replicas }}
   revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
@@ -15,26 +21,27 @@ spec:
   selector:
     matchLabels:
     {{- include "access-ui.selectorLabels" . | nindent 6 }}
+
   template:
     metadata:
       labels:
       {{- include "access-ui.selectorLabels" . | nindent 8 }}
     spec:
+      serviceAccountName: {{ include "access-ui.serviceAccountName" . }}
+      securityContext: {{- toYaml .Values.podSecurityContext | nindent 8 }}
+
       containers:
-      - image: {{ .Values.image.repository }}:{{ include "access-ui.version" . }}
+      - name: access-ui
+        image: {{ .Values.image.repository }}:{{ include "access-ui.version" . }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
-        livenessProbe:
-          httpGet:
-            path: /access/health
-            port: {{ .Values.service.port }}
-            scheme: HTTP
-          initialDelaySeconds: 60
-          periodSeconds: 30
-          timeoutSeconds: 2
-        name: access-ui
+        resources: {{- toYaml .Values.resources | nindent 10 }}
+        securityContext: {{- toYaml .Values.containerSecurityContext | nindent 10 }}
+           
         ports:
-        - containerPort: {{ .Values.service.port }}
+        - name: http
+          containerPort: {{ .Values.service.port }}
           protocol: TCP
+      
         readinessProbe:
           httpGet:
             path: /access/health
@@ -43,15 +50,20 @@ spec:
           initialDelaySeconds: 60
           periodSeconds: 30
           timeoutSeconds: 2
-        resources: {{- toYaml .Values.resources | nindent 10 }}
-        securityContext: {{- toYaml .Values.containerSecurityContext |
-          nindent 10 }}
+        livenessProbe:
+          httpGet:
+            path: /access/health
+            port: {{ .Values.service.port }}
+            scheme: HTTP
+          initialDelaySeconds: 60
+          periodSeconds: 30
+          timeoutSeconds: 2
+
         volumeMounts:
         - mountPath: /usr/local/nginx/html/env-config.js
           name: app-config-volume
           subPath: env-config.js
-      securityContext: {{- toYaml .Values.podSecurityContext | nindent 8 }}
-      serviceAccountName: {{ include "access-ui.serviceAccountName" . }}
+      
       volumes:
       - configMap:
           name: {{ include "access-ui.configMapName" . }}

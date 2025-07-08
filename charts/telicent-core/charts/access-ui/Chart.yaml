@@ -1,3 +1,5 @@
+# Copyright (C) 2025 Telicent Limited
+
 apiVersion: v2
 name: access-ui
 description: A Helm chart for Kubernetes
