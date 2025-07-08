@@ -1,12 +1,18 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
 {{- if not .Values.existingCacertConfigmap -}}
 {{- if .Values.cacert -}}
 apiVersion: v1
 kind: ConfigMap
+
 metadata:
   name: {{ include "access-api.cacertConfigmapName" . }}
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "access-api.labels" . | nindent 4 }}
+
 data:
   ca.crt: {{- .Values.cacert | toYaml | indent 1 }}
 {{- end -}}
