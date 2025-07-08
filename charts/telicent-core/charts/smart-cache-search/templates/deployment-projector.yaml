@@ -81,10 +81,9 @@ spec:
         volumeMounts:
         - mountPath: /app/config/kafka-auth/
           name: kafka-auth-config
-        {{- if .Values.existingCacertSecret }}
-        - mountPath: /opt/jre-21/lib/security/cacerts
-          name: java-truststore
-          subPath: truststore.jks
+        {{- if .Values.global.existingTruststoreSecretName }}
+        - mountPath: {{ .Values.global.truststore.mountPath | default "/app/config/truststore" }}
+          name: truststore-volume
         {{- end }}
       securityContext: {{- toYaml .Values.podSecurityContext | nindent 8 }}
       serviceAccountName: {{ include "smart-cache-search.serviceAccountName" . }}-projector
@@ -96,8 +95,9 @@ spec:
       {{- else }}
           secretName: {{ include "telicent-core.kafkaAuthConfigSecretName" . }}
       {{- end }}
-      {{- if .Values.existingCacertSecret  }}
-      - name: java-truststore
+
+      {{- if .Values.global.existingTruststoreSecretName }}
+      - name: truststore-volume
         secret:
-          secretName: {{ .Values.existingCacertSecret.name }}
+          secretName: {{ .Values.global.existingTruststoreSecretName }}
       {{- end }}

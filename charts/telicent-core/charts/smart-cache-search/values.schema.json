@@ -35,6 +35,21 @@
                     "type": "string",
                     "description": "The namespace where Istio is installed",
                     "default": "istio-system"
+                },
+                "existingTruststoreSecretName": {
+                    "type": "string",
+                    "description": "The name of an existing secret containing the truststore",
+                    "default": ""
+                },
+                "truststore": {
+                    "type": "object",
+                    "properties": {
+                        "mountPath": {
+                            "type": "string",
+                            "description": "The mount path for the truststore in the container",
+                            "default": "/app/config/truststore"
+                        }
+                    }
                 }
             }
         },
@@ -318,6 +333,16 @@
                     "description": "sets the number of old ReplicaSets to retain",
                     "default": 3
                 },
+                "service": {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "description": "is the type of service to create",
+                            "default": "ClusterIP"
+                        }
+                    }
+                },
                 "image": {
                     "type": "object",
                     "properties": {
@@ -506,7 +531,7 @@
                         "javaOptions": {
                             "type": "string",
                             "description": "are the Java options to use for the OpenSearch instance",
-                            "default": "-XX:MaxRAMPercentage=70.0"
+                            "default": "-XX:MaxRAMPercentage=70.0 -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks"
                         },
                         "indexBatchSize": {
                             "type": "string",

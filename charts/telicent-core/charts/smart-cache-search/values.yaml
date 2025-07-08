@@ -26,7 +26,12 @@ global:
   istioServiceAccountName: istio-ingress
   # @key global.istioNamespace The namespace where Istio is installed
   istioNamespace: istio-system
-
+  # @key global.existingTruststoreSecretName The name of an existing secret containing the truststore
+  existingTruststoreSecretName: ""
+  # This is used to mount the truststore in the container, default is /app/config/truststore
+  truststore: 
+    # @key global.truststore.mountPath The mount path for the truststore in the container
+    mountPath: /app/config/truststore
 # api configuration
 # @section api configuration This section contains configuration options specific to the Telicent Search API.
 api:
@@ -160,7 +165,7 @@ projector:
   
   # @section service configuration
   service:
-    # @key service.type is the type of service to create
+    # @key projector.service.type is the type of service to create
     type: ClusterIP
     
   # @section projector.image is the image configuration
@@ -238,7 +243,7 @@ projector:
     # @key projector.configuration.elasticPort is the port for the OpenSearch instance
     elasticPort: "443"
     # @key projector.configuration.javaOptions are the Java options to use for the OpenSearch instance
-    javaOptions: -XX:MaxRAMPercentage=70.0
+    javaOptions: -XX:MaxRAMPercentage=70.0 -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks
     # @key projector.configuration.indexBatchSize is the batch size for indexing documents
     # this defines how many documents to index in a single batch
     indexBatchSize: "500"

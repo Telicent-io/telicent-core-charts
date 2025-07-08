@@ -78,7 +78,7 @@ spec:
         - mountPath: /app/config/kafka-auth/
           name: kafka-auth-config
       {{- if .Values.global.existingTruststoreSecretName }}
-        - mountPath: /app/config/truststore/
+        - mountPath: {{ .Values.global.truststore.mountPath | default "/app/config/truststore" }}
           name: truststore-volume
       {{- end }}
       securityContext: {{- toYaml .Values.podSecurityContext | nindent 8 }}

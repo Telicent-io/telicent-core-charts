@@ -26,7 +26,12 @@ global:
   kafkaBootstrapUrls: "kafka-kafka-bootstrap.kafka-dev.svc.cluster.local:9092"
   # appsGateway is the name of the Istio gateway for applications
   appsGateway: istio-system/gateways-apps
-
+  # @key global.existingTruststoreSecretName The name of an existing secret containing the truststore
+  existingTruststoreSecretName: ""
+  # This is used to mount the truststore in the container, default is /app/config/truststore
+  truststore:
+    # @key global.truststore.mountPath The mount path for the truststore in the container
+    mountPath: /app/config/truststore
 # job service account name
 # This is the service account used for running jobs in Kubernetes.
 jobServiceAccountName: producers

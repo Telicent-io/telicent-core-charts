@@ -35,6 +35,21 @@
                     "type": "string",
                     "description": "The namespace where Istio is installed",
                     "default": "istio-system"
+                },
+                "existingTruststoreSecretName": {
+                    "type": "string",
+                    "description": "The name of an existing secret containing the truststore",
+                    "default": ""
+                },
+                "truststore": {
+                    "type": "object",
+                    "properties": {
+                        "mountPath": {
+                            "type": "string",
+                            "description": "The mount path for the truststore in the container",
+                            "default": "/app/config/truststore"
+                        }
+                    }
                 }
             }
         },
