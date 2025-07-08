@@ -1,9 +1,15 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
 apiVersion: apps/v1
 kind: Deployment
+
 metadata:
   name: {{ include "smart-cache-search.fullname" . }}-projector
   labels:
     {{- include "smart-cache-search.projectorLabels" . | nindent 4 }}
+
 spec:
   replicas: {{ .Values.projector.replicas }}
   revisionHistoryLimit: {{ .Values.projector.revisionHistoryLimit }}
@@ -28,6 +34,8 @@ spec:
     {{- end }}
       containers:
       - name: search-projector
+        image: {{ .Values.projector.image.repository }}:{{ include "smart-cache-search-projector.version" . }}
+        imagePullPolicy: {{ .Values.projector.image.pullPolicy }}
         env:
         {{- with .Values.projector.extraEnvs }}
         {{- range . }}
@@ -51,8 +59,7 @@ spec:
         {{- range $key, $value := .Values.projector.extraEnvs }}
         {{- end }}
         {{- end }}
-        image: {{ .Values.projector.image.repository }}:{{ include "smart-cache-search-projector.version" . }}
-        imagePullPolicy: {{ .Values.projector.image.pullPolicy }}
+       
         livenessProbe:
           httpGet:
             path: /version-info

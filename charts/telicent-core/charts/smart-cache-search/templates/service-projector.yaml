@@ -1,15 +1,22 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
 apiVersion: v1
 kind: Service
+
 metadata:
   name: {{ include "smart-cache-search.serviceName" .}}-projector
   labels:
     {{- include "smart-cache-search.projectorLabels" . | nindent 4 }}
+
 spec:
   type: {{ .Values.projector.service.type }}
   selector:
     {{- include "smart-cache-search.projectorSelectorLabels" . | nindent 4 }}
   ports:
     - name: metrics
-      protocol: TCP
       port: {{ .Values.projector.metrics.service.port }}
+      appProtocol: http
+      protocol: TCP
       targetPort: 9464
