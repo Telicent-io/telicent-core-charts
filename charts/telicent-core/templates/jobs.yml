@@ -1,14 +1,14 @@
-{{- range $jobname, $jobvalues := .Values.jobs }}
-{{- if not $jobvalues.enabled }}
+{{- range .Values.jobs }}
+{{- if not .enabled }}
 {{- continue }}
 {{- end }}
 ---
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ $jobname }}
+  name: {{ .name }}
   labels:
-    app.kubernetes.io/name: {{ $jobname }}
+    app.kubernetes.io/name: {{ .name }}
     telicent.io/resource: "true"
     telicent.io/run-once: "true"
 spec:
@@ -24,7 +24,7 @@ spec:
         helm.sh/hook-weight: "1"
         helm.sh/hook-delete-policy: hook-succeeded
       labels:
-        app.kubernetes.io/name: {{ $jobname }}
+        app.kubernetes.io/name: {{ .name }}
         telicent.io/resource: "true"
         telicent.io/run-once: "true"
     spec:
@@ -33,16 +33,16 @@ spec:
       - name: {{ $.Values.global.imagePullSecrets }}
       {{- end }}
       containers:
-      - image: {{ $jobvalues.image.repository }}:{{ $jobvalues.image.tag }}
-        imagePullPolicy: {{ $jobvalues.image.pullPolicy }}
-        name: {{ $jobname }}
+      - image: {{ .image.repository }}:{{ .image.tag }}
+        imagePullPolicy: {{ .image.pullPolicy }}
+        name: {{ .name }}
         env: 
         - name: BOOTSTRAP_SERVERS
           value: {{ $.Values.global.kafkaBootstrapUrls | quote }}
-        {{- toYaml $jobvalues.configuration | nindent 8 }}
+        {{- toYaml .configuration | nindent 8 }}
         {{- if $.Values.resources }}
         resources: 
-        {{- toYaml $jobvalues.resources | nindent 10 }}
+        {{- toYaml .resources | nindent 10 }}
         {{- end }}
         securityContext:
           allowPrivilegeEscalation: false
@@ -65,7 +65,7 @@ spec:
         runAsUser: 185
         seccompProfile:
           type: RuntimeDefault
-      serviceAccountName: {{ $jobvalues.serviceAccountName }}
+      serviceAccountName: {{ .serviceAccountName }}
       volumes:
       - name: kafka-auth-config
         secret:

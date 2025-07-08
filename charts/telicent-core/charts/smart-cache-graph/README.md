@@ -1,7 +1,6 @@
 # Telicent Package for Smart Cache Graph
 
-Telicent Smart Cache Graph allows for testing and demonstrating of Attribute-Based Access Control (ABAC) capabilities within
-Telicent CORE.
+Telicent Smart Cache Graph enables efficient storage, retrieval, and querying of complex relationships, making it ideal for applications that require rapid access to interconnected datasets.
 
 ## Introduction
 

@@ -1,7 +1,6 @@
 # Telicent Package for Access UI
 
-Telicent Access UI allows for testing and demonstrating of Attribute-Based Access Control (ABAC) capabilities within
-Telicent CORE.
+Telicent Access UI is a frontend to interact with the ABAC utility.
 
 ## Introduction
 
