@@ -214,3 +214,7 @@ appVersion is used by default when defining an empty string
 | ----------------------- | ------------------------------------------------ | ----- |
 | `ingress.principal`     | is the principal to use for ingress traffic      | `""`  |
 | `graphServer.principal` | is the principal to use for graph server traffic | `""`  |
+
+## License
+
+Copyright &copy; 2025 Telicent Limited
