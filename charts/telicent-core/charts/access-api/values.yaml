@@ -68,7 +68,7 @@ mongo:
   # @key mongo.existingMongoPasswordSecret Existing secret containing the MongoDB password
   existingMongoPasswordSecret: ""
   # @key mongo.existingCaSecret existingCaSecret If you have an existing secret for the CA certificate, you can specify it here. If you've specified to use TLS in the url, you must provide a CA certificate.
-  existingCaSecret: "a"
+  existingCaSecret: ""
 # @section Access API Deployment Parameters
 
 # @key replicas Number of Access API replicas to deploy
