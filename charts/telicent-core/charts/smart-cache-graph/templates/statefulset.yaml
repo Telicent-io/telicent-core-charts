@@ -1,9 +1,15 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
 apiVersion: apps/v1
 kind: StatefulSet
+
 metadata:
   name: {{ include "smart-cache-graph.fullname" . }}-server
   labels:
     {{- include "smart-cache-graph.labels" . | nindent 4 }}
+
 spec:
   replicas: {{ .Values.replicas }}
   revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}

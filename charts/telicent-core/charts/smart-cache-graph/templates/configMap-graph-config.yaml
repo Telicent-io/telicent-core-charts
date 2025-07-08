@@ -1,6 +1,11 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
 {{- if not .Values.existingGraphConfigMapName }}
 apiVersion: v1
 kind: ConfigMap
+
 metadata:
     name: {{ include "smart-cache-graph.serverConfig" . }}
     labels:
@@ -8,6 +13,7 @@ metadata:
         helm.sh/chart: {{ include "smart-cache-graph.chart" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
         app.kubernetes.io/managed-by: {{ .Release.Service }}
+
 data:
     config.ttl: {{- (include "smart-cache-graph.graphConfig" . ) | toYaml | indent 6 }}
 {{- end }}
