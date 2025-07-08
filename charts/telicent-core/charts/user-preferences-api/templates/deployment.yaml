@@ -35,6 +35,7 @@ spec:
         image: {{ .Values.image.repository }}:{{ include "user-preferences-api.version" . }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         resources: {{- toYaml .Values.resources | nindent 10 }}
+        securityContext: {{- toYaml .Values.containerSecurityContext | nindent 10 }}
 
         envFrom:    
         - configMapRef:
