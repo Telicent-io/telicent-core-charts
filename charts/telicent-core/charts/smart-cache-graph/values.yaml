@@ -26,7 +26,13 @@ global:
   istioServiceAccountName: istio-ingress
   # @key global.istioNamespace The namespace where Istio is installed
   istioNamespace: istio-system
-
+  # @key global.existingTruststoreSecretName The name of an existing secret containing the truststore
+  existingTruststoreSecretName: ""
+  # This is used to mount the truststore in the container, default is /app/config/truststore
+  truststore: 
+    # @key global.truststore.mountPath The mount path for the truststore in the container
+    mountPath: /app/config/truststore
+    
 # @section Configuration Parameters
 # @descStart
 # Contains configuration parameters specific to the Smart Cache Graph application

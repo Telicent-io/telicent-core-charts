@@ -47,14 +47,16 @@ The command removes all the Kubernetes components associated with the chart and 
 
 Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
 
-| Name                             | Description                                                                                       | Value              |
-| -------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------ |
-| `global.imageRegistry`           | Global image registry                                                                             | `""`               |
-| `global.imagePullSecrets`        | Global registry secret names as an array                                                          | `[]`               |
-| `global.appHostDomain`           | Domain name associated with Access UI                                                             | `apps.telicent.io` |
-| `global.authHostDomain`          | Domain to be used for interacting with Telicent authentication services, including OIDC providers | `auth.telicent.io` |
-| `global.istioServiceAccountName` | The name of the Istio service account to use for the Access API                                   | `istio-ingress`    |
-| `global.istioNamespace`          | The namespace where Istio is installed                                                            | `istio-system`     |
+| Name                                  | Description                                                                                       | Value                    |
+| ------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------ |
+| `global.imageRegistry`                | Global image registry                                                                             | `""`                     |
+| `global.imagePullSecrets`             | Global registry secret names as an array                                                          | `[]`                     |
+| `global.appHostDomain`                | Domain name associated with Access UI                                                             | `apps.telicent.io`       |
+| `global.authHostDomain`               | Domain to be used for interacting with Telicent authentication services, including OIDC providers | `auth.telicent.io`       |
+| `global.istioServiceAccountName`      | The name of the Istio service account to use for the Access API                                   | `istio-ingress`          |
+| `global.istioNamespace`               | The namespace where Istio is installed                                                            | `istio-system`           |
+| `global.existingTruststoreSecretName` | The name of an existing secret containing the truststore                                          | `""`                     |
+| `global.truststore.mountPath`         | The mount path for the truststore in the container                                                | `/app/config/truststore` |
 
 ### api configuration This section contains configuration options specific to the Telicent Search API.
 
@@ -138,6 +140,12 @@ The projector is responsible for indexing data into the search engine. // TODO c
 | `projector.resources`            | sets the resource requests and limits for the pod | `{}`  |
 | `projector.revisionHistoryLimit` | sets the number of old ReplicaSets to retain      | `3`   |
 
+### service configuration
+
+| Name                     | Description                      | Value       |
+| ------------------------ | -------------------------------- | ----------- |
+| `projector.service.type` | is the type of service to create | `ClusterIP` |
+
 ### projector.image is the image configuration
 
 appVersion is used by default when defining an empty string
@@ -178,18 +186,18 @@ appVersion is used by default when defining an empty string
 
 ### projector.configuration is for projector specific settings
 
-| Name                                              | Description                                                | Value                                   |
-| ------------------------------------------------- | ---------------------------------------------------------- | --------------------------------------- |
-| `projector.configuration.topic`                   | is the topic to consume from the message broker            | `knowledge`                             |
-| `projector.configuration.dlqTopic`                | is the dead-letter queue topic for failed messages         | `knowledge.dlq`                         |
-| `projector.configuration.elasticHost`             | is the host for the OpenSearch instance                    | `https://your.opensearch.host.here:443` |
-| `projector.configuration.elasticIndex`            | is the name of the index in OpenSearch                     | `search`                                |
-| `projector.configuration.elasticPort`             | is the port for the OpenSearch instance                    | `443`                                   |
-| `projector.configuration.javaOptions`             | are the Java options to use for the OpenSearch instance    | `-XX:MaxRAMPercentage=70.0`             |
-| `projector.configuration.indexBatchSize`          | is the batch size for indexing documents                   | `500`                                   |
-| `projector.configuration.opensearchCompatibility` | indicates if the application is compatible with OpenSearch | `true`                                  |
-| `projector.configuration.otelMetricsExporter`     | is the OpenTelemetry metrics exporter                      | `prometheus`                            |
-| `projector.configuration.otelTracesExporter`      | is the OpenTelemetry traces exporter                       | `none`                                  |
+| Name                                              | Description                                                | Value                                                                                        |
+| ------------------------------------------------- | ---------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| `projector.configuration.topic`                   | is the topic to consume from the message broker            | `knowledge`                                                                                  |
+| `projector.configuration.dlqTopic`                | is the dead-letter queue topic for failed messages         | `knowledge.dlq`                                                                              |
+| `projector.configuration.elasticHost`             | is the host for the OpenSearch instance                    | `https://your.opensearch.host.here:443`                                                      |
+| `projector.configuration.elasticIndex`            | is the name of the index in OpenSearch                     | `search`                                                                                     |
+| `projector.configuration.elasticPort`             | is the port for the OpenSearch instance                    | `443`                                                                                        |
+| `projector.configuration.javaOptions`             | are the Java options to use for the OpenSearch instance    | `-XX:MaxRAMPercentage=70.0 -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks` |
+| `projector.configuration.indexBatchSize`          | is the batch size for indexing documents                   | `500`                                                                                        |
+| `projector.configuration.opensearchCompatibility` | indicates if the application is compatible with OpenSearch | `true`                                                                                       |
+| `projector.configuration.otelMetricsExporter`     | is the OpenTelemetry metrics exporter                      | `prometheus`                                                                                 |
+| `projector.configuration.otelTracesExporter`      | is the OpenTelemetry traces exporter                       | `none`                                                                                       |
 
 ### serviceAccount configuration
 
