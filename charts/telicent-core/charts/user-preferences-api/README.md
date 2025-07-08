@@ -73,6 +73,7 @@ This section contains the MongoDB configuration for the user preferences service
 | `mongo.database`                    | database is the name of the MongoDB database to use                                                                                                                            | `user-preferences`                                                                                                 |
 | `mongo.existingMongoPasswordSecret` | existingMongoPasswordSecret If you have an existing secret for the MongoDB password, you can specify it here                                                                   | `""`                                                                                                               |
 | `mongo.existingCaSecret`            | existingCaSecret If you have an existing secret for the CA certificate, you can specify it here. If you've specified to use TLS in the url, you must provide a CA certificate. | `""`                                                                                                               |
+| `mongo.cacertPath`                  | Path to the CA certificate file, must be set if TLS is enabled in the url and mirror the path in the connectionStringOptions                                                   | `""`                                                                                                               |
 
 ### common configuration
 

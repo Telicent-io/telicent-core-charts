@@ -78,15 +78,17 @@ Contains configuration parameters specific to the Access API application
 
 ### MongoDB Parameters
 
-| Name                                | Description                                     | Value                                         |
-| ----------------------------------- | ----------------------------------------------- | --------------------------------------------- |
-| `mongo.url`                         | MongoDB connection URL                          | `mongodb://example.mongodb.net`               |
-| `mongo.username`                    | MongoDB username                                | `root`                                        |
-| `mongo.password`                    | MongoDB password                                | `""`                                          |
-| `mongo.collection`                  | MongoDB collection                              | `access`                                      |
-| `mongo.connectionStringOptions`     | MongoDB additional connection values            | `authMechanism=SCRAM-SHA-1&retryWrites=false` |
-| `mongo.retryRewrites`               | Enable Retryable Writes                         | `false`                                       |
-| `mongo.existingMongoPasswordSecret` | Existing secret containing the MongoDB password | `""`                                          |
+| Name                                | Description                                                                                                                                                                    | Value                                         |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------- |
+| `mongo.url`                         | MongoDB connection URL                                                                                                                                                         | `mongodb://example.mongodb.net`               |
+| `mongo.username`                    | MongoDB username                                                                                                                                                               | `root`                                        |
+| `mongo.password`                    | MongoDB password                                                                                                                                                               | `""`                                          |
+| `mongo.collection`                  | MongoDB collection                                                                                                                                                             | `access`                                      |
+| `mongo.connectionStringOptions`     | MongoDB additional connection values                                                                                                                                           | `authMechanism=SCRAM-SHA-1&retryWrites=false` |
+| `mongo.retryRewrites`               | Enable Retryable Writes                                                                                                                                                        | `false`                                       |
+| `mongo.existingMongoPasswordSecret` | Existing secret containing the MongoDB password                                                                                                                                | `""`                                          |
+| `mongo.existingCaSecret`            | existingCaSecret If you have an existing secret for the CA certificate, you can specify it here. If you've specified to use TLS in the url, you must provide a CA certificate. | `""`                                          |
+| `mongo.cacertPath`                  | Path to the CA certificate file, must be set if TLS is enabled in the url and mirror the path in the connectionStringOptions                                                   | `""`                                          |
 
 ### Access API Deployment Parameters
 
@@ -141,9 +143,9 @@ If not set, it defaults to the Istio service account in the istio-system
 
 If not set, it defaults to the search api name in the current namespace
 
-| Name                  | Description                                    | Value |
-| --------------------- | ---------------------------------------------- | ----- |
-| `searchApi.principal` | is the principal to use for search API traffic | `""`  |
+| Name                  | Description                                      | Value |
+| --------------------- | ------------------------------------------------ | ----- |
+| `searchApi.principal` | is the principal to use for search API traffic.  | `""`  |
 
 ### Graph Server Parameters
 
