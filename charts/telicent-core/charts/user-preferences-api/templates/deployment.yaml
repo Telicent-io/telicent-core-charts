@@ -1,5 +1,10 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
 apiVersion: apps/v1
 kind: Deployment
+
 metadata:
   name: {{ include "user-preferences-api.fullname" . }}
   labels:
@@ -19,12 +24,18 @@ spec:
       labels:
         {{- include "user-preferences-api.labels" . | nindent 8 }}
     spec:
+      serviceAccountName: {{ include "user-preferences-api.serviceAccountName" . }}
+      securityContext: {{- toYaml .Values.podSecurityContext | nindent 8 }}
     {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
     {{- end }}
       containers:
       - name: user-preferences-api
+        image: {{ .Values.image.repository }}:{{ include "user-preferences-api.version" . }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        resources: {{- toYaml .Values.resources | nindent 10 }}
+
         envFrom:    
         - configMapRef:
             name: {{ include "user-preferences-api.fullname" . }}
@@ -38,8 +49,15 @@ spec:
               {{- else }}
               name: {{ include "user-preferences-api.secret" . }}
               {{- end }}
-        image: {{ .Values.image.repository }}:{{ include "user-preferences-api.version" . }}
-        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        
+        ports:
+        - name: http
+          protocol: TCP
+          containerPort: 11111
+        - name: metrics
+          protocol: TCP
+          containerPort: 9464
+
         livenessProbe:
           httpGet:
             path: /version-info
@@ -48,13 +66,6 @@ spec:
           initialDelaySeconds: 30
           periodSeconds: 60
           timeoutSeconds: 5
-        ports:
-        - containerPort: 11111
-          name: http
-          protocol: TCP
-        - containerPort: 9464
-          name: metrics
-          protocol: TCP
         readinessProbe:
           httpGet:
             path: /healthz
@@ -63,7 +74,7 @@ spec:
           initialDelaySeconds: 30
           periodSeconds: 60
           timeoutSeconds: 10
-        resources: {{- toYaml .Values.resources | nindent 10 }}
+       
         volumeMounts:
       {{- if .Values.global.existingTruststoreSecretName }}
         - name: truststore-volume
@@ -75,8 +86,6 @@ spec:
           mountPath: {{ .Values.mongo.cacertPath | default "/app/config/ca-certificate" }}
           readOnly: true
       {{- end }}
-
-
 
       volumes:
       {{- if .Values.global.existingTruststoreSecretName }}
@@ -90,5 +99,4 @@ spec:
         secret:
           secretName: {{ .Values.mongo.existingCaSecret }}
       {{- end }}
-      securityContext: {{- toYaml .Values.podSecurityContext | nindent 8 }}
-      serviceAccountName: {{ include "user-preferences-api.serviceAccountName" . }}
+     
