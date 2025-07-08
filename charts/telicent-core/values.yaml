@@ -29,7 +29,7 @@ global:
   # @key global.existingTruststoreSecretName The name of an existing secret containing the truststore
   existingTruststoreSecretName: ""
   # This is used to mount the truststore in the container, default is /app/config/truststore
-  truststore: 
+  truststore:
     # @key global.truststore.mountPath The mount path for the truststore in the container
     mountPath: /app/config/truststore
 # job service account name
