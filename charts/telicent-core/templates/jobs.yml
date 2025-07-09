@@ -30,18 +30,18 @@ spec:
     spec:
       {{- if $.Values.global.imagePullSecrets }}
       imagePullSecrets:
-      - name: {{ $.Values.global.imagePullSecrets }}
+        {{- toYaml $.Values.global.imagePullSecrets | nindent 8 }}
       {{- end }}
       containers:
       - image: {{ $jobvalues.image.repository }}:{{ $jobvalues.image.tag }}
         imagePullPolicy: {{ $jobvalues.image.pullPolicy }}
         name: {{ $jobname }}
-        env: 
+        env:
         - name: BOOTSTRAP_SERVERS
           value: {{ $.Values.global.kafkaBootstrapUrls | quote }}
         {{- toYaml $jobvalues.configuration | nindent 8 }}
         {{- if $.Values.resources }}
-        resources: 
+        resources:
         {{- toYaml $jobvalues.resources | nindent 10 }}
         {{- end }}
         securityContext:
