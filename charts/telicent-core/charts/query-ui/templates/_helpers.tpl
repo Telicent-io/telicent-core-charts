@@ -1,4 +1,8 @@
 {{/*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
+{{/*
 Expand the name of the chart.
 */}}
 {{- define "query.name" -}}

@@ -1,3 +1,7 @@
+{{/*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
 {{- define "smart-cache-graph.graphConfig" -}}
     PREFIX :        <#>
     PREFIX fuseki:  <http://jena.apache.org/fuseki#>

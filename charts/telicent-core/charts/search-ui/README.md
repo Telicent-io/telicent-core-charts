@@ -125,3 +125,7 @@ If set, it can generate multiple layers from any map service that adheres to the
 | `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                            | `{}`  |
 | `ingress.principal`          | is the principal to use for ingress traffic                                                     | `""`  |
 
+
+## License
+
+Copyright &copy; 2025 Telicent Limited

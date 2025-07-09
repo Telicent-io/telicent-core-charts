@@ -117,4 +117,6 @@ Contains configuration parameters specific to the Graph UI application
 | `serviceAccount.name`        | Name of the created ServiceAccount. If not set, a name is generated using the fullname template | `""`  |
 | `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                            | `{}`  |
 
+## License
 
+Copyright &copy; 2025 Telicent Limited

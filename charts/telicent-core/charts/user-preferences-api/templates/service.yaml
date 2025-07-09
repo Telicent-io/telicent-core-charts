@@ -1,15 +1,23 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
 apiVersion: v1
 kind: Service
+
 metadata:
   name: {{ include "user-preferences-api.fullname" . }}
   labels:
     {{- include "user-preferences-api.labels" . | nindent 4 }}
+
 spec:
   type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
+    - name: http
+      port: {{ .Values.service.port }}
+      appProtocol: http
       protocol: TCP
-      name: http
+      targetPort: http
+     
   selector:
     {{- include "user-preferences-api.selectorLabels" . | nindent 4 }}

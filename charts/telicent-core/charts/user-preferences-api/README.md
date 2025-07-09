@@ -1,3 +1,4 @@
+# Copyright (C) 2025 Telicent Limited
 # Telicent Package for User Preferences API
 
 Telicent User Preferences API allows for testing and demonstrating of Attribute-Based Access Control (ABAC) capabilities within
@@ -126,3 +127,8 @@ This section contains the MongoDB configuration for the user preferences service
 | `service.port`      | port the service will listen on      | `11111`     |
 | `service.type`      | type defines the service type        | `ClusterIP` |
 | `ingress.principal` | principal to use for ingress traffic | `""`        |
+
+
+## License
+
+Copyright &copy; 2025 Telicent Limited

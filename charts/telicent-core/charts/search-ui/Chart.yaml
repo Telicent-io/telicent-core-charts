@@ -1,3 +1,5 @@
+# Copyright (C) 2025 Telicent Limited
+
 apiVersion: v2
 name: search-ui
 description: Telicent Search UI

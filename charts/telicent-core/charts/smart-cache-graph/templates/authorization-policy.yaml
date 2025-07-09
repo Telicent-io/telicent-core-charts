@@ -1,9 +1,15 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
 apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
+
 metadata:
   name: {{ include "smart-cache-graph.fullname" . }}-ingress
   labels:
   {{- include "smart-cache-graph.labels" . | nindent 4 }}
+
 spec:
   action: ALLOW
   rules:

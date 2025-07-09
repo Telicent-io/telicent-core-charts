@@ -125,3 +125,7 @@ It includes the size and storage class for each volume.
 | `serviceAccount.annotations`                        | are additional annotations for the service account                                              | `{}`             |
 | `serviceAccount.name`                               | Name of the created ServiceAccount. If not set, a name is generated using the fullname template | `""`             |
 | `ingress.principal`                                 | is the principal to use for ingress traffic                                                     | `""`             |
+
+## License
+
+Copyright &copy; 2025 Telicent Limited
