@@ -1,30 +1,32 @@
-# Default values for Telicent Core Umbrella Helm Chart
+# Copyright (C) 2025 Telicent Limited
+# Telicent Telicent Core umbrella chart
 
-# global configuration
-# This section contains global values that are used across the charts inherited from the telicent core umbrella chart, will override these values. These are included to allow this chart to be standalone.
+# @section Global Parameters
+# @descStart
+# Contains global parameters, these parameters are mirrored across all Telicent Core subcharts, these values will be authoritative.
+# @descEnd
 global:
-  # enterprise is a flag to indicate if the deployment is for the enterprise version
-  # This is used to enable or disable enterprise features.
+  # @key global.enterprise If set to true, the chart will be configured for enterprise use, This will enable additional features and configurations suitable for enterprise deployments.
   enterprise: false
-  # existingKafkaConfigSecretName is the name of an existing secret containing Kafka configuration
+  # @key global.existingKafkaConfigSecretName is the name of an existing secret containing Kafka configuration
   existingKafkaConfigSecretName: ""
-  # kafkaConfigProtocol is the protocol used for Kafka communication
+  # @key global.kafkaConfigProtocol is the protocol used for Kafka communication
   kafkaConfigProtocol: "SASL_SSL"
-  # kafkaConfigMechanism is the SASL mechanism used for Kafka authentication
+  # @key global.kafkaConfigMechanism is the SASL mechanism used for Kafka authentication
   kafkaConfigMechanism: "SCRAM-SHA-512"
-  # kafkaConfigUsername is the username for Kafka authentication
+  # @key global.kafkaConfigUsername is the username for Kafka authentication
   kafkaConfigUsername: "your.kafka.username.here"
-  # kafkaConfigPassword is the password for Kafka authentication
+  # @key global.kafkaConfigPassword is the password for Kafka authentication
   kafkaConfigPassword: "your.kafka.password.here"
-  # appHostDomain is the domain for the Telicent applications
+  # @key global.appHostDomain is the domain for the Telicent applications
   appHostDomain: "apps.yourdomain.com"
-  # authHostDomain is the domain for the Telicent authentication service
+  # @key global.authHostDomain is the domain for the Telicent authentication service
   authHostDomain: "auth.yourdomain.com"
-  # jwksUrl is the URL for the JSON Web Key Set (JWKS) used
+  # @key global.jwksUrl is the URL for the JSON Web Key Set (JWKS) used
   jwksUrl: "https://yourdomain.com/.well-known/jwks.json"
-  # kafkaBootstrapUrls is the list of Kafka bootstrap URLs
+  # @key global.kafkaBootstrapUrls is the list of Kafka bootstrap URLs
   kafkaBootstrapUrls: "kafka-kafka-bootstrap.kafka-dev.svc.cluster.local:9092"
-  # appsGateway is the name of the Istio gateway for applications
+  # @key global.appsGateway is the name of the Istio gateway for applications
   appsGateway: istio-system/gateways-apps
   # @key global.existingTruststoreSecretName The name of an existing secret containing the truststore
   existingTruststoreSecretName: ""
@@ -32,167 +34,5 @@ global:
   truststore:
     # @key global.truststore.mountPath The mount path for the truststore in the container
     mountPath: /app/config/truststore
-# job service account name
-# This is the service account used for running jobs in Kubernetes.
+# @key jobServiceAccountName This is the service account used for running jobs in Kubernetes.
 jobServiceAccountName: producers
-
-# Job configurations
-# This section contains configurations for various jobs that can be run in the Telicent Core environment.
-# Each job can be enabled or disabled, and has its own configuration settings.
-jobs:
-  # Each job is run as a Kubernetes Job and managed as a Helm hook.
-  # ontology-ies job configuration
-  ontology-ies:
-    # enabled is a flag to enable or disable the job
-    enabled: false
-    # completedTtl is the time-to-live for completed jobs, after which they are cleaned up
-    completedTtl: 30
-    # serviceAccountName is the name of the service account used to run the job
-    serviceAccountName: producers
-    # kafkaAuthSecretName is the name of the secret containing Kafka authentication configuration
-    kafkaAuthSecretName: kafka-auth-config
-    # image configuration for the job
-    image:
-      # pullPolicy defines the image pull policy
-      pullPolicy: IfNotPresent
-      # repository is the Docker image repository for the job
-      repository: 098669589541.dkr.ecr.eu-west-2.amazonaws.com/telicent-ies-ontology-producer
-      # tag is the specific version of the image to use
-      tag: "0.2.0"
-    # configuration for the job
-    # These are read as environment variables in the job container
-    configuration:
-      # TARGET_TOPIC is the Kafka topic to which the job will produce messages
-      - name: TARGET_TOPIC
-        value: ontology
-      # PRODUCER_NAME is the name of the producer
-      - name: PRODUCER_NAME
-        value: ies-ontology-producer
-      # SOURCE_NAME is the name of the source of the data
-      - name: SOURCE_NAME
-        value: ies-ontology
-      # KAFKA_CONFIG_MODE specifies the configuration mode for Kafka
-      - name: KAFKA_CONFIG_MODE
-        value: "toml"
-      # KAFKA_CONFIG_FILE_PATH is the path to the Kafka configuration file
-      - name: KAFKA_CONFIG_FILE_PATH
-        value: /app/config/kafka-auth/kafka-config.toml
-    # resources defines the resource requests and limits for the job container
-    resources: null
-  # ontology-rdf job configuration
-  ontology-rdf:
-    # enabled is a flag to enable or disable the job
-    enabled: false
-    # completedTtl is the time-to-live for completed jobs, after which they are cleaned up
-    completedTtl: 30
-    # serviceAccountName is the name of the service account used to run the job
-    serviceAccountName: producers
-    # kafkaAuthSecretName is the name of the secret containing Kafka authentication configuration
-    kafkaAuthSecretName: kafka-auth-config
-    # image configuration for the job
-    image:
-      # pullPolicy defines the image pull policy
-      pullPolicy: IfNotPresent
-      # repository is the Docker image repository for the job
-      repository: 098669589541.dkr.ecr.eu-west-2.amazonaws.com/telicent-ontologies-rdf-rdfs-owl-producer
-      # tag is the specific version of the image to use
-      tag: "0.1.8"
-    # configuration for the job
-    # These are read as environment variables in the job container
-    configuration:
-      # TARGET_TOPIC is the Kafka topic to which the job will produce messages
-      - name: TARGET_TOPIC
-        value: ontology
-      # PRODUCER_NAME is the name of the producer
-      - name: PRODUCER_NAME
-        value: ies-ontology-producer
-      # SOURCE_NAME is the name of the source of the data
-      - name: SOURCE_NAME
-        value: ies-ontology
-      # KAFKA_CONFIG_MODE specifies the configuration mode for Kafka
-      - name: KAFKA_CONFIG_MODE
-        value: toml
-      # KAFKA_CONFIG_FILE_PATH is the path to the Kafka configuration file
-      - name: KAFKA_CONFIG_FILE_PATH
-        value: /app/config/kafka-auth/kafka-config.toml
-    # resources defines the resource requests and limits for the job container
-    resources: null
-  # ies-regions job configuration
-  ies-regions:
-    # enabled is a flag to enable or disable the job
-    enabled: false
-    # completedTtl is the time-to-live for completed jobs, after which they are cleaned up
-    completedTtl: 30
-    # serviceAccountName is the name of the service account used to run the job
-    serviceAccountName: producers
-    # kafkaAuthSecretName is the name of the secret containing Kafka authentication configuration
-    kafkaAuthSecretName: kafka-auth-config
-    # image configuration for the job
-    image:
-      # pullPolicy defines the image pull policy
-      pullPolicy: IfNotPresent
-      # repository is the Docker image repository for the job
-      repository: 098669589541.dkr.ecr.eu-west-2.amazonaws.com/telicent-ies-regions-producer
-      # tag is the specific version of the image to use
-      tag: "0.8.1"
-    # configuration for the job
-    # These are read as environment variables in the job container
-    configuration:
-      # TARGET_TOPIC is the Kafka topic to which the job will produce messages
-      - name: TARGET_TOPIC
-        value: knowledge
-      # PRODUCER_NAME is the name of the producer
-      - name: PRODUCER_NAME
-        value: ies-regions-producer
-      # SOURCE_NAME is the name of the source of the data
-      - name: SOURCE_NAME
-        value: ies-regions-ttls
-      # KAFKA_CONFIG_MODE specifies the configuration mode for Kafka
-      - name: KAFKA_CONFIG_MODE
-        value: toml
-      # KAFKA_CONFIG_FILE_PATH is the path to the Kafka configuration file
-      - name: ADD_COMMENTS
-        value: "True"
-      # KAFKA_CONFIG_FILE_PATH is the path to the Kafka configuration file
-      - name: KAFKA_CONFIG_FILE_PATH
-        value: /app/config/kafka-auth/kafka-config.toml
-    # resources defines the resource requests and limits for the job container
-    resources: null
-  # ontology-ies-regions job configuration
-  ontology-ies-regions:
-    # enabled is a flag to enable or disable the job
-    enabled: false
-    # completedTtl is the time-to-live for completed jobs, after which they are cleaned up
-    completedTtl: 30
-    # serviceAccountName is the name of the service account used to run the job
-    serviceAccountName: producers
-    # kafkaAuthSecretName is the name of the secret containing Kafka authentication configuration
-    kafkaAuthSecretName: kafka-auth-config
-    # image configuration for the job
-    image:
-      # pullPolicy defines the image pull policy
-      pullPolicy: IfNotPresent
-      # repository is the Docker image repository for the job
-      repository: 098669589541.dkr.ecr.eu-west-2.amazonaws.com/telicent-ies-regions-ontology-adapter
-      # tag is the specific version of the image to use
-      tag: "0.8.1"
-    # configuration for the job
-    # These are read as environment variables in the job container
-    configuration:
-      # TARGET_TOPIC is the Kafka topic to which the job will produce messages
-      - name: TARGET_TOPIC
-        value: ontology
-      # PRODUCER_NAME is the name of the producer
-      - name: PRODUCER_NAME
-        value: ies-regions-ontology-producer
-      # SOURCE_NAME is the name of the source of the data
-      - name: SOURCE_NAME
-        value: ies-ies-regions.generation.iso3166_ontology
-      # KAFKA_CONFIG_MODE specifies the configuration mode for Kafka
-      - name: KAFKA_CONFIG_MODE
-        value: toml
-      # KAFKA_CONFIG_FILE_PATH is the path to the Kafka configuration file
-      - name: KAFKA_CONFIG_FILE_PATH
-        value: /app/config/kafka-auth/kafka-config.toml
-    # resources defines the resource requests and limits for the job container
-    resources: null

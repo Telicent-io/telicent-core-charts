@@ -1,6 +1,6 @@
 # Telicent Package for Search UI
 
-Telicent Search UI is an application for querying data in Telicent CORE.
+Telicent Search UI is an application for searching data in Telicent CORE.
 
 ## Introduction
 

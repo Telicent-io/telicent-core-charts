@@ -1,0 +1,86 @@
+{
+    "title": "Chart Values",
+    "type": "object",
+    "properties": {
+        "global": {
+            "type": "object",
+            "properties": {
+                "enterprise": {
+                    "type": "boolean",
+                    "description": "If set to true, the chart will be configured for enterprise use, This will enable additional features and configurations suitable for enterprise deployments.",
+                    "default": false
+                },
+                "existingKafkaConfigSecretName": {
+                    "type": "string",
+                    "description": "is the name of an existing secret containing Kafka configuration",
+                    "default": ""
+                },
+                "kafkaConfigProtocol": {
+                    "type": "string",
+                    "description": "is the protocol used for Kafka communication",
+                    "default": "SASL_SSL"
+                },
+                "kafkaConfigMechanism": {
+                    "type": "string",
+                    "description": "is the SASL mechanism used for Kafka authentication",
+                    "default": "SCRAM-SHA-512"
+                },
+                "kafkaConfigUsername": {
+                    "type": "string",
+                    "description": "is the username for Kafka authentication",
+                    "default": "your.kafka.username.here"
+                },
+                "kafkaConfigPassword": {
+                    "type": "string",
+                    "description": "is the password for Kafka authentication",
+                    "default": "your.kafka.password.here"
+                },
+                "appHostDomain": {
+                    "type": "string",
+                    "description": "is the domain for the Telicent applications",
+                    "default": "apps.yourdomain.com"
+                },
+                "authHostDomain": {
+                    "type": "string",
+                    "description": "is the domain for the Telicent authentication service",
+                    "default": "auth.yourdomain.com"
+                },
+                "jwksUrl": {
+                    "type": "string",
+                    "description": "is the URL for the JSON Web Key Set (JWKS) used",
+                    "default": "https://yourdomain.com/.well-known/jwks.json"
+                },
+                "kafkaBootstrapUrls": {
+                    "type": "string",
+                    "description": "is the list of Kafka bootstrap URLs",
+                    "default": "kafka-kafka-bootstrap.kafka-dev.svc.cluster.local:9092"
+                },
+                "appsGateway": {
+                    "type": "string",
+                    "description": "is the name of the Istio gateway for applications",
+                    "default": "istio-system/gateways-apps"
+                },
+                "existingTruststoreSecretName": {
+                    "type": "string",
+                    "description": "The name of an existing secret containing the truststore",
+                    "default": ""
+                },
+                "truststore": {
+                    "type": "object",
+                    "properties": {
+                        "mountPath": {
+                            "type": "string",
+                            "description": "The mount path for the truststore in the container",
+                            "default": "/app/config/truststore"
+                        }
+                    }
+                }
+            }
+        },
+        "jobServiceAccountName": {
+            "type": "string",
+            "description": "This is the service account used for running jobs in Kubernetes.",
+            "default": "producers"
+        }
+    }
+}

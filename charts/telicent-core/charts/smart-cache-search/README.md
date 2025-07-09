@@ -1,7 +1,11 @@
 # Telicent Package for Smart Cache Search
 
-Telicent Smart Cache Search allows for testing and demonstrating of Attribute-Based Access Control (ABAC) capabilities within
-Telicent CORE.
+Telicent Smart Cache Search is a two-part system consisting of:
+
+- **API**: Provides search capabilities and exposes endpoints for querying indexed data.
+- **Projector**: Responsible for ingesting and indexing data into the search engine, ensuring that the API has up-to-date information to serve queries.
+
+Both components are deployed as part of this Helm chart and can be configured independently to suit your deployment needs.
 
 ## Introduction
 
