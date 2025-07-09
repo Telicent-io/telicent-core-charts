@@ -61,6 +61,7 @@ Contains global parameters, these parameters are mirrored across all Telicent Co
 | `global.appsGateway`                   | is the name of the Istio gateway for applications                                                                                                             | `istio-system/gateways-apps`                             |
 | `global.existingTruststoreSecretName`  | The name of an existing secret containing the truststore                                                                                                      | `""`                                                     |
 | `global.truststore.mountPath`          | The mount path for the truststore in the container                                                                                                            | `/app/config/truststore`                                 |
+| `jobServiceAccountName`                | This is the service account used for running jobs in Kubernetes.                                                                                              | `producers`                                              |
 
 ## Subchart configurations 
 

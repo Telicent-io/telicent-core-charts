@@ -76,6 +76,11 @@
                     }
                 }
             }
+        },
+        "jobServiceAccountName": {
+            "type": "string",
+            "description": "This is the service account used for running jobs in Kubernetes.",
+            "default": "producers"
         }
     }
 }
