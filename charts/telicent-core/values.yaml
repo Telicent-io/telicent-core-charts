@@ -45,7 +45,7 @@ global:
 # jobs:
 #   # Each job is run as a Kubernetes Job and managed as a Helm hook.
 #   # ontology-ies job configuration
-#   # @section jobs.ontology-ies 
+#   # @section jobs.ontology-ies
 #   # @descStart
 #   # This job is responsible for producing messages related to the IES ontology.
 #   # It is configured to run as a Kubernetes Job and can be enabled or disabled.
@@ -60,7 +60,7 @@ global:
 #     # @key jobs.ontology-ies.kafkaAuthSecretName is the name of the secret containing Kafka authentication configuration
 #     kafkaAuthSecretName: kafka-auth-config
 #     # @key jobs.ontology-ies.image configuration for the job
-#     # @section image 
+#     # @section image
 #     image:
 #       # pullPolicy defines the image pull policy
 #       pullPolicy: IfNotPresent
