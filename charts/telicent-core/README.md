@@ -1,10 +1,10 @@
-# Helm Chart for Telicent Pipelines
+# Helm Chart for Telicent Core
 
-Telicent Pipelines is the umbrella chart under which all the pipelines are configured and released.
+Telicent Core is the umbrella chart under which all the subcharts are configured and released.
 
 ## Introduction
 
-This chart bootstraps Telicent Pipelines deployment on a [Kubernetes](https://kubernetes.io) cluster using
+This chart bootstraps Telicent Core deployment on a [Kubernetes](https://kubernetes.io) cluster using
 the [Helm](https://helm.sh) package manager.
 
 ## Prerequisites
@@ -17,7 +17,7 @@ the [Helm](https://helm.sh) package manager.
 To install the chart with the release name `my-release`:
 
 ```console
-helm install my-release ./charts/telicent-pipelines
+helm install my-release ./charts/telicent-core
 ```
 
 ## Uninstalling the Chart
@@ -29,7 +29,14 @@ helm delete my-release
 ```
 The command removes all the Kubernetes components associated with the chart and deletes the release.
 
+## Automating README and schema generation
 
+```bash
+.dev/readme-generator-for-helm --config=charts/telicent-core/readme.config \
+ --values=charts/telicent-core/values.yaml \
+ --readme=charts/telicent-core/README.md \
+ --schema=charts/telicent-core/values.schema.json
+```
 
 ## Configuration and installation details
 
@@ -55,6 +62,12 @@ Contains global parameters, these parameters are mirrored across all Telicent Co
 | `global.existingTruststoreSecretName`  | Name of an existing secret containing the truststore                                                         | `""`                                                     |
 | `global.truststore.mountPath`          | Mount path for the truststore in the container                                                               | `/app/config/truststore`                                 |
 | `jobServiceAccountName`                | Service account used for running jobs in Kubernetes.                                                         | `producers`                                              |
+
+## Subchart configurations
+
+This section contains configurations for the various subcharts included in the Telicent Core chart.
+Each subchart can be configured independently, allowing for flexibility in deployment.
+They are addressed by their names, and each subchart has its own set of configuration parameters.
 
 ## License
 
