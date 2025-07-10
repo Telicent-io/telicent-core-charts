@@ -1,8 +1,7 @@
 # Copyright (C) 2025 Telicent Limited
 # Telicent Package for User Preferences API
 
-Telicent User Preferences API allows for testing and demonstrating of Attribute-Based Access Control (ABAC) capabilities within
-Telicent CORE.
+Telicent User Preferences API enables sharing of user preferences and data across Telicent Applications.
 
 ## Introduction
 
@@ -48,85 +47,83 @@ The command removes all the Kubernetes components associated with the chart and 
 
 Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
 
-| Name                                  | Description                                                                                | Value           |
-| ------------------------------------- | ------------------------------------------------------------------------------------------ | --------------- |
-| `global.existingTruststoreSecretName` | existingTruststoreSecretName is the name of an existing secret containing the truststore   | `""`            |
-| `global.istioServiceAccountName`      | istioServiceAccountName is the name of the Istio service account to use for the Access API | `istio-ingress` |
-| `global.istioNamespace`               | istioNamespace is the namespace where Istio is installed                                   | `istio-system`  |
+| Name                                  | Description                                                           | Value           |
+| ------------------------------------- | --------------------------------------------------------------------- | --------------- |
+| `global.imageRegistry`                | Global image registry                                                 | `""`            |
+| `global.imagePullSecrets`             | Global registry secret names as an array                              | `[]`            |
+| `global.existingTruststoreSecretName` | Name of an existing secret containing the truststore                  | `""`            |
+| `global.istioServiceAccountName`      | Name of the Istio service account to use for the User Preferences API | `istio-ingress` |
+| `global.istioNamespace`               | Istio Namespace where Istio is installed                              | `istio-system`  |
 
 ### Configuration Parameters
 
 Contains configuration parameters specific to the User Preferences API application
 
-| Name                        | Description                                         | Value               |
-| --------------------------- | --------------------------------------------------- | ------------------- |
-| `configuration.javaOptions` | javaOptions are the JVM options for the application | `-Xms512m -Xmx512m` |
+| Name                        | Description                     | Value               |
+| --------------------------- | ------------------------------- | ------------------- |
+| `configuration.javaOptions` | JVM options for the application | `-Xms512m -Xmx512m` |
 
-### mongo configuration
+### MongoDB Parameters
 
-This section contains the MongoDB configuration for the user preferences service.
+| Name                                | Description                                                                                                                                                   | Value                                                                                                              |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| `mongo.url`                         | MongoDB connection URL                                                                                                                                        | `mongodb://mongodb-demo-prereqs-mongodb-svc.mongodb-dev.svc.cluster.local:27017/user-preferences?authSource=admin` |
+| `mongo.username`                    | MongoDB username                                                                                                                                              | `user-preferences`                                                                                                 |
+| `mongo.password`                    | MongoDB password                                                                                                                                              | `your.mongo.password.here`                                                                                         |
+| `mongo.database`                    | MongoDB database                                                                                                                                              | `user-preferences`                                                                                                 |
+| `mongo.existingMongoPasswordSecret` | Existing secret containing the MongoDB password                                                                                                               | `""`                                                                                                               |
+| `mongo.existingCaSecret`            | If you have an existing secret for the CA certificate, you can specify it here. If you've specified to use TLS in the url, you must provide a CA certificate. | `""`                                                                                                               |
+| `mongo.cacertPath`                  | Path to the CA certificate file, must be set if TLS is enabled in the url and mirror the path in the connectionStringOptions                                  | `""`                                                                                                               |
 
-| Name                                | Description                                                                                                                                                                    | Value                                                                                                              |
-| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ |
-| `mongo.url`                         | url is the MongoDB connection string                                                                                                                                           | `mongodb://mongodb-demo-prereqs-mongodb-svc.mongodb-dev.svc.cluster.local:27017/user-preferences?authSource=admin` |
-| `mongo.username`                    | username is used for authentication                                                                                                                                            | `user-preferences`                                                                                                 |
-| `mongo.password`                    | password is the password for the MongoDB user                                                                                                                                  | `your.mongo.password.here`                                                                                         |
-| `mongo.database`                    | database is the name of the MongoDB database to use                                                                                                                            | `user-preferences`                                                                                                 |
-| `mongo.existingMongoPasswordSecret` | existingMongoPasswordSecret If you have an existing secret for the MongoDB password, you can specify it here                                                                   | `""`                                                                                                               |
-| `mongo.existingCaSecret`            | existingCaSecret If you have an existing secret for the CA certificate, you can specify it here. If you've specified to use TLS in the url, you must provide a CA certificate. | `""`                                                                                                               |
-| `mongo.cacertPath`                  | Path to the CA certificate file, must be set if TLS is enabled in the url and mirror the path in the connectionStringOptions                                                   | `""`                                                                                                               |
+### User Preferences API Deployment Parameters
 
-### common configuration
+| Name                                                | Description                                                                         | Value                                               |
+| --------------------------------------------------- | ----------------------------------------------------------------------------------- | --------------------------------------------------- |
+| `replicas`                                          | Number of User Preferences API replicas to deploy                                   | `1`                                                 |
+| `revisionHistoryLimit`                              | Number of controller revisions to keep                                              | `5`                                                 |
+| `annotations`                                       | Add extra annotations to the Deployment object                                      | `{}`                                                |
+| `image.registry`                                    | User Preferences API image registry                                                 | `REGISTRY_NAME`                                     |
+| `image.repository`                                  | User Preferences API image name                                                     | `REPOSITORY_NAME/telicent-user-preferences-service` |
+| `image.tag`                                         | User Preferences API image tag. If not set, a tag is generated using the appVersion | `""`                                                |
+| `image.pullPolicy`                                  | User Preferences API image pull policy                                              | `IfNotPresent`                                      |
+| `image.pullSecrets`                                 | Specify registry secret names as an array                                           | `[]`                                                |
+| `resources.requests.cpu`                            | Set containers' CPU request                                                         | `100m`                                              |
+| `resources.requests.memory`                         | Set containers' memory request                                                      | `768Mi`                                             |
+| `resources.limits.cpu`                              | Set containers' CPU limit                                                           | `250m`                                              |
+| `resources.limits.memory`                           | Set containers' memory limit                                                        | `1024Mi`                                            |
+| `containerSecurityContext.runAsUser`                | Set containers' Security Context runAsUser User ID                                  | `185`                                               |
+| `containerSecurityContext.runAsGroup`               | Set containers' Security Context runAsGroup Group ID                                | `185`                                               |
+| `containerSecurityContext.runAsNonRoot`             | Set container's Security Context runAsNonRoot                                       | `true`                                              |
+| `containerSecurityContext.allowPrivilegeEscalation` | Set container's Security Context allowPrivilegeEscalation                           | `false`                                             |
+| `containerSecurityContext.capabilities.drop`        | List of capabilities to be dropped                                                  | `["ALL"]`                                           |
+| `containerSecurityContext.seccompProfile.type`      | Set container's Security Context seccomp profile                                    | `RuntimeDefault`                                    |
+| `podSecurityContext.runAsUser`                      | Set the provisioning pod's Security Context runAsUser User ID                       | `185`                                               |
+| `podSecurityContext.runAsGroup`                     | Set the provisioning pod's Security Context runAsGroup Group ID                     | `185`                                               |
+| `podSecurityContext.runAsNonRoot`                   | Set the provisioning pod's Security Context runAsNonRoot                            | `true`                                              |
+| `podSecurityContext.fsGroup`                        | Set the provisioning pod's Group ID for the mounted volumes' filesystem             | `185`                                               |
+| `podSecurityContext.seccompProfile.type`            | Set the provisioning pod's Security Context seccomp profile                         | `RuntimeDefault`                                    |
 
-| Name                   | Description                                                                                                 | Value |
-| ---------------------- | ----------------------------------------------------------------------------------------------------------- | ----- |
-| `fullnameOverride`     | fullnameOverride sets the full name of the chart                                                            | `""`  |
-| `nameOverride`         | nameOverride sets a custom name for the chart it differs from fullnameOverride as it is not fully qualified | `""`  |
-| `annotations`          | annotations are additional annotations to add to the pod                                                    | `{}`  |
-| `replicas`             | replicas sets the replica count                                                                             | `1`   |
-| `resources`            | resources sets the resource requests and limits for the pod                                                 | `{}`  |
-| `revisionHistoryLimit` | revisionHistoryLimit sets the number of old ReplicaSets to retain                                           | `3`   |
+### Metrics Parameters
 
-### image configuration
+| Name                   | Description                     | Value     |
+| ---------------------- | ------------------------------- | --------- |
+| `metrics.service.port` | Port for the Prometheus service | `9464`    |
+| `metrics.service.name` | Name for the Prometheus service | `metrics` |
 
-| Name                                                | Description                                                                             | Value                                                                            |
-| --------------------------------------------------- | --------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
-| `image.pullPolicy`                                  | pullPolicy defines the image pull policy                                                | `IfNotPresent`                                                                   |
-| `image.repository`                                  | repository is the Docker repository for the image                                       | `098669589541.dkr.ecr.eu-west-2.amazonaws.com/telicent-user-preferences-service` |
-| `image.tag`                                         | tag is the image tag to use appVersion is used by default when defining an empty string | `""`                                                                             |
-| `imagePullSecrets`                                  | imagePullSecrets is a list of secrets to use for pulling the image                      | `[]`                                                                             |
-| `podSecurityContext.fsGroup`                        | fsGroup sets the filesystem group ID for the pod                                        | `185`                                                                            |
-| `podSecurityContext.runAsGroup`                     | runAsGroup sets the group ID for the pod                                                | `185`                                                                            |
-| `podSecurityContext.runAsNonRoot`                   | runAsNonRoot ensures the pod runs as a non-root user                                    | `true`                                                                           |
-| `podSecurityContext.runAsUser`                      | runAsUser sets the user ID for the pod                                                  | `185`                                                                            |
-| `podSecurityContext.seccompProfile.type`            | type sets the seccomp profile for the pod                                               | `RuntimeDefault`                                                                 |
-| `containerSecurityContext.allowPrivilegeEscalation` | allowPrivilegeEscalation prevents privilege escalation                                  | `false`                                                                          |
-| `containerSecurityContext.capabilities.drop`        | drop all capabilities                                                                   | `["ALL"]`                                                                        |
-| `containerSecurityContext.runAsGroup`               | runAsGroup sets the group ID for the container                                          | `185`                                                                            |
-| `containerSecurityContext.runAsNonRoot`             | runAsNonRoot ensures the container runs as a non-root user                              | `true`                                                                           |
-| `containerSecurityContext.runAsUser`                | runAsUser sets the user ID for the container                                            | `185`                                                                            |
-| `containerSecurityContext.seccompProfile.type`      | type defines the seccomp profile type                                                   | `RuntimeDefault`                                                                 |
+### Traffic Exposure Parameters
 
-### metrics configuration
+| Name                | Description                                                                                                 | Value       |
+| ------------------- | ----------------------------------------------------------------------------------------------------------- | ----------- |
+| `service.port`      | User Preferences API service port                                                                           | `11111`     |
+| `service.type`      | User Preferences API service type                                                                           | `ClusterIP` |
+| `ingress.principal` | Principal to use for ingress traffic. If not set, defaults to the Istio service account in the istio-system | `""`        |
 
-| Name                   | Description                     | Value  |
-| ---------------------- | ------------------------------- | ------ |
-| `metrics.service.port` | port for the Prometheus service | `9464` |
+### Service Account Parameters
 
-### serviceAccount configuration
-
-| Name                         | Description                                                                                                   | Value |
-| ---------------------------- | ------------------------------------------------------------------------------------------------------------- | ----- |
-| `serviceAccount.annotations` | annotations are additional annotations for the service account                                                | `{}`  |
-| `serviceAccount.name`        | name is the name of the service account. If not set, the chart will generate a name based on the release name | `""`  |
-
-### service configuration
-
-| Name                | Description                          | Value       |
-| ------------------- | ------------------------------------ | ----------- |
-| `service.port`      | port the service will listen on      | `11111`     |
-| `service.type`      | type defines the service type        | `ClusterIP` |
-| `ingress.principal` | principal to use for ingress traffic | `""`        |
+| Name                         | Description                                                                                     | Value |
+| ---------------------------- | ----------------------------------------------------------------------------------------------- | ----- |
+| `serviceAccount.name`        | Name of the created ServiceAccount. If not set, a name is generated using the fullname template | `""`  |
+| `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                            | `{}`  |
 
 
 ## License
