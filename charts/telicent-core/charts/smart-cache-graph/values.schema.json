@@ -302,12 +302,12 @@
                     "properties": {
                         "port": {
                             "type": "number",
-                            "description": "is the port for the Prometheus service",
+                            "description": "Port for the Prometheus service",
                             "default": 9464
                         },
                         "name": {
                             "type": "string",
-                            "description": "is the name for the Prometheus service",
+                            "description": "Name for the Prometheus service",
                             "default": "metrics"
                         }
                     }
@@ -319,12 +319,12 @@
             "properties": {
                 "port": {
                     "type": "number",
-                    "description": "is the port the service will listen on",
+                    "description": "Smart Cache Graph service port",
                     "default": 3030
                 },
                 "type": {
                     "type": "string",
-                    "description": "defines the service type",
+                    "description": "Smart Cache Graph service type",
                     "default": "ClusterIP"
                 }
             }

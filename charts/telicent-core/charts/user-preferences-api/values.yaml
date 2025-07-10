@@ -1,5 +1,5 @@
 # Copyright (C) 2025 Telicent Limited
-# Telicent User Preferences stand-alone chart
+# Telicent User Preferences API stand-alone chart
 
 # @section Global Parameters
 # @descStart
@@ -7,14 +7,20 @@
 # @descEnd
 ## Please, note that this will override the image parameters
 ## Current available global image parameters: imageRegistry and imagePullSecrets
-
-#
 global:
-  # @key global.existingTruststoreSecretName existingTruststoreSecretName is the name of an existing secret containing the truststore
+  # @key global.imageRegistry Global image registry
+  imageRegistry: ""
+  # E.g.
+  # imagePullSecrets:
+  #   - myRegistryKeySecretName
+  #
+  # @key global.imagePullSecrets Global registry secret names as an array
+  imagePullSecrets: []
+  # @key global.existingTruststoreSecretName Name of an existing secret containing the truststore
   existingTruststoreSecretName: ""
-  # @key global.istioServiceAccountName istioServiceAccountName is the name of the Istio service account to use for the Access API
+  # @key global.istioServiceAccountName Name of the Istio service account to use for the User Preferences API
   istioServiceAccountName: istio-ingress
-  # @key global.istioNamespace istioNamespace is the namespace where Istio is installed
+  # @key global.istioNamespace Istio Namespace where Istio is installed
   istioNamespace: istio-system
 
 # @section Configuration Parameters
@@ -22,110 +28,111 @@ global:
 # Contains configuration parameters specific to the User Preferences API application
 # @descEnd
 configuration:
-  # @key configuration.javaOptions javaOptions are the JVM options for the application
+  # @key configuration.javaOptions JVM options for the application
   javaOptions: "-Xms512m -Xmx512m"
 
-# @section mongo configuration
-# @descStart
-# This section contains the MongoDB configuration for the user preferences service.
-# @descEnd
+# @section MongoDB Parameters
 mongo:
-  # @key mongo.url url is the MongoDB connection string
+  # @key mongo.url MongoDB connection URL
   url: mongodb://mongodb-demo-prereqs-mongodb-svc.mongodb-dev.svc.cluster.local:27017/user-preferences?authSource=admin
-  # @key mongo.username username is used for authentication
+  # @key mongo.username MongoDB username
   username: user-preferences
-  # @key mongo.password password is the password for the MongoDB user
+  # @key mongo.password MongoDB password
   # If you have an existing secret for the password, you can use existingMongoPasswordSecret
   password: "your.mongo.password.here"
-  # @key mongo.database database is the name of the MongoDB database to use
+  # @key mongo.database MongoDB database
   database: user-preferences
-  # @key mongo.existingMongoPasswordSecret existingMongoPasswordSecret If you have an existing secret for the MongoDB password, you can specify it here
+  # @key mongo.existingMongoPasswordSecret Existing secret containing the MongoDB password
   existingMongoPasswordSecret: ""
-  # @key mongo.existingCaSecret existingCaSecret If you have an existing secret for the CA certificate, you can specify it here. If you've specified to use TLS in the url, you must provide a CA certificate.
+  # @key mongo.existingCaSecret If you have an existing secret for the CA certificate, you can specify it here. If you've specified to use TLS in the url, you must provide a CA certificate.
   existingCaSecret: ""
   # @key mongo.cacertPath Path to the CA certificate file, must be set if TLS is enabled in the url and mirror the path in the connectionStringOptions
   cacertPath: ""
 
-# @section common configuration
-# @key fullnameOverride fullnameOverride sets the full name of the chart
-fullnameOverride: ""
-# @key nameOverride nameOverride sets a custom name for the chart it differs from fullnameOverride as it is not fully qualified
-nameOverride: ""
-
-# @key annotations annotations are additional annotations to add to the pod
-annotations: {}
-
-# @key replicas replicas sets the replica count
+# @section User Preferences API Deployment Parameters
+# @key replicas Number of User Preferences API replicas to deploy
 replicas: 1
+# @key revisionHistoryLimit Number of controller revisions to keep
+revisionHistoryLimit: 5
+# @key annotations Add extra annotations to the Deployment object
+annotations: { }
 
-# @key resources resources sets the resource requests and limits for the pod
-resources: {}
-
-# @key revisionHistoryLimit revisionHistoryLimit sets the number of old ReplicaSets to retain
-revisionHistoryLimit: 3
-# @section image configuration
 image:
-  # @key image.pullPolicy pullPolicy defines the image pull policy
-  pullPolicy: IfNotPresent
-  # @key image.repository repository is the Docker repository for the image
+  # @key image.registry [default: REGISTRY_NAME] User Preferences API image registry
+  registry: 098669589541.dkr.ecr.eu-west-2.amazonaws.com
+  # @key image.repository [default: REPOSITORY_NAME/telicent-user-preferences-service] User Preferences API image name
   repository: 098669589541.dkr.ecr.eu-west-2.amazonaws.com/telicent-user-preferences-service
-  # @key image.tag tag is the image tag to use appVersion is used by default when defining an empty string
+  # @key image.tag User Preferences API image tag. If not set, a tag is generated using the appVersion
   tag: ""
-# @key imagePullSecrets imagePullSecrets is a list of secrets to use for pulling the image
-imagePullSecrets: []
-podSecurityContext:
-  # @key podSecurityContext.fsGroup fsGroup sets the filesystem group ID for the pod
-  fsGroup: 185
-  # @key podSecurityContext.runAsGroup runAsGroup sets the group ID for the pod
-  runAsGroup: 185
-  # @key podSecurityContext.runAsNonRoot runAsNonRoot ensures the pod runs as a non-root user
-  runAsNonRoot: true
-  # @key podSecurityContext.runAsUser runAsUser sets the user ID for the pod
-  runAsUser: 185
-  seccompProfile:
-    # @key podSecurityContext.seccompProfile.type type sets the seccomp profile for the pod
-    type: RuntimeDefault
+  # @key image.pullPolicy User Preferences API image pull policy
+  pullPolicy: IfNotPresent
+  # @key image.pullSecrets Specify registry secret names as an array
+  pullSecrets: []
+
+resources:
+  requests:
+    # @key resources.requests.cpu Set containers' CPU request
+    cpu: "100m"
+    # @key resources.requests.memory Set containers' memory request
+    memory: "768Mi"
+  limits:
+    # @key resources.limits.cpu Set containers' CPU limit
+    cpu: "250m"
+    # @key resources.limits.memory Set containers' memory limit
+    memory: "1024Mi"
 
 containerSecurityContext:
-  # @key containerSecurityContext.allowPrivilegeEscalation allowPrivilegeEscalation prevents privilege escalation
+  # @key containerSecurityContext.runAsUser Set containers' Security Context runAsUser User ID
+  runAsUser: 185
+  # @key containerSecurityContext.runAsGroup Set containers' Security Context runAsGroup Group ID
+  runAsGroup: 185
+  # @key containerSecurityContext.runAsNonRoot Set container's Security Context runAsNonRoot
+  runAsNonRoot: true
+  # @key containerSecurityContext.allowPrivilegeEscalation Set container's Security Context allowPrivilegeEscalation
   allowPrivilegeEscalation: false
   capabilities:
-    # @key containerSecurityContext.capabilities.drop drop all capabilities
+    #@key containerSecurityContext.capabilities.drop List of capabilities to be dropped
     drop:
       - ALL
-  # @key containerSecurityContext.runAsGroup runAsGroup sets the group ID for the container
-  runAsGroup: 185
-  # @key containerSecurityContext.runAsNonRoot runAsNonRoot ensures the container runs as a non-root user
-  runAsNonRoot: true
-  # @key containerSecurityContext.runAsUser runAsUser sets the user ID for the container
-  runAsUser: 185
   seccompProfile:
-    # @key containerSecurityContext.seccompProfile.type type defines the seccomp profile type
-    # RuntimeDefault uses the default runtime seccomp profile
+    # @key containerSecurityContext.seccompProfile.type Set container's Security Context seccomp profile
     type: RuntimeDefault
-# @section metrics configuration
+
+podSecurityContext:
+  # @key podSecurityContext.runAsUser Set the provisioning pod's Security Context runAsUser User ID
+  runAsUser: 185
+  # @key podSecurityContext.runAsGroup Set the provisioning pod's Security Context runAsGroup Group ID
+  runAsGroup: 185
+  # @key podSecurityContext.runAsNonRoot Set the provisioning pod's Security Context runAsNonRoot
+  runAsNonRoot: true
+  # @key podSecurityContext.fsGroup Set the provisioning pod's Group ID for the mounted volumes' filesystem
+  fsGroup: 185
+  seccompProfile:
+    # @key podSecurityContext.seccompProfile.type Set the provisioning pod's Security Context seccomp profile
+    type: RuntimeDefault
+
+# @section Metrics Parameters
 metrics:
   service:
-    # @key metrics.service.port port for the Prometheus service
+    # @key metrics.service.port Port for the Prometheus service
     port: 9464
+    # @key metrics.service.name Name for the Prometheus service
+    name: metrics
 
-# @section serviceAccount configuration
-serviceAccount:
-  # @key serviceAccount.annotations annotations are additional annotations for the service account
-  annotations:
-    {}
-    # example.annotation/key: "value"
-  # @key serviceAccount.name name is the name of the service account. If not set, the chart will generate a name based on the release name
-  name: ""
-
-# @section service configuration
+# @section Traffic Exposure Parameters
 service:
-  # @key service.port port the service will listen on
+  # @key service.port User Preferences API service port
   port: 11111
-  # @key service.type type defines the service type
+  # @key service.type User Preferences API service type
   type: ClusterIP
 
 ingress:
-  # @key ingress.principal principal to use for ingress traffic
-  # If not set, it defaults to the Istio service account in the istio-system
+  # @key ingress.principal Principal to use for ingress traffic. If not set, defaults to the Istio service account in the istio-system
   principal: ""
+
+# @section Service Account Parameters
+serviceAccount:
+  # @key serviceAccount.name Name of the created ServiceAccount. If not set, a name is generated using the fullname template
+  name: ""
+  #@key serviceAccount.annotations Additional custom annotations for the ServiceAccount
+  annotations: { }

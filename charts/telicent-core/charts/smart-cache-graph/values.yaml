@@ -135,16 +135,16 @@ persistentVolumeClaims:
 # @section Metrics Parameters
 metrics:
   service:
-    # @key metrics.service.port is the port for the Prometheus service
+    # @key metrics.service.port Port for the Prometheus service
     port: 9464
-    # @key metrics.service.name is the name for the Prometheus service
+    # @key metrics.service.name Name for the Prometheus service
     name: metrics
 
 # @section Traffic Exposure Parameters
 service:
-  # @key service.port is the port the service will listen on
+  # @key service.port Smart Cache Graph service port
   port: 3030
-  # @key service.type defines the service type
+  # @key service.type Smart Cache Graph service type
   type: ClusterIP
 
 ingress:

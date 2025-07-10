@@ -115,17 +115,17 @@ Contains configuration parameters specific to the Smart Cache Graph application
 
 ### Metrics Parameters
 
-| Name                   | Description                            | Value     |
-| ---------------------- | -------------------------------------- | --------- |
-| `metrics.service.port` | is the port for the Prometheus service | `9464`    |
-| `metrics.service.name` | is the name for the Prometheus service | `metrics` |
+| Name                   | Description                     | Value     |
+| ---------------------- | ------------------------------- | --------- |
+| `metrics.service.port` | Port for the Prometheus service | `9464`    |
+| `metrics.service.name` | Name for the Prometheus service | `metrics` |
 
 ### Traffic Exposure Parameters
 
 | Name                | Description                                                                                                 | Value       |
 | ------------------- | ----------------------------------------------------------------------------------------------------------- | ----------- |
-| `service.port`      | is the port the service will listen on                                                                      | `3030`      |
-| `service.type`      | defines the service type                                                                                    | `ClusterIP` |
+| `service.port`      | Smart Cache Graph service port                                                                              | `3030`      |
+| `service.type`      | Smart Cache Graph service type                                                                              | `ClusterIP` |
 | `ingress.principal` | Principal to use for ingress traffic. If not set, defaults to the Istio service account in the istio-system | `""`        |
 
 ### Service Account Parameters
