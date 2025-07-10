@@ -4,7 +4,7 @@ Telicent Core is the umbrella chart under which all the subcharts are configured
 
 ## Introduction
 
-This chart bootstraps Telicent Telicent Core deployment on a [Kubernetes](https://kubernetes.io) cluster using
+This chart bootstraps Telicent Core deployment on a [Kubernetes](https://kubernetes.io) cluster using
 the [Helm](https://helm.sh) package manager.
 
 ## Prerequisites
@@ -17,7 +17,7 @@ the [Helm](https://helm.sh) package manager.
 To install the chart with the release name `my-release`:
 
 ```console
-helm install my-release ./charts/telicent-core/charts/access-api
+helm install my-release ./charts/telicent-core
 ```
 
 ## Uninstalling the Chart
@@ -33,9 +33,9 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ```bash
 .dev/readme-generator-for-helm --config=charts/telicent-core/readme.config \
- --values=charts/telicent-core/charts/access-api/values.yaml \
- --readme=charts/telicent-core/charts/access-api/README.md \
- --schema=charts/telicent-core/charts/access-api/values.schema.json
+ --values=charts/telicent-core/values.yaml \
+ --readme=charts/telicent-core/README.md \
+ --schema=charts/telicent-core/values.schema.json
 ```
 
 ## Configuration and installation details
@@ -46,22 +46,22 @@ The command removes all the Kubernetes components associated with the chart and 
 
 Contains global parameters, these parameters are mirrored across all Telicent Core subcharts, these values will be authoritative.
 
-| Name                                   | Description                                                                                                                                                   | Value                                                    |
-| -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
-| `global.enterprise`                    | If set to true, the chart will be configured for enterprise use, This will enable additional features and configurations suitable for enterprise deployments. | `false`                                                  |
-| `global.existingKafkaConfigSecretName` | is the name of an existing secret containing Kafka configuration                                                                                              | `""`                                                     |
-| `global.kafkaConfigProtocol`           | is the protocol used for Kafka communication                                                                                                                  | `SASL_SSL`                                               |
-| `global.kafkaConfigMechanism`          | is the SASL mechanism used for Kafka authentication                                                                                                           | `SCRAM-SHA-512`                                          |
-| `global.kafkaConfigUsername`           | is the username for Kafka authentication                                                                                                                      | `your.kafka.username.here`                               |
-| `global.kafkaConfigPassword`           | is the password for Kafka authentication                                                                                                                      | `your.kafka.password.here`                               |
-| `global.appHostDomain`                 | is the domain for the Telicent applications                                                                                                                   | `apps.yourdomain.com`                                    |
-| `global.authHostDomain`                | is the domain for the Telicent authentication service                                                                                                         | `auth.yourdomain.com`                                    |
-| `global.jwksUrl`                       | is the URL for the JSON Web Key Set (JWKS) used                                                                                                               | `https://yourdomain.com/.well-known/jwks.json`           |
-| `global.kafkaBootstrapUrls`            | is the list of Kafka bootstrap URLs                                                                                                                           | `kafka-kafka-bootstrap.kafka-dev.svc.cluster.local:9092` |
-| `global.appsGateway`                   | is the name of the Istio gateway for applications                                                                                                             | `istio-system/gateways-apps`                             |
-| `global.existingTruststoreSecretName`  | The name of an existing secret containing the truststore                                                                                                      | `""`                                                     |
-| `global.truststore.mountPath`          | The mount path for the truststore in the container                                                                                                            | `/app/config/truststore`                                 |
-| `jobServiceAccountName`                | This is the service account used for running jobs in Kubernetes.                                                                                              | `producers`                                              |
+| Name                                   | Description                                                                                                  | Value                                                    |
+| -------------------------------------- | ------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------- |
+| `global.enterprise`                    | Enable enterprise mode, adding additional features and configurations suitable for an enterprise deployment. | `false`                                                  |
+| `global.existingKafkaConfigSecretName` | Name of an existing secret containing Kafka configuration                                                    | `""`                                                     |
+| `global.kafkaConfigProtocol`           | Protocol used for Kafka communication                                                                        | `SASL_SSL`                                               |
+| `global.kafkaConfigMechanism`          | SASL mechanism used for Kafka authentication                                                                 | `SCRAM-SHA-512`                                          |
+| `global.kafkaConfigUsername`           | Username for Kafka authentication                                                                            | `your.kafka.username.here`                               |
+| `global.kafkaConfigPassword`           | Password for Kafka authentication                                                                            | `your.kafka.password.here`                               |
+| `global.appHostDomain`                 | Domain name associated with Telicent Applications                                                            | `apps.yourdomain.com`                                    |
+| `global.authHostDomain`                | Domain to be used for interacting with Telicent authentication services, including OIDC providers            | `auth.yourdomain.com`                                    |
+| `global.jwksUrl`                       | URL for the JSON Web Key Set (JWKS) used                                                                     | `https://yourdomain.com/.well-known/jwks.json`           |
+| `global.kafkaBootstrapUrls`            | List of Kafka bootstrap URLs                                                                                 | `kafka-kafka-bootstrap.kafka-dev.svc.cluster.local:9092` |
+| `global.appsGateway`                   | Name of the Istio gateway for applications                                                                   | `istio-system/gateways-apps`                             |
+| `global.existingTruststoreSecretName`  | Name of an existing secret containing the truststore                                                         | `""`                                                     |
+| `global.truststore.mountPath`          | Mount path for the truststore in the container                                                               | `/app/config/truststore`                                 |
+| `jobServiceAccountName`                | Service account used for running jobs in Kubernetes.                                                         | `producers`                                              |
 
 ## Subchart configurations 
 
