@@ -16,12 +16,12 @@ spec:
     {{- include "smart-cache-graph.selectorLabels" . | nindent 4 }}
   ports:
     - name: http
+      port: {{ .Values.service.port }}
       appProtocol: http
       protocol: TCP
-      port: {{ .Values.service.port }}
       targetPort: 3030
     - name: metrics
+      port: {{ .Values.metrics.service.port }}
       appProtocol: http
       protocol: TCP
-      port: {{ .Values.metrics.service.port }}
       targetPort: 9464

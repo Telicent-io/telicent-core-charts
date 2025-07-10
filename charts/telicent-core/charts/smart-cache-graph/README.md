@@ -17,7 +17,7 @@ the [Helm](https://helm.sh) package manager.
 To install the chart with the release name `my-release`:
 
 ```console
-helm install my-release ./charts/telicent-core/charts/smart-cache-search
+helm install my-release ./charts/telicent-core/charts/smart-cache-graph
 ```
 
 ## Uninstalling the Chart
@@ -33,9 +33,9 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ```bash
 .dev/readme-generator-for-helm --config=charts/telicent-core/readme.config \
- --values=charts/telicent-core/charts/smart-cache-search/values.yaml \
- --readme=charts/telicent-core/charts/smart-cache-search/README.md \
- --schema=charts/telicent-core/charts/smart-cache-search/values.schema.json
+ --values=charts/telicent-core/charts/smart-cache-graph/values.yaml \
+ --readme=charts/telicent-core/charts/smart-cache-graph/README.md \
+ --schema=charts/telicent-core/charts/smart-cache-graph/values.schema.json
 ```
 
 ## Configuration and installation details
@@ -60,71 +60,80 @@ Contains global parameters, these parameters are mirrored within the Telicent co
 ### Configuration Parameters
 
 Contains configuration parameters specific to the Smart Cache Graph application
-appVersion is used by default when defining an empty string
 
-| Name                                  | Description                                       | Value                                                                                  |
-| ------------------------------------- | ------------------------------------------------- | -------------------------------------------------------------------------------------- |
-| `configuration.attributeHierarchyUrl` | is used to look up attribute hierarchies by name  | `http://access-api.tc-system.svc.cluster.local:8080/hierarchies/lookup/{name}`         |
-| `configuration.javaOptions`           | are the JVM options for the application           | `-Xmx5120m -Xms2048m -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks` |
-| `configuration.otelMetricsExporter`   | is the OpenTelemetry metrics exporter             | `prometheus`                                                                           |
-| `configuration.otelTracesExporter`    | is the OpenTelemetry traces exporter              | `none`                                                                                 |
-| `configuration.userAttributesUrl`     | is the URL for the user attributes endpoint       | `http://access-api.tc-system.svc.cluster.local:8080/users/lookup/{user}`               |
-| `fullnameOverride`                    | sets the full name of the chart                   | `""`                                                                                   |
-| `image.pullPolicy`                    | defines the image pull policy                     | `IfNotPresent`                                                                         |
-| `image.repository`                    | is the Docker repository for the image            | `telicent/smart-cache-graph`                                                           |
-| `image.tag`                           | is the image tag to use                           | `""`                                                                                   |
-| `imagePullSecrets`                    | is a list of secrets to use for pulling the image | `[]`                                                                                   |
+| Name                                  | Description                         | Value                                                                                  |
+| ------------------------------------- | ----------------------------------- | -------------------------------------------------------------------------------------- |
+| `configuration.userAttributesUrl`     | URL for the user details endpoint   | `http://access-api.tc-system.svc.cluster.local:8080/users/lookup/{user}`               |
+| `configuration.attributeHierarchyUrl` | URL for the user hierarchy endpoint | `http://access-api.tc-system.svc.cluster.local:8080/hierarchies/lookup/{name}`         |
+| `configuration.javaOptions`           | JVM options for the application     | `-Xmx5120m -Xms2048m -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks` |
+| `configuration.otelMetricsExporter`   | OpenTelemetry metrics exporter      | `prometheus`                                                                           |
+| `configuration.otelTracesExporter`    | OpenTelemetry traces exporter       | `none`                                                                                 |
 
-### metrics configuration
+### Common Parameters
 
-| Name                   | Description                                                                                    | Value     |
-| ---------------------- | ---------------------------------------------------------------------------------------------- | --------- |
-| `metrics.service.port` | is the port for the Prometheus service                                                         | `9464`    |
-| `metrics.service.name` | is the name for the Prometheus service                                                         | `metrics` |
-| `nameOverride`         | sets a custom name for the chart it differs from fullnameOverride as it is not fully qualified | `""`      |
+| Name               | Description                                                                                    | Value |
+| ------------------ | ---------------------------------------------------------------------------------------------- | ----- |
+| `fullnameOverride` | String to fully override the generated release name                                            | `""`  |
+| `nameOverride`     | sets a custom name for the chart it differs from fullnameOverride as it is not fully qualified | `""`  |
 
-### podSecurityContext sets the pod security context
+### Smart Cache Graph Statefulset Parameters
 
-| Name                                     | Description                              | Value            |
-| ---------------------------------------- | ---------------------------------------- | ---------------- |
-| `podSecurityContext.fsGroup`             | sets the filesystem group ID for the pod | `185`            |
-| `podSecurityContext.runAsGroup`          | sets the group ID for the pod            | `185`            |
-| `podSecurityContext.runAsNonRoot`        | ensures the pod runs as a non-root user  | `true`           |
-| `podSecurityContext.runAsUser`           | sets the user ID for the pod             | `185`            |
-| `podSecurityContext.seccompProfile.type` | defines the seccomp profile type         | `RuntimeDefault` |
+| Name                                                | Description                                                                      | Value                               |
+| --------------------------------------------------- | -------------------------------------------------------------------------------- | ----------------------------------- |
+| `replicas`                                          | Number of Smart Cache Graph replicas to deploy                                   | `1`                                 |
+| `revisionHistoryLimit`                              | Number of controller revisions to keep                                           | `5`                                 |
+| `annotations`                                       | Add extra annotations to the Statefulset object                                  | `{}`                                |
+| `image.registry`                                    | Smart Cache Graph image registry                                                 | `REGISTRY_NAME`                     |
+| `image.repository`                                  | Smart Cache Graph image name                                                     | `REPOSITORY_NAME/smart-cache-graph` |
+| `image.tag`                                         | Smart Cache Graph image tag. If not set, a tag is generated using the appVersion | `""`                                |
+| `image.pullPolicy`                                  | Smart Cache Graph image pull policy                                              | `IfNotPresent`                      |
+| `image.pullSecrets`                                 | Specify registry secret names as an array                                        | `[]`                                |
+| `resources.requests.cpu`                            | Set containers' CPU request                                                      | `500m`                              |
+| `resources.requests.memory`                         | Set containers' memory request                                                   | `8000Mi`                            |
+| `resources.limits.cpu`                              | Set containers' CPU limit                                                        | `1500m`                             |
+| `resources.limits.memory`                           | Set containers' memory limit                                                     | `12000Mi`                           |
+| `containerSecurityContext.runAsUser`                | Set containers' Security Context runAsUser User ID                               | `185`                               |
+| `containerSecurityContext.runAsGroup`               | Set containers' Security Context runAsGroup Group ID                             | `185`                               |
+| `containerSecurityContext.runAsNonRoot`             | Set container's Security Context runAsNonRoot                                    | `true`                              |
+| `containerSecurityContext.allowPrivilegeEscalation` | Set container's Security Context allowPrivilegeEscalation                        | `false`                             |
+| `containerSecurityContext.capabilities.drop`        | List of capabilities to be dropped                                               | `["ALL"]`                           |
+| `containerSecurityContext.seccompProfile.type`      | Set container's Security Context seccomp profile                                 | `RuntimeDefault`                    |
+| `podSecurityContext.runAsUser`                      | Set the provisioning pod's Security Context runAsUser User ID                    | `185`                               |
+| `podSecurityContext.runAsGroup`                     | Set the provisioning pod's Security Context runAsGroup Group ID                  | `185`                               |
+| `podSecurityContext.runAsNonRoot`                   | Set the provisioning pod's Security Context runAsNonRoot                         | `true`                              |
+| `podSecurityContext.fsGroup`                        | Set the provisioning pod's Group ID for the mounted volumes' filesystem          | `185`                               |
+| `podSecurityContext.seccompProfile.type`            | Set the provisioning pod's Security Context seccomp profile                      | `RuntimeDefault`                    |
 
-### persistentVolumeClaims are the persistent volume claims for the application
-
-This section defines the persistent volume claims for the Smart Cache Graph application.
-It includes the size and storage class for each volume.
+### Persistent Volume Claim Parameters
 
 | Name                                                 | Description                                  | Value     |
 | ---------------------------------------------------- | -------------------------------------------- | --------- |
-| `persistentVolumeClaims.backupsVolume.size`          | is the size of the backups volume            | `100Gi`   |
-| `persistentVolumeClaims.backupsVolume.storageClass`  | is the storage class for the backups volume  | `gp3-enc` |
-| `persistentVolumeClaims.datasetsVolume.size`         | is the size of the datasets volume           | `25Gi`    |
-| `persistentVolumeClaims.datasetsVolume.storageClass` | is the storage class for the datasets volume | `gp3-enc` |
-| `annotations`                                        | are additional annotations to add to the pod | `{}`      |
+| `persistentVolumeClaims.backupsVolume.size`          | PVC Storage Request for Backup volume        | `100Gi`   |
+| `persistentVolumeClaims.backupsVolume.storageClass`  | PVC Storage Class for the Backup data volume | `gp3-enc` |
+| `persistentVolumeClaims.datasetsVolume.size`         | PVC Storage Request for Graph volume         | `25Gi`    |
+| `persistentVolumeClaims.datasetsVolume.storageClass` | iPVC Storage Class for the Graph data volume | `gp3-enc` |
 
-### containerSecurityContext sets the container security context
+### Metrics Parameters
 
-| Name                                                | Description                                                                                     | Value            |
-| --------------------------------------------------- | ----------------------------------------------------------------------------------------------- | ---------------- |
-| `containerSecurityContext.allowPrivilegeEscalation` | prevents privilege escalation                                                                   | `false`          |
-| `containerSecurityContext.capabilities.drop`        | defines the capabilities to drop                                                                | `["ALL"]`        |
-| `containerSecurityContext.runAsGroup`               | sets the group ID for the container                                                             | `185`            |
-| `containerSecurityContext.runAsNonRoot`             | ensures the container runs as a non-root user                                                   | `true`           |
-| `containerSecurityContext.runAsUser`                | sets the user ID for the container                                                              | `185`            |
-| `containerSecurityContext.seccompProfile.type`      | defines the seccomp profile type                                                                | `RuntimeDefault` |
-| `containerSecurityContext.seccompProfile.type`      | RuntimeDefault uses the default runtime seccomp profile                                         | `RuntimeDefault` |
-| `replicas`                                          | Number of Smart Cache Graph replicas to deploy                                                  | `1`              |
-| `resources`                                         | sets the resource requests and limits for the pod                                               | `{}`             |
-| `revisionHistoryLimit`                              | sets the number of old ReplicaSets to retain                                                    | `3`              |
-| `service.port`                                      | is the port the service will listen on                                                          | `3030`           |
-| `service.type`                                      | defines the service type                                                                        | `ClusterIP`      |
-| `serviceAccount.annotations`                        | are additional annotations for the service account                                              | `{}`             |
-| `serviceAccount.name`                               | Name of the created ServiceAccount. If not set, a name is generated using the fullname template | `""`             |
-| `ingress.principal`                                 | is the principal to use for ingress traffic                                                     | `""`             |
+| Name                   | Description                            | Value     |
+| ---------------------- | -------------------------------------- | --------- |
+| `metrics.service.port` | is the port for the Prometheus service | `9464`    |
+| `metrics.service.name` | is the name for the Prometheus service | `metrics` |
+
+### Traffic Exposure Parameters
+
+| Name                | Description                                                                                                 | Value       |
+| ------------------- | ----------------------------------------------------------------------------------------------------------- | ----------- |
+| `service.port`      | is the port the service will listen on                                                                      | `3030`      |
+| `service.type`      | defines the service type                                                                                    | `ClusterIP` |
+| `ingress.principal` | Principal to use for ingress traffic. If not set, defaults to the Istio service account in the istio-system | `""`        |
+
+### Service Account Parameters
+
+| Name                         | Description                                                                                     | Value |
+| ---------------------------- | ----------------------------------------------------------------------------------------------- | ----- |
+| `serviceAccount.name`        | Name of the created ServiceAccount. If not set, a name is generated using the fullname template | `""`  |
+| `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                            | `{}`  |
 
 ## License
 

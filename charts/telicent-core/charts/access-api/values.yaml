@@ -145,6 +145,7 @@ serviceAccount:
   name: ""
   #@key serviceAccount.annotations Additional custom annotations for the ServiceAccount
   annotations: {}
+
 # @section Istio ingress Parameters
 ingress:
   # @key ingress.principal is the principal to use for ingress traffic
