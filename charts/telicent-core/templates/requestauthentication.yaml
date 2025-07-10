@@ -1,9 +1,15 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
 apiVersion: security.istio.io/v1
 kind: RequestAuthentication
+
 metadata:
   name: {{ include "telicent-core.fullname" . }}-users
   labels:
   {{- include "telicent-core.labels" . | nindent 4 }}
+
 spec:
   jwtRules:
   - forwardOriginalToken: true
