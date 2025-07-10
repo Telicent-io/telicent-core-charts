@@ -9,15 +9,12 @@ metadata:
   name: {{ include "smart-cache-graph.fullname" . }}-server
   labels:
     {{- include "smart-cache-graph.labels" . | nindent 4 }}
-
 spec:
   replicas: {{ .Values.replicas }}
   revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
   selector:
     matchLabels:
     {{- include "smart-cache-graph.selectorLabels" . | nindent 6 }}
-  updateStrategy: {}
-  serviceName: ""
   template:
     metadata:
       annotations:
@@ -30,12 +27,20 @@ spec:
       labels:
         {{- include "smart-cache-graph.labels" . | nindent 8 }}
     spec:
+      serviceAccountName: {{ include "smart-cache-graph.serviceAccountName" . }}
+      securityContext: {{- toYaml .Values.podSecurityContext | nindent 8 }}
     {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
     {{- end }}
       containers:
-      - args:
+      - name: graph-server
+        image: {{ .Values.image.repository }}:{{ include "smart-cache-graph.version" . }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        resources: {{- toYaml .Values.resources | nindent 10 }}
+        securityContext: {{- toYaml .Values.containerSecurityContext | nindent 10 }}
+
+        args:
           - --config
           - /fuseki/config/config.ttl
         envFrom:
@@ -44,25 +49,16 @@ spec:
             optional: true
         - configMapRef:
             name: {{ include "smart-cache-graph.fullname" . }}
-            optional: true
-        image: {{ .Values.image.repository }}:{{ include "smart-cache-graph.version" . }}
-        imagePullPolicy: {{ .Values.image.pullPolicy }}
-        livenessProbe:
-          httpGet:
-            path: /$/ping
-            port: 3030
-            scheme: HTTP
-          initialDelaySeconds: 120
-          periodSeconds: 30
-          timeoutSeconds: 2
-        name: graph-server
+            optional: true        
+
         ports:
-        - containerPort: 3030
-          name: http
+        - name: http
+          containerPort: 3030
           protocol: TCP
-        - containerPort: {{ .Values.metrics.service.port }}
-          name: {{ .Values.metrics.service.name | default "metrics" }}
+        - name: {{ .Values.metrics.service.name | default "metrics" }}
+          containerPort: {{ .Values.metrics.service.port }}
           protocol: TCP
+
         readinessProbe:
           httpGet:
             path: /$/ping
@@ -71,9 +67,15 @@ spec:
           initialDelaySeconds: 120
           periodSeconds: 30
           timeoutSeconds: 2
-        resources: {{- toYaml .Values.resources | nindent 10 }}
-        securityContext: {{- toYaml .Values.containerSecurityContext |
-          nindent 10 }}
+        livenessProbe:
+          httpGet:
+            path: /$/ping
+            port: 3030
+            scheme: HTTP
+          initialDelaySeconds: 120
+          periodSeconds: 30
+          timeoutSeconds: 2 
+        
         volumeMounts:
         - mountPath: /fuseki/config
           name: graph-config-volume
@@ -87,9 +89,7 @@ spec:
         - mountPath: {{ .Values.global.truststore.mountPath | default "/app/config/truststore" }}
           name: truststore-volume
       {{- end }}
-      securityContext: {{- toYaml .Values.podSecurityContext | nindent 8 }}
-
-      serviceAccountName: {{ include "smart-cache-graph.serviceAccountName" . }}
+      
       volumes:
       - configMap:
           {{- if .Values.existingGraphConfigMapName }}
@@ -116,7 +116,6 @@ spec:
 
   volumeClaimTemplates:
   - metadata:
-      creationTimestamp: null
       labels:
         app.kubernetes.io/name: {{ include "smart-cache-graph.name" . }}
         telicent.io/resource: "true"
@@ -129,7 +128,6 @@ spec:
             storage: {{ .Values.persistentVolumeClaims.datasetsVolume.size }}
       storageClassName: {{ .Values.persistentVolumeClaims.datasetsVolume.storageClass }}
   - metadata:
-      creationTimestamp: null
       labels:
         app.kubernetes.io/name: {{ include "smart-cache-graph.name" . }}
         telicent.io/resource: "true"

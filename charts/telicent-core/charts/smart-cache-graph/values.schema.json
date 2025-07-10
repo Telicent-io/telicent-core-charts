@@ -56,63 +56,243 @@
         "configuration": {
             "type": "object",
             "properties": {
+                "userAttributesUrl": {
+                    "type": "string",
+                    "description": "URL for the user details endpoint",
+                    "default": "http://access-api.tc-system.svc.cluster.local:8080/users/lookup/{user}"
+                },
                 "attributeHierarchyUrl": {
                     "type": "string",
-                    "description": "is used to look up attribute hierarchies by name",
+                    "description": "URL for the user hierarchy endpoint",
                     "default": "http://access-api.tc-system.svc.cluster.local:8080/hierarchies/lookup/{name}"
                 },
                 "javaOptions": {
                     "type": "string",
-                    "description": "are the JVM options for the application",
+                    "description": "JVM options for the application",
                     "default": "-Xmx5120m -Xms2048m -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks"
                 },
                 "otelMetricsExporter": {
                     "type": "string",
-                    "description": "is the OpenTelemetry metrics exporter",
+                    "description": "OpenTelemetry metrics exporter",
                     "default": "prometheus"
                 },
                 "otelTracesExporter": {
                     "type": "string",
-                    "description": "is the OpenTelemetry traces exporter",
+                    "description": "OpenTelemetry traces exporter",
                     "default": "none"
-                },
-                "userAttributesUrl": {
-                    "type": "string",
-                    "description": "is the URL for the user attributes endpoint",
-                    "default": "http://access-api.tc-system.svc.cluster.local:8080/users/lookup/{user}"
                 }
             }
         },
         "fullnameOverride": {
             "type": "string",
-            "description": "sets the full name of the chart",
+            "description": "String to fully override the generated release name",
             "default": ""
+        },
+        "nameOverride": {
+            "type": "string",
+            "description": "sets a custom name for the chart it differs from fullnameOverride as it is not fully qualified",
+            "default": ""
+        },
+        "replicas": {
+            "type": "number",
+            "description": "Number of Smart Cache Graph replicas to deploy",
+            "default": 1
+        },
+        "revisionHistoryLimit": {
+            "type": "number",
+            "description": "Number of controller revisions to keep",
+            "default": 5
+        },
+        "annotations": {
+            "type": "object",
+            "description": "Add extra annotations to the Statefulset object",
+            "default": {}
         },
         "image": {
             "type": "object",
             "properties": {
-                "pullPolicy": {
+                "registry": {
                     "type": "string",
-                    "description": "defines the image pull policy",
-                    "default": "IfNotPresent"
+                    "description": "Smart Cache Graph image registry",
+                    "default": "REGISTRY_NAME"
                 },
                 "repository": {
                     "type": "string",
-                    "description": "is the Docker repository for the image",
-                    "default": "telicent/smart-cache-graph"
+                    "description": "Smart Cache Graph image name",
+                    "default": "REPOSITORY_NAME/smart-cache-graph"
                 },
                 "tag": {
                     "type": "string",
-                    "description": "is the image tag to use",
+                    "description": "Smart Cache Graph image tag. If not set, a tag is generated using the appVersion",
                     "default": ""
+                },
+                "pullPolicy": {
+                    "type": "string",
+                    "description": "Smart Cache Graph image pull policy",
+                    "default": "IfNotPresent"
+                },
+                "pullSecrets": {
+                    "type": "array",
+                    "description": "Specify registry secret names as an array",
+                    "default": [],
+                    "items": {}
                 }
             }
         },
-        "imagePullSecrets": {
-            "type": "array",
-            "description": "is a list of secrets to use for pulling the image",
-            "default": [],
-            "items": {}
+        "resources": {
+            "type": "object",
+            "properties": {
+                "requests": {
+                    "type": "object",
+                    "properties": {
+                        "cpu": {
+                            "type": "string",
+                            "description": "Set containers' CPU request",
+                            "default": "500m"
+                        },
+                        "memory": {
+                            "type": "string",
+                            "description": "Set containers' memory request",
+                            "default": "8000Mi"
+                        }
+                    }
+                },
+                "limits": {
+                    "type": "object",
+                    "properties": {
+                        "cpu": {
+                            "type": "string",
+                            "description": "Set containers' CPU limit",
+                            "default": "1500m"
+                        },
+                        "memory": {
+                            "type": "string",
+                            "description": "Set containers' memory limit",
+                            "default": "12000Mi"
+                        }
+                    }
+                }
+            }
+        },
+        "containerSecurityContext": {
+            "type": "object",
+            "properties": {
+                "runAsUser": {
+                    "type": "number",
+                    "description": "Set containers' Security Context runAsUser User ID",
+                    "default": 185
+                },
+                "runAsGroup": {
+                    "type": "number",
+                    "description": "Set containers' Security Context runAsGroup Group ID",
+                    "default": 185
+                },
+                "runAsNonRoot": {
+                    "type": "boolean",
+                    "description": "Set container's Security Context runAsNonRoot",
+                    "default": true
+                },
+                "allowPrivilegeEscalation": {
+                    "type": "boolean",
+                    "description": "Set container's Security Context allowPrivilegeEscalation",
+                    "default": false
+                },
+                "capabilities": {
+                    "type": "object",
+                    "properties": {
+                        "drop": {
+                            "type": "array",
+                            "description": "List of capabilities to be dropped",
+                            "default": [
+                                "ALL"
+                            ],
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "seccompProfile": {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "description": "Set container's Security Context seccomp profile",
+                            "default": "RuntimeDefault"
+                        }
+                    }
+                }
+            }
+        },
+        "podSecurityContext": {
+            "type": "object",
+            "properties": {
+                "runAsUser": {
+                    "type": "number",
+                    "description": "Set the provisioning pod's Security Context runAsUser User ID",
+                    "default": 185
+                },
+                "runAsGroup": {
+                    "type": "number",
+                    "description": "Set the provisioning pod's Security Context runAsGroup Group ID",
+                    "default": 185
+                },
+                "runAsNonRoot": {
+                    "type": "boolean",
+                    "description": "Set the provisioning pod's Security Context runAsNonRoot",
+                    "default": true
+                },
+                "fsGroup": {
+                    "type": "number",
+                    "description": "Set the provisioning pod's Group ID for the mounted volumes' filesystem",
+                    "default": 185
+                },
+                "seccompProfile": {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "description": "Set the provisioning pod's Security Context seccomp profile",
+                            "default": "RuntimeDefault"
+                        }
+                    }
+                }
+            }
+        },
+        "persistentVolumeClaims": {
+            "type": "object",
+            "properties": {
+                "backupsVolume": {
+                    "type": "object",
+                    "properties": {
+                        "size": {
+                            "type": "string",
+                            "description": "PVC Storage Request for Backup volume",
+                            "default": "100Gi"
+                        },
+                        "storageClass": {
+                            "type": "string",
+                            "description": "PVC Storage Class for the Backup data volume",
+                            "default": "gp3-enc"
+                        }
+                    }
+                },
+                "datasetsVolume": {
+                    "type": "object",
+                    "properties": {
+                        "size": {
+                            "type": "string",
+                            "description": "PVC Storage Request for Graph volume",
+                            "default": "25Gi"
+                        },
+                        "storageClass": {
+                            "type": "string",
+                            "description": "iPVC Storage Class for the Graph data volume",
+                            "default": "gp3-enc"
+                        }
+                    }
+                }
+            }
         },
         "metrics": {
             "type": "object",
@@ -134,151 +314,6 @@
                 }
             }
         },
-        "nameOverride": {
-            "type": "string",
-            "description": "sets a custom name for the chart it differs from fullnameOverride as it is not fully qualified",
-            "default": ""
-        },
-        "podSecurityContext": {
-            "type": "object",
-            "properties": {
-                "fsGroup": {
-                    "type": "number",
-                    "description": "sets the filesystem group ID for the pod",
-                    "default": 185
-                },
-                "runAsGroup": {
-                    "type": "number",
-                    "description": "sets the group ID for the pod",
-                    "default": 185
-                },
-                "runAsNonRoot": {
-                    "type": "boolean",
-                    "description": "ensures the pod runs as a non-root user",
-                    "default": true
-                },
-                "runAsUser": {
-                    "type": "number",
-                    "description": "sets the user ID for the pod",
-                    "default": 185
-                },
-                "seccompProfile": {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "type": "string",
-                            "description": "defines the seccomp profile type",
-                            "default": "RuntimeDefault"
-                        }
-                    }
-                }
-            }
-        },
-        "persistentVolumeClaims": {
-            "type": "object",
-            "properties": {
-                "backupsVolume": {
-                    "type": "object",
-                    "properties": {
-                        "size": {
-                            "type": "string",
-                            "description": "is the size of the backups volume",
-                            "default": "100Gi"
-                        },
-                        "storageClass": {
-                            "type": "string",
-                            "description": "is the storage class for the backups volume",
-                            "default": "gp3-enc"
-                        }
-                    }
-                },
-                "datasetsVolume": {
-                    "type": "object",
-                    "properties": {
-                        "size": {
-                            "type": "string",
-                            "description": "is the size of the datasets volume",
-                            "default": "25Gi"
-                        },
-                        "storageClass": {
-                            "type": "string",
-                            "description": "is the storage class for the datasets volume",
-                            "default": "gp3-enc"
-                        }
-                    }
-                }
-            }
-        },
-        "annotations": {
-            "type": "object",
-            "description": "are additional annotations to add to the pod",
-            "default": {}
-        },
-        "containerSecurityContext": {
-            "type": "object",
-            "properties": {
-                "allowPrivilegeEscalation": {
-                    "type": "boolean",
-                    "description": "prevents privilege escalation",
-                    "default": false
-                },
-                "capabilities": {
-                    "type": "object",
-                    "properties": {
-                        "drop": {
-                            "type": "array",
-                            "description": "defines the capabilities to drop",
-                            "default": [
-                                "ALL"
-                            ],
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                },
-                "runAsGroup": {
-                    "type": "number",
-                    "description": "sets the group ID for the container",
-                    "default": 185
-                },
-                "runAsNonRoot": {
-                    "type": "boolean",
-                    "description": "ensures the container runs as a non-root user",
-                    "default": true
-                },
-                "runAsUser": {
-                    "type": "number",
-                    "description": "sets the user ID for the container",
-                    "default": 185
-                },
-                "seccompProfile": {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "type": "string",
-                            "description": "RuntimeDefault uses the default runtime seccomp profile",
-                            "default": "RuntimeDefault"
-                        }
-                    }
-                }
-            }
-        },
-        "replicas": {
-            "type": "number",
-            "description": "Number of Smart Cache Graph replicas to deploy",
-            "default": 1
-        },
-        "resources": {
-            "type": "object",
-            "description": "sets the resource requests and limits for the pod",
-            "default": {}
-        },
-        "revisionHistoryLimit": {
-            "type": "number",
-            "description": "sets the number of old ReplicaSets to retain",
-            "default": 3
-        },
         "service": {
             "type": "object",
             "properties": {
@@ -294,28 +329,28 @@
                 }
             }
         },
-        "serviceAccount": {
-            "type": "object",
-            "properties": {
-                "annotations": {
-                    "type": "object",
-                    "description": "are additional annotations for the service account",
-                    "default": {}
-                },
-                "name": {
-                    "type": "string",
-                    "description": "Name of the created ServiceAccount. If not set, a name is generated using the fullname template",
-                    "default": ""
-                }
-            }
-        },
         "ingress": {
             "type": "object",
             "properties": {
                 "principal": {
                     "type": "string",
-                    "description": "is the principal to use for ingress traffic",
+                    "description": "Principal to use for ingress traffic. If not set, defaults to the Istio service account in the istio-system",
                     "default": ""
+                }
+            }
+        },
+        "serviceAccount": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Name of the created ServiceAccount. If not set, a name is generated using the fullname template",
+                    "default": ""
+                },
+                "annotations": {
+                    "type": "object",
+                    "description": "Additional custom annotations for the ServiceAccount",
+                    "default": {}
                 }
             }
         }

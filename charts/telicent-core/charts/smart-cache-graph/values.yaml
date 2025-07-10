@@ -1,5 +1,5 @@
 # Copyright (C) 2025 Telicent Limited
-# Telicent Access UI stand-alone chart
+# Telicent Smart Cache Graph stand-alone chart
 
 # @section Global Parameters
 # @descStart
@@ -17,7 +17,7 @@ global:
   #   - myRegistryKeySecretName
   #
   # @key global.imagePullSecrets Global registry secret names as an array
-  imagePullSecrets: []
+  imagePullSecrets: [ ]
   # @key global.appHostDomain Domain name associated with the application
   appHostDomain: "apps.telicent.io"
   # @key global.authHostDomain Domain to be used for interacting with Telicent authentication services, including OIDC providers
@@ -29,46 +29,110 @@ global:
   # @key global.existingTruststoreSecretName The name of an existing secret containing the truststore
   existingTruststoreSecretName: ""
   # This is used to mount the truststore in the container, default is /app/config/truststore
-  truststore: 
+  truststore:
     # @key global.truststore.mountPath The mount path for the truststore in the container
     mountPath: /app/config/truststore
-    
+
 # @section Configuration Parameters
 # @descStart
 # Contains configuration parameters specific to the Smart Cache Graph application
 # @descEnd
 configuration:
-  # @key configuration.attributeHierarchyUrl is used to look up attribute hierarchies by name
+  # @key configuration.userAttributesUrl URL for the user details endpoint
+  userAttributesUrl: http://access-api.tc-system.svc.cluster.local:8080/users/lookup/{user}
+  # @key configuration.attributeHierarchyUrl URL for the user hierarchy endpoint
   attributeHierarchyUrl: http://access-api.tc-system.svc.cluster.local:8080/hierarchies/lookup/{name}
-
-  # @key configuration.javaOptions are the JVM options for the application
+  # @key configuration.javaOptions JVM options for the application
   javaOptions: -Xmx5120m -Xms2048m -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks
-  # @key configuration.otelMetricsExporter is the OpenTelemetry metrics exporter
+  # @key configuration.otelMetricsExporter OpenTelemetry metrics exporter
   # Options: prometheus, otlp, none
   otelMetricsExporter: prometheus
-  # @key configuration.otelTracesExporter is the OpenTelemetry traces exporter
+  # @key configuration.otelTracesExporter OpenTelemetry traces exporter
   # Options: otlp, none
   otelTracesExporter: none
-  # @key configuration.userAttributesUrl is the URL for the user attributes endpoint
-  userAttributesUrl: http://access-api.tc-system.svc.cluster.local:8080/users/lookup/{user}
 
-# @key fullnameOverride sets the full name of the chart
+# @section Common Parameters
+#@key fullnameOverride String to fully override the generated release name
 fullnameOverride: ""
+# @key nameOverride sets a custom name for the chart it differs from fullnameOverride as it is not fully qualified
+nameOverride: ""
 
-# Image configuration
+# @section Smart Cache Graph Statefulset Parameters
+# @key replicas Number of Smart Cache Graph replicas to deploy
+replicas: 1
+# @key revisionHistoryLimit Number of controller revisions to keep
+revisionHistoryLimit: 5
+# @key annotations Add extra annotations to the Statefulset object
+annotations: { }
+
 image:
-  # @key image.pullPolicy defines the image pull policy
-  pullPolicy: IfNotPresent
-  # @key image.repository is the Docker repository for the image
+  # @key image.registry [default: REGISTRY_NAME] Smart Cache Graph image registry
+  registry: docker.io
+  # @key image.repository [default: REPOSITORY_NAME/smart-cache-graph] Smart Cache Graph image name
   repository: telicent/smart-cache-graph
-  # @key image.tag is the image tag to use
-  # @descStart
-  # appVersion is used by default when defining an empty string
-  # @descEnd
+  # @key image.tag Smart Cache Graph image tag. If not set, a tag is generated using the appVersion
   tag: ""
-# @key imagePullSecrets is a list of secrets to use for pulling the image
-imagePullSecrets: []
-# @section metrics configuration
+  # @key image.pullPolicy Smart Cache Graph image pull policy
+  pullPolicy: IfNotPresent
+  # @key image.pullSecrets Specify registry secret names as an array
+  pullSecrets: [ ]
+
+resources:
+  requests:
+    # @key resources.requests.cpu Set containers' CPU request
+    cpu: "500m"
+    # @key resources.requests.memory Set containers' memory request
+    memory: "8000Mi"
+  limits:
+    # @key resources.limits.cpu Set containers' CPU limit
+    cpu: "1500m"
+    # @key resources.limits.memory Set containers' memory limit
+    memory: "12000Mi"
+
+containerSecurityContext:
+  # @key containerSecurityContext.runAsUser Set containers' Security Context runAsUser User ID
+  runAsUser: 185
+  # @key containerSecurityContext.runAsGroup Set containers' Security Context runAsGroup Group ID
+  runAsGroup: 185
+  # @key containerSecurityContext.runAsNonRoot Set container's Security Context runAsNonRoot
+  runAsNonRoot: true
+  # @key containerSecurityContext.allowPrivilegeEscalation Set container's Security Context allowPrivilegeEscalation
+  allowPrivilegeEscalation: false
+  capabilities:
+    #@key containerSecurityContext.capabilities.drop List of capabilities to be dropped
+    drop:
+      - ALL
+  seccompProfile:
+    # @key containerSecurityContext.seccompProfile.type Set container's Security Context seccomp profile
+    type: RuntimeDefault
+
+podSecurityContext:
+  # @key podSecurityContext.runAsUser Set the provisioning pod's Security Context runAsUser User ID
+  runAsUser: 185
+  # @key podSecurityContext.runAsGroup Set the provisioning pod's Security Context runAsGroup Group ID
+  runAsGroup: 185
+  # @key podSecurityContext.runAsNonRoot Set the provisioning pod's Security Context runAsNonRoot
+  runAsNonRoot: true
+  # @key podSecurityContext.fsGroup Set the provisioning pod's Group ID for the mounted volumes' filesystem
+  fsGroup: 185
+  seccompProfile:
+    # @key podSecurityContext.seccompProfile.type Set the provisioning pod's Security Context seccomp profile
+    type: RuntimeDefault
+
+# @section Persistent Volume Claim Parameters
+persistentVolumeClaims:
+  backupsVolume:
+    # @key persistentVolumeClaims.backupsVolume.size PVC Storage Request for Backup volume
+    size: 100Gi
+    # @key persistentVolumeClaims.backupsVolume.storageClass PVC Storage Class for the Backup data volume
+    storageClass: gp3-enc
+  datasetsVolume:
+    # @key persistentVolumeClaims.datasetsVolume.size PVC Storage Request for Graph volume
+    size: 25Gi
+    # @key persistentVolumeClaims.datasetsVolume.storageClass iPVC Storage Class for the Graph data volume
+    storageClass: gp3-enc
+
+# @section Metrics Parameters
 metrics:
   service:
     # @key metrics.service.port is the port for the Prometheus service
@@ -76,86 +140,22 @@ metrics:
     # @key metrics.service.name is the name for the Prometheus service
     name: metrics
 
-# @key nameOverride sets a custom name for the chart it differs from fullnameOverride as it is not fully qualified
-nameOverride: ""
-
-# @section podSecurityContext sets the pod security context
-podSecurityContext:
-  # @key podSecurityContext.fsGroup sets the filesystem group ID for the pod
-  fsGroup: 185
-  # @key podSecurityContext.runAsGroup sets the group ID for the pod
-  runAsGroup: 185
-  # @key podSecurityContext.runAsNonRoot ensures the pod runs as a non-root user
-  runAsNonRoot: true
-  # @key podSecurityContext.runAsUser sets the user ID for the pod
-  runAsUser: 185
-  seccompProfile:
-  # @key podSecurityContext.seccompProfile.type defines the seccomp profile type
-    type: RuntimeDefault
-
-# @section persistentVolumeClaims are the persistent volume claims for the application
-# @descStart
-# This section defines the persistent volume claims for the Smart Cache Graph application.
-# It includes the size and storage class for each volume.
-# @descEnd
-persistentVolumeClaims:
-  backupsVolume:
-    # @key persistentVolumeClaims.backupsVolume.size is the size of the backups volume
-    size: 100Gi
-    # @key persistentVolumeClaims.backupsVolume.storageClass is the storage class for the backups volume
-    storageClass: gp3-enc
-  datasetsVolume:
-    # @key persistentVolumeClaims.datasetsVolume.size is the size of the datasets volume
-    size: 25Gi
-    # @key persistentVolumeClaims.datasetsVolume.storageClass is the storage class for the datasets volume
-    storageClass: gp3-enc
-
-# @key annotations are additional annotations to add to the pod
-annotations: {}
-
-# @section containerSecurityContext sets the container security context
-containerSecurityContext:
-  # @key containerSecurityContext.allowPrivilegeEscalation prevents privilege escalation
-  allowPrivilegeEscalation: false
-  capabilities:
-    # @key containerSecurityContext.capabilities.drop defines the capabilities to drop
-    drop:
-      - ALL
-  # @key containerSecurityContext.runAsGroup sets the group ID for the container
-  runAsGroup: 185
-  # @key containerSecurityContext.runAsNonRoot ensures the container runs as a non-root user
-  runAsNonRoot: true
-  # @key containerSecurityContext.runAsUser sets the user ID for the container
-  runAsUser: 185
-  seccompProfile:
-    # @key containerSecurityContext.seccompProfile.type defines the seccomp profile type
-    # @key containerSecurityContext.seccompProfile.type RuntimeDefault uses the default runtime seccomp profile
-    type: RuntimeDefault
-
-# @key replicas Number of Smart Cache Graph replicas to deploy
-replicas: 1
-
-# @key resources sets the resource requests and limits for the pod
-resources: {}
-
-# @key revisionHistoryLimit sets the number of old ReplicaSets to retain
-revisionHistoryLimit: 3
-
-# service configuration
+# @section Traffic Exposure Parameters
 service:
   # @key service.port is the port the service will listen on
   port: 3030
   # @key service.type defines the service type
   type: ClusterIP
 
-# serviceAccount configuration
+ingress:
+  # @key ingress.principal Principal to use for ingress traffic. If not set, defaults to the Istio service account in the istio-system
+  principal: ""
+
+# @section Service Account Parameters
 serviceAccount:
-  # @key serviceAccount.annotations are additional annotations for the service account
-  annotations: {}
   # @key serviceAccount.name Name of the created ServiceAccount. If not set, a name is generated using the fullname template
   name: ""
+  #@key serviceAccount.annotations Additional custom annotations for the ServiceAccount
+  annotations: { }
 
-ingress:
-  # @key ingress.principal is the principal to use for ingress traffic
-  # If not set, it defaults to the Istio service account in the istio-system
-  principal: ""
+
