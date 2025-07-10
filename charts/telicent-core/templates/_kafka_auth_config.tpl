@@ -1,3 +1,7 @@
+{{/*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
 {{- define "telicent-core.kafka-config-properties" -}}
       security.protocol={{ .Values.global.kafkaConfigProtocol }}
       sasl.mechanism={{ .Values.global.kafkaConfigMechanism }}

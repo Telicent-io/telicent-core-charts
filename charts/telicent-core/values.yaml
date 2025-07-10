@@ -1,38 +1,40 @@
 # Copyright (C) 2025 Telicent Limited
-# Telicent Telicent Core umbrella chart
+# Telicent Core umbrella chart
 
 # @section Global Parameters
 # @descStart
 # Contains global parameters, these parameters are mirrored across all Telicent Core subcharts, these values will be authoritative.
 # @descEnd
 global:
-  # @key global.enterprise If set to true, the chart will be configured for enterprise use, This will enable additional features and configurations suitable for enterprise deployments.
+  # @key global.enterprise Enable enterprise mode, adding additional features and configurations suitable for an enterprise deployment.
   enterprise: false
-  # @key global.existingKafkaConfigSecretName is the name of an existing secret containing Kafka configuration
+
+  # @key global.existingKafkaConfigSecretName Name of an existing secret containing Kafka configuration
   existingKafkaConfigSecretName: ""
-  # @key global.kafkaConfigProtocol is the protocol used for Kafka communication
+  # @key global.kafkaConfigProtocol Protocol used for Kafka communication
   kafkaConfigProtocol: "SASL_SSL"
-  # @key global.kafkaConfigMechanism is the SASL mechanism used for Kafka authentication
+  # @key global.kafkaConfigMechanism SASL mechanism used for Kafka authentication
   kafkaConfigMechanism: "SCRAM-SHA-512"
-  # @key global.kafkaConfigUsername is the username for Kafka authentication
+  # @key global.kafkaConfigUsername Username for Kafka authentication
   kafkaConfigUsername: "your.kafka.username.here"
-  # @key global.kafkaConfigPassword is the password for Kafka authentication
+  # @key global.kafkaConfigPassword Password for Kafka authentication
   kafkaConfigPassword: "your.kafka.password.here"
-  # @key global.appHostDomain is the domain for the Telicent applications
+
+  # @key global.appHostDomain Domain name associated with Telicent Applications
   appHostDomain: "apps.yourdomain.com"
-  # @key global.authHostDomain is the domain for the Telicent authentication service
+  # @key global.authHostDomain Domain to be used for interacting with Telicent authentication services, including OIDC providers
   authHostDomain: "auth.yourdomain.com"
-  # @key global.jwksUrl is the URL for the JSON Web Key Set (JWKS) used
+  # @key global.jwksUrl URL for the JSON Web Key Set (JWKS) used
   jwksUrl: "https://yourdomain.com/.well-known/jwks.json"
-  # @key global.kafkaBootstrapUrls is the list of Kafka bootstrap URLs
+  # @key global.kafkaBootstrapUrls List of Kafka bootstrap URLs
   kafkaBootstrapUrls: "kafka-kafka-bootstrap.kafka-dev.svc.cluster.local:9092"
-  # @key global.appsGateway is the name of the Istio gateway for applications
+  # @key global.appsGateway Name of the Istio gateway for applications
   appsGateway: istio-system/gateways-apps
-  # @key global.existingTruststoreSecretName The name of an existing secret containing the truststore
+  # @key global.existingTruststoreSecretName Name of an existing secret containing the truststore
   existingTruststoreSecretName: ""
-  # This is used to mount the truststore in the container, default is /app/config/truststore
+
   truststore:
-    # @key global.truststore.mountPath The mount path for the truststore in the container
+    # @key global.truststore.mountPath Mount path for the truststore in the container
     mountPath: /app/config/truststore
-# @key jobServiceAccountName This is the service account used for running jobs in Kubernetes.
+# @key jobServiceAccountName Service account used for running jobs in Kubernetes.
 jobServiceAccountName: producers
