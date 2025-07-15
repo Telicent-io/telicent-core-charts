@@ -55,169 +55,182 @@ Contains global parameters, these parameters are mirrored within the Telicent co
 | ------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------ |
 | `global.imageRegistry`                | Global image registry                                                                             | `""`                     |
 | `global.imagePullSecrets`             | Global registry secret names as an array                                                          | `[]`                     |
-| `global.appHostDomain`                | Domain name associated with Access UI                                                             | `apps.telicent.io`       |
+| `global.appHostDomain`                | Domain name associated with Smart Cache Search API & Projector                                    | `apps.telicent.io`       |
 | `global.authHostDomain`               | Domain to be used for interacting with Telicent authentication services, including OIDC providers | `auth.telicent.io`       |
-| `global.istioServiceAccountName`      | The name of the Istio service account to use for the Access API                                   | `istio-ingress`          |
+| `global.istioServiceAccountName`      | The name of the Istio service account to use for Smart Cache Search API & Projector               | `istio-ingress`          |
 | `global.istioNamespace`               | The namespace where Istio is installed                                                            | `istio-system`           |
 | `global.existingTruststoreSecretName` | The name of an existing secret containing the truststore                                          | `""`                     |
 | `global.truststore.mountPath`         | The mount path for the truststore in the container                                                | `/app/config/truststore` |
 
-### api configuration This section contains configuration options specific to the Telicent Search API.
+### Smart Cache Search API Parameters
 
-| Name                       | Description                                       | Value |
-| -------------------------- | ------------------------------------------------- | ----- |
-| `api.annotations`          | are additional annotations to add to the pod      | `{}`  |
-| `api.replicas`             | sets the number of replicas for the Search API    | `1`   |
-| `api.resources`            | sets the resource requests and limits for the pod | `{}`  |
-| `api.revisionHistoryLimit` | sets the number of old ReplicaSets to retain      | `3`   |
 
-### image configuration
+### Configuration Parameters - Smart Cache Search API
 
-| Name                         | Description                                       | Value                                                            |
-| ---------------------------- | ------------------------------------------------- | ---------------------------------------------------------------- |
-| `api.image.imagePullSecrets` | is a list of secrets to use for pulling the image | `[]`                                                             |
-| `api.image.pullPolicy`       | defines the image pull policy                     | `IfNotPresent`                                                   |
-| `api.image.repository`       | is the Docker repository for the image            | `098669589541.dkr.ecr.eu-west-2.amazonaws.com/search-api-server` |
-| `api.image.tag`              | is the image tag to use                           | `""`                                                             |
+Contains configuration parameters specific to the Smart Cache Search API application
 
-### containerSecurityContext sets the container security context
+| Name                                        | Description                         | Value                                                                          |
+| ------------------------------------------- | ----------------------------------- | ------------------------------------------------------------------------------ |
+| `api.configuration.userAttributesUrl`       | URL for the user details endpoint   | `http://access-api.tc-system.svc.cluster.local:8080/users/lookup/{user}`       |
+| `api.configuration.attributeHierarchyUrl`   | URL for the user hierarchy endpoint | `http://access-api.tc-system.svc.cluster.local:8080/hierarchies/lookup/{name}` |
+| `api.configuration.javaOptions`             | JVM options for the application     | `-XX:MaxRAMPercentage=70.0`                                                    |
+| `api.configuration.otelMetricsExporter`     | OpenTelemetry metrics exporter      | `prometheus`                                                                   |
+| `api.configuration.otelTracesExporter`      | OpenTelemetry traces exporter       | `none`                                                                         |
+| `api.configuration.elasticHost`             | OpenSearch host                     | `https://your.opensearch.host.here:443`                                        |
+| `api.configuration.elasticPort`             | OpenSearch port number              | `443`                                                                          |
+| `api.configuration.elasticClusterPort`      | OpenSearch cluster port             | `9200`                                                                         |
+| `api.configuration.opensearchCompatibility` | Enable OpenSearch compatibility     | `true`                                                                         |
+| `api.configuration.elasticIndexNames`       | OpenSearch index name(s)            | `search,doc-content`                                                           |
+| `api.configuration.searchFieldOptions`      | Field options for search            | `primaryName^2,*`                                                              |
 
-| Name                                                    | Description                                          | Value            |
-| ------------------------------------------------------- | ---------------------------------------------------- | ---------------- |
-| `api.containerSecurityContext.allowPrivilegeEscalation` | prevents privilege escalation                        | `false`          |
-| `api.containerSecurityContext.capabilities.drop`        | drop all capabilities                                | `["ALL"]`        |
-| `api.containerSecurityContext.runAsGroup`               | sets the group ID for the container                  | `185`            |
-| `api.containerSecurityContext.runAsNonRoot`             | ensures the container runs as a non-root user        | `true`           |
-| `api.containerSecurityContext.runAsUser`                | sets the user ID for the container                   | `185`            |
-| `api.containerSecurityContext.seccompProfile.type`      | defines the seccomp profile type                     | `RuntimeDefault` |
-| `api.podSecurityContext.fsGroup`                        | fsGroup sets the filesystem group ID for the pod     | `185`            |
-| `api.podSecurityContext.runAsGroup`                     | runAsGroup sets the group ID for the pod             | `185`            |
-| `api.podSecurityContext.runAsNonRoot`                   | runAsNonRoot ensures the pod runs as a non-root user | `true`           |
-| `api.podSecurityContext.runAsUser`                      | runAsUser sets the user ID for the pod               | `185`            |
-| `api.podSecurityContext.seccompProfile.type`            | defines the seccomp profile type                     | `RuntimeDefault` |
+### OpenSearch secrets - Smart Cache Search API
 
-### metrics configuration
+| Name                                               | Description                            | Value |
+| -------------------------------------------------- | -------------------------------------- | ----- |
+| `api.elasticSecrets.elasticUser`                   | OpenSearch username                    | `""`  |
+| `api.elasticSecrets.elasticPassword`               | OpenSearch user password               | `""`  |
+| `api.elasticSecrets.truststorePass`                | Password for the truststore            | `""`  |
+| `api.elasticSecrets.existingEnvironmentSecretName` | Name of an existing environment secret | `""`  |
 
-| Name                       | Description                                                     | Value  |
-| -------------------------- | --------------------------------------------------------------- | ------ |
-| `api.metrics.service.port` | is the port for the Prometheus service                          | `9464` |
-| `api.extraEnvs`            | is a list of additional environment variables to set in the pod | `[]`   |
+### Common Parameters - Smart Cache Search API
 
-### API Configuration Parameters
+| Name                   | Description                                                            | Value |
+| ---------------------- | ---------------------------------------------------------------------- | ----- |
+| `api.fullnameOverride` | String to fully override the generated release name                    | `""`  |
+| `api.nameOverride`     | String to partially override fullname (will maintain the release name) | `""`  |
 
-Contains configuration parameters specific to the Access UI application
+### Deployment Parameters - Smart Cache Search API
 
-| Name                                        | Description                                                | Value                                                                          |
-| ------------------------------------------- | ---------------------------------------------------------- | ------------------------------------------------------------------------------ |
-| `api.configuration.attributeHierarchyUrl`   | is the URL for the attribute hierarchy endpoint            | `http://access-api.tc-system.svc.cluster.local:8080/hierarchies/lookup/{name}` |
-| `api.configuration.elasticHost`             | is the host for the OpenSearch instance                    | `https://your.opensearch.host.here:443`                                        |
-| `api.configuration.elasticIndexNames`       | is the name of the index in OpenSearch                     | `search,doc-content`                                                           |
-| `api.configuration.elasticPort`             | is the port for the OpenSearch instance                    | `443`                                                                          |
-| `api.configuration.elasticClusterPort`      | is the port for the OpenSearch cluster                     | `9200`                                                                         |
-| `api.configuration.searchFieldOptions`      | is the field options for search                            | `primaryName^2,*`                                                              |
-| `api.configuration.javaOptions`             | are the JVM options for the application                    | `-XX:MaxRAMPercentage=70.0`                                                    |
-| `api.configuration.opensearchCompatibility` | indicates if the application is compatible with OpenSearch | `true`                                                                         |
-| `api.configuration.otelMetricsExporter`     | is the OpenTelemetry metrics exporter                      | `prometheus`                                                                   |
-| `api.configuration.otelTracesExporter`      | is the OpenTelemetry traces exporter                       | `none`                                                                         |
-| `api.configuration.userAttributesUrl`       | is the URL for the user attributes endpoint                | `http://access-api.tc-system.svc.cluster.local:8080/users/lookup/{user}`       |
+| Name                                                    | Description                                                                           | Value                               |
+| ------------------------------------------------------- | ------------------------------------------------------------------------------------- | ----------------------------------- |
+| `api.replicas`                                          | Number of Smart Cache Search API replicas to deploy                                   | `1`                                 |
+| `api.revisionHistoryLimit`                              | Number of controller revisions to keep                                                | `5`                                 |
+| `api.annotations`                                       | Add extra annotations to the Deployment object                                        | `{}`                                |
+| `api.extraEnvs`                                         | List of additional environment variables to set in the pod                            | `[]`                                |
+| `api.image.registry`                                    | Smart Cache Search API image registry                                                 | `REGISTRY_NAME`                     |
+| `api.image.repository`                                  | Smart Cache Search API image name                                                     | `REPOSITORY_NAME/search-api-server` |
+| `api.image.tag`                                         | Smart Cache Search API image tag. If not set, a tag is generated using the appVersion | `""`                                |
+| `api.image.pullPolicy`                                  | Smart Cache Search API image pull policy                                              | `IfNotPresent`                      |
+| `api.image.pullSecrets`                                 | Specify registry secret names as an array                                             | `[]`                                |
+| `api.resources.requests.cpu`                            | Set containers' CPU request                                                           | `500m`                              |
+| `api.resources.requests.memory`                         | Set containers' memory request                                                        | `4000Mi`                            |
+| `api.resources.limits.cpu`                              | Set containers' CPU limit                                                             | `1000m`                             |
+| `api.resources.limits.memory`                           | Set containers' memory limit                                                          | `8000Mi`                            |
+| `api.containerSecurityContext.runAsUser`                | Set containers' Security Context runAsUser User ID                                    | `185`                               |
+| `api.containerSecurityContext.runAsGroup`               | Set containers' Security Context runAsGroup Group ID                                  | `185`                               |
+| `api.containerSecurityContext.runAsNonRoot`             | Set container's Security Context runAsNonRoot                                         | `true`                              |
+| `api.containerSecurityContext.allowPrivilegeEscalation` | Set container's Security Context allowPrivilegeEscalation                             | `false`                             |
+| `api.containerSecurityContext.capabilities.drop`        | List of capabilities to be dropped                                                    | `["ALL"]`                           |
+| `api.containerSecurityContext.seccompProfile.type`      | Set container's Security Context seccomp profile                                      | `RuntimeDefault`                    |
+| `api.podSecurityContext.runAsUser`                      | Set the provisioning pod's Security Context runAsUser User ID                         | `185`                               |
+| `api.podSecurityContext.runAsGroup`                     | Set the provisioning pod's Security Context runAsGroup Group ID                       | `185`                               |
+| `api.podSecurityContext.runAsNonRoot`                   | Set the provisioning pod's Security Context runAsNonRoot                              | `true`                              |
+| `api.podSecurityContext.fsGroup`                        | Set the provisioning pod's Group ID for the mounted volumes' filesystem               | `185`                               |
+| `api.podSecurityContext.seccompProfile.type`            | Set the provisioning pod's Security Context seccomp profile                           | `RuntimeDefault`                    |
 
-### service configuration
+### Metrics Parameters - Smart Cache Search API
 
-| Name                                               | Description                                   | Value       |
-| -------------------------------------------------- | --------------------------------------------- | ----------- |
-| `api.service.port`                                 | is the port the service will listen on        | `8181`      |
-| `api.service.type`                                 | is the type of service to create              | `ClusterIP` |
-| `api.elasticSecrets.elasticPassword`               | is the password for the OpenSearch user       | `""`        |
-| `api.elasticSecrets.elasticUser`                   | is the username for the OpenSearch user       | `""`        |
-| `api.elasticSecrets.truststorePass`                | is the password for the truststore            | `""`        |
-| `api.elasticSecrets.existingEnvironmentSecretName` | is the name of an existing environment secret | `""`        |
+| Name                       | Description                     | Value     |
+| -------------------------- | ------------------------------- | --------- |
+| `api.metrics.service.name` | Name for the Prometheus service | `metrics` |
+| `api.metrics.service.port` | Port for the Prometheus service | `9464`    |
 
-### projector configuration
+### Traffic Exposure Parameters - Smart Cache Search API
 
-This section contains configuration options for the Smart Cache Search Projector.
-The projector is responsible for indexing data into the search engine. // TODO check wording
+| Name                    | Description                                                                                                 | Value       |
+| ----------------------- | ----------------------------------------------------------------------------------------------------------- | ----------- |
+| `api.service.port`      | Smart Cache Search API service port                                                                         | `8181`      |
+| `api.service.type`      | Smart Cache Search API service port                                                                         | `ClusterIP` |
+| `api.ingress.principal` | Principal to use for ingress traffic. If not set, defaults to the Istio service account in the istio-system | `""`        |
 
-| Name                             | Description                                       | Value |
-| -------------------------------- | ------------------------------------------------- | ----- |
-| `projector.annotations`          | are additional annotations to add to the pod      | `{}`  |
-| `projector.replicas`             | sets the number of replicas for the Search API    | `1`   |
-| `projector.resources`            | sets the resource requests and limits for the pod | `{}`  |
-| `projector.revisionHistoryLimit` | sets the number of old ReplicaSets to retain      | `3`   |
+### Service Account Parameters - Smart Cache Search Api
 
-### service configuration
+| Name                             | Description                                                                                     | Value |
+| -------------------------------- | ----------------------------------------------------------------------------------------------- | ----- |
+| `api.serviceAccount.name`        | Name of the created ServiceAccount. If not set, a name is generated using the fullname template | `""`  |
+| `api.serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                            | `{}`  |
 
-| Name                     | Description                      | Value       |
-| ------------------------ | -------------------------------- | ----------- |
-| `projector.service.type` | is the type of service to create | `ClusterIP` |
+### Smart Cache Search Projector/Indexer Parameters
 
-### projector.image is the image configuration
 
-appVersion is used by default when defining an empty string
+### Configuration Parameters - Smart Cache Search Projector
 
-| Name                               | Description                                       | Value                                                                    |
-| ---------------------------------- | ------------------------------------------------- | ------------------------------------------------------------------------ |
-| `projector.image.imagePullSecrets` | is a list of secrets to use for pulling the image | `[]`                                                                     |
-| `projector.image.pullPolicy`       | defines the image pull policy                     | `IfNotPresent`                                                           |
-| `projector.image.repository`       | is the Docker repository for the image            | `098669589541.dkr.ecr.eu-west-2.amazonaws.com/smart-cache-elastic-index` |
-| `projector.image.tag`              | is the image tag to use                           | `""`                                                                     |
+Contains configuration parameters specific to the Smart Cache Search Projector application
 
-### projector.containerSecurityContext sets the container security context
+| Name                                              | Description                           | Value                                                                                        |
+| ------------------------------------------------- | ------------------------------------- | -------------------------------------------------------------------------------------------- |
+| `projector.configuration.javaOptions`             | JVM options for the application       | `-XX:MaxRAMPercentage=70.0 -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks` |
+| `projector.configuration.otelMetricsExporter`     | OpenTelemetry metrics exporter        | `prometheus`                                                                                 |
+| `projector.configuration.otelTracesExporter`      | OpenTelemetry traces exporter         | `none`                                                                                       |
+| `projector.configuration.elasticHost`             | OpenSearch host                       | `https://your.opensearch.host.here:443`                                                      |
+| `projector.configuration.elasticPort`             | OpenSearch port number                | `443`                                                                                        |
+| `projector.configuration.elasticClusterPort`      | OpenSearch cluster port               | `9200`                                                                                       |
+| `projector.configuration.opensearchCompatibility` | Enable OpenSearch compatibility       | `true`                                                                                       |
+| `projector.configuration.elasticIndex`            | Name of the index in OpenSearch       | `search`                                                                                     |
+| `projector.configuration.topic`                   | Topic to consume messages from        | `knowledge`                                                                                  |
+| `projector.configuration.dlqTopic`                | Dead-letter topic for failed messages | `knowledge.dlq`                                                                              |
+| `projector.configuration.indexBatchSize`          | Batch size for indexing documents     | `500`                                                                                        |
 
-| Name                                                          | Description                   | Value   |
-| ------------------------------------------------------------- | ----------------------------- | ------- |
-| `projector.containerSecurityContext.allowPrivilegeEscalation` | prevents privilege escalation | `false` |
+### OpenSearch secrets - Smart Cache Search Projector
 
-### projector.containerSecurityContext.capabilities sets the capabilities for the container
+| Name                                                     | Description                            | Value |
+| -------------------------------------------------------- | -------------------------------------- | ----- |
+| `projector.elasticSecrets.elasticUser`                   | OpenSearch username                    | `""`  |
+| `projector.elasticSecrets.elasticPassword`               | OpenSearch user password               | `""`  |
+| `projector.elasticSecrets.truststorePass`                | Password for the truststore            | `""`  |
+| `projector.elasticSecrets.existingEnvironmentSecretName` | Name of an existing environment secret | `""`  |
 
-| Name                                                     | Description                                                                              | Value            |
-| -------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------- |
-| `projector.containerSecurityContext.capabilities.drop`   | all capabilities                                                                         | `["ALL"]`        |
-| `projector.containerSecurityContext.runAsGroup`          | sets the group ID for the container                                                      | `185`            |
-| `projector.containerSecurityContext.runAsNonRoot`        | ensures the container runs as a non-root user                                            | `true`           |
-| `projector.containerSecurityContext.runAsUser`           | sets the user ID for the container                                                       | `185`            |
-| `projector.containerSecurityContext.seccompProfile.type` | defines the seccomp profile type RuntimeDefault uses the default runtime seccomp profile | `RuntimeDefault` |
-| `projector.podSecurityContext.fsGroup`                   | sets the filesystem group ID for the pod                                                 | `185`            |
-| `projector.podSecurityContext.runAsGroup`                | sets the group ID for the pod                                                            | `185`            |
-| `projector.podSecurityContext.runAsNonRoot`              | ensures the pod runs as a non-root user                                                  | `true`           |
-| `projector.podSecurityContext.runAsUser`                 | sets the user ID for the pod                                                             | `185`            |
-| `projector.podSecurityContext.seccompProfile.type`       | defines the seccomp profile type RuntimeDefault uses the default runtime seccomp profile | `RuntimeDefault` |
-| `projector.metrics.service.port`                         | is the port for the Prometheus service                                                   | `9464`           |
-| `projector.extraEnvs`                                    | is a list of additional environment variables to set in the pod                          | `[]`             |
-| `projector.elasticSecrets.elasticPassword`               | is the password for the OpenSearch user                                                  | `""`             |
-| `projector.elasticSecrets.elasticUser`                   | is the username for the OpenSearch user                                                  | `""`             |
-| `projector.elasticSecrets.truststorePass`                | is the password for the truststore                                                       | `""`             |
-| `projector.elasticSecrets.existingEnvironmentSecretName` | is a section for an existing environment secret                                          | `""`             |
+### Deployment Parameters - Smart Cache Search Projector
 
-### projector.configuration is for projector specific settings
+| Name                                                          | Description                                                                                 | Value                               |
+| ------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ----------------------------------- |
+| `projector.replicas`                                          | Number of Smart Cache Search Projector replicas to deploy                                   | `1`                                 |
+| `projector.revisionHistoryLimit`                              | Number of controller revisions to keep                                                      | `5`                                 |
+| `projector.annotations`                                       | Add extra annotations to the Deployment object                                              | `{}`                                |
+| `projector.extraEnvs`                                         | List of additional environment variables to set in the pod                                  | `[]`                                |
+| `projector.image.registry`                                    | Smart Cache Search Projector image registry                                                 | `REGISTRY_NAME`                     |
+| `projector.image.repository`                                  | Smart Cache Search Projector image name                                                     | `REPOSITORY_NAME/search-api-server` |
+| `projector.image.tag`                                         | Smart Cache Search Projector image tag. If not set, a tag is generated using the appVersion | `""`                                |
+| `projector.image.pullPolicy`                                  | Smart Cache Search Projector image pull policy                                              | `IfNotPresent`                      |
+| `projector.image.pullSecrets`                                 | Specify registry secret names as an array                                                   | `[]`                                |
+| `projector.resources.requests.cpu`                            | Set containers' CPU request                                                                 | `250m`                              |
+| `projector.resources.requests.memory`                         | Set containers' memory request                                                              | `1000Mi`                            |
+| `projector.resources.limits.cpu`                              | Set containers' CPU limit                                                                   | `500m`                              |
+| `projector.resources.limits.memory`                           | Set containers' memory limit                                                                | `2000Mi`                            |
+| `projector.containerSecurityContext.runAsUser`                | Set containers' Security Context runAsUser User ID                                          | `185`                               |
+| `projector.containerSecurityContext.runAsGroup`               | Set containers' Security Context runAsGroup Group ID                                        | `185`                               |
+| `projector.containerSecurityContext.runAsNonRoot`             | Set container's Security Context runAsNonRoot                                               | `true`                              |
+| `projector.containerSecurityContext.allowPrivilegeEscalation` | Set container's Security Context allowPrivilegeEscalation                                   | `false`                             |
+| `projector.containerSecurityContext.capabilities.drop`        | List of capabilities to be dropped                                                          | `["ALL"]`                           |
+| `projector.containerSecurityContext.seccompProfile.type`      | Set container's Security Context seccomp profile                                            | `RuntimeDefault`                    |
+| `projector.podSecurityContext.runAsUser`                      | Set the provisioning pod's Security Context runAsUser User ID                               | `185`                               |
+| `projector.podSecurityContext.runAsGroup`                     | Set the provisioning pod's Security Context runAsGroup Group ID                             | `185`                               |
+| `projector.podSecurityContext.runAsNonRoot`                   | Set the provisioning pod's Security Context runAsNonRoot                                    | `true`                              |
+| `projector.podSecurityContext.fsGroup`                        | Set the provisioning pod's Group ID for the mounted volumes' filesystem                     | `185`                               |
+| `projector.podSecurityContext.seccompProfile.type`            | Set the provisioning pod's Security Context seccomp profile                                 | `RuntimeDefault`                    |
 
-| Name                                              | Description                                                | Value                                                                                        |
-| ------------------------------------------------- | ---------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| `projector.configuration.topic`                   | is the topic to consume from the message broker            | `knowledge`                                                                                  |
-| `projector.configuration.dlqTopic`                | is the dead-letter queue topic for failed messages         | `knowledge.dlq`                                                                              |
-| `projector.configuration.elasticHost`             | is the host for the OpenSearch instance                    | `https://your.opensearch.host.here:443`                                                      |
-| `projector.configuration.elasticIndex`            | is the name of the index in OpenSearch                     | `search`                                                                                     |
-| `projector.configuration.elasticPort`             | is the port for the OpenSearch instance                    | `443`                                                                                        |
-| `projector.configuration.javaOptions`             | are the Java options to use for the OpenSearch instance    | `-XX:MaxRAMPercentage=70.0 -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks` |
-| `projector.configuration.indexBatchSize`          | is the batch size for indexing documents                   | `500`                                                                                        |
-| `projector.configuration.opensearchCompatibility` | indicates if the application is compatible with OpenSearch | `true`                                                                                       |
-| `projector.configuration.otelMetricsExporter`     | is the OpenTelemetry metrics exporter                      | `prometheus`                                                                                 |
-| `projector.configuration.otelTracesExporter`      | is the OpenTelemetry traces exporter                       | `none`                                                                                       |
+### Metrics Parameters - Smart Cache Search Projector
 
-### serviceAccount configuration
+| Name                             | Description                     | Value     |
+| -------------------------------- | ------------------------------- | --------- |
+| `projector.metrics.service.name` | Name for the Prometheus service | `metrics` |
+| `projector.metrics.service.port` | Port for the Prometheus service | `9464`    |
 
-| Name                         | Description                                                                                    | Value |
-| ---------------------------- | ---------------------------------------------------------------------------------------------- | ----- |
-| `serviceAccount.annotations` | are additional annotations for the service account                                             | `{}`  |
-| `serviceAccount.name`        | is the name of the service account                                                             | `""`  |
-| `fullnameOverride`           | sets the full name of the chart                                                                | `""`  |
-| `nameOverride`               | sets a custom name for the chart it differs from fullnameOverride as it is not fully qualified | `""`  |
+### Traffic Exposure Parameters - Smart Cache Search Projector
 
-### ingress configuration
+| Name                          | Description                                                                                                 | Value       |
+| ----------------------------- | ----------------------------------------------------------------------------------------------------------- | ----------- |
+| `projector.service.port`      | Smart Cache Search Projector service port                                                                   | `8181`      |
+| `projector.service.type`      | Smart Cache Search Projector service port                                                                   | `ClusterIP` |
+| `projector.ingress.principal` | Principal to use for ingress traffic. If not set, defaults to the Istio service account in the istio-system | `""`        |
 
-| Name                    | Description                                      | Value |
-| ----------------------- | ------------------------------------------------ | ----- |
-| `ingress.principal`     | is the principal to use for ingress traffic      | `""`  |
-| `graphServer.principal` | is the principal to use for graph server traffic | `""`  |
+### Service Account Parameters - Smart Cache Search Projector
+
+| Name                                   | Description                                                                                     | Value |
+| -------------------------------------- | ----------------------------------------------------------------------------------------------- | ----- |
+| `projector.serviceAccount.name`        | Name of the created ServiceAccount. If not set, a name is generated using the fullname template | `""`  |
+| `projector.serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                            | `{}`  |
+| `graphServer.principal`                | is the principal to use for graph server traffic                                                | `""`  |
 
 ## License
 

@@ -17,12 +17,12 @@ global:
   #   - myRegistryKeySecretName
   #
   # @key global.imagePullSecrets Global registry secret names as an array
-  imagePullSecrets: [ ]
-  # @key global.appHostDomain Domain name associated with the application
+  imagePullSecrets: []
+  # @key global.appHostDomain Domain name associated with Smart Cache Graph
   appHostDomain: "apps.telicent.io"
   # @key global.authHostDomain Domain to be used for interacting with Telicent authentication services, including OIDC providers
   authHostDomain: "auth.telicent.io"
-  # @key global.istioServiceAccountName The name of the Istio service account to use for the Smart Cache Graph
+  # @key global.istioServiceAccountName The name of the Istio service account to use for Smart Cache Graph
   istioServiceAccountName: istio-ingress
   # @key global.istioNamespace The namespace where Istio is installed
   istioNamespace: istio-system
@@ -42,8 +42,10 @@ configuration:
   userAttributesUrl: http://access-api.tc-system.svc.cluster.local:8080/users/lookup/{user}
   # @key configuration.attributeHierarchyUrl URL for the user hierarchy endpoint
   attributeHierarchyUrl: http://access-api.tc-system.svc.cluster.local:8080/hierarchies/lookup/{name}
+
   # @key configuration.javaOptions JVM options for the application
   javaOptions: -Xmx5120m -Xms2048m -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks
+
   # @key configuration.otelMetricsExporter OpenTelemetry metrics exporter
   # Options: prometheus, otlp, none
   otelMetricsExporter: prometheus
@@ -54,7 +56,7 @@ configuration:
 # @section Common Parameters
 #@key fullnameOverride String to fully override the generated release name
 fullnameOverride: ""
-# @key nameOverride sets a custom name for the chart it differs from fullnameOverride as it is not fully qualified
+# @key nameOverride String to partially override fullname (will maintain the release name)
 nameOverride: ""
 
 # @section Smart Cache Graph Statefulset Parameters
@@ -135,10 +137,10 @@ persistentVolumeClaims:
 # @section Metrics Parameters
 metrics:
   service:
-    # @key metrics.service.port Port for the Prometheus service
-    port: 9464
     # @key metrics.service.name Name for the Prometheus service
     name: metrics
+    # @key metrics.service.port Port for the Prometheus service
+    port: 9464
 
 # @section Traffic Exposure Parameters
 service:

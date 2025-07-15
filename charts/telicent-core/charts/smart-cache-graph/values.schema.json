@@ -18,7 +18,7 @@
                 },
                 "appHostDomain": {
                     "type": "string",
-                    "description": "Domain name associated with the application",
+                    "description": "Domain name associated with Smart Cache Graph",
                     "default": "apps.telicent.io"
                 },
                 "authHostDomain": {
@@ -28,7 +28,7 @@
                 },
                 "istioServiceAccountName": {
                     "type": "string",
-                    "description": "The name of the Istio service account to use for the Smart Cache Graph",
+                    "description": "The name of the Istio service account to use for Smart Cache Graph",
                     "default": "istio-ingress"
                 },
                 "istioNamespace": {
@@ -90,7 +90,7 @@
         },
         "nameOverride": {
             "type": "string",
-            "description": "sets a custom name for the chart it differs from fullnameOverride as it is not fully qualified",
+            "description": "String to partially override fullname (will maintain the release name)",
             "default": ""
         },
         "replicas": {
@@ -300,15 +300,15 @@
                 "service": {
                     "type": "object",
                     "properties": {
-                        "port": {
-                            "type": "number",
-                            "description": "Port for the Prometheus service",
-                            "default": 9464
-                        },
                         "name": {
                             "type": "string",
                             "description": "Name for the Prometheus service",
                             "default": "metrics"
+                        },
+                        "port": {
+                            "type": "number",
+                            "description": "Port for the Prometheus service",
+                            "default": 9464
                         }
                     }
                 }

@@ -50,9 +50,9 @@ Contains global parameters, these parameters are mirrored within the Telicent co
 | ------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------ |
 | `global.imageRegistry`                | Global image registry                                                                             | `""`                     |
 | `global.imagePullSecrets`             | Global registry secret names as an array                                                          | `[]`                     |
-| `global.appHostDomain`                | Domain name associated with the application                                                       | `apps.telicent.io`       |
+| `global.appHostDomain`                | Domain name associated with Smart Cache Graph                                                     | `apps.telicent.io`       |
 | `global.authHostDomain`               | Domain to be used for interacting with Telicent authentication services, including OIDC providers | `auth.telicent.io`       |
-| `global.istioServiceAccountName`      | The name of the Istio service account to use for the Smart Cache Graph                            | `istio-ingress`          |
+| `global.istioServiceAccountName`      | The name of the Istio service account to use for Smart Cache Graph                                | `istio-ingress`          |
 | `global.istioNamespace`               | The namespace where Istio is installed                                                            | `istio-system`           |
 | `global.existingTruststoreSecretName` | The name of an existing secret containing the truststore                                          | `""`                     |
 | `global.truststore.mountPath`         | The mount path for the truststore in the container                                                | `/app/config/truststore` |
@@ -71,10 +71,10 @@ Contains configuration parameters specific to the Smart Cache Graph application
 
 ### Common Parameters
 
-| Name               | Description                                                                                    | Value |
-| ------------------ | ---------------------------------------------------------------------------------------------- | ----- |
-| `fullnameOverride` | String to fully override the generated release name                                            | `""`  |
-| `nameOverride`     | sets a custom name for the chart it differs from fullnameOverride as it is not fully qualified | `""`  |
+| Name               | Description                                                            | Value |
+| ------------------ | ---------------------------------------------------------------------- | ----- |
+| `fullnameOverride` | String to fully override the generated release name                    | `""`  |
+| `nameOverride`     | String to partially override fullname (will maintain the release name) | `""`  |
 
 ### Smart Cache Graph Statefulset Parameters
 
@@ -117,8 +117,8 @@ Contains configuration parameters specific to the Smart Cache Graph application
 
 | Name                   | Description                     | Value     |
 | ---------------------- | ------------------------------- | --------- |
-| `metrics.service.port` | Port for the Prometheus service | `9464`    |
 | `metrics.service.name` | Name for the Prometheus service | `metrics` |
+| `metrics.service.port` | Port for the Prometheus service | `9464`    |
 
 ### Traffic Exposure Parameters
 
