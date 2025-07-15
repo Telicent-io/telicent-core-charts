@@ -99,8 +99,6 @@ spec:
         secret:
       {{- if .Values.global.existingKafkaConfigSecretName }}
           secretName: {{ .Values.global.existingKafkaConfigSecretName }}
-      {{- else }}
-          secretName: {{ include "telicent-core.kafkaAuthConfigSecretName" . }}
       {{- end }}
 
       {{- if .Values.global.existingTruststoreSecretName }}

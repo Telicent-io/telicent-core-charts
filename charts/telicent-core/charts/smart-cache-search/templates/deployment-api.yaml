@@ -21,18 +21,26 @@ spec:
         prometheus.io/path: /
         prometheus.io/port: "9464"
         prometheus.io/scrape: "true"
+   
       {{- range $key, $value := .Values.api.annotations }}
         {{ $key }}: {{ $value | quote }}
       {{- end }}
       labels:
         {{- include "smart-cache-search.apiLabels" . | nindent 8 }}
     spec:
+      serviceAccountName: {{ include "smart-cache-search.serviceAccountName" . }}-api
+      securityContext: {{- toYaml .Values.api.podSecurityContext | nindent 8 }}
     {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
     {{- end }}
       containers:
       - name: search-api
+        image: {{ .Values.api.image.repository }}:{{ include "smart-cache-search-api.version" . }}
+        imagePullPolicy: {{ .Values.api.image.pullPolicy }}
+        resources: {{- toYaml .Values.api.resources | nindent 10 }}
+        securityContext: {{- toYaml .Values.api.containerSecurityContext | nindent 10 }}
+        
         env:
         {{- with .Values.projector.extraEnvs }}
         {{- range . }}
@@ -40,6 +48,7 @@ spec:
           value: {{ .value | quote }}
         {{- end }}
         {{- end }}
+        
         envFrom:
         {{- if .Values.api.elasticSecrets.existingEnvironmentSecretName }}
         - secretRef:
@@ -59,23 +68,15 @@ spec:
             optional: true
         {{- end }}
         {{- end }}
-        image: {{ .Values.api.image.repository }}:{{ include "smart-cache-search-api.version" . }}
-        imagePullPolicy: {{ .Values.api.image.pullPolicy }}
-        livenessProbe:
-          httpGet:
-            path: /version-info
-            port: 8181
-            scheme: HTTP
-          initialDelaySeconds: 30
-          periodSeconds: 60
-          timeoutSeconds: 5
+       
         ports:
-        - containerPort: 8181
-          name: http
+        - name: http
+          containerPort: 8181
           protocol: TCP
-        - containerPort: 9464
-          name: metrics
+        - name: metrics
+          containerPort: 9464
           protocol: TCP
+
         readinessProbe:
           httpGet:
             path: /healthz
@@ -84,16 +85,21 @@ spec:
           initialDelaySeconds: 30
           periodSeconds: 60
           timeoutSeconds: 10
-        resources: {{- toYaml .Values.api.resources | nindent 10 }}
-        securityContext: {{- toYaml .Values.containerSecurityContext | nindent 10 }}
+        livenessProbe:
+          httpGet:
+            path: /version-info
+            port: 8181
+            scheme: HTTP
+          initialDelaySeconds: 30
+          periodSeconds: 60
+          timeoutSeconds: 5
+        
         volumeMounts:
         {{- if .Values.global.existingTruststoreSecretName }}
         - mountPath: {{ .Values.global.truststore.mountPath | default "/app/config/truststore" }}
           name: java-truststore
         {{- end }}
-      securityContext: {{- toYaml .Values.podSecurityContext | nindent 8 }}
-
-      serviceAccountName: {{ include "smart-cache-search.serviceAccountName" . }}-api
+     
       volumes:
       {{- if .Values.global.existingTruststoreSecretName }}
       - name: java-truststore
