@@ -9,6 +9,7 @@ metadata:
   name: {{ include "smart-cache-search.fullname" . }}-api
   labels:
     {{- include "smart-cache-search.apiLabels" . | nindent 4 }}
+
 spec:
   replicas: {{ .Values.api.replicas }}
   revisionHistoryLimit: {{ .Values.api.revisionHistoryLimit }}
@@ -28,7 +29,7 @@ spec:
       labels:
         {{- include "smart-cache-search.apiLabels" . | nindent 8 }}
     spec:
-      serviceAccountName: {{ include "smart-cache-search.serviceAccountName" . }}-api
+      serviceAccountName: {{ include "smart-cache-search.apiServiceAccountName" . }}
       securityContext: {{- toYaml .Values.api.podSecurityContext | nindent 8 }}
     {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -41,8 +42,8 @@ spec:
         resources: {{- toYaml .Values.api.resources | nindent 10 }}
         securityContext: {{- toYaml .Values.api.containerSecurityContext | nindent 10 }}
         
+        {{- with .Values.api.extraEnvs }}
         env:
-        {{- with .Values.projector.extraEnvs }}
         {{- range . }}
         - name: {{ .name }}
           value: {{ .value | quote }}
@@ -94,14 +95,15 @@ spec:
           periodSeconds: 60
           timeoutSeconds: 5
         
-        volumeMounts:
+       
         {{- if .Values.global.existingTruststoreSecretName }}
+        volumeMounts:
         - mountPath: {{ .Values.global.truststore.mountPath | default "/app/config/truststore" }}
           name: java-truststore
         {{- end }}
      
-      volumes:
       {{- if .Values.global.existingTruststoreSecretName }}
+      volumes:
       - name: java-truststore
         secret:
           secretName: {{ .Values.global.existingTruststoreSecretName }}

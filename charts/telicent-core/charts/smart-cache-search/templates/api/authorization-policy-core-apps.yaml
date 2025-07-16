@@ -17,7 +17,7 @@ spec:
     - from:
       - source:
           principals:
-          - {{ include "smart-cache-search.graphServerPrincipal" . }}
+          - {{ include "smart-cache-search.apiGraphServerPrincipal" . }}
       to:
         - operation:
             paths:

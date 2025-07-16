@@ -87,16 +87,23 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "smart-cache-search.serviceAccountName" -}}
-{{- default (include "smart-cache-search.fullname" .) .Values.serviceAccount.name }}
+{{- define "smart-cache-search.apiServiceAccountName" -}}
+{{- default (printf "%s-api" (include "smart-cache-search.fullname" .)) .Values.api.serviceAccount.name }}
+{{- end }}
+{{- define "smart-cache-search.projectorServiceAccountName" -}}
+{{- default (printf "%s-projector" (include "smart-cache-search.fullname" .)) .Values.projector.serviceAccount.name }}
 {{- end }}
 
 {{/*
 Create the name of the service to use
 */}}
-{{- define "smart-cache-search.serviceName" -}}
-{{- include "smart-cache-search.fullname" . }}
+{{- define "smart-cache-search.apiServiceName" -}}
+{{- include "smart-cache-search.fullname" . }}-api
 {{- end }}
+{{- define "smart-cache-search.projectorServiceName" -}}
+{{- include "smart-cache-search.fullname" . }}-projector
+{{- end }}
+
 
 {{/*
 Create the name of environment variable secrets
@@ -109,10 +116,10 @@ Create the name of environment variable secrets
 {{ include "smart-cache-search.fullname" . }}-projector
 {{- end }}
 
-{{- define "smart-cache-search.ingressPrincipal" -}}
-{{- .Values.ingress.principal | default (printf "cluster.local/ns/%s/sa/%s" .Values.global.istioNamespace .Values.global.istioServiceAccountName) | quote }}
+{{- define "smart-cache-search.apiIngressPrincipal" -}}
+{{- .Values.api.ingress.principal | default (printf "cluster.local/ns/%s/sa/%s" .Values.global.istioNamespace .Values.global.istioServiceAccountName) | quote }}
 {{- end }}
 
-{{- define "smart-cache-search.graphServerPrincipal" -}}
-{{- .Values.graphServer.principal | default (printf "cluster.local/ns/%s/sa/%s-%s" .Release.Namespace .Release.Name "smart-cache-graph") | quote }}
+{{- define "smart-cache-search.apiGraphServerPrincipal" -}}
+{{- .Values.api.graphServer.principal | default (printf "cluster.local/ns/%s/sa/%s-%s" .Release.Namespace .Release.Name "smart-cache-graph") | quote }}
 {{- end }}

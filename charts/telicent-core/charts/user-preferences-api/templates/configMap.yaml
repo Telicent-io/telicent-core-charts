@@ -12,8 +12,7 @@ metadata:
         {{- include "user-preferences-api.labels" . | nindent 6 }}
 
 data:
-    # Environment variables for the projector container
-    # These values are used to configure the search projector service
+    # Environment variables for the user-preferences-api container
     # Ensure that these values are set correctly in your values.yaml file
     JWKS_URL: {{ .Values.global.jwksUrl | quote }}
     MONGO_URL: {{ .Values.mongo.url | quote }}

@@ -22,13 +22,14 @@ global:
   appHostDomain: "apps.telicent.io"
   # @key global.authHostDomain Domain to be used for interacting with Telicent authentication services, including OIDC providers
   authHostDomain: "auth.telicent.io"
-  # @key global.istioServiceAccountName The name of the Istio service account to use for Smart Cache Search API & Projector
+  # @key global.appsGateway Name of the Istio gateway for applications
+  appsGateway: istio-system/gateways-apps
+  # @key global.istioServiceAccountName Name of the Istio service account to use for Smart Cache Search API & Projector
   istioServiceAccountName: istio-ingress
-  # @key global.istioNamespace The namespace where Istio is installed
+  # @key global.istioNamespace Namespace where Istio is installed
   istioNamespace: istio-system
-  # @key global.existingTruststoreSecretName The name of an existing secret containing the truststore
+  # @key global.existingTruststoreSecretName Name of an existing secret containing the truststore
   existingTruststoreSecretName: ""
-  # This is used to mount the truststore in the container, default is /app/config/truststore
   truststore:
     # @key global.truststore.mountPath The mount path for the truststore in the container
     mountPath: /app/config/truststore
@@ -174,6 +175,10 @@ api:
     # @key api.ingress.principal Principal to use for ingress traffic. If not set, defaults to the Istio service account in the istio-system
     principal: ""
 
+  graphServer:
+    # @key api.graphServer.principal Principal to use for graph server traffic. If not set, it defaults to the graph server name in the current namespace
+    principal: ""
+
   # @section Service Account Parameters - Smart Cache Search Api
   serviceAccount:
     # @key api.serviceAccount.name Name of the created ServiceAccount. If not set, a name is generated using the fullname template
@@ -182,7 +187,7 @@ api:
     annotations: { }
 
 # -----------------------------------------------------------------------------
-# @section Smart Cache Search Projector/Indexer Parameters
+# @section Smart Cache Search Projector Parameters
 # -----------------------------------------------------------------------------
 projector:
   # @section Configuration Parameters - Smart Cache Search Projector
@@ -311,10 +316,6 @@ projector:
     # @key projector.service.type Smart Cache Search Projector service port
     type: ClusterIP
 
-  ingress:
-    # @key projector.ingress.principal Principal to use for ingress traffic. If not set, defaults to the Istio service account in the istio-system
-    principal: ""
-
   # @section Service Account Parameters - Smart Cache Search Projector
   serviceAccount:
     # @key projector.serviceAccount.name Name of the created ServiceAccount. If not set, a name is generated using the fullname template
@@ -322,9 +323,4 @@ projector:
     #@key projector.serviceAccount.annotations Additional custom annotations for the ServiceAccount
     annotations: { }
 
-
-graphServer:
-  # @key graphServer.principal is the principal to use for graph server traffic
-  # If not set, it defaults to the graph server name in the current namespace
-  principal: ""
 
