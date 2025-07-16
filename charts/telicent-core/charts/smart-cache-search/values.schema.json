@@ -26,19 +26,24 @@
                     "description": "Domain to be used for interacting with Telicent authentication services, including OIDC providers",
                     "default": "auth.telicent.io"
                 },
+                "appsGateway": {
+                    "type": "string",
+                    "description": "Name of the Istio gateway for applications",
+                    "default": "istio-system/gateways-apps"
+                },
                 "istioServiceAccountName": {
                     "type": "string",
-                    "description": "The name of the Istio service account to use for Smart Cache Search API & Projector",
+                    "description": "Name of the Istio service account to use for Smart Cache Search API & Projector",
                     "default": "istio-ingress"
                 },
                 "istioNamespace": {
                     "type": "string",
-                    "description": "The namespace where Istio is installed",
+                    "description": "Namespace where Istio is installed",
                     "default": "istio-system"
                 },
                 "existingTruststoreSecretName": {
                     "type": "string",
-                    "description": "The name of an existing secret containing the truststore",
+                    "description": "Name of an existing secret containing the truststore",
                     "default": ""
                 },
                 "truststore": {
@@ -368,6 +373,16 @@
                         }
                     }
                 },
+                "graphServer": {
+                    "type": "object",
+                    "properties": {
+                        "principal": {
+                            "type": "string",
+                            "description": "Principal to use for graph server traffic. If not set, it defaults to the graph server name in the current namespace",
+                            "default": ""
+                        }
+                    }
+                },
                 "serviceAccount": {
                     "type": "object",
                     "properties": {
@@ -680,16 +695,6 @@
                         }
                     }
                 },
-                "ingress": {
-                    "type": "object",
-                    "properties": {
-                        "principal": {
-                            "type": "string",
-                            "description": "Principal to use for ingress traffic. If not set, defaults to the Istio service account in the istio-system",
-                            "default": ""
-                        }
-                    }
-                },
                 "serviceAccount": {
                     "type": "object",
                     "properties": {
@@ -704,16 +709,6 @@
                             "default": {}
                         }
                     }
-                }
-            }
-        },
-        "graphServer": {
-            "type": "object",
-            "properties": {
-                "principal": {
-                    "type": "string",
-                    "description": "is the principal to use for graph server traffic",
-                    "default": ""
                 }
             }
         }

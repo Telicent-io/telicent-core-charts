@@ -9,7 +9,7 @@ kind: AuthorizationPolicy
 metadata:
   name: {{ include "smart-cache-search.fullname" . }}-ingress
   labels:
-  {{- include "smart-cache-search.apiLabels" . | nindent 4 }}
+    {{- include "smart-cache-search.apiLabels" . | nindent 4 }}
 
 spec:
   action: ALLOW
@@ -17,7 +17,7 @@ spec:
     - from:
         - source:
             principals:
-            - {{ include "smart-cache-search.ingressPrincipal" . }}
+            - {{ include "smart-cache-search.apiIngressPrincipal" . }}
       to:
         - operation:
             paths:

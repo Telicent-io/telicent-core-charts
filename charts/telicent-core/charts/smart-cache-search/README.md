@@ -51,16 +51,17 @@ The command removes all the Kubernetes components associated with the chart and 
 
 Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
 
-| Name                                  | Description                                                                                       | Value                    |
-| ------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------ |
-| `global.imageRegistry`                | Global image registry                                                                             | `""`                     |
-| `global.imagePullSecrets`             | Global registry secret names as an array                                                          | `[]`                     |
-| `global.appHostDomain`                | Domain name associated with Smart Cache Search API & Projector                                    | `apps.telicent.io`       |
-| `global.authHostDomain`               | Domain to be used for interacting with Telicent authentication services, including OIDC providers | `auth.telicent.io`       |
-| `global.istioServiceAccountName`      | The name of the Istio service account to use for Smart Cache Search API & Projector               | `istio-ingress`          |
-| `global.istioNamespace`               | The namespace where Istio is installed                                                            | `istio-system`           |
-| `global.existingTruststoreSecretName` | The name of an existing secret containing the truststore                                          | `""`                     |
-| `global.truststore.mountPath`         | The mount path for the truststore in the container                                                | `/app/config/truststore` |
+| Name                                  | Description                                                                                       | Value                        |
+| ------------------------------------- | ------------------------------------------------------------------------------------------------- | ---------------------------- |
+| `global.imageRegistry`                | Global image registry                                                                             | `""`                         |
+| `global.imagePullSecrets`             | Global registry secret names as an array                                                          | `[]`                         |
+| `global.appHostDomain`                | Domain name associated with Smart Cache Search API & Projector                                    | `apps.telicent.io`           |
+| `global.authHostDomain`               | Domain to be used for interacting with Telicent authentication services, including OIDC providers | `auth.telicent.io`           |
+| `global.appsGateway`                  | Name of the Istio gateway for applications                                                        | `istio-system/gateways-apps` |
+| `global.istioServiceAccountName`      | Name of the Istio service account to use for Smart Cache Search API & Projector                   | `istio-ingress`              |
+| `global.istioNamespace`               | Namespace where Istio is installed                                                                | `istio-system`               |
+| `global.existingTruststoreSecretName` | Name of an existing secret containing the truststore                                              | `""`                         |
+| `global.truststore.mountPath`         | The mount path for the truststore in the container                                                | `/app/config/truststore`     |
 
 ### Smart Cache Search API Parameters
 
@@ -137,11 +138,12 @@ Contains configuration parameters specific to the Smart Cache Search API applica
 
 ### Traffic Exposure Parameters - Smart Cache Search API
 
-| Name                    | Description                                                                                                 | Value       |
-| ----------------------- | ----------------------------------------------------------------------------------------------------------- | ----------- |
-| `api.service.port`      | Smart Cache Search API service port                                                                         | `8181`      |
-| `api.service.type`      | Smart Cache Search API service port                                                                         | `ClusterIP` |
-| `api.ingress.principal` | Principal to use for ingress traffic. If not set, defaults to the Istio service account in the istio-system | `""`        |
+| Name                        | Description                                                                                                          | Value       |
+| --------------------------- | -------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `api.service.port`          | Smart Cache Search API service port                                                                                  | `8181`      |
+| `api.service.type`          | Smart Cache Search API service port                                                                                  | `ClusterIP` |
+| `api.ingress.principal`     | Principal to use for ingress traffic. If not set, defaults to the Istio service account in the istio-system          | `""`        |
+| `api.graphServer.principal` | Principal to use for graph server traffic. If not set, it defaults to the graph server name in the current namespace | `""`        |
 
 ### Service Account Parameters - Smart Cache Search Api
 
@@ -150,7 +152,7 @@ Contains configuration parameters specific to the Smart Cache Search API applica
 | `api.serviceAccount.name`        | Name of the created ServiceAccount. If not set, a name is generated using the fullname template | `""`  |
 | `api.serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                            | `{}`  |
 
-### Smart Cache Search Projector/Indexer Parameters
+### Smart Cache Search Projector Parameters
 
 
 ### Configuration Parameters - Smart Cache Search Projector
@@ -218,11 +220,10 @@ Contains configuration parameters specific to the Smart Cache Search Projector a
 
 ### Traffic Exposure Parameters - Smart Cache Search Projector
 
-| Name                          | Description                                                                                                 | Value       |
-| ----------------------------- | ----------------------------------------------------------------------------------------------------------- | ----------- |
-| `projector.service.port`      | Smart Cache Search Projector service port                                                                   | `8181`      |
-| `projector.service.type`      | Smart Cache Search Projector service port                                                                   | `ClusterIP` |
-| `projector.ingress.principal` | Principal to use for ingress traffic. If not set, defaults to the Istio service account in the istio-system | `""`        |
+| Name                     | Description                               | Value       |
+| ------------------------ | ----------------------------------------- | ----------- |
+| `projector.service.port` | Smart Cache Search Projector service port | `8181`      |
+| `projector.service.type` | Smart Cache Search Projector service port | `ClusterIP` |
 
 ### Service Account Parameters - Smart Cache Search Projector
 
@@ -230,7 +231,6 @@ Contains configuration parameters specific to the Smart Cache Search Projector a
 | -------------------------------------- | ----------------------------------------------------------------------------------------------- | ----- |
 | `projector.serviceAccount.name`        | Name of the created ServiceAccount. If not set, a name is generated using the fullname template | `""`  |
 | `projector.serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                            | `{}`  |
-| `graphServer.principal`                | is the principal to use for graph server traffic                                                | `""`  |
 
 ## License
 
