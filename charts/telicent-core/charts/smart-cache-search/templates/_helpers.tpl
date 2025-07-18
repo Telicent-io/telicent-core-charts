@@ -35,20 +35,6 @@ Create chart name and version as used by the chart label.
 {{- end }}
 
 {{/*
-Returns the version of the api
-*/}}
-{{- define "smart-cache-search-api.version" -}}
-{{ .Values.api.image.tag | default .Chart.AppVersion }}
-{{- end -}}
-
-{{/*
-Returns the version of the projector
-*/}}
-{{- define "smart-cache-search-projector.version" -}}
-{{ .Values.projector.image.tag | default .Chart.AppVersion }}
-{{- end -}}
-
-{{/*
 Common labels
 */}}
 {{- define "smart-cache-search.commonLabels" -}}

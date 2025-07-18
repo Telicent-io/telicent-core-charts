@@ -30,14 +30,16 @@ spec:
         {{- include "smart-cache-search.projectorLabels" . | nindent 8 }}
     spec:
       serviceAccountName: {{ include "smart-cache-search.projectorServiceAccountName" . }}
-      securityContext: {{- toYaml .Values.projector.podSecurityContext | nindent 8 }}     
-    {{- with .Values.imagePullSecrets }}
+      securityContext: {{- toYaml .Values.projector.podSecurityContext | nindent 8 }}
+      
+      {{- $pullSecret := .Values.global.imagePullSecrets | default .Values.projector.image.pullSecrets }}
+      {{- with $pullSecret }}
       imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
+        {{- toYaml . | nindent 6 }}
+      {{- end }}  
       containers:
       - name: search-projector
-        image: {{ .Values.projector.image.repository }}:{{ include "smart-cache-search-projector.version" . }}
+        image: {{ include "smart-cache-search-projector.image" . }}
         imagePullPolicy: {{ .Values.projector.image.pullPolicy }}
         resources: {{- toYaml .Values.projector.resources | nindent 10 }}
         securityContext: {{- toYaml .Values.projector.containerSecurityContext | nindent 10 }}

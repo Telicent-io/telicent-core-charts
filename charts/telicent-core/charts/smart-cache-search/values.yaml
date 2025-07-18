@@ -106,7 +106,7 @@ api:
     # @key api.image.registry [default: REGISTRY_NAME] Smart Cache Search API image registry
     registry: 098669589541.dkr.ecr.eu-west-2.amazonaws.com
     # @key api.image.repository [default: REPOSITORY_NAME/search-api-server] Smart Cache Search API image name
-    repository: 098669589541.dkr.ecr.eu-west-2.amazonaws.com/search-api-server
+    repository: search-api-server
     # @key api.image.tag Smart Cache Search API image tag. If not set, a tag is generated using the appVersion
     tag: ""
     # @key api.image.pullPolicy Smart Cache Search API image pull policy
@@ -251,7 +251,7 @@ projector:
     # @key projector.image.registry [default: REGISTRY_NAME] Smart Cache Search Projector image registry
     registry: 098669589541.dkr.ecr.eu-west-2.amazonaws.com
     # @key projector.image.repository [default: REPOSITORY_NAME/search-api-server] Smart Cache Search Projector image name
-    repository: 098669589541.dkr.ecr.eu-west-2.amazonaws.com/smart-cache-elastic-index
+    repository: smart-cache-elastic-index
     # @key projector.image.tag Smart Cache Search Projector image tag. If not set, a tag is generated using the appVersion
     tag: ""
     # @key projector.image.pullPolicy Smart Cache Search Projector image pull policy

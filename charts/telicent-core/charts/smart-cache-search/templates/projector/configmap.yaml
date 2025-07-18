@@ -12,7 +12,6 @@ metadata:
 
 data:
   # Environment variables for the projector container
-  # These values are used to configure the search projector service
   JAVA_OPTIONS: {{ .Values.projector.configuration.javaOptions | quote }}
   OTEL_METRICS_EXPORTER: {{ .Values.projector.configuration.otelMetricsExporter | quote }}
   OTEL_TRACES_EXPORTER: {{ .Values.projector.configuration.otelTracesExporter | quote }}
