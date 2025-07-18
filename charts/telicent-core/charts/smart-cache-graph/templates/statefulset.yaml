@@ -9,6 +9,7 @@ metadata:
   name: {{ include "smart-cache-graph.fullname" . }}-server
   labels:
     {{- include "smart-cache-graph.labels" . | nindent 4 }}
+
 spec:
   replicas: {{ .Values.replicas }}
   revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
@@ -21,6 +22,7 @@ spec:
         prometheus.io/path: /
         prometheus.io/port: "9464"
         prometheus.io/scrape: "true"
+      
       {{- range $key, $value := .Values.annotations }}
         {{ $key }}: {{ $value | quote }}
       {{- end }}
@@ -29,13 +31,15 @@ spec:
     spec:
       serviceAccountName: {{ include "smart-cache-graph.serviceAccountName" . }}
       securityContext: {{- toYaml .Values.podSecurityContext | nindent 8 }}
-    {{- with .Values.imagePullSecrets }}
+
+      {{- $pullSecret := .Values.global.imagePullSecrets | default .Values.image.pullSecrets }}
+      {{- with $pullSecret }}
       imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
+        {{- toYaml . | nindent 6 }}
+      {{- end }}
       containers:
       - name: graph-server
-        image: {{ .Values.image.repository }}:{{ include "smart-cache-graph.version" . }}
+        image: {{ include "smart-cache-graph.image" . }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         resources: {{- toYaml .Values.resources | nindent 10 }}
         securityContext: {{- toYaml .Values.containerSecurityContext | nindent 10 }}
