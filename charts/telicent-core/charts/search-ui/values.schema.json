@@ -148,12 +148,12 @@
                         "cpu": {
                             "type": "string",
                             "description": "Set containers' CPU request",
-                            "default": "10m"
+                            "default": "125m"
                         },
                         "memory": {
                             "type": "string",
                             "description": "Set containers' memory request",
-                            "default": "200Mi"
+                            "default": "512Mi"
                         }
                     }
                 },
@@ -163,12 +163,12 @@
                         "cpu": {
                             "type": "string",
                             "description": "Set containers' CPU limit",
-                            "default": "100m"
+                            "default": "250m"
                         },
                         "memory": {
                             "type": "string",
                             "description": "Set containers' memory limit",
-                            "default": "1000Mi"
+                            "default": "768Mi"
                         }
                     }
                 }
@@ -290,6 +290,16 @@
                 }
             }
         },
+        "ingress": {
+            "type": "object",
+            "properties": {
+                "principal": {
+                    "type": "string",
+                    "description": "Principal to use for ingress traffic. If not set, defaults to the Istio service account in the istio-system",
+                    "default": ""
+                }
+            }
+        },
         "serviceAccount": {
             "type": "object",
             "properties": {
@@ -302,16 +312,6 @@
                     "type": "object",
                     "description": "Additional custom annotations for the ServiceAccount",
                     "default": {}
-                }
-            }
-        },
-        "ingress": {
-            "type": "object",
-            "properties": {
-                "principal": {
-                    "type": "string",
-                    "description": "is the principal to use for ingress traffic",
-                    "default": ""
                 }
             }
         }

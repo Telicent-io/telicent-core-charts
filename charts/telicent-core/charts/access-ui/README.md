@@ -99,20 +99,18 @@ Contains configuration parameters specific to the Access UI application
 
 ### Traffic Exposure Parameters
 
-| Name           | Description            | Value       |
-| -------------- | ---------------------- | ----------- |
-| `service.port` | Access UI service port | `8080`      |
-| `service.type` | Access UI service type | `ClusterIP` |
+| Name                | Description                                                                                                 | Value       |
+| ------------------- | ----------------------------------------------------------------------------------------------------------- | ----------- |
+| `service.port`      | Access UI service port                                                                                      | `8080`      |
+| `service.type`      | Access UI service type                                                                                      | `ClusterIP` |
+| `ingress.principal` | Principal to use for ingress traffic. If not set, defaults to the Istio service account in the istio-system | `""`        |
 
 ### Other Parameters
-
-If not set, it defaults to the Istio service account in the istio-system
 
 | Name                         | Description                                                                                     | Value |
 | ---------------------------- | ----------------------------------------------------------------------------------------------- | ----- |
 | `serviceAccount.name`        | Name of the created ServiceAccount. If not set, a name is generated using the fullname template | `""`  |
 | `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                            | `{}`  |
-| `ingress.principal`          | is the principal to use for ingress traffic                                                     | `""`  |
 
 ## License
 

@@ -25,6 +25,21 @@
                     "type": "string",
                     "description": "Domain to be used for interacting with Telicent authentication services, including OIDC providers",
                     "default": "auth.telicent.io"
+                },
+                "appsGateway": {
+                    "type": "string",
+                    "description": "Name of the Istio gateway for applications",
+                    "default": "istio-system/gateways-apps"
+                },
+                "istioServiceAccountName": {
+                    "type": "string",
+                    "description": "Name of the Istio service account to use for the Graph API",
+                    "default": "istio-ingress"
+                },
+                "istioNamespace": {
+                    "type": "string",
+                    "description": "The namespace where Istio is installed",
+                    "default": "istio-system"
                 }
             }
         },
@@ -51,15 +66,25 @@
                     "description": "The URL to be used for signing out",
                     "default": "https://your.host.here/logout"
                 },
-                "searchUiMaptilerToken": {
+                "graphUiMaptilerToken": {
                     "type": "string",
-                    "description": "MapTiler token for Graph UI",
+                    "description": "is the MapTiler token for the graph UI",
                     "default": "your.maptiler.token.here"
+                },
+                "graphUiMapboxStyleSpecUrl": {
+                    "type": "string",
+                    "description": "",
+                    "default": ""
+                },
+                "graphUiArcgisToken": {
+                    "type": "string",
+                    "description": "",
+                    "default": ""
                 },
                 "existingMapConfigSecretName": {
                     "type": "string",
                     "description": "The name of an existing secret containing map configuration",
-                    "default": "your-existing-map-config-secret-name"
+                    "default": ""
                 }
             }
         },
@@ -105,14 +130,14 @@
                     "type": "string",
                     "description": "Graph UI image pull policy",
                     "default": "IfNotPresent"
-                },
-                "pullSecrets": {
-                    "type": "array",
-                    "description": "Specify registry secret names as an array",
-                    "default": [],
-                    "items": {}
                 }
             }
+        },
+        "imagePullSecrets": {
+            "type": "array",
+            "description": "Specify registry secret names as an array",
+            "default": [],
+            "items": {}
         },
         "resources": {
             "type": "object",
@@ -123,7 +148,7 @@
                         "cpu": {
                             "type": "string",
                             "description": "Set containers' CPU request",
-                            "default": "500m"
+                            "default": "250m"
                         },
                         "memory": {
                             "type": "string",
@@ -138,12 +163,12 @@
                         "cpu": {
                             "type": "string",
                             "description": "Set containers' CPU limit",
-                            "default": "1"
+                            "default": "375m"
                         },
                         "memory": {
                             "type": "string",
                             "description": "Set containers' memory limit",
-                            "default": "1Gi"
+                            "default": "768Mi"
                         }
                     }
                 }
@@ -262,6 +287,16 @@
                     "type": "string",
                     "description": "Graph UI service type",
                     "default": "ClusterIP"
+                }
+            }
+        },
+        "ingress": {
+            "type": "object",
+            "properties": {
+                "principal": {
+                    "type": "string",
+                    "description": "Principal to use for ingress traffic. If not set, defaults to the Istio service account in the istio-system",
+                    "default": ""
                 }
             }
         },

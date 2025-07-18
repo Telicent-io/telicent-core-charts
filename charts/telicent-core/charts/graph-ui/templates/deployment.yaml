@@ -4,10 +4,12 @@ Copyright (C) 2025 Telicent Limited
 
 apiVersion: apps/v1
 kind: Deployment
+
 metadata:
   name: {{ include "graph.fullname" . }}
   labels:
     {{- include "graph.labels" . | nindent 4 }}
+
 spec:
   replicas: {{ .Values.replicas }}
   revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
@@ -16,6 +18,7 @@ spec:
       maxSurge: 1
       maxUnavailable: 0
     type: RollingUpdate
+  
   selector:
     matchLabels:
     {{- include "graph.selectorLabels" . | nindent 6 }}
@@ -30,13 +33,15 @@ spec:
     spec:
       serviceAccountName: {{ include "graph.serviceAccountName" . }}
       securityContext: {{- toYaml .Values.podSecurityContext | nindent 8 }}
-    {{- with .Values.imagePullSecrets }}
+      
+      {{- $pullSecret := .Values.global.imagePullSecrets | default .Values.image.pullSecrets }}
+      {{- with $pullSecret }}
       imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
+        {{- toYaml . | nindent 6 }}
+      {{- end }}
       containers:
       - name: graph-ui
-        image: {{ .Values.image.repository }}:{{ include "graph.version" . }}
+        image: {{ include "graph.image" . }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         resources: {{- toYaml .Values.resources | nindent 10 }}
         securityContext: {{- toYaml .Values.containerSecurityContext | nindent 10 }}
@@ -89,7 +94,7 @@ spec:
         name: secret-config-js-volume
       {{- end }}
       
-       {{- with .Values.affinity }}
+      {{- with .Values.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}  

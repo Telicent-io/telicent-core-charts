@@ -234,6 +234,16 @@
                 }
             }
         },
+        "ingress": {
+            "type": "object",
+            "properties": {
+                "principal": {
+                    "type": "string",
+                    "description": "Principal to use for ingress traffic. If not set, defaults to the Istio service account in the istio-system",
+                    "default": ""
+                }
+            }
+        },
         "serviceAccount": {
             "type": "object",
             "properties": {
@@ -246,16 +256,6 @@
                     "type": "object",
                     "description": "Additional custom annotations for the ServiceAccount",
                     "default": {}
-                }
-            }
-        },
-        "ingress": {
-            "type": "object",
-            "properties": {
-                "principal": {
-                    "type": "string",
-                    "description": "is the principal to use for ingress traffic",
-                    "default": ""
                 }
             }
         }
