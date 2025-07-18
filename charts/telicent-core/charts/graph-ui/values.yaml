@@ -66,9 +66,9 @@ revisionHistoryLimit: 5
 
 image:
   # @key image.registry [default: REGISTRY_NAME] Graph UI image registry
-  registry: ""
+  registry: 098669589541.dkr.ecr.eu-west-2.amazonaws.com
   # @key image.repository [default: REPOSITORY_NAME/telicent-graph] Graph UI image name
-  repository: 098669589541.dkr.ecr.eu-west-2.amazonaws.com/telicent-graph
+  repository: telicent-graph
   # @key image.tag Seearch UI image tag. If not set, a tag is generated using the appVersion
   tag: ""
   # @key image.pullPolicy Graph UI image pull policy
