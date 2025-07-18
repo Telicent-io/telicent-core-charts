@@ -29,10 +29,7 @@ spec:
     spec:
       serviceAccountName: {{ include "access-api.serviceAccountName" . }}
       securityContext: {{- toYaml .Values.podSecurityContext | nindent 8 }}
-      {{- if .Values.global.imagePullSecrets }}
-      shit: shit
-      {{- end }}
-      
+     
       {{- $pullSecret := .Values.global.imagePullSecrets | default .Values.image.pullSecrets }}
       {{- with $pullSecret }}
       imagePullSecrets:
