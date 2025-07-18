@@ -16,10 +16,9 @@ Returns the image registry
 {{- .Values.global.imageRegistry | default .Values.image.registry }}
 {{- end -}}
 
-
 {{/*
 Returns the image 
 */}}
 {{- define "access-ui.image" -}}
-{{-   printf "%s/%s:%s" (include "access-ui.imageRegistry" .) .Values.image.repository  (include "access-ui.version" .) }}
+{{- printf "%s/%s:%s" (include "access-ui.imageRegistry" .) .Values.image.repository  (include "access-ui.version" .) }}
 {{- end -}}

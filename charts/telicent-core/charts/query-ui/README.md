@@ -74,10 +74,10 @@ Contains global parameters, these parameters are mirrored within the Telicent co
 | `image.tag`                                         | Query UI image tag. If not set, a tag is generated using the appVersion | `""`                             |
 | `image.pullPolicy`                                  | Query UI image pull policy                                              | `IfNotPresent`                   |
 | `image.pullSecrets`                                 | Specify registry secret names as an array                               | `[]`                             |
-| `resources.requests.cpu`                            | Set containers' CPU request                                             | `10m`                            |
-| `resources.requests.memory`                         | Set containers' memory request                                          | `200Mi`                          |
-| `resources.limits.cpu`                              | Set containers' CPU limit                                               | `100m`                           |
-| `resources.limits.memory`                           | Set containers' memory limit                                            | `1000Mi`                         |
+| `resources.requests.cpu`                            | Set containers' CPU request                                             | `125m`                           |
+| `resources.requests.memory`                         | Set containers' memory request                                          | `512Mi`                          |
+| `resources.limits.cpu`                              | Set containers' CPU limit                                               | `250m`                           |
+| `resources.limits.memory`                           | Set containers' memory limit                                            | `768Mi`                          |
 | `containerSecurityContext.runAsUser`                | Set containers' Security Context runAsUser User ID                      | `185`                            |
 | `containerSecurityContext.runAsGroup`               | Set containers' Security Context runAsGroup Group ID                    | `185`                            |
 | `containerSecurityContext.runAsNonRoot`             | Set container's Security Context runAsNonRoot                           | `true`                           |
@@ -95,10 +95,11 @@ Contains global parameters, these parameters are mirrored within the Telicent co
 
 ### Traffic Exposure Parameters
 
-| Name           | Description           | Value       |
-| -------------- | --------------------- | ----------- |
-| `service.port` | Query UI service port | `8080`      |
-| `service.type` | Query UI service type | `ClusterIP` |
+| Name                | Description                                                                                                 | Value       |
+| ------------------- | ----------------------------------------------------------------------------------------------------------- | ----------- |
+| `service.port`      | Query UI service port                                                                                       | `8080`      |
+| `service.type`      | Query UI service type                                                                                       | `ClusterIP` |
+| `ingress.principal` | Principal to use for ingress traffic. If not set, defaults to the Istio service account in the istio-system | `""`        |
 
 ### Other Parameters
 
@@ -106,7 +107,6 @@ Contains global parameters, these parameters are mirrored within the Telicent co
 | ---------------------------- | ----------------------------------------------------------------------------------------------- | ----- |
 | `serviceAccount.name`        | Name of the created ServiceAccount. If not set, a name is generated using the fullname template | `""`  |
 | `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                            | `{}`  |
-| `ingress.principal`          | is the principal to use for ingress traffic                                                     | `""`  |
 
 
 ## License

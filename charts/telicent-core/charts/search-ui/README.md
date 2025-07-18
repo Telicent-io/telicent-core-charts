@@ -91,10 +91,10 @@ If set, it can generate multiple layers from any map service that adheres to the
 | `image.tag`                                         | Seearch UI image tag. If not set, a tag is generated using the appVersion | `""`                              |
 | `image.pullPolicy`                                  | Search UI image pull policy                                               | `IfNotPresent`                    |
 | `imagePullSecrets`                                  | Specify registry secret names as an array                                 | `[]`                              |
-| `resources.requests.cpu`                            | Set containers' CPU request                                               | `10m`                             |
-| `resources.requests.memory`                         | Set containers' memory request                                            | `200Mi`                           |
-| `resources.limits.cpu`                              | Set containers' CPU limit                                                 | `100m`                            |
-| `resources.limits.memory`                           | Set containers' memory limit                                              | `1000Mi`                          |
+| `resources.requests.cpu`                            | Set containers' CPU request                                               | `125m`                            |
+| `resources.requests.memory`                         | Set containers' memory request                                            | `512Mi`                           |
+| `resources.limits.cpu`                              | Set containers' CPU limit                                                 | `250m`                            |
+| `resources.limits.memory`                           | Set containers' memory limit                                              | `768Mi`                           |
 | `containerSecurityContext.runAsUser`                | Set containers' Security Context runAsUser User ID                        | `185`                             |
 | `containerSecurityContext.runAsGroup`               | Set containers' Security Context runAsGroup Group ID                      | `185`                             |
 | `containerSecurityContext.runAsNonRoot`             | Set container's Security Context runAsNonRoot                             | `true`                            |
@@ -112,10 +112,11 @@ If set, it can generate multiple layers from any map service that adheres to the
 
 ### Traffic Exposure Parameters
 
-| Name           | Description            | Value       |
-| -------------- | ---------------------- | ----------- |
-| `service.port` | Search UI service port | `8080`      |
-| `service.type` | Search UI service type | `ClusterIP` |
+| Name                | Description                                                                                                 | Value       |
+| ------------------- | ----------------------------------------------------------------------------------------------------------- | ----------- |
+| `service.port`      | Search UI service port                                                                                      | `8080`      |
+| `service.type`      | Search UI service type                                                                                      | `ClusterIP` |
+| `ingress.principal` | Principal to use for ingress traffic. If not set, defaults to the Istio service account in the istio-system | `""`        |
 
 ### Other Parameters
 
@@ -123,7 +124,6 @@ If set, it can generate multiple layers from any map service that adheres to the
 | ---------------------------- | ----------------------------------------------------------------------------------------------- | ----- |
 | `serviceAccount.name`        | Name of the created ServiceAccount. If not set, a name is generated using the fullname template | `""`  |
 | `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                            | `{}`  |
-| `ingress.principal`          | is the principal to use for ingress traffic                                                     | `""`  |
 
 
 ## License

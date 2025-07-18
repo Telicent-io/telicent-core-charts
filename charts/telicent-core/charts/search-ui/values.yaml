@@ -72,9 +72,9 @@ revisionHistoryLimit: 5
 
 image:
   # @key image.registry [default: REGISTRY_NAME] Search UI image registry
-  registry: ""
+  registry: 098669589541.dkr.ecr.eu-west-2.amazonaws.com
   # @key image.repository [default: REPOSITORY_NAME/telicent-search] Search UI image name
-  repository: 098669589541.dkr.ecr.eu-west-2.amazonaws.com/telicent-search
+  repository: telicent-search
   # @key image.tag Seearch UI image tag. If not set, a tag is generated using the appVersion
   tag: ""
   # @key image.pullPolicy Search UI image pull policy
@@ -141,6 +141,10 @@ service:
   # @key service.type Search UI service type
   type: ClusterIP
 
+ingress:
+  # @key ingress.principal Principal to use for ingress traffic. If not set, defaults to the Istio service account in the istio-system
+  principal: ""
+
 # @section Other Parameters
 serviceAccount:
   # @key serviceAccount.name Name of the created ServiceAccount. If not set, a name is generated using the fullname template
@@ -148,7 +152,3 @@ serviceAccount:
   #@key serviceAccount.annotations Additional custom annotations for the ServiceAccount
   annotations: {}
 
-ingress:
-  # @key ingress.principal is the principal to use for ingress traffic
-  # If not set, it defaults to the Istio service account in the istio-system
-  principal: ""

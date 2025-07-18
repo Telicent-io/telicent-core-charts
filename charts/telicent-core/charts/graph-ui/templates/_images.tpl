@@ -5,20 +5,20 @@ Copyright (C) 2025 Telicent Limited
 {{/*
 Returns the version
 */}}
-{{- define "access-api.version" -}}
+{{- define "graph.version" -}}
 {{- .Values.image.tag | default .Chart.AppVersion }}
 {{- end -}}
 
 {{/*
 Returns the image registry
 */}}
-{{- define "access-api.imageRegistry" -}}
+{{- define "graph.imageRegistry" -}}
 {{- .Values.global.imageRegistry | default .Values.image.registry }}
 {{- end -}}
 
 {{/*
 Returns the image 
 */}}
-{{- define "access-api.image" -}}
-{{- printf "%s/%s:%s" (include "access-api.imageRegistry" .) .Values.image.repository  (include "access-api.version" .) }}
+{{- define "graph.image" -}}
+{{- printf "%s/%s:%s" (include "graph.imageRegistry" .) .Values.image.repository  (include "graph.version" .) }}
 {{- end -}}
