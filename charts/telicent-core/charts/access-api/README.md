@@ -101,10 +101,10 @@ Contains configuration parameters specific to the Access API application
 | `image.tag`                                         | Access API image tag. If not set, a tag is generated using the appVersion | `""`                                  |
 | `image.pullPolicy`                                  | Access API image pull policy                                              | `IfNotPresent`                        |
 | `image.pullSecrets`                                 | Specify registry secret names as an array                                 | `[]`                                  |
-| `resources.requests.cpu`                            | Set containers' CPU request                                               | `500m`                                |
+| `resources.requests.cpu`                            | Set containers' CPU request                                               | `250m`                                |
 | `resources.requests.memory`                         | Set containers' memory request                                            | `512Mi`                               |
-| `resources.limits.cpu`                              | Set containers' CPU limit                                                 | `1`                                   |
-| `resources.limits.memory`                           | Set containers' memory limit                                              | `1Gi`                                 |
+| `resources.limits.cpu`                              | Set containers' CPU limit                                                 | `350m`                                |
+| `resources.limits.memory`                           | Set containers' memory limit                                              | `768Mi`                               |
 | `containerSecurityContext.runAsUser`                | Set containers' Security Context runAsUser User ID                        | `185`                                 |
 | `containerSecurityContext.runAsGroup`               | Set containers' Security Context runAsGroup Group ID                      | `185`                                 |
 | `containerSecurityContext.runAsNonRoot`             | Set container's Security Context runAsNonRoot                             | `true`                                |
