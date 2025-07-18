@@ -46,7 +46,7 @@ spec:
         env:
         - name: NODE_EXTRA_CA_CERTS
           value: "/certs/ca.crt"
-        {{ end }}
+        {{- end }}
         envFrom:
         - configMapRef:
             name: {{ include "access-api.envConfigmapName" . }}
@@ -55,7 +55,7 @@ spec:
             name: {{ .Values.mongo.existingMongoPasswordSecret }}
             {{ else }}
             name: {{ include "access-api.envSecretName" . }}
-            {{ end }}
+            {{- end }}
             
         ports:
         - name: http
