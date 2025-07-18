@@ -38,7 +38,7 @@ Create chart name and version as used by the chart label.
 Returns the version
 */}}
 {{- define "access-api.version" -}}
-{{ .Values.image.tag | default .Chart.AppVersion }}
+{{- .Values.image.tag | default .Chart.AppVersion }}
 {{- end -}}
 
 {{/*

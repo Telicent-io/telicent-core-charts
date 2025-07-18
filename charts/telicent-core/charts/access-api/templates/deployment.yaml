@@ -28,18 +28,28 @@ spec:
       {{- include "access-api.selectorLabels" . | nindent 8 }}
     spec:
       serviceAccountName: {{ include "access-api.serviceAccountName" . }}
-      securityContext: {{- toYaml .Values.podSecurityContext | nindent 8 }}  
-    {{- with .Values.imagePullSecrets }}
+      securityContext: {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      {{- if .Values.global.imagePullSecrets }}
+      shit: shit
+      {{- end }}
+      
+      {{- $pullSecret := .Values.global.imagePullSecrets | default .Values.image.pullSecrets }}
+      {{- with $pullSecret }}
       imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
+        {{- toYaml . | nindent 6 }}
+      {{- end }}
       containers:
       - name: access-api
-        image: {{ .Values.image.repository }}:{{ include "access-api.version" . }}
+        image: {{ include "access-api.image" . }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         resources: {{- toYaml .Values.resources | nindent 10 }}
         securityContext: {{- toYaml .Values.containerSecurityContext | nindent 10 }}
 
+        {{- if or .Values.existingCacertConfigmap .Values.cacert }}
+        env:
+        - name: NODE_EXTRA_CA_CERTS
+          value: "/certs/ca.crt"
+        {{ end }}
         envFrom:
         - configMapRef:
             name: {{ include "access-api.envConfigmapName" . }}
@@ -49,13 +59,7 @@ spec:
             {{ else }}
             name: {{ include "access-api.envSecretName" . }}
             {{ end }}
-        {{- if or .Values.existingCacertConfigmap .Values.cacert }}
-        env:
-        - name: NODE_EXTRA_CA_CERTS
-          value: "/certs/ca.crt"
-        {{ end }}
-      
-       
+            
         ports:
         - name: http
           containerPort: {{ .Values.service.port }} 

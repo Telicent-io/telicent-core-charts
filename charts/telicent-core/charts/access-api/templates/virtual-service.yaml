@@ -8,13 +8,14 @@ kind: VirtualService
 metadata:
   name: {{ include "access-api.fullname" . }}
   labels:
-  {{- include "access-api.labels" . | nindent 4 }}
+    {{- include "access-api.labels" . | nindent 4 }}
 
 spec:
   gateways:
   - {{ .Values.global.appsGateway }}
   hosts:
   - {{ .Values.global.appHostDomain }}
+  
   http:
   - match:
     - uri:
