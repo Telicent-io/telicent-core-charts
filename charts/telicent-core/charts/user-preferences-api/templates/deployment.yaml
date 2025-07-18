@@ -9,6 +9,7 @@ metadata:
   name: {{ include "user-preferences-api.fullname" . }}
   labels:
     {{- include "user-preferences-api.labels" . | nindent 4 }}
+
 spec:
   replicas: {{ .Values.replicas }}
   revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
@@ -26,20 +27,19 @@ spec:
     spec:
       serviceAccountName: {{ include "user-preferences-api.serviceAccountName" . }}
       securityContext: {{- toYaml .Values.podSecurityContext | nindent 8 }}
-    {{- with .Values.imagePullSecrets }}
+
+      {{- $pullSecret := .Values.global.imagePullSecrets | default .Values.image.pullSecrets }}
+      {{- with $pullSecret }}
       imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
+        {{- toYaml . | nindent 6 }}
+      {{- end }}
       containers:
       - name: user-preferences-api
-        image: {{ .Values.image.repository }}:{{ include "user-preferences-api.version" . }}
+        image: {{ include "user-preferences-api.image" . }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         resources: {{- toYaml .Values.resources | nindent 10 }}
         securityContext: {{- toYaml .Values.containerSecurityContext | nindent 10 }}
 
-        envFrom:    
-        - configMapRef:
-            name: {{ include "user-preferences-api.fullname" . }}
         env:
         - name: MONGO_PASSWORD
           valueFrom:
@@ -50,6 +50,9 @@ spec:
               {{- else }}
               name: {{ include "user-preferences-api.secret" . }}
               {{- end }}
+        envFrom:    
+        - configMapRef:
+            name: {{ include "user-preferences-api.fullname" . }}
         
         ports:
         - name: http
@@ -59,14 +62,6 @@ spec:
           protocol: TCP
           containerPort: 9464
 
-        livenessProbe:
-          httpGet:
-            path: /version-info
-            port: 11111
-            scheme: HTTP
-          initialDelaySeconds: 30
-          periodSeconds: 60
-          timeoutSeconds: 5
         readinessProbe:
           httpGet:
             path: /healthz
@@ -75,18 +70,26 @@ spec:
           initialDelaySeconds: 30
           periodSeconds: 60
           timeoutSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /version-info
+            port: 11111
+            scheme: HTTP
+          initialDelaySeconds: 30
+          periodSeconds: 60
+          timeoutSeconds: 5
        
         volumeMounts:
-      {{- if .Values.global.existingTruststoreSecretName }}
+        {{- if .Values.global.existingTruststoreSecretName }}
         - name: truststore-volume
           mountPath: /app/config/truststore
         securityContext: {{- toYaml .Values.containerSecurityContext | nindent 10 }}
-      {{- end }}
-      {{- if contains "tls=true" .Values.mongo.url }}
+        {{- end }}
+        {{- if contains "tls=true" .Values.mongo.url }}
         - name: ca-certificate-volume
           mountPath: {{ .Values.mongo.cacertPath | default "/app/config/ca-certificate" }}
           readOnly: true
-      {{- end }}
+        {{- end }}
 
       volumes:
       {{- if .Values.global.existingTruststoreSecretName }}

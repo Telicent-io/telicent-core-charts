@@ -8,10 +8,7 @@ kind: ConfigMap
 metadata:
   name: {{ include "query.configMapName" . }}
   labels:
-    app.kubernetes.io/name: {{ include "query.name" . }}
-    helm.sh/chart: {{ include "query.chart" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    {{- include "query.labels" . | nindent 4 }}
 
 data:
   env-config.js: |

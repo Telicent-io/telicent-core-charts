@@ -3,14 +3,13 @@ Copyright (C) 2025 Telicent Limited
 */}}
 
 {{- if .Values.global.enterprise }}
-
 apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
 
 metadata:
+  name: {{ include "user-preferences-api.fullname" . }}-ingress
   labels:
     {{- include "user-preferences-api.labels" . | nindent 4 }}
-  name: {{ include "user-preferences-api.fullname" . }}-ingress
 
 spec:
   action: ALLOW

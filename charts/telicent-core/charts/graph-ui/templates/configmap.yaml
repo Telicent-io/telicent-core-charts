@@ -3,16 +3,14 @@ Copyright (C) 2025 Telicent Limited
 */}}
 
 {{- if not .Values.existingGraphUIConfigName }}
-
 apiVersion: v1
 kind: ConfigMap
+
 metadata:
   name: {{ include "graph.configMapName" . }}
   labels:
-    app.kubernetes.io/name: {{ include "graph.name" . }}
-    helm.sh/chart: {{ include "graph.chart" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    {{- include "graph.labels" . | nindent 4 }}
+
 data:
   env-config.js: |
     // UIs
