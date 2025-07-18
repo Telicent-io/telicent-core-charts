@@ -40,7 +40,7 @@ spec:
       {{- end }}
       containers:
       - name: search-ui
-         image: {{ include "search.image" . }}
+        image: {{ include "search.image" . }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         resources: {{- toYaml .Values.resources | nindent 10 }}
         securityContext: {{- toYaml .Values.containerSecurityContext | nindent 10 }}
