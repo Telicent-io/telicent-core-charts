@@ -108,7 +108,7 @@
                         "cpu": {
                             "type": "string",
                             "description": "Set containers' CPU request",
-                            "default": "10m"
+                            "default": "250m"
                         },
                         "memory": {
                             "type": "string",
@@ -123,12 +123,12 @@
                         "cpu": {
                             "type": "string",
                             "description": "Set containers' CPU limit",
-                            "default": "100m"
+                            "default": "350m"
                         },
                         "memory": {
                             "type": "string",
                             "description": "Set containers' memory limit",
-                            "default": "1000Mi"
+                            "default": "768Mi"
                         }
                     }
                 }

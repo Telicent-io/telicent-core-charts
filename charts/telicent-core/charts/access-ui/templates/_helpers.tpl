@@ -35,13 +35,6 @@ Create chart name and version as used by the chart label.
 {{- end }}
 
 {{/*
-Returns the version
-*/}}
-{{- define "access-ui.version" -}}
-{{ .Values.image.tag | default .Chart.AppVersion }}
-{{- end -}}
-
-{{/*
 Common labels
 */}}
 {{- define "access-ui.labels" -}}
