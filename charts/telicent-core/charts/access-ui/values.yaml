@@ -22,6 +22,8 @@ global:
   appHostDomain: "apps.telicent.io"
   # @key global.authHostDomain Domain to be used for interacting with Telicent authentication services, including OIDC providers
   authHostDomain: "auth.telicent.io"
+  # @key global.appsGateway is the name of the Istio gateway for applications
+  appsGateway: istio-system/gateways-apps
   # @key global.istioServiceAccountName The name of the Istio service account to use for the Access API
   istioServiceAccountName: istio-ingress
   # @key global.istioNamespace The namespace where Istio is installed
