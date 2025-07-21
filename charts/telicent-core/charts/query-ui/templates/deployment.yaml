@@ -20,7 +20,7 @@ spec:
     type: RollingUpdate
   selector:
     matchLabels:
-    {{- include "query.selectorLabels" . | nindent 6 }}s
+    {{- include "query.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       annotations:

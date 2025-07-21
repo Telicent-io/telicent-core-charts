@@ -5,6 +5,11 @@
         "global": {
             "type": "object",
             "properties": {
+                "enterprise": {
+                    "type": "boolean",
+                    "description": "Enable enterprise mode, adding additional features and configurations",
+                    "default": false
+                },
                 "imageRegistry": {
                     "type": "string",
                     "description": "Global image registry",
