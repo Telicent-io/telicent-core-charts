@@ -48,6 +48,7 @@ Contains global parameters, these parameters are mirrored within the Telicent co
 
 | Name                             | Description                                                                                       | Value                        |
 | -------------------------------- | ------------------------------------------------------------------------------------------------- | ---------------------------- |
+| `global.enterprise`              | Enable enterprise mode, adding additional features and configurations                             | `false`                      |
 | `global.imageRegistry`           | Global image registry                                                                             | `""`                         |
 | `global.imagePullSecrets`        | Global registry secret names as an array                                                          | `[]`                         |
 | `global.appHostDomain`           | Domain name associated with Search UI                                                             | `apps.telicent.io`           |
