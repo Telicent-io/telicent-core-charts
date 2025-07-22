@@ -127,11 +127,11 @@ Contains configuration parameters specific to the Smart Cache Graph application
 
 ### Traffic Exposure Parameters
 
-| Name                | Description                                                                                                                                                                  | Value       |
-| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| `service.port`      | Smart Cache Graph service port                                                                                                                                               | `3030`      |
-| `service.type`      | Smart Cache Graph service type                                                                                                                                               | `ClusterIP` |
-| `ingress.principal` | Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName' | `""`        |
+| Name                      | Description                                                                                                                                                                  | Value       |
+| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `service.port`            | Smart Cache Graph service port                                                                                                                                               | `3030`      |
+| `service.type`            | Smart Cache Graph service type                                                                                                                                               | `ClusterIP` |
+| `istio.ingress.principal` | Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName' | `""`        |
 
 ### Service Account Parameters
 

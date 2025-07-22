@@ -100,11 +100,11 @@ Contains configuration parameters specific to the Access UI application
 
 ### Traffic Exposure Parameters
 
-| Name                | Description                                                                                                                                                                  | Value       |
-| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| `service.port`      | Access UI service port                                                                                                                                                       | `8080`      |
-| `service.type`      | Access UI service type                                                                                                                                                       | `ClusterIP` |
-| `ingress.principal` | Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName' | `""`        |
+| Name                      | Description                                                                                                                                                                  | Value       |
+| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `service.port`            | Access UI service port                                                                                                                                                       | `8080`      |
+| `service.type`            | Access UI service type                                                                                                                                                       | `ClusterIP` |
+| `istio.ingress.principal` | Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName' | `""`        |
 
 ### Service Account Parameters
 

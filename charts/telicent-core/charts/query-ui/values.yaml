@@ -114,9 +114,10 @@ service:
   # @key service.type Query UI service type
   type: ClusterIP
 
-ingress:
-  # @key ingress.principal Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName'
-  principal: ""
+istio:
+  ingress:
+    # @key istio.ingress.principal Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName'
+    principal: ""
 
 # @section Service Account Parameters
 serviceAccount:
