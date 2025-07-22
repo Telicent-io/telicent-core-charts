@@ -14,7 +14,7 @@ global:
   # imagePullSecrets:
   #   - myRegistryKeySecretName
   # @key global.imagePullSecrets Global registry secret names as an array
-  imagePullSecrets: [ ]
+  imagePullSecrets: []
 
   # @key global.enterprise Enable enterprise mode, adding additional features and configurations
   enterprise: false
