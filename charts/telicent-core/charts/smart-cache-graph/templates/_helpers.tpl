@@ -73,10 +73,10 @@ Create the name of the service to use
 {{- end }}
 
 {{/*
-Create a config name to use
+Create a fuseki config name to use
 */}}
-{{- define "smart-cache-graph.serverConfig" -}}
-{{ include "smart-cache-graph.fullname" . }}-config
+{{- define "smart-cache-graph.fusekiConfig" -}}
+{{ include "smart-cache-graph.fullname" . }}-fuseki
 {{- end }}
 
 {{/* 

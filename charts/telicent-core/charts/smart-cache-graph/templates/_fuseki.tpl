@@ -2,7 +2,7 @@
 Copyright (C) 2025 Telicent Limited
 */}}
 
-{{- define "smart-cache-graph.graphConfig" -}}
+{{- define "smart-cache-graph.fuseki" -}}
     PREFIX :        <#>
     PREFIX fuseki:  <http://jena.apache.org/fuseki#>
     PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
