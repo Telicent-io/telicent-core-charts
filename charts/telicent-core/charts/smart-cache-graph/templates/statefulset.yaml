@@ -6,7 +6,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 
 metadata:
-  name: {{ include "smart-cache-graph.fullname" . }}-server
+  name: {{ include "smart-cache-graph.fullname" . }}
   labels:
     {{- include "smart-cache-graph.labels" . | nindent 4 }}
 

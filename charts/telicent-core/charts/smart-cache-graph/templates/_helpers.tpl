@@ -69,14 +69,14 @@ Create the name of the service to use
 {{- end }}
 
 {{- define "smart-cache-graph.envSecretName" -}}
-{{ include "smart-cache-graph.fullname" . }}-server
+{{ include "smart-cache-graph.fullname" . }}
 {{- end }}
 
 {{/*
-Create Server config name to use
+Create a config name to use
 */}}
 {{- define "smart-cache-graph.serverConfig" -}}
-{{ include "smart-cache-graph.fullname" . }}-server-config
+{{ include "smart-cache-graph.fullname" . }}-config
 {{- end }}
 
 {{/* 
