@@ -43,18 +43,6 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ## Parameters
 
-### Global Parameters
-
-Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
-
-| Name                                  | Description                                                           | Value           |
-| ------------------------------------- | --------------------------------------------------------------------- | --------------- |
-| `global.imageRegistry`                | Global image registry                                                 | `""`            |
-| `global.imagePullSecrets`             | Global registry secret names as an array                              | `[]`            |
-| `global.existingTruststoreSecretName` | Name of an existing secret containing the truststore                  | `""`            |
-| `global.istioServiceAccountName`      | Name of the Istio service account to use for the User Preferences API | `istio-ingress` |
-| `global.istioNamespace`               | Istio Namespace where Istio is installed                              | `istio-system`  |
-
 ### Configuration Parameters
 
 Contains configuration parameters specific to the User Preferences API application
@@ -112,18 +100,18 @@ Contains configuration parameters specific to the User Preferences API applicati
 
 ### Traffic Exposure Parameters
 
-| Name                | Description                                                                                                 | Value       |
-| ------------------- | ----------------------------------------------------------------------------------------------------------- | ----------- |
-| `service.port`      | User Preferences API service port                                                                           | `11111`     |
-| `service.type`      | User Preferences API service type                                                                           | `ClusterIP` |
-| `ingress.principal` | Principal to use for ingress traffic. If not set, defaults to the Istio service account in the istio-system | `""`        |
+| Name                      | Description                                                                                                                                                                  | Value       |
+| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `service.port`            | User Preferences API service port                                                                                                                                            | `11111`     |
+| `service.type`            | User Preferences API service type                                                                                                                                            | `ClusterIP` |
+| `istio.ingress.principal` | Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName' | `""`        |
 
 ### Service Account Parameters
 
-| Name                         | Description                                                                                     | Value |
-| ---------------------------- | ----------------------------------------------------------------------------------------------- | ----- |
-| `serviceAccount.name`        | Name of the created ServiceAccount. If not set, a name is generated using the fullname template | `""`  |
-| `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                            | `{}`  |
+| Name                         | Description                                                                           | Value |
+| ---------------------------- | ------------------------------------------------------------------------------------- | ----- |
+| `serviceAccount.name`        | Name of the ServiceAccount to use. If not set, a name is generated using the fullname | `""`  |
+| `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                  | `{}`  |
 
 
 ## License
