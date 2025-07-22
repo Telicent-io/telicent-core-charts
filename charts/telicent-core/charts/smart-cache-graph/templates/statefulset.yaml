@@ -82,7 +82,7 @@ spec:
         
         volumeMounts:
         - mountPath: /fuseki/config
-          name: graph-config-volume
+          name: fuseki-config-volume
         - mountPath: /fuseki/databases
           name: datasets-volume
         - mountPath: /fuseki/backups
@@ -95,13 +95,9 @@ spec:
       {{- end }}
       
       volumes:
-      - configMap:
-          {{- if .Values.existingGraphConfigMapName }}
-            name: {{ .Values.existingGraphConfigMapName }}
-          {{- else }}
-            name: {{ include "smart-cache-graph.serverConfig" . }}
-          {{- end }}
-        name: graph-config-volume
+      - name: fuseki-config-volume
+        configMap:
+            name: {{ include "smart-cache-graph.fusekiConfig" . }}
       - name: kafka-auth-config
         secret:
         {{- if .Values.global.existingKafkaConfigSecretName }}
