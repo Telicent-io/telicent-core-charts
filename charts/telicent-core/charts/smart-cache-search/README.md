@@ -60,7 +60,8 @@ Contains global parameters, these parameters are mirrored within the Telicent co
 | `global.authHostDomain`                | Domain associated with Telicent authentication services, including OIDC providers | `auth.telicent.io`                               |
 | `global.jwksUrl`                       | Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)     | `https://{yourAuthdomain}/.well-known/jwks.json` |
 | `global.istioNamespace`                | Namespace in which Istio is deployed                                              | `istio-system`                                   |
-| `global.istioGatewayName`              | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)         | `istio-ingress`                                  |
+| `global.istioServiceAccountName`       | Name of the Istio service account                                                 | `istio-ingress`                                  |
+| `global.istioGatewayName`              | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)         | `ingress-gateway`                                |
 | `global.kafkaBootstrapUrls`            | Comma separated list containing Kafka bootstrap URLs                              | `kafka-bootstrap.kafka.svc.cluster.local:9092`   |
 | `global.existingKafkaConfigSecretName` | Name of an existing secret containing Kafka configuration                         | `""`                                             |
 | `global.existingTruststoreSecretName`  | Name of an existing secret containing the truststore                              | `""`                                             |
@@ -141,12 +142,13 @@ Contains configuration parameters specific to the Smart Cache Search API applica
 
 ### Traffic Exposure Parameters - Smart Cache Search API
 
-| Name                        | Description                                                                                                                                   | Value       |
-| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| `api.service.port`          | Smart Cache Search API service port                                                                                                           | `8181`      |
-| `api.service.type`          | Smart Cache Search API service port                                                                                                           | `ClusterIP` |
-| `api.ingress.principal`     | Principal to use for ingress traffic. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName' | `""`        |
-| `api.graphServer.principal` | Principal to use for graph server traffic. If not set, it defaults to the graph server name in the current namespace                          | `""`        |
+| Name                                           | Description                                                                                                                                                                  | Value               |
+| ---------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- |
+| `api.service.port`                             | Smart Cache Search API service port                                                                                                                                          | `8181`              |
+| `api.service.type`                             | Smart Cache Search API service port                                                                                                                                          | `ClusterIP`         |
+| `api.istio.ingress.principal`                  | Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName' | `""`                |
+| `api.istio.smartCacheGraph.principal`          | Principal used for Smart Cache Graph traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'serviceAccountName' and the current namespace     | `""`                |
+| `api.istio.smartCacheGraph.serviceAccountName` | Name of the Smart Cache Graph service account                                                                                                                                | `smart-cache-graph` |
 
 ### Service Account Parameters - Smart Cache Search Api
 

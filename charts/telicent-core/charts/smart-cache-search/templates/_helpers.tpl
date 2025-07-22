@@ -103,9 +103,9 @@ Create the name of environment variable secrets
 {{- end }}
 
 {{- define "smart-cache-search.apiIngressPrincipal" -}}
-{{- .Values.api.ingress.principal | default (printf "cluster.local/ns/%s/sa/%s" .Values.global.istioNamespace .Values.global.istioServiceAccountName) | quote }}
+{{- .Values.api.istio.ingress.principal | default (printf "cluster.local/ns/%s/sa/%s" .Values.global.istioNamespace .Values.global.istioServiceAccountName) | quote }}
 {{- end }}
 
-{{- define "smart-cache-search.apiGraphServerPrincipal" -}}
-{{- .Values.api.graphServer.principal | default (printf "cluster.local/ns/%s/sa/%s-%s" .Release.Namespace .Release.Name "smart-cache-graph") | quote }}
+{{- define "smart-cache-search.apiSmartCacheGraphPrincipal" -}}
+{{- .Values.api.istio.smartCacheGraph.principal | default (printf "cluster.local/ns/%s/sa/%s" .Release.Namespace .Values.api.istio.smartCacheGraph.serviceAccountName ) | quote }}
 {{- end }}
