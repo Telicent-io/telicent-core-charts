@@ -101,13 +101,13 @@ Create the name of the config map
 {{- end }}
 
 {{- define "access-api.ingressPrincipal" -}}
-{{- .Values.ingress.principal | default (printf "cluster.local/ns/%s/sa/%s" .Values.global.istioNamespace .Values.global.istioServiceAccountName) | quote }}
+{{- .Values.istio.ingress.principal | default (printf "cluster.local/ns/%s/sa/%s" .Values.global.istioNamespace .Values.global.istioServiceAccountName) | quote }}
 {{- end }}
 
-{{- define "access-api.graphServerPrincipal" -}}
-{{- .Values.graphServer.principal | default (printf "cluster.local/ns/%s/sa/%s-%s" .Release.Namespace .Release.Name "smart-cache-graph") | quote }}
+{{- define "access-api.smartCacheGraphPrincipal" -}}
+{{- .Values.istio.smartCacheGraph.principal | default (printf "cluster.local/ns/%s/sa/%s" .Release.Namespace .Values.istio.smartCacheGraph.serviceAccountName) | quote }}
 {{- end }}
 
-{{- define "access-api.searchApiPrincipal" -}}
-{{- .Values.searchApi.principal | default (printf "cluster.local/ns/%s/sa/%s-%s" .Release.Namespace .Release.Name "smart-cache-search") | quote }}
+{{- define "access-api.smartCacheSearchApiPrincipal" -}}
+{{- .Values.istio.smartCacheSearchApi.principal | default (printf "cluster.local/ns/%s/sa/%s" .Release.Namespace .Values.istio.smartCacheSearchApi.serviceAccountName) | quote }}
 {{- end }}

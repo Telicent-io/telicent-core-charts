@@ -38,7 +38,7 @@ spec:
         {{- toYaml . | nindent 6 }}
       {{- end }}
       containers:
-      - name: graph-server
+      - name: smart-cache-graph
         image: {{ include "smart-cache-graph.image" . }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         resources: {{- toYaml .Values.resources | nindent 10 }}

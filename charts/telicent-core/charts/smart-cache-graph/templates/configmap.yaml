@@ -11,7 +11,7 @@ metadata:
     {{- include "smart-cache-graph.labels" . | nindent 4 }}
        
 data:
-  ATTRIBUTE_HIERARCHY_URL: {{ .Values.configuration.attributeHierarchyUrl | default (include "smart-cache-graph.attributeHeirachyUrl" .) | quote }}
+  ATTRIBUTE_HIERARCHY_URL: {{ .Values.configuration.attributeHierarchyUrl | default (include "smart-cache-graph.attributeHierachyUrl" .) | quote }}
   ENABLE_BACKUPS: "false"
   ENABLE_LABELS_QUERY: "false"
   JAVA_OPTIONS: {{ .Values.configuration.javaOptions | quote }}

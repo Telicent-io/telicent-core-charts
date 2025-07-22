@@ -6,7 +6,7 @@ apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
 
 metadata:
-  name: {{ include "access-api.fullname" . }}-core-apps
+  name: {{ include "access-api.fullname" . }}-internal-ingress
   labels:
   {{- include "access-api.labels" . | nindent 4 }}
 
@@ -16,8 +16,8 @@ spec:
   - from:
     - source:
         principals: 
-        - {{ include "access-api.graphServerPrincipal" . }}
-        - {{ include "access-api.searchApiPrincipal" . }}
+        - {{ include "access-api.smartCacheGraphPrincipal" . }}
+        - {{ include "access-api.smartCacheSearchApiPrincipal" . }}
     to:
     - operation:
         methods:
