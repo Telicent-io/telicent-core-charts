@@ -103,9 +103,9 @@ Default User Preferences URL
 {{- end }}
 
 {{/*
-Default Atrribute Heirarchy URL
+Default Atrribute Hierarchy URL
 */}}
-{{- define "smart-cache-graph.attributeHeirachyUrl" -}}
+{{- define "smart-cache-graph.attributeHierachyUrl" -}}
 {{- printf "http://%s-access-api:8080/hierarchies/lookup/{name}" (.Release.Name) }}
 {{- end }}
 

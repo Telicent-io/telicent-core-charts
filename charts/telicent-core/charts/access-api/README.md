@@ -119,23 +119,15 @@ Contains configuration parameters specific to the Access API application
 
 ### Traffic Exposure Parameters
 
-| Name                | Description                                                                                                                                                                  | Value       |
-| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| `service.port`      | Access API service port                                                                                                                                                      | `8080`      |
-| `service.type`      | Access API service type                                                                                                                                                      | `ClusterIP` |
-| `ingress.principal` | Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName' | `""`        |
-
-### Search API Principal
-
-| Name                  | Description                                                                                                                                                  | Value |
-| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----- |
-| `searchApi.principal` | Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using the search api name in the current namespace | `""`  |
-
-### Graph Server Principal
-
-| Name                    | Description                                      | Value |
-| ----------------------- | ------------------------------------------------ | ----- |
-| `graphServer.principal` | is the principal to use for graph server traffic | `""`  |
+| Name                                           | Description                                                                                                                                                                   | Value                    |
+| ---------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ |
+| `service.port`                                 | Access API service port                                                                                                                                                       | `8080`                   |
+| `service.type`                                 | Access API service type                                                                                                                                                       | `ClusterIP`              |
+| `istio.ingress.principal`                      | Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName'  | `""`                     |
+| `istio.smartCacheSearchApi.principal`          | Principal used for Smart Cache Search API traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'serviceAccountName' and the current namespace | `""`                     |
+| `istio.smartCacheSearchApi.serviceAccountName` | Name of the Smart Cache Search API service account                                                                                                                            | `smart-cache-search-api` |
+| `istio.smartCacheGraph.principal`              | Principal used for Smart Cache Graph traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'serviceAccountName' and the current namespace      | `""`                     |
+| `istio.smartCacheGraph.serviceAccountName`     | Name of the Smart Cache Graph service account                                                                                                                                 | `smart-cache-graph`      |
 
 ### Service Account Parameters
 
