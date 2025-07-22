@@ -12,7 +12,7 @@ metadata:
 
 spec:
   gateways:
-  - {{ .Values.global.istioGatewayName }}
+  - {{ .Values.global.istioNamespace }}/{{ .Values.global.istioGatewayName }}
   hosts:
   - {{ .Values.global.appHostDomain }}
   http:

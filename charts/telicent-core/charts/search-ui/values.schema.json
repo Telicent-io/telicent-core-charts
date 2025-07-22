@@ -5,11 +5,6 @@
         "global": {
             "type": "object",
             "properties": {
-                "enterprise": {
-                    "type": "boolean",
-                    "description": "Enable enterprise mode, adding additional features and configurations",
-                    "default": false
-                },
                 "imageRegistry": {
                     "type": "string",
                     "description": "Global image registry",
@@ -21,30 +16,30 @@
                     "default": [],
                     "items": {}
                 },
+                "enterprise": {
+                    "type": "boolean",
+                    "description": "Enable enterprise mode, adding additional features and configurations",
+                    "default": false
+                },
                 "appHostDomain": {
                     "type": "string",
-                    "description": "Domain name associated with Search UI",
+                    "description": "Domain associated with Telicent application services",
                     "default": "apps.telicent.io"
                 },
                 "authHostDomain": {
                     "type": "string",
-                    "description": "Domain to be used for interacting with Telicent authentication services, including OIDC providers",
+                    "description": "Domain associated with Telicent authentication services, including OIDC providers",
                     "default": "auth.telicent.io"
-                },
-                "appsGateway": {
-                    "type": "string",
-                    "description": "is the name of the Istio gateway for applications",
-                    "default": "istio-system/gateways-apps"
-                },
-                "istioServiceAccountName": {
-                    "type": "string",
-                    "description": "The name of the Istio service account to use for the Access API",
-                    "default": "istio-ingress"
                 },
                 "istioNamespace": {
                     "type": "string",
-                    "description": "The namespace where Istio is installed",
+                    "description": "Namespace in which Istio is deployed",
                     "default": "istio-system"
+                },
+                "istioGatewayName": {
+                    "type": "string",
+                    "description": "Name of the Istio Gateway Resource (LB operating at the edge of the mesh)",
+                    "default": "istio-ingress"
                 }
             }
         },
@@ -300,7 +295,7 @@
             "properties": {
                 "principal": {
                     "type": "string",
-                    "description": "Principal to use for ingress traffic. If not set, defaults to the Istio service account in the istio-system",
+                    "description": "Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioGatewayName'",
                     "default": ""
                 }
             }
@@ -310,7 +305,7 @@
             "properties": {
                 "name": {
                     "type": "string",
-                    "description": "Name of the created ServiceAccount. If not set, a name is generated using the fullname template",
+                    "description": "Name of the ServiceAccount to use. If not set, a name is generated using the fullname",
                     "default": ""
                 },
                 "annotations": {
