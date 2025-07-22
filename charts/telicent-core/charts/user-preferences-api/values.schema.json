@@ -16,20 +16,40 @@
                     "default": [],
                     "items": {}
                 },
-                "existingTruststoreSecretName": {
-                    "type": "string",
-                    "description": "Name of an existing secret containing the truststore",
-                    "default": ""
+                "enterprise": {
+                    "type": "boolean",
+                    "description": "Enable enterprise mode, adding additional features and configurations",
+                    "default": false
                 },
-                "istioServiceAccountName": {
+                "appHostDomain": {
                     "type": "string",
-                    "description": "Name of the Istio service account to use for the User Preferences API",
-                    "default": "istio-ingress"
+                    "description": "Domain associated with Telicent application services",
+                    "default": "apps.telicent.io"
+                },
+                "authHostDomain": {
+                    "type": "string",
+                    "description": "Domain associated with Telicent authentication services, including OIDC providers",
+                    "default": "auth.telicent.io"
+                },
+                "jwksUrl": {
+                    "type": "string",
+                    "description": "Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)",
+                    "default": "https://{yourAuthdomain}/.well-known/jwks.json"
                 },
                 "istioNamespace": {
                     "type": "string",
-                    "description": "Istio Namespace where Istio is installed",
+                    "description": "Namespace in which Istio is deployed",
                     "default": "istio-system"
+                },
+                "istioServiceAccountName": {
+                    "type": "string",
+                    "description": "Name of the Istio service account",
+                    "default": "istio-ingress"
+                },
+                "istioGatewayName": {
+                    "type": "string",
+                    "description": "Name of the Istio Gateway Resource (LB operating at the edge of the mesh)",
+                    "default": "ingress-gateway"
                 }
             }
         },
@@ -284,13 +304,18 @@
                 }
             }
         },
-        "ingress": {
+        "istio": {
             "type": "object",
             "properties": {
-                "principal": {
-                    "type": "string",
-                    "description": "Principal to use for ingress traffic. If not set, defaults to the Istio service account in the istio-system",
-                    "default": ""
+                "ingress": {
+                    "type": "object",
+                    "properties": {
+                        "principal": {
+                            "type": "string",
+                            "description": "Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName'",
+                            "default": ""
+                        }
+                    }
                 }
             }
         },
@@ -299,7 +324,7 @@
             "properties": {
                 "name": {
                     "type": "string",
-                    "description": "Name of the created ServiceAccount. If not set, a name is generated using the fullname template",
+                    "description": "Name of the ServiceAccount to use. If not set, a name is generated using the fullname",
                     "default": ""
                 },
                 "annotations": {

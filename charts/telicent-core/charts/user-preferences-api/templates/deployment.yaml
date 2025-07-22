@@ -83,7 +83,6 @@ spec:
         {{- if .Values.global.existingTruststoreSecretName }}
         - name: truststore-volume
           mountPath: /app/config/truststore
-        securityContext: {{- toYaml .Values.containerSecurityContext | nindent 10 }}
         {{- end }}
         {{- if contains "tls=true" .Values.mongo.url }}
         - name: ca-certificate-volume
