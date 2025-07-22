@@ -30,19 +30,18 @@ spec:
     spec:
       {{- if $.Values.imagePullSecrets }}
       imagePullSecrets:
-        {{- toYaml $.Values.imagePullSecrets | nindent 8 }}
+      {{- toYaml $.Values.imagePullSecrets | nindent 8 }}
       {{- end }}
       containers:
       - image: {{ .image.repository }}:{{ .image.tag }}
-        imagePullPolicy: {{ .image.pullPolicy }}
         name: {{ .name }}
         env:
         - name: BOOTSTRAP_SERVERS
-          value: {{ $.kafkaBootstrapUrls | quote }}
+          value: {{ $.Values.kafkaBootstrapUrls | quote }}
         - name: KAFKA_CONFIG_FILE_PATH
           value: /app/config/kafka-auth/kafka-config.toml
         {{- toYaml .configuration | nindent 8 }}
-        {{- if $.Values.resources }}
+        {{- if .resources }}
         resources:
         {{- toYaml .resources | nindent 10 }}
         {{- end }}

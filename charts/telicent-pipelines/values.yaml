@@ -88,7 +88,7 @@ jobs:
 
   - name: ies-regions
     # enabled is a flag to enable or disable the job
-    enabled: false
+    enabled: true
     # completedTtl is the time-to-live for completed jobs, after which they are cleaned up
     completedTtl: 30
     # serviceAccountName is the name of the service account used to run the job
@@ -128,7 +128,7 @@ jobs:
     resources: null
   - name: ontology-ies-regions
     # enabled is a flag to enable or disable the job
-    enabled: false
+    enabled: true
     # completedTtl is the time-to-live for completed jobs, after which they are cleaned up
     completedTtl: 30
     # serviceAccountName is the name of the service account used to run the job
