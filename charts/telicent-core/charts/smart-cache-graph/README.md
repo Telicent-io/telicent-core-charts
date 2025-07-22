@@ -55,7 +55,8 @@ Contains global parameters, these parameters are mirrored within the Telicent co
 | `global.authHostDomain`                | Domain associated with Telicent authentication services, including OIDC providers | `auth.telicent.io`                               |
 | `global.jwksUrl`                       | Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)     | `https://{yourAuthdomain}/.well-known/jwks.json` |
 | `global.istioNamespace`                | Namespace in which Istio is deployed                                              | `istio-system`                                   |
-| `global.istioGatewayName`              | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)         | `istio-ingress`                                  |
+| `global.istioServiceAccountName`       | Name of the Istio service account                                                 | `istio-ingress`                                  |
+| `global.istioGatewayName`              | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)         | `ingress-gateway`                                |
 | `global.kafkaBootstrapUrls`            | Comma separated list containing Kafka bootstrap URLs                              | `kafka-bootstrap.kafka.svc.cluster.local:9092`   |
 | `global.existingKafkaConfigSecretName` | Name of an existing secret containing Kafka configuration                         | `""`                                             |
 | `global.existingTruststoreSecretName`  | Name of an existing secret containing the truststore                              | `""`                                             |
@@ -126,11 +127,11 @@ Contains configuration parameters specific to the Smart Cache Graph application
 
 ### Traffic Exposure Parameters
 
-| Name                | Description                                                                                                                                                           | Value       |
-| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| `service.port`      | Smart Cache Graph service port                                                                                                                                        | `3030`      |
-| `service.type`      | Smart Cache Graph service type                                                                                                                                        | `ClusterIP` |
-| `ingress.principal` | Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioGatewayName' | `""`        |
+| Name                | Description                                                                                                                                                                  | Value       |
+| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `service.port`      | Smart Cache Graph service port                                                                                                                                               | `3030`      |
+| `service.type`      | Smart Cache Graph service type                                                                                                                                               | `ClusterIP` |
+| `ingress.principal` | Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName' | `""`        |
 
 ### Service Account Parameters
 

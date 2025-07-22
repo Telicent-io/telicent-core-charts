@@ -51,17 +51,20 @@ The command removes all the Kubernetes components associated with the chart and 
 
 Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
 
-| Name                                  | Description                                                                                       | Value                        |
-| ------------------------------------- | ------------------------------------------------------------------------------------------------- | ---------------------------- |
-| `global.imageRegistry`                | Global image registry                                                                             | `""`                         |
-| `global.imagePullSecrets`             | Global registry secret names as an array                                                          | `[]`                         |
-| `global.appHostDomain`                | Domain name associated with Smart Cache Search API & Projector                                    | `apps.telicent.io`           |
-| `global.authHostDomain`               | Domain to be used for interacting with Telicent authentication services, including OIDC providers | `auth.telicent.io`           |
-| `global.appsGateway`                  | Name of the Istio gateway for applications                                                        | `istio-system/gateways-apps` |
-| `global.istioServiceAccountName`      | Name of the Istio service account to use for Smart Cache Search API & Projector                   | `istio-ingress`              |
-| `global.istioNamespace`               | Namespace where Istio is installed                                                                | `istio-system`               |
-| `global.existingTruststoreSecretName` | Name of an existing secret containing the truststore                                              | `""`                         |
-| `global.truststore.mountPath`         | The mount path for the truststore in the container                                                | `/app/config/truststore`     |
+| Name                                   | Description                                                                       | Value                                            |
+| -------------------------------------- | --------------------------------------------------------------------------------- | ------------------------------------------------ |
+| `global.imageRegistry`                 | Global image registry                                                             | `""`                                             |
+| `global.imagePullSecrets`              | Global registry secret names as an array                                          | `[]`                                             |
+| `global.enterprise`                    | Enable enterprise mode, adding additional features and configurations             | `false`                                          |
+| `global.appHostDomain`                 | Domain associated with Telicent application services                              | `apps.telicent.io`                               |
+| `global.authHostDomain`                | Domain associated with Telicent authentication services, including OIDC providers | `auth.telicent.io`                               |
+| `global.jwksUrl`                       | Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)     | `https://{yourAuthdomain}/.well-known/jwks.json` |
+| `global.istioNamespace`                | Namespace in which Istio is deployed                                              | `istio-system`                                   |
+| `global.istioGatewayName`              | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)         | `istio-ingress`                                  |
+| `global.kafkaBootstrapUrls`            | Comma separated list containing Kafka bootstrap URLs                              | `kafka-bootstrap.kafka.svc.cluster.local:9092`   |
+| `global.existingKafkaConfigSecretName` | Name of an existing secret containing Kafka configuration                         | `""`                                             |
+| `global.existingTruststoreSecretName`  | Name of an existing secret containing the truststore                              | `""`                                             |
+| `global.truststore.mountPath`          | The mount path for the truststore in the container                                | `/app/config/truststore`                         |
 
 ### Smart Cache Search API Parameters
 
@@ -138,12 +141,12 @@ Contains configuration parameters specific to the Smart Cache Search API applica
 
 ### Traffic Exposure Parameters - Smart Cache Search API
 
-| Name                        | Description                                                                                                          | Value       |
-| --------------------------- | -------------------------------------------------------------------------------------------------------------------- | ----------- |
-| `api.service.port`          | Smart Cache Search API service port                                                                                  | `8181`      |
-| `api.service.type`          | Smart Cache Search API service port                                                                                  | `ClusterIP` |
-| `api.ingress.principal`     | Principal to use for ingress traffic. If not set, defaults to the Istio service account in the istio-system          | `""`        |
-| `api.graphServer.principal` | Principal to use for graph server traffic. If not set, it defaults to the graph server name in the current namespace | `""`        |
+| Name                        | Description                                                                                                                                   | Value       |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `api.service.port`          | Smart Cache Search API service port                                                                                                           | `8181`      |
+| `api.service.type`          | Smart Cache Search API service port                                                                                                           | `ClusterIP` |
+| `api.ingress.principal`     | Principal to use for ingress traffic. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName' | `""`        |
+| `api.graphServer.principal` | Principal to use for graph server traffic. If not set, it defaults to the graph server name in the current namespace                          | `""`        |
 
 ### Service Account Parameters - Smart Cache Search Api
 
@@ -227,10 +230,10 @@ Contains configuration parameters specific to the Smart Cache Search Projector a
 
 ### Service Account Parameters - Smart Cache Search Projector
 
-| Name                                   | Description                                                                                     | Value |
-| -------------------------------------- | ----------------------------------------------------------------------------------------------- | ----- |
-| `projector.serviceAccount.name`        | Name of the created ServiceAccount. If not set, a name is generated using the fullname template | `""`  |
-| `projector.serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                            | `{}`  |
+| Name                                   | Description                                                                           | Value |
+| -------------------------------------- | ------------------------------------------------------------------------------------- | ----- |
+| `projector.serviceAccount.name`        | Name of the ServiceAccount to use. If not set, a name is generated using the fullname | `""`  |
+| `projector.serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                  | `{}`  |
 
 ## License
 
