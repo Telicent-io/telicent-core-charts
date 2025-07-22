@@ -41,10 +41,15 @@
                     "description": "Namespace in which Istio is deployed",
                     "default": "istio-system"
                 },
+                "istioServiceAccountName": {
+                    "type": "string",
+                    "description": "Name of the Istio service account",
+                    "default": "istio-ingress"
+                },
                 "istioGatewayName": {
                     "type": "string",
                     "description": "Name of the Istio Gateway Resource (LB operating at the edge of the mesh)",
-                    "default": "istio-ingress"
+                    "default": "ingress-gateway"
                 },
                 "kafkaBootstrapUrls": {
                     "type": "string",
@@ -378,23 +383,33 @@
                         }
                     }
                 },
-                "ingress": {
+                "istio": {
                     "type": "object",
                     "properties": {
-                        "principal": {
-                            "type": "string",
-                            "description": "Principal to use for ingress traffic. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName'",
-                            "default": ""
-                        }
-                    }
-                },
-                "graphServer": {
-                    "type": "object",
-                    "properties": {
-                        "principal": {
-                            "type": "string",
-                            "description": "Principal to use for graph server traffic. If not set, it defaults to the graph server name in the current namespace",
-                            "default": ""
+                        "ingress": {
+                            "type": "object",
+                            "properties": {
+                                "principal": {
+                                    "type": "string",
+                                    "description": "Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName'",
+                                    "default": ""
+                                }
+                            }
+                        },
+                        "smartCacheGraph": {
+                            "type": "object",
+                            "properties": {
+                                "principal": {
+                                    "type": "string",
+                                    "description": "Principal used for Smart Cache Graph traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'serviceAccountName' and the current namespace",
+                                    "default": ""
+                                },
+                                "serviceAccountName": {
+                                    "type": "string",
+                                    "description": "Name of the Smart Cache Graph service account",
+                                    "default": "smart-cache-graph"
+                                }
+                            }
                         }
                     }
                 },
