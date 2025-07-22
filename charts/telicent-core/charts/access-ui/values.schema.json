@@ -31,10 +31,15 @@
                     "description": "Namespace in which Istio is deployed",
                     "default": "istio-system"
                 },
+                "istioServiceAccountName": {
+                    "type": "string",
+                    "description": "Name of the Istio service account",
+                    "default": "istio-ingress"
+                },
                 "istioGatewayName": {
                     "type": "string",
                     "description": "Name of the Istio Gateway Resource (LB operating at the edge of the mesh)",
-                    "default": "istio-ingress"
+                    "default": "ingress-gateway"
                 }
             }
         },
@@ -239,7 +244,7 @@
             "properties": {
                 "principal": {
                     "type": "string",
-                    "description": "Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioGatewayName'",
+                    "description": "Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName'",
                     "default": ""
                 }
             }

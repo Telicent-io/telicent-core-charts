@@ -31,8 +31,10 @@ global:
   # @key global.istioNamespace Namespace in which Istio is deployed
   # NOTE: Istio, by default, is deployed within the 'istio-system' namespace
   istioNamespace: istio-system
+  # @key global.istioServiceAccountName Name of the Istio service account
+  istioServiceAccountName: istio-ingress
   # @key global.istioGatewayName Name of the Istio Gateway Resource (LB operating at the edge of the mesh)
-  istioGatewayName: istio-ingress
+  istioGatewayName: ingress-gateway
 
   # @key global.kafkaBootstrapUrls Comma separated list containing Kafka bootstrap URLs
   kafkaBootstrapUrls: "kafka-bootstrap.kafka.svc.cluster.local:9092"
@@ -162,7 +164,7 @@ service:
   type: ClusterIP
 
 ingress:
-  # @key ingress.principal Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioGatewayName'
+  # @key ingress.principal Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName'
   principal: ""
 
 # @section Service Account Parameters
