@@ -46,16 +46,20 @@ The command removes all the Kubernetes components associated with the chart and 
 
 Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
 
-| Name                                  | Description                                                                                       | Value                    |
-| ------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------ |
-| `global.imageRegistry`                | Global image registry                                                                             | `""`                     |
-| `global.imagePullSecrets`             | Global registry secret names as an array                                                          | `[]`                     |
-| `global.appHostDomain`                | Domain name associated with Smart Cache Graph                                                     | `apps.telicent.io`       |
-| `global.authHostDomain`               | Domain to be used for interacting with Telicent authentication services, including OIDC providers | `auth.telicent.io`       |
-| `global.istioServiceAccountName`      | The name of the Istio service account to use for Smart Cache Graph                                | `istio-ingress`          |
-| `global.istioNamespace`               | The namespace where Istio is installed                                                            | `istio-system`           |
-| `global.existingTruststoreSecretName` | The name of an existing secret containing the truststore                                          | `""`                     |
-| `global.truststore.mountPath`         | The mount path for the truststore in the container                                                | `/app/config/truststore` |
+| Name                                   | Description                                                                       | Value                                            |
+| -------------------------------------- | --------------------------------------------------------------------------------- | ------------------------------------------------ |
+| `global.imageRegistry`                 | Global image registry                                                             | `""`                                             |
+| `global.imagePullSecrets`              | Global registry secret names as an array                                          | `[]`                                             |
+| `global.enterprise`                    | Enable enterprise mode, adding additional features and configurations             | `false`                                          |
+| `global.appHostDomain`                 | Domain associated with Telicent application services                              | `apps.telicent.io`                               |
+| `global.authHostDomain`                | Domain associated with Telicent authentication services, including OIDC providers | `auth.telicent.io`                               |
+| `global.jwksUrl`                       | Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)     | `https://{yourAuthdomain}/.well-known/jwks.json` |
+| `global.istioNamespace`                | Namespace in which Istio is deployed                                              | `istio-system`                                   |
+| `global.istioGatewayName`              | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)         | `istio-ingress`                                  |
+| `global.kafkaBootstrapUrls`            | Comma separated list containing Kafka bootstrap URLs                              | `kafka-bootstrap.kafka.svc.cluster.local:9092`   |
+| `global.existingKafkaConfigSecretName` | Name of an existing secret containing Kafka configuration                         | `""`                                             |
+| `global.existingTruststoreSecretName`  | Name of an existing secret containing the truststore                              | `""`                                             |
+| `global.truststore.mountPath`          | The mount path for the truststore in the container                                | `/app/config/truststore`                         |
 
 ### Configuration Parameters
 
@@ -106,12 +110,12 @@ Contains configuration parameters specific to the Smart Cache Graph application
 
 ### Persistent Volume Claim Parameters
 
-| Name                                                 | Description                                  | Value     |
-| ---------------------------------------------------- | -------------------------------------------- | --------- |
-| `persistentVolumeClaims.backupsVolume.size`          | PVC Storage Request for Backup volume        | `100Gi`   |
-| `persistentVolumeClaims.backupsVolume.storageClass`  | PVC Storage Class for the Backup data volume | `gp3-enc` |
-| `persistentVolumeClaims.datasetsVolume.size`         | PVC Storage Request for Graph volume         | `25Gi`    |
-| `persistentVolumeClaims.datasetsVolume.storageClass` | iPVC Storage Class for the Graph data volume | `gp3-enc` |
+| Name                                                 | Description                                  | Value  |
+| ---------------------------------------------------- | -------------------------------------------- | ------ |
+| `persistentVolumeClaims.backupsVolume.size`          | PVC Storage Request for the Backup volume    | `25Gi` |
+| `persistentVolumeClaims.backupsVolume.storageClass`  | PVC Storage Class for the Backup data volume | `gp3`  |
+| `persistentVolumeClaims.datasetsVolume.size`         | PVC Storage Request for the Graph volume     | `25Gi` |
+| `persistentVolumeClaims.datasetsVolume.storageClass` | iPVC Storage Class for the Graph data volume | `gp3`  |
 
 ### Metrics Parameters
 
@@ -122,18 +126,18 @@ Contains configuration parameters specific to the Smart Cache Graph application
 
 ### Traffic Exposure Parameters
 
-| Name                | Description                                                                                                 | Value       |
-| ------------------- | ----------------------------------------------------------------------------------------------------------- | ----------- |
-| `service.port`      | Smart Cache Graph service port                                                                              | `3030`      |
-| `service.type`      | Smart Cache Graph service type                                                                              | `ClusterIP` |
-| `ingress.principal` | Principal to use for ingress traffic. If not set, defaults to the Istio service account in the istio-system | `""`        |
+| Name                | Description                                                                                                                                                           | Value       |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `service.port`      | Smart Cache Graph service port                                                                                                                                        | `3030`      |
+| `service.type`      | Smart Cache Graph service type                                                                                                                                        | `ClusterIP` |
+| `ingress.principal` | Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioGatewayName' | `""`        |
 
 ### Service Account Parameters
 
-| Name                         | Description                                                                                     | Value |
-| ---------------------------- | ----------------------------------------------------------------------------------------------- | ----- |
-| `serviceAccount.name`        | Name of the created ServiceAccount. If not set, a name is generated using the fullname template | `""`  |
-| `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                            | `{}`  |
+| Name                         | Description                                                                           | Value |
+| ---------------------------- | ------------------------------------------------------------------------------------- | ----- |
+| `serviceAccount.name`        | Name of the ServiceAccount to use. If not set, a name is generated using the fullname | `""`  |
+| `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                  | `{}`  |
 
 ## License
 

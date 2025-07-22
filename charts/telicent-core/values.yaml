@@ -6,7 +6,7 @@
 # Contains global parameters, these parameters are mirrored across all Telicent Core subcharts, these values will be authoritative.
 # @descEnd
 global:
-  # @key global.enterprise Enable enterprise mode, adding additional features and configurations suitable for an enterprise deployment.
+  # @key global.enterprise Enable enterprise mode, adding additional features and configurations
   enterprise: false
 
   # @key global.existingKafkaConfigSecretName Name of an existing secret containing Kafka configuration
@@ -24,7 +24,7 @@ global:
   appHostDomain: "apps.yourdomain.com"
   # @key global.authHostDomain Domain to be used for interacting with Telicent authentication services, including OIDC providers
   authHostDomain: "auth.yourdomain.com"
-  # @key global.jwksUrl URL for the JSON Web Key Set (JWKS) used
+  # @key global.jwksUrl URL for the JSON Web Key Set (JWKS)
   jwksUrl: "https://yourdomain.com/.well-known/jwks.json"
   # @key global.kafkaBootstrapUrls List of Kafka bootstrap URLs
   kafkaBootstrapUrls: "kafka-kafka-bootstrap.kafka-dev.svc.cluster.local:9092"
