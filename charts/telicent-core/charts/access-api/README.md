@@ -47,15 +47,14 @@ The command removes all the Kubernetes components associated with the chart and 
 
 Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
 
-| Name                             | Description                                                                                       | Value                        |
-| -------------------------------- | ------------------------------------------------------------------------------------------------- | ---------------------------- |
-| `global.imageRegistry`           | Global image registry                                                                             | `""`                         |
-| `global.imagePullSecrets`        | Global registry secret names as an array                                                          | `[]`                         |
-| `global.appHostDomain`           | Domain name associated with Access API                                                            | `apps.telicent.io`           |
-| `global.authHostDomain`          | Domain to be used for interacting with Telicent authentication services, including OIDC providers | `auth.telicent.io`           |
-| `global.appsGateway`             | is the name of the Istio gateway for applications                                                 | `istio-system/gateways-apps` |
-| `global.istioServiceAccountName` | The name of the Istio service account to use for the Access API                                   | `istio-ingress`              |
-| `global.istioNamespace`          | The namespace where Istio is installed                                                            | `istio-system`               |
+| Name                      | Description                                                                       | Value              |
+| ------------------------- | --------------------------------------------------------------------------------- | ------------------ |
+| `global.imageRegistry`    | Global image registry                                                             | `""`               |
+| `global.imagePullSecrets` | Global registry secret names as an array                                          | `[]`               |
+| `global.appHostDomain`    | Domain associated with Telicent application services                              | `apps.telicent.io` |
+| `global.authHostDomain`   | Domain associated with Telicent authentication services, including OIDC providers | `auth.telicent.io` |
+| `global.istioNamespace`   | Namespace in which Istio is deployed                                              | `istio-system`     |
+| `global.istioGatewayName` | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)         | `istio-ingress`    |
 
 ### Configuration Parameters
 
@@ -69,12 +68,12 @@ Contains configuration parameters specific to the Access API application
 
 ### Common Parameters
 
-| Name                      | Description                                               | Value |
-| ------------------------- | --------------------------------------------------------- | ----- |
-| `fullnameOverride`        | String to fully override the generated release name       | `""`  |
-| `existingConfigmap`       | The name of the existing configmap for configuration      | `""`  |
-| `existingCacertConfigmap` | The name of the existing configmap for extra certificates | `""`  |
-| `cacert`                  | Path to the CA certificate file                           | `""`  |
+| Name                      | Description                                           | Value |
+| ------------------------- | ----------------------------------------------------- | ----- |
+| `fullnameOverride`        | String to fully override the generated release name   | `""`  |
+| `existingConfigmap`       | Name of the existing configmap for configuration      | `""`  |
+| `existingCacertConfigmap` | Name of the existing configmap for extra certificates | `""`  |
+| `cacert`                  | Path to the CA certificate file                       | `""`  |
 
 ### MongoDB Parameters
 
@@ -119,41 +118,30 @@ Contains configuration parameters specific to the Access API application
 
 ### Traffic Exposure Parameters
 
-| Name           | Description             | Value       |
-| -------------- | ----------------------- | ----------- |
-| `service.port` | Access API service port | `8080`      |
-| `service.type` | Access API service type | `ClusterIP` |
+| Name                | Description                                                                                                                                                           | Value       |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `service.port`      | Access API service port                                                                                                                                               | `8080`      |
+| `service.type`      | Access API service type                                                                                                                                               | `ClusterIP` |
+| `ingress.principal` | Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioGatewayName' | `""`        |
 
-### Service Account Parameters
+### Search API Principal
 
-| Name                         | Description                                                                                     | Value |
-| ---------------------------- | ----------------------------------------------------------------------------------------------- | ----- |
-| `serviceAccount.name`        | Name of the created ServiceAccount. If not set, a name is generated using the fullname template | `""`  |
-| `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                            | `{}`  |
+| Name                  | Description                                                                                                                                                  | Value |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----- |
+| `searchApi.principal` | Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using the search api name in the current namespace | `""`  |
 
-### Istio ingress Parameters
-
-If not set, it defaults to the Istio service account in the istio-system
-
-| Name                | Description                                 | Value |
-| ------------------- | ------------------------------------------- | ----- |
-| `ingress.principal` | is the principal to use for ingress traffic | `""`  |
-
-### API Principals
-
-If not set, it defaults to the search api name in the current namespace
-
-| Name                  | Description                                      | Value |
-| --------------------- | ------------------------------------------------ | ----- |
-| `searchApi.principal` | is the principal to use for search API traffic.  | `""`  |
-
-### Graph Server Parameters
-
-If not set, it defaults to the graph server name in the current namespace
+### Graph Server Principal
 
 | Name                    | Description                                      | Value |
 | ----------------------- | ------------------------------------------------ | ----- |
 | `graphServer.principal` | is the principal to use for graph server traffic | `""`  |
+
+### Service Account Parameters
+
+| Name                         | Description                                                                           | Value |
+| ---------------------------- | ------------------------------------------------------------------------------------- | ----- |
+| `serviceAccount.name`        | Name of the ServiceAccount to use. If not set, a name is generated using the fullname | `""`  |
+| `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                  | `{}`  |
 
 
 ## License

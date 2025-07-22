@@ -18,28 +18,23 @@
                 },
                 "appHostDomain": {
                     "type": "string",
-                    "description": "Domain name associated with Access API",
+                    "description": "Domain associated with Telicent application services",
                     "default": "apps.telicent.io"
                 },
                 "authHostDomain": {
                     "type": "string",
-                    "description": "Domain to be used for interacting with Telicent authentication services, including OIDC providers",
+                    "description": "Domain associated with Telicent authentication services, including OIDC providers",
                     "default": "auth.telicent.io"
-                },
-                "appsGateway": {
-                    "type": "string",
-                    "description": "is the name of the Istio gateway for applications",
-                    "default": "istio-system/gateways-apps"
-                },
-                "istioServiceAccountName": {
-                    "type": "string",
-                    "description": "The name of the Istio service account to use for the Access API",
-                    "default": "istio-ingress"
                 },
                 "istioNamespace": {
                     "type": "string",
-                    "description": "The namespace where Istio is installed",
+                    "description": "Namespace in which Istio is deployed",
                     "default": "istio-system"
+                },
+                "istioGatewayName": {
+                    "type": "string",
+                    "description": "Name of the Istio Gateway Resource (LB operating at the edge of the mesh)",
+                    "default": "istio-ingress"
                 }
             }
         },
@@ -70,12 +65,12 @@
         },
         "existingConfigmap": {
             "type": "string",
-            "description": "The name of the existing configmap for configuration",
+            "description": "Name of the existing configmap for configuration",
             "default": ""
         },
         "existingCacertConfigmap": {
             "type": "string",
-            "description": "The name of the existing configmap for extra certificates",
+            "description": "Name of the existing configmap for extra certificates",
             "default": ""
         },
         "cacert": {
@@ -309,27 +304,12 @@
                 }
             }
         },
-        "serviceAccount": {
-            "type": "object",
-            "properties": {
-                "name": {
-                    "type": "string",
-                    "description": "Name of the created ServiceAccount. If not set, a name is generated using the fullname template",
-                    "default": ""
-                },
-                "annotations": {
-                    "type": "object",
-                    "description": "Additional custom annotations for the ServiceAccount",
-                    "default": {}
-                }
-            }
-        },
         "ingress": {
             "type": "object",
             "properties": {
                 "principal": {
                     "type": "string",
-                    "description": "is the principal to use for ingress traffic",
+                    "description": "Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioGatewayName'",
                     "default": ""
                 }
             }
@@ -339,7 +319,7 @@
             "properties": {
                 "principal": {
                     "type": "string",
-                    "description": "is the principal to use for search API traffic. ",
+                    "description": "Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using the search api name in the current namespace",
                     "default": ""
                 }
             }
@@ -351,6 +331,21 @@
                     "type": "string",
                     "description": "is the principal to use for graph server traffic",
                     "default": ""
+                }
+            }
+        },
+        "serviceAccount": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Name of the ServiceAccount to use. If not set, a name is generated using the fullname",
+                    "default": ""
+                },
+                "annotations": {
+                    "type": "object",
+                    "description": "Additional custom annotations for the ServiceAccount",
+                    "default": {}
                 }
             }
         }

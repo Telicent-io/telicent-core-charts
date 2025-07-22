@@ -5,27 +5,28 @@
 # @descStart
 # Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
 # @descEnd
-## Please, note that this will override the image parameters
-## Current available global image parameters: imageRegistry and imagePullSecrets
+
 global:
+  ## Current available global image parameters: imageRegistry and imagePullSecrets
+  ## Please, note that this will override the image parameters
   # @key global.imageRegistry Global image registry
   imageRegistry: ""
   # E.g.
   # imagePullSecrets:
   #   - myRegistryKeySecretName
-  #
   # @key global.imagePullSecrets Global registry secret names as an array
   imagePullSecrets: []
-  # @key global.appHostDomain Domain name associated with Access API
+
+  # @key global.appHostDomain Domain associated with Telicent application services
   appHostDomain: "apps.telicent.io"
-  # @key global.authHostDomain Domain to be used for interacting with Telicent authentication services, including OIDC providers
+  # @key global.authHostDomain Domain associated with Telicent authentication services, including OIDC providers
   authHostDomain: "auth.telicent.io"
-  # @key global.appsGateway is the name of the Istio gateway for applications
-  appsGateway: istio-system/gateways-apps
-  # @key global.istioServiceAccountName The name of the Istio service account to use for the Access API
-  istioServiceAccountName: istio-ingress
-  # @key global.istioNamespace The namespace where Istio is installed
+
+  # @key global.istioNamespace Namespace in which Istio is deployed
+  # NOTE: Istio, by default, is deployed within the 'istio-system' namespace
   istioNamespace: istio-system
+  # @key global.istioGatewayName Name of the Istio Gateway Resource (LB operating at the edge of the mesh)
+  istioGatewayName: istio-ingress
 
 # @section Configuration Parameters
 # @descStart
@@ -40,15 +41,13 @@ configuration:
   scimEnabled: true
 
 # @section Common Parameters
-
 #@key fullnameOverride String to fully override the generated release name
 fullnameOverride: ""
-
-#@key existingConfigmap The name of the existing configmap for configuration
+#@key existingConfigmap Name of the existing configmap for configuration
 existingConfigmap: ""
-#@key existingCacertConfigmap The name of the existing configmap for extra certificates
+#@key existingCacertConfigmap Name of the existing configmap for extra certificates
 existingCacertConfigmap: ""
-#@key cacert  Path to the CA certificate file
+#@key cacert Path to the CA certificate file
 cacert: ""
 
 # @section MongoDB Parameters
@@ -139,32 +138,27 @@ service:
   # @key service.type Access API service type
   type: ClusterIP
 
-# @section Service Account Parameters
-serviceAccount:
-  # @key serviceAccount.name Name of the created ServiceAccount. If not set, a name is generated using the fullname template
-  name: ""
-  #@key serviceAccount.annotations Additional custom annotations for the ServiceAccount
-  annotations: {}
-
-# @section Istio ingress Parameters
 ingress:
-  # @key ingress.principal is the principal to use for ingress traffic
-  # @descStart
-  # If not set, it defaults to the Istio service account in the istio-system
-  # @descEnd
-  principal: ""
-# @section API Principals
-searchApi:
-  # @key searchApi.principal is the principal to use for search API traffic. 
-  # @descStart
-  # If not set, it defaults to the search api name in the current namespace
-  # @descEnd
+  # @key ingress.principal Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioGatewayName'
   principal: ""
 
-# @section Graph Server Parameters
+# @section Search API Principal
+searchApi:
+  # @key searchApi.principal Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using the search api name in the current namespace
+  principal: ""
+
+# @section Graph Server Principal
 graphServer:
   # @key graphServer.principal is the principal to use for graph server traffic
-  # @descStart
-  # If not set, it defaults to the graph server name in the current namespace
-  # @descEnd
   principal: ""
+
+# @section Service Account Parameters
+serviceAccount:
+  # @key serviceAccount.name Name of the ServiceAccount to use. If not set, a name is generated using the fullname
+  name: ""
+  #@key serviceAccount.annotations Additional custom annotations for the ServiceAccount
+  annotations: { }
+
+
+
+

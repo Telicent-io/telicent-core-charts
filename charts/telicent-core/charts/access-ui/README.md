@@ -46,15 +46,14 @@ The command removes all the Kubernetes components associated with the chart and 
 
 Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
 
-| Name                             | Description                                                                                       | Value                        |
-| -------------------------------- | ------------------------------------------------------------------------------------------------- | ---------------------------- |
-| `global.imageRegistry`           | Global image registry                                                                             | `""`                         |
-| `global.imagePullSecrets`        | Global registry secret names as an array                                                          | `[]`                         |
-| `global.appHostDomain`           | Domain name associated with Access UI                                                             | `apps.telicent.io`           |
-| `global.authHostDomain`          | Domain to be used for interacting with Telicent authentication services, including OIDC providers | `auth.telicent.io`           |
-| `global.appsGateway`             | is the name of the Istio gateway for applications                                                 | `istio-system/gateways-apps` |
-| `global.istioServiceAccountName` | The name of the Istio service account to use for the Access API                                   | `istio-ingress`              |
-| `global.istioNamespace`          | The namespace where Istio is installed                                                            | `istio-system`               |
+| Name                      | Description                                                                       | Value              |
+| ------------------------- | --------------------------------------------------------------------------------- | ------------------ |
+| `global.imageRegistry`    | Global image registry                                                             | `""`               |
+| `global.imagePullSecrets` | Global registry secret names as an array                                          | `[]`               |
+| `global.appHostDomain`    | Domain associated with Telicent application services                              | `apps.telicent.io` |
+| `global.authHostDomain`   | Domain associated with Telicent authentication services, including OIDC providers | `auth.telicent.io` |
+| `global.istioNamespace`   | Namespace in which Istio is deployed                                              | `istio-system`     |
+| `global.istioGatewayName` | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)         | `istio-ingress`    |
 
 ### Configuration Parameters
 
@@ -100,18 +99,18 @@ Contains configuration parameters specific to the Access UI application
 
 ### Traffic Exposure Parameters
 
-| Name                | Description                                                                                                 | Value       |
-| ------------------- | ----------------------------------------------------------------------------------------------------------- | ----------- |
-| `service.port`      | Access UI service port                                                                                      | `8080`      |
-| `service.type`      | Access UI service type                                                                                      | `ClusterIP` |
-| `ingress.principal` | Principal to use for ingress traffic. If not set, defaults to the Istio service account in the istio-system | `""`        |
+| Name                | Description                                                                                                                                                           | Value       |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `service.port`      | Access UI service port                                                                                                                                                | `8080`      |
+| `service.type`      | Access UI service type                                                                                                                                                | `ClusterIP` |
+| `ingress.principal` | Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioGatewayName' | `""`        |
 
-### Other Parameters
+### Service Account Parameters
 
-| Name                         | Description                                                                                     | Value |
-| ---------------------------- | ----------------------------------------------------------------------------------------------- | ----- |
-| `serviceAccount.name`        | Name of the created ServiceAccount. If not set, a name is generated using the fullname template | `""`  |
-| `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                            | `{}`  |
+| Name                         | Description                                                                           | Value |
+| ---------------------------- | ------------------------------------------------------------------------------------- | ----- |
+| `serviceAccount.name`        | Name of the ServiceAccount to use. If not set, a name is generated using the fullname | `""`  |
+| `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                  | `{}`  |
 
 ## License
 
