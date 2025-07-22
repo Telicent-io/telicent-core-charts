@@ -245,13 +245,18 @@
                 }
             }
         },
-        "ingress": {
+        "istio": {
             "type": "object",
             "properties": {
-                "principal": {
-                    "type": "string",
-                    "description": "Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName'",
-                    "default": ""
+                "ingress": {
+                    "type": "object",
+                    "properties": {
+                        "principal": {
+                            "type": "string",
+                            "description": "Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName'",
+                            "default": ""
+                        }
+                    }
                 }
             }
         },
