@@ -110,5 +110,5 @@ Default Atrribute Heirarchy URL
 {{- end }}
 
 {{- define "smart-cache-graph.ingressPrincipal" -}}
-{{- .Values.ingress.principal | default (printf "cluster.local/ns/%s/sa/%s" .Values.global.istioNamespace .Values.global.istioServiceAccountName) | quote }}
+{{- .Values.ingress.principal | default (printf "cluster.local/ns/%s/sa/%s" .Values.global.istioNamespace .Values.global.istioGatewayName) | quote }}
 {{- end }}
