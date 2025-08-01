@@ -68,6 +68,6 @@ supersedes all prior or contemporaneous agreements, representations, warranties,
 
 For questions regarding this License, please contact:
 Telicent Limited
-Email: legal@telicent.io
+Email: info@telicent.io
 Website: https://telicent.io
-By using this Software, you acknowledge that
+By using this Software, you acknowledge that you have read, understood, and agree to be bound by the terms of this license.
