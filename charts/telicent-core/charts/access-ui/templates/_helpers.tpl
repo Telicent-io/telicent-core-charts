@@ -35,13 +35,6 @@ Create chart name and version as used by the chart label.
 {{- end }}
 
 {{/*
-Returns the version
-*/}}
-{{- define "access-ui.version" -}}
-{{ .Values.image.tag | default .Chart.AppVersion }}
-{{- end -}}
-
-{{/*
 Common labels
 */}}
 {{- define "access-ui.labels" -}}
@@ -82,5 +75,5 @@ Create the name of the config map
 {{- end }}
 
 {{- define "access-ui.ingressPrincipal" -}}
-{{- .Values.ingress.principal | default (printf "cluster.local/ns/%s/sa/%s" .Values.global.istioNamespace .Values.global.istioServiceAccountName) | quote }}
+{{- .Values.istio.ingress.principal | default (printf "cluster.local/ns/%s/sa/%s" .Values.global.istioNamespace .Values.global.istioServiceAccountName) | quote }}
 {{- end }}

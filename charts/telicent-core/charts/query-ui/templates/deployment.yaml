@@ -18,11 +18,9 @@ spec:
       maxSurge: 1
       maxUnavailable: 0
     type: RollingUpdate
-
   selector:
     matchLabels:
     {{- include "query.selectorLabels" . | nindent 6 }}
-
   template:
     metadata:
       annotations:
@@ -31,13 +29,18 @@ spec:
         {{- end }}
       labels:
         {{- include "query.labels" . | nindent 8 }}
-
     spec:
       serviceAccountName: {{ include "query.serviceAccountName" . }}
       securityContext: {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      
+      {{- $pullSecret := .Values.global.imagePullSecrets | default .Values.image.pullSecrets }}
+      {{- with $pullSecret }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 6 }}
+      {{- end }}
       containers:
       - name: query-ui
-        image: {{ .Values.image.repository }}:{{ include "query.version" . }}
+        image: {{ include "query.image" . }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         resources: {{- toYaml .Values.resources | nindent 10 }}
         securityContext: {{- toYaml .Values.containerSecurityContext | nindent 10 }}

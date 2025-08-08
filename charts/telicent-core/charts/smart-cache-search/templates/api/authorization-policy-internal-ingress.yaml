@@ -7,7 +7,7 @@ apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
 
 metadata:
-  name: {{ include "smart-cache-search.fullname" . }}-core-apps
+  name: {{ include "smart-cache-search.fullname" . }}-internal-ingress
   labels:
   {{- include "smart-cache-search.apiLabels" . | nindent 4 }}
 
@@ -17,7 +17,7 @@ spec:
     - from:
       - source:
           principals:
-          - {{ include "smart-cache-search.graphServerPrincipal" . }}
+          - {{ include "smart-cache-search.apiSmartCacheGraphPrincipal" . }}
       to:
         - operation:
             paths:

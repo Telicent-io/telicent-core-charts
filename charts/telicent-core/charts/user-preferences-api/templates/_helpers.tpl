@@ -35,13 +35,6 @@ Create chart name and version as used by the chart label.
 {{- end }}
 
 {{/*
-Returns the version
-*/}}
-{{- define "user-preferences-api.version" -}}
-{{ .Values.image.tag | default .Chart.AppVersion }}
-{{- end -}}
-
-{{/*
 Common labels
 */}}
 {{- define "user-preferences-api.labels" -}}
@@ -99,7 +92,6 @@ Create MongoPassword name to use
 {{ include "user-preferences-api.fullname" . }}-secret
 {{- end }}
 
-
 {{- define "user-preferences-api.ingressPrincipal" -}}
-{{- .Values.ingress.principal | default (printf "cluster.local/ns/%s/sa/%s" .Values.global.istioNamespace .Values.global.istioServiceAccountName) | quote }}
+{{- .Values.istio.ingress.principal | default (printf "cluster.local/ns/%s/sa/%s" .Values.global.istioNamespace .Values.global.istioServiceAccountName) | quote }}
 {{- end }}

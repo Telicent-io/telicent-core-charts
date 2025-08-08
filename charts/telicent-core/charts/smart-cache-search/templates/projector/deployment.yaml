@@ -22,22 +22,30 @@ spec:
         prometheus.io/path: /
         prometheus.io/port: "9464"
         prometheus.io/scrape: "true"
+     
       {{- range $key, $value := .Values.projector.annotations }}
         {{ $key }}: {{ $value | quote }}
       {{- end }}
       labels:
         {{- include "smart-cache-search.projectorLabels" . | nindent 8 }}
     spec:
-    {{- with .Values.imagePullSecrets }}
+      serviceAccountName: {{ include "smart-cache-search.projectorServiceAccountName" . }}
+      securityContext: {{- toYaml .Values.projector.podSecurityContext | nindent 8 }}
+      
+      {{- $pullSecret := .Values.global.imagePullSecrets | default .Values.projector.image.pullSecrets }}
+      {{- with $pullSecret }}
       imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
+        {{- toYaml . | nindent 6 }}
+      {{- end }}  
       containers:
       - name: search-projector
-        image: {{ .Values.projector.image.repository }}:{{ include "smart-cache-search-projector.version" . }}
+        image: {{ include "smart-cache-search-projector.image" . }}
         imagePullPolicy: {{ .Values.projector.image.pullPolicy }}
-        env:
+        resources: {{- toYaml .Values.projector.resources | nindent 10 }}
+        securityContext: {{- toYaml .Values.projector.containerSecurityContext | nindent 10 }}
+
         {{- with .Values.projector.extraEnvs }}
+        env:
         {{- range . }}
         - name: {{ .name }}
           value: {{ .value | quote }}
@@ -59,22 +67,15 @@ spec:
         {{- range $key, $value := .Values.projector.extraEnvs }}
         {{- end }}
         {{- end }}
-       
-        livenessProbe:
-          httpGet:
-            path: /version-info
-            port: 10101
-            scheme: HTTP
-          initialDelaySeconds: 45
-          periodSeconds: 60
-          timeoutSeconds: 5
+
         ports:
-        - containerPort: 9464
-          name: metrics
+        - name: metrics
+          containerPort: 9464
           protocol: TCP
-        - containerPort: 10101
-          name: health-probes
+        - name: health-probes
+          containerPort: 10101
           protocol: TCP
+
         readinessProbe:
           httpGet:
             path: /healthz
@@ -83,8 +84,15 @@ spec:
           initialDelaySeconds: 45
           periodSeconds: 60
           timeoutSeconds: 10
-        resources: {{- toYaml .Values.projector.resources | nindent 10 }}
-        securityContext: {{- toYaml .Values.containerSecurityContext | nindent 10 }}
+        livenessProbe:
+          httpGet:
+            path: /version-info
+            port: 10101
+            scheme: HTTP
+          initialDelaySeconds: 45
+          periodSeconds: 60
+          timeoutSeconds: 5
+  
         volumeMounts:
         - mountPath: /app/config/kafka-auth/
           name: kafka-auth-config
@@ -92,15 +100,12 @@ spec:
         - mountPath: {{ .Values.global.truststore.mountPath | default "/app/config/truststore" }}
           name: truststore-volume
         {{- end }}
-      securityContext: {{- toYaml .Values.podSecurityContext | nindent 8 }}
-      serviceAccountName: {{ include "smart-cache-search.serviceAccountName" . }}-projector
+    
       volumes:
+      {{- if .Values.global.existingKafkaConfigSecretName }}
       - name: kafka-auth-config
         secret:
-      {{- if .Values.global.existingKafkaConfigSecretName }}
           secretName: {{ .Values.global.existingKafkaConfigSecretName }}
-      {{- else }}
-          secretName: {{ include "telicent-core.kafkaAuthConfigSecretName" . }}
       {{- end }}
 
       {{- if .Values.global.existingTruststoreSecretName }}

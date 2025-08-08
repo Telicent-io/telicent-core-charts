@@ -5,25 +5,61 @@
         "global": {
             "type": "object",
             "properties": {
+                "imageRegistry": {
+                    "type": "string",
+                    "description": "Global image registry",
+                    "default": ""
+                },
+                "imagePullSecrets": {
+                    "type": "array",
+                    "description": "Global registry secret names as an array",
+                    "default": [],
+                    "items": {}
+                },
                 "enterprise": {
                     "type": "boolean",
-                    "description": "Enable enterprise mode, adding additional features and configurations suitable for an enterprise deployment.",
+                    "description": "Enable enterprise mode, adding additional features and configurations",
                     "default": false
+                },
+                "appHostDomain": {
+                    "type": "string",
+                    "description": "Domain associated with Telicent application services",
+                    "default": "apps.telicent.io"
+                },
+                "authHostDomain": {
+                    "type": "string",
+                    "description": "Domain associated with Telicent authentication services, including OIDC providers",
+                    "default": "auth.telicent.io"
+                },
+                "jwksUrl": {
+                    "type": "string",
+                    "description": "Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)",
+                    "default": "https://{yourAuthdomain}/.well-known/jwks.json"
+                },
+                "istioNamespace": {
+                    "type": "string",
+                    "description": "Namespace in which Istio is deployed",
+                    "default": "istio-system"
+                },
+                "istioServiceAccountName": {
+                    "type": "string",
+                    "description": "Name of the Istio service account",
+                    "default": "istio-ingress"
+                },
+                "istioGatewayName": {
+                    "type": "string",
+                    "description": "Name of the Istio Gateway Resource (LB operating at the edge of the mesh)",
+                    "default": "ingress-gateway"
+                },
+                "kafkaBootstrapUrls": {
+                    "type": "string",
+                    "description": "Comma separated list containing Kafka bootstrap URLs",
+                    "default": "kafka-bootstrap.kafka.svc.cluster.local:9092"
                 },
                 "existingKafkaConfigSecretName": {
                     "type": "string",
                     "description": "Name of an existing secret containing Kafka configuration",
                     "default": ""
-                },
-                "kafkaConfigProtocol": {
-                    "type": "string",
-                    "description": "Protocol used for Kafka communication",
-                    "default": "SASL_SSL"
-                },
-                "kafkaConfigMechanism": {
-                    "type": "string",
-                    "description": "SASL mechanism used for Kafka authentication",
-                    "default": "SCRAM-SHA-512"
                 },
                 "kafkaConfigUsername": {
                     "type": "string",
@@ -35,30 +71,15 @@
                     "description": "Password for Kafka authentication",
                     "default": "your.kafka.password.here"
                 },
-                "appHostDomain": {
+                "kafkaConfigProtocol": {
                     "type": "string",
-                    "description": "Domain name associated with Telicent Applications",
-                    "default": "apps.yourdomain.com"
+                    "description": "Protocol used for Kafka communication",
+                    "default": "SASL_SSL"
                 },
-                "authHostDomain": {
+                "kafkaConfigMechanism": {
                     "type": "string",
-                    "description": "Domain to be used for interacting with Telicent authentication services, including OIDC providers",
-                    "default": "auth.yourdomain.com"
-                },
-                "jwksUrl": {
-                    "type": "string",
-                    "description": "URL for the JSON Web Key Set (JWKS) used",
-                    "default": "https://yourdomain.com/.well-known/jwks.json"
-                },
-                "kafkaBootstrapUrls": {
-                    "type": "string",
-                    "description": "List of Kafka bootstrap URLs",
-                    "default": "kafka-kafka-bootstrap.kafka-dev.svc.cluster.local:9092"
-                },
-                "appsGateway": {
-                    "type": "string",
-                    "description": "Name of the Istio gateway for applications",
-                    "default": "istio-system/gateways-apps"
+                    "description": "SASL mechanism used for Kafka authentication",
+                    "default": "SCRAM-SHA-512"
                 },
                 "existingTruststoreSecretName": {
                     "type": "string",
@@ -70,7 +91,7 @@
                     "properties": {
                         "mountPath": {
                             "type": "string",
-                            "description": "Mount path for the truststore in the container",
+                            "description": "The mount path for the truststore in the container",
                             "default": "/app/config/truststore"
                         }
                     }

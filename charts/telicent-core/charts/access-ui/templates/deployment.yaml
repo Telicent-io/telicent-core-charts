@@ -21,7 +21,6 @@ spec:
   selector:
     matchLabels:
     {{- include "access-ui.selectorLabels" . | nindent 6 }}
-
   template:
     metadata:
       labels:
@@ -30,9 +29,14 @@ spec:
       serviceAccountName: {{ include "access-ui.serviceAccountName" . }}
       securityContext: {{- toYaml .Values.podSecurityContext | nindent 8 }}
 
+      {{- $pullSecret := .Values.global.imagePullSecrets | default .Values.image.pullSecrets }}
+      {{- with $pullSecret }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 6 }}
+      {{- end }}
       containers:
       - name: access-ui
-        image: {{ .Values.image.repository }}:{{ include "access-ui.version" . }}
+        image: {{ include "access-ui.image" . }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         resources: {{- toYaml .Values.resources | nindent 10 }}
         securityContext: {{- toYaml .Values.containerSecurityContext | nindent 10 }}

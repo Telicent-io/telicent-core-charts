@@ -5,20 +5,51 @@
         "global": {
             "type": "object",
             "properties": {
-                "existingTruststoreSecretName": {
+                "imageRegistry": {
                     "type": "string",
-                    "description": "existingTruststoreSecretName is the name of an existing secret containing the truststore",
+                    "description": "Global image registry",
                     "default": ""
                 },
-                "istioServiceAccountName": {
+                "imagePullSecrets": {
+                    "type": "array",
+                    "description": "Global registry secret names as an array",
+                    "default": [],
+                    "items": {}
+                },
+                "enterprise": {
+                    "type": "boolean",
+                    "description": "Enable enterprise mode, adding additional features and configurations",
+                    "default": false
+                },
+                "appHostDomain": {
                     "type": "string",
-                    "description": "istioServiceAccountName is the name of the Istio service account to use for the Access API",
-                    "default": "istio-ingress"
+                    "description": "Domain associated with Telicent application services",
+                    "default": "apps.telicent.io"
+                },
+                "authHostDomain": {
+                    "type": "string",
+                    "description": "Domain associated with Telicent authentication services, including OIDC providers",
+                    "default": "auth.telicent.io"
+                },
+                "jwksUrl": {
+                    "type": "string",
+                    "description": "Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)",
+                    "default": "https://{yourAuthdomain}/.well-known/jwks.json"
                 },
                 "istioNamespace": {
                     "type": "string",
-                    "description": "istioNamespace is the namespace where Istio is installed",
+                    "description": "Namespace in which Istio is deployed",
                     "default": "istio-system"
+                },
+                "istioServiceAccountName": {
+                    "type": "string",
+                    "description": "Name of the Istio service account",
+                    "default": "istio-ingress"
+                },
+                "istioGatewayName": {
+                    "type": "string",
+                    "description": "Name of the Istio Gateway Resource (LB operating at the edge of the mesh)",
+                    "default": "ingress-gateway"
                 }
             }
         },
@@ -27,7 +58,7 @@
             "properties": {
                 "javaOptions": {
                     "type": "string",
-                    "description": "javaOptions are the JVM options for the application",
+                    "description": "JVM options for the application",
                     "default": "-Xms512m -Xmx512m"
                 }
             }
@@ -37,32 +68,32 @@
             "properties": {
                 "url": {
                     "type": "string",
-                    "description": "url is the MongoDB connection string",
+                    "description": "MongoDB connection URL",
                     "default": "mongodb://mongodb-demo-prereqs-mongodb-svc.mongodb-dev.svc.cluster.local:27017/user-preferences?authSource=admin"
                 },
                 "username": {
                     "type": "string",
-                    "description": "username is used for authentication",
+                    "description": "MongoDB username",
                     "default": "user-preferences"
                 },
                 "password": {
                     "type": "string",
-                    "description": "password is the password for the MongoDB user",
+                    "description": "MongoDB password",
                     "default": "your.mongo.password.here"
                 },
                 "database": {
                     "type": "string",
-                    "description": "database is the name of the MongoDB database to use",
+                    "description": "MongoDB database",
                     "default": "user-preferences"
                 },
                 "existingMongoPasswordSecret": {
                     "type": "string",
-                    "description": "existingMongoPasswordSecret If you have an existing secret for the MongoDB password, you can specify it here",
+                    "description": "Existing secret containing the MongoDB password",
                     "default": ""
                 },
                 "existingCaSecret": {
                     "type": "string",
-                    "description": "existingCaSecret If you have an existing secret for the CA certificate, you can specify it here. If you've specified to use TLS in the url, you must provide a CA certificate.",
+                    "description": "If you have an existing secret for the CA certificate, you can specify it here. If you've specified to use TLS in the url, you must provide a CA certificate.",
                     "default": ""
                 },
                 "cacertPath": {
@@ -72,92 +103,82 @@
                 }
             }
         },
-        "fullnameOverride": {
-            "type": "string",
-            "description": "fullnameOverride sets the full name of the chart",
-            "default": ""
-        },
-        "nameOverride": {
-            "type": "string",
-            "description": "nameOverride sets a custom name for the chart it differs from fullnameOverride as it is not fully qualified",
-            "default": ""
-        },
-        "annotations": {
-            "type": "object",
-            "description": "annotations are additional annotations to add to the pod",
-            "default": {}
-        },
         "replicas": {
             "type": "number",
-            "description": "replicas sets the replica count",
+            "description": "Number of User Preferences API replicas to deploy",
             "default": 1
-        },
-        "resources": {
-            "type": "object",
-            "description": "resources sets the resource requests and limits for the pod",
-            "default": {}
         },
         "revisionHistoryLimit": {
             "type": "number",
-            "description": "revisionHistoryLimit sets the number of old ReplicaSets to retain",
-            "default": 3
+            "description": "Number of controller revisions to keep",
+            "default": 5
+        },
+        "annotations": {
+            "type": "object",
+            "description": "Add extra annotations to the Deployment object",
+            "default": {}
         },
         "image": {
             "type": "object",
             "properties": {
-                "pullPolicy": {
+                "registry": {
                     "type": "string",
-                    "description": "pullPolicy defines the image pull policy",
-                    "default": "IfNotPresent"
+                    "description": "User Preferences API image registry",
+                    "default": "REGISTRY_NAME"
                 },
                 "repository": {
                     "type": "string",
-                    "description": "repository is the Docker repository for the image",
-                    "default": "098669589541.dkr.ecr.eu-west-2.amazonaws.com/telicent-user-preferences-service"
+                    "description": "User Preferences API image name",
+                    "default": "REPOSITORY_NAME/telicent-user-preferences-service"
                 },
                 "tag": {
                     "type": "string",
-                    "description": "tag is the image tag to use appVersion is used by default when defining an empty string",
+                    "description": "User Preferences API image tag. If not set, a tag is generated using the appVersion",
                     "default": ""
+                },
+                "pullPolicy": {
+                    "type": "string",
+                    "description": "User Preferences API image pull policy",
+                    "default": "IfNotPresent"
+                },
+                "pullSecrets": {
+                    "type": "array",
+                    "description": "Specify registry secret names as an array",
+                    "default": [],
+                    "items": {}
                 }
             }
         },
-        "imagePullSecrets": {
-            "type": "array",
-            "description": "imagePullSecrets is a list of secrets to use for pulling the image",
-            "default": [],
-            "items": {}
-        },
-        "podSecurityContext": {
+        "resources": {
             "type": "object",
             "properties": {
-                "fsGroup": {
-                    "type": "number",
-                    "description": "fsGroup sets the filesystem group ID for the pod",
-                    "default": 185
-                },
-                "runAsGroup": {
-                    "type": "number",
-                    "description": "runAsGroup sets the group ID for the pod",
-                    "default": 185
-                },
-                "runAsNonRoot": {
-                    "type": "boolean",
-                    "description": "runAsNonRoot ensures the pod runs as a non-root user",
-                    "default": true
-                },
-                "runAsUser": {
-                    "type": "number",
-                    "description": "runAsUser sets the user ID for the pod",
-                    "default": 185
-                },
-                "seccompProfile": {
+                "requests": {
                     "type": "object",
                     "properties": {
-                        "type": {
+                        "cpu": {
                             "type": "string",
-                            "description": "type sets the seccomp profile for the pod",
-                            "default": "RuntimeDefault"
+                            "description": "Set containers' CPU request",
+                            "default": "100m"
+                        },
+                        "memory": {
+                            "type": "string",
+                            "description": "Set containers' memory request",
+                            "default": "768Mi"
+                        }
+                    }
+                },
+                "limits": {
+                    "type": "object",
+                    "properties": {
+                        "cpu": {
+                            "type": "string",
+                            "description": "Set containers' CPU limit",
+                            "default": "250m"
+                        },
+                        "memory": {
+                            "type": "string",
+                            "description": "Set containers' memory limit",
+                            "default": "1024Mi"
                         }
                     }
                 }
@@ -166,9 +187,24 @@
         "containerSecurityContext": {
             "type": "object",
             "properties": {
+                "runAsUser": {
+                    "type": "number",
+                    "description": "Set containers' Security Context runAsUser User ID",
+                    "default": 185
+                },
+                "runAsGroup": {
+                    "type": "number",
+                    "description": "Set containers' Security Context runAsGroup Group ID",
+                    "default": 185
+                },
+                "runAsNonRoot": {
+                    "type": "boolean",
+                    "description": "Set container's Security Context runAsNonRoot",
+                    "default": true
+                },
                 "allowPrivilegeEscalation": {
                     "type": "boolean",
-                    "description": "allowPrivilegeEscalation prevents privilege escalation",
+                    "description": "Set container's Security Context allowPrivilegeEscalation",
                     "default": false
                 },
                 "capabilities": {
@@ -176,7 +212,7 @@
                     "properties": {
                         "drop": {
                             "type": "array",
-                            "description": "drop all capabilities",
+                            "description": "List of capabilities to be dropped",
                             "default": [
                                 "ALL"
                             ],
@@ -186,19 +222,39 @@
                         }
                     }
                 },
+                "seccompProfile": {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "description": "Set container's Security Context seccomp profile",
+                            "default": "RuntimeDefault"
+                        }
+                    }
+                }
+            }
+        },
+        "podSecurityContext": {
+            "type": "object",
+            "properties": {
+                "runAsUser": {
+                    "type": "number",
+                    "description": "Set the provisioning pod's Security Context runAsUser User ID",
+                    "default": 185
+                },
                 "runAsGroup": {
                     "type": "number",
-                    "description": "runAsGroup sets the group ID for the container",
+                    "description": "Set the provisioning pod's Security Context runAsGroup Group ID",
                     "default": 185
                 },
                 "runAsNonRoot": {
                     "type": "boolean",
-                    "description": "runAsNonRoot ensures the container runs as a non-root user",
+                    "description": "Set the provisioning pod's Security Context runAsNonRoot",
                     "default": true
                 },
-                "runAsUser": {
+                "fsGroup": {
                     "type": "number",
-                    "description": "runAsUser sets the user ID for the container",
+                    "description": "Set the provisioning pod's Group ID for the mounted volumes' filesystem",
                     "default": 185
                 },
                 "seccompProfile": {
@@ -206,7 +262,7 @@
                     "properties": {
                         "type": {
                             "type": "string",
-                            "description": "type defines the seccomp profile type",
+                            "description": "Set the provisioning pod's Security Context seccomp profile",
                             "default": "RuntimeDefault"
                         }
                     }
@@ -221,25 +277,15 @@
                     "properties": {
                         "port": {
                             "type": "number",
-                            "description": "port for the Prometheus service",
+                            "description": "Port for the Prometheus service",
                             "default": 9464
+                        },
+                        "name": {
+                            "type": "string",
+                            "description": "Name for the Prometheus service",
+                            "default": "metrics"
                         }
                     }
-                }
-            }
-        },
-        "serviceAccount": {
-            "type": "object",
-            "properties": {
-                "annotations": {
-                    "type": "object",
-                    "description": "annotations are additional annotations for the service account",
-                    "default": {}
-                },
-                "name": {
-                    "type": "string",
-                    "description": "name is the name of the service account. If not set, the chart will generate a name based on the release name",
-                    "default": ""
                 }
             }
         },
@@ -248,23 +294,43 @@
             "properties": {
                 "port": {
                     "type": "number",
-                    "description": "port the service will listen on",
+                    "description": "User Preferences API service port",
                     "default": 11111
                 },
                 "type": {
                     "type": "string",
-                    "description": "type defines the service type",
+                    "description": "User Preferences API service type",
                     "default": "ClusterIP"
                 }
             }
         },
-        "ingress": {
+        "istio": {
             "type": "object",
             "properties": {
-                "principal": {
+                "ingress": {
+                    "type": "object",
+                    "properties": {
+                        "principal": {
+                            "type": "string",
+                            "description": "Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName'",
+                            "default": ""
+                        }
+                    }
+                }
+            }
+        },
+        "serviceAccount": {
+            "type": "object",
+            "properties": {
+                "name": {
                     "type": "string",
-                    "description": "principal to use for ingress traffic",
+                    "description": "Name of the ServiceAccount to use. If not set, a name is generated using the fullname",
                     "default": ""
+                },
+                "annotations": {
+                    "type": "object",
+                    "description": "Additional custom annotations for the ServiceAccount",
+                    "default": {}
                 }
             }
         }

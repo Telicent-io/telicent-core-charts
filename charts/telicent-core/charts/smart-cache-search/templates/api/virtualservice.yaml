@@ -9,11 +9,11 @@ kind: VirtualService
 metadata:
   name: {{ include "smart-cache-search.fullname" . }}-api
   labels:
-  {{- include "smart-cache-search.apiLabels" . | nindent 4 }}
+    {{- include "smart-cache-search.apiLabels" . | nindent 4 }}
 
 spec:
   gateways:
-  - {{ .Values.global.appsGateway }}
+  - {{ .Values.global.istioNamespace }}/{{ .Values.global.istioGatewayName }}
   hosts:
   - {{ .Values.global.appHostDomain }}
   http:
@@ -31,7 +31,7 @@ spec:
 
     route:
     - destination:
-        host: {{ include "smart-cache-search.serviceName" . }}-api
+        host: {{ include "smart-cache-search.apiServiceName" . }}
         port:
           number: {{ .Values.api.service.port }}
 {{- end }}

@@ -9,7 +9,7 @@ metadata:
   name: {{ include "access-api.serviceName" . }}
   labels:
     app: access-api
-  {{- include "access-api.labels" . | nindent 4 }}
+    {{- include "access-api.labels" . | nindent 4 }}
 
 spec:
   type: {{ .Values.service.type }}

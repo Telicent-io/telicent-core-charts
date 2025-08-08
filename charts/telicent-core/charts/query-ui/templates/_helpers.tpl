@@ -35,13 +35,6 @@ Create chart name and version as used by the chart label.
 {{- end }}
 
 {{/*
-Returns the version
-*/}}
-{{- define "query.version" -}}
-{{ .Values.image.tag | default .Chart.AppVersion }}
-{{- end -}}
-
-{{/*
 Common labels
 */}}
 {{- define "query.labels" -}}
@@ -59,7 +52,6 @@ Selector labels
 app.kubernetes.io/name: {{ include "query.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
-
 
 {{/*
 Create the name of the service account to use
@@ -83,5 +75,5 @@ Create the name of the config map
 {{- end }}
 
 {{- define "query.ingressPrincipal" -}}
-{{- .Values.ingress.principal | default (printf "cluster.local/ns/%s/sa/%s" .Values.global.istioNamespace .Values.global.istioServiceAccountName) | quote }}
+{{- .Values.istio.ingress.principal | default (printf "cluster.local/ns/%s/sa/%s" .Values.global.istioNamespace .Values.global.istioServiceAccountName) | quote }}
 {{- end }}

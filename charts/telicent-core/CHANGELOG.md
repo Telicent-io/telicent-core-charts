@@ -1,5 +1,30 @@
 # Changelog
 
+## [0.3.2](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v0.3.1...telicent-core-v0.3.2) (2025-07-22)
+
+
+### Bug Fixes
+
+* Adds TLS support for opensearch ([48750b4](https://github.com/Telicent-io/telicent-core-charts/commit/48750b4da13c3bb66cb8b9fb9b040bd494fa52f7))
+* Adds TLS support for opensearch ([3453a64](https://github.com/Telicent-io/telicent-core-charts/commit/3453a646b4d1afb3a3f176bd5bc56568d561ee37))
+* broken image secrets ([e44aaee](https://github.com/Telicent-io/telicent-core-charts/commit/e44aaee27e14ea442c3f9fabc627f6d01d203d18))
+* istio global ([5fc74ce](https://github.com/Telicent-io/telicent-core-charts/commit/5fc74ceced4187793b85f13324965b6d0ccd4067))
+* istio global ([b548f13](https://github.com/Telicent-io/telicent-core-charts/commit/b548f13e23ed33a884ea544146c7dccb6bb52987))
+* Remove Jobs config ([1e72b25](https://github.com/Telicent-io/telicent-core-charts/commit/1e72b25d4d39beb0f02ded67077df3ef6dfe51fc))
+* scg registry ([cae087a](https://github.com/Telicent-io/telicent-core-charts/commit/cae087a7b1ef2e890ce66d729234d5ea1f52d176))
+* scg registry ([4cc15bc](https://github.com/Telicent-io/telicent-core-charts/commit/4cc15bc7d191d15af0b0425c05a16551b312c428))
+* scs registry ([176353e](https://github.com/Telicent-io/telicent-core-charts/commit/176353e29836351edce47fb5060ba91cbe80b80a))
+* scs registy ([813b1d3](https://github.com/Telicent-io/telicent-core-charts/commit/813b1d35cbf687b56e53102c34b52523b710de8f))
+* search-ui registry ([0b241e9](https://github.com/Telicent-io/telicent-core-charts/commit/0b241e962836cb8b159c6001ae23428e2bce3ada))
+* search-ui registry ([ea19e74](https://github.com/Telicent-io/telicent-core-charts/commit/ea19e741b3b2530caa475308ba3f5fbfcff3d7bd))
+* Standardise truststore usage across Kafka connections ([694bd33](https://github.com/Telicent-io/telicent-core-charts/commit/694bd33d1156afe66d024327527923b3f30449a9))
+* Standardise truststore usage across Kafka connections ([65c503b](https://github.com/Telicent-io/telicent-core-charts/commit/65c503bdfbb74cd8a40950be6365556767508daa))
+* ui registry ([07a3d89](https://github.com/Telicent-io/telicent-core-charts/commit/07a3d893bbec37e23c20fca62cc451c8b4effd52))
+* user-pref reg ([5eda15b](https://github.com/Telicent-io/telicent-core-charts/commit/5eda15b0cdfa922a37d99652ad51c922f9ffb24f))
+* user-pref reg ([0cd9586](https://github.com/Telicent-io/telicent-core-charts/commit/0cd9586a3e7f1da688376a7533e369776e2c7516))
+* yaml ([d828b55](https://github.com/Telicent-io/telicent-core-charts/commit/d828b551f5470ad75db03ac2cf0c4d2c584eb4b3))
+* yaml ([c8cf431](https://github.com/Telicent-io/telicent-core-charts/commit/c8cf4312a6bc5827486850412cf9387369744098))
+
 ## [0.3.1](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v0.3.0...telicent-core-v0.3.1) (2025-07-08)
 
 

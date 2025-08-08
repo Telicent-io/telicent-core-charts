@@ -6,9 +6,10 @@ apiVersion: apps/v1
 kind: StatefulSet
 
 metadata:
-  name: {{ include "smart-cache-graph.fullname" . }}-server
+  name: {{ include "smart-cache-graph.fullname" . }}
   labels:
     {{- include "smart-cache-graph.labels" . | nindent 4 }}
+
 spec:
   replicas: {{ .Values.replicas }}
   revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
@@ -21,6 +22,7 @@ spec:
         prometheus.io/path: /
         prometheus.io/port: "9464"
         prometheus.io/scrape: "true"
+      
       {{- range $key, $value := .Values.annotations }}
         {{ $key }}: {{ $value | quote }}
       {{- end }}
@@ -29,13 +31,15 @@ spec:
     spec:
       serviceAccountName: {{ include "smart-cache-graph.serviceAccountName" . }}
       securityContext: {{- toYaml .Values.podSecurityContext | nindent 8 }}
-    {{- with .Values.imagePullSecrets }}
+
+      {{- $pullSecret := .Values.global.imagePullSecrets | default .Values.image.pullSecrets }}
+      {{- with $pullSecret }}
       imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
+        {{- toYaml . | nindent 6 }}
+      {{- end }}
       containers:
-      - name: graph-server
-        image: {{ .Values.image.repository }}:{{ include "smart-cache-graph.version" . }}
+      - name: smart-cache-graph
+        image: {{ include "smart-cache-graph.image" . }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         resources: {{- toYaml .Values.resources | nindent 10 }}
         securityContext: {{- toYaml .Values.containerSecurityContext | nindent 10 }}
@@ -78,7 +82,7 @@ spec:
         
         volumeMounts:
         - mountPath: /fuseki/config
-          name: graph-config-volume
+          name: fuseki-config-volume
         - mountPath: /fuseki/databases
           name: datasets-volume
         - mountPath: /fuseki/backups
@@ -91,19 +95,13 @@ spec:
       {{- end }}
       
       volumes:
-      - configMap:
-          {{- if .Values.existingGraphConfigMapName }}
-            name: {{ .Values.existingGraphConfigMapName }}
-          {{- else }}
-            name: {{ include "smart-cache-graph.serverConfig" . }}
-          {{- end }}
-        name: graph-config-volume
+      - name: fuseki-config-volume
+        configMap:
+            name: {{ include "smart-cache-graph.fusekiConfig" . }}
       - name: kafka-auth-config
         secret:
         {{- if .Values.global.existingKafkaConfigSecretName }}
           secretName: {{ .Values.global.existingKafkaConfigSecretName }}
-        {{- else }}
-          secretName: {{ include "telicent-core.kafkaAuthConfigSecretName" . }}
         {{- end }}
         # TODO: Secret is created outside of Helm by using Ansible. Would potentially need cert-manager to remove this dependency.
 

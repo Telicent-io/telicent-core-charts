@@ -35,13 +35,6 @@ Create chart name and version as used by the chart label.
 {{- end }}
 
 {{/*
-Returns the version
-*/}}
-{{- define "smart-cache-graph.version" -}}
-{{ .Values.image.tag | default .Chart.AppVersion }}
-{{- end -}}
-
-{{/*
 Common labels
 */}}
 {{- define "smart-cache-graph.labels" -}}
@@ -76,14 +69,14 @@ Create the name of the service to use
 {{- end }}
 
 {{- define "smart-cache-graph.envSecretName" -}}
-{{ include "smart-cache-graph.fullname" . }}-server
+{{ include "smart-cache-graph.fullname" . }}
 {{- end }}
 
 {{/*
-Create Server config name to use
+Create a fuseki config name to use
 */}}
-{{- define "smart-cache-graph.serverConfig" -}}
-{{ include "smart-cache-graph.fullname" . }}-server-config
+{{- define "smart-cache-graph.fusekiConfig" -}}
+{{ include "smart-cache-graph.fullname" . }}-fuseki
 {{- end }}
 
 {{/* 
@@ -110,12 +103,12 @@ Default User Preferences URL
 {{- end }}
 
 {{/*
-Default Atrribute Heirarchy URL
+Default Atrribute Hierarchy URL
 */}}
-{{- define "smart-cache-graph.attributeHeirachyUrl" -}}
+{{- define "smart-cache-graph.attributeHierachyUrl" -}}
 {{- printf "http://%s-access-api:8080/hierarchies/lookup/{name}" (.Release.Name) }}
 {{- end }}
 
 {{- define "smart-cache-graph.ingressPrincipal" -}}
-{{- .Values.ingress.principal | default (printf "cluster.local/ns/%s/sa/%s" .Values.global.istioNamespace .Values.global.istioServiceAccountName) | quote }}
+{{- .Values.istio.ingress.principal | default (printf "cluster.local/ns/%s/sa/%s" .Values.global.istioNamespace .Values.global.istioServiceAccountName) | quote }}
 {{- end }}

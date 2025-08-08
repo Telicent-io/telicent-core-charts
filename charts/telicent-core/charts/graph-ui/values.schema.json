@@ -16,15 +16,35 @@
                     "default": [],
                     "items": {}
                 },
+                "enterprise": {
+                    "type": "boolean",
+                    "description": "Enable enterprise mode, adding additional features and configurations",
+                    "default": false
+                },
                 "appHostDomain": {
                     "type": "string",
-                    "description": "Domain name associated with Graph UI",
+                    "description": "Domain associated with Telicent application services",
                     "default": "apps.telicent.io"
                 },
                 "authHostDomain": {
                     "type": "string",
-                    "description": "Domain to be used for interacting with Telicent authentication services, including OIDC providers",
+                    "description": "Domain associated with Telicent authentication services, including OIDC providers",
                     "default": "auth.telicent.io"
+                },
+                "istioNamespace": {
+                    "type": "string",
+                    "description": "Namespace in which Istio is deployed",
+                    "default": "istio-system"
+                },
+                "istioServiceAccountName": {
+                    "type": "string",
+                    "description": "Name of the Istio service account",
+                    "default": "istio-ingress"
+                },
+                "istioGatewayName": {
+                    "type": "string",
+                    "description": "Name of the Istio Gateway Resource (LB operating at the edge of the mesh)",
+                    "default": "ingress-gateway"
                 }
             }
         },
@@ -51,15 +71,25 @@
                     "description": "The URL to be used for signing out",
                     "default": "https://your.host.here/logout"
                 },
-                "searchUiMaptilerToken": {
+                "graphUiMaptilerToken": {
                     "type": "string",
-                    "description": "MapTiler token for Graph UI",
+                    "description": "is the MapTiler token for the graph UI",
                     "default": "your.maptiler.token.here"
+                },
+                "graphUiMapboxStyleSpecUrl": {
+                    "type": "string",
+                    "description": "",
+                    "default": ""
+                },
+                "graphUiArcgisToken": {
+                    "type": "string",
+                    "description": "",
+                    "default": ""
                 },
                 "existingMapConfigSecretName": {
                     "type": "string",
                     "description": "The name of an existing secret containing map configuration",
-                    "default": "your-existing-map-config-secret-name"
+                    "default": ""
                 }
             }
         },
@@ -105,14 +135,14 @@
                     "type": "string",
                     "description": "Graph UI image pull policy",
                     "default": "IfNotPresent"
-                },
-                "pullSecrets": {
-                    "type": "array",
-                    "description": "Specify registry secret names as an array",
-                    "default": [],
-                    "items": {}
                 }
             }
+        },
+        "imagePullSecrets": {
+            "type": "array",
+            "description": "Specify registry secret names as an array",
+            "default": [],
+            "items": {}
         },
         "resources": {
             "type": "object",
@@ -123,7 +153,7 @@
                         "cpu": {
                             "type": "string",
                             "description": "Set containers' CPU request",
-                            "default": "500m"
+                            "default": "250m"
                         },
                         "memory": {
                             "type": "string",
@@ -138,12 +168,12 @@
                         "cpu": {
                             "type": "string",
                             "description": "Set containers' CPU limit",
-                            "default": "1"
+                            "default": "375m"
                         },
                         "memory": {
                             "type": "string",
                             "description": "Set containers' memory limit",
-                            "default": "1Gi"
+                            "default": "768Mi"
                         }
                     }
                 }
@@ -265,12 +295,27 @@
                 }
             }
         },
+        "istio": {
+            "type": "object",
+            "properties": {
+                "ingress": {
+                    "type": "object",
+                    "properties": {
+                        "principal": {
+                            "type": "string",
+                            "description": "Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName'",
+                            "default": ""
+                        }
+                    }
+                }
+            }
+        },
         "serviceAccount": {
             "type": "object",
             "properties": {
                 "name": {
                     "type": "string",
-                    "description": "Name of the created ServiceAccount. If not set, a name is generated using the fullname template",
+                    "description": "Name of the ServiceAccount to use. If not set, a name is generated using the fullname",
                     "default": ""
                 },
                 "annotations": {

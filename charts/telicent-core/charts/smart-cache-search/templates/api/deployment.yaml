@@ -9,6 +9,7 @@ metadata:
   name: {{ include "smart-cache-search.fullname" . }}-api
   labels:
     {{- include "smart-cache-search.apiLabels" . | nindent 4 }}
+
 spec:
   replicas: {{ .Values.api.replicas }}
   revisionHistoryLimit: {{ .Values.api.revisionHistoryLimit }}
@@ -21,25 +22,36 @@ spec:
         prometheus.io/path: /
         prometheus.io/port: "9464"
         prometheus.io/scrape: "true"
+   
       {{- range $key, $value := .Values.api.annotations }}
         {{ $key }}: {{ $value | quote }}
       {{- end }}
       labels:
         {{- include "smart-cache-search.apiLabels" . | nindent 8 }}
     spec:
-    {{- with .Values.imagePullSecrets }}
+      serviceAccountName: {{ include "smart-cache-search.apiServiceAccountName" . }}
+      securityContext: {{- toYaml .Values.api.podSecurityContext | nindent 8 }}
+      
+      {{- $pullSecret := .Values.global.imagePullSecrets | default .Values.api.image.pullSecrets }}
+      {{- with $pullSecret }}
       imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
+        {{- toYaml . | nindent 6 }}
+      {{- end }}
       containers:
       - name: search-api
+        image: {{ include "smart-cache-search-api.image" . }}
+        imagePullPolicy: {{ .Values.api.image.pullPolicy }}
+        resources: {{- toYaml .Values.api.resources | nindent 10 }}
+        securityContext: {{- toYaml .Values.api.containerSecurityContext | nindent 10 }}
+        
+        {{- with .Values.api.extraEnvs }}
         env:
-        {{- with .Values.projector.extraEnvs }}
         {{- range . }}
         - name: {{ .name }}
           value: {{ .value | quote }}
         {{- end }}
         {{- end }}
+        
         envFrom:
         {{- if .Values.api.elasticSecrets.existingEnvironmentSecretName }}
         - secretRef:
@@ -59,23 +71,15 @@ spec:
             optional: true
         {{- end }}
         {{- end }}
-        image: {{ .Values.api.image.repository }}:{{ include "smart-cache-search-api.version" . }}
-        imagePullPolicy: {{ .Values.api.image.pullPolicy }}
-        livenessProbe:
-          httpGet:
-            path: /version-info
-            port: 8181
-            scheme: HTTP
-          initialDelaySeconds: 30
-          periodSeconds: 60
-          timeoutSeconds: 5
+       
         ports:
-        - containerPort: 8181
-          name: http
+        - name: http
+          containerPort: 8181
           protocol: TCP
-        - containerPort: 9464
-          name: metrics
+        - name: metrics
+          containerPort: 9464
           protocol: TCP
+
         readinessProbe:
           httpGet:
             path: /healthz
@@ -84,18 +88,24 @@ spec:
           initialDelaySeconds: 30
           periodSeconds: 60
           timeoutSeconds: 10
-        resources: {{- toYaml .Values.api.resources | nindent 10 }}
-        securityContext: {{- toYaml .Values.containerSecurityContext | nindent 10 }}
-        volumeMounts:
+        livenessProbe:
+          httpGet:
+            path: /version-info
+            port: 8181
+            scheme: HTTP
+          initialDelaySeconds: 30
+          periodSeconds: 60
+          timeoutSeconds: 5
+        
+       
         {{- if .Values.global.existingTruststoreSecretName }}
+        volumeMounts:
         - mountPath: {{ .Values.global.truststore.mountPath | default "/app/config/truststore" }}
           name: java-truststore
         {{- end }}
-      securityContext: {{- toYaml .Values.podSecurityContext | nindent 8 }}
-
-      serviceAccountName: {{ include "smart-cache-search.serviceAccountName" . }}-api
-      volumes:
+     
       {{- if .Values.global.existingTruststoreSecretName }}
+      volumes:
       - name: java-truststore
         secret:
           secretName: {{ .Values.global.existingTruststoreSecretName }}

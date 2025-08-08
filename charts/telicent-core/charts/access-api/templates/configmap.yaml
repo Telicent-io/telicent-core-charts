@@ -15,12 +15,12 @@ metadata:
 data:
   DEBUG: {{ .Values.configuration.debug | quote }}
   DEPLOYED_DOMAIN: "https://{{ .Values.global.appHostDomain }}"
-  MONGO_COLLECTION: {{ .Values.mongo.collection | quote }}
+  OPENID_PROVIDER_URL: {{ .Values.configuration.openidProviderUrl | quote }}
   MONGO_URL: {{ .Values.mongo.url | quote }}
   MONGO_USER: {{ .Values.mongo.username | quote }}
-  OPENID_PROVIDER_URL: {{ .Values.configuration.openidProviderUrl | quote }}
-  PORT: {{ .Values.service.port | quote }}
-  SCIM_ENABLED: {{ .Values.configuration.scimEnabled | quote }}
+  MONGO_COLLECTION: {{ .Values.mongo.collection | quote }}
   MONGO_CONNECTION_STRING_OPTIONS: {{ .Values.mongo.connectionStringOptions | quote }}
   MONGO_RETRY_REWRITES: {{ .Values.mongo.retryRewrites | quote }}
+  SCIM_ENABLED: {{ .Values.configuration.scimEnabled | quote }}
+  PORT: {{ .Values.service.port | quote }}
 {{- end -}}
