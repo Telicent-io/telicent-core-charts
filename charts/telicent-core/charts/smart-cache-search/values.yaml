@@ -62,7 +62,7 @@ api:
     attributeHierarchyUrl: http://access-api.tc-system.svc.cluster.local:8080/hierarchies/lookup/{name}
 
     # @key api.configuration.javaOptions JVM options for the application
-    javaOptions: -XX:MaxRAMPercentage=70.0
+    javaOptions: -XX:MaxRAMPercentage=70.0 -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks
 
     # @key api.configuration.otelMetricsExporter OpenTelemetry metrics exporter
     # Options: prometheus, otlp, none
@@ -338,5 +338,3 @@ projector:
     name: ""
     #@key projector.serviceAccount.annotations Additional custom annotations for the ServiceAccount
     annotations: { }
-
-
