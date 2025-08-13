@@ -40,9 +40,9 @@ entries:
     version: 0.1.0
   demo-prereqs-gateways:
   - apiVersion: v2
-    created: "2025-07-22T16:51:57.562138138Z"
+    created: "2025-08-13T09:20:15.349080888Z"
     description: Create Istio gateways and authn configuration for Telicent CORE demo
-    digest: bbf3a16e3b685dbd182fc7182b32693b8810a583f441b2287e69757a2efbdfc4
+    digest: 7d51b72d290254e5433d2596ec4f081ce5b71980a32b7814c6cbdd543285e610
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -54,9 +54,9 @@ entries:
     version: 0.1.0
   demo-prereqs-kafka:
   - apiVersion: v2
-    created: "2025-07-22T16:51:57.562705077Z"
+    created: "2025-08-13T09:20:15.349296147Z"
     description: Create a kafka cluster and associated configuration
-    digest: a8097a32de3fbd0fd8b8c8166476f1820448c92f66042988eb57d570d20cede8
+    digest: b270c36e3c734be9978051afee92409079e02bf203c56634bb99de1795ccd854
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -69,9 +69,9 @@ entries:
   demo-prereqs-keycloak:
   - apiVersion: v2
     appVersion: 26.2.3
-    created: "2025-07-22T16:51:57.563165204Z"
+    created: "2025-08-13T09:20:15.349637274Z"
     description: Provisions a dev mode instance of keycloak
-    digest: b9a45cdabc4c376255ff812f735cf91dc2d36252d1d72583be8c33cc859dfa80
+    digest: 0439e8d0496971b417dfa8fdf1d64f4398a0baa0d16d63fca639dae25bdc31a3
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -83,9 +83,9 @@ entries:
     version: 0.1.0
   demo-prereqs-mongodb:
   - apiVersion: v2
-    created: "2025-07-22T16:51:57.563423531Z"
+    created: "2025-08-13T09:20:15.349890421Z"
     description: Create a mongodb instance and associated configuration
-    digest: a514907d71acc444b50a6735fcd3840022279bb8be770cb4e11ca26b26000d3c
+    digest: 64cb400c61692164ce7fc8ee6d667cdedd505155f94d50d3bd986944c6d8a7c4
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -98,9 +98,9 @@ entries:
   demo-prereqs-oauth2-proxy:
   - apiVersion: v2
     appVersion: v7.8.1
-    created: "2025-07-22T16:51:57.563726772Z"
+    created: "2025-08-13T09:20:15.35021049Z"
     description: A Helm chart for Kubernetes
-    digest: b677948648c2eeac90b8a91208d447439f4b1f9b68431c016866d9db1ab6b61d
+    digest: ae1b2b2fa9ee41ba8514b95662cfa1844dcb47d8bd9bf76efdac1bb5ebd74774
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -112,9 +112,9 @@ entries:
     version: 0.2.0
   demo-prereqs-system-mesh:
   - apiVersion: v2
-    created: "2025-07-22T16:51:57.563973938Z"
+    created: "2025-08-13T09:20:15.350454982Z"
     description: A Helm chart for Kubernetes
-    digest: 4a9933bd6d31899e72da86aeced0d6269ae82ce4859a76117c49f3074eaac402
+    digest: 0063456a6ba3aa25f59ebadd3085633a71fbb40dbd676ce596bfc67f4fc1fb81
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -246,6 +246,48 @@ entries:
     - smart-cache-search-0.1.1.tgz
     version: 0.1.1
   telicent-core:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2025-08-13T09:20:15.360344405Z"
+    dependencies:
+    - name: access-api
+      repository: file://./charts/access-api
+      version: ^0.1.0
+    - name: access-ui
+      repository: file://./charts/access-ui
+      version: ^0.1.0
+    - condition: global.enterprise
+      name: graph-ui
+      repository: file://./charts/graph-ui
+      version: ^0.1.0
+    - name: query-ui
+      repository: file://./charts/query-ui
+      version: ^0.1.0
+    - condition: global.enterprise
+      name: search-ui
+      repository: file://./charts/search-ui
+      version: ^0.1.0
+    - name: smart-cache-graph
+      repository: file://./charts/smart-cache-graph
+      version: ^0.1.0
+    - name: smart-cache-search
+      repository: file://./charts/smart-cache-search
+      version: ^0.1.1
+    - condition: global.enterprise
+      name: user-preferences-api
+      repository: file://./charts/user-preferences-api
+      version: ^0.1.0
+    description: A Helm chart for Kubernetes
+    digest: 653bf1d97a6974e092122ecb6927248869f0d524ab414ceb28f5089df7a3fb9a
+    icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
+    maintainers:
+    - name: telicent
+      url: https://github.com/Telicent-IO
+    name: telicent-core
+    type: application
+    urls:
+    - telicent-core-0.3.3.tgz
+    version: 0.3.3
   - apiVersion: v2
     appVersion: 1.16.0
     created: "2025-07-22T16:51:57.574389986Z"
@@ -1002,4 +1044,4 @@ entries:
     urls:
     - telicent-core-0.1.0.tgz
     version: 0.1.0
-generated: "2025-07-22T16:51:57.561238573Z"
+generated: "2025-08-13T09:20:15.348700751Z"
