@@ -50,10 +50,20 @@ spec:
               {{- else }}
               name: {{ include "user-preferences-api.secret" . }}
               {{- end }}
-        envFrom:    
+        - name: MONGO_URL
+          valueFrom:
+            secretKeyRef:
+              key: MONGO_URL
+              {{- if .Values.mongo.existingMongoUrlSecret }}
+              name: {{ .Values.mongo.existingMongoUrlSecret }}
+              {{- else }}
+              name: {{ include "user-preferences-api.secret" . }}
+              {{- end }}
+
+        envFrom:
         - configMapRef:
             name: {{ include "user-preferences-api.fullname" . }}
-        
+
         ports:
         - name: http
           protocol: TCP
@@ -78,7 +88,7 @@ spec:
           initialDelaySeconds: 30
           periodSeconds: 60
           timeoutSeconds: 5
-       
+
         volumeMounts:
         {{- if .Values.global.existingTruststoreSecretName }}
         - name: truststore-volume
@@ -102,4 +112,3 @@ spec:
         secret:
           secretName: {{ .Values.mongo.existingCaSecret }}
       {{- end }}
-     
