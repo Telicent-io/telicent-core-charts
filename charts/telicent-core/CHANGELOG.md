@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.3](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v0.3.2...telicent-core-v0.3.3) (2025-08-13)
+
+
+### Bug Fixes
+
+* helm issues prior to release ([#134](https://github.com/Telicent-io/telicent-core-charts/issues/134)) ([473222f](https://github.com/Telicent-io/telicent-core-charts/commit/473222fcfe3a16cbb2a92c3f9e8d318046157346))
+
 ## [0.3.2](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v0.3.1...telicent-core-v0.3.2) (2025-07-22)
 
 
