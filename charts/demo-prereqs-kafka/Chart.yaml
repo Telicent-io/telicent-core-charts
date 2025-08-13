@@ -2,7 +2,7 @@ apiVersion: v2
 name: demo-prereqs-kafka
 description: Create a kafka cluster and associated configuration
 type: application
-version: 0.1.0
+version: 0.2.0
 icon: "https://avatars.githubusercontent.com/u/65304240?s=200&v=4"
 maintainers:
   - name: telicent
