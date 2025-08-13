@@ -316,6 +316,7 @@ Copyright (C) 2025 Telicent Limited
     <#connector> rdf:type fk:Connector ;
         fk:bootstrapServers    {{ .Values.global.kafkaBootstrapUrls | quote }};
         fk:topic               "knowledge";
+        fk:dlqTopic            "knowledge.dlq";
         ## This should refer to an authz:upload endpoint
         fk:fusekiServiceName   "/knowledge/upload";
         ## From 0.90.0 onwards this is mandatory if defining more than one connector
@@ -333,6 +334,7 @@ Copyright (C) 2025 Telicent Limited
     <#ontologyConnector> rdf:type fk:Connector ;
         fk:bootstrapServers    {{ .Values.global.kafkaBootstrapUrls | quote }};
         fk:topic               "ontology";
+        fk:dlqTopic            "ontology.dlq";
         ## This should refer to the target dataset
         fk:fusekiServiceName   "/ontology/upload";
         ## From 0.90.0 onwards this is mandatory if defining more than one connector
@@ -350,6 +352,7 @@ Copyright (C) 2025 Telicent Limited
     <#catalogConnector> rdf:type fk:Connector ;
         fk:bootstrapServers    {{ .Values.global.kafkaBootstrapUrls | quote }};
         fk:topic               "catalog";
+        fk:dlqTopic            "catalog.dlq";
         ## This should refer to the target dataset
         fk:fusekiServiceName   "/catalog/upload";
         ## From 0.90.0 onwards this is mandatory if defining more than one connector

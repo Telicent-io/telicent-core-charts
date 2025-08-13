@@ -4,8 +4,8 @@ apiVersion: v2
 name: search-ui
 description: Telicent Search UI
 type: application
-version: 0.1.1
-appVersion: "4.14.3"
+version: 0.1.2
+appVersion: "4.16.3"
 
 icon: "https://avatars.githubusercontent.com/u/65304240?s=200&v=4"
 
