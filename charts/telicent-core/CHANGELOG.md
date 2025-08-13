@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.5](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v0.3.4...telicent-core-v0.3.5) (2025-08-13)
+
+
+### Bug Fixes
+
+* Make mongo URL a secret ([#139](https://github.com/Telicent-io/telicent-core-charts/issues/139)) ([1811e83](https://github.com/Telicent-io/telicent-core-charts/commit/1811e83307ecb83d831de673f93d59a58fe0c54b))
+
 ## [0.3.4](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v0.3.3...telicent-core-v0.3.4) (2025-08-13)
 
 
