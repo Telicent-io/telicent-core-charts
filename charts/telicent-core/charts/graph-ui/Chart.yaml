@@ -4,8 +4,8 @@ apiVersion: v2
 name: graph-ui
 description: Telicent Graph UI
 type: application
-version: 0.1.1
-appVersion: "1.29.17"
+version: 0.1.2
+appVersion: "1.32.1"
 
 icon: "https://avatars.githubusercontent.com/u/65304240?s=200&v=4"
 
