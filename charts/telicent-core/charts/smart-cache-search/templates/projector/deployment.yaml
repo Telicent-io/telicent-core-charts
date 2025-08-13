@@ -22,7 +22,7 @@ spec:
         prometheus.io/path: /
         prometheus.io/port: "9464"
         prometheus.io/scrape: "true"
-     
+
       {{- range $key, $value := .Values.projector.annotations }}
         {{ $key }}: {{ $value | quote }}
       {{- end }}
@@ -31,12 +31,12 @@ spec:
     spec:
       serviceAccountName: {{ include "smart-cache-search.projectorServiceAccountName" . }}
       securityContext: {{- toYaml .Values.projector.podSecurityContext | nindent 8 }}
-      
+
       {{- $pullSecret := .Values.global.imagePullSecrets | default .Values.projector.image.pullSecrets }}
       {{- with $pullSecret }}
       imagePullSecrets:
         {{- toYaml . | nindent 6 }}
-      {{- end }}  
+      {{- end }}
       containers:
       - name: search-projector
         image: {{ include "smart-cache-search-projector.image" . }}
@@ -92,7 +92,7 @@ spec:
           initialDelaySeconds: 45
           periodSeconds: 60
           timeoutSeconds: 5
-  
+
         volumeMounts:
         - mountPath: /app/config/kafka-auth/
           name: kafka-auth-config
@@ -100,13 +100,15 @@ spec:
         - mountPath: {{ .Values.global.truststore.mountPath | default "/app/config/truststore" }}
           name: truststore-volume
         {{- end }}
-    
+
       volumes:
-      {{- if .Values.global.existingKafkaConfigSecretName }}
       - name: kafka-auth-config
         secret:
+        {{- if .Values.global.existingKafkaConfigSecretName }}
           secretName: {{ .Values.global.existingKafkaConfigSecretName }}
-      {{- end }}
+        {{- else }}
+          secretName: {{ include "telicent-core.kafkaAuthConfigSecretName" . }}
+        {{- end }}
 
       {{- if .Values.global.existingTruststoreSecretName }}
       - name: truststore-volume
