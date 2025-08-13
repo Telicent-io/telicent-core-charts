@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.4](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v0.3.3...telicent-core-v0.3.4) (2025-08-13)
+
+
+### Bug Fixes
+
+* Upversion images ([#137](https://github.com/Telicent-io/telicent-core-charts/issues/137)) ([87bc3fd](https://github.com/Telicent-io/telicent-core-charts/commit/87bc3fd47de3ea44558718de0356b0cafc695068))
+
 ## [0.3.3](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v0.3.2...telicent-core-v0.3.3) (2025-08-13)
 
 
