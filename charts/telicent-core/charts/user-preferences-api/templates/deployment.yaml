@@ -54,8 +54,8 @@ spec:
           valueFrom:
             secretKeyRef:
               key: MONGO_URL
-              {{- if .Values.mongo.existingMongoUrlSecret }}
-              name: {{ .Values.mongo.existingMongoUrlSecret }}
+              {{- if .Values.mongo.existingMongoPasswordSecret }}
+              name: {{ .Values.mongo.existingMongoPasswordSecret }}
               {{- else }}
               name: {{ include "user-preferences-api.secret" . }}
               {{- end }}
