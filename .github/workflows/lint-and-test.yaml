@@ -35,7 +35,7 @@ jobs:
       - name: Run chart-testing (lint)
         if: steps.list-changed.outputs.changed == 'true'
         run: |
-          helm repo add --username robf-telicent --password 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 telicent-core-charts 'https://raw.githubusercontent.com/Telicent-io/telicent-core-charts/gh-pages'
+          helm repo add  telicent-core-charts 'https://charts.telicent.io'
           helm dependency update ./charts/telicent-core
           ct lint --config .github/ct.yaml
 
@@ -49,4 +49,3 @@ jobs:
       # - name: Run chart-testing (install)
       #   if: steps.list-changed.outputs.changed == 'true'
       #   run: ct install --target-branch ${{ github.event.repository.default_branch }}
-
