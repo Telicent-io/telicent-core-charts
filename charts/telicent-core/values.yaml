@@ -9,7 +9,7 @@ global:
   ## Current available global image parameters: imageRegistry and imagePullSecrets
   ## Please, note that this will override the image parameters
   # @key global.imageRegistry Global image registry
-  imageRegistry: ""
+  imageregistry: quay.io ""
   # E.g.
   # imagePullSecrets:
   #   - myRegistryKeySecretName
@@ -17,7 +17,7 @@ global:
   imagePullSecrets: []
 
   # @key global.enterprise Enable enterprise mode, adding additional features and configurations
-  enterprise: false
+  enterprise: true
 
   # @key global.appHostDomain Domain associated with Telicent application services
   appHostDomain: "apps.telicent.io"

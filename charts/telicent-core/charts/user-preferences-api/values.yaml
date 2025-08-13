@@ -5,7 +5,7 @@ global:
   ## Current available global image parameters: imageRegistry and imagePullSecrets
   ## Please, note that this will override the image parameters
   # @key global.imageRegistry Global image registry
-  imageRegistry: ""
+  imageregistry: quay.io
   # E.g.
   # imagePullSecrets:
   #   - myRegistryKeySecretName
@@ -67,9 +67,9 @@ annotations: { }
 
 image:
   # @key image.registry [default: REGISTRY_NAME] User Preferences API image registry
-  registry: 098669589541.dkr.ecr.eu-west-2.amazonaws.com
+  registry: quay.io
   # @key image.repository [default: REPOSITORY_NAME/telicent-user-preferences-service] User Preferences API image name
-  repository: telicent-user-preferences-service
+  repository: telicent/telicent-user-preferences-service
   # @key image.tag User Preferences API image tag. If not set, a tag is generated using the appVersion
   tag: ""
   # @key image.pullPolicy User Preferences API image pull policy
