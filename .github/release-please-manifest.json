@@ -1,4 +1,5 @@
 {
+  "charts/telicent-pipelines": "0.1.0",
   "charts/demo-prereqs-gateways": "0.1.0",
   "charts/demo-prereqs-kafka": "0.1.0",
   "charts/demo-prereqs-keycloak": "0.1.0",

@@ -1,0 +1,70 @@
+{
+    "title": "Chart Values",
+    "type": "object",
+    "properties": {
+        "existingKafkaConfigSecretName": {
+            "type": "string",
+            "description": "Name of an existing secret containing Kafka configuration",
+            "default": ""
+        },
+        "imagePullSecrets": {
+            "type": "array",
+            "description": "List of image pull secrets for the job",
+            "default": [],
+            "items": {}
+        },
+        "kafkaConfigProtocol": {
+            "type": "string",
+            "description": "Protocol used for Kafka communication",
+            "default": "SASL_SSL"
+        },
+        "kafkaConfigMechanism": {
+            "type": "string",
+            "description": "SASL mechanism used for Kafka authentication",
+            "default": "SCRAM-SHA-512"
+        },
+        "kafkaConfigUsername": {
+            "type": "string",
+            "description": "Username for Kafka authentication",
+            "default": ""
+        },
+        "kafkaConfigPassword": {
+            "type": "string",
+            "description": "Password for Kafka authentication",
+            "default": ""
+        },
+        "kafkaBootstrapUrls": {
+            "type": "string",
+            "description": "List of Kafka bootstrap URLs",
+            "default": "kafka-kafka-bootstrap.kafka-dev.svc.cluster.local:9092"
+        },
+        "serviceAccount": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Name of the service account used by the job",
+                    "default": "producers"
+                },
+                "annotations": {
+                    "type": "object",
+                    "description": "Annotations for the service account @object",
+                    "default": {}
+                }
+            }
+        },
+        "jobs": {
+            "type": "array",
+            "description": "Name of the job @array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the job @array"
+                    }
+                }
+            }
+        }
+    }
+}

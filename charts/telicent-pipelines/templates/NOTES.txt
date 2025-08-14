@@ -1,0 +1,4 @@
+********* NOTES *********
+This chart has a soft dependency on the telicent-core chart.
+It's supposed to use the existing kafka auth method and not create a new one.
+However, you can specify all the same values as in the telicent-core chart to create a new one.
