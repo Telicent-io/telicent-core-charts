@@ -10,7 +10,7 @@ global:
   ## Current available global image parameters: imageRegistry and imagePullSecrets
   ## Please, note that this will override the image parameters
   # @key global.imageRegistry Global image registry
-  imageRegistry: ""
+  imageregistry: quay.io
   # E.g.
   # imagePullSecrets:
   #   - myRegistryKeySecretName
@@ -62,7 +62,7 @@ api:
     attributeHierarchyUrl: http://access-api.tc-system.svc.cluster.local:8080/hierarchies/lookup/{name}
 
     # @key api.configuration.javaOptions JVM options for the application
-    javaOptions: -XX:MaxRAMPercentage=70.0
+    javaOptions: -XX:MaxRAMPercentage=70.0 -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks
 
     # @key api.configuration.otelMetricsExporter OpenTelemetry metrics exporter
     # Options: prometheus, otlp, none
@@ -117,9 +117,9 @@ api:
 
   image:
     # @key api.image.registry [default: REGISTRY_NAME] Smart Cache Search API image registry
-    registry: 098669589541.dkr.ecr.eu-west-2.amazonaws.com
+    registry: quay.io
     # @key api.image.repository [default: REPOSITORY_NAME/search-api-server] Smart Cache Search API image name
-    repository: search-api-server
+    repository: telicent/search-api-server
     # @key api.image.tag Smart Cache Search API image tag. If not set, a tag is generated using the appVersion
     tag: ""
     # @key api.image.pullPolicy Smart Cache Search API image pull policy
@@ -265,9 +265,9 @@ projector:
 
   image:
     # @key projector.image.registry [default: REGISTRY_NAME] Smart Cache Search Projector image registry
-    registry: 098669589541.dkr.ecr.eu-west-2.amazonaws.com
+    registry: quay.io
     # @key projector.image.repository [default: REPOSITORY_NAME/search-api-server] Smart Cache Search Projector image name
-    repository: smart-cache-elastic-index
+    repository: telicent/smart-cache-elastic-index
     # @key projector.image.tag Smart Cache Search Projector image tag. If not set, a tag is generated using the appVersion
     tag: ""
     # @key projector.image.pullPolicy Smart Cache Search Projector image pull policy
@@ -338,5 +338,3 @@ projector:
     name: ""
     #@key projector.serviceAccount.annotations Additional custom annotations for the ServiceAccount
     annotations: { }
-
-

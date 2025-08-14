@@ -1,5 +1,26 @@
 # Changelog
 
+## [0.3.5](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v0.3.4...telicent-core-v0.3.5) (2025-08-13)
+
+
+### Bug Fixes
+
+* Make mongo URL a secret ([#139](https://github.com/Telicent-io/telicent-core-charts/issues/139)) ([1811e83](https://github.com/Telicent-io/telicent-core-charts/commit/1811e83307ecb83d831de673f93d59a58fe0c54b))
+
+## [0.3.4](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v0.3.3...telicent-core-v0.3.4) (2025-08-13)
+
+
+### Bug Fixes
+
+* Upversion images ([#137](https://github.com/Telicent-io/telicent-core-charts/issues/137)) ([87bc3fd](https://github.com/Telicent-io/telicent-core-charts/commit/87bc3fd47de3ea44558718de0356b0cafc695068))
+
+## [0.3.3](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v0.3.2...telicent-core-v0.3.3) (2025-08-13)
+
+
+### Bug Fixes
+
+* helm issues prior to release ([#134](https://github.com/Telicent-io/telicent-core-charts/issues/134)) ([473222f](https://github.com/Telicent-io/telicent-core-charts/commit/473222fcfe3a16cbb2a92c3f9e8d318046157346))
+
 ## [0.3.2](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v0.3.1...telicent-core-v0.3.2) (2025-07-22)
 
 

@@ -22,7 +22,7 @@ spec:
         prometheus.io/path: /
         prometheus.io/port: "9464"
         prometheus.io/scrape: "true"
-      
+
       {{- range $key, $value := .Values.annotations }}
         {{ $key }}: {{ $value | quote }}
       {{- end }}
@@ -53,7 +53,7 @@ spec:
             optional: true
         - configMapRef:
             name: {{ include "smart-cache-graph.fullname" . }}
-            optional: true        
+            optional: true
 
         ports:
         - name: http
@@ -78,8 +78,8 @@ spec:
             scheme: HTTP
           initialDelaySeconds: 120
           periodSeconds: 30
-          timeoutSeconds: 2 
-        
+          timeoutSeconds: 2
+
         volumeMounts:
         - mountPath: /fuseki/config
           name: fuseki-config-volume
@@ -93,7 +93,7 @@ spec:
         - mountPath: {{ .Values.global.truststore.mountPath | default "/app/config/truststore" }}
           name: truststore-volume
       {{- end }}
-      
+
       volumes:
       - name: fuseki-config-volume
         configMap:
@@ -102,6 +102,8 @@ spec:
         secret:
         {{- if .Values.global.existingKafkaConfigSecretName }}
           secretName: {{ .Values.global.existingKafkaConfigSecretName }}
+        {{- else }}
+          secretName: {{ include "telicent-core.kafkaAuthConfigSecretName" . }}
         {{- end }}
         # TODO: Secret is created outside of Helm by using Ansible. Would potentially need cert-manager to remove this dependency.
 
@@ -121,7 +123,7 @@ spec:
     spec:
       accessModes:
       - ReadWriteOnce
-      resources: 
+      resources:
         requests:
             storage: {{ .Values.persistentVolumeClaims.datasetsVolume.size }}
       storageClassName: {{ .Values.persistentVolumeClaims.datasetsVolume.storageClass }}
