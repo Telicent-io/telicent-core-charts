@@ -60,6 +60,3 @@ Kafka Auth Secret Name
 {{- printf "%s-kafka-auth" (include "telicent-pipelines.fullname" .) | trunc 63 | trimSuffix "-" }}
 {{- end }}
 {{- end }}
-
-{{/*
-*/}}

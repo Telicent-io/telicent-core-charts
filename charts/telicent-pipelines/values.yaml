@@ -28,19 +28,19 @@ jobs:
       repository: telicent/ontology-ies
       tag: "0.1.0"
       pullPolicy: IfNotPresent
-      configuration:
-        # TARGET_TOPIC is the Kafka topic to which the job will produce messages
-        - name: TARGET_TOPIC
-          value: ontology
-        # PRODUCER_NAME is the name of the producer
-        - name: PRODUCER_NAME
-          value: ies-ontology-producer
-        # SOURCE_NAME is the name of the source of the data
-        - name: SOURCE_NAME
-          value: ies-ontology
-        # KAFKA_CONFIG_MODE specifies the configuration mode for Kafka
-        - name: KAFKA_CONFIG_MODE
-          value: "toml"
+    configuration:
+      # TARGET_TOPIC is the Kafka topic to which the job will produce messages
+      - name: TARGET_TOPIC
+        value: ontology
+      # PRODUCER_NAME is the name of the producer
+      - name: PRODUCER_NAME
+        value: ies-ontology-producer
+      # SOURCE_NAME is the name of the source of the data
+      - name: SOURCE_NAME
+        value: ies-ontology
+      # KAFKA_CONFIG_MODE specifies the configuration mode for Kafka
+      - name: KAFKA_CONFIG_MODE
+        value: "toml"
     resources:
       requests:
         cpu: "100m"

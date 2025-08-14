@@ -40,7 +40,10 @@ spec:
           value: {{ $.Values.kafkaBootstrapUrls | quote }}
         - name: KAFKA_CONFIG_FILE_PATH
           value: /app/config/kafka-auth/kafka-config.toml
-        {{- toYaml .configuration | nindent 8 }}
+        {{- range .configuration }}
+        - name: {{ .name }}
+          value: {{ .value | quote }}
+        {{- end }}
         {{- if .resources }}
         resources:
         {{- toYaml .resources | nindent 10 }}
