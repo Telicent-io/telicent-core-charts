@@ -6,9 +6,9 @@ apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
 
 metadata:
-  name: {{ include "access-api.fullname" . }}-ingress
+  name: {{ include "access.fullname" . }}-ingress
   labels:
-  {{- include "access-api.labels" . | nindent 4 }}
+  {{- include "access.labels" . | nindent 4 }}
 
 spec:
   action: ALLOW
@@ -16,7 +16,7 @@ spec:
   - from:
     - source:
         principals:
-        - {{ include "access-api.ingressPrincipal" . }}
+        - {{ include "access.ingressPrincipal" . }}
     to:
     - operation:
         methods:
@@ -32,7 +32,7 @@ spec:
   - from:
     - source:
         principals:
-        - {{ include "access-api.ingressPrincipal" . }}
+        - {{ include "access.ingressPrincipal" . }}
     to:
     - operation:
         methods:
@@ -45,4 +45,4 @@ spec:
       - tc_read
   selector:
     matchLabels:
-    {{- include "access-api.selectorLabels" . | nindent 6 }}
+    {{- include "access.selectorLabels" . | nindent 6 }}

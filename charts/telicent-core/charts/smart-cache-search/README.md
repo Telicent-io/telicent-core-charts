@@ -74,19 +74,19 @@ Contains global parameters, these parameters are mirrored within the Telicent co
 
 Contains configuration parameters specific to the Smart Cache Search API application
 
-| Name                                        | Description                         | Value                                                                          |
-| ------------------------------------------- | ----------------------------------- | ------------------------------------------------------------------------------ |
-| `api.configuration.userAttributesUrl`       | URL for the user details endpoint   | `http://access-api.tc-system.svc.cluster.local:8080/users/lookup/{user}`       |
-| `api.configuration.attributeHierarchyUrl`   | URL for the user hierarchy endpoint | `http://access-api.tc-system.svc.cluster.local:8080/hierarchies/lookup/{name}` |
-| `api.configuration.javaOptions`             | JVM options for the application     | `-XX:MaxRAMPercentage=70.0`                                                    |
-| `api.configuration.otelMetricsExporter`     | OpenTelemetry metrics exporter      | `prometheus`                                                                   |
-| `api.configuration.otelTracesExporter`      | OpenTelemetry traces exporter       | `none`                                                                         |
-| `api.configuration.elasticHost`             | OpenSearch host                     | `https://your.opensearch.host.here:443`                                        |
-| `api.configuration.elasticPort`             | OpenSearch port number              | `443`                                                                          |
-| `api.configuration.elasticClusterPort`      | OpenSearch cluster port             | `9200`                                                                         |
-| `api.configuration.opensearchCompatibility` | Enable OpenSearch compatibility     | `true`                                                                         |
-| `api.configuration.elasticIndexNames`       | OpenSearch index name(s)            | `search,doc-content`                                                           |
-| `api.configuration.searchFieldOptions`      | Field options for search            | `primaryName^2,*`                                                              |
+| Name                                        | Description                         | Value                                                                                        |
+| ------------------------------------------- | ----------------------------------- | -------------------------------------------------------------------------------------------- |
+| `api.configuration.userAttributesUrl`       | URL for the user details endpoint   | `http://access.tc-system.svc.cluster.local:8080/users/lookup/{user}`                         |
+| `api.configuration.attributeHierarchyUrl`   | URL for the user hierarchy endpoint | `http://access.tc-system.svc.cluster.local:8080/hierarchies/lookup/{name}`                   |
+| `api.configuration.javaOptions`             | JVM options for the application     | `-XX:MaxRAMPercentage=70.0 -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks` |
+| `api.configuration.otelMetricsExporter`     | OpenTelemetry metrics exporter      | `prometheus`                                                                                 |
+| `api.configuration.otelTracesExporter`      | OpenTelemetry traces exporter       | `none`                                                                                       |
+| `api.configuration.elasticHost`             | OpenSearch host                     | `https://your.opensearch.host.here:443`                                                      |
+| `api.configuration.elasticPort`             | OpenSearch port number              | `443`                                                                                        |
+| `api.configuration.elasticClusterPort`      | OpenSearch cluster port             | `9200`                                                                                       |
+| `api.configuration.opensearchCompatibility` | Enable OpenSearch compatibility     | `true`                                                                                       |
+| `api.configuration.elasticIndexNames`       | OpenSearch index name(s)            | `search,doc-content`                                                                         |
+| `api.configuration.searchFieldOptions`      | Field options for search            | `primaryName^2,*`                                                                            |
 
 ### OpenSearch secrets - Smart Cache Search API
 

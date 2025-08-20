@@ -18,7 +18,7 @@ the [Helm](https://helm.sh) package manager.
 To install the chart with the release name `my-release`:
 
 ```console
-helm install my-release ./charts/telicent-core/charts/access-api
+helm install my-release ./charts/telicent-core/charts/access
 ```
 
 ## Uninstalling the Chart
@@ -34,9 +34,9 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ```bash
 .dev/readme-generator-for-helm --config=charts/telicent-core/readme.config \
- --values=charts/telicent-core/charts/access-api/values.yaml \
- --readme=charts/telicent-core/charts/access-api/README.md \
- --schema=charts/telicent-core/charts/access-api/values.schema.json
+ --values=charts/telicent-core/charts/access/values.yaml \
+ --readme=charts/telicent-core/charts/access/README.md \
+ --schema=charts/telicent-core/charts/access/values.schema.json
 ```
 
 ## Configuration and installation details
@@ -96,8 +96,8 @@ Contains configuration parameters specific to the Access API application
 | --------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------- |
 | `replicas`                                          | Number of Access API replicas to deploy                                   | `1`                                   |
 | `revisionHistoryLimit`                              | Number of controller revisions to keep                                    | `5`                                   |
-| `image.registry`                                    | Access API image registry                                                 | `REGISTRY_NAME`                       |
-| `image.repository`                                  | Access API image name                                                     | `REPOSITORY_NAME/telicent-access-api` |
+| `image.registry`                                    | Access image registry                                                     | `REGISTRY_NAME`                       |
+| `image.repository`                                  | Access image name                                                         | `REPOSITORY_NAME/telicent-access-api` |
 | `image.tag`                                         | Access API image tag. If not set, a tag is generated using the appVersion | `""`                                  |
 | `image.pullPolicy`                                  | Access API image pull policy                                              | `IfNotPresent`                        |
 | `image.pullSecrets`                                 | Specify registry secret names as an array                                 | `[]`                                  |

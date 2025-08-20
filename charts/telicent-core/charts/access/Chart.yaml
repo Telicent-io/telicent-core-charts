@@ -1,7 +1,7 @@
 # Copyright (C) 2025 Telicent Limited
 
 apiVersion: v2
-name: access-api
+name: access
 description: A Helm chart for Kubernetes
 # A chart can be either an 'application' or a 'library' chart.
 #

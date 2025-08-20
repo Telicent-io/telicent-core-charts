@@ -148,12 +148,12 @@
             "properties": {
                 "registry": {
                     "type": "string",
-                    "description": "Access API image registry",
+                    "description": "Access image registry",
                     "default": "REGISTRY_NAME"
                 },
                 "repository": {
                     "type": "string",
-                    "description": "Access API image name",
+                    "description": "Access image name",
                     "default": "REPOSITORY_NAME/telicent-access-api"
                 },
                 "tag": {

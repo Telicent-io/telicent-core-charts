@@ -87,17 +87,17 @@
                         "userAttributesUrl": {
                             "type": "string",
                             "description": "URL for the user details endpoint",
-                            "default": "http://access-api.tc-system.svc.cluster.local:8080/users/lookup/{user}"
+                            "default": "http://access.tc-system.svc.cluster.local:8080/users/lookup/{user}"
                         },
                         "attributeHierarchyUrl": {
                             "type": "string",
                             "description": "URL for the user hierarchy endpoint",
-                            "default": "http://access-api.tc-system.svc.cluster.local:8080/hierarchies/lookup/{name}"
+                            "default": "http://access.tc-system.svc.cluster.local:8080/hierarchies/lookup/{name}"
                         },
                         "javaOptions": {
                             "type": "string",
                             "description": "JVM options for the application",
-                            "default": "-XX:MaxRAMPercentage=70.0"
+                            "default": "-XX:MaxRAMPercentage=70.0 -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks"
                         },
                         "otelMetricsExporter": {
                             "type": "string",
