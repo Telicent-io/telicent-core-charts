@@ -10,7 +10,7 @@ global:
   ## Current available global image parameters: imageRegistry and imagePullSecrets
   ## Please, note that this will override the image parameters
   # @key global.imageRegistry Global image registry
-  imageregistry: quay.io
+  imageRegistry: ""
   # E.g.
   # imagePullSecrets:
   #   - myRegistryKeySecretName
@@ -57,9 +57,9 @@ api:
   # @descEnd
   configuration:
     # @key api.configuration.userAttributesUrl URL for the user details endpoint
-    userAttributesUrl: http://access-api.tc-system.svc.cluster.local:8080/users/lookup/{user}
+    userAttributesUrl: http://access.tc-system.svc.cluster.local:8080/users/lookup/{user}
     # @key api.configuration.attributeHierarchyUrl URL for the user hierarchy endpoint
-    attributeHierarchyUrl: http://access-api.tc-system.svc.cluster.local:8080/hierarchies/lookup/{name}
+    attributeHierarchyUrl: http://access.tc-system.svc.cluster.local:8080/hierarchies/lookup/{name}
 
     # @key api.configuration.javaOptions JVM options for the application
     javaOptions: -XX:MaxRAMPercentage=70.0 -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks

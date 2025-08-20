@@ -1,6 +1,6 @@
 dependencies:
-- name: access-api
-  repository: file://./charts/access-api
+- name: access
+  repository: file://./charts/access
   version: 0.1.1
 - name: access-ui
   repository: file://./charts/access-ui

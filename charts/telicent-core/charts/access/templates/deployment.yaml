@@ -6,9 +6,9 @@ apiVersion: apps/v1
 kind: Deployment
 
 metadata:
-  name: {{ include "access-api.fullname" . }}
+  name: {{ include "access.fullname" . }}
   labels:
-  {{- include "access-api.labels" . | nindent 4 }}
+  {{- include "access.labels" . | nindent 4 }}
 
 spec:
   replicas: {{ .Values.replicas }}
@@ -20,13 +20,13 @@ spec:
     type: RollingUpdate
   selector:
     matchLabels:
-    {{- include "access-api.selectorLabels" . | nindent 6 }}
+    {{- include "access.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-      {{- include "access-api.selectorLabels" . | nindent 8 }}
+      {{- include "access.selectorLabels" . | nindent 8 }}
     spec:
-      serviceAccountName: {{ include "access-api.serviceAccountName" . }}
+      serviceAccountName: {{ include "access.serviceAccountName" . }}
       securityContext: {{- toYaml .Values.podSecurityContext | nindent 8 }}
      
       {{- $pullSecret := .Values.global.imagePullSecrets | default .Values.image.pullSecrets }}
@@ -35,8 +35,8 @@ spec:
         {{- toYaml . | nindent 6 }}
       {{- end }}
       containers:
-      - name: access-api
-        image: {{ include "access-api.image" . }}
+      - name: access
+        image: {{ include "access.image" . }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         resources: {{- toYaml .Values.resources | nindent 10 }}
         securityContext: {{- toYaml .Values.containerSecurityContext | nindent 10 }}
@@ -48,12 +48,12 @@ spec:
         {{- end }}
         envFrom:
         - configMapRef:
-            name: {{ include "access-api.envConfigmapName" . }}
+            name: {{ include "access.envConfigmapName" . }}
         - secretRef:
             {{- if .Values.mongo.existingMongoPasswordSecret }}
             name: {{ .Values.mongo.existingMongoPasswordSecret }}
             {{ else }}
-            name: {{ include "access-api.envSecretName" . }}
+            name: {{ include "access.envSecretName" . }}
             {{- end }}
             
         ports:
@@ -75,7 +75,7 @@ spec:
       {{- if or .Values.existingCacertConfigmap .Values.cacert }}
       - name: cert-volume
         configMap:
-          name: {{ include "access-api.cacertConfigmapName" . }}
+          name: {{ include "access.cacertConfigmapName" . }}
       {{- end }}
       {{- if .Values.mongo.existingCaSecret }}
       - name: ca-certificate-volume

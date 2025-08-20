@@ -44,7 +44,7 @@ helm uninstall my-release
 
 The `telicent-core` chart includes the following sub-charts:
 
-- **[access-api](./charts/telicent-core/charts/access-api/README.md)** - Access control API service
+- **[access](charts/telicent-core/charts/access/README.md)** - Access control service
 - **[access-ui](./charts/telicent-core/charts/access-ui/README.md)** - Access control user interface
 - **[graph-ui](./charts/telicent-core/charts/graph-ui/README.md)** - Graph visualization interface
 - **[query-ui](./charts/telicent-core/charts/query-ui/README.md)** - Query interface for data exploration

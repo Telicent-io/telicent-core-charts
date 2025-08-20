@@ -135,7 +135,7 @@
         },
         "replicas": {
             "type": "number",
-            "description": "Number of Access API replicas to deploy",
+            "description": "Number of Access replicas to deploy",
             "default": 1
         },
         "revisionHistoryLimit": {
@@ -148,22 +148,22 @@
             "properties": {
                 "registry": {
                     "type": "string",
-                    "description": "Access API image registry",
+                    "description": "Access image registry",
                     "default": "REGISTRY_NAME"
                 },
                 "repository": {
                     "type": "string",
-                    "description": "Access API image name",
+                    "description": "Access image name",
                     "default": "REPOSITORY_NAME/telicent-access-api"
                 },
                 "tag": {
                     "type": "string",
-                    "description": "Access API image tag. If not set, a tag is generated using the appVersion",
+                    "description": "Access image tag. If not set, a tag is generated using the appVersion",
                     "default": ""
                 },
                 "pullPolicy": {
                     "type": "string",
-                    "description": "Access API image pull policy",
+                    "description": "Access image pull policy",
                     "default": "IfNotPresent"
                 },
                 "pullSecrets": {
@@ -299,12 +299,12 @@
             "properties": {
                 "port": {
                     "type": "number",
-                    "description": "Access API service port",
+                    "description": "Access service port",
                     "default": 8080
                 },
                 "type": {
                     "type": "string",
-                    "description": "Access API service type",
+                    "description": "Access service type",
                     "default": "ClusterIP"
                 }
             }

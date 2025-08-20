@@ -68,8 +68,8 @@ Contains configuration parameters specific to the Smart Cache Graph application
 
 | Name                                  | Description                         | Value                                                                                  |
 | ------------------------------------- | ----------------------------------- | -------------------------------------------------------------------------------------- |
-| `configuration.userAttributesUrl`     | URL for the user details endpoint   | `http://access-api.tc-system.svc.cluster.local:8080/users/lookup/{user}`               |
-| `configuration.attributeHierarchyUrl` | URL for the user hierarchy endpoint | `http://access-api.tc-system.svc.cluster.local:8080/hierarchies/lookup/{name}`         |
+| `configuration.userAttributesUrl`     | URL for the user details endpoint   | `http://access.tc-system.svc.cluster.local:8080/users/lookup/{user}`                   |
+| `configuration.attributeHierarchyUrl` | URL for the user hierarchy endpoint | `http://access.tc-system.svc.cluster.local:8080/hierarchies/lookup/{name}`             |
 | `configuration.javaOptions`           | JVM options for the application     | `-Xmx5120m -Xms2048m -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks` |
 | `configuration.otelMetricsExporter`   | OpenTelemetry metrics exporter      | `prometheus`                                                                           |
 | `configuration.otelTracesExporter`    | OpenTelemetry traces exporter       | `none`                                                                                 |

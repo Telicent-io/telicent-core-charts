@@ -29,9 +29,9 @@ appVersion: "1.16.0"
 # TODO: Use a remote repository for dependencies? Will require a change to the CI/CD pipeline.
 # The dependencies will be fetched and installed when the chart is installed.
 dependencies:
-  - name: access-api
+  - name: access
     version: "^0.1.0"
-    repository: file://./charts/access-api
+    repository: file://./charts/access
   - name: access-ui
     version: "^0.1.0"
     repository: file://./charts/access-ui
