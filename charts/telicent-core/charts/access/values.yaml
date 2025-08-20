@@ -145,11 +145,11 @@ istio:
     # @key istio.ingress.principal Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName'
     principal: ""
 
-  smartCacheSearchApi:
-    # @key istio.smartCacheSearchApi.principal Principal used for Smart Cache Search API traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'serviceAccountName' and the current namespace
+  smartCacheSearch:
+    # @key istio.smartCacheSearch.principal Principal used for Smart Cache Search traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'serviceAccountName' and the current namespace
     principal: ""
-    # @key istio.smartCacheSearchApi.serviceAccountName Name of the Smart Cache Search API service account
-    serviceAccountName: "smart-cache-search-api"
+    # @key istio.smartCacheSearch.serviceAccountName Name of the Smart Cache Search service account
+    serviceAccountName: "smart-cache-search"
 
   smartCacheGraph:
     # @key istio.smartCacheGraph.principal Principal used for Smart Cache Graph traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'serviceAccountName' and the current namespace
