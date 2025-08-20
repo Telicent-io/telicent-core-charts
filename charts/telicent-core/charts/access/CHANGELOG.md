@@ -5,4 +5,4 @@
 
 ### Features
 
-* access api and ui charts ([fd0b888](https://github.com/Telicent-io/singlenode/commit/fd0b888b7757791fb081929d2da01210a5dbc64b))
+* access and access-ui charts ([fd0b888](https://github.com/Telicent-io/singlenode/commit/fd0b888b7757791fb081929d2da01210a5dbc64b))
