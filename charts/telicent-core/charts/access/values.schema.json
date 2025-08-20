@@ -322,18 +322,18 @@
                         }
                     }
                 },
-                "smartCacheSearchApi": {
+                "smartCacheSearch": {
                     "type": "object",
                     "properties": {
                         "principal": {
                             "type": "string",
-                            "description": "Principal used for Smart Cache Search API traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'serviceAccountName' and the current namespace",
+                            "description": "Principal used for Smart Cache Search traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'serviceAccountName' and the current namespace",
                             "default": ""
                         },
                         "serviceAccountName": {
                             "type": "string",
-                            "description": "Name of the Smart Cache Search API service account",
-                            "default": "smart-cache-search-api"
+                            "description": "Name of the Smart Cache Search service account",
+                            "default": "smart-cache-search"
                         }
                     }
                 },

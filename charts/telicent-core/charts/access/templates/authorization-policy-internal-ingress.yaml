@@ -17,7 +17,7 @@ spec:
     - source:
         principals: 
         - {{ include "access.smartCacheGraphPrincipal" . }}
-        - {{ include "access.smartCacheSearchApiPrincipal" . }}
+        - {{ include "access.smartCacheSearchPrincipal" . }}
     to:
     - operation:
         methods:
