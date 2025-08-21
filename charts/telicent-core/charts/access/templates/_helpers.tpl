@@ -105,9 +105,9 @@ Create the name of the config map
 {{- end }}
 
 {{- define "access.smartCacheGraphPrincipal" -}}
-{{- .Values.istio.smartCacheGraph.principal | default (printf "cluster.local/ns/%s/sa/%s" .Release.Namespace .Values.istio.smartCacheGraph.serviceAccountName) | quote }}
+{{- .Values.istio.smartCacheGraph.principal | default (printf "cluster.local/ns/%s/sa/%s-%s" .Release.Namespace .Release.Name .Values.istio.smartCacheGraph.serviceAccountName) | quote }}
 {{- end }}
 
 {{- define "access.smartCacheSearchPrincipal" -}}
-{{- .Values.istio.smartCacheSearch.principal | default (printf "cluster.local/ns/%s/sa/%s" .Release.Namespace .Values.istio.smartCacheSearch.serviceAccountName) | quote }}
+{{- .Values.istio.smartCacheSearch.principal | default (printf "cluster.local/ns/%s/sa/%s-%s" .Release.Namespace .Release.Name .Values.istio.smartCacheSearch.serviceAccountName) | quote }}
 {{- end }}
