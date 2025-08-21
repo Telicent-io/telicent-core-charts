@@ -84,12 +84,12 @@
                 "userAttributesUrl": {
                     "type": "string",
                     "description": "URL for the user details endpoint",
-                    "default": "http://access-api.tc-system.svc.cluster.local:8080/users/lookup/{user}"
+                    "default": "http://access.tc-system.svc.cluster.local:8080/users/lookup/{user}"
                 },
                 "attributeHierarchyUrl": {
                     "type": "string",
                     "description": "URL for the user hierarchy endpoint",
-                    "default": "http://access-api.tc-system.svc.cluster.local:8080/hierarchies/lookup/{name}"
+                    "default": "http://access.tc-system.svc.cluster.local:8080/hierarchies/lookup/{name}"
                 },
                 "javaOptions": {
                     "type": "string",

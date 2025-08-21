@@ -5,7 +5,7 @@ Copyright (C) 2025 Telicent Limited
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "access-api.name" -}}
+{{- define "access.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -14,7 +14,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "access-api.fullname" -}}
+{{- define "access.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -30,84 +30,84 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "access-api.chart" -}}
+{{- define "access.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "access-api.labels" -}}
+{{- define "access.labels" -}}
 telicent.io/resource: "true"
-helm.sh/chart: {{ include "access-api.chart" . }}
-{{ include "access-api.selectorLabels" . }}
-app.kubernetes.io/version: {{ include "access-api.version" . | quote }}
+helm.sh/chart: {{ include "access.chart" . }}
+{{ include "access.selectorLabels" . }}
+app.kubernetes.io/version: {{ include "access.version" . | quote }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 
 {{/*
 Selector labels
 */}}
-{{- define "access-api.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "access-api.name" . }}
+{{- define "access.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "access.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "access-api.serviceAccountName" -}}
-{{- default (include "access-api.fullname" .) .Values.serviceAccount.name }}
+{{- define "access.serviceAccountName" -}}
+{{- default (include "access.fullname" .) .Values.serviceAccount.name }}
 {{- end }}
 
 {{/*
 Create the name of the service to use
 */}}
-{{- define "access-api.serviceName" -}}
-{{- include "access-api.fullname" . }}
+{{- define "access.serviceName" -}}
+{{- include "access.fullname" . }}
 {{- end }}
 
 {{/*
 Create the name of the environment secrets
 */}}
-{{- define "access-api.envSecretName" -}}
+{{- define "access.envSecretName" -}}
 {{- if .Values.mongo.existingMongoPasswordSecret }}
 {{- .Values.mongo.existingMongoPasswordSecret }}
 {{- else }}
-{{- printf "%s-%s" (include "access-api.fullname" .) "env" }}
+{{- printf "%s-%s" (include "access.fullname" .) "env" }}
 {{- end }}
 {{- end -}}
 
 {{/*
 Create the name of the config map
 */}}
-{{- define "access-api.envConfigmapName" -}}
+{{- define "access.envConfigmapName" -}}
 {{- if .Values.existingConfigmap }}
 {{- .Values.existingConfigmap }}
 {{- else }}
-{{- printf "%s-%s" (include "access-api.fullname" .) "env" }}
+{{- printf "%s-%s" (include "access.fullname" .) "env" }}
 {{- end }}
 {{- end }}
 
 {{/*
 Create the name of the config map
 */}}
-{{- define "access-api.cacertConfigmapName" -}}
+{{- define "access.cacertConfigmapName" -}}
 {{- if .Values.existingCacertConfigmap -}}
 {{- .Values.existingCacertConfigmap }}
 {{- else }}
-{{- printf "%s-%s" (include "access-api.fullname" .) "cacert" }}
+{{- printf "%s-%s" (include "access.fullname" .) "cacert" }}
 {{- end }}
 {{- end }}
 
-{{- define "access-api.ingressPrincipal" -}}
+{{- define "access.ingressPrincipal" -}}
 {{- .Values.istio.ingress.principal | default (printf "cluster.local/ns/%s/sa/%s" .Values.global.istioNamespace .Values.global.istioServiceAccountName) | quote }}
 {{- end }}
 
-{{- define "access-api.smartCacheGraphPrincipal" -}}
+{{- define "access.smartCacheGraphPrincipal" -}}
 {{- .Values.istio.smartCacheGraph.principal | default (printf "cluster.local/ns/%s/sa/%s-%s" .Release.Namespace .Release.Name .Values.istio.smartCacheGraph.serviceAccountName) | quote }}
 {{- end }}
 
-{{- define "access-api.smartCacheSearchApiPrincipal" -}}
+{{- define "access.smartCacheSearchApiPrincipal" -}}
 {{- .Values.istio.smartCacheSearchApi.principal | default (printf "cluster.local/ns/%s/sa/%s-%s" .Release.Namespace .Release.Name .Values.istio.smartCacheSearchApi.serviceAccountName) | quote }}
 {{- end }}

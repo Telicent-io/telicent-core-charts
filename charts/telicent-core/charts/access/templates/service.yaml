@@ -6,15 +6,15 @@ apiVersion: v1
 kind: Service
 
 metadata:
-  name: {{ include "access-api.serviceName" . }}
+  name: {{ include "access.serviceName" . }}
   labels:
-    app: access-api
-    {{- include "access-api.labels" . | nindent 4 }}
+    app: access
+    {{- include "access.labels" . | nindent 4 }}
 
 spec:
   type: {{ .Values.service.type }}
   selector:
-    {{- include "access-api.selectorLabels" . | nindent 4 }}
+    {{- include "access.selectorLabels" . | nindent 4 }}
   ports:
   - name: http
     port: {{ .Values.service.port }}

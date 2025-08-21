@@ -99,14 +99,14 @@ Search API URL
 Default User Preferences URL
 */}}
 {{- define "smart-cache-graph.userPreferencesUrl" -}}
-{{- printf "http://%s-access-api:8080/users/lookup/{user}" (.Release.Name) }}
+{{- printf "http://%s-access:8080/users/lookup/{user}" (.Release.Name) }}
 {{- end }}
 
 {{/*
 Default Atrribute Hierarchy URL
 */}}
 {{- define "smart-cache-graph.attributeHierachyUrl" -}}
-{{- printf "http://%s-access-api:8080/hierarchies/lookup/{name}" (.Release.Name) }}
+{{- printf "http://%s-access:8080/hierarchies/lookup/{name}" (.Release.Name) }}
 {{- end }}
 
 {{- define "smart-cache-graph.ingressPrincipal" -}}
