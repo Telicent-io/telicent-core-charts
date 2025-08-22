@@ -59,3 +59,10 @@ global:
 
 # @key jobServiceAccountName Service account used for running jobs in Kubernetes.
 jobServiceAccountName: producers
+
+# @section Service Account Parameters
+serviceAccount:
+  # @key serviceAccount.name Name of the ServiceAccount to use. If not set, a name is generated using the fullname
+  name: ""
+  #@key serviceAccount.annotations Additional custom annotations for the ServiceAccount
+  annotations: { }

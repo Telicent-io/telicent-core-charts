@@ -6,7 +6,9 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 
 metadata:
-  name: label-ns
+  name: label-namespace-role
+  labels:
+    {{- include "telicent-core.labels" . | nindent 4 }}s
 
 rules:
   - apiGroups: [""]

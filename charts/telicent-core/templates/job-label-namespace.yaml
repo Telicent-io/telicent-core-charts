@@ -1,0 +1,35 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+apiVersion: batch/v1
+kind: Job
+
+metadata:
+  name: job-label-namespace
+  labels:
+    {{- include "telicent-core.labels" . | nindent 4 }}
+
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/hook-delete-policy": hook-succeeded
+
+spec:
+  template:
+    metadata:
+      labels:
+        {{- include "telicent-core.labels" . | nindent 4 }}
+
+    spec:
+      restartPolicy: Never
+      serviceAccountName: {{ include "telicent-core.serviceAccountName" . }}
+      containers:
+        - name: job-label-namespace
+          image: "bitnami/kubectl:latest"
+          command:
+            command:
+              - /bin/sh
+              - -c
+              - |
+                kubectl label namespace {{ .Release.Namespace }} \
+                  istio-injection: enabled --overwrite
+           
