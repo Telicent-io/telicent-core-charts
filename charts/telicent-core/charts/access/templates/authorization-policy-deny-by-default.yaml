@@ -1,0 +1,13 @@
+{{- /*
+  Copyright (C) 2025 Telicent Limited
+  */}}
+
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+
+metadata:
+  name: {{ include "access.fullname" . }}-deny-by-default
+  labels:
+  {{- include "access.labels" . | nindent 4 }}
+
+spec: {}

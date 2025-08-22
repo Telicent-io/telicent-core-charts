@@ -5,13 +5,13 @@ Copyright (C) 2025 Telicent Limited
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "graph.serviceName" . }}
+  name: {{ include "graph-ui.serviceName" . }}
   labels:
-    {{- include "graph.labels" . | nindent 4 }}
+    {{- include "graph-ui.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   selector:
-    {{- include "graph.selectorLabels" . | nindent 4 }}
+    {{- include "graph-ui.selectorLabels" . | nindent 4 }}
   ports:
     - name: http
       port: {{ .Values.service.port }}

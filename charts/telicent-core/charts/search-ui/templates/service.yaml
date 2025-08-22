@@ -6,14 +6,14 @@ apiVersion: v1
 kind: Service
 
 metadata:
-  name: {{ include "search.serviceName" . }}
+  name: {{ include "search-ui.serviceName" . }}
   labels:
-    {{- include "search.labels" . | nindent 4 }}
+    {{- include "search-ui.labels" . | nindent 4 }}
 
 spec:
   type: {{ .Values.service.type }}
   selector:
-    {{- include "search.selectorLabels" . | nindent 4 }}
+    {{- include "search-ui.selectorLabels" . | nindent 4 }}
   ports:
     - name: http
       port: {{ .Values.service.port }}

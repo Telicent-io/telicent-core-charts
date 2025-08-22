@@ -1,0 +1,29 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: {{ include "search-projector.fullname" . }}
+  labels:
+    {{- include "search-projector.labels" . | nindent 4 }}
+
+data:
+  # Environment variables for the projector container
+  JAVA_OPTIONS: {{ .Values.configuration.javaOptions | quote }}
+  OTEL_METRICS_EXPORTER: {{ .Values.configuration.otelMetricsExporter | quote }}
+  OTEL_TRACES_EXPORTER: {{ .Values.configuration.otelTracesExporter | quote }}
+  BOOTSTRAP_SERVERS: {{ .Values.global.kafkaBootstrapUrls | quote }}
+  KAFKA_CONFIG_FILE_PATH: /app/config/kafka-auth/kafka-config.properties
+  ELASTIC_HOST: {{ .Values.configuration.elasticHost | quote }}
+  ELASTIC_PORT: {{ .Values.configuration.elasticPort | quote }}
+  OPENSEARCH_COMPATIBILITY: {{ .Values.configuration.opensearchCompatibility | quote }}
+  ELASTIC_INDEX: {{ .Values.configuration.elasticIndex | quote }}
+  TOPIC: {{ .Values.configuration.topic | quote }}
+  DLQ_TOPIC: {{ .Values.configuration.dlqTopic | quote }}
+  INDEX_BATCH_SIZE: {{ .Values.configuration.indexBatchSize | quote }}
+  {{- with .Values.extraEnvs }}
+  {{- toYaml . | nindent 2 }}
+  {{- end }}

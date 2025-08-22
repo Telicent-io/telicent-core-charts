@@ -60,9 +60,9 @@ configuration:
 
 # @section Common Parameters
 
-#@key fullnameOverride String to fully override the generated release name
+# @key fullnameOverride String to fully override the generated release name
 fullnameOverride: ""
-#@key nameOverride String to replace the name of the chart in the Chart.yaml file
+# @key nameOverride String to replace the name of the chart in the Chart.yaml file
 nameOverride: ""
 
 # @section Graph UI Deployment Parameters
@@ -106,7 +106,7 @@ containerSecurityContext:
   # @key containerSecurityContext.allowPrivilegeEscalation Set container's Security Context allowPrivilegeEscalation
   allowPrivilegeEscalation: false
   capabilities:
-    #@key containerSecurityContext.capabilities.drop List of capabilities to be dropped
+    # @key containerSecurityContext.capabilities.drop List of capabilities to be dropped
     drop:
       - ALL
   seccompProfile:
@@ -129,10 +129,10 @@ podSecurityContext:
 
 # @key affinity Affinity for pod assignment
 # Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
-affinity: { }
+affinity: {}
 # @key nodeSelector Node labels for pod assignment
 # Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
-nodeSelector: { }
+nodeSelector: {}
 # @key tolerations Tolerations for pod assignment
 # Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
 tolerations: [ ]
@@ -153,5 +153,5 @@ istio:
 serviceAccount:
   # @key serviceAccount.name Name of the ServiceAccount to use. If not set, a name is generated using the fullname
   name: ""
-  #@key serviceAccount.annotations Additional custom annotations for the ServiceAccount
-  annotations: { }
+  # @key serviceAccount.annotations Additional custom annotations for the ServiceAccount
+  annotations: {}

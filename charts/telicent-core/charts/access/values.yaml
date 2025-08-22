@@ -43,13 +43,13 @@ configuration:
   scimEnabled: true
 
 # @section Common Parameters
-#@key fullnameOverride String to fully override the generated release name
+# @key fullnameOverride String to fully override the generated release name
 fullnameOverride: ""
-#@key existingConfigmap Name of the existing configmap for configuration
+# @key existingConfigmap Name of the existing configmap for configuration
 existingConfigmap: ""
-#@key existingCacertConfigmap Name of the existing configmap for extra certificates
+# @key existingCacertConfigmap Name of the existing configmap for extra certificates
 existingCacertConfigmap: ""
-#@key cacert Path to the CA certificate file
+# @key cacert Path to the CA certificate file
 cacert: ""
 
 # @section MongoDB Parameters
@@ -113,7 +113,7 @@ containerSecurityContext:
   # @key containerSecurityContext.allowPrivilegeEscalation Set container's Security Context allowPrivilegeEscalation
   allowPrivilegeEscalation: false
   capabilities:
-    #@key containerSecurityContext.capabilities.drop List of capabilities to be dropped
+    # @key containerSecurityContext.capabilities.drop List of capabilities to be dropped
     drop:
       - ALL
   seccompProfile:
@@ -141,25 +141,26 @@ service:
   type: ClusterIP
 
 istio:
+
   ingress:
-    # @key istio.ingress.principal Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName'
+    # @key istio.ingress.principal Principal used for ingress traffic to this application by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName'
     principal: ""
 
-  smartCacheSearch:
-    # @key istio.smartCacheSearch.principal Principal used for Smart Cache Search traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'serviceAccountName' and the current namespace
+  search:
+    # @key istio.search.principal Principal used for Search traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'serviceAccountName' and the current namespace
     principal: ""
-    # @key istio.smartCacheSearch.serviceAccountName Name of the Smart Cache Search service account
-    serviceAccountName: "smart-cache-search"
+    # @key istio.search.serviceAccountName Name of the Search service account
+    serviceAccountName: "search"
 
-  smartCacheGraph:
-    # @key istio.smartCacheGraph.principal Principal used for Smart Cache Graph traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'serviceAccountName' and the current namespace
+  graph:
+    # @key istio.graph.principal Principal used for Graph traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'serviceAccountName' and the current namespace
     principal: ""
-    # @key istio.smartCacheGraph.serviceAccountName Name of the Smart Cache Graph service account
-    serviceAccountName: "smart-cache-graph"
+    # @key istio.graph.serviceAccountName Name of the Graph service account
+    serviceAccountName: "graph"
 
 # @section Service Account Parameters
 serviceAccount:
   # @key serviceAccount.name Name of the ServiceAccount to use. If not set, a name is generated using the fullname
   name: ""
-  #@key serviceAccount.annotations Additional custom annotations for the ServiceAccount
-  annotations: { }
+  # @key serviceAccount.annotations Additional custom annotations for the ServiceAccount
+  annotations: {}

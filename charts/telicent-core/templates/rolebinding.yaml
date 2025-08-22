@@ -1,0 +1,21 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+
+metadata:
+  name: {{ .Release.Namespace }}:label-namespace-binding
+  labels:
+    {{- include "telicent-core.labels" . | nindent 4 }}
+
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "telicent-core.serviceAccountName" . }}
+    namespace: {{ .Release.Namespace }}
+
+roleRef:
+  kind: Role
+  name: label-namespace-role
+  apiGroup: rbac.authorization.k8s.io

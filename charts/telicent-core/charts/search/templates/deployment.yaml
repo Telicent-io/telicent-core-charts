@@ -1,0 +1,112 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: {{ include "search.fullname" . }}
+  labels:
+    {{- include "search.labels" . | nindent 4 }}
+
+spec:
+  replicas: {{ .Values.replicas }}
+  revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
+  selector:
+    matchLabels:
+    {{- include "search.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        prometheus.io/path: /
+        prometheus.io/port: "9464"
+        prometheus.io/scrape: "true"
+   
+      {{- range $key, $value := .Values.annotations }}
+        {{ $key }}: {{ $value | quote }}
+      {{- end }}
+      labels:
+        {{- include "search.labels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ include "search.serviceAccountName" . }}
+      securityContext: {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      
+      {{- $pullSecret := .Values.global.imagePullSecrets | default .Values.image.pullSecrets }}
+      {{- with $pullSecret }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 6 }}
+      {{- end }}
+      containers:
+      - name: search
+        image: {{ include "search.image" . }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        resources: {{- toYaml .Values.resources | nindent 10 }}
+        securityContext: {{- toYaml .Values.containerSecurityContext | nindent 10 }}
+        
+        {{- with .Values.extraEnvs }}
+        env:
+        {{- range . }}
+        - name: {{ .name }}
+          value: {{ .value | quote }}
+        {{- end }}
+        {{- end }}
+        
+        envFrom:
+        {{- if .Values.elasticSecrets.existingEnvironmentSecretName }}
+        - secretRef:
+            name: {{ .Values.elasticSecrets.existingEnvironmentSecretName | quote }}
+            optional: true
+        {{- else }}
+        - secretRef:
+            name: {{ include "search.fullname" . }}
+            optional: true
+        {{- end }}
+        - configMapRef:
+            name: {{ include "search.fullname" . }}
+        {{- if .Values.extraEnvs }}
+        {{- range $key, $value := .Values.extraEnvs }}
+          - name: {{ $key }}
+            value: {{ $value | quote }}
+            optional: true
+        {{- end }}
+        {{- end }}
+       
+        ports:
+        - name: http
+          containerPort: 8181
+          protocol: TCP
+        - name: metrics
+          containerPort: 9464
+          protocol: TCP
+
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 8181
+            scheme: HTTP
+          initialDelaySeconds: 30
+          periodSeconds: 60
+          timeoutSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /version-info
+            port: 8181
+            scheme: HTTP
+          initialDelaySeconds: 30
+          periodSeconds: 60
+          timeoutSeconds: 5
+        
+       
+        {{- if .Values.global.existingTruststoreSecretName }}
+        volumeMounts:
+        - mountPath: {{ .Values.global.truststore.mountPath | default "/app/config/truststore" }}
+          name: java-truststore
+        {{- end }}
+     
+      {{- if .Values.global.existingTruststoreSecretName }}
+      volumes:
+      - name: java-truststore
+        secret:
+          secretName: {{ .Values.global.existingTruststoreSecretName }}
+      {{- end }}

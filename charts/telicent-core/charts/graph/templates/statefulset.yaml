@@ -1,0 +1,141 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
+apiVersion: apps/v1
+kind: StatefulSet
+
+metadata:
+  name: {{ include "graph.fullname" . }}
+  labels:
+    {{- include "graph.labels" . | nindent 4 }}
+
+spec:
+  replicas: {{ .Values.replicas }}
+  revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
+  selector:
+    matchLabels:
+    {{- include "graph.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        prometheus.io/path: /
+        prometheus.io/port: "9464"
+        prometheus.io/scrape: "true"
+
+      {{- range $key, $value := .Values.annotations }}
+        {{ $key }}: {{ $value | quote }}
+      {{- end }}
+      labels:
+        {{- include "graph.labels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ include "graph.serviceAccountName" . }}
+      securityContext: {{- toYaml .Values.podSecurityContext | nindent 8 }}
+
+      {{- $pullSecret := .Values.global.imagePullSecrets | default .Values.image.pullSecrets }}
+      {{- with $pullSecret }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 6 }}
+      {{- end }}
+      containers:
+      - name: graph
+        image: {{ include "graph.image" . }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        resources: {{- toYaml .Values.resources | nindent 10 }}
+        securityContext: {{- toYaml .Values.containerSecurityContext | nindent 10 }}
+
+        args:
+          - --config
+          - /fuseki/config/config.ttl
+        envFrom:
+        - secretRef:
+            name: {{ include "graph.envSecretName" . }}
+            optional: true
+        - configMapRef:
+            name: {{ include "graph.fullname" . }}
+            optional: true
+
+        ports:
+        - name: http
+          containerPort: 3030
+          protocol: TCP
+        - name: {{ .Values.metrics.service.name | default "metrics" }}
+          containerPort: {{ .Values.metrics.service.port }}
+          protocol: TCP
+
+        readinessProbe:
+          httpGet:
+            path: /$/ping
+            port: 3030
+            scheme: HTTP
+          initialDelaySeconds: 120
+          periodSeconds: 30
+          timeoutSeconds: 2
+        livenessProbe:
+          httpGet:
+            path: /$/ping
+            port: 3030
+            scheme: HTTP
+          initialDelaySeconds: 120
+          periodSeconds: 30
+          timeoutSeconds: 2
+
+        volumeMounts:
+        - mountPath: /fuseki/config
+          name: fuseki-config-volume
+        - mountPath: /fuseki/databases
+          name: datasets-volume
+        - mountPath: /fuseki/backups
+          name: backups-volume
+        - mountPath: /app/config/kafka-auth/
+          name: kafka-auth-config
+      {{- if .Values.global.existingTruststoreSecretName }}
+        - mountPath: {{ .Values.global.truststore.mountPath | default "/app/config/truststore" }}
+          name: truststore-volume
+      {{- end }}
+
+      volumes:
+      - name: fuseki-config-volume
+        configMap:
+            name: {{ include "graph.fusekiConfig" . }}
+      - name: kafka-auth-config
+        secret:
+        {{- if .Values.global.existingKafkaConfigSecretName }}
+          secretName: {{ .Values.global.existingKafkaConfigSecretName }}
+        {{- else }}
+          secretName: {{ include "telicent-core.kafkaAuthConfigSecretName" . }}
+        {{- end }}
+        # TODO: Secret is created outside of Helm by using Ansible. Would potentially need cert-manager to remove this dependency.
+
+      {{- if .Values.global.existingTruststoreSecretName }}
+      - name: truststore-volume
+        secret:
+          secretName: {{ .Values.global.existingTruststoreSecretName }}
+          optional: true
+      {{- end }}
+
+  volumeClaimTemplates:
+  - metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "graph.name" . }}
+        telicent.io/resource: "true"
+      name: datasets-volume
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+            storage: {{ .Values.persistentVolumeClaims.datasetsVolume.size }}
+      storageClassName: {{ .Values.persistentVolumeClaims.datasetsVolume.storageClass }}
+  - metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "graph.name" . }}
+        telicent.io/resource: "true"
+      name: backups-volume
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+            storage: {{ .Values.persistentVolumeClaims.backupsVolume.size }}
+      storageClassName: {{ .Values.persistentVolumeClaims.backupsVolume.storageClass }}

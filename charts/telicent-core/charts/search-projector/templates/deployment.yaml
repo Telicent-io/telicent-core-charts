@@ -1,0 +1,117 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: {{ include "search-projector.fullname" . }}
+  labels:
+    {{- include "search-projector.labels" . | nindent 4 }}
+
+spec:
+  replicas: {{ .Values.replicas }}
+  revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
+  selector:
+    matchLabels:
+    {{- include "search-projector.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        prometheus.io/path: /
+        prometheus.io/port: "9464"
+        prometheus.io/scrape: "true"
+
+      {{- range $key, $value := .Values.annotations }}
+        {{ $key }}: {{ $value | quote }}
+      {{- end }}
+      labels:
+        {{- include "search-projector.labels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ include "search-projector.serviceAccountName" . }}
+      securityContext: {{- toYaml .Values.podSecurityContext | nindent 8 }}
+
+      {{- $pullSecret := .Values.global.imagePullSecrets | default .Values.image.pullSecrets }}
+      {{- with $pullSecret }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 6 }}
+      {{- end }}
+      containers:
+      - name: search-projector
+        image: {{ include "search-projector.image" . }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        resources: {{- toYaml .Values.resources | nindent 10 }}
+        securityContext: {{- toYaml .Values.containerSecurityContext | nindent 10 }}
+
+        {{- with .Values.extraEnvs }}
+        env:
+        {{- range . }}
+        - name: {{ .name }}
+          value: {{ .value | quote }}
+        {{- end }}
+        {{- end }}
+        envFrom:
+        {{- if .Values.elasticSecrets.existingEnvironmentSecretName }}
+        - secretRef:
+            name: {{ .Values.elasticSecrets.existingEnvironmentSecretName | quote }}
+            optional: true
+        {{- else }}
+        - secretRef:
+            name: {{ include "search-projector.fullname" . }}
+            optional: true
+        {{- end }}
+        - configMapRef:
+            name: {{ include "search-projector.fullname" . }}
+        {{- if .Values.extraEnvs }}
+        {{- range $key, $value := .Values.extraEnvs }}
+        {{- end }}
+        {{- end }}
+
+        ports:
+        - name: metrics
+          containerPort: 9464
+          protocol: TCP
+        - name: health-probes
+          containerPort: 10101
+          protocol: TCP
+
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 10101
+            scheme: HTTP
+          initialDelaySeconds: 45
+          periodSeconds: 60
+          timeoutSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /version-info
+            port: 10101
+            scheme: HTTP
+          initialDelaySeconds: 45
+          periodSeconds: 60
+          timeoutSeconds: 5
+
+        volumeMounts:
+        - mountPath: /app/config/kafka-auth/
+          name: kafka-auth-config
+        {{- if .Values.global.existingTruststoreSecretName }}
+        - mountPath: {{ .Values.global.truststore.mountPath | default "/app/config/truststore" }}
+          name: truststore-volume
+        {{- end }}
+
+      volumes:
+      - name: kafka-auth-config
+        secret:
+        {{- if .Values.global.existingKafkaConfigSecretName }}
+          secretName: {{ .Values.global.existingKafkaConfigSecretName }}
+        {{- else }}
+          secretName: {{ include "telicent-core.kafkaAuthConfigSecretName" . }}
+        {{- end }}
+
+      {{- if .Values.global.existingTruststoreSecretName }}
+      - name: truststore-volume
+        secret:
+          secretName: {{ .Values.global.existingTruststoreSecretName }}
+      {{- end }}
