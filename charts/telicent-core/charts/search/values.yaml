@@ -111,7 +111,7 @@ replicas: 1
 # @key revisionHistoryLimit Number of controller revisions to keep
 revisionHistoryLimit: 5
 # @key annotations Add extra annotations to the Deployment object
-annotations: { }
+annotations: {}
 # @key extraEnvs List of additional environment variables to set in the pod
 extraEnvs: [ ]
 
@@ -200,4 +200,4 @@ serviceAccount:
   # @key serviceAccount.name Name of the created ServiceAccount. If not set, a name is generated using the fullname template
   name: ""
   # @key serviceAccount.annotations Additional custom annotations for the ServiceAccount
-  annotations: { }
+  annotations: {}

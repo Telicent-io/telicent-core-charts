@@ -159,4 +159,4 @@ serviceAccount:
   # @key serviceAccount.name Name of the ServiceAccount to use. If not set, a name is generated using the fullname
   name: ""
   # @key serviceAccount.annotations Additional custom annotations for the ServiceAccount
-  annotations: { }
+  annotations: {}

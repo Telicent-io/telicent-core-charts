@@ -129,10 +129,10 @@ podSecurityContext:
 
 # @key affinity Affinity for pod assignment
 # Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
-affinity: { }
+affinity: {}
 # @key nodeSelector Node labels for pod assignment
 # Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
-nodeSelector: { }
+nodeSelector: {}
 # @key tolerations Tolerations for pod assignment
 # Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
 tolerations: [ ]
@@ -154,4 +154,4 @@ serviceAccount:
   # @key serviceAccount.name Name of the ServiceAccount to use. If not set, a name is generated using the fullname
   name: ""
   # @key serviceAccount.annotations Additional custom annotations for the ServiceAccount
-  annotations: { }
+  annotations: {}
