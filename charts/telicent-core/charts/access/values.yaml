@@ -43,13 +43,13 @@ configuration:
   scimEnabled: true
 
 # @section Common Parameters
-#@key fullnameOverride String to fully override the generated release name
+# @key fullnameOverride String to fully override the generated release name
 fullnameOverride: ""
-#@key existingConfigmap Name of the existing configmap for configuration
+# @key existingConfigmap Name of the existing configmap for configuration
 existingConfigmap: ""
-#@key existingCacertConfigmap Name of the existing configmap for extra certificates
+# @key existingCacertConfigmap Name of the existing configmap for extra certificates
 existingCacertConfigmap: ""
-#@key cacert Path to the CA certificate file
+# @key cacert Path to the CA certificate file
 cacert: ""
 
 # @section MongoDB Parameters
@@ -113,7 +113,7 @@ containerSecurityContext:
   # @key containerSecurityContext.allowPrivilegeEscalation Set container's Security Context allowPrivilegeEscalation
   allowPrivilegeEscalation: false
   capabilities:
-    #@key containerSecurityContext.capabilities.drop List of capabilities to be dropped
+    # @key containerSecurityContext.capabilities.drop List of capabilities to be dropped
     drop:
       - ALL
   seccompProfile:
@@ -162,5 +162,5 @@ istio:
 serviceAccount:
   # @key serviceAccount.name Name of the ServiceAccount to use. If not set, a name is generated using the fullname
   name: ""
-  #@key serviceAccount.annotations Additional custom annotations for the ServiceAccount
+  # @key serviceAccount.annotations Additional custom annotations for the ServiceAccount
   annotations: { }

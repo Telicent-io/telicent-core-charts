@@ -149,7 +149,7 @@ containerSecurityContext:
   # @key containerSecurityContext.allowPrivilegeEscalation Set container's Security Context allowPrivilegeEscalation
   allowPrivilegeEscalation: false
   capabilities:
-    #@key containerSecurityContext.capabilities.drop List of capabilities to be dropped
+    # @key containerSecurityContext.capabilities.drop List of capabilities to be dropped
     drop:
       - ALL
   seccompProfile:
@@ -199,5 +199,5 @@ istio:
 serviceAccount:
   # @key serviceAccount.name Name of the created ServiceAccount. If not set, a name is generated using the fullname template
   name: ""
-  #@key serviceAccount.annotations Additional custom annotations for the ServiceAccount
+  # @key serviceAccount.annotations Additional custom annotations for the ServiceAccount
   annotations: { }
