@@ -90,7 +90,7 @@ Create Kafka Auth Config name to use
 Search API URL
 */}}
 {{- define "graph.searchUrl" -}}
-{{- printf "http://%ssearch:8181" (.Release.Name) }}
+{{- printf "http://%s-search:8181" (.Release.Name) }}
 {{- end }}
 {{/*
 */}}
