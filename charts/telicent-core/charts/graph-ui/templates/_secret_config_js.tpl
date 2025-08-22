@@ -2,7 +2,7 @@
 Copyright (C) 2025 Telicent Limited
 */}}
 
-{{- define "graph.secretConfigJs"  -}}
+{{- define "graph-ui.secretConfigJs"  -}}
 // Config values
 
 {{- if .Values.configuration.graphUiMaptilerToken }}

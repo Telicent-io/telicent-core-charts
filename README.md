@@ -49,9 +49,9 @@ The `telicent-core` chart includes the following sub-charts:
 - **[graph-ui](./charts/telicent-core/charts/graph-ui/README.md)** - Graph visualization interface
 - **[query-ui](./charts/telicent-core/charts/query-ui/README.md)** - Query interface for data exploration
 - **[search-ui](./charts/telicent-core/charts/search-ui/README.md)** - Search interface
-- **[smart-cache-graph](./charts/telicent-core/charts/smart-cache-graph/README.md)** - Graph data caching service
-- **[smart-cache-search](./charts/telicent-core/charts/smart-cache-search/README.md)** - Search data caching service
-- **[user-preferences-api](./charts/telicent-core/charts/user-preferences-api/README.md)** - User preferences management API
+- **[smart-cache-graph](charts/telicent-core/charts/graph/README.md)** - Graph data caching service
+- **[smart-cache-search](charts/telicent-core/charts/search/README.md)** - Search data caching service
+- **[user-preferences-api](charts/telicent-core/charts/user-preferences/README.md)** - User preferences management API
 
 ### Demo Prerequisites
 

@@ -1,0 +1,88 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+
+metadata:
+  name: {{ include "graph.fullname" . }}
+  labels:
+  {{- include "graph.labels" . | nindent 4 }}
+
+spec:
+  gateways:
+  - {{ .Values.global.istioNamespace }}/{{ .Values.global.istioGatewayName }}
+  hosts:
+  - {{ .Values.global.appHostDomain }}
+  http:
+  - match:
+    - uri:
+        prefix: /api/sparql/knowledge/sparql
+    rewrite:
+      uri: /knowledge/sparql
+    route:
+    - destination:
+        host: {{ include "graph.serviceName" . }}
+        port:
+          number: {{ .Values.service.port }}
+  - match:
+    - uri:
+        prefix: /api/sparql/knowledge/query
+    rewrite:
+      uri: /knowledge/query
+    route:
+    - destination:
+        host: {{ include "graph.serviceName" . }}
+        port:
+          number: {{ .Values.service.port }}
+  - match:
+    - uri:
+        prefix: /api/graphql/knowledge/graphql
+    rewrite:
+      uri: /knowledge/graphql
+    route:
+    - destination:
+        host: {{ include "graph.serviceName" . }}
+        port:
+          number: {{ .Values.service.port }}
+  - match:
+    - uri:
+        prefix: /api/sparql/ontology/sparql
+    rewrite:
+      uri: /ontology/sparql
+    route:
+    - destination:
+        host: {{ include "graph.serviceName" . }}
+        port:
+          number: {{ .Values.service.port }}
+  - match:
+    - uri:
+        prefix: /api/sparql/ontology/query
+    rewrite:
+      uri: /ontology/query
+    route:
+    - destination:
+        host: {{ include "graph.serviceName" . }}
+        port:
+          number: {{ .Values.service.port }}
+  - match:
+    - uri:
+        prefix: /api/sparql/catalog/sparql
+    rewrite:
+      uri: /catalog/sparql
+    route:
+    - destination:
+        host: {{ include "graph.serviceName" . }}
+        port:
+          number: {{ .Values.service.port }}
+  - match:
+    - uri:
+        prefix: /api/sparql/catalog/query
+    rewrite:
+      uri: /catalog/query
+    route:
+    - destination:
+        host: {{ include "graph.serviceName" . }}
+        port:
+          number: {{ .Values.service.port }}

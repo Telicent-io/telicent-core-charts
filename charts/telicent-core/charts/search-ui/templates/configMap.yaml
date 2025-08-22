@@ -5,9 +5,9 @@ Copyright (C) 2025 Telicent Limited
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "search.configMapName" . }}
+  name: {{ include "search-ui.configMapName" . }}
   labels:
-    {{- include "search.labels" . | nindent 4 }}
+    {{- include "search-ui.labels" . | nindent 4 }}
 
 data:
   env-config.js: |

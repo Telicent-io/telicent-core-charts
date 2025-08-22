@@ -1,0 +1,25 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: {{ include "graph.fullname" . }}
+  labels:
+    {{- include "graph.labels" . | nindent 4 }}
+       
+data:
+  ATTRIBUTE_HIERARCHY_URL: {{ .Values.configuration.attributeHierarchyUrl | default (include "graph.attributeHierachyUrl" .) | quote }}
+  ENABLE_BACKUPS: "false"
+  ENABLE_LABELS_QUERY: "false"
+  JAVA_OPTIONS: {{ .Values.configuration.javaOptions | quote }}
+  JWKS_URL: {{ .Values.global.jwksUrl | quote }}
+  KAFKA_CONFIG_FILE_PATH: /app/config/kafka-auth/kafka-config.properties
+  OTEL_METRICS_EXPORTER: {{ .Values.configuration.otelMetricsExporter | quote }}
+  OTEL_TRACES_EXPORTER: {{ .Values.configuration.otelTracesExporter | quote }}
+  {{- if .Values.global.enterprise}}
+  SEARCH_API_URL: {{ include "graph.searchUrl" . | quote }}
+  {{- end}}
+  USER_ATTRIBUTES_URL: {{ .Values.configuration.userAttributesUrl | default (include "graph.userPreferencesUrl" .) | quote }}

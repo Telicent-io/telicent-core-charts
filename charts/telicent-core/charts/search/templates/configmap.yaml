@@ -1,0 +1,29 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: {{ include "search.fullname" . }}-api
+  labels:
+    {{- include "search.labels" . | nindent 4 }}
+
+data:
+  # Environment variables for the search-api container
+  USER_ATTRIBUTES_URL: {{ .Values.configuration.userAttributesUrl | quote }}
+  ATTRIBUTE_HIERARCHY_URL: {{ .Values.configuration.attributeHierarchyUrl | quote }}
+  JAVA_OPTIONS: {{ .Values.configuration.javaOptions | quote }}
+  OTEL_METRICS_EXPORTER: {{ .Values.configuration.otelMetricsExporter | quote }}
+  OTEL_TRACES_EXPORTER: {{ .Values.configuration.otelTracesExporter | quote }}
+  ELASTIC_HOST: {{ .Values.configuration.elasticHost | quote }}
+  ELASTIC_PORT: {{ .Values.configuration.elasticPort | quote }}
+  ES_CLUSTER_PORT: {{ .Values.configuration.elasticClusterPort | quote }}
+  OPENSEARCH_COMPATIBILITY: {{ .Values.configuration.opensearchCompatibility | quote }}
+  ELASTIC_INDEX: {{ .Values.configuration.elasticIndexNames | quote }}
+  FIELD_OPTIONS: {{ .Values.configuration.searchFieldOptions | quote }}
+  JWKS_URL: {{ .Values.global.jwksUrl | quote }}
+{{- with .Values.extraEnvs }}
+{{- toYaml . | nindent 2 }}
+{{- end }}

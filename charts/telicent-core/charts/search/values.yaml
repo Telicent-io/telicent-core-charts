@@ -1,0 +1,203 @@
+# Copyright (C) 2025 Telicent Limited
+# Telicent Search stand-alone chart
+
+# @section Global Parameters
+# @descStart
+# Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
+# @descEnd
+
+global:
+  ## Current available global image parameters: imageRegistry and imagePullSecrets
+  ## Please, note that this will override the image parameters
+  # @key global.imageRegistry Global image registry
+  imageRegistry: ""
+  # E.g.
+  # imagePullSecrets:
+  #   - myRegistryKeySecretName
+  # @key global.imagePullSecrets Global registry secret names as an array
+  imagePullSecrets: []
+
+  # @key global.enterprise Enable enterprise mode, adding additional features and configurations
+  enterprise: false
+
+  # @key global.appHostDomain Domain associated with Telicent application services
+  appHostDomain: "apps.telicent.io"
+  # @key global.authHostDomain Domain associated with Telicent authentication services, including OIDC providers
+  authHostDomain: "auth.telicent.io"
+  # @key global.jwksUrl Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)
+  # NOTE: For Dex the endpoint would be https://{yourDexDomain}/keys
+  jwksUrl: "https://{yourAuthdomain}/.well-known/jwks.json"
+
+  # @key global.istioNamespace Namespace in which Istio is deployed
+  # NOTE: Istio, by default, is deployed within the 'istio-system' namespace
+  istioNamespace: istio-system
+  # @key global.istioServiceAccountName Name of the Istio service account
+  istioServiceAccountName: istio-ingress
+  # @key global.istioGatewayName Name of the Istio Gateway Resource (LB operating at the edge of the mesh)
+  istioGatewayName: ingress-gateway
+
+  # @key global.kafkaBootstrapUrls Comma separated list containing Kafka bootstrap URLs
+  kafkaBootstrapUrls: "kafka-bootstrap.kafka.svc.cluster.local:9092"
+  # @key global.existingKafkaConfigSecretName Name of an existing secret containing Kafka configuration
+  existingKafkaConfigSecretName: ""
+
+  # @key global.existingTruststoreSecretName Name of an existing secret containing the truststore
+  existingTruststoreSecretName: ""
+  truststore:
+    # @key global.truststore.mountPath The mount path for the truststore in the container
+    mountPath: /app/config/truststore
+
+# -----------------------------------------------------------------------------
+# @section Search Parameters
+# -----------------------------------------------------------------------------
+
+# @section Configuration Parameters - Search
+# @descStart
+# Contains configuration parameters specific to the Smart Cach Search application
+# @descEnd
+configuration:
+  # @key configuration.userAttributesUrl URL for the user details endpoint
+  userAttributesUrl: http://access.tc-system.svc.cluster.local:8080/users/lookup/{user}
+  # @key configuration.attributeHierarchyUrl URL for the user hierarchy endpoint
+  attributeHierarchyUrl: http://access.tc-system.svc.cluster.local:8080/hierarchies/lookup/{name}
+
+  # @key configuration.javaOptions JVM options for the application
+  javaOptions: -XX:MaxRAMPercentage=70.0 -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks
+
+  # @key configuration.otelMetricsExporter OpenTelemetry metrics exporter
+  # Options: prometheus, otlp, none
+  otelMetricsExporter: prometheus
+  # @key configuration.otelTracesExporter OpenTelemetry traces exporter
+  # Options: otlp, none
+  otelTracesExporter: none
+
+  # @key configuration.elasticHost OpenSearch host
+  # Note: This should be the URL of your OpenSearch instance, including protocol (https or http)
+  elasticHost: https://your.opensearch.host.here:443
+  # @key configuration.elasticPort OpenSearch port number
+  elasticPort: "443"
+  # @key configuration.elasticClusterPort OpenSearch cluster port
+  # Note: This should be the port of your OpenSearch cluster, typically 9200
+  elasticClusterPort: "9200"
+  # @key configuration.opensearchCompatibility Enable OpenSearch compatibility
+  opensearchCompatibility: "true"
+  # @key configuration.elasticIndexNames OpenSearch index name(s)
+  elasticIndexNames: search,doc-content
+  # @key configuration.searchFieldOptions Field options for search
+  # This is a comma-separated list of fields to be used for search, with optional weights
+  searchFieldOptions: primaryName^2,*
+
+# @section OpenSearch secrets - Search
+# Note: It is recommended to use a Kubernetes secret for sensitive information like passwords
+elasticSecrets:
+  # @key elasticSecrets.elasticUser OpenSearch username
+  elasticUser: ""
+  # @key elasticSecrets.elasticPassword OpenSearch user password
+  elasticPassword: ""
+  # @key elasticSecrets.truststorePass Password for the truststore
+  truststorePass: ""
+  # @key elasticSecrets.existingEnvironmentSecretName Name of an existing environment secret
+  existingEnvironmentSecretName: ""
+
+# @section Common Parameters - Search
+# @key fullnameOverride String to fully override the generated release name
+fullnameOverride: ""
+# @key nameOverride String to partially override fullname (will maintain the release name)
+nameOverride: ""
+
+# @section Deployment Parameters - Search
+# @key replicas Number of Search replicas to deploy
+replicas: 1
+# @key revisionHistoryLimit Number of controller revisions to keep
+revisionHistoryLimit: 5
+# @key annotations Add extra annotations to the Deployment object
+annotations: { }
+# @key extraEnvs List of additional environment variables to set in the pod
+extraEnvs: [ ]
+
+image:
+  # @key image.registry [default: REGISTRY_NAME] Search image registry
+  registry: quay.io
+  # @key image.repository [default: REPOSITORY_NAME/search-api-server] Search image name
+  repository: telicent/search-api-server
+  # @key image.tag Search image tag. If not set, a tag is generated using the appVersion
+  tag: ""
+  # @key image.pullPolicy Search image pull policy
+  pullPolicy: IfNotPresent
+  # @key image.pullSecrets Specify registry secret names as an array
+  pullSecrets: [ ]
+
+resources:
+  requests:
+    # @key resources.requests.cpu Set containers' CPU request
+    cpu: "500m"
+    # @key resources.requests.memory Set containers' memory request
+    memory: "4000Mi"
+  limits:
+    # @key resources.limits.cpu Set containers' CPU limit
+    cpu: "1000m"
+    # @key resources.limits.memory Set containers' memory limit
+    memory: "8000Mi"
+
+containerSecurityContext:
+  # @key containerSecurityContext.runAsUser Set containers' Security Context runAsUser User ID
+  runAsUser: 185
+  # @key containerSecurityContext.runAsGroup Set containers' Security Context runAsGroup Group ID
+  runAsGroup: 185
+  # @key containerSecurityContext.runAsNonRoot Set container's Security Context runAsNonRoot
+  runAsNonRoot: true
+  # @key containerSecurityContext.allowPrivilegeEscalation Set container's Security Context allowPrivilegeEscalation
+  allowPrivilegeEscalation: false
+  capabilities:
+    #@key containerSecurityContext.capabilities.drop List of capabilities to be dropped
+    drop:
+      - ALL
+  seccompProfile:
+    # @key containerSecurityContext.seccompProfile.type Set container's Security Context seccomp profile
+    type: RuntimeDefault
+
+podSecurityContext:
+  # @key podSecurityContext.runAsUser Set the provisioning pod's Security Context runAsUser User ID
+  runAsUser: 185
+  # @key podSecurityContext.runAsGroup Set the provisioning pod's Security Context runAsGroup Group ID
+  runAsGroup: 185
+  # @key podSecurityContext.runAsNonRoot Set the provisioning pod's Security Context runAsNonRoot
+  runAsNonRoot: true
+  # @key podSecurityContext.fsGroup Set the provisioning pod's Group ID for the mounted volumes' filesystem
+  fsGroup: 185
+  seccompProfile:
+    # @key podSecurityContext.seccompProfile.type Set the provisioning pod's Security Context seccomp profile
+    type: RuntimeDefault
+
+# @section Metrics Parameters - Search
+metrics:
+  service:
+    # @key metrics.service.name Name for the Prometheus service
+    name: metrics
+    # @key metrics.service.port Port for the Prometheus service
+    port: 9464
+
+# @section Traffic Exposure Parameters - Search
+service:
+  # @key service.port Search service port
+  port: 8181
+  # @key service.type Search service port
+  type: ClusterIP
+
+istio:
+  ingress:
+    # @key istio.ingress.principal Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName'
+    principal: ""
+
+  graph:
+    # @key istio.graph.principal Principal used for Graph traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'serviceAccountName' and the current namespace
+    principal: ""
+    # @key istio.graph.serviceAccountName Name of the Graph service account
+    serviceAccountName: "graph"
+
+# @section Service Account Parameters - Search
+serviceAccount:
+  # @key serviceAccount.name Name of the created ServiceAccount. If not set, a name is generated using the fullname template
+  name: ""
+  #@key serviceAccount.annotations Additional custom annotations for the ServiceAccount
+  annotations: { }

@@ -317,38 +317,38 @@
                     "properties": {
                         "principal": {
                             "type": "string",
-                            "description": "Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName'",
+                            "description": "Principal used for ingress traffic to this application by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName'",
                             "default": ""
                         }
                     }
                 },
-                "smartCacheSearch": {
+                "search": {
                     "type": "object",
                     "properties": {
                         "principal": {
                             "type": "string",
-                            "description": "Principal used for Smart Cache Search traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'serviceAccountName' and the current namespace",
+                            "description": "Principal used for Search traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'serviceAccountName' and the current namespace",
                             "default": ""
                         },
                         "serviceAccountName": {
                             "type": "string",
-                            "description": "Name of the Smart Cache Search service account",
-                            "default": "smart-cache-search"
+                            "description": "Name of the Search service account",
+                            "default": "search"
                         }
                     }
                 },
-                "smartCacheGraph": {
+                "graph": {
                     "type": "object",
                     "properties": {
                         "principal": {
                             "type": "string",
-                            "description": "Principal used for Smart Cache Graph traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'serviceAccountName' and the current namespace",
+                            "description": "Principal used for Graph traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'serviceAccountName' and the current namespace",
                             "default": ""
                         },
                         "serviceAccountName": {
                             "type": "string",
-                            "description": "Name of the Smart Cache Graph service account",
-                            "default": "smart-cache-graph"
+                            "description": "Name of the Graph service account",
+                            "default": "graph"
                         }
                     }
                 }

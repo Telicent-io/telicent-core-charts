@@ -38,11 +38,11 @@ Create chart name and version as used by the chart label.
 Common labels
 */}}
 {{- define "access.labels" -}}
-telicent.io/resource: "true"
 helm.sh/chart: {{ include "access.chart" . }}
 {{ include "access.selectorLabels" . }}
 app.kubernetes.io/version: {{ include "access.version" . | quote }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
+telicent.io/resource: "true"
 {{- end }}
 
 {{/*
@@ -104,10 +104,10 @@ Create the name of the config map
 {{- .Values.istio.ingress.principal | default (printf "cluster.local/ns/%s/sa/%s" .Values.global.istioNamespace .Values.global.istioServiceAccountName) | quote }}
 {{- end }}
 
-{{- define "access.smartCacheGraphPrincipal" -}}
-{{- .Values.istio.smartCacheGraph.principal | default (printf "cluster.local/ns/%s/sa/%s" .Release.Namespace .Values.istio.smartCacheGraph.serviceAccountName) | quote }}
+{{- define "access.graphPrincipal" -}}
+{{- .Values.istio.graph.principal | default (printf "cluster.local/ns/%s/sa/%s" .Release.Namespace .Values.istio.graph.serviceAccountName) | quote }}
 {{- end }}
 
-{{- define "access.smartCacheSearchPrincipal" -}}
-{{- .Values.istio.smartCacheSearch.principal | default (printf "cluster.local/ns/%s/sa/%s" .Release.Namespace .Values.istio.smartCacheSearch.serviceAccountName) | quote }}
+{{- define "access.searchPrincipal" -}}
+{{- .Values.istio.search.principal | default (printf "cluster.local/ns/%s/sa/%s" .Release.Namespace .Values.istio.search.serviceAccountName) | quote }}
 {{- end }}

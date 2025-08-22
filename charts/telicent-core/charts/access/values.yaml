@@ -141,21 +141,22 @@ service:
   type: ClusterIP
 
 istio:
+
   ingress:
-    # @key istio.ingress.principal Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName'
+    # @key istio.ingress.principal Principal used for ingress traffic to this application by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName'
     principal: ""
 
-  smartCacheSearch:
-    # @key istio.smartCacheSearch.principal Principal used for Smart Cache Search traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'serviceAccountName' and the current namespace
+  search:
+    # @key istio.search.principal Principal used for Search traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'serviceAccountName' and the current namespace
     principal: ""
-    # @key istio.smartCacheSearch.serviceAccountName Name of the Smart Cache Search service account
-    serviceAccountName: "smart-cache-search"
+    # @key istio.search.serviceAccountName Name of the Search service account
+    serviceAccountName: "search"
 
-  smartCacheGraph:
-    # @key istio.smartCacheGraph.principal Principal used for Smart Cache Graph traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'serviceAccountName' and the current namespace
+  graph:
+    # @key istio.graph.principal Principal used for Graph traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'serviceAccountName' and the current namespace
     principal: ""
-    # @key istio.smartCacheGraph.serviceAccountName Name of the Smart Cache Graph service account
-    serviceAccountName: "smart-cache-graph"
+    # @key istio.graph.serviceAccountName Name of the Graph service account
+    serviceAccountName: "graph"
 
 # @section Service Account Parameters
 serviceAccount:

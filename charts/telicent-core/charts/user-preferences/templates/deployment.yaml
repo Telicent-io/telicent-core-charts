@@ -1,0 +1,105 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: {{ include "user-preferences.fullname" . }}
+  labels:
+    {{- include "user-preferences.labels" . | nindent 4 }}
+
+spec:
+  replicas: {{ .Values.replicas }}
+  revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
+  selector:
+    matchLabels:
+    {{- include "user-preferences.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+      {{- range $key, $value := .Values.annotations }}
+        {{ $key }}: {{ $value | quote }}
+      {{- end }}
+      labels:
+        {{- include "user-preferences.labels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ include "user-preferences.serviceAccountName" . }}
+      securityContext: {{- toYaml .Values.podSecurityContext | nindent 8 }}
+
+      {{- $pullSecret := .Values.global.imagePullSecrets | default .Values.image.pullSecrets }}
+      {{- with $pullSecret }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 6 }}
+      {{- end }}
+      containers:
+      - name: user-preferences
+        image: {{ include "user-preferences.image" . }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        resources: {{- toYaml .Values.resources | nindent 10 }}
+        securityContext: {{- toYaml .Values.containerSecurityContext | nindent 10 }}
+
+        env:
+        - name: MONGO_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: password
+              {{- if .Values.mongo.existingMongoPasswordSecret }}
+              name: {{ .Values.mongo.existingMongoPasswordSecret }}
+              {{- else }}
+              name: {{ include "user-preferences.secret" . }}
+              {{- end }}
+        envFrom:    
+        - configMapRef:
+            name: {{ include "user-preferences.fullname" . }}
+        
+        ports:
+        - name: http
+          protocol: TCP
+          containerPort: 11111
+        - name: metrics
+          protocol: TCP
+          containerPort: 9464
+
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 11111
+            scheme: HTTP
+          initialDelaySeconds: 30
+          periodSeconds: 60
+          timeoutSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /version-info
+            port: 11111
+            scheme: HTTP
+          initialDelaySeconds: 30
+          periodSeconds: 60
+          timeoutSeconds: 5
+       
+        volumeMounts:
+        {{- if .Values.global.existingTruststoreSecretName }}
+        - name: truststore-volume
+          mountPath: /app/config/truststore
+        {{- end }}
+        {{- if contains "tls=true" .Values.mongo.url }}
+        - name: ca-certificate-volume
+          mountPath: {{ .Values.mongo.cacertPath | default "/app/config/ca-certificate" }}
+          readOnly: true
+        {{- end }}
+
+      volumes:
+      {{- if .Values.global.existingTruststoreSecretName }}
+      - name: truststore-volume
+        secret:
+          secretName: {{ .Values.global.existingTruststoreSecretName }}
+          optional: true
+      {{- end }}
+      {{- if .Values.mongo.existingCaSecret }}
+      - name: ca-certificate-volume
+        secret:
+          secretName: {{ .Values.mongo.existingCaSecret }}
+      {{- end }}
+     
