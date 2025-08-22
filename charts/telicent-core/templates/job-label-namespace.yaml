@@ -30,4 +30,4 @@ spec:
           args:
             - |
               kubectl label namespace {{ .Release.Namespace }} \
-                istio-injection: enabled --overwrite
+                istio-injection=enabled --overwrite
