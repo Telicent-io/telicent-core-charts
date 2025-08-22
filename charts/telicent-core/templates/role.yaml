@@ -1,7 +1,13 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
+
 metadata:
   name: label-ns
+
 rules:
   - apiGroups: [""]
     resources: ["namespaces"]
