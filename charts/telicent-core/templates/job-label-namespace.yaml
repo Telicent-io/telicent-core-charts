@@ -11,7 +11,7 @@ metadata:
     {{- include "telicent-core.labels" . | nindent 4 }}
 
   annotations:
-    "helm.sh/hook": post-install
+    "helm.sh/hook": pre-install
     "helm.sh/hook-delete-policy": before-hook-creation
 
 spec:
