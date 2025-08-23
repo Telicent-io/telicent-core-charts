@@ -11,7 +11,7 @@ metadata:
     {{- include "search.labels" . | nindent 4 }}
 
 data:
-  # Environment variables for the search-api container
+  # Environment variables for the search container
   USER_ATTRIBUTES_URL: {{ .Values.configuration.userAttributesUrl | quote }}
   ATTRIBUTE_HIERARCHY_URL: {{ .Values.configuration.attributeHierarchyUrl | quote }}
   JAVA_OPTIONS: {{ .Values.configuration.javaOptions | quote }}
