@@ -1,16 +1,28 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
 apiVersion: v1
 kind: Pod
+
 metadata:
   name: {{ include "search.fullname" . }}-test-connection
+  namespace: {{ .Release.Namespace }}
   labels:
     {{- include "search.labels" . | nindent 4 }}
   annotations:
     "helm.sh/hook": test
+    sidecar.istio.io/inject: "false"
 
 spec:
-  restartPolicy: Never
+  restartPolicy: Never # do not restart automatically, regardless of the exit status
   containers:
-    - name: wget
-      image: busybox
-      command: ['wget']
-      args: ['{{ include "search.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.service.port }}/healthz']
+    - name: istio-403
+      image: alpine/curl:8.14.1
+      imagePullPolicy: IfNotPresent
+      command: [ "/bin/sh", "-c" ]
+      args:
+        - |
+          sleep 15;
+          output="$(curl -sS --retry 10 --retry-delay 10 --retry-connrefused http://{{ include "search.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.service.port }}/healthz)";
+          echo "attempting an unauthorized request... $output";
+          echo "$output" | grep "access denied" || ( echo "error: expected 403, RBAC access denied" && exit 1 );

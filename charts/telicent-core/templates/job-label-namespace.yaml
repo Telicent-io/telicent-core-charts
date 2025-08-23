@@ -11,14 +11,18 @@ metadata:
     {{- include "telicent-core.labels" . | nindent 4 }}
 
   annotations:
-    "helm.sh/hook": post-install  # only run after the dependency resources are created
+    "helm.sh/hook": post-install  # only run after the required resources have been created
     "helm.sh/hook-delete-policy": before-hook-creation
 
 spec:
+  backoffLimit: 3
+  activeDeadlineSeconds: 180 # once reached, all running Pods are terminated with Job status:Failed
   template:
     metadata:
+      annotations:
+        sidecar.istio.io/inject: "false"
       labels:
-        {{- include "telicent-core.labels" . | nindent 4 }}
+        {{- include "telicent-core.labels" . | nindent 8 }}
 
     spec:
       restartPolicy: Never
@@ -29,6 +33,7 @@ spec:
           command: [ "/bin/sh", "-c" ]
           args:
             - |
-              sleep 44; \
-              output="$(kubectl label namespace {{ .Release.Namespace }} istio-injection=enabled --overwrite)"; \
-              echo "$output" | grep "labeled"
+              sleep 30;
+              output="$(kubectl label namespace {{ .Release.Namespace }} istio-injection=enabled --overwrite)";
+              echo "attempting to add istio label... $output";
+              echo "$output" | grep "labeled" || ( echo "error: expected namespace/{{ .Release.Namespace }} (not) labeled" && exit 1 );
