@@ -63,7 +63,7 @@ spec:
             optional: true
         {{- end }}
         - configMapRef:
-            name: {{ include "search.fullname" . }}
+            name: {{ include "search.envConfigmapName" . }}
         {{- if .Values.extraEnvs }}
         {{- range $key, $value := .Values.extraEnvs }}
           - name: {{ $key }}

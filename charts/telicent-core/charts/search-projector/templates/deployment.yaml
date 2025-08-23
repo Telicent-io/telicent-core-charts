@@ -62,7 +62,7 @@ spec:
             optional: true
         {{- end }}
         - configMapRef:
-            name: {{ include "search-projector.fullname" . }}
+            name: {{ include "search-projector.envConfigmapName" . }}
         {{- if .Values.extraEnvs }}
         {{- range $key, $value := .Values.extraEnvs }}
         {{- end }}

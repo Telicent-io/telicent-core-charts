@@ -68,6 +68,17 @@ Create the name of the service to use
 {{ include "graph.fullname" . }}
 {{- end }}
 
+{{/*
+Create the name of the config map
+*/}}
+{{- define "graph.envConfigmapName" -}}
+{{- if .Values.existingConfigmap }}
+{{- .Values.existingConfigmap }}
+{{- else }}
+{{- printf "%s-%s" (include "graph.fullname" .) "env" }}
+{{- end }}
+{{- end }}
+
 {{- define "graph.envSecretName" -}}
 {{ include "graph.fullname" . }}
 {{- end }}

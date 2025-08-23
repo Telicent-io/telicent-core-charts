@@ -68,17 +68,6 @@ Create the name of the service to use
 {{- end }}
 
 {{/*
-Create the name of the environment secrets
-*/}}
-{{- define "access.envSecretName" -}}
-{{- if .Values.mongo.existingMongoPasswordSecret }}
-{{- .Values.mongo.existingMongoPasswordSecret }}
-{{- else }}
-{{- printf "%s-%s" (include "access.fullname" .) "env" }}
-{{- end }}
-{{- end -}}
-
-{{/*
 Create the name of the config map
 */}}
 {{- define "access.envConfigmapName" -}}
@@ -90,7 +79,18 @@ Create the name of the config map
 {{- end }}
 
 {{/*
-Create the name of the config map
+Create the name of the environment secrets
+*/}}
+{{- define "access.envSecretName" -}}
+{{- if .Values.mongo.existingMongoPasswordSecret }}
+{{- .Values.mongo.existingMongoPasswordSecret }}
+{{- else }}
+{{- printf "%s-%s" (include "access.fullname" .) "env" }}
+{{- end }}
+{{- end -}}
+
+{{/*
+Create the name of the CA config map
 */}}
 {{- define "access.cacertConfigmapName" -}}
 {{- if .Values.existingCacertConfigmap -}}
