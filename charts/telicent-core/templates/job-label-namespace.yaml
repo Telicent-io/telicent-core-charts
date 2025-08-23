@@ -30,7 +30,7 @@ spec:
           command: [ "/bin/sh", "-c" ]
           args:
             - |
-              sleep 45;
+              sleep 44;
               kubectl label namespace {{ .Release.Namespace }} \
                 istio-injection=enabled --overwrite
       restartPolicy: OnFailure
