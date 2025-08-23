@@ -6,7 +6,9 @@ metadata:
     {{- include "search-projector.labels" . | nindent 4 }}
   annotations:
     "helm.sh/hook": test
+
 spec:
+  restartPolicy: Never
   containers:
     - name: istio-403
       image: alpine/curl:8.1.14
@@ -16,4 +18,3 @@ spec:
         - |
           output="$(curl http://{{ include "search-projector.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.metrics.service.port }})"; \
           echo "$output" | grep "403"
-      restartPolicy: Never
