@@ -16,5 +16,4 @@ spec:
         - |
           output="$(curl http://{{ include "search-projector.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.metrics.service.port }})"; \
           echo "$output" | grep "403"
-
-  restartPolicy: Never
+      restartPolicy: Never
