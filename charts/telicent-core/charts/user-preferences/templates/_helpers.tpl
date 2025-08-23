@@ -72,6 +72,17 @@ Create the name of the service to use
 {{- end }}
 
 {{/*
+Create the name of the config map
+*/}}
+{{- define "user-preferences.envConfigmapName" -}}
+{{- if .Values.existingConfigmap }}
+{{- .Values.existingConfigmap }}
+{{- else }}
+{{- printf "%s-%s" (include "user-preferences.fullname" .) "env" }}
+{{- end }}
+{{- end }}
+
+{{/*
 Create Server config name to use
 */}}
 {{- define "user-preferences.serverConfig" -}}

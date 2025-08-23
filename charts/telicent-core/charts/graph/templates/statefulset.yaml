@@ -52,7 +52,7 @@ spec:
             name: {{ include "graph.envSecretName" . }}
             optional: true
         - configMapRef:
-            name: {{ include "graph.fullname" . }}
+            name: {{ include "graph.envConfigmapName" . }}
             optional: true
 
         ports:

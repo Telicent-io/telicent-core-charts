@@ -52,7 +52,7 @@ spec:
               {{- end }}
         envFrom:    
         - configMapRef:
-            name: {{ include "user-preferences.fullname" . }}
+            name: {{ include "user-preferences.envConfigmapName" . }}
         
         ports:
         - name: http

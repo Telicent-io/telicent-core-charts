@@ -6,12 +6,12 @@ apiVersion: v1
 kind: ConfigMap
 
 metadata:
-  name: {{ include "user-preferences.fullname" . }}
+  name: { { include "user-preferences.envConfigmapName" . } }
   labels:
     {{- include "user-preferences.labels" . | nindent 6 }}
 
 data:
-  # Environment variables for the user-preferences container
+  # Environment variables for the user preferences container
   JAVA_OPTIONS: {{ .Values.configuration.javaOptions | quote }}
   JWKS_URL: {{ .Values.global.jwksUrl | quote }}
   MONGO_URL: {{ .Values.mongo.url | quote }}
