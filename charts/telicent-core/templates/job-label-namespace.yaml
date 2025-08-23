@@ -5,18 +5,16 @@ apiVersion: batch/v1
 kind: Job
 
 metadata:
-  name: job-label-namespace
+  name: job-inject-istio-label-namespace
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "telicent-core.labels" . | nindent 4 }}
 
   annotations:
     "helm.sh/hook": post-install
-    "helm.sh/hook-delete-policy": hook-succeeded
+    "helm.sh/hook-delete-policy": before-hook-creation
 
 spec:
-  backoffLimit: 3
-  activeDeadlineSeconds: 300
   template:
     metadata:
       labels:
@@ -33,4 +31,4 @@ spec:
               sleep 44;
               kubectl label namespace {{ .Release.Namespace }} \
                 istio-injection=enabled --overwrite
-      restartPolicy: OnFailure
+      restartPolicy: Never
