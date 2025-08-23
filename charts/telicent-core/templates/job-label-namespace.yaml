@@ -28,7 +28,7 @@ spec:
           command: [ "/bin/sh", "-c" ]
           args:
             - |
-              sleep 44;
-              kubectl label namespace {{ .Release.Namespace }} \
-                istio-injection=enabled --overwrite
+              sleep 44; \
+              output="$(kubectl label namespace {{ .Release.Namespace }} istio-injection=enabled --overwrite)"; \
+              echo "$output" | grep "labeled"
       restartPolicy: Never
