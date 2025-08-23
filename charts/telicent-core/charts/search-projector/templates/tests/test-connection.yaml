@@ -9,7 +9,8 @@ metadata:
 spec:
   containers:
     - name: istio-403
-      image: busybox
+      image: alpine/curl:8.1.14
+      imagePullPolicy: IfNotPresent
       command: [ "/bin/sh", "-c" ]
       args:
         - |
