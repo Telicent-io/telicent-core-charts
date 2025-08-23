@@ -8,8 +8,12 @@ metadata:
     "helm.sh/hook": test
 spec:
   containers:
-    - name: wget
+    - name: istio-403
       image: busybox
-      command: ['wget']
-      args: ['{{ include "search-projector.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.metrics.service.port }}']
+      command: [ "/bin/sh", "-c" ]
+      args:
+        - |
+          output="$(curl http://{{ include "search-projector.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.metrics.service.port }})"; \
+          echo "$output" | grep "403"
+
   restartPolicy: Never
