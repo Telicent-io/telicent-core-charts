@@ -15,13 +15,14 @@ metadata:
     "helm.sh/hook-delete-policy": hook-succeeded
 
 spec:
+  backoffLimit: 3
+  activeDeadlineSeconds: 300
   template:
     metadata:
       labels:
         {{- include "telicent-core.labels" . | nindent 4 }}
 
     spec:
-      restartPolicy: Never
       serviceAccountName: {{ include "telicent-core.serviceAccountName" . }}
       containers:
         - name: job-label-namespace
@@ -29,5 +30,7 @@ spec:
           command: [ "/bin/sh", "-c" ]
           args:
             - |
+              sleep 45;
               kubectl label namespace {{ .Release.Namespace }} \
                 istio-injection=enabled --overwrite
+      restartPolicy: OnFailure
