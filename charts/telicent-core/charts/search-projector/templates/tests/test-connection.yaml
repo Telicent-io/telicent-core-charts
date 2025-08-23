@@ -11,5 +11,5 @@ spec:
     - name: wget
       image: busybox
       command: ['wget']
-      args: ['{{ include "search-projector.fullname" . }}:{{ .Values.metrics.service.port }}']
+      args: ['{{ include "search-projector.fullname" . }}.{{ include ".Release.Namespace" . }}.svc.cluster.local:{{ .Values.metrics.service.port }}']
   restartPolicy: Never
