@@ -90,5 +90,5 @@ Create the name of environment variable secrets
 {{- end }}
 
 {{- define "search.graphPrincipal" -}}
-{{- .Values.istio.graph.principal | default (printf "cluster.local/ns/%s/sa/%s" .Release.Namespace .Values.istio.graph.serviceAccountName ) | quote }}
+{{- .Values.istio.graph.principal | default (printf "cluster.local/ns/%s/sa/%s-%s" .Release.Namespace .Release.Name .Values.istio.graph.serviceAccountName ) | quote }}
 {{- end }}
