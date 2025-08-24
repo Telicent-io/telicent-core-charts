@@ -1,6 +1,6 @@
 {
   "charts/demo-prereqs-gateways": "0.1.0",
-  "charts/demo-prereqs-kafka": "0.1.0",
+  "charts/demo-prereqs-kafka": "0.2.0",
   "charts/demo-prereqs-keycloak": "0.1.0",
   "charts/demo-prereqs-mongodb": "0.1.0",
   "charts/demo-prereqs-oauth2-proxy": "0.2.0",
