@@ -105,9 +105,9 @@ Create the name of the CA config map
 {{- end }}
 
 {{- define "access.graphPrincipal" -}}
-{{- .Values.istio.graph.principal | default (printf "cluster.local/ns/%s/sa/%s" .Release.Namespace .Values.istio.graph.serviceAccountName) | quote }}
+{{- .Values.istio.graph.principal | default (printf "cluster.local/ns/%s/sa/%s-%s" .Release.Namespace .Release.Name  .Values.istio.graph.serviceAccountName) | quote }}
 {{- end }}
 
 {{- define "access.searchPrincipal" -}}
-{{- .Values.istio.search.principal | default (printf "cluster.local/ns/%s/sa/%s" .Release.Namespace .Values.istio.search.serviceAccountName) | quote }}
+{{- .Values.istio.search.principal | default (printf "cluster.local/ns/%s/sa/%s-%s" .Release.Namespace .Release.Name .Values.istio.search.serviceAccountName) | quote }}
 {{- end }}
