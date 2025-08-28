@@ -7,9 +7,9 @@ apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
 
 metadata:
-  name: {{ include "graph.fullname" . }}-ingress
+  name: {{ include "graph-ui.fullname" . }}-ingress
   labels: 
-  {{- include "graph.labels" . | nindent 4 }}
+  {{- include "graph-ui.labels" . | nindent 4 }}
 
 spec:
   action: ALLOW
@@ -17,12 +17,12 @@ spec:
     - from:
         - source:
             principals:
-              - {{ include "graph.ingressPrincipal" . }}
+              - {{ include "graph-ui.ingressPrincipal" . }}
       to:
         - operation:
             methods:
               - GET
   selector:
     matchLabels:
-    {{- include "graph.selectorLabels" . | nindent 6 }}
+    {{- include "graph-ui.selectorLabels" . | nindent 6 }}
 {{- end }}

@@ -1,0 +1,27 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
+{{- if .Values.global.enterprise }}
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+
+metadata:
+  name: {{ include "search-ui.fullname" . }}-redirect
+  labels:
+  {{- include "search-ui.labels" . | nindent 4 }}
+
+spec:
+  gateways:
+  - {{ .Values.global.istioNamespace }}/{{ .Values.global.istioGatewayName }}
+  hosts:
+  - {{ .Values.global.appHostDomain }}
+  http:
+    # Redirect https://hostname to https://hostname/search
+    - match:
+      - uri:
+          exact: "/"
+      redirect:
+        uri: /search/
+
+{{- end }}

@@ -102,6 +102,21 @@
             "type": "string",
             "description": "Service account used for running jobs in Kubernetes.",
             "default": "producers"
+        },
+        "serviceAccount": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Name of the ServiceAccount to use. If not set, a name is generated using the fullname",
+                    "default": ""
+                },
+                "annotations": {
+                    "type": "object",
+                    "description": "Additional custom annotations for the ServiceAccount",
+                    "default": {}
+                }
+            }
         }
     }
 }

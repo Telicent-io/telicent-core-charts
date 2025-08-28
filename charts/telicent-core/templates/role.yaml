@@ -1,0 +1,17 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+
+metadata:
+  name: label-namespace-role
+  labels:
+    {{- include "telicent-core.labels" . | nindent 4 }}s
+
+rules:
+  - apiGroups: [""]
+    resources: ["namespaces"]
+    resourceNames: [{{ .Release.Namespace }}]
+    verbs: ["get", "patch"]

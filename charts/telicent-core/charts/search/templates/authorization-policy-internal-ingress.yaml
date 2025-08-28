@@ -1,0 +1,46 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
+{{- if .Values.global.enterprise }}
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+
+metadata:
+  name: {{ include "search.fullname" . }}-internal-ingress
+  labels:
+  {{- include "search.labels" . | nindent 4 }}
+
+spec:
+  action: ALLOW
+  rules:
+    - from:
+      - source:
+          principals:
+          - {{ include "search.graphPrincipal" . }}
+      to:
+        - operation:
+            paths:
+              - /documents
+              - /documents/*
+              - /facets
+              - /facets/*
+              - /list
+              - /list/*
+              - /states
+              - /states/*
+              - /typeahead
+              - /typeahead/*
+              - /healthz
+              - /healthz/*
+              - /version-info
+              - /version-info/*
+            methods: ["GET", "POST"]
+      when:
+        - key: request.auth.claims[groups]
+          values:
+            - tc_read
+  selector:
+    matchLabels:
+    {{- include "search.selectorLabels" . | nindent 6 }}
+{{- end }}

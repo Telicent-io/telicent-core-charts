@@ -1,0 +1,429 @@
+{
+    "title": "Chart Values",
+    "type": "object",
+    "properties": {
+        "global": {
+            "type": "object",
+            "properties": {
+                "imageRegistry": {
+                    "type": "string",
+                    "description": "Global image registry",
+                    "default": ""
+                },
+                "imagePullSecrets": {
+                    "type": "array",
+                    "description": "Global registry secret names as an array",
+                    "default": [],
+                    "items": {}
+                },
+                "enterprise": {
+                    "type": "boolean",
+                    "description": "Enable enterprise mode, adding additional features and configurations",
+                    "default": false
+                },
+                "appHostDomain": {
+                    "type": "string",
+                    "description": "Domain associated with Telicent application services",
+                    "default": "apps.telicent.io"
+                },
+                "authHostDomain": {
+                    "type": "string",
+                    "description": "Domain associated with Telicent authentication services, including OIDC providers",
+                    "default": "auth.telicent.io"
+                },
+                "jwksUrl": {
+                    "type": "string",
+                    "description": "Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)",
+                    "default": "https://{yourAuthdomain}/.well-known/jwks.json"
+                },
+                "istioNamespace": {
+                    "type": "string",
+                    "description": "Namespace in which Istio is deployed",
+                    "default": "istio-system"
+                },
+                "istioServiceAccountName": {
+                    "type": "string",
+                    "description": "Name of the Istio service account",
+                    "default": "istio-ingress"
+                },
+                "istioGatewayName": {
+                    "type": "string",
+                    "description": "Name of the Istio Gateway Resource (LB operating at the edge of the mesh)",
+                    "default": "ingress-gateway"
+                },
+                "kafkaBootstrapUrls": {
+                    "type": "string",
+                    "description": "Comma separated list containing Kafka bootstrap URLs",
+                    "default": "kafka-bootstrap.kafka.svc.cluster.local:9092"
+                },
+                "existingKafkaConfigSecretName": {
+                    "type": "string",
+                    "description": "Name of an existing secret containing Kafka configuration",
+                    "default": ""
+                },
+                "existingTruststoreSecretName": {
+                    "type": "string",
+                    "description": "Name of an existing secret containing the truststore",
+                    "default": ""
+                },
+                "truststore": {
+                    "type": "object",
+                    "properties": {
+                        "mountPath": {
+                            "type": "string",
+                            "description": "The mount path for the truststore in the container",
+                            "default": "/app/config/truststore"
+                        }
+                    }
+                }
+            }
+        },
+        "configuration": {
+            "type": "object",
+            "properties": {
+                "userAttributesUrl": {
+                    "type": "string",
+                    "description": "URL for the user details endpoint",
+                    "default": "http://access.tc-system.svc.cluster.local:8080/users/lookup/{user}"
+                },
+                "attributeHierarchyUrl": {
+                    "type": "string",
+                    "description": "URL for the user hierarchy endpoint",
+                    "default": "http://access.tc-system.svc.cluster.local:8080/hierarchies/lookup/{name}"
+                },
+                "javaOptions": {
+                    "type": "string",
+                    "description": "JVM options for the application",
+                    "default": "-XX:MaxRAMPercentage=70.0 -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks"
+                },
+                "otelMetricsExporter": {
+                    "type": "string",
+                    "description": "OpenTelemetry metrics exporter",
+                    "default": "prometheus"
+                },
+                "otelTracesExporter": {
+                    "type": "string",
+                    "description": "OpenTelemetry traces exporter",
+                    "default": "none"
+                },
+                "elasticHost": {
+                    "type": "string",
+                    "description": "OpenSearch host",
+                    "default": "https://your.opensearch.host.here:443"
+                },
+                "elasticPort": {
+                    "type": "string",
+                    "description": "OpenSearch port number",
+                    "default": "443"
+                },
+                "elasticClusterPort": {
+                    "type": "string",
+                    "description": "OpenSearch cluster port",
+                    "default": "9200"
+                },
+                "opensearchCompatibility": {
+                    "type": "string",
+                    "description": "Enable OpenSearch compatibility",
+                    "default": "true"
+                },
+                "elasticIndexNames": {
+                    "type": "string",
+                    "description": "OpenSearch index name(s)",
+                    "default": "search,doc-content"
+                },
+                "searchFieldOptions": {
+                    "type": "string",
+                    "description": "Field options for search",
+                    "default": "primaryName^2,*"
+                }
+            }
+        },
+        "elasticSecrets": {
+            "type": "object",
+            "properties": {
+                "elasticUser": {
+                    "type": "string",
+                    "description": "OpenSearch username",
+                    "default": ""
+                },
+                "elasticPassword": {
+                    "type": "string",
+                    "description": "OpenSearch user password",
+                    "default": ""
+                },
+                "truststorePass": {
+                    "type": "string",
+                    "description": "Password for the truststore",
+                    "default": ""
+                },
+                "existingEnvironmentSecretName": {
+                    "type": "string",
+                    "description": "Name of an existing environment secret",
+                    "default": ""
+                }
+            }
+        },
+        "fullnameOverride": {
+            "type": "string",
+            "description": "String to fully override the generated release name",
+            "default": ""
+        },
+        "nameOverride": {
+            "type": "string",
+            "description": "String to partially override fullname (will maintain the release name)",
+            "default": ""
+        },
+        "replicas": {
+            "type": "number",
+            "description": "Number of Search replicas to deploy",
+            "default": 1
+        },
+        "revisionHistoryLimit": {
+            "type": "number",
+            "description": "Number of controller revisions to keep",
+            "default": 5
+        },
+        "annotations": {
+            "type": "object",
+            "description": "Add extra annotations to the Deployment object",
+            "default": {}
+        },
+        "extraEnvs": {
+            "type": "array",
+            "description": "List of additional environment variables to set in the pod",
+            "default": [],
+            "items": {}
+        },
+        "image": {
+            "type": "object",
+            "properties": {
+                "registry": {
+                    "type": "string",
+                    "description": "Search image registry",
+                    "default": "REGISTRY_NAME"
+                },
+                "repository": {
+                    "type": "string",
+                    "description": "Search image name",
+                    "default": "REPOSITORY_NAME/search-api-server"
+                },
+                "tag": {
+                    "type": "string",
+                    "description": "Search image tag. If not set, a tag is generated using the appVersion",
+                    "default": ""
+                },
+                "pullPolicy": {
+                    "type": "string",
+                    "description": "Search image pull policy",
+                    "default": "IfNotPresent"
+                },
+                "pullSecrets": {
+                    "type": "array",
+                    "description": "Specify registry secret names as an array",
+                    "default": [],
+                    "items": {}
+                }
+            }
+        },
+        "resources": {
+            "type": "object",
+            "properties": {
+                "requests": {
+                    "type": "object",
+                    "properties": {
+                        "cpu": {
+                            "type": "string",
+                            "description": "Set containers' CPU request",
+                            "default": "500m"
+                        },
+                        "memory": {
+                            "type": "string",
+                            "description": "Set containers' memory request",
+                            "default": "4000Mi"
+                        }
+                    }
+                },
+                "limits": {
+                    "type": "object",
+                    "properties": {
+                        "cpu": {
+                            "type": "string",
+                            "description": "Set containers' CPU limit",
+                            "default": "1000m"
+                        },
+                        "memory": {
+                            "type": "string",
+                            "description": "Set containers' memory limit",
+                            "default": "8000Mi"
+                        }
+                    }
+                }
+            }
+        },
+        "containerSecurityContext": {
+            "type": "object",
+            "properties": {
+                "runAsUser": {
+                    "type": "number",
+                    "description": "Set containers' Security Context runAsUser User ID",
+                    "default": 185
+                },
+                "runAsGroup": {
+                    "type": "number",
+                    "description": "Set containers' Security Context runAsGroup Group ID",
+                    "default": 185
+                },
+                "runAsNonRoot": {
+                    "type": "boolean",
+                    "description": "Set container's Security Context runAsNonRoot",
+                    "default": true
+                },
+                "allowPrivilegeEscalation": {
+                    "type": "boolean",
+                    "description": "Set container's Security Context allowPrivilegeEscalation",
+                    "default": false
+                },
+                "capabilities": {
+                    "type": "object",
+                    "properties": {
+                        "drop": {
+                            "type": "array",
+                            "description": "List of capabilities to be dropped",
+                            "default": [
+                                "ALL"
+                            ],
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "seccompProfile": {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "description": "Set container's Security Context seccomp profile",
+                            "default": "RuntimeDefault"
+                        }
+                    }
+                }
+            }
+        },
+        "podSecurityContext": {
+            "type": "object",
+            "properties": {
+                "runAsUser": {
+                    "type": "number",
+                    "description": "Set the provisioning pod's Security Context runAsUser User ID",
+                    "default": 185
+                },
+                "runAsGroup": {
+                    "type": "number",
+                    "description": "Set the provisioning pod's Security Context runAsGroup Group ID",
+                    "default": 185
+                },
+                "runAsNonRoot": {
+                    "type": "boolean",
+                    "description": "Set the provisioning pod's Security Context runAsNonRoot",
+                    "default": true
+                },
+                "fsGroup": {
+                    "type": "number",
+                    "description": "Set the provisioning pod's Group ID for the mounted volumes' filesystem",
+                    "default": 185
+                },
+                "seccompProfile": {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "description": "Set the provisioning pod's Security Context seccomp profile",
+                            "default": "RuntimeDefault"
+                        }
+                    }
+                }
+            }
+        },
+        "metrics": {
+            "type": "object",
+            "properties": {
+                "service": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string",
+                            "description": "Name for the Prometheus service",
+                            "default": "metrics"
+                        },
+                        "port": {
+                            "type": "number",
+                            "description": "Port for the Prometheus service",
+                            "default": 9464
+                        }
+                    }
+                }
+            }
+        },
+        "service": {
+            "type": "object",
+            "properties": {
+                "port": {
+                    "type": "number",
+                    "description": "Search service port",
+                    "default": 8181
+                },
+                "type": {
+                    "type": "string",
+                    "description": "Search service port",
+                    "default": "ClusterIP"
+                }
+            }
+        },
+        "istio": {
+            "type": "object",
+            "properties": {
+                "ingress": {
+                    "type": "object",
+                    "properties": {
+                        "principal": {
+                            "type": "string",
+                            "description": "Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName'",
+                            "default": ""
+                        }
+                    }
+                },
+                "graph": {
+                    "type": "object",
+                    "properties": {
+                        "principal": {
+                            "type": "string",
+                            "description": "Principal used for Graph traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'serviceAccountName' and the current namespace",
+                            "default": ""
+                        },
+                        "serviceAccountName": {
+                            "type": "string",
+                            "description": "Name of the Graph service account",
+                            "default": "graph"
+                        }
+                    }
+                }
+            }
+        },
+        "serviceAccount": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Name of the created ServiceAccount. If not set, a name is generated using the fullname template",
+                    "default": ""
+                },
+                "annotations": {
+                    "type": "object",
+                    "description": "Additional custom annotations for the ServiceAccount",
+                    "default": {}
+                }
+            }
+        }
+    }
+}

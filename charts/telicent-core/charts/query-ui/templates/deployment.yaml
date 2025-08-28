@@ -6,9 +6,9 @@ apiVersion: apps/v1
 kind: Deployment
 
 metadata:
-  name: {{ include "query.fullname" . }}
+  name: {{ include "query-ui.fullname" . }}
   labels:
-    {{- include "query.labels" . | nindent 4 }}
+    {{- include "query-ui.labels" . | nindent 4 }}
 
 spec:
   replicas: {{ .Values.replicas }}
@@ -20,7 +20,7 @@ spec:
     type: RollingUpdate
   selector:
     matchLabels:
-    {{- include "query.selectorLabels" . | nindent 6 }}
+    {{- include "query-ui.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       annotations:
@@ -28,9 +28,9 @@ spec:
           {{ $key }}: {{ $value | quote }}
         {{- end }}
       labels:
-        {{- include "query.labels" . | nindent 8 }}
+        {{- include "query-ui.labels" . | nindent 8 }}
     spec:
-      serviceAccountName: {{ include "query.serviceAccountName" . }}
+      serviceAccountName: {{ include "query-ui.serviceAccountName" . }}
       securityContext: {{- toYaml .Values.podSecurityContext | nindent 8 }}
       
       {{- $pullSecret := .Values.global.imagePullSecrets | default .Values.image.pullSecrets }}
@@ -40,7 +40,7 @@ spec:
       {{- end }}
       containers:
       - name: query-ui
-        image: {{ include "query.image" . }}
+        image: {{ include "query-ui.image" . }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         resources: {{- toYaml .Values.resources | nindent 10 }}
         securityContext: {{- toYaml .Values.containerSecurityContext | nindent 10 }}
@@ -74,7 +74,7 @@ spec:
 
       volumes:
       - configMap:
-          name: {{ include "query.configMapName" . }}
+          name: {{ include "query-ui.configMapName" . }}
         name: app-config-volume
 
       {{- with .Values.affinity }}

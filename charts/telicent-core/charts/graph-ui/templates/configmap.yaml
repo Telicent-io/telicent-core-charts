@@ -7,9 +7,9 @@ apiVersion: v1
 kind: ConfigMap
 
 metadata:
-  name: {{ include "graph.configMapName" . }}
+  name: {{ include "graph-ui.configMapName" . }}
   labels:
-    {{- include "graph.labels" . | nindent 4 }}
+    {{- include "graph-ui.labels" . | nindent 4 }}
 
 data:
   env-config.js: |

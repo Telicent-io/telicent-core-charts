@@ -7,9 +7,9 @@ apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 
 metadata:
-  name: {{ include "graph.fullname" . }}
+  name: {{ include "graph-ui.fullname" . }}
   labels:
-  {{- include "graph.labels" . | nindent 4 }}
+  {{- include "graph-ui.labels" . | nindent 4 }}
 
 spec:
   gateways:
@@ -27,7 +27,7 @@ spec:
         prefix: /graph/
     route:
     - destination:
-        host: {{ include "graph.serviceName" . }}
+        host: {{ include "graph-ui.serviceName" . }}
         port:
           number: {{ .Values.service.port }}
 {{- end }}

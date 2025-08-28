@@ -67,6 +67,13 @@ Contains global parameters, these parameters are mirrored across all Telicent Co
 | `global.truststore.mountPath`          | The mount path for the truststore in the container                                | `/app/config/truststore`                         |
 | `jobServiceAccountName`                | Service account used for running jobs in Kubernetes.                              | `producers`                                      |
 
+### Service Account Parameters
+
+| Name                         | Description                                                                           | Value |
+| ---------------------------- | ------------------------------------------------------------------------------------- | ----- |
+| `serviceAccount.name`        | Name of the ServiceAccount to use. If not set, a name is generated using the fullname | `""`  |
+| `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                  | `{}`  |
+
 ## Subchart configurations
 
 This section contains configurations for the various subcharts included in the Telicent Core chart.

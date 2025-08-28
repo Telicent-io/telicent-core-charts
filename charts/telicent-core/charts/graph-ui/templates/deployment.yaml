@@ -6,9 +6,9 @@ apiVersion: apps/v1
 kind: Deployment
 
 metadata:
-  name: {{ include "graph.fullname" . }}
+  name: {{ include "graph-ui.fullname" . }}
   labels:
-    {{- include "graph.labels" . | nindent 4 }}
+    {{- include "graph-ui.labels" . | nindent 4 }}
 
 spec:
   replicas: {{ .Values.replicas }}
@@ -20,7 +20,7 @@ spec:
     type: RollingUpdate
   selector:
     matchLabels:
-    {{- include "graph.selectorLabels" . | nindent 6 }}
+    {{- include "graph-ui.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       annotations:
@@ -28,9 +28,9 @@ spec:
           {{ $key }}: {{ $value | quote }}
         {{- end }}
       labels:
-        {{- include "graph.labels" . | nindent 8 }}
+        {{- include "graph-ui.labels" . | nindent 8 }}
     spec:
-      serviceAccountName: {{ include "graph.serviceAccountName" . }}
+      serviceAccountName: {{ include "graph-ui.serviceAccountName" . }}
       securityContext: {{- toYaml .Values.podSecurityContext | nindent 8 }}
       
       {{- $pullSecret := .Values.global.imagePullSecrets | default .Values.image.pullSecrets }}
@@ -40,7 +40,7 @@ spec:
       {{- end }}
       containers:
       - name: graph-ui
-        image: {{ include "graph.image" . }}
+        image: {{ include "graph-ui.image" . }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         resources: {{- toYaml .Values.resources | nindent 10 }}
         securityContext: {{- toYaml .Values.containerSecurityContext | nindent 10 }}
@@ -80,7 +80,7 @@ spec:
           {{- if .Values.existingGraphUIConfigName }}
           name: {{ .Values.existingGraphUIConfigName }}
           {{- else }}
-          name: {{ include "graph.configMapName" . }}
+          name: {{ include "graph-ui.configMapName" . }}
           {{- end }}
         name: app-config-volume
       {{- if .Values.configuration.existingMapConfigSecretName }}
@@ -89,7 +89,7 @@ spec:
         name: secret-config-js-volume
       {{- else }}
       - secret:
-          secretName: {{ include "graph.fullname" . }}-secret-config-js
+          secretName: {{ include "graph-ui.fullname" . }}-secret-config-js
         name: secret-config-js-volume
       {{- end }}
       

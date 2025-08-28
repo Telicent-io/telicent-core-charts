@@ -38,11 +38,11 @@ Create chart name and version as used by the chart label.
 Common labels
 */}}
 {{- define "access-ui.labels" -}}
-telicent.io/resource: "true"
 helm.sh/chart: {{ include "access-ui.chart" . }}
 {{ include "access-ui.selectorLabels" . }}
 app.kubernetes.io/version: {{ include "access-ui.version" . | quote }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
+telicent.io/resource: "true"
 {{- end }}
 
 {{/*

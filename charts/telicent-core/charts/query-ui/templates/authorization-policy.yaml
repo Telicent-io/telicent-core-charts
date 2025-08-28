@@ -6,9 +6,9 @@ apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
 
 metadata:
-  name: {{ include "query.fullname" . }}-ingress
+  name: {{ include "query-ui.fullname" . }}-ingress
   labels: 
-    {{ include "query.labels" . | nindent 4 }}
+    {{ include "query-ui.labels" . | nindent 4 }}
 
 spec:
   action: ALLOW
@@ -16,11 +16,11 @@ spec:
     - from:
         - source:
             principals:
-              - {{ include "query.ingressPrincipal" . }}
+              - {{ include "query-ui.ingressPrincipal" . }}
       to:
         - operation:
             methods:
               - GET
   selector:
     matchLabels:
-    {{ include "query.selectorLabels" . | nindent 6 }}
+    {{ include "query-ui.selectorLabels" . | nindent 6 }}

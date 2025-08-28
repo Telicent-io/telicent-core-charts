@@ -7,9 +7,9 @@ apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
 
 metadata:
-  name: {{ include "search.fullname" . }}-ingress
+  name: {{ include "search-ui.fullname" . }}-ingress
   labels: 
-  {{- include "search.labels" . | nindent 4 }}
+  {{- include "search-ui.labels" . | nindent 4 }}
 
 spec:
   action: ALLOW
@@ -17,12 +17,12 @@ spec:
     - from:
         - source:
             principals:
-              - {{ include "search.ingressPrincipal" . }}
+              - {{ include "search-ui.ingressPrincipal" . }}
       to:
         - operation:
             methods:
               - GET
   selector:
     matchLabels:
-    {{- include "search.selectorLabels" . | nindent 6 }}
+    {{- include "search-ui.selectorLabels" . | nindent 6 }}
 {{- end }}

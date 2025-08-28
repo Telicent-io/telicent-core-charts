@@ -14,4 +14,7 @@
 
 #dev area
 _dev/
-telicent.yaml
+/telicent.yaml
+/before.yaml
+/after.yaml
+/values.yaml

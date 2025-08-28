@@ -1,0 +1,48 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+
+metadata:
+  name: {{ include "access.fullname" . }}-ingress
+  labels:
+  {{- include "access.labels" . | nindent 4 }}
+
+spec:
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        principals:
+        - {{ include "access.ingressPrincipal" . }}
+    to:
+    - operation:
+        methods:
+        - GET
+        - POST
+        - DELETE
+        - PUT
+        - PATCH
+    when:
+    - key: request.auth.claims[groups]
+      values:
+      - tc_admin
+  - from:
+    - source:
+        principals:
+        - {{ include "access.ingressPrincipal" . }}
+    to:
+    - operation:
+        methods:
+        - GET
+        paths:
+        - /whoami
+    when:
+    - key: request.auth.claims[groups]
+      values:
+      - tc_read
+  selector:
+    matchLabels:
+    {{- include "access.selectorLabels" . | nindent 6 }}

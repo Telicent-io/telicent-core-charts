@@ -1,0 +1,147 @@
+# Copyright (C) 2025 Telicent Limited
+# Telicent User Preferences API stand-alone chart
+
+global:
+  ## Current available global image parameters: imageRegistry and imagePullSecrets
+  ## Please, note that this will override the image parameters
+  # @key global.imageRegistry Global image registry
+  imageRegistry: ""
+  # E.g.
+  # imagePullSecrets:
+  #   - myRegistryKeySecretName
+  # @key global.imagePullSecrets Global registry secret names as an array
+  imagePullSecrets: []
+
+  # @key global.enterprise Enable enterprise mode, adding additional features and configurations
+  enterprise: false
+
+  # @key global.appHostDomain Domain associated with Telicent application services
+  appHostDomain: "apps.telicent.io"
+  # @key global.authHostDomain Domain associated with Telicent authentication services, including OIDC providers
+  authHostDomain: "auth.telicent.io"
+  # @key global.jwksUrl Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)
+  # NOTE: For Dex the endpoint would be https://{yourDexDomain}/keys
+  jwksUrl: "https://{yourAuthdomain}/.well-known/jwks.json"
+
+  # @key global.istioNamespace Namespace in which Istio is deployed
+  # NOTE: Istio, by default, is deployed within the 'istio-system' namespace
+  istioNamespace: istio-system
+  # @key global.istioServiceAccountName Name of the Istio service account
+  istioServiceAccountName: istio-ingress
+  # @key global.istioGatewayName Name of the Istio Gateway Resource (LB operating at the edge of the mesh)
+  istioGatewayName: ingress-gateway
+
+# @section Configuration Parameters
+# @descStart
+# Contains configuration parameters specific to the User Preferences API application
+# @descEnd
+configuration:
+  # @key configuration.javaOptions JVM options for the application
+  javaOptions: "-Xms512m -Xmx512m"
+
+# @section MongoDB Parameters
+mongo:
+  # @key mongo.url MongoDB connection URL
+  url: mongodb://mongodb-demo-prereqs-mongodb-svc.mongodb-dev.svc.cluster.local:27017/user-preferences?authSource=admin
+  # @key mongo.username MongoDB username
+  username: user-preferences
+  # @key mongo.password MongoDB password
+  # NOTE: If you have an existing secret for the password, you can use existingMongoPasswordSecret
+  password: "your.mongo.password.here"
+  # @key mongo.database MongoDB database
+  database: user-preferences
+  # @key mongo.existingMongoPasswordSecret Existing secret containing the MongoDB password
+  existingMongoPasswordSecret: ""
+  # @key mongo.existingCaSecret If you have an existing secret for the CA certificate, you can specify it here. If you've specified to use TLS in the url, you must provide a CA certificate.
+  existingCaSecret: ""
+  # @key mongo.cacertPath Path to the CA certificate file, must be set if TLS is enabled in the url and mirror the path in the connectionStringOptions
+  cacertPath: ""
+
+# @section User Preferences API Deployment Parameters
+# @key replicas Number of User Preferences API replicas to deploy
+replicas: 1
+# @key revisionHistoryLimit Number of controller revisions to keep
+revisionHistoryLimit: 5
+# @key annotations Add extra annotations to the Deployment object
+annotations: {}
+
+image:
+  # @key image.registry [default: REGISTRY_NAME] User Preferences API image registry
+  registry: quay.io
+  # @key image.repository [default: REPOSITORY_NAME/telicent-user-preferences-service] User Preferences API image name
+  repository: telicent/telicent-user-preferences-service
+  # @key image.tag User Preferences API image tag. If not set, a tag is generated using the appVersion
+  tag: ""
+  # @key image.pullPolicy User Preferences API image pull policy
+  pullPolicy: IfNotPresent
+  # @key image.pullSecrets Specify registry secret names as an array
+  pullSecrets: []
+
+resources:
+  requests:
+    # @key resources.requests.cpu Set containers' CPU request
+    cpu: "100m"
+    # @key resources.requests.memory Set containers' memory request
+    memory: "768Mi"
+  limits:
+    # @key resources.limits.cpu Set containers' CPU limit
+    cpu: "250m"
+    # @key resources.limits.memory Set containers' memory limit
+    memory: "1024Mi"
+
+containerSecurityContext:
+  # @key containerSecurityContext.runAsUser Set containers' Security Context runAsUser User ID
+  runAsUser: 185
+  # @key containerSecurityContext.runAsGroup Set containers' Security Context runAsGroup Group ID
+  runAsGroup: 185
+  # @key containerSecurityContext.runAsNonRoot Set container's Security Context runAsNonRoot
+  runAsNonRoot: true
+  # @key containerSecurityContext.allowPrivilegeEscalation Set container's Security Context allowPrivilegeEscalation
+  allowPrivilegeEscalation: false
+  capabilities:
+    # @key containerSecurityContext.capabilities.drop List of capabilities to be dropped
+    drop:
+      - ALL
+  seccompProfile:
+    # @key containerSecurityContext.seccompProfile.type Set container's Security Context seccomp profile
+    type: RuntimeDefault
+
+podSecurityContext:
+  # @key podSecurityContext.runAsUser Set the provisioning pod's Security Context runAsUser User ID
+  runAsUser: 185
+  # @key podSecurityContext.runAsGroup Set the provisioning pod's Security Context runAsGroup Group ID
+  runAsGroup: 185
+  # @key podSecurityContext.runAsNonRoot Set the provisioning pod's Security Context runAsNonRoot
+  runAsNonRoot: true
+  # @key podSecurityContext.fsGroup Set the provisioning pod's Group ID for the mounted volumes' filesystem
+  fsGroup: 185
+  seccompProfile:
+    # @key podSecurityContext.seccompProfile.type Set the provisioning pod's Security Context seccomp profile
+    type: RuntimeDefault
+
+# @section Metrics Parameters
+metrics:
+  service:
+    # @key metrics.service.port Port for the Prometheus service
+    port: 9464
+    # @key metrics.service.name Name for the Prometheus service
+    name: metrics
+
+# @section Traffic Exposure Parameters
+service:
+  # @key service.port User Preferences API service port
+  port: 11111
+  # @key service.type User Preferences API service type
+  type: ClusterIP
+
+istio:
+  ingress:
+    # @key istio.ingress.principal Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName'
+    principal: ""
+
+# @section Service Account Parameters
+serviceAccount:
+  # @key serviceAccount.name Name of the ServiceAccount to use. If not set, a name is generated using the fullname
+  name: ""
+  # @key serviceAccount.annotations Additional custom annotations for the ServiceAccount
+  annotations: {}
