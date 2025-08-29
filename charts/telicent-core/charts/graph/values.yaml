@@ -43,6 +43,7 @@ global:
   # @key global.existingKafkaConfigSecretName Name of an existing secret containing Kafka configuration
   existingKafkaConfigSecretName: ""
 
+
   # @key global.existingTruststoreSecretName Name of an existing secret containing the truststore
   existingTruststoreSecretName: ""
   truststore:
@@ -68,6 +69,10 @@ configuration:
   # @key configuration.otelTracesExporter OpenTelemetry traces exporter
   # Options: otlp, none
   otelTracesExporter: none
+  # @key configuration.kafkaTopics Kafka topics for the application, created by a init container
+  kafkaTopics:
+  - test
+  - test2
 
 # @section Common Parameters
 # @key fullnameOverride String to fully override the generated release name
