@@ -55,7 +55,7 @@ Kafka Auth Secret Name
 */}}
 {{- define "telicent-pipelines.kafkaAuthConfigSecretName" -}}
 {{- if .Values.existingKafkaConfigSecretName }}
-{{- .Values.kafka.auth.secretName | trunc 63 | trimSuffix "-" }}
+{{- .Values.existingKafkaConfigSecretName | trunc 63 | trimSuffix "-" }}
 {{- else }}
 {{- printf "%s-kafka-auth" (include "telicent-pipelines.fullname" .) | trunc 63 | trimSuffix "-" }}
 {{- end }}
