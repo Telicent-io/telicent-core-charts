@@ -37,7 +37,7 @@ spec:
               - /version-info/*
             methods: ["GET", "POST"]
       when:
-        - key: request.auth.claims[groups]
+        - key: request.auth.claims[{{ .Values.global.groupsClaim }}]
           values:
             - tc_read
   selector:
