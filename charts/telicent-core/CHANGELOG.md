@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v0.3.5...telicent-core-v0.4.0) (2025-08-24)
+
+
+### Features
+
+* standard naming ([#146](https://github.com/Telicent-io/telicent-core-charts/issues/146)) ([8121bb5](https://github.com/Telicent-io/telicent-core-charts/commit/8121bb599d5e2ea76a86525ff3251dae92c872d0))
+
 ## [0.3.5](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v0.3.4...telicent-core-v0.3.5) (2025-08-13)
 
 
