@@ -52,9 +52,11 @@ dependencies:
   - name: search
     version: "^0.1.1"
     repository: file://./charts/search
+    condition: global.enterprise
   - name: search-projector
     version: "^0.1.1"
     repository: file://./charts/search-projector
+    condition: global.enterprise
   - name: user-preferences
     version: "^0.1.0"
     repository: file://./charts/user-preferences
