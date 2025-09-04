@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.1](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v0.4.0...telicent-core-v0.4.1) (2025-09-04)
+
+
+### Bug Fixes
+
+* Add condition to `search` and `search-projector` sub-charts. ([#162](https://github.com/Telicent-io/telicent-core-charts/issues/162)) ([0af193c](https://github.com/Telicent-io/telicent-core-charts/commit/0af193c2417ffef9b12f9b54ab871caba4c9f9e6))
+
 ## [0.4.0](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v0.3.5...telicent-core-v0.4.0) (2025-08-24)
 
 
