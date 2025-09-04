@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "oauth2-proxy.externalEnvConfigmapName" . }}
+  name: {{ include "oauth2-proxy.internalEnvConfigmapName" . }}
   labels:
     {{- include "oauth2-proxy.labels" . | nindent 4 }}
     {{- include "oauth2-proxy.internalSelectorLabels" . | nindent 4 }}

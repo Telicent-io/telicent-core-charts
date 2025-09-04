@@ -9,6 +9,7 @@ metadata:
   name: {{ include "oauth2-proxy.name" . }}-ingress-external
   labels:
     {{ include "oauth2-proxy.labels" . | nindent 4 }}
+    {{ include "oauth2-proxy.externalSelectorLabels" . | nindent 4 }}
 
 spec:
   action: ALLOW
@@ -23,4 +24,5 @@ spec:
               - GET
   selector:
     matchLabels:
-    {{ include "oauth2-proxy.externalSelectorLabels" . | nindent 6 }}
+      app.kubernetes.io/app: {{ include "oauth2-proxy.name" . }}
+      {{ include "oauth2-proxy.externalSelectorLabels" . | nindent 6 }}

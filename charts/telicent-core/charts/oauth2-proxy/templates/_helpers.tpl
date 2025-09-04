@@ -71,14 +71,14 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 Internal Selector labels
 */}}
 {{- define "oauth2-proxy.internalSelectorLabels" -}}
-app.kubernetes.io/name: {{ include "oauth2-proxy.name" . }}-internal
+app.kubernetes.io/component: internal
 {{- end }}
 
 {{/*
 Internal Selector labels
 */}}
 {{- define "oauth2-proxy.externalSelectorLabels" -}}
-app.kubernetes.io/name: {{ include "oauth2-proxy.name" . }}-external
+app.kubernetes.io/component: external
 {{- end }}
 
 {{/*

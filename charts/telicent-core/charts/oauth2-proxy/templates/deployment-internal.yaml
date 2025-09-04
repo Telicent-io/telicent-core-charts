@@ -11,6 +11,7 @@ spec:
   {{- end }}
   selector:
     matchLabels:
+      app.kubernetes.io/app: {{ include "oauth2-proxy.name" . }}
       {{- include "oauth2-proxy.internalSelectorLabels" . | nindent 6 }}
   template:
     metadata:
@@ -19,7 +20,12 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "oauth2-proxy.labels" . | nindent 8 }}
+        app.kubernetes.io/app: {{ include "oauth2-proxy.name" . }}
+        {{- include "oauth2-proxy.internalSelectorLabels" . | nindent 8 }}
+        {{- if .Chart.AppVersion }}
+        app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+        {{- end }}
+        app.kubernetes.io/managed-by: {{ .Release.Service }}
         {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}

@@ -2,10 +2,10 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "oauth2-proxy.internalEnvConfigmapName" . }}
+  name: {{ include "oauth2-proxy.externalEnvConfigmapName" . }}
   labels:
     {{- include "oauth2-proxy.labels" . | nindent 4 }}
-    {{- include "oauth2-proxy.internalSelectorLabels" . | nindent 4 }}
+    {{- include "oauth2-proxy.externalSelectorLabels" . | nindent 4 }}
 data:
   OAUTH2_PROXY_API_ROUTES: /api/.*$
   OAUTH2_PROXY_APPROVAL_PROMPT: none
