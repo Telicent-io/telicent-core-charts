@@ -150,3 +150,7 @@ Create the oidcRedirectURL
 {{/*
 {{- printf "%s/oauth2/callback" .Values.global.appHostDomain }}
 */}}
+
+{{- define "oauth2-proxy.ingressPrincipal" -}}
+{{- .Values.istio.ingress.principal | default (printf "cluster.local/ns/%s/sa/%s" .Values.global.istioNamespace .Values.global.istioServiceAccountName) | quote }}
+{{- end }}
