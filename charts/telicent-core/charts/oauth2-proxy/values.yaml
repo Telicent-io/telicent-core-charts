@@ -54,7 +54,7 @@ image:
   # @key image.pullPolicy Image pull policy
   pullPolicy: IfNotPresent
   # @key image.tag Image tag (defaults to chart appVersion if not set)
-  tag: ""
+  tag: "v7.12.0"
 # @section Configuration Parameters
 # @descStart
 # Application Specific configuration for the OAuth2 Proxy.
@@ -76,6 +76,8 @@ configuration:
   oidcClientID: "change-me"
   # @key configuration.clientSecret OIDC client secret (should be set via existingEnvSecretName)
   clientSecret: "change-me"
+  # @key configuration.cacert Optional CA certificate data (PEM format) for validating the OIDC provider's TLS certificate
+  cacert: ""
 
 
 
@@ -138,7 +140,7 @@ service:
   # @key service.type Service type (ClusterIP, NodePort, LoadBalancer)
   type: ClusterIP
   # @key service.port Service port
-  port: 80
+  port: 4080
 
 # @section Ingress Parameters
 # @descStart
@@ -176,19 +178,6 @@ resources: {}
   # requests:
   #   cpu: 100m
   #   memory: 128Mi
-
-# @section Probe Parameters
-# @descStart
-# Liveness and readiness probe configuration.
-# @descEnd
-livenessProbe:
-  httpGet:
-    path: /
-    port: http
-readinessProbe:
-  httpGet:
-    path: /
-    port: http
 
 # @section Autoscaling Parameters
 # @descStart

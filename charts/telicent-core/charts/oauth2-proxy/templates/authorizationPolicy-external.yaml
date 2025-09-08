@@ -6,7 +6,7 @@ apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
 
 metadata:
-  name: {{ include "oauth2-proxy.name" . }}-ingress-external
+  name: {{ include "oauth2-proxy.fullname" . }}-ingress-external
   labels:
     {{ include "oauth2-proxy.labels" . | nindent 4 }}
     {{ include "oauth2-proxy.externalSelectorLabels" . | nindent 4 }}

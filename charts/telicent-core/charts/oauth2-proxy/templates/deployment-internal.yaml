@@ -51,19 +51,25 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
-          {{- with .Values.livenessProbe }}
           livenessProbe:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-          {{- with .Values.readinessProbe }}
+            httpGet:
+              path: /ping
+              port: http
+              scheme: HTTP
+            timeoutSeconds: 1
           readinessProbe:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
+            httpGet:
+              path: /ready
+              port: http
+              scheme: HTTP
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
           {{- with .Values.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- if or .Values.existingCacertConfigmapName .Values.cacert }}
+          {{- if or .Values.existingCacertConfigmapName .Values.configuration.cacert }}
           volumeMounts:
           - name: cert-volume
             mountPath: /etc/ssl/certs
@@ -73,7 +79,7 @@ spec:
               name: {{ include "oauth2-proxy.envSecretName" . }}
           - configMapRef:
               name: {{ include "oauth2-proxy.internalEnvConfigmapName" . }}
-      {{- if or .Values.existingCacertConfigmapName .Values.cacert }}
+      {{- if or .Values.existingCacertConfigmapName .Values.configuration.cacert }}
       volumes:
       - name: cert-volume
         configMap:
