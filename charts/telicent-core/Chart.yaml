@@ -61,6 +61,10 @@ dependencies:
     version: "^0.1.0"
     repository: file://./charts/user-preferences
     condition: global.enterprise
+  - name: oauth2-proxy
+    version: "^0.1.0"
+    repository: file://./charts/oauth2-proxy
+    condition: global.enterprise
 
 icon: "https://avatars.githubusercontent.com/u/65304240?s=200&v=4"
 
