@@ -82,3 +82,10 @@ Create the name of the environment secrets
 {{- printf "%s-%s" (include "keycloak.fullname" .) "env" }}
 {{- end }}
 {{- end -}}
+
+{{/*
+Service principals
+*/}}
+{{- define "keycloak.ingressPrincipal" -}}
+{{- printf "cluster.local/ns/%s/sa/%s" .Values.ingress.namespace .Values.ingress.serviceAccountName }}
+{{- end }}

@@ -70,9 +70,7 @@ configuration:
   # Options: otlp, none
   otelTracesExporter: none
   # @key configuration.kafkaTopics Kafka topics for the application, created by a init container
-  kafkaTopics:
-  - test
-  - test2
+  kafkaTopics: []
 
 # @section Common Parameters
 # @key fullnameOverride String to fully override the generated release name

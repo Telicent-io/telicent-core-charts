@@ -1,6 +1,6 @@
 adminUsername: admin
 adminPassword: "CHANGE-ADMIN-PASSWORD"
-
+authGateway: istio-system/gateways-authn
 authHost: auth.127.0.0.1.nip.io
 
 containerSecurityContext:
@@ -22,6 +22,10 @@ dbVolume:
 existingEnvSecret: ""
 
 fullnameOverride: ""
+
+ingress:
+  namespace: istio-system
+  serviceAccountName: istio-ingress
 
 image:
   pullPolicy: Always

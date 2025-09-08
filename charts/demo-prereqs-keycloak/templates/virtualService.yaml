@@ -1,0 +1,20 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: {{ include "keycloak.fullname" . }}
+  labels:
+  {{- include "keycloak.labels" . | nindent 4 }}
+spec:
+  gateways:
+  - {{ .Values.authGateway }}
+  hosts:
+  - {{ .Values.authHost }}
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: {{ include "keycloak.serviceName" . }}
+        port:
+          number: {{ .Values.service.port }}
