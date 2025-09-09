@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.2](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v0.4.1...telicent-core-v0.4.2) (2025-09-09)
+
+
+### Features
+
+* Adds NOTES.txt for post install information ([36605d4](https://github.com/Telicent-io/telicent-core-charts/commit/36605d4ecc03011d07a67e98c1f497fb1c68d064))
+
 ## [0.4.1](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v0.4.0...telicent-core-v0.4.1) (2025-09-04)
 
 
