@@ -2,9 +2,7 @@
   "separate-pull-requests": true,
   "packages": {
     "charts/telicent-core": {
-      "labels": [
-        "autorelease: pending"
-      ],
+      "labels": ["autorelease: pending"],
       "bumpPatchForMinorPreMajor": true,
       "release-type": "helm",
       "include-component-in-tag": true,
@@ -14,9 +12,7 @@
       "bump-minor-pre-major": true
     },
     "charts/demo-prereqs-gateways": {
-      "labels": [
-        "autorelease: pending"
-      ],
+      "labels": ["autorelease: pending"],
       "bumpPatchForMinorPreMajor": true,
       "release-type": "helm",
       "include-component-in-tag": true,
@@ -26,9 +22,7 @@
       "bump-minor-pre-major": true
     },
     "charts/demo-prereqs-kafka": {
-      "labels": [
-        "autorelease: pending"
-      ],
+      "labels": ["autorelease: pending"],
       "bumpPatchForMinorPreMajor": true,
       "release-type": "helm",
       "include-component-in-tag": true,
@@ -38,9 +32,7 @@
       "bump-minor-pre-major": true
     },
     "charts/demo-prereqs-keycloak": {
-      "labels": [
-        "autorelease: pending"
-      ],
+      "labels": ["autorelease: pending"],
       "bumpPatchForMinorPreMajor": true,
       "release-type": "helm",
       "include-component-in-tag": true,
