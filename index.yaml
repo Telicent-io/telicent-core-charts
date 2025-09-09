@@ -40,6 +40,19 @@ entries:
     version: 0.1.0
   demo-prereqs-gateways:
   - apiVersion: v2
+    created: "2025-09-09T14:37:46.464904766Z"
+    description: Create Istio gateways and authn configuration for Telicent CORE demo
+    digest: 57f1ace875f884e96532fe697e4cd7102f319b93f869102d6dd56b367dbf472a
+    icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
+    maintainers:
+    - name: telicent
+      url: https://github.com/Telicent-IO
+    name: demo-prereqs-gateways
+    type: application
+    urls:
+    - demo-prereqs-gateways-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
     created: "2025-09-09T13:56:44.82343021Z"
     description: Create Istio gateways and authn configuration for Telicent CORE demo
     digest: f9ed5deb5ecf6905ca35494c78465ffd2cc4e1bd874fe2dbd5a267f11e9182f1
@@ -54,9 +67,9 @@ entries:
     version: 0.1.0
   demo-prereqs-kafka:
   - apiVersion: v2
-    created: "2025-09-09T13:56:44.823690624Z"
+    created: "2025-09-09T14:37:46.465150796Z"
     description: Create a kafka cluster and associated configuration
-    digest: f78a22e584d9d2c4dcd1493a04697e66d9f09f15d7d04b472ca8e920416a8b84
+    digest: 9cdc53dd2de5b45aa1da5a8896a222212fb5a65e17c7743928b3f0f503399607
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -82,9 +95,9 @@ entries:
   demo-prereqs-keycloak:
   - apiVersion: v2
     appVersion: 26.2.3
-    created: "2025-09-09T13:56:44.824018373Z"
+    created: "2025-09-09T14:37:46.465478943Z"
     description: Provisions a dev mode instance of keycloak
-    digest: 11c39855bf4d45037d0e351cb15b3e11569ecd0627e82a0d038e87ee86052afc
+    digest: 141ab41cb7d1ad0b410aa052d0300abc8409d198dc343898bffdbc0ee7dc8b14
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -96,9 +109,9 @@ entries:
     version: 0.1.0
   demo-prereqs-mongodb:
   - apiVersion: v2
-    created: "2025-09-09T13:56:44.824239815Z"
+    created: "2025-09-09T14:37:46.465706548Z"
     description: Create a mongodb instance and associated configuration
-    digest: 8fb7c3f9bbd4392d1a3130512bbbf9be407334fa545a6b8c5e9abc7256de572c
+    digest: 5303316ae6adb2143c155a2427b35306830382df5aeee9ec5f61c0480ca08293
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -261,7 +274,7 @@ entries:
   telicent-core:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-09-09T13:56:44.834744141Z"
+    created: "2025-09-09T14:37:46.475984204Z"
     dependencies:
     - name: access
       repository: file://./charts/access
@@ -299,7 +312,7 @@ entries:
       repository: file://./charts/oauth2-proxy
       version: ^0.1.0
     description: A Helm chart for Kubernetes
-    digest: 6521e68ac9cb5480f93022af7fd08fc835d2c257493a652a418eb7263552ed56
+    digest: 78fe3793bc8638ad4ba5019941d4c62c55b621d630389d0ef74c50826b1de7f1
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -1194,4 +1207,4 @@ entries:
     urls:
     - telicent-core-0.1.0.tgz
     version: 0.1.0
-generated: "2025-09-09T13:56:44.823082544Z"
+generated: "2025-09-09T14:37:46.464534919Z"
