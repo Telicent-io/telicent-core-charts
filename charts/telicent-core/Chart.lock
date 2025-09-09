@@ -26,5 +26,8 @@ dependencies:
 - name: user-preferences
   repository: file://./charts/user-preferences
   version: 0.1.2
-digest: sha256:ad7db2545a989fc3f834cbb2a616d697ca180246ac0cd3480181f7027fed6cd4
-generated: "2025-08-21T19:48:27.804396+01:00"
+- name: oauth2-proxy
+  repository: file://./charts/oauth2-proxy
+  version: 0.1.0
+digest: sha256:7e4ee1b0ff24cef4ba75c07bf8a80918142526a492e9d7fc5e06cf3a2545bc0e
+generated: "2025-09-08T16:55:29.224102+01:00"

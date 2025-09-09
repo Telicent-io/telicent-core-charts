@@ -1,0 +1,28 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+
+metadata:
+  name: {{ include "oauth2-proxy.fullname" . }}-ingress-external
+  labels:
+    {{ include "oauth2-proxy.labels" . | nindent 4 }}
+    {{ include "oauth2-proxy.externalSelectorLabels" . | nindent 4 }}
+
+spec:
+  action: ALLOW
+  rules:
+    - from:
+        - source:
+            principals:
+              - {{ include "oauth2-proxy.ingressPrincipal" . }}
+      to:
+        - operation:
+            methods:
+              - '*'
+  selector:
+    matchLabels:
+      app.kubernetes.io/app: {{ include "oauth2-proxy.name" . }}
+      {{ include "oauth2-proxy.externalSelectorLabels" . | nindent 6 }}

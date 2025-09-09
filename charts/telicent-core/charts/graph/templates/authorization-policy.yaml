@@ -44,7 +44,7 @@ spec:
               - /knowledge/shacl
               - /knowledge/shacl/*
       when:
-        - key: request.auth.claims[groups]
+        - key: request.auth.claims[{{ .Values.global.groupsClaim }}]
           values:
             - tc_read
   selector:

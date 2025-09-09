@@ -23,4 +23,5 @@ data:
   MONGO_RETRY_REWRITES: {{ .Values.mongo.retryRewrites | quote }}
   SCIM_ENABLED: {{ .Values.configuration.scimEnabled | quote }}
   PORT: {{ .Values.service.port | quote }}
+  GROUPS_KEY: {{ .Values.global.groupsClaim | quote }}
 {{- end -}}

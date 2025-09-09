@@ -1,9 +1,9 @@
 apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
 metadata:
-  name: {{ include "system-mesh.fullname" . }}-ingress-to-kc
+  name: {{ include "keycloak.fullname" . }}
   labels:
-  {{- include "system-mesh.labels" . | nindent 4 }}
+  {{- include "keycloak.labels" . | nindent 4 }}
 spec:
   action: ALLOW
   rules:
@@ -21,11 +21,11 @@ spec:
   - from:
     - source:
         principals:
-        - {{ include "system-mesh.ingressPrincipal" . }}
+        - {{ include "keycloak.ingressPrincipal" . }}
     to:
     - operation:
         methods:
         - '*'
   selector:
     matchLabels:
-      {{- include "system-mesh.keycloakSelectors" . | nindent 6 }}
+      {{- include "keycloak.selectorLabels" . | nindent 6 }}

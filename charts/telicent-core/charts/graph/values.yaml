@@ -24,6 +24,8 @@ global:
   appHostDomain: "apps.telicent.io"
   # @key global.authHostDomain Domain associated with Telicent authentication services, including OIDC providers
   authHostDomain: "auth.telicent.io"
+  # @key global.groupsClaim Key used to retrieve groups from the OIDC provider
+  groupsClaim: "groups"
   # @key global.jwksUrl Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)
   # NOTE: For Dex the endpoint would be https://{yourDexDomain}/keys
   jwksUrl: "https://{yourAuthdomain}/.well-known/jwks.json"
@@ -40,6 +42,7 @@ global:
   kafkaBootstrapUrls: "kafka-bootstrap.kafka.svc.cluster.local:9092"
   # @key global.existingKafkaConfigSecretName Name of an existing secret containing Kafka configuration
   existingKafkaConfigSecretName: ""
+
 
   # @key global.existingTruststoreSecretName Name of an existing secret containing the truststore
   existingTruststoreSecretName: ""
@@ -66,6 +69,8 @@ configuration:
   # @key configuration.otelTracesExporter OpenTelemetry traces exporter
   # Options: otlp, none
   otelTracesExporter: none
+  # @key configuration.kafkaTopics Kafka topics for the application, created by a init container
+  kafkaTopics: []
 
 # @section Common Parameters
 # @key fullnameOverride String to fully override the generated release name

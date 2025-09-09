@@ -15,9 +15,11 @@ spec:
   rules:
   - from:
     - source:
-        principals: 
+        principals:
         - {{ include "access.graphPrincipal" . }}
+        {{- if .Values.global.enterprise }}
         - {{ include "access.searchPrincipal" . }}
+        {{- end }}
     to:
     - operation:
         methods:

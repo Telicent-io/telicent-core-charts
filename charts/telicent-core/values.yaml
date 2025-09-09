@@ -23,6 +23,8 @@ global:
   appHostDomain: "apps.telicent.io"
   # @key global.authHostDomain Domain associated with Telicent authentication services, including OIDC providers
   authHostDomain: "auth.telicent.io"
+  # @key global.groupsClaim Key used to retrieve groups from the OIDC provider
+  groupsClaim: "groups"
   # @key global.jwksUrl Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)
   # NOTE: For Dex the endpoint would be https://{yourDexDomain}/keys
   jwksUrl: "https://{yourAuthdomain}/.well-known/jwks.json"

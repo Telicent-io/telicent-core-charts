@@ -53,6 +53,7 @@ Contains global parameters, these parameters are mirrored within the Telicent co
 | `global.enterprise`                    | Enable enterprise mode, adding additional features and configurations             | `false`                                          |
 | `global.appHostDomain`                 | Domain associated with Telicent application services                              | `apps.telicent.io`                               |
 | `global.authHostDomain`                | Domain associated with Telicent authentication services, including OIDC providers | `auth.telicent.io`                               |
+| `global.groupsClaim`                   | Key used to retrieve groups from the OIDC provider                                | `groups`                                         |
 | `global.jwksUrl`                       | Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)     | `https://{yourAuthdomain}/.well-known/jwks.json` |
 | `global.istioNamespace`                | Namespace in which Istio is deployed                                              | `istio-system`                                   |
 | `global.istioServiceAccountName`       | Name of the Istio service account                                                 | `istio-ingress`                                  |
@@ -66,13 +67,14 @@ Contains global parameters, these parameters are mirrored within the Telicent co
 
 Contains configuration parameters specific to the Graph application
 
-| Name                                  | Description                         | Value                                                                                  |
-| ------------------------------------- | ----------------------------------- | -------------------------------------------------------------------------------------- |
-| `configuration.userAttributesUrl`     | URL for the user details endpoint   | `http://access.tc-system.svc.cluster.local:8080/users/lookup/{user}`                   |
-| `configuration.attributeHierarchyUrl` | URL for the user hierarchy endpoint | `http://access.tc-system.svc.cluster.local:8080/hierarchies/lookup/{name}`             |
-| `configuration.javaOptions`           | JVM options for the application     | `-Xmx5120m -Xms2048m -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks` |
-| `configuration.otelMetricsExporter`   | OpenTelemetry metrics exporter      | `prometheus`                                                                           |
-| `configuration.otelTracesExporter`    | OpenTelemetry traces exporter       | `none`                                                                                 |
+| Name                                  | Description                                                   | Value                                                                                  |
+| ------------------------------------- | ------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| `configuration.userAttributesUrl`     | URL for the user details endpoint                             | `http://access.tc-system.svc.cluster.local:8080/users/lookup/{user}`                   |
+| `configuration.attributeHierarchyUrl` | URL for the user hierarchy endpoint                           | `http://access.tc-system.svc.cluster.local:8080/hierarchies/lookup/{name}`             |
+| `configuration.javaOptions`           | JVM options for the application                               | `-Xmx5120m -Xms2048m -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks` |
+| `configuration.otelMetricsExporter`   | OpenTelemetry metrics exporter                                | `prometheus`                                                                           |
+| `configuration.otelTracesExporter`    | OpenTelemetry traces exporter                                 | `none`                                                                                 |
+| `configuration.kafkaTopics`           | Kafka topics for the application, created by a init container | `[]`                                                                                   |
 
 ### Common Parameters
 

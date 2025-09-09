@@ -53,6 +53,7 @@ Contains global parameters, these parameters are mirrored within the Telicent co
 | `global.imagePullSecrets`        | Global registry secret names as an array                                          | `[]`               |
 | `global.appHostDomain`           | Domain associated with Telicent application services                              | `apps.telicent.io` |
 | `global.authHostDomain`          | Domain associated with Telicent authentication services, including OIDC providers | `auth.telicent.io` |
+| `global.groupsClaim`             | Key used to retrieve groups from the OIDC provider                                | `groups`           |
 | `global.istioNamespace`          | Namespace in which Istio is deployed                                              | `istio-system`     |
 | `global.istioServiceAccountName` | Name of the Istio service account                                                 | `istio-ingress`    |
 | `global.istioGatewayName`        | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)         | `ingress-gateway`  |
