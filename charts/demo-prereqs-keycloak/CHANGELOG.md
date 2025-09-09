@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.1](https://github.com/Telicent-io/telicent-core-charts/compare/demo-prereqs-keycloak-v0.2.0...demo-prereqs-keycloak-v0.2.1) (2025-09-09)
+
+
+### Bug Fixes
+
+* upversion keycloak and add virtual services ([711c8a6](https://github.com/Telicent-io/telicent-core-charts/commit/711c8a62d7f4c1dbd077aa6fdeb91a23d252379b))
+* upversion keycloak and add virtual services ([e18a135](https://github.com/Telicent-io/telicent-core-charts/commit/e18a135ac822922a8787499195803bad32c39d73))
+
 ## [0.2.0](https://github.com/Telicent-io/telicent-core-charts/compare/demo-prereqs-keycloak-v0.1.0...demo-prereqs-keycloak-v0.2.0) (2025-09-09)
 
 
