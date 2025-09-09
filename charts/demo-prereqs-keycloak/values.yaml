@@ -33,7 +33,6 @@ image:
   tag: ""
 
 nameOverride: ""
-
 podSecurityContext:
   {}
   # fsGroup: 10101
