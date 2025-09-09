@@ -27,7 +27,6 @@ spec:
         - --proxy-headers=xforwarded
         - --hostname={{ .Values.authHost }}
         - --hostname-strict=false
-        - --log-level=debug
         env:
         - name: KC_HTTP_ENABLED
           value: "true"
