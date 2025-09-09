@@ -62,8 +62,6 @@ The following charts provide demo environment prerequisites:
 - **demo-prereqs-kafka** - Kafka setup for demo environments
 - **demo-prereqs-keycloak** - Keycloak authentication for demo environments
 - **demo-prereqs-mongodb** - MongoDB database for demo environments
-- **demo-prereqs-oauth2-proxy** - OAuth2 proxy for demo environments
-- **demo-prereqs-system-mesh** - Service mesh configuration for demo environments
 
 ## Configuration
 
