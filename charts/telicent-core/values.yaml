@@ -68,3 +68,8 @@ serviceAccount:
   name: ""
   # @key serviceAccount.annotations Additional custom annotations for the ServiceAccount
   annotations: {}
+
+# @section paperback-writer Parameters
+paperback-writer:
+  # @key paperback-writer.enabled Enable or disable the paperback-writer component
+  enabled: false
