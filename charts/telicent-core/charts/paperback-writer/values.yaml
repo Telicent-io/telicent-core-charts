@@ -85,21 +85,17 @@ podAnnotations: {}
 # @key podLabels Additional labels for the pod
 podLabels: {}
 
-# @section Security Context Parameters
+# @key podSecurityContext security context for the pod
 podSecurityContext:
-  # @key podSecurityContext.fsGroup Set the provisioning pod's Group ID for the mounted volumes' filesystem
   # fsGroup: 2000
 
+# @key securityContext security context for the container
 securityContext:
-  # @key securityContext.capabilities.drop List of capabilities to be dropped
   # capabilities:
   #   drop:
   #   - ALL
-  # @key securityContext.readOnlyRootFilesystem Set container's root filesystem as read-only
   # readOnlyRootFilesystem: true
-  # @key securityContext.runAsNonRoot Set container's Security Context runAsNonRoot
   # runAsNonRoot: true
-  # @key securityContext.runAsUser Set container's Security Context runAsUser User ID
   # runAsUser: 1000
 
 # @section Service Parameters
@@ -109,13 +105,11 @@ service:
   # @key service.port paperback-writer service port
   port: 8000
 
-# @section Resource Parameters
+# @key resources Resource requests and limits for the container
 resources:
-  # @key resources.limits.cpu Set containers' CPU limit
   # limits:
   #   cpu: 100m
   #   memory: 128Mi
-  # @key resources.requests.cpu Set containers' CPU request
   # requests:
   #   cpu: 100m
   #   memory: 128Mi
@@ -125,11 +119,13 @@ livenessProbe:
   # @key livenessProbe.httpGet.path Path for liveness probe
   httpGet:
     path: /availability
+    # @key livenessProbe.httpGet.port Port for liveness probe
     port: http
 readinessProbe:
-  # @key readinessProbe.httpGet.path Path for readiness probe
   httpGet:
+    # @key readinessProbe.httpGet.path Path for readiness probe
     path: /availability
+    # @key readinessProbe.httpGet.port Port for readiness probe
     port: http
 
 # @section Volume Parameters
