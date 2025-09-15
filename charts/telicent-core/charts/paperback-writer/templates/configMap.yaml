@@ -1,0 +1,17 @@
+{{- if and (not .Values.existingConfigMapName) (.Values.enabled)  -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "paperback-writer.fullname" . }}-config
+  labels:
+    {{- include "paperback-writer.labels" . | nindent 4 }}
+data:
+  SPARQL_URL: {{ include "paperback-writer.sparqlEndpoint" . | quote }}
+  SPARQL_DEFAULT_LABEL: {{ .Values.configuration.sparqlDefaultLabel | default "!" |  quote }}
+  JWKS_DISABLED: {{ .Values.configuration.jwksDisabled | default "false" | quote }}
+  JWKS_URL: {{  required "Must config JWKS URL (.Values.configuration.jwksUrl)" .Values.global.jwksUrl | quote }}
+  JWT_HEADER: {{ .Values.configuration.jwtHeader | default "Authorization" }}
+  JWT_REQUIRED_GROUP: "tc_write"
+  JWT_USER_ID_ATTR: "email"
+  ACCESS_API_URL: {{ include "paperback-writer.accessApiEndpoint" . | quote }}
+{{- end }}

@@ -19,6 +19,7 @@ spec:
         - {{ include "access.graphPrincipal" . }}
         {{- if .Values.global.enterprise }}
         - {{ include "access.searchPrincipal" . }}
+        - {{ include "access.paperbackWriterPrincipal" . }}
         {{- end }}
     to:
     - operation:

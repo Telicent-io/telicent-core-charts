@@ -1,0 +1,179 @@
+# Copyright (C) 2025 Telicent Limited
+# Telicent Core paperback-writer chart
+
+# @section Global Parameters
+# @descStart
+# Contains global parameters, these parameters are mirrored across all Telicent Core sub charts, these values will be authoritative.
+# @descEnd
+global:
+  # @key global.imageRegistry Global image registry
+  imageRegistry: ""
+  # @key global.imagePullSecrets Global registry secret names as an array
+  imagePullSecrets: []
+  # @key global.enterprise Enable enterprise mode, adding additional features and configurations
+  enterprise: false
+  # @key global.appHostDomain Domain associated with Telicent application services
+  appHostDomain: "apps.telicent.io"
+  # @key global.authHostDomain Domain associated with Telicent authentication services, including OIDC providers
+  authHostDomain: "auth.telicent.io"
+  # @key global.groupsClaim Key used to retrieve groups from the OIDC provider
+  groupsClaim: "groups"
+  # @key global.jwksUrl Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)
+  jwksUrl: "https://{yourAuthdomain}/.well-known/jwks.json"
+  # @key global.istioNamespace Namespace in which Istio is deployed
+  istioNamespace: istio-system
+  # @key global.istioServiceAccountName Name of the Istio service account
+  istioServiceAccountName: istio-ingress
+  # @key global.istioGatewayName Name of the Istio Gateway Resource (LB operating at the edge of the mesh)
+  istioGatewayName: ingress-gateway
+  # @key global.kafkaBootstrapUrls Comma separated list containing Kafka bootstrap URLs
+  kafkaBootstrapUrls: "kafka-bootstrap.kafka.svc.cluster.local:9092"
+  # @key global.existingKafkaConfigSecretName Name of an existing secret containing Kafka configuration
+  existingKafkaConfigSecretName: ""
+  # @key global.kafkaConfigUsername Username for Kafka authentication
+  kafkaConfigUsername: "your.kafka.username.here"
+  # @key global.kafkaConfigPassword Password for Kafka authentication
+  kafkaConfigPassword: "your.kafka.password.here"
+  # @key global.kafkaConfigProtocol Protocol used for Kafka communication
+  kafkaConfigProtocol: "SASL_SSL"
+  # @key global.kafkaConfigMechanism SASL mechanism used for Kafka authentication
+  kafkaConfigMechanism: "SCRAM-SHA-512"
+  # @key global.existingTruststoreSecretName Name of an existing secret containing the truststore
+  existingTruststoreSecretName: ""
+  truststore:
+    # @key global.truststore.mountPath The mount path for the truststore in the container
+    mountPath: /app/config/truststore
+
+# @section Chart Parameters
+# @key enabled Enable paperback-writer deployment
+enabled: false
+
+# @key replicaCount Number of paperback-writer replicas to deploy
+replicaCount: 1
+
+# @section Image Parameters
+image:
+  # @key image.repository paperback-writer image repository
+  repository: quay.io/telicent/telicent-paperback-writer
+  # @key image.pullPolicy paperback-writer image pull policy
+  pullPolicy: IfNotPresent
+  # @key image.tag paperback-writer image tag. If not set, defaults to chart appVersion
+  tag: ""
+
+# @key imagePullSecrets Specify registry secret names as an array
+imagePullSecrets: []
+
+# @key nameOverride String to replace the name of the chart in the Chart.yaml file
+nameOverride: ""
+# @key fullnameOverride String to fully override the generated release name
+fullnameOverride: ""
+
+# @section Service Account Parameters
+serviceAccount:
+  # @key serviceAccount.create Specifies whether a service account should be created
+  create: true
+  # @key serviceAccount.automount Automatically mount a ServiceAccount's API credentials
+  automount: true
+  # @key serviceAccount.annotations Additional custom annotations for the ServiceAccount
+  annotations: {}
+  # @key serviceAccount.name Name of the ServiceAccount to use. If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+# @section Pod Parameters
+# @key podAnnotations Additional annotations for the pod
+podAnnotations: {}
+# @key podLabels Additional labels for the pod
+podLabels: {}
+
+# @key podSecurityContext security context for the pod
+podSecurityContext:
+  # fsGroup: 2000
+
+# @key securityContext security context for the container
+securityContext:
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+# @section Service Parameters
+service:
+  # @key service.type paperback-writer service type
+  type: ClusterIP
+  # @key service.port paperback-writer service port
+  port: 8000
+
+# @key resources Resource requests and limits for the container
+resources:
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+# @section Probe Parameters
+livenessProbe:
+  # @key livenessProbe.httpGet.path Path for liveness probe
+  httpGet:
+    path: /availability
+    # @key livenessProbe.httpGet.port Port for liveness probe
+    port: http
+readinessProbe:
+  httpGet:
+    # @key readinessProbe.httpGet.path Path for readiness probe
+    path: /availability
+    # @key readinessProbe.httpGet.port Port for readiness probe
+    port: http
+
+# @section Volume Parameters
+# @key volumes Additional volumes on the output Deployment definition
+volumes: []
+# - name: foo
+#   secret:
+#     secretName: mysecret
+#     optional: false
+
+# @key volumeMounts Additional volumeMounts on the output Deployment definition
+volumeMounts: []
+# - name: foo
+#   mountPath: "/etc/foo"
+#   readOnly: true
+
+# @key nodeSelector Node labels for pod assignment
+nodeSelector: {}
+
+# @key tolerations Tolerations for pod assignment
+tolerations: []
+
+# @key affinity Affinity for pod assignment
+affinity: {}
+
+# @section Application Configuration
+configuration:
+  # @key configuration.sparqlUrl SPARQL endpoint URL. Defaults to http://release-name-graph.release-namespace.svc.cluster.local:3030
+  sparqlUrl: ""
+  # @key configuration.sparqlUser SPARQL endpoint username. Use existing secret to set these values if possible (.Values.existingSecretName)
+  sparqlUser: ""
+  # @key configuration.sparqlPwd SPARQL endpoint password. Use existing secret to set these values if possible (.Values.existingSecretName)
+  sparqlPwd: ""
+  # @key configuration.sparqlDefaultLabel Default label for SPARQL queries
+  sparqlDefaultLabel: "!"
+  # @key configuration.jwksDisabled Disable JWKS validation
+  jwksDisabled: "false"
+  # @key configuration.jwtHeader JWT header name
+  jwtHeader: "Authorization"
+  # @key configuration.accessApiUrl URL for the Access API
+  accessApiUrl: "" # Defaults to http://release-name-access-api.release-namespace.svc.cluster.local:8080
+
+# @key existingConfigMapName Name of an existing ConfigMap to use for configuration
+existingConfigMapName: ""
+# @key existingSecretName Name of an existing Secret to use for credentials
+existingSecretName: ""
+
+istio:
+  ingress:
+    # @key istio.ingress.principal Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName'
+    principal: ""

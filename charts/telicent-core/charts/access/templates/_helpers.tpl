@@ -111,3 +111,7 @@ Create the name of the CA config map
 {{- define "access.searchPrincipal" -}}
 {{- .Values.istio.search.principal | default (printf "cluster.local/ns/%s/sa/%s-%s" .Release.Namespace .Release.Name .Values.istio.search.serviceAccountName) | quote }}
 {{- end }}
+
+{{- define "access.paperbackWriterPrincipal" -}}
+{{- index .Values "istio" "paperback-writer" "principal" | default (printf "cluster.local/ns/%s/sa/%s-%s" .Release.Namespace .Release.Name .Values.istio.search.serviceAccountName) | quote }}
+{{- end }}

@@ -159,6 +159,12 @@ istio:
     # @key istio.graph.serviceAccountName Name of the Graph service account
     serviceAccountName: "graph"
 
+  paperback-writer:
+    # @key istio.paperback-writer.principal Principal used for Paperback Writer traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'serviceAccountName' and the current namespace
+    principal: ""
+    # @key istio.paperback-writer.serviceAccountName Name of the Paperback Writer service account
+    serviceAccountName: "paperback-writer"
+
 # @section Service Account Parameters
 serviceAccount:
   # @key serviceAccount.name Name of the ServiceAccount to use. If not set, a name is generated using the fullname
