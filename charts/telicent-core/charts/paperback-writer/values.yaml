@@ -103,7 +103,7 @@ service:
   # @key service.type paperback-writer service type
   type: ClusterIP
   # @key service.port paperback-writer service port
-  port: 8000
+  port: 8080
 
 # @key resources Resource requests and limits for the container
 resources:
