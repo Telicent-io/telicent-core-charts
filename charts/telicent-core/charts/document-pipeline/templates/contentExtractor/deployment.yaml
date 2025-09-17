@@ -1,0 +1,87 @@
+{{- if .Values.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "content-extractor.fullname" . }}
+  labels:
+    {{- include "document-pipeline.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.contentExtractor.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "content-extractor.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.contentExtractor.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "document-pipeline.labels" . | nindent 8 }}
+        {{- include "content-extractor.selectorLabels" . | nindent 8 }}
+        {{- with .Values.contentExtractor.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.contentExtractor.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "document-pipeline.serviceAccountName" . }}
+      {{- with .Values.contentExtractor.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          {{- with .Values.contentExtractor.securityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          env:
+            - name: BOOTSTRAP_SERVERS
+              value: {{ .Values.global.kafkaBootstrapUrls | quote }}
+            - name: INPUT_TOPIC
+              value: {{ .Values.contentExtractor.inputTopic | quote }}
+            - name: OUTPUT_TOPIC
+              value: {{ .Values.contentExtractor.outputTopic | quote }}
+
+          image: "{{ .Values.contentExtractor.image.repository }}:{{ .Values.contentExtractor.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.contentExtractor.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.contentExtractor.service.port }}
+              protocol: TCP
+          {{- with .Values.contentExtractor.livenessProbe }}
+          livenessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.contentExtractor.readinessProbe }}
+          readinessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.contentExtractor.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.contentExtractor.volumeMounts }}
+          volumeMounts:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      {{- with .Values.contentExtractor.volumes }}
+      volumes:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.contentExtractor.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.contentExtractor.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.contentExtractor.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end -}}

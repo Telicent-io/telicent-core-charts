@@ -1,0 +1,96 @@
+{{- if .Values.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "http-ingester.fullname" . }}
+  labels:
+    {{- include "document-pipeline.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.httpIngester.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "http-ingester.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.httpIngester.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "document-pipeline.labels" . | nindent 8 }}
+        {{- include "http-ingester.selectorLabels" . | nindent 8 }}
+        {{- with .Values.httpIngester.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.httpIngester.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "document-pipeline.serviceAccountName" . }}
+      {{- with .Values.httpIngester.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          {{- with .Values.httpIngester.securityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          env:
+            - name: ROUTE_CONFIG_PATH
+              value: /etc/http-ingester/
+            - name: BOOTSTRAP_SERVERS
+              value: {{ .Values.global.kafkaBootstrapUrls | quote }}
+            - name: JWKS_URL
+              value: {{ .Values.global.jwksUrl | quote }}
+          image: "{{ .Values.httpIngester.image.repository }}:{{ .Values.httpIngester.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.httpIngester.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.httpIngester.service.port }}
+              protocol: TCP
+          {{- with .Values.httpIngester.livenessProbe }}
+          livenessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.httpIngester.readinessProbe }}
+          readinessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.httpIngester.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          volumeMounts:
+            - name: config-volume
+              mountPath: /etc/http-ingester
+              readOnly: true
+          {{- with .Values.httpIngester.volumeMounts }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      volumes:
+        - name: config-volume
+          configMap:
+            {{- if .Values.httpIngester.existingConfigMapName }}
+            name: {{ .Values.httpIngester.existingConfigMapName }}
+            {{- else }}
+            name: {{ include "http-ingester.fullname" . }}
+            {{- end }}
+      {{- with .Values.httpIngester.volumes }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.httpIngester.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.httpIngester.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.httpIngester.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end -}}

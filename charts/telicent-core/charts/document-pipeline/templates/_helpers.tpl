@@ -60,3 +60,95 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+*********************
+*** HTTP Ingestor ***
+*********************
+*/}}
+
+{{/*
+Fullname
+*/}}
+
+{{- define "http-ingester.fullname" -}}
+{{ printf "%s-%s" (include "document-pipeline.fullname" .) "http-ingester"}}
+{{- end }}
+
+{{/*
+Selector labels
+*/}}
+{{- define "http-ingester.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "document-pipeline.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/component: http-ingester
+{{- end }}
+
+{{/*
+*************************
+*** Content Extractor ***
+*************************
+*/}}
+
+{{/*
+Fullname
+*/}}
+
+{{- define "content-extractor.fullname" -}}
+{{ printf "%s-%s" (include "document-pipeline.fullname" .) "content-extractor"}}
+{{- end }}
+
+{{/*
+Selector labels
+*/}}
+{{- define "content-extractor.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "document-pipeline.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/component: content-extractor
+{{- end }}
+
+{{/*
+***********************
+*** Content Indexer ***
+***********************
+*/}}
+
+{{/*
+Fullname
+*/}}
+
+{{- define "content-indexer.fullname" -}}
+{{ printf "%s-%s" (include "document-pipeline.fullname" .) "content-indexer"}}
+{{- end }}
+
+{{/*
+Selector labels
+*/}}
+{{- define "content-indexer.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "document-pipeline.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/component: content-indexer
+{{- end }}
+
+{{/*
+*************************
+*** Catalogue Updater ***
+*************************
+*/}}
+
+{{/*
+Fullname
+*/}}
+
+{{- define "catalogue-updater.fullname" -}}
+{{ printf "%s-%s" (include "document-pipeline.fullname" .) "catalogue-updater"}}
+{{- end }}
+
+{{/*
+Selector labels
+*/}}
+{{- define "catalogue-updater.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "document-pipeline.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/component: catalogue-updater
+{{- end }}

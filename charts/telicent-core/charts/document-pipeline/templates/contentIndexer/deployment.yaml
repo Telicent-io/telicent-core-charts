@@ -1,0 +1,91 @@
+{{- if .Values.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "content-indexer.fullname" . }}
+  labels:
+    {{- include "document-pipeline.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.contentIndexer.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "content-indexer.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.contentIndexer.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "document-pipeline.labels" . | nindent 8 }}
+        {{- include "content-indexer.selectorLabels" . | nindent 8 }}
+        {{- with .Values.contentIndexer.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.contentIndexer.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "document-pipeline.serviceAccountName" . }}
+      {{- with .Values.contentIndexer.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          {{- with .Values.contentIndexer.securityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          image: "{{ .Values.contentIndexer.image.repository }}:{{ .Values.contentIndexer.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.contentIndexer.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.contentIndexer.service.port }}
+              protocol: TCP
+          env:
+            - name: BOOTSTRAP_SERVERS
+              value: {{ .Values.global.kafkaBootstrapUrls | quote }}
+            - name: INPUT_TOPIC
+              value: {{ .Values.contentIndexer.configuration.inputTopic | quote }}
+            - name: ELASTIC_HOST
+              value: {{ .Values.contentIndexer.configuration.elasticsearchHost | quote }}
+            - name: ELASTIC_PORT
+              value: {{ .Values.contentIndexer.configuration.elasticsearchPort | quote }}
+            - name: ELASTIC_INDEX
+              value: {{ .Values.contentIndexer.configuration.elasticsearchIndex | quote }}
+            
+          {{- with .Values.contentIndexer.livenessProbe }}
+          livenessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.contentIndexer.readinessProbe }}
+          readinessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.contentIndexer.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.contentIndexer.volumeMounts }}
+          volumeMounts:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      {{- with .Values.contentIndexer.volumes }}
+      volumes:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.contentIndexer.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.contentIndexer.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.contentIndexer.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end -}}

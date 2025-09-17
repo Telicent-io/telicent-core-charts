@@ -1,0 +1,18 @@
+{{- if .Values.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "document-pipeline.fullname" . }}
+  labels:
+    {{- include "document-pipeline.labels" . | nindent 4 }}
+    {{- include "content-indexer.selectorLabels" . | nindent 4 }}
+spec:
+  type: {{ .Values.contentIndexer.service.type }}
+  ports:
+    - port: {{ .Values.contentIndexer.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "content-indexer.selectorLabels" . | nindent 4 }}
+{{- end -}}
