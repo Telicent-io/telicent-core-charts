@@ -5,5 +5,5 @@ dependencies:
 - name: gateway-authn
   repository: file://./charts/gateway-authn
   version: 0.1.0
-digest: sha256:81301c8d3eb74ea5cb09f4bec5dcd19c1572c819b5ed6f2bcaedd69cecb41fb1
-generated: "2025-09-12T11:24:46.712397+01:00"
+digest: sha256:148904eeaa11cfb7db612494664b429c6914d1d462e029018479865e51ffd489
+generated: "2025-09-18T09:56:15.969546+01:00"
