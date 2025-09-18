@@ -129,8 +129,8 @@ Create the name of the external configMap
 Create the name of the config map
 */}}
 {{- define "oauth2-proxy.cacertConfigmapName" -}}
-{{- if .Values.existingCacertConfigmap -}}
-{{- .Values.existingCacertConfigmap }}
+{{- if .Values.existingCacertConfigmapName -}}
+{{- .Values.existingCacertConfigmapName }}
 {{- else }}
 {{- printf "%s-%s" (include "oauth2-proxy.fullname" .) "cacert" }}
 {{- end }}

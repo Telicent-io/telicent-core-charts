@@ -1,4 +1,4 @@
-{{- if not .Values.configuration.existingCacertConfigmap -}}
+{{- if not .Values.existingCacertConfigmapName -}}
 {{- if .Values.configuration.cacert -}}
 apiVersion: v1
 kind: ConfigMap
