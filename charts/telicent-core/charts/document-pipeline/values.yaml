@@ -8,7 +8,6 @@ enabled: true
 # @descStart
 # Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
 # @descEnd
-
 global:
   ## Current available global image parameters: imageRegistry and imagePullSecrets
   ## Please, note that this will override the image parameters
@@ -49,7 +48,10 @@ global:
   truststore:
     # @key global.truststore.mountPath The mount path for the truststore in the container
     mountPath: /app/config/truststore
+# @section Service Account
+# @descStart
 # This section builds out the service account more information can be found here: https://kubernetes.io/docs/concepts/security/service-accounts/
+# @descEnd
 serviceAccount:
   # @key serviceAccount.create Specifies whether a service account should be created
   create: true
@@ -59,53 +61,51 @@ serviceAccount:
   annotations: {}
   # @key serviceAccount.name The name of the service account to use. If not set and create is true, a name is generated using the fullname template
   name: ""
-
+# @section HTTP Ingester
+# @descStart
+# This section builds out the HTTP Ingester configuration
+# The application configuration is contained within the 'configuration' key or can be overriden by providing an existing ConfigMap name
+# @descEnd
 httpIngester:
-  # This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
+  # @key httpIngester.replicaCount The number of replicas for the HTTP Ingester
   replicaCount: 1
 
-  # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
   image:
+    # @key httpIngester.image.repository The container image repository for the HTTP Ingester
     repository: nginx
-    # This sets the pull policy for images.
+    # @key httpIngester.image.pullPolicy The image pull policy for the HTTP Ingester
     pullPolicy: IfNotPresent
-    # Overrides the image tag whose default is the chart appVersion.
+    # @key httpIngester.image.tag The image tag for the HTTP Ingester
     tag: ""
 
-  # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+  # @key httpIngester.imagePullSecrets Secrets for pulling an image from a private repository
   imagePullSecrets: []
-  # This is to override the chart name.
+  # @key httpIngester.nameOverride Override the chart name for the HTTP Ingester
   nameOverride: ""
+  # @key httpIngester.fullnameOverride Override the full name for the HTTP Ingester
   fullnameOverride: ""
 
-  # This is for setting Kubernetes Annotations to a Pod.
-  # For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+  # @key httpIngester.podAnnotations Annotations to add to the HTTP Ingester pods
   podAnnotations: {}
-  # This is for setting Kubernetes Labels to a Pod.
-  # For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+  # @key httpIngester.podLabels Labels to add to the HTTP Ingester pods
   podLabels: {}
 
   podSecurityContext:
+    # @key httpIngester.podSecurityContext Security context for the HTTP Ingester pods
     {}
-    # fsGroup: 2000
 
   securityContext:
+    # @key httpIngester.securityContext Security context for the HTTP Ingester containers
     {}
-    # capabilities:
-    #   drop:
-    #   - ALL
-    # readOnlyRootFilesystem: true
-    # runAsNonRoot: true
-    # runAsUser: 1000
 
-  # This is for setting up a service more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/
   service:
-    # This sets the service type more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
+    # @key httpIngester.service.type The service type for the HTTP Ingester
     type: ClusterIP
-    # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
+    # @key httpIngester.service.port The service port for the HTTP Ingester
     port: 80
 
   resources:
+    # @key httpIngester.resources Resource requests and limits for the HTTP Ingester
     {}
     # We usually recommend not to specify default resources and to leave this as a conscious
     # choice for the user. This also increases chances charts run on environments with little
@@ -121,34 +121,37 @@ httpIngester:
   # This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
   livenessProbe:
     httpGet:
+      # @key httpIngester.livenessProbe.httpGet.path The HTTP path for the liveness probe
       path: /
+      # @key httpIngester.livenessProbe.httpGet.port The HTTP port for the liveness probe
       port: http
   readinessProbe:
     httpGet:
+      # @key httpIngester.readinessProbe.httpGet.path The HTTP path for the readiness probe
       path: /
+      # @key httpIngester.readinessProbe.httpGet.port The HTTP port for the readiness probe
       port: http
 
-  # Additional volumes on the output Deployment definition.
+  # @key httpIngester.volumes Additional volumes on the output Deployment definition.
   volumes: []
   # - name: foo
   #   secret:
   #     secretName: mysecret
   #     optional: false
 
-  # Additional volumeMounts on the output Deployment definition.
+  # @key httpIngester.volumeMounts Additional volumeMounts on the output Deployment definition.
   volumeMounts: []
   # - name: foo
   #   mountPath: "/etc/foo"
   #   readOnly: true
-
+  # @key httpIngester.nodeSelector Node selector for the HTTP Ingester pods
   nodeSelector: {}
-
+  # @key httpIngester.tolerations Tolerations for the HTTP Ingester pods
   tolerations: []
-
+  # @key httpIngester.affinity Affinity for the HTTP Ingester pods
   affinity: {}
 
-  # If you want to use an existing ConfigMap for configuration then set the name here.
-  # If not set then a new ConfigMap will be created using the configuration in this values
+  # @key httpIngester.existingConfigMapName If you want to use an existing ConfigMap for configuration then set the name here. If not set then a new ConfigMap will be created using the configuration in this values
   existingConfigMapName: ""
   configuration:
     routes:
@@ -160,63 +163,73 @@ httpIngester:
         securityLabel: dGVzdD10cnVl
         # @key httpIngester.configuration.routes[0].namespace The Namespace URI that will be used to assign a unique URI to a document URIs are generated deterministically based on this and the ingested document content
         namespace: https://example.org/ns#
-        # @key httpIngester.configuration.routes[0].headers Headers to copy from the request and/or apply onto document ingest events
         headers:
-          # @key httpIngester.configuration.routes[0].headers[0].owner The Owner header, configured such that even if the header is present in the request then the defaultValue here takes precedence
+          # @key httpIngester.configuration.routes[0].headers[0].name The Owner header, configured such that even if the header is present in the request then the defaultValue here takes precedence
           - name: Owner
-            # @key httpIngester.configuration.routes[0].headers[0].owner.defaultValue The default value for the Owner header
+            # @key httpIngester.configuration.routes[0].headers[0].defaultValue The default value for the Owner header
             defaultValue: Platform Team
-            # @key httpIngester.configuration.routes[0].headers[0].owner.priority The priority for the Owner header
+            # @key httpIngester.configuration.routes[0].headers[0].priority The priority for the Owner header
             priority: CONFIGURATION
-          # The (deprecated) Data-Source-Name, configured such that if the header is present in
-          # the request then the request value takes precedence
+          # @key httpIngester.configuration.routes[0].headers[1].name The (deprecated) Data-Source-Name, configured such that if the header is present in the request then the request value takes precedence
           - name: Data-Source-Name
+            # @key httpIngester.configuration.routes[0].headers[1].defaultValue The default value for the (deprecated) Data-Source-Name header
             defaultValue: Test Data
+            # @key httpIngester.configuration.routes[0].headers[1].priority The priority for the (deprecated) Data-Source-Name header
             priority: REQUEST
-          # The Distribution ID header. This is necessary to indicate what data catalogue
-          # details are associated to the incoming request.
-          # NOTE: marked as REQUEST for time being to make development/testing easier
-          # but should be REQUEST_ONLY when deployed.
+          # @key httpIngester.configuration.routes[0].headers[2].name The Distribution ID header. This is necessary to indicate what data catalogue details are associated to the incoming request. NOTE: marked as REQUEST for time being to make development/testing easier but should be REQUEST_ONLY when deployed.
           - name: Data-Source-Reference
+            # @key httpIngester.configuration.routes[0].headers[2].defaultValue The default value for the Distribution ID header
             defaultValue: Telicent Document Pipeline
+            # @key httpIngester.configuration.routes[0].headers[2].priority The priority for the Distribution ID header
             priority: REQUEST
+          # @key httpIngester.configuration.routes[0].headers[3].name The Distribution ID header. This is necessary to indicate what data catalogue details are associated to the incoming request. NOTE: marked as REQUEST for time being to make development/testing easier but should be REQUEST_ONLY when deployed.
           - name: Distribution-Id
+            # @key httpIngester.configuration.routes[0].headers[3].defaultValue The default value for the Distribution ID header
             defaultValue: 13bce3bf-7edb-4efb-a54f-574327458dd7
+            # @key httpIngester.configuration.routes[0].headers[3].priority The priority for the Distribution ID header
             priority: REQUEST
-          # The EDH/IDH policy information header
+          # @key httpIngester.configuration.routes[0].headers[4].name The EDH/IDH policy information header
           - name: Policy-Information
+            # @key httpIngester.configuration.routes[0].headers[4].defaultValue The default value for the EDH/IDH policy information header
             defaultValue: '{"EDH":{"classification":"O","permittedNats":["GBR"],"permittedOrgs":["Telicent"],"orGroups":[],"andGroups":[]}}'
+            # @key httpIngester.configuration.routes[0].headers[4].priority The priority for the EDH/IDH policy information header
             priority: REQUEST
 
+# @section Content Extractor
+# @descStart
+# This section builds out the Content Extractor configuration
+# The application configuration is contained within the 'configuration' key
+# @descEnd
 contentExtractor:
-  # This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
+  # @key contentExtractor.replicaCount The number of replicas for the Content Extractor
   replicaCount: 1
 
-  # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
   image:
+    # @key contentExtractor.image.repository The container image repository for the Content Extractor
     repository: nginx
-    # This sets the pull policy for images.
+    # @key contentExtractor.image.pullPolicy The image pull policy for the Content Extractor
     pullPolicy: IfNotPresent
-    # Overrides the image tag whose default is the chart appVersion.
+    # @key contentExtractor.image.tag The image tag for the Content Extractor
     tag: ""
 
-  # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+  # @key contentExtractor.imagePullSecrets Secrets for pulling an image from a private repository
   imagePullSecrets: []
-  # This is to override the chart name.
+  # @key contentExtractor.nameOverride Override the chart name for the Content Extractor
   nameOverride: ""
+  # @key contentExtractor.fullnameOverride Override the full name for the Content Extractor
   fullnameOverride: ""
 
-  # This is for setting Kubernetes Annotations to a Pod.
-  # For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+  # @key contentExtractor.podAnnotations Annotations to add to the Content Extractor pods
   podAnnotations: {}
-  # This is for setting Kubernetes Labels to a Pod.
-  # For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+  # @key contentExtractor.podLabels Labels to add to the Content Extractor pods
   podLabels: {}
 
+  # @key contentExtractor.podSecurityContext Security context for the Content Extractor pods
   podSecurityContext:
     {}
     # fsGroup: 2000
 
+  # @key contentExtractor.securityContext Security context for the Content Extractor containers
   securityContext:
     {}
     # capabilities:
@@ -226,13 +239,13 @@ contentExtractor:
     # runAsNonRoot: true
     # runAsUser: 1000
 
-  # This is for setting up a service more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/
   service:
-    # This sets the service type more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
+    # @key contentExtractor.service.type The service type for the Content Extractor
     type: ClusterIP
-    # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
+    # @key contentExtractor.service.port The service port for the Content Extractor
     port: 80
 
+  # @key contentExtractor.resources Resource requests and limits for the Content Extractor
   resources:
     {}
     # We usually recommend not to specify default resources and to leave this as a conscious
@@ -249,30 +262,37 @@ contentExtractor:
   # This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
   livenessProbe:
     httpGet:
+      # @key contentExtractor.livenessProbe.httpGet.path The HTTP path for the liveness probe
       path: /
+      # @key contentExtractor.livenessProbe.httpGet.port The HTTP port for the liveness probe
       port: http
   readinessProbe:
     httpGet:
+      # @key contentExtractor.readinessProbe.httpGet.path The HTTP path for the readiness probe
       path: /
+      # @key contentExtractor.readinessProbe.httpGet.port The HTTP port for the readiness probe
       port: http
 
-  # Additional volumes on the output Deployment definition.
+  # @key contentExtractor.volumes Additional volumes for the Content Extractor
   volumes: []
   # - name: foo
   #   secret:
   #     secretName: mysecret
   #     optional: false
 
-  # Additional volumeMounts on the output Deployment definition.
+  # @key contentExtractor.volumeMounts Additional volume mounts for the Content Extractor
   volumeMounts: []
   # - name: foo
   #   mountPath: "/etc/foo"
   #   readOnly: true
 
+  # @key contentExtractor.nodeSelector Node selector for the Content Extractor pods
   nodeSelector: {}
 
+  # @key contentExtractor.tolerations Tolerations for the Content Extractor pods
   tolerations: []
 
+  # @key contentExtractor.affinity Affinity rules for the Content Extractor pods
   affinity: {}
 
   configuration:
@@ -281,35 +301,41 @@ contentExtractor:
     # @key contentExtractor.configuration.outputTopic The Kafka topic to which the content extractor will produce messages
     outputTopic: extracted_content
 
+# @section Content Indexer
+# @descStart
+# This section builds out the Content Indexer configuration
+# The application configuration is contained within the 'configuration' key
+# @descEnd
 contentIndexer:
-  # This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
+  # @key contentIndexer.replicaCount The number of replicas for the Content Indexer
   replicaCount: 1
 
-  # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
   image:
+    # @key contentIndexer.image.repository The container image repository for the Content Indexer
     repository: nginx
-    # This sets the pull policy for images.
+    # @key contentIndexer.image.pullPolicy The image pull policy for the Content Indexer
     pullPolicy: IfNotPresent
-    # Overrides the image tag whose default is the chart appVersion.
+    # @key contentIndexer.image.tag The image tag for the Content Indexer
     tag: ""
 
-  # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+  # @key contentIndexer.imagePullSecrets Secrets for pulling an image from a private repository
   imagePullSecrets: []
-  # This is to override the chart name.
+  # @key contentIndexer.nameOverride Override the chart name for the Content Indexer
   nameOverride: ""
+  # @key contentIndexer.fullnameOverride Override the full name for the Content Indexer
   fullnameOverride: ""
 
-  # This is for setting Kubernetes Annotations to a Pod.
-  # For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+  # @key contentIndexer.podAnnotations Annotations to add to the Content Indexer pods
   podAnnotations: {}
-  # This is for setting Kubernetes Labels to a Pod.
-  # For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+  # @key contentIndexer.podLabels Labels to add to the Content Indexer pods
   podLabels: {}
 
+  # @key contentIndexer.podSecurityContext Security context for the Content Indexer pods
   podSecurityContext:
     {}
     # fsGroup: 2000
 
+  # @key contentIndexer.securityContext Security context for the Content Indexer containers
   securityContext:
     {}
     # capabilities:
@@ -319,13 +345,13 @@ contentIndexer:
     # runAsNonRoot: true
     # runAsUser: 1000
 
-  # This is for setting up a service more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/
   service:
-    # This sets the service type more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
+    # @key contentIndexer.service.type The service type for the Content Indexer
     type: ClusterIP
-    # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
+    # @key contentIndexer.service.port The service port for the Content Indexer
     port: 80
 
+  # @key contentIndexer.resources Resource requests and limits for the Content Indexer
   resources:
     {}
     # We usually recommend not to specify default resources and to leave this as a conscious
@@ -342,30 +368,37 @@ contentIndexer:
   # This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
   livenessProbe:
     httpGet:
+      # @key contentIndexer.livenessProbe.httpGet.path The HTTP path for the liveness probe
       path: /
+      # @key contentIndexer.livenessProbe.httpGet.port The HTTP port for the liveness probe
       port: http
   readinessProbe:
     httpGet:
+      # @key contentIndexer.readinessProbe.httpGet.path The HTTP path for the readiness probe
       path: /
+      # @key contentIndexer.readinessProbe.httpGet.port The HTTP port for the readiness probe
       port: http
 
-  # Additional volumes on the output Deployment definition.
+  # @key contentIndexer.volumes Additional volumes for the Content Indexer
   volumes: []
   # - name: foo
   #   secret:
   #     secretName: mysecret
   #     optional: false
 
-  # Additional volumeMounts on the output Deployment definition.
+  # @key contentIndexer.volumeMounts Additional volume mounts for the Content Indexer
   volumeMounts: []
   # - name: foo
   #   mountPath: "/etc/foo"
   #   readOnly: true
 
+  # @key contentIndexer.nodeSelector Node selector for the Content Indexer pods
   nodeSelector: {}
 
+  # @key contentIndexer.tolerations Tolerations for the Content Indexer pods
   tolerations: []
 
+  # @key contentIndexer.affinity Affinity rules for the Content Indexer pods
   affinity: {}
 
   configuration:
@@ -377,36 +410,41 @@ contentIndexer:
     elasticsearchPort: "9200"
     # @key contentIndexer.configuration.elasticsearchIndex The Elasticsearch index to which documents will be indexed
     elasticsearchIndex: documents
-
+# @section Catalogue Updater
+# @descStart
+# This section builds out the Catalogue Updater configuration
+# The application configuration is contained within the 'configuration' key
+# @descEnd
 catalogueUpdater:
-  # This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
+  # @key catalogueUpdater.replicaCount The number of replicas for the Catalogue Updater
   replicaCount: 1
 
-  # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
   image:
+    # @key catalogueUpdater.image.repository The container image repository for the Catalogue Updater
     repository: nginx
-    # This sets the pull policy for images.
+    # @key catalogueUpdater.image.pullPolicy The image pull policy for the Catalogue Updater
     pullPolicy: IfNotPresent
-    # Overrides the image tag whose default is the chart appVersion.
+    # @key catalogueUpdater.image.tag The image tag for the Catalogue Updater
     tag: ""
 
-  # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+  # @key catalogueUpdater.imagePullSecrets Secrets for pulling an image from a private repository
   imagePullSecrets: []
-  # This is to override the chart name.
+  # @key catalogueUpdater.nameOverride Override the chart name for the Catalogue Updater
   nameOverride: ""
+  # @key catalogueUpdater.fullnameOverride Override the full name for the Catalogue Updater
   fullnameOverride: ""
 
-  # This is for setting Kubernetes Annotations to a Pod.
-  # For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+  # @key catalogueUpdater.podAnnotations Annotations to add to the Catalogue Updater pods
   podAnnotations: {}
-  # This is for setting Kubernetes Labels to a Pod.
-  # For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+  # @key catalogueUpdater.podLabels Labels to add to the Catalogue Updater pods
   podLabels: {}
 
+  # @key catalogueUpdater.podSecurityContext Security context for the Catalogue Updater pods
   podSecurityContext:
     {}
     # fsGroup: 2000
 
+  # @key catalogueUpdater.securityContext Security context for the Catalogue Updater containers
   securityContext:
     {}
     # capabilities:
@@ -416,13 +454,13 @@ catalogueUpdater:
     # runAsNonRoot: true
     # runAsUser: 1000
 
-  # This is for setting up a service more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/
   service:
-    # This sets the service type more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
+    # @key catalogueUpdater.service.type The service type for the Catalogue Updater
     type: ClusterIP
-    # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
+    # @key catalogueUpdater.service.port The service port for the Catalogue Updater
     port: 80
 
+  # @key catalogueUpdater.resources Resource requests and limits for the Catalogue Updater
   resources:
     {}
     # We usually recommend not to specify default resources and to leave this as a conscious
@@ -439,30 +477,37 @@ catalogueUpdater:
   # This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
   livenessProbe:
     httpGet:
+      # @key catalogueUpdater.livenessProbe.httpGet.path The HTTP path for the liveness probe
       path: /
+      # @key catalogueUpdater.livenessProbe.httpGet.port The HTTP port for the liveness probe
       port: http
   readinessProbe:
     httpGet:
+      # @key catalogueUpdater.readinessProbe.httpGet.path The HTTP path for the readiness probe
       path: /
+      # @key catalogueUpdater.readinessProbe.httpGet.port The HTTP port for the readiness probe
       port: http
 
-  # Additional volumes on the output Deployment definition.
+  # @key catalogueUpdater.volumes Additional volumes for the Catalogue Updater
   volumes: []
   # - name: foo
   #   secret:
   #     secretName: mysecret
   #     optional: false
 
-  # Additional volumeMounts on the output Deployment definition.
+  # @key catalogueUpdater.volumeMounts Additional volume mounts for the Catalogue Updater
   volumeMounts: []
   # - name: foo
   #   mountPath: "/etc/foo"
   #   readOnly: true
 
+  # @key catalogueUpdater.nodeSelector Node selector for the Catalogue Updater pods
   nodeSelector: {}
 
+  # @key catalogueUpdater.tolerations Tolerations for the Catalogue Updater pods
   tolerations: []
 
+  # @key catalogueUpdater.affinity Affinity rules for the Catalogue Updater pods
   affinity: {}
 
   configuration:
