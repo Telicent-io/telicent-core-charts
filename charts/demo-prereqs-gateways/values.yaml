@@ -1,21 +1,33 @@
-appsHost: apps.127.0.0.1.nip.io
-authnHost: auth.127.0.0.1.nip.io
+global:
+  tenantName: change-me
+  appsHost: apps.127.0.0.1.nip.io
+  authnHost: auth.127.0.0.1.nip.io
 
-appsTlsCredentialName: ""
-appsTls:
-  key: ""
-  crt: ""
-authnTlsCredentialName: ""
-authnTls:
-  key: ""
-  crt: ""
+gateway-apps:
+  enabled: true
+  tlsCredentialName: ""
+  tls:
+    key: ""
+    crt: ""
 
-fullnameOverride: ""
-ingressSelectors:
-  istio: ingress
+  fullnameOverride: ""
+  ingressSelectors:
+    istio: ingress
 
-jwksUri: ""
-jwtIssuer: ""
+  jwksUri: ""
+  jwtIssuer: ""
 
-nameOverride: ""
-tenantName: change-me
+  nameOverride: ""
+
+gateway-authn:
+  enabled: true
+  tlsCredentialName: ""
+  tls:
+    key: ""
+    crt: ""
+
+  fullnameOverride: ""
+  ingressSelectors:
+    istio: ingress
+
+  nameOverride: ""

@@ -1,0 +1,14 @@
+global:
+  tenantName: change-me
+  authnHost: auth.127.0.0.1.nip.io
+
+tlsCredentialName: ""
+tls:
+  key: ""
+  crt: ""
+
+fullnameOverride: ""
+ingressSelectors:
+  istio: ingress
+
+nameOverride: ""
