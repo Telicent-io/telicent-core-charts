@@ -38,6 +38,9 @@ spec:
           securityContext:
             {{- toYaml . | nindent 12 }}
           {{- end }}
+          env:
+          - name: REQUESTS_CA_BUNDLE
+            value: /etc/ssl/certs/ca.crt
           envFrom:
             - configMapRef:
                 name: {{ include "paperback-writer.configMapName" . }}
@@ -61,12 +64,27 @@ spec:
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- with .Values.volumeMounts }}
           volumeMounts:
+          {{- if or .Values.cacert .Values.existingCacertConfigmapName }}
+          - name: certs
+            mountPath: /etc/ssl/certs
+            readOnly: true
+          {{- end }}
+          {{- with .Values.volumeMounts }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
-      {{- with .Values.volumes }}
       volumes:
+      {{- if or .Values.cacert .Values.existingCacertConfigmapName }}
+      - name: certs
+        configMap:
+          {{- if .Values.existingCacertConfigmapName }}
+          name: {{ .Values.existingCacertConfigmapName }}
+          {{- else if .Values.cacert }}
+          name: {{ include "paperback-writer.fullname" . }}-cacert
+          {{- end }}
+          optional: true
+      {{- end }}
+      {{- with .Values.volumes }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
       {{- with .Values.nodeSelector }}

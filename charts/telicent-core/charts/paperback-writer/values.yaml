@@ -103,7 +103,7 @@ service:
   # @key service.type paperback-writer service type
   type: ClusterIP
   # @key service.port paperback-writer service port
-  port: 8080
+  port: 8000
 
 # @key resources Resource requests and limits for the container
 resources:
@@ -172,6 +172,10 @@ configuration:
 existingConfigMapName: ""
 # @key existingSecretName Name of an existing Secret to use for credentials
 existingSecretName: ""
+# @key existingCacertConfigmapName Name of an existing ConfigMap to use for CA certs
+existingCacertConfigmapName: "" # If not set, and cacert is provided, a ConfigMap will be created
+# @key cacert CA certificate data in PEM format
+cacert: ""
 
 istio:
   ingress:
