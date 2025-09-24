@@ -14,4 +14,5 @@ data:
   JWT_REQUIRED_GROUP: "tc_write"
   JWT_USER_ID_ATTR: "email"
   ACCESS_API_URL: {{ include "paperback-writer.accessApiEndpoint" . | quote }}
+  JWKS_CA_CERT_PATH: {{ .Values.configuration.cacertPath | default "/etc/ssl/certs/ca.crt" | quote }}
 {{- end }}
