@@ -1,0 +1,75 @@
+{{- if .Values.kafkaTopics.enabled -}}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "telicent-core.fullname" . }}-create-topics
+  labels:
+    {{- include "telicent-core.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": pre-install
+    "helm.sh/hook-weight": "-5"
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+    "sidecar.istio.io/inject": "false"
+spec:
+  template:
+    metadata:
+      name: {{ include "telicent-core.fullname" . }}-create-topics
+      labels:
+        {{- include "telicent-core.selectorLabels" . | nindent 8 }}
+      annotations:
+        "sidecar.istio.io/inject": "false"
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: kafka-topic-creation
+        image: apache/kafka:4.0.0
+        command: ['/bin/sh', '-c']
+        resources:
+          requests:
+            memory: "2Gi"
+          limits:
+            memory: "4Gi"
+        env:
+          - name: KAFKA_HEAP_OPTS
+            value: "-XX:+UseContainerSupport \
+             -XX:MaxRAMPercentage=75.0 \
+             -XX:InitialRAMPercentage=25.0 \
+             -XX:+UseG1GC \
+             -XX:+UseStringDeduplication \
+             -XX:+OptimizeStringConcat"
+          - name: KAFKA_OPTS
+            value: "-Djavax.net.ssl.trustStore={{ .Values.global.truststore.path | default "/app/config/truststore" }}/truststore.jks"
+        args:
+          - |
+            for i in $(echo {{ .Values.kafkaTopics.topics | quote }} | tr -d "[]"); do
+              /opt/kafka/bin/kafka-topics.sh \
+                --create \
+                --topic $i \
+                --partitions 1 \
+                --replication-factor 1 \
+                --if-not-exists \
+                --command-config=/app/config/kafka-auth/kafka-config.properties \
+                --bootstrap-server {{ .Values.global.kafkaBootstrapUrls }};
+            done
+        volumeMounts:
+        - mountPath: /app/config/kafka-auth/
+          name: kafka-auth-config
+      {{- if .Values.global.existingTruststoreSecretName }}
+        - mountPath: {{ .Values.global.truststore.mountPath | default "/app/config/truststore" }}
+          name: truststore-volume
+      {{- end }}
+      volumes:
+      - name: kafka-auth-config
+        secret:
+        {{- if .Values.global.existingKafkaConfigSecretName }}
+          secretName: {{ .Values.global.existingKafkaConfigSecretName }}
+        {{- else }}
+          secretName: {{ include "telicent-core.kafkaAuthConfigSecretName" . }}
+        {{- end }}
+      {{- if .Values.global.existingTruststoreSecretName }}
+      - name: truststore-volume
+        secret:
+          secretName: {{ .Values.global.existingTruststoreSecretName }}
+          optional: true
+      {{- end }}
+{{- end -}}
