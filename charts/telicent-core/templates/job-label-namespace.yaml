@@ -17,6 +17,7 @@ metadata:
 spec:
   backoffLimit: 3
   activeDeadlineSeconds: 180 # once reached, all running Pods are terminated with Job status:Failed
+  ttlSecondsAfterFinished: 30 # once reached, Job is eligible to be automatically deleted
   template:
     metadata:
       annotations:

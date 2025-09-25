@@ -71,7 +71,10 @@ dependencies:
   - name: document-pipeline
     version: "^0.1.0"
     repository: file://./charts/document-pipeline
-
+  - name: data-catalog
+    version: "^0.1.0"
+    repository: file://./charts/data-catalog
+    condition: global.enterprise
 icon: "https://avatars.githubusercontent.com/u/65304240?s=200&v=4"
 
 # The name of the chart's maintainers.

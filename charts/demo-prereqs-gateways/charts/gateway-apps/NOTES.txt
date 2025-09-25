@@ -1,0 +1,8 @@
+################################## WARNING #####################################
+
+This configuration is provided for demonstration purposes only and is not
+intended for production use. It may lack essential security features and has not
+been tested for deployment in secure or mission-critical environments. Use at
+your own risk.
+
+################################## WARNING #####################################

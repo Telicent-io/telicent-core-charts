@@ -167,11 +167,17 @@ configuration:
   jwtHeader: "Authorization"
   # @key configuration.accessApiUrl URL for the Access API
   accessApiUrl: "" # Defaults to http://release-name-access-api.release-namespace.svc.cluster.local:8080
+  # @key configuration.cacertPath Path to CA certs in the container
+  cacertPath: "/etc/ssl/certs/ca.crt" # Path to CA certs in the container
 
 # @key existingConfigMapName Name of an existing ConfigMap to use for configuration
 existingConfigMapName: ""
 # @key existingSecretName Name of an existing Secret to use for credentials
 existingSecretName: ""
+# @key existingCacertConfigmapName Name of an existing ConfigMap to use for CA certs
+existingCacertConfigmapName: "" # If not set, and cacert is provided, a ConfigMap will be created
+# @key cacert CA certificate data in PEM format
+cacert: ""
 
 istio:
   ingress:
