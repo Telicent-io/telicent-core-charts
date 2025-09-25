@@ -43,7 +43,6 @@ global:
   # @key global.existingKafkaConfigSecretName Name of an existing secret containing Kafka configuration
   existingKafkaConfigSecretName: ""
 
-
   # @key global.existingTruststoreSecretName Name of an existing secret containing the truststore
   existingTruststoreSecretName: ""
   truststore:
@@ -70,7 +69,6 @@ configuration:
   # Options: otlp, none
   otelTracesExporter: none
   # @key configuration.kafkaTopics Kafka topics for the application, created by a init container
-  kafkaTopics: []
 
 # @section Common Parameters
 # @key fullnameOverride String to fully override the generated release name
@@ -96,7 +94,7 @@ image:
   # @key image.pullPolicy Graph image pull policy
   pullPolicy: IfNotPresent
   # @key image.pullSecrets Specify registry secret names as an array
-  pullSecrets: [ ]
+  pullSecrets: []
 
 resources:
   requests:
