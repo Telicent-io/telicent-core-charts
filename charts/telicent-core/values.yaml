@@ -76,3 +76,9 @@ paperback-writer:
 document-pipeline:
   # @key document-pipeline.enabled Enable or disable the document-pipeline component
   enabled: false
+
+kafkaTopics:
+  # @key kafkaTopics.enabled Enable or disable the creation of Kafka topics during installation
+  enabled: false
+  # @key kafkaTopics.topics List of Kafka topics to be created
+  topics: []
