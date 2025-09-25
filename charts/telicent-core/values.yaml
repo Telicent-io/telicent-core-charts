@@ -72,8 +72,8 @@ paperback-writer:
   # @key paperback-writer.enabled Enable or disable the paperback-writer component
   enabled: false
 
-createTopics:
-  # @key createTopics.enabled Enable or disable the creation of Kafka topics during installation
+kafkaTopics:
+  # @key kafkaTopics.enabled Enable or disable the creation of Kafka topics during installation
   enabled: false
-  # @key createTopics.topics List of Kafka topics to be created
+  # @key kafkaTopics.topics List of Kafka topics to be created
   topics: []
