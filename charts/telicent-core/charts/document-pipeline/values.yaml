@@ -98,9 +98,7 @@ httpIngester:
     # @key httpIngester.securityContext Security context for the HTTP Ingester containers
     {}
 
-  resources:
-    # @key httpIngester.resources Resource requests and limits for the HTTP Ingester
-    {}
+  resources: {} # @key httpIngester.resources Resource requests and limits for the HTTP Ingester
     # We usually recommend not to specify default resources and to leave this as a conscious
     # choice for the user. This also increases chances charts run on environments with little
     # resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -111,20 +109,6 @@ httpIngester:
     # requests:
     #   cpu: 100m
     #   memory: 128Mi
-
-  # This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
-  livenessProbe:
-    httpGet:
-      # @key httpIngester.livenessProbe.httpGet.path The HTTP path for the liveness probe
-      path: /
-      # @key httpIngester.livenessProbe.httpGet.port The HTTP port for the liveness probe
-      port: http
-  readinessProbe:
-    httpGet:
-      # @key httpIngester.readinessProbe.httpGet.path The HTTP path for the readiness probe
-      path: /
-      # @key httpIngester.readinessProbe.httpGet.port The HTTP port for the readiness probe
-      port: http
 
   # @key httpIngester.volumes Additional volumes on the output Deployment definition.
   volumes: []
@@ -147,7 +131,10 @@ httpIngester:
 
   # @key httpIngester.existingConfigMapName If you want to use an existing ConfigMap for configuration then set the name here. If not set then a new ConfigMap will be created using the configuration in this values
   existingConfigMapName: ""
+  existingCacertConfigmapName: trust-bundle
+  cacert: ""
   configuration:
+    javaOpts: "-Djavax.net.ssl.trustStore=/etc/ssl/truststore.jks"
     routes:
       # @key httpIngester.configuration.routes[0].name A unique name for the route
       - name: local
@@ -219,13 +206,11 @@ contentExtractor:
   podLabels: {}
 
   # @key contentExtractor.podSecurityContext Security context for the Content Extractor pods
-  podSecurityContext:
-    {}
+  podSecurityContext: {}
     # fsGroup: 2000
 
   # @key contentExtractor.securityContext Security context for the Content Extractor containers
-  securityContext:
-    {}
+  securityContext: {}
     # capabilities:
     #   drop:
     #   - ALL
@@ -240,8 +225,7 @@ contentExtractor:
     port: 80
 
   # @key contentExtractor.resources Resource requests and limits for the Content Extractor
-  resources:
-    {}
+  resources: {}
     # We usually recommend not to specify default resources and to leave this as a conscious
     # choice for the user. This also increases chances charts run on environments with little
     # resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -325,13 +309,11 @@ contentIndexer:
   podLabels: {}
 
   # @key contentIndexer.podSecurityContext Security context for the Content Indexer pods
-  podSecurityContext:
-    {}
+  podSecurityContext: {}
     # fsGroup: 2000
 
   # @key contentIndexer.securityContext Security context for the Content Indexer containers
-  securityContext:
-    {}
+  securityContext: {}
     # capabilities:
     #   drop:
     #   - ALL
@@ -346,8 +328,7 @@ contentIndexer:
     port: 80
 
   # @key contentIndexer.resources Resource requests and limits for the Content Indexer
-  resources:
-    {}
+  resources: {}
     # We usually recommend not to specify default resources and to leave this as a conscious
     # choice for the user. This also increases chances charts run on environments with little
     # resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -450,13 +431,11 @@ catalogueUpdater:
   podLabels: {}
 
   # @key catalogueUpdater.podSecurityContext Security context for the Catalogue Updater pods
-  podSecurityContext:
-    {}
+  podSecurityContext: {}
     # fsGroup: 2000
 
   # @key catalogueUpdater.securityContext Security context for the Catalogue Updater containers
-  securityContext:
-    {}
+  securityContext: {}
     # capabilities:
     #   drop:
     #   - ALL
@@ -471,8 +450,7 @@ catalogueUpdater:
     port: 80
 
   # @key catalogueUpdater.resources Resource requests and limits for the Catalogue Updater
-  resources:
-    {}
+  resources: {}
     # We usually recommend not to specify default resources and to leave this as a conscious
     # choice for the user. This also increases chances charts run on environments with little
     # resources, such as Minikube. If you do want to specify resources, uncomment the following

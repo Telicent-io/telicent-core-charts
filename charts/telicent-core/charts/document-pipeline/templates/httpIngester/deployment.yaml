@@ -50,6 +50,11 @@ spec:
               value: {{ .Values.global.kafkaBootstrapUrls | quote }}
             - name: JWKS_URL
               value: {{ .Values.global.jwksUrl | quote }}
+            - name: JAVA_OPTS
+              value: {{ .Values.httpIngester.configuration.javaOpts | quote }}
+            - name: KAFKA_CONFIG_FILE_PATH
+              value: /app/config/kafka-auth/kafka-config.properties
+
           image: "{{ .Values.httpIngester.image.repository }}:{{ .Values.httpIngester.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.httpIngester.image.pullPolicy }}
           ports:
@@ -69,13 +74,30 @@ spec:
             {{- toYaml . | nindent 12 }}
           {{- end }}
           volumeMounts:
-            - name: config-volume
-              mountPath: /etc/http-ingester
-              readOnly: true
+          - name: config-volume
+            mountPath: /etc/http-ingester
+            readOnly: true
+          {{- if or .Values.httpIngester.cacert .Values.httpIngester.existingCacertConfigmapName }}
+          - name: certs
+            mountPath: /etc/ssl/certs
+            readOnly: true
+          {{- end }}
+          - mountPath: /app/config/kafka-auth/
+            name: kafka-auth-config
           {{- with .Values.httpIngester.volumeMounts }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
       volumes:
+        {{- if or .Values.httpIngester.cacert .Values.httpIngester.existingCacertConfigmapName }}
+        - name: certs
+          configMap:
+            {{- if .Values.httpIngester.existingCacertConfigmapName }}
+            name: {{ .Values.httpIngester.existingCacertConfigmapName }}
+            {{- else if .Values.httpIngester.cacert }}
+            name: {{ include "http-ingester.fullname" . }}-cacert
+            {{- end }}
+            optional: true
+        {{- end }}
         - name: config-volume
           configMap:
             {{- if .Values.httpIngester.existingConfigMapName }}
@@ -83,6 +105,13 @@ spec:
             {{- else }}
             name: {{ include "http-ingester.fullname" . }}
             {{- end }}
+        - name: kafka-auth-config
+          secret:
+          {{- if .Values.global.existingKafkaConfigSecretName }}
+            secretName: {{ .Values.global.existingKafkaConfigSecretName }}
+          {{- else }}
+            secretName: {{ include "telicent-core.kafkaAuthConfigSecretName" . }}
+          {{- end }}
       {{- with .Values.httpIngester.volumes }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
