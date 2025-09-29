@@ -32,6 +32,11 @@ spec:
       securityContext:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{- $pullSecret := .Values.global.imagePullSecrets | default .Values.imagePullSecrets }}
+      {{- with $pullSecret }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 6 }}
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           {{- with .Values.contentIndexer.securityContext }}
@@ -55,25 +60,48 @@ spec:
               value: {{ .Values.contentIndexer.configuration.elasticsearchPort | quote }}
             - name: ELASTIC_INDEX
               value: {{ .Values.contentIndexer.configuration.elasticsearchIndex | quote }}
-            
-          {{- with .Values.contentIndexer.livenessProbe }}
+            - name: JAVA_OPTIONS
+              value: {{ .Values.contentIndexer.configuration.javaOptions | quote }}
+            - name: OPENSEARCH_COMPATIBILITY
+              value: {{ .Values.contentIndexer.configuration.opensearchCompatibility | quote }}
+          envFrom:
+          {{- if .Values.contentIndexer.elasticSecrets.existingEnvironmentSecretName }}
+          - secretRef:
+              name: {{ .Values.contentIndexer.elasticSecrets.existingEnvironmentSecretName | quote }}
+              optional: true
+          {{- else }}
+          - secretRef:
+              name: {{ include "content-indexer.fullname" . }}
+              optional: true
+          {{- end }}
           livenessProbe:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-          {{- with .Values.contentIndexer.readinessProbe }}
+            httpGet:
+              path: /healthz
+              port: 10101
           readinessProbe:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
+            httpGet:
+              path: /version-info
+              port: 10101
           {{- with .Values.contentIndexer.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- with .Values.contentIndexer.volumeMounts }}
           volumeMounts:
+          {{- if .Values.global.existingTruststoreSecretName }}
+          - mountPath: {{ .Values.global.truststore.mountPath | default "/app/config/truststore" }}
+            name: truststore-volume
+          {{- end }}
+          {{- with .Values.contentIndexer.volumeMounts }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
-      {{- with .Values.contentIndexer.volumes }}
       volumes:
+      {{- if .Values.global.existingTruststoreSecretName }}
+      - name: truststore-volume
+        secret:
+          secretName: {{ .Values.global.existingTruststoreSecretName }}
+      {{- end }}
+
+      {{- with .Values.contentIndexer.volumes }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
       {{- with .Values.contentIndexer.nodeSelector }}

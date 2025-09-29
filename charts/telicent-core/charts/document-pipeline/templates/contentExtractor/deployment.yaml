@@ -32,6 +32,11 @@ spec:
       securityContext:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{- $pullSecret := .Values.global.imagePullSecrets | default .Values.imagePullSecrets }}
+      {{- with $pullSecret }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 6 }}
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           {{- with .Values.contentExtractor.securityContext }}
@@ -42,9 +47,9 @@ spec:
             - name: BOOTSTRAP_SERVERS
               value: {{ .Values.global.kafkaBootstrapUrls | quote }}
             - name: INPUT_TOPIC
-              value: {{ .Values.contentExtractor.inputTopic | quote }}
+              value: {{ .Values.contentExtractor.configuration.inputTopic | quote }}
             - name: OUTPUT_TOPIC
-              value: {{ .Values.contentExtractor.outputTopic | quote }}
+              value: {{ .Values.contentExtractor.configuration.outputTopic | quote }}
 
           image: "{{ .Values.contentExtractor.image.repository }}:{{ .Values.contentExtractor.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.contentExtractor.image.pullPolicy }}
@@ -52,14 +57,14 @@ spec:
             - name: http
               containerPort: {{ .Values.contentExtractor.service.port }}
               protocol: TCP
-          {{- with .Values.contentExtractor.livenessProbe }}
           livenessProbe:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-          {{- with .Values.contentExtractor.readinessProbe }}
+            httpGet:
+              path: /healthz
+              port: 10101
           readinessProbe:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
+            httpGet:
+              path: /version-info
+              port: 10101
           {{- with .Values.contentExtractor.resources }}
           resources:
             {{- toYaml . | nindent 12 }}

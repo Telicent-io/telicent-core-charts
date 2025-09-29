@@ -72,11 +72,11 @@ httpIngester:
 
   image:
     # @key httpIngester.image.repository The container image repository for the HTTP Ingester
-    repository: nginx
+    repository: quay.io/telicent/telicent-document-http-ingester
     # @key httpIngester.image.pullPolicy The image pull policy for the HTTP Ingester
     pullPolicy: IfNotPresent
     # @key httpIngester.image.tag The image tag for the HTTP Ingester
-    tag: ""
+    tag: "3.1.2"
 
   # @key httpIngester.imagePullSecrets Secrets for pulling an image from a private repository
   imagePullSecrets: []
@@ -97,12 +97,6 @@ httpIngester:
   securityContext:
     # @key httpIngester.securityContext Security context for the HTTP Ingester containers
     {}
-
-  service:
-    # @key httpIngester.service.type The service type for the HTTP Ingester
-    type: ClusterIP
-    # @key httpIngester.service.port The service port for the HTTP Ingester
-    port: 80
 
   resources:
     # @key httpIngester.resources Resource requests and limits for the HTTP Ingester
@@ -206,11 +200,11 @@ contentExtractor:
 
   image:
     # @key contentExtractor.image.repository The container image repository for the Content Extractor
-    repository: nginx
+    repository: quay.io/telicent/telicent-document-content-extractor
     # @key contentExtractor.image.pullPolicy The image pull policy for the Content Extractor
     pullPolicy: IfNotPresent
     # @key contentExtractor.image.tag The image tag for the Content Extractor
-    tag: ""
+    tag: "3.1.3"
 
   # @key contentExtractor.imagePullSecrets Secrets for pulling an image from a private repository
   imagePullSecrets: []
@@ -312,11 +306,11 @@ contentIndexer:
 
   image:
     # @key contentIndexer.image.repository The container image repository for the Content Indexer
-    repository: nginx
+    repository: quay.io/telicent/telicent-document-content-indexer
     # @key contentIndexer.image.pullPolicy The image pull policy for the Content Indexer
     pullPolicy: IfNotPresent
     # @key contentIndexer.image.tag The image tag for the Content Indexer
-    tag: ""
+    tag: "3.1.2"
 
   # @key contentIndexer.imagePullSecrets Secrets for pulling an image from a private repository
   imagePullSecrets: []
@@ -410,6 +404,22 @@ contentIndexer:
     elasticsearchPort: "9200"
     # @key contentIndexer.configuration.elasticsearchIndex The Elasticsearch index to which documents will be indexed
     elasticsearchIndex: documents
+    # @key contentIndexer.configuration.javaOptions Additional Java options for the Content Indexer
+    javaOptions: -XX:MaxRAMPercentage=70.0 -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks
+    # @key contentIndexer.configuration.opensearchCompatibility Whether to enable OpenSearch compatibility mode
+    opensearchCompatibility: true
+  # @section OpenSearch secrets - Search Projector
+  # Note: It is recommended to use a Kubernetes secret for sensitive information like passwords
+  elasticSecrets:
+    # @key elasticSecrets.elasticUser OpenSearch username
+    elasticUser: ""
+    # @key elasticSecrets.elasticPassword OpenSearch user password
+    elasticPassword: ""
+    # @key elasticSecrets.truststorePass Password for the truststore
+    truststorePass: ""
+    # @key elasticSecrets.existingEnvironmentSecretName Name of an existing environment secret
+    existingEnvironmentSecretName: ""
+
 # @section Catalogue Updater
 # @descStart
 # This section builds out the Catalogue Updater configuration
@@ -421,11 +431,11 @@ catalogueUpdater:
 
   image:
     # @key catalogueUpdater.image.repository The container image repository for the Catalogue Updater
-    repository: nginx
+    repository: quay.io/telicent/telicent-document-catalogue-updater
     # @key catalogueUpdater.image.pullPolicy The image pull policy for the Catalogue Updater
     pullPolicy: IfNotPresent
     # @key catalogueUpdater.image.tag The image tag for the Catalogue Updater
-    tag: ""
+    tag: "3.1.3"
 
   # @key catalogueUpdater.imagePullSecrets Secrets for pulling an image from a private repository
   imagePullSecrets: []
@@ -475,18 +485,6 @@ catalogueUpdater:
     #   memory: 128Mi
 
   # This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
-  livenessProbe:
-    httpGet:
-      # @key catalogueUpdater.livenessProbe.httpGet.path The HTTP path for the liveness probe
-      path: /
-      # @key catalogueUpdater.livenessProbe.httpGet.port The HTTP port for the liveness probe
-      port: http
-  readinessProbe:
-    httpGet:
-      # @key catalogueUpdater.readinessProbe.httpGet.path The HTTP path for the readiness probe
-      path: /
-      # @key catalogueUpdater.readinessProbe.httpGet.port The HTTP port for the readiness probe
-      port: http
 
   # @key catalogueUpdater.volumes Additional volumes for the Catalogue Updater
   volumes: []

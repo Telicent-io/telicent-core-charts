@@ -32,6 +32,11 @@ spec:
       securityContext:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{- $pullSecret := .Values.global.imagePullSecrets | default .Values.imagePullSecrets }}
+      {{- with $pullSecret }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 6 }}
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           {{- with .Values.catalogueUpdater.securityContext }}
@@ -57,14 +62,14 @@ spec:
               value: {{ .Values.catalogueUpdater.configuration.flushIntervalMs | quote }}
             - name: MAX_BUFFER_SIZE
               value: {{ .Values.catalogueUpdater.configuration.maxBufferSize | quote }}
-          {{- with .Values.catalogueUpdater.livenessProbe }}
           livenessProbe:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-          {{- with .Values.catalogueUpdater.readinessProbe }}
+            httpGet:
+              path: /healthz
+              port: 10101
           readinessProbe:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
+            httpGet:
+              path: /version-info
+              port: 10101
           {{- with .Values.catalogueUpdater.resources }}
           resources:
             {{- toYaml . | nindent 12 }}

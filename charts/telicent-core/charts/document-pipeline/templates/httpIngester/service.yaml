@@ -2,15 +2,15 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "document-pipeline.fullname" . }}
+  name: {{ include "http-ingester.fullname" . }}
   labels:
     {{- include "document-pipeline.labels" . | nindent 4 }}
     {{- include "http-ingester.selectorLabels" . | nindent 4 }}
 spec:
-  type: {{ .Values.httpIngester.service.type }}
+  type: ClusterIP
   ports:
-    - port: {{ .Values.httpIngester.service.port }}
-      targetPort: http
+    - port: 15431
+      targetPort: 15431
       protocol: TCP
       name: http
   selector:

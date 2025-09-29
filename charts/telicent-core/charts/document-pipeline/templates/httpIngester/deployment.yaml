@@ -32,6 +32,11 @@ spec:
       securityContext:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{- $pullSecret := .Values.global.imagePullSecrets | default .Values.imagePullSecrets }}
+      {{- with $pullSecret }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 6 }}
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           {{- with .Values.httpIngester.securityContext }}
@@ -39,7 +44,7 @@ spec:
             {{- toYaml . | nindent 12 }}
           {{- end }}
           env:
-            - name: ROUTE_CONFIG_PATH
+            - name: ROUTE_CONFIG_DIRECTORY
               value: /etc/http-ingester/
             - name: BOOTSTRAP_SERVERS
               value: {{ .Values.global.kafkaBootstrapUrls | quote }}
@@ -49,16 +54,16 @@ spec:
           imagePullPolicy: {{ .Values.httpIngester.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: {{ .Values.httpIngester.service.port }}
+              containerPort: 15431
               protocol: TCP
-          {{- with .Values.httpIngester.livenessProbe }}
           livenessProbe:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-          {{- with .Values.httpIngester.readinessProbe }}
+            httpGet:
+              path: /healthz
+              port: 15431
           readinessProbe:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
+            httpGet:
+              path: /version-info
+              port: 15431
           {{- with .Values.httpIngester.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
