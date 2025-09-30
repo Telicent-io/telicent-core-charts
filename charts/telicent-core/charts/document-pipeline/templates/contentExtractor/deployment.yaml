@@ -50,6 +50,8 @@ spec:
               value: {{ .Values.contentExtractor.configuration.inputTopic | quote }}
             - name: OUTPUT_TOPIC
               value: {{ .Values.contentExtractor.configuration.outputTopic | quote }}
+            - name: KAFKA_CONFIG_FILE_PATH
+              value: /app/config/kafka-auth/kafka-config.properties
 
           image: "{{ .Values.contentExtractor.image.repository }}:{{ .Values.contentExtractor.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.contentExtractor.image.pullPolicy }}
@@ -69,12 +71,21 @@ spec:
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- with .Values.contentExtractor.volumeMounts }}
           volumeMounts:
+          - mountPath: /app/config/kafka-auth/
+            name: kafka-auth-config
+          {{- with .Values.contentExtractor.volumeMounts }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
-      {{- with .Values.contentExtractor.volumes }}
       volumes:
+      - name: kafka-auth-config
+        secret:
+        {{- if .Values.global.existingKafkaConfigSecretName }}
+          secretName: {{ .Values.global.existingKafkaConfigSecretName }}
+        {{- else }}
+          secretName: {{ include "telicent-core.kafkaAuthConfigSecretName" . }}
+        {{- end }}
+      {{- with .Values.contentExtractor.volumes }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
       {{- with .Values.contentExtractor.nodeSelector }}

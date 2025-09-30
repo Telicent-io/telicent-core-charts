@@ -62,6 +62,8 @@ spec:
               value: {{ .Values.catalogueUpdater.configuration.flushIntervalMs | quote }}
             - name: MAX_BUFFER_SIZE
               value: {{ .Values.catalogueUpdater.configuration.maxBufferSize | quote }}
+            - name: KAFKA_CONFIG_FILE_PATH
+              value: /app/config/kafka-auth/kafka-config.properties
           livenessProbe:
             httpGet:
               path: /healthz
@@ -74,12 +76,21 @@ spec:
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- with .Values.catalogueUpdater.volumeMounts }}
           volumeMounts:
+          - mountPath: /app/config/kafka-auth/
+            name: kafka-auth-config
+          {{- with .Values.catalogueUpdater.volumeMounts }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
-      {{- with .Values.catalogueUpdater.volumes }}
       volumes:
+      - name: kafka-auth-config
+        secret:
+        {{- if .Values.global.existingKafkaConfigSecretName }}
+          secretName: {{ .Values.global.existingKafkaConfigSecretName }}
+        {{- else }}
+          secretName: {{ include "telicent-core.kafkaAuthConfigSecretName" . }}
+        {{- end }}
+      {{- with .Values.catalogueUpdater.volumes }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
       {{- with .Values.catalogueUpdater.nodeSelector }}

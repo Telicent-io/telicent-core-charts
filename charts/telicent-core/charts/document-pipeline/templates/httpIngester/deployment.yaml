@@ -50,7 +50,7 @@ spec:
               value: {{ .Values.global.kafkaBootstrapUrls | quote }}
             - name: JWKS_URL
               value: {{ .Values.global.jwksUrl | quote }}
-            - name: JAVA_OPTS
+            - name: JAVA_OPTIONS
               value: {{ .Values.httpIngester.configuration.javaOpts | quote }}
             - name: KAFKA_CONFIG_FILE_PATH
               value: /app/config/kafka-auth/kafka-config.properties
@@ -79,7 +79,7 @@ spec:
             readOnly: true
           {{- if or .Values.httpIngester.cacert .Values.httpIngester.existingCacertConfigmapName }}
           - name: certs
-            mountPath: /etc/ssl/certs
+            mountPath: /app/config/truststore/
             readOnly: true
           {{- end }}
           - mountPath: /app/config/kafka-auth/

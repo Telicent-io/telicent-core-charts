@@ -64,6 +64,8 @@ spec:
               value: {{ .Values.contentIndexer.configuration.javaOptions | quote }}
             - name: OPENSEARCH_COMPATIBILITY
               value: {{ .Values.contentIndexer.configuration.opensearchCompatibility | quote }}
+            - name: KAFKA_CONFIG_FILE_PATH
+              value: /app/config/kafka-auth/kafka-config.properties
           envFrom:
           {{- if .Values.contentIndexer.elasticSecrets.existingEnvironmentSecretName }}
           - secretRef:
@@ -91,6 +93,8 @@ spec:
           - mountPath: {{ .Values.global.truststore.mountPath | default "/app/config/truststore" }}
             name: truststore-volume
           {{- end }}
+          - mountPath: /app/config/kafka-auth/
+            name: kafka-auth-config
           {{- with .Values.contentIndexer.volumeMounts }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
@@ -100,7 +104,13 @@ spec:
         secret:
           secretName: {{ .Values.global.existingTruststoreSecretName }}
       {{- end }}
-
+      - name: kafka-auth-config
+        secret:
+        {{- if .Values.global.existingKafkaConfigSecretName }}
+          secretName: {{ .Values.global.existingKafkaConfigSecretName }}
+        {{- else }}
+          secretName: {{ include "telicent-core.kafkaAuthConfigSecretName" . }}
+        {{- end }}
       {{- with .Values.contentIndexer.volumes }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
