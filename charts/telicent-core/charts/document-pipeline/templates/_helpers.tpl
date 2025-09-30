@@ -152,3 +152,25 @@ app.kubernetes.io/name: {{ include "document-pipeline.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 app.kubernetes.io/component: catalogue-updater
 {{- end }}
+
+{{/*
+**********************
+*** Content Tagger ***
+**********************
+*/}}
+
+{{/*
+Fullname
+*/}}
+{{- define "content-tagger.fullname" -}}
+{{ printf "%s-%s" (include "document-pipeline.fullname" .) "content-tagger "}}
+{{- end }}
+
+{{/*
+Selector labels
+*/}}
+{{- define "content-tagger.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "document-pipeline.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/component: content-tagger
+{{- end }}

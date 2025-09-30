@@ -87,9 +87,9 @@ The application configuration is contained within the 'configuration' key or can
 | Name                                                           | Description                                                                                                                                                                                                                                       | Value                                                                                                              |
 | -------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
 | `httpIngester.replicaCount`                                    | The number of replicas for the HTTP Ingester                                                                                                                                                                                                      | `1`                                                                                                                |
-| `httpIngester.image.repository`                                | The container image repository for the HTTP Ingester                                                                                                                                                                                              | `nginx`                                                                                                            |
+| `httpIngester.image.repository`                                | The container image repository for the HTTP Ingester                                                                                                                                                                                              | `quay.io/telicent/telicent-document-http-ingester`                                                                 |
 | `httpIngester.image.pullPolicy`                                | The image pull policy for the HTTP Ingester                                                                                                                                                                                                       | `IfNotPresent`                                                                                                     |
-| `httpIngester.image.tag`                                       | The image tag for the HTTP Ingester                                                                                                                                                                                                               | `""`                                                                                                               |
+| `httpIngester.image.tag`                                       | The image tag for the HTTP Ingester                                                                                                                                                                                                               | `3.1.2`                                                                                                            |
 | `httpIngester.imagePullSecrets`                                | Secrets for pulling an image from a private repository                                                                                                                                                                                            | `[]`                                                                                                               |
 | `httpIngester.nameOverride`                                    | Override the chart name for the HTTP Ingester                                                                                                                                                                                                     | `""`                                                                                                               |
 | `httpIngester.fullnameOverride`                                | Override the full name for the HTTP Ingester                                                                                                                                                                                                      | `""`                                                                                                               |
@@ -97,19 +97,16 @@ The application configuration is contained within the 'configuration' key or can
 | `httpIngester.podLabels`                                       | Labels to add to the HTTP Ingester pods                                                                                                                                                                                                           | `{}`                                                                                                               |
 | `httpIngester.podSecurityContext`                              | Security context for the HTTP Ingester pods                                                                                                                                                                                                       | `{}`                                                                                                               |
 | `httpIngester.securityContext`                                 | Security context for the HTTP Ingester containers                                                                                                                                                                                                 | `{}`                                                                                                               |
-| `httpIngester.service.type`                                    | The service type for the HTTP Ingester                                                                                                                                                                                                            | `ClusterIP`                                                                                                        |
-| `httpIngester.service.port`                                    | The service port for the HTTP Ingester                                                                                                                                                                                                            | `80`                                                                                                               |
 | `httpIngester.resources`                                       | Resource requests and limits for the HTTP Ingester                                                                                                                                                                                                | `{}`                                                                                                               |
-| `httpIngester.livenessProbe.httpGet.path`                      | The HTTP path for the liveness probe                                                                                                                                                                                                              | `/`                                                                                                                |
-| `httpIngester.livenessProbe.httpGet.port`                      | The HTTP port for the liveness probe                                                                                                                                                                                                              | `http`                                                                                                             |
-| `httpIngester.readinessProbe.httpGet.path`                     | The HTTP path for the readiness probe                                                                                                                                                                                                             | `/`                                                                                                                |
-| `httpIngester.readinessProbe.httpGet.port`                     | The HTTP port for the readiness probe                                                                                                                                                                                                             | `http`                                                                                                             |
 | `httpIngester.volumes`                                         | Additional volumes on the output Deployment definition.                                                                                                                                                                                           | `[]`                                                                                                               |
 | `httpIngester.volumeMounts`                                    | Additional volumeMounts on the output Deployment definition.                                                                                                                                                                                      | `[]`                                                                                                               |
 | `httpIngester.nodeSelector`                                    | Node selector for the HTTP Ingester pods                                                                                                                                                                                                          | `{}`                                                                                                               |
 | `httpIngester.tolerations`                                     | Tolerations for the HTTP Ingester pods                                                                                                                                                                                                            | `[]`                                                                                                               |
 | `httpIngester.affinity`                                        | Affinity for the HTTP Ingester pods                                                                                                                                                                                                               | `{}`                                                                                                               |
 | `httpIngester.existingConfigMapName`                           | If you want to use an existing ConfigMap for configuration then set the name here. If not set then a new ConfigMap will be created using the configuration in this values                                                                         | `""`                                                                                                               |
+| `httpIngester.existingCacertConfigmapName`                     | Name of a ConfigMap containing a CA certificate to be mounted within the container                                                                                                                                                                | `trust-bundle`                                                                                                     |
+| `httpIngester.cacert`                                          | Name of a ConfigMap containing a CA certificate to be mounted within the container                                                                                                                                                                | `""`                                                                                                               |
+| `httpIngester.configuration.javaOpts`                          | Java options to pass to the JVM                                                                                                                                                                                                                   | `-Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks`                                                 |
 | `httpIngester.configuration.routes[0].name`                    | A unique name for the route                                                                                                                                                                                                                       | `local`                                                                                                            |
 | `httpIngester.configuration.routes[0].topic`                   | The destination Kafka topic for the route                                                                                                                                                                                                         | `ingested_content`                                                                                                 |
 | `httpIngester.configuration.routes[0].securityLabel`           | In this test configuration the label is simply test=true                                                                                                                                                                                          | `dGVzdD10cnVl`                                                                                                     |
@@ -135,104 +132,147 @@ The application configuration is contained within the 'configuration' key or can
 This section builds out the Content Extractor configuration
 The application configuration is contained within the 'configuration' key
 
-| Name                                           | Description                                                            | Value               |
-| ---------------------------------------------- | ---------------------------------------------------------------------- | ------------------- |
-| `contentExtractor.replicaCount`                | The number of replicas for the Content Extractor                       | `1`                 |
-| `contentExtractor.image.repository`            | The container image repository for the Content Extractor               | `nginx`             |
-| `contentExtractor.image.pullPolicy`            | The image pull policy for the Content Extractor                        | `IfNotPresent`      |
-| `contentExtractor.image.tag`                   | The image tag for the Content Extractor                                | `""`                |
-| `contentExtractor.imagePullSecrets`            | Secrets for pulling an image from a private repository                 | `[]`                |
-| `contentExtractor.nameOverride`                | Override the chart name for the Content Extractor                      | `""`                |
-| `contentExtractor.fullnameOverride`            | Override the full name for the Content Extractor                       | `""`                |
-| `contentExtractor.podAnnotations`              | Annotations to add to the Content Extractor pods                       | `{}`                |
-| `contentExtractor.podLabels`                   | Labels to add to the Content Extractor pods                            | `{}`                |
-| `contentExtractor.podSecurityContext`          | Security context for the Content Extractor pods                        | `{}`                |
-| `contentExtractor.securityContext`             | Security context for the Content Extractor containers                  | `{}`                |
-| `contentExtractor.service.type`                | The service type for the Content Extractor                             | `ClusterIP`         |
-| `contentExtractor.service.port`                | The service port for the Content Extractor                             | `80`                |
-| `contentExtractor.resources`                   | Resource requests and limits for the Content Extractor                 | `{}`                |
-| `contentExtractor.livenessProbe.httpGet.path`  | The HTTP path for the liveness probe                                   | `/`                 |
-| `contentExtractor.livenessProbe.httpGet.port`  | The HTTP port for the liveness probe                                   | `http`              |
-| `contentExtractor.readinessProbe.httpGet.path` | The HTTP path for the readiness probe                                  | `/`                 |
-| `contentExtractor.readinessProbe.httpGet.port` | The HTTP port for the readiness probe                                  | `http`              |
-| `contentExtractor.volumes`                     | Additional volumes for the Content Extractor                           | `[]`                |
-| `contentExtractor.volumeMounts`                | Additional volume mounts for the Content Extractor                     | `[]`                |
-| `contentExtractor.nodeSelector`                | Node selector for the Content Extractor pods                           | `{}`                |
-| `contentExtractor.tolerations`                 | Tolerations for the Content Extractor pods                             | `[]`                |
-| `contentExtractor.affinity`                    | Affinity rules for the Content Extractor pods                          | `{}`                |
-| `contentExtractor.configuration.inputTopic`    | The Kafka topic from which the content extractor will consume messages | `ingested_content`  |
-| `contentExtractor.configuration.outputTopic`   | The Kafka topic to which the content extractor will produce messages   | `extracted_content` |
+| Name                                           | Description                                                            | Value                                                  |
+| ---------------------------------------------- | ---------------------------------------------------------------------- | ------------------------------------------------------ |
+| `contentExtractor.replicaCount`                | The number of replicas for the Content Extractor                       | `1`                                                    |
+| `contentExtractor.image.repository`            | The container image repository for the Content Extractor               | `quay.io/telicent/telicent-document-content-extractor` |
+| `contentExtractor.image.pullPolicy`            | The image pull policy for the Content Extractor                        | `IfNotPresent`                                         |
+| `contentExtractor.image.tag`                   | The image tag for the Content Extractor                                | `3.1.3`                                                |
+| `contentExtractor.imagePullSecrets`            | Secrets for pulling an image from a private repository                 | `[]`                                                   |
+| `contentExtractor.nameOverride`                | Override the chart name for the Content Extractor                      | `""`                                                   |
+| `contentExtractor.fullnameOverride`            | Override the full name for the Content Extractor                       | `""`                                                   |
+| `contentExtractor.podAnnotations`              | Annotations to add to the Content Extractor pods                       | `{}`                                                   |
+| `contentExtractor.podLabels`                   | Labels to add to the Content Extractor pods                            | `{}`                                                   |
+| `contentExtractor.podSecurityContext`          | Security context for the Content Extractor pods                        | `{}`                                                   |
+| `contentExtractor.securityContext`             | Security context for the Content Extractor containers                  | `{}`                                                   |
+| `contentExtractor.service.type`                | The service type for the Content Extractor                             | `ClusterIP`                                            |
+| `contentExtractor.service.port`                | The service port for the Content Extractor                             | `80`                                                   |
+| `contentExtractor.resources`                   | Resource requests and limits for the Content Extractor                 | `{}`                                                   |
+| `contentExtractor.livenessProbe.httpGet.path`  | The HTTP path for the liveness probe                                   | `/`                                                    |
+| `contentExtractor.livenessProbe.httpGet.port`  | The HTTP port for the liveness probe                                   | `http`                                                 |
+| `contentExtractor.readinessProbe.httpGet.path` | The HTTP path for the readiness probe                                  | `/`                                                    |
+| `contentExtractor.readinessProbe.httpGet.port` | The HTTP port for the readiness probe                                  | `http`                                                 |
+| `contentExtractor.volumes`                     | Additional volumes for the Content Extractor                           | `[]`                                                   |
+| `contentExtractor.volumeMounts`                | Additional volume mounts for the Content Extractor                     | `[]`                                                   |
+| `contentExtractor.nodeSelector`                | Node selector for the Content Extractor pods                           | `{}`                                                   |
+| `contentExtractor.tolerations`                 | Tolerations for the Content Extractor pods                             | `[]`                                                   |
+| `contentExtractor.affinity`                    | Affinity rules for the Content Extractor pods                          | `{}`                                                   |
+| `contentExtractor.configuration.inputTopic`    | The Kafka topic from which the content extractor will consume messages | `ingested_content`                                     |
+| `contentExtractor.configuration.outputTopic`   | The Kafka topic to which the content extractor will produce messages   | `extracted_content`                                    |
 
 ### Content Indexer
 
 This section builds out the Content Indexer configuration
 The application configuration is contained within the 'configuration' key
 
-| Name                                              | Description                                                          | Value                  |
-| ------------------------------------------------- | -------------------------------------------------------------------- | ---------------------- |
-| `contentIndexer.replicaCount`                     | The number of replicas for the Content Indexer                       | `1`                    |
-| `contentIndexer.image.repository`                 | The container image repository for the Content Indexer               | `nginx`                |
-| `contentIndexer.image.pullPolicy`                 | The image pull policy for the Content Indexer                        | `IfNotPresent`         |
-| `contentIndexer.image.tag`                        | The image tag for the Content Indexer                                | `""`                   |
-| `contentIndexer.imagePullSecrets`                 | Secrets for pulling an image from a private repository               | `[]`                   |
-| `contentIndexer.nameOverride`                     | Override the chart name for the Content Indexer                      | `""`                   |
-| `contentIndexer.fullnameOverride`                 | Override the full name for the Content Indexer                       | `""`                   |
-| `contentIndexer.podAnnotations`                   | Annotations to add to the Content Indexer pods                       | `{}`                   |
-| `contentIndexer.podLabels`                        | Labels to add to the Content Indexer pods                            | `{}`                   |
-| `contentIndexer.podSecurityContext`               | Security context for the Content Indexer pods                        | `{}`                   |
-| `contentIndexer.securityContext`                  | Security context for the Content Indexer containers                  | `{}`                   |
-| `contentIndexer.service.type`                     | The service type for the Content Indexer                             | `ClusterIP`            |
-| `contentIndexer.service.port`                     | The service port for the Content Indexer                             | `80`                   |
-| `contentIndexer.resources`                        | Resource requests and limits for the Content Indexer                 | `{}`                   |
-| `contentIndexer.livenessProbe.httpGet.path`       | The HTTP path for the liveness probe                                 | `/`                    |
-| `contentIndexer.livenessProbe.httpGet.port`       | The HTTP port for the liveness probe                                 | `http`                 |
-| `contentIndexer.readinessProbe.httpGet.path`      | The HTTP path for the readiness probe                                | `/`                    |
-| `contentIndexer.readinessProbe.httpGet.port`      | The HTTP port for the readiness probe                                | `http`                 |
-| `contentIndexer.volumes`                          | Additional volumes for the Content Indexer                           | `[]`                   |
-| `contentIndexer.volumeMounts`                     | Additional volume mounts for the Content Indexer                     | `[]`                   |
-| `contentIndexer.nodeSelector`                     | Node selector for the Content Indexer pods                           | `{}`                   |
-| `contentIndexer.tolerations`                      | Tolerations for the Content Indexer pods                             | `[]`                   |
-| `contentIndexer.affinity`                         | Affinity rules for the Content Indexer pods                          | `{}`                   |
-| `contentIndexer.configuration.inputTopic`         | The Kafka topic from which the content indexer will consume messages | `extracted_content`    |
-| `contentIndexer.configuration.elasticsearchHost`  | The hostname for the Elasticsearch instance                          | `elasticsearch-master` |
-| `contentIndexer.configuration.elasticsearchPort`  | The port for the Elasticsearch instance                              | `9200`                 |
-| `contentIndexer.configuration.elasticsearchIndex` | The Elasticsearch index to which documents will be indexed           | `documents`            |
+| Name                                                   | Description                                                          | Value                                                |
+| ------------------------------------------------------ | -------------------------------------------------------------------- | ---------------------------------------------------- |
+| `contentIndexer.replicaCount`                          | The number of replicas for the Content Indexer                       | `1`                                                  |
+| `contentIndexer.image.repository`                      | The container image repository for the Content Indexer               | `quay.io/telicent/telicent-document-content-indexer` |
+| `contentIndexer.image.pullPolicy`                      | The image pull policy for the Content Indexer                        | `IfNotPresent`                                       |
+| `contentIndexer.image.tag`                             | The image tag for the Content Indexer                                | `3.1.2`                                              |
+| `contentIndexer.imagePullSecrets`                      | Secrets for pulling an image from a private repository               | `[]`                                                 |
+| `contentIndexer.nameOverride`                          | Override the chart name for the Content Indexer                      | `""`                                                 |
+| `contentIndexer.fullnameOverride`                      | Override the full name for the Content Indexer                       | `""`                                                 |
+| `contentIndexer.podAnnotations`                        | Annotations to add to the Content Indexer pods                       | `{}`                                                 |
+| `contentIndexer.podLabels`                             | Labels to add to the Content Indexer pods                            | `{}`                                                 |
+| `contentIndexer.podSecurityContext`                    | Security context for the Content Indexer pods                        | `{}`                                                 |
+| `contentIndexer.securityContext`                       | Security context for the Content Indexer containers                  | `{}`                                                 |
+| `contentIndexer.service.type`                          | The service type for the Content Indexer                             | `ClusterIP`                                          |
+| `contentIndexer.service.port`                          | The service port for the Content Indexer                             | `80`                                                 |
+| `contentIndexer.resources`                             | Resource requests and limits for the Content Indexer                 | `{}`                                                 |
+| `contentIndexer.livenessProbe.httpGet.path`            | The HTTP path for the liveness probe                                 | `/`                                                  |
+| `contentIndexer.livenessProbe.httpGet.port`            | The HTTP port for the liveness probe                                 | `http`                                               |
+| `contentIndexer.readinessProbe.httpGet.path`           | The HTTP path for the readiness probe                                | `/`                                                  |
+| `contentIndexer.readinessProbe.httpGet.port`           | The HTTP port for the readiness probe                                | `http`                                               |
+| `contentIndexer.volumes`                               | Additional volumes for the Content Indexer                           | `[]`                                                 |
+| `contentIndexer.volumeMounts`                          | Additional volume mounts for the Content Indexer                     | `[]`                                                 |
+| `contentIndexer.nodeSelector`                          | Node selector for the Content Indexer pods                           | `{}`                                                 |
+| `contentIndexer.tolerations`                           | Tolerations for the Content Indexer pods                             | `[]`                                                 |
+| `contentIndexer.affinity`                              | Affinity rules for the Content Indexer pods                          | `{}`                                                 |
+| `contentIndexer.configuration.inputTopic`              | The Kafka topic from which the content indexer will consume messages | `extracted_content`                                  |
+| `contentIndexer.configuration.elasticsearchHost`       | The hostname for the Elasticsearch instance                          | `elasticsearch-master`                               |
+| `contentIndexer.configuration.elasticsearchPort`       | The port for the Elasticsearch instance                              | `9200`                                               |
+| `contentIndexer.configuration.elasticsearchIndex`      | The Elasticsearch index to which documents will be indexed           | `documents`                                          |
+| `contentIndexer.configuration.javaOptions`             | Additional Java options for the Content Indexer                      | `""`                                                 |
+| `contentIndexer.configuration.opensearchCompatibility` | Whether to enable OpenSearch compatibility mode                      | `true`                                               |
+
+### OpenSearch secrets - Search Projector
+
+| Name                                                          | Description                            | Value |
+| ------------------------------------------------------------- | -------------------------------------- | ----- |
+| `contentIndexer.elasticSecrets.elasticUser`                   | OpenSearch username                    | `""`  |
+| `contentIndexer.elasticSecrets.elasticPassword`               | OpenSearch user password               | `""`  |
+| `contentIndexer.elasticSecrets.truststorePass`                | Password for the truststore            | `""`  |
+| `contentIndexer.elasticSecrets.existingEnvironmentSecretName` | Name of an existing environment secret | `""`  |
 
 ### Catalogue Updater
 
 This section builds out the Catalogue Updater configuration
 The application configuration is contained within the 'configuration' key
 
-| Name                                              | Description                                                            | Value               |
-| ------------------------------------------------- | ---------------------------------------------------------------------- | ------------------- |
-| `catalogueUpdater.replicaCount`                   | The number of replicas for the Catalogue Updater                       | `1`                 |
-| `catalogueUpdater.image.repository`               | The container image repository for the Catalogue Updater               | `nginx`             |
-| `catalogueUpdater.image.pullPolicy`               | The image pull policy for the Catalogue Updater                        | `IfNotPresent`      |
-| `catalogueUpdater.image.tag`                      | The image tag for the Catalogue Updater                                | `""`                |
-| `catalogueUpdater.imagePullSecrets`               | Secrets for pulling an image from a private repository                 | `[]`                |
-| `catalogueUpdater.nameOverride`                   | Override the chart name for the Catalogue Updater                      | `""`                |
-| `catalogueUpdater.fullnameOverride`               | Override the full name for the Catalogue Updater                       | `""`                |
-| `catalogueUpdater.podAnnotations`                 | Annotations to add to the Catalogue Updater pods                       | `{}`                |
-| `catalogueUpdater.podLabels`                      | Labels to add to the Catalogue Updater pods                            | `{}`                |
-| `catalogueUpdater.podSecurityContext`             | Security context for the Catalogue Updater pods                        | `{}`                |
-| `catalogueUpdater.securityContext`                | Security context for the Catalogue Updater containers                  | `{}`                |
-| `catalogueUpdater.service.type`                   | The service type for the Catalogue Updater                             | `ClusterIP`         |
-| `catalogueUpdater.service.port`                   | The service port for the Catalogue Updater                             | `80`                |
-| `catalogueUpdater.resources`                      | Resource requests and limits for the Catalogue Updater                 | `{}`                |
-| `catalogueUpdater.livenessProbe.httpGet.path`     | The HTTP path for the liveness probe                                   | `/`                 |
-| `catalogueUpdater.livenessProbe.httpGet.port`     | The HTTP port for the liveness probe                                   | `http`              |
-| `catalogueUpdater.readinessProbe.httpGet.path`    | The HTTP path for the readiness probe                                  | `/`                 |
-| `catalogueUpdater.readinessProbe.httpGet.port`    | The HTTP port for the readiness probe                                  | `http`              |
-| `catalogueUpdater.volumes`                        | Additional volumes for the Catalogue Updater                           | `[]`                |
-| `catalogueUpdater.volumeMounts`                   | Additional volume mounts for the Catalogue Updater                     | `[]`                |
-| `catalogueUpdater.nodeSelector`                   | Node selector for the Catalogue Updater pods                           | `{}`                |
-| `catalogueUpdater.tolerations`                    | Tolerations for the Catalogue Updater pods                             | `[]`                |
-| `catalogueUpdater.affinity`                       | Affinity rules for the Catalogue Updater pods                          | `{}`                |
-| `catalogueUpdater.configuration.inputTopic`       | The Kafka topic from which the catalogue updater will consume messages | `extracted_content` |
-| `catalogueUpdater.configuration.outputTopic`      | The Kafka topic to which the catalogue updater will produce            | `catalogue_updates` |
-| `catalogueUpdater.configuration.debounceWindowMs` | The debounce window in milliseconds                                    | `30000`             |
-| `catalogueUpdater.configuration.flushIntervalMs`  | The flush interval in milliseconds                                     | `60000`             |
-| `catalogueUpdater.configuration.maxBufferSize`    | The maximum buffer size                                                | `100`               |
+| Name                                              | Description                                                            | Value                                                  |
+| ------------------------------------------------- | ---------------------------------------------------------------------- | ------------------------------------------------------ |
+| `catalogueUpdater.replicaCount`                   | The number of replicas for the Catalogue Updater                       | `1`                                                    |
+| `catalogueUpdater.image.repository`               | The container image repository for the Catalogue Updater               | `quay.io/telicent/telicent-document-catalogue-updater` |
+| `catalogueUpdater.image.pullPolicy`               | The image pull policy for the Catalogue Updater                        | `IfNotPresent`                                         |
+| `catalogueUpdater.image.tag`                      | The image tag for the Catalogue Updater                                | `3.1.3`                                                |
+| `catalogueUpdater.imagePullSecrets`               | Secrets for pulling an image from a private repository                 | `[]`                                                   |
+| `catalogueUpdater.nameOverride`                   | Override the chart name for the Catalogue Updater                      | `""`                                                   |
+| `catalogueUpdater.fullnameOverride`               | Override the full name for the Catalogue Updater                       | `""`                                                   |
+| `catalogueUpdater.podAnnotations`                 | Annotations to add to the Catalogue Updater pods                       | `{}`                                                   |
+| `catalogueUpdater.podLabels`                      | Labels to add to the Catalogue Updater pods                            | `{}`                                                   |
+| `catalogueUpdater.podSecurityContext`             | Security context for the Catalogue Updater pods                        | `{}`                                                   |
+| `catalogueUpdater.securityContext`                | Security context for the Catalogue Updater containers                  | `{}`                                                   |
+| `catalogueUpdater.service.type`                   | The service type for the Catalogue Updater                             | `ClusterIP`                                            |
+| `catalogueUpdater.service.port`                   | The service port for the Catalogue Updater                             | `80`                                                   |
+| `catalogueUpdater.resources`                      | Resource requests and limits for the Catalogue Updater                 | `{}`                                                   |
+| `catalogueUpdater.volumes`                        | Additional volumes for the Catalogue Updater                           | `[]`                                                   |
+| `catalogueUpdater.volumeMounts`                   | Additional volume mounts for the Catalogue Updater                     | `[]`                                                   |
+| `catalogueUpdater.nodeSelector`                   | Node selector for the Catalogue Updater pods                           | `{}`                                                   |
+| `catalogueUpdater.tolerations`                    | Tolerations for the Catalogue Updater pods                             | `[]`                                                   |
+| `catalogueUpdater.affinity`                       | Affinity rules for the Catalogue Updater pods                          | `{}`                                                   |
+| `catalogueUpdater.configuration.inputTopic`       | The Kafka topic from which the catalogue updater will consume messages | `extracted_content`                                    |
+| `catalogueUpdater.configuration.outputTopic`      | The Kafka topic to which the catalogue updater will produce            | `catalogue_updates`                                    |
+| `catalogueUpdater.configuration.debounceWindowMs` | The debounce window in milliseconds                                    | `30000`                                                |
+| `catalogueUpdater.configuration.flushIntervalMs`  | The flush interval in milliseconds                                     | `60000`                                                |
+| `catalogueUpdater.configuration.maxBufferSize`    | The maximum buffer size                                                | `100`                                                  |
+
+### Content Tagger
+
+This section builds out the Content Tagger configuration
+The application configuration is contained within the 'configuration' key
+
+| Name                                               | Description                                                              | Value                                              |
+| -------------------------------------------------- | ------------------------------------------------------------------------ | -------------------------------------------------- |
+| `contentTagger.replicaCount`                       | The number of replicas for the Content Tagger                            | `1`                                                |
+| `contentTagger.image.repository`                   | The container image repository for the Content Tagger                    | `quay.io/telicent/telicent-rdf-document-tagger-dc` |
+| `contentTagger.image.pullPolicy`                   | The image pull policy for the Content Tagger                             | `IfNotPresent`                                     |
+| `contentTagger.image.tag`                          | The image tag for the Content Tagger                                     | `2.0.0`                                            |
+| `contentTagger.imagePullSecrets`                   | Secrets for pulling an image from a private repository                   | `[]`                                               |
+| `contentTagger.nameOverride`                       | Override the chart name for the Content Tagger                           | `""`                                               |
+| `contentTagger.fullnameOverride`                   | Override the full name for the Content Tagger                            | `""`                                               |
+| `contentTagger.podAnnotations`                     | Annotations to add to the Content Tagger pods                            | `{}`                                               |
+| `contentTagger.podLabels`                          | Labels to add to the Content Tagger pods                                 | `{}`                                               |
+| `contentTagger.podSecurityContext`                 | Security context for the Content Tagger pods                             | `{}`                                               |
+| `contentTagger.securityContext`                    | Security context for the Content Tagger containers                       | `{}`                                               |
+| `contentTagger.service.type`                       | The service type for the Content Tagger                                  | `ClusterIP`                                        |
+| `contentTagger.service.port`                       | The service port for the Content Tagger                                  | `80`                                               |
+| `contentTagger.resources`                          | Resource requests and limits for the Content Tagger                      | `{}`                                               |
+| `contentTagger.volumes`                            | Additional volumes for the Content Tagger                                | `[]`                                               |
+| `contentTagger.volumeMounts`                       | Additional volume mounts for the Content Tagger                          | `[]`                                               |
+| `contentTagger.nodeSelector`                       | Node selector for the Content Tagger pods                                | `{}`                                               |
+| `contentTagger.tolerations`                        | Tolerations for the Content Tagger pods                                  | `[]`                                               |
+| `contentTagger.affinity`                           | Affinity rules for the Content Tagger pods                               | `{}`                                               |
+| `contentTagger.configuration.inputTopic`           | The Kafka topic from which the content tagger will consume messages      | `extracted_content`                                |
+| `contentTagger.configuration.outputTopic`          | The Kafka topic to which the content tagger will produce                 | `knowledge`                                        |
+| `contentTagger.configuration.rdfTaggerDataUriStub` | The URI for the RDF Tagger service                                       | `http://telicent.io/data#`                         |
+| `contentTagger.configuration.dctUri`               | The URI for Dublin Core Terms                                            | `http://purl.org/dc/terms/`                        |
+| `contentTagger.configuration.iesUri`               | The URI for the IES Ontology                                             | `http://ies.data.gov.uk/ontology/ies4#`            |
+| `contentTagger.configuration.tontUri`              | The URI for the Telicent Ontology                                        | `http://telicent.io/ontology/`                     |
+| `contentTagger.configuration.iso3166Uri`           | The URI for the ISO 3166 standard                                        | `http://iso.org/iso3166#`                          |
+| `contentTagger.configuration.loggingLevel`         | The logging level for the Content Tagger, e.g., DEBUG, INFO, WARN, ERROR | `INFO`                                             |
+| `contentTagger.configuration.kafkaConfigMode`      | The configuration mode for Kafka, either 'basic' or 'toml'               | `toml`                                             |
 
 
 ## License

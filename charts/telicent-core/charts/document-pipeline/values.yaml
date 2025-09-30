@@ -97,8 +97,8 @@ httpIngester:
   securityContext:
     # @key httpIngester.securityContext Security context for the HTTP Ingester containers
     {}
-
-  resources: {} # @key httpIngester.resources Resource requests and limits for the HTTP Ingester
+  # @key httpIngester.resources Resource requests and limits for the HTTP Ingester
+  resources: {}
     # We usually recommend not to specify default resources and to leave this as a conscious
     # choice for the user. This also increases chances charts run on environments with little
     # resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -131,9 +131,12 @@ httpIngester:
 
   # @key httpIngester.existingConfigMapName If you want to use an existing ConfigMap for configuration then set the name here. If not set then a new ConfigMap will be created using the configuration in this values
   existingConfigMapName: ""
+  # @key httpIngester.existingCacertConfigmapName Name of a ConfigMap containing a CA certificate to be mounted within the container
   existingCacertConfigmapName: trust-bundle
+  # @key httpIngester.cacert Name of a ConfigMap containing a CA certificate to be mounted within the container
   cacert: ""
   configuration:
+    # @key httpIngester.configuration.javaOpts Java options to pass to the JVM
     javaOpts: "-Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks"
     routes:
       # @key httpIngester.configuration.routes[0].name A unique name for the route
@@ -392,13 +395,13 @@ contentIndexer:
   # @section OpenSearch secrets - Search Projector
   # Note: It is recommended to use a Kubernetes secret for sensitive information like passwords
   elasticSecrets:
-    # @key elasticSecrets.elasticUser OpenSearch username
+    # @key contentIndexer.elasticSecrets.elasticUser OpenSearch username
     elasticUser: ""
-    # @key elasticSecrets.elasticPassword OpenSearch user password
+    # @key contentIndexer.elasticSecrets.elasticPassword OpenSearch user password
     elasticPassword: ""
-    # @key elasticSecrets.truststorePass Password for the truststore
+    # @key contentIndexer.elasticSecrets.truststorePass Password for the truststore
     truststorePass: ""
-    # @key elasticSecrets.existingEnvironmentSecretName Name of an existing environment secret
+    # @key contentIndexer.elasticSecrets.existingEnvironmentSecretName Name of an existing environment secret
     existingEnvironmentSecretName: ""
 
 # @section Catalogue Updater
@@ -497,3 +500,108 @@ catalogueUpdater:
     flushIntervalMs: 60000
     # @key catalogueUpdater.configuration.maxBufferSize The maximum buffer size
     maxBufferSize: 100
+
+# @section Content Tagger
+# @descStart
+# This section builds out the Content Tagger configuration
+# The application configuration is contained within the 'configuration' key
+# @descEnd
+contentTagger:
+  # @key contentTagger.replicaCount The number of replicas for the Content Tagger
+  replicaCount: 1
+
+  image:
+    # @key contentTagger.image.repository The container image repository for the Content Tagger
+    repository: quay.io/telicent/telicent-rdf-document-tagger-dc
+    # @key contentTagger.image.pullPolicy The image pull policy for the Content Tagger
+    pullPolicy: IfNotPresent
+    # @key contentTagger.image.tag The image tag for the Content Tagger
+    tag: "2.0.0"
+
+  # @key contentTagger.imagePullSecrets Secrets for pulling an image from a private repository
+  imagePullSecrets: []
+  # @key contentTagger.nameOverride Override the chart name for the Content Tagger
+  nameOverride: ""
+  # @key contentTagger.fullnameOverride Override the full name for the Content Tagger
+  fullnameOverride: ""
+
+  # @key contentTagger.podAnnotations Annotations to add to the Content Tagger pods
+  podAnnotations: {}
+  # @key contentTagger.podLabels Labels to add to the Content Tagger pods
+  podLabels: {}
+
+  # @key contentTagger.podSecurityContext Security context for the Content Tagger pods
+  podSecurityContext: {}
+    # fsGroup: 2000
+
+  # @key contentTagger.securityContext Security context for the Content Tagger containers
+  securityContext: {}
+    # capabilities:
+    #   drop:
+    #   - ALL
+    # readOnlyRootFilesystem: true
+    # runAsNonRoot: true
+    # runAsUser: 1000
+
+  service:
+    # @key contentTagger.service.type The service type for the Content Tagger
+    type: ClusterIP
+    # @key contentTagger.service.port The service port for the Content Tagger
+    port: 80
+
+  # @key contentTagger.resources Resource requests and limits for the Content Tagger
+  resources: {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+
+  # This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
+
+  # @key contentTagger.volumes Additional volumes for the Content Tagger
+  volumes: []
+  # - name: foo
+  #   secret:
+  #     secretName: mysecret
+  #     optional: false
+
+  # @key contentTagger.volumeMounts Additional volume mounts for the Content Tagger
+  volumeMounts: []
+  # - name: foo
+  #   mountPath: "/etc/foo"
+  #   readOnly: true
+
+  # @key contentTagger.nodeSelector Node selector for the Content Tagger pods
+  nodeSelector: {}
+
+  # @key contentTagger.tolerations Tolerations for the Content Tagger pods
+  tolerations: []
+
+  # @key contentTagger.affinity Affinity rules for the Content Tagger pods
+  affinity: {}
+
+  configuration:
+    # @key contentTagger.configuration.inputTopic The Kafka topic from which the content tagger will consume messages
+    inputTopic: extracted_content
+    # @key contentTagger.configuration.outputTopic The Kafka topic to which the content tagger will produce
+    outputTopic: knowledge
+    # @key contentTagger.configuration.rdfTaggerDataUriStub The URI for the RDF Tagger service
+    rdfTaggerDataUriStub: http://telicent.io/data#
+    # @key contentTagger.configuration.dctUri The URI for Dublin Core Terms
+    dctUri: http://purl.org/dc/terms/
+    # @key contentTagger.configuration.iesUri The URI for the IES Ontology
+    iesUri: http://ies.data.gov.uk/ontology/ies4#
+    # @key contentTagger.configuration.tontUri The URI for the Telicent Ontology
+    tontUri: "http://telicent.io/ontology/"
+    # @key contentTagger.configuration.iso3166Uri The URI for the ISO 3166 standard
+    iso3166Uri: "http://iso.org/iso3166#"
+    # @key contentTagger.configuration.loggingLevel The logging level for the Content Tagger, e.g., DEBUG, INFO, WARN, ERROR
+    loggingLevel: INFO
+    # @key contentTagger.configuration.kafkaConfigMode The configuration mode for Kafka, either 'basic' or 'toml'
+    kafkaConfigMode: toml
