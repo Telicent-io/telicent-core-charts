@@ -46,7 +46,7 @@ spec:
                 name: {{ include "paperback-writer.configMapName" . }}
             - secretRef:
                 name: {{ include "paperback-writer.secretName" . }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          image: {{ include "paperback-writer.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
