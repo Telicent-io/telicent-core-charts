@@ -51,15 +51,40 @@
                     "description": "Name of the Istio Gateway Resource (LB operating at the edge of the mesh)",
                     "default": "ingress-gateway"
                 },
-                "kafkaBootstrapUrls": {
-                    "type": "string",
-                    "description": "Comma separated list containing Kafka bootstrap URLs",
-                    "default": "kafka-bootstrap.kafka.svc.cluster.local:9092"
-                },
-                "existingKafkaConfigSecretName": {
-                    "type": "string",
-                    "description": "Name of an existing secret containing Kafka configuration",
-                    "default": ""
+                "kafka": {
+                    "type": "object",
+                    "properties": {
+                        "bootstrapServers": {
+                            "type": "string",
+                            "description": "Comma separated list containing Kafka bootstrap servers",
+                            "default": "kafka-bootstrap.kafka.svc.cluster.local:9092"
+                        },
+                        "existingKafkaConfigSecretName": {
+                            "type": "string",
+                            "description": "Name of an existing secret containing Kafka configuration",
+                            "default": ""
+                        },
+                        "username": {
+                            "type": "string",
+                            "description": "Username for Kafka authentication",
+                            "default": "your.kafka.username.here"
+                        },
+                        "password": {
+                            "type": "string",
+                            "description": "Password for Kafka authentication",
+                            "default": "your.kafka.password.here"
+                        },
+                        "protocol": {
+                            "type": "string",
+                            "description": "Protocol used for Kafka communication",
+                            "default": "SASL_SSL"
+                        },
+                        "mechanism": {
+                            "type": "string",
+                            "description": "SASL mechanism used for Kafka authentication",
+                            "default": "SCRAM-SHA-512"
+                        }
+                    }
                 },
                 "existingTruststoreSecretName": {
                     "type": "string",

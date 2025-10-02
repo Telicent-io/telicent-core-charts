@@ -29,5 +29,11 @@ dependencies:
 - name: oauth2-proxy
   repository: file://./charts/oauth2-proxy
   version: 0.1.0
-digest: sha256:7e4ee1b0ff24cef4ba75c07bf8a80918142526a492e9d7fc5e06cf3a2545bc0e
-generated: "2025-09-08T16:55:29.224102+01:00"
+- name: paperback-writer
+  repository: file://./charts/paperback-writer
+  version: 0.1.0
+- name: data-catalog
+  repository: file://./charts/data-catalog
+  version: 0.1.0
+digest: sha256:ff8834f83fca11047d862421bb7e1975026e402a52d5cbfc4fc2f728dcd222d6
+generated: "2025-10-02T10:34:51.428674+01:00"

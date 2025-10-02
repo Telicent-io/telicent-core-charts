@@ -86,11 +86,11 @@ podAnnotations: {}
 podLabels: {}
 
 # @key podSecurityContext security context for the pod
-podSecurityContext:
+podSecurityContext: {}
   # fsGroup: 2000
 
 # @key securityContext security context for the container
-securityContext:
+securityContext: {}
   # capabilities:
   #   drop:
   #   - ALL
@@ -106,7 +106,7 @@ service:
   port: 8000
 
 # @key resources Resource requests and limits for the container
-resources:
+resources: {}
   # limits:
   #   cpu: 100m
   #   memory: 128Mi
@@ -165,17 +165,17 @@ configuration:
   jwksDisabled: "false"
   # @key configuration.jwtHeader JWT header name
   jwtHeader: "Authorization"
-  # @key configuration.accessApiUrl URL for the Access API
-  accessApiUrl: "" # Defaults to http://release-name-access-api.release-namespace.svc.cluster.local:8080
+  # @key configuration.accessApiUrl URL for the Access API. Defaults to http://release-name-access-api.release-namespace.svc.cluster.local:8080
+  accessApiUrl: ""
   # @key configuration.cacertPath Path to CA certs in the container
-  cacertPath: "/etc/ssl/certs/ca.crt" # Path to CA certs in the container
+  cacertPath: "/etc/ssl/certs/ca.crt"
 
 # @key existingConfigMapName Name of an existing ConfigMap to use for configuration
 existingConfigMapName: ""
 # @key existingSecretName Name of an existing Secret to use for credentials
 existingSecretName: ""
-# @key existingCacertConfigmapName Name of an existing ConfigMap to use for CA certs
-existingCacertConfigmapName: "" # If not set, and cacert is provided, a ConfigMap will be created
+# @key existingCacertConfigmapName Name of an existing ConfigMap to use for CA certs. If not set, and cacert is provided, a ConfigMap will be created
+existingCacertConfigmapName: ""
 # @key cacert CA certificate data in PEM format
 cacert: ""
 

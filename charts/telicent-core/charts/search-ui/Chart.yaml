@@ -2,7 +2,7 @@
 
 apiVersion: v2
 name: search-ui
-description: Telicent Search UI
+description: Telicent Search UI for full-text search and content discovery across data assets
 type: application
 version: 0.1.2
 appVersion: "4.16.3"

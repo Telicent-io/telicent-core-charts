@@ -45,6 +45,7 @@ spec:
           valueFrom:
             secretKeyRef:
               key: password
+              {{- /* Allow use of an existing secret if provided */}}
               {{- if .Values.mongo.existingMongoPasswordSecret }}
               name: {{ .Values.mongo.existingMongoPasswordSecret }}
               {{- else }}

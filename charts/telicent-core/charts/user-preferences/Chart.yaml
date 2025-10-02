@@ -2,7 +2,7 @@
 
 apiVersion: v2
 name: user-preferences
-description: A Helm chart for Kubernetes
+description: Telicent User Preferences API for managing user settings and preferences
 
 # A chart can be either an 'application' or a 'library' chart.
 #
@@ -24,3 +24,8 @@ version: 0.1.2
 # follow Semantic Versioning. They should reflect the version the application is using.
 # It is recommended to use it with quotes.
 appVersion: "0.5.2"
+icon: "https://avatars.githubusercontent.com/u/65304240?s=200&v=4"
+
+maintainers:
+  - name: telicent
+    url: https://github.com/Telicent-IO
