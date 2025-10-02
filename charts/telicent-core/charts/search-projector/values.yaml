@@ -106,7 +106,7 @@ revisionHistoryLimit: 5
 # @key annotations Add extra annotations to the Deployment object
 annotations: {}
 # @key extraEnvs List of additional environment variables to set in the pod
-extraEnvs: [ ]
+extraEnvs: []
 
 image:
   # @key image.registry [default: REGISTRY_NAME] Search Projector image registry
@@ -118,7 +118,7 @@ image:
   # @key image.pullPolicy Search Projector image pull policy
   pullPolicy: IfNotPresent
   # @key image.pullSecrets Specify registry secret names as an array
-  pullSecrets: [ ]
+  pullSecrets: []
 
 resources:
   requests:

@@ -1,6 +1,8 @@
+# Copyright (C) 2025 Telicent Limited
+
 apiVersion: v2
 name: data-catalog
-description: A Helm chart for Kubernetes
+description: Telicent Data Catalog for metadata management and data discovery
 
 # A chart can be either an 'application' or a 'library' chart.
 #

@@ -2,7 +2,7 @@
 
 apiVersion: v2
 name: telicent-core
-description: A Helm chart for Kubernetes
+description: Telicent CORE platform for knowledge graph and data management
 
 # A chart can be either an 'application' or a 'library' chart.
 #

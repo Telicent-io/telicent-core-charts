@@ -45,16 +45,21 @@ spec:
         env:
         - name: NODE_EXTRA_CA_CERTS
           value: "/certs/ca.crt"
+        - name: MONGO_PWD
+          valueFrom:
+            secretKeyRef:
+              key: password
+              {{- /* Allow use of an existing secret if provided */}}
+              {{- if .Values.mongo.existingMongoPasswordSecret }}
+              name: {{ .Values.mongo.existingMongoPasswordSecret }}
+              {{- else }}
+              name: {{ include "access.envSecretName" . }}
+              {{- end }}
         {{- end }}
         envFrom:
         - configMapRef:
             name: {{ include "access.envConfigmapName" . }}
-        - secretRef:
-            {{- if .Values.mongo.existingMongoPasswordSecret }}
-            name: {{ .Values.mongo.existingMongoPasswordSecret }}
-            {{ else }}
-            name: {{ include "access.envSecretName" . }}
-            {{- end }}
+
             
         ports:
         - name: http

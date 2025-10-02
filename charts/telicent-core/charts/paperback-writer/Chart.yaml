@@ -1,6 +1,8 @@
+# Copyright (C) 2025 Telicent Limited
+
 apiVersion: v2
 name: paperback-writer
-description: A Helm chart for Kubernetes
+description: Telicent Paperback Writer for document and content processing
 
 # A chart can be either an 'application' or a 'library' chart.
 #

@@ -1,6 +1,8 @@
+# Copyright (C) 2025 Telicent Limited
+
 apiVersion: v2
 name: oauth2-proxy
-description: A Helm chart for Kubernetes
+description: OAuth2 Proxy for authentication and authorization
 
 # A chart can be either an 'application' or a 'library' chart.
 #

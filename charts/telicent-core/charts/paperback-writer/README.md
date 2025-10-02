@@ -100,8 +100,8 @@ Contains global parameters, these parameters are mirrored across all Telicent Co
 | -------------------- | ---------------------------------- | ----- |
 | `podAnnotations`     | Additional annotations for the pod | `{}`  |
 | `podLabels`          | Additional labels for the pod      | `{}`  |
-| `podSecurityContext` | security context for the pod       | `nil` |
-| `securityContext`    | security context for the container | `nil` |
+| `podSecurityContext` | security context for the pod       | `{}`  |
+| `securityContext`    | security context for the container | `{}`  |
 
 ### Service Parameters
 
@@ -109,7 +109,7 @@ Contains global parameters, these parameters are mirrored across all Telicent Co
 | -------------- | ---------------------------------------------- | ----------- |
 | `service.type` | paperback-writer service type                  | `ClusterIP` |
 | `service.port` | paperback-writer service port                  | `8000`      |
-| `resources`    | Resource requests and limits for the container | `nil`       |
+| `resources`    | Resource requests and limits for the container | `{}`        |
 
 ### Probe Parameters
 
@@ -132,18 +132,21 @@ Contains global parameters, these parameters are mirrored across all Telicent Co
 
 ### Application Configuration
 
-| Name                               | Description                                                                                                                                                                  | Value           |
-| ---------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- |
-| `configuration.sparqlUrl`          | SPARQL endpoint URL. Defaults to http://release-name-graph.release-namespace.svc.cluster.local:3030                                                                          | `""`            |
-| `configuration.sparqlUser`         | SPARQL endpoint username. Use existing secret to set these values if possible (.Values.existingSecretName)                                                                   | `""`            |
-| `configuration.sparqlPwd`          | SPARQL endpoint password. Use existing secret to set these values if possible (.Values.existingSecretName)                                                                   | `""`            |
-| `configuration.sparqlDefaultLabel` | Default label for SPARQL queries                                                                                                                                             | `!`             |
-| `configuration.jwksDisabled`       | Disable JWKS validation                                                                                                                                                      | `false`         |
-| `configuration.jwtHeader`          | JWT header name                                                                                                                                                              | `Authorization` |
-| `configuration.accessApiUrl`       | URL for the Access API                                                                                                                                                       | `""`            |
-| `existingConfigMapName`            | Name of an existing ConfigMap to use for configuration                                                                                                                       | `""`            |
-| `existingSecretName`               | Name of an existing Secret to use for credentials                                                                                                                            | `""`            |
-| `istio.ingress.principal`          | Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName' | `""`            |
+| Name                               | Description                                                                                                                                                                  | Value                   |
+| ---------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------- |
+| `configuration.sparqlUrl`          | SPARQL endpoint URL. Defaults to http://release-name-graph.release-namespace.svc.cluster.local:3030                                                                          | `""`                    |
+| `configuration.sparqlUser`         | SPARQL endpoint username. Use existing secret to set these values if possible (.Values.existingSecretName)                                                                   | `""`                    |
+| `configuration.sparqlPwd`          | SPARQL endpoint password. Use existing secret to set these values if possible (.Values.existingSecretName)                                                                   | `""`                    |
+| `configuration.sparqlDefaultLabel` | Default label for SPARQL queries                                                                                                                                             | `!`                     |
+| `configuration.jwksDisabled`       | Disable JWKS validation                                                                                                                                                      | `false`                 |
+| `configuration.jwtHeader`          | JWT header name                                                                                                                                                              | `Authorization`         |
+| `configuration.accessApiUrl`       | URL for the Access API                                                                                                                                                       | `""`                    |
+| `configuration.cacertPath`         | Path to CA certs in the container                                                                                                                                            | `/etc/ssl/certs/ca.crt` |
+| `existingConfigMapName`            | Name of an existing ConfigMap to use for configuration                                                                                                                       | `""`                    |
+| `existingSecretName`               | Name of an existing Secret to use for credentials                                                                                                                            | `""`                    |
+| `existingCacertConfigmapName`      | Name of an existing ConfigMap to use for CA certs                                                                                                                            | `""`                    |
+| `cacert`                           | CA certificate data in PEM format                                                                                                                                            | `""`                    |
+| `istio.ingress.principal`          | Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName' | `""`                    |
 
 
 ## License
