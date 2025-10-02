@@ -41,7 +41,7 @@ global:
   kafka:
     # @key global.kafka.bootstrapServers Comma separated list containing Kafka bootstrap servers
     bootstrapServers: "kafka-bootstrap.kafka.svc.cluster.local:9092"
-    # @key global.existingKafkaConfigSecretName Name of an existing secret containing Kafka configuration (preferred over individual settings below for security)
+    # @key global.kafka.existingKafkaConfigSecretName Name of an existing secret containing Kafka configuration (preferred over individual settings below for security)
     existingKafkaConfigSecretName: ""
     # @key global.kafka.username Username for Kafka authentication
     username: "your.kafka.username.here"
@@ -77,7 +77,6 @@ configuration:
   # @key configuration.otelTracesExporter OpenTelemetry traces exporter
   # Options: otlp, none
   otelTracesExporter: none
-  # @key configuration.kafkaTopics Kafka topics for the application, created by a init container
 
 # @section Common Parameters
 # @key fullnameOverride String to fully override the generated release name

@@ -317,7 +317,7 @@
                 },
                 "accessApiUrl": {
                     "type": "string",
-                    "description": "URL for the Access API",
+                    "description": "URL for the Access API. Defaults to http://release-name-access-api.release-namespace.svc.cluster.local:8080",
                     "default": ""
                 },
                 "cacertPath": {
@@ -339,7 +339,7 @@
         },
         "existingCacertConfigmapName": {
             "type": "string",
-            "description": "Name of an existing ConfigMap to use for CA certs",
+            "description": "Name of an existing ConfigMap to use for CA certs. If not set, and cacert is provided, a ConfigMap will be created",
             "default": ""
         },
         "cacert": {
