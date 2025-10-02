@@ -103,7 +103,7 @@ spec:
         {{- if .Values.global.existingKafkaConfigSecretName }}
           secretName: {{ .Values.global.existingKafkaConfigSecretName }}
         {{- else }}
-          secretName: {{ include "telicent-core.kafkaAuthConfigSecretName" . }}
+          secretName: {{ include "graph.fullname" . }}-kafka-config
         {{- end }}
         # TODO: Secret is created outside of Helm by using Ansible. Would potentially need cert-manager to remove this dependency.
 

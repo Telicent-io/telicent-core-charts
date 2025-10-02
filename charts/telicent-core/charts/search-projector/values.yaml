@@ -35,11 +35,19 @@ global:
   istioServiceAccountName: istio-ingress
   # @key global.istioGatewayName Name of the Istio Gateway Resource (LB operating at the edge of the mesh)
   istioGatewayName: ingress-gateway
-
-  # @key global.kafkaBootstrapUrls Comma separated list containing Kafka bootstrap URLs
-  kafkaBootstrapUrls: "kafka-bootstrap.kafka.svc.cluster.local:9092"
-  # @key global.existingKafkaConfigSecretName Name of an existing secret containing Kafka configuration
-  existingKafkaConfigSecretName: ""
+  kafka:
+    # @key global.kafka.bootstrapServers Comma separated list containing Kafka bootstrap servers
+    bootstrapServers: "kafka-bootstrap.kafka.svc.cluster.local:9092"
+    # @key global.existingKafkaConfigSecretName Name of an existing secret containing Kafka configuration
+    existingKafkaConfigSecretName: ""
+    # @key global.kafka.username Username for Kafka authentication
+    username: "your.kafka.username.here"
+    # @key global.kafka.password Password for Kafka authentication
+    password: "your.kafka.password.here"
+    # @key global.kafka.protocol Protocol used for Kafka communication
+    protocol: "SASL_SSL"
+    # @key global.kafka.mechanism SASL mechanism used for Kafka authentication
+    mechanism: "SCRAM-SHA-512"
 
   # @key global.existingTruststoreSecretName Name of an existing secret containing the truststore
   existingTruststoreSecretName: ""
