@@ -1,0 +1,40 @@
+🎉 Telicent DEMO has been successfully deployed!
+
+################################## WARNING #####################################
+
+This configuration is provided for demonstration purposes only and is not
+intended for production use. It may lack essential security features and has not
+been tested for deployment in secure or mission-critical environments. Use at
+your own risk.
+
+################################## WARNING #####################################
+
+█████████████████████████████████████████████████████████
+███████████████████ TELICENT DEMO ███████████████████████
+█████████████████████████████████████████████████████████
+
+CORE: {{ if (index (index .Values "telicent-core") "enabled") }}    ✅{{ else }}    ❌{{ end }}
+Kafka: {{ if .Values.kafka.enabled }}   ✅{{ else }}   ❌{{ end }}
+Keycloak: {{ if .Values.keycloak.enabled }}✅{{ else }}❌{{ end }}
+Gateways: {{ if .Values.gateways.enabled }}✅{{ else }}❌{{ end }}
+Mongo: {{ if .Values.mongodb.enabled }}   ✅{{ else }}   ❌{{ end }}
+
+{{ if .Values.outputPasswordsToConsole }}
+Passwords:
+Kafka smart cache password: {{ include "telicent-demo.kafkaSmartCachePassword" .  }}
+Kafka Pipeline password: {{ include "telicent-demo.kafkaPipelinePassword" . }}
+
+Mongo Admin Password: {{ include "telicent-demo.mongoAdminPassword" . }}
+Mongo User Preferences Password: 
+{{ end }}
+
+
+
+################################## WARNING #####################################
+
+This configuration is provided for demonstration purposes only and is not
+intended for production use. It may lack essential security features and has not
+been tested for deployment in secure or mission-critical environments. Use at
+your own risk.
+
+################################## WARNING #####################################

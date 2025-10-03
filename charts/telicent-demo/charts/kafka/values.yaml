@@ -6,9 +6,3 @@ existingUserPwdSecretName: ""
 pipelinePassword: ""
 smartCachePassword: ""
 topics: []
-# topics:
-#   - name
-#     partitions
-#     replicas
-#     retentionMs
-#     retentionBytes

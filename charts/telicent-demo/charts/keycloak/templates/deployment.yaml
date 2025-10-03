@@ -25,7 +25,7 @@ spec:
         - start-dev
         - --http-enabled=true
         - --proxy-headers=xforwarded
-        - --hostname={{ .Values.authHost }}
+        - --hostname={{ .Values.global.authHostDomain }}
         - --hostname-strict=false
         env:
         - name: KC_HTTP_ENABLED

@@ -1,0 +1,25 @@
+global:
+  appsHostDomain: apps.127.0.0.1.nip.io
+  authnHostDomain: auth.127.0.0.1.nip.io
+
+demo:
+  outputPasswordsToConsole: true
+
+kafka:
+  enabled: true
+  existingUserPwdSecretName: "kafka-passwords"
+
+telicent-core:
+  enabled: false
+
+mongodb:
+  enabled: true
+  existingUserPreferencesPwdSecretName: "mongo-user-preferences-password"
+  existingAccessPwdSecretName: "mongo-access-password"
+  existingAdminPwdSecretName: "mongo-admin-password"
+
+gateways:
+  enabled: true
+# keycloak:
+#   enabled: true
+#   authHost: auth.127.0.0.1.nip.io

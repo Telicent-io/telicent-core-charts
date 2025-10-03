@@ -8,7 +8,7 @@ spec:
   gateways:
   - {{ .Values.authGateway }}
   hosts:
-  - {{ .Values.authHost }}
+  - {{ .Values.global.authHostDomain}}
   http:
   - match:
     - uri:

@@ -1,0 +1,18 @@
+dependencies:
+- name: telicent-core
+  repository: https://charts.telicent.io/
+  version: 0.4.2
+- name: gateways
+  repository: file://./charts/gateways
+  version: 0.3.0
+- name: kafka
+  repository: file://./charts/kafka
+  version: 0.2.0
+- name: keycloak
+  repository: file://./charts/keycloak
+  version: 0.2.1
+- name: mongodb
+  repository: file://./charts/mongodb
+  version: 0.1.0
+digest: sha256:666808be5b2e69eec3b68c122ab50ff684517857179571a84b155e40217a82d3
+generated: "2025-10-02T14:47:29.943896+01:00"
