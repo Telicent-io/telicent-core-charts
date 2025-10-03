@@ -35,5 +35,8 @@ dependencies:
 - name: data-catalog
   repository: file://./charts/data-catalog
   version: 0.1.0
-digest: sha256:ff8834f83fca11047d862421bb7e1975026e402a52d5cbfc4fc2f728dcd222d6
-generated: "2025-10-02T10:34:51.428674+01:00"
+- name: traefik
+  repository: https://traefik.github.io/charts
+  version: 9.20.1
+digest: sha256:71cc85423330f2f41c1b2272e315a6937257069845fb6baa5a6db9743bc51e25
+generated: "2025-10-03T09:41:16.550649+01:00"

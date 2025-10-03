@@ -1,7 +1,7 @@
 {{- /*
 Copyright (C) 2025 Telicent Limited
 */}}
-
+{{- if .Values.global.istioEnabled }}
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 
@@ -86,3 +86,4 @@ spec:
         host: {{ include "graph.serviceName" . }}
         port:
           number: {{ .Values.service.port }}
+{{- end }}

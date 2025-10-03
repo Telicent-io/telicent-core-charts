@@ -29,6 +29,8 @@ global:
   # NOTE: For Dex the endpoint would be https://{yourDexDomain}/keys
   jwksUrl: "https://{yourAuthdomain}/.well-known/jwks.json"
 
+  # @key global.istioEnabled Enable Istio integration (either Istio or Traefik must be enabled, not both)
+  istioEnabled: false
   # @key global.istioNamespace Namespace in which Istio is deployed
   # NOTE: Istio, by default, is deployed within the 'istio-system' namespace
   istioNamespace: istio-system
@@ -77,3 +79,6 @@ kafkaTopics:
   enabled: false
   # @key kafkaTopics.topics List of Kafka topics to be created
   topics: []
+
+traefik:
+  enabled: true
