@@ -1,0 +1,141 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
+{{- if not .Values.existingUserPortalUIConfigName }}
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: {{ include "user-portal-ui.fullname" . }}
+  labels:
+    {{- include "user-portal-ui.labels" . | nindent 4 }}
+
+data:
+  env-config.js: |
+    // Initialize window.env
+    window.env = window.env || {};
+    window.featureFlags = window.featureFlags || {};
+
+    const DOMAIN = "https://{{ .Values.global.appHostDomain}}";
+    // Config
+    window.env.SIGN_OUT_URL =
+    `${DOMAIN}/oauth2/sign_out?rd=/oauth2/authorize`;
+    window.featureFlags.FF_SKIP_AUTH = false;
+    window.featureFlags.FF_DISABLE_SAVED_SEARCHES = false;
+
+    // `APPS_LIBRARY` configures the app cards on the user-portal app.
+    //  Each app card renders a name, a short description, a call-to-action and link to open the app.
+    window.env.APPS_LIBRARY = [
+        {
+            id: "telicent-graph",
+            name: "GRAPH",
+            telicentUITheme: "GraphOrange",
+            shortDescription: "Easily navigate the web of information using our state-of-the-art knowledge graph app.",
+            url: `${DOMAIN}/graph`,
+            buttonText: "Explore graph",
+            buttonIconURL: "./assets/icons/graph.svg",
+            imageURL: `./assets/images/graph.png`,
+        },
+        {
+            id: "telicent-search",
+            name: "SEARCH",
+            telicentUITheme: "DocumentPink",
+            shortDescription: "Discover insights with web-like search capability.",
+            url: `${DOMAIN}/search`,
+            buttonText: "Start searching",
+            buttonIconURL: "./assets/icons/search.svg",
+            imageURL: `./assets/images/search.png`,
+        },
+        {
+            id: "telicent-catalog",
+            name: "CATALOG",
+            telicentUITheme: "DataNavy",
+            shortDescription: "Provides an organized overview of the datasets available to you for analysis.",
+            url: `${DOMAIN}/data-catalog/`,
+            buttonText: "Find your dataset",
+            buttonIconURL: "./assets/icons/catalog.svg",
+            imageURL: `./assets/images/catalog.png`,
+        },
+        // {
+        //     id: "telicent-ontology",
+        //     name: "ONTOLOGY",
+        //     telicentUITheme: "DataNavy",
+        //     shortDescription: "A simple way to create, edit and manage ontologies.",
+        //     url: `${DOMAIN}/ontology`,
+        //     buttonText: "Start modelling",
+        //     buttonIconURL: "./assets/icons/ontology.svg",
+        //     imageURL: `./assets/images/ontology.png`,
+        // },
+        // {
+        //     id: "telicent-instance",
+        //     name: "INSTANCE",
+        //     telicentUITheme: "DocumentPink",
+        //     shortDescription: "A tool to create and visualise diagrams for specific ontologies using the Resource Description Framework.",
+        //     url: `${DOMAIN}/instance`,
+        //     buttonText: "Start building",
+        //     buttonIconURL: "./assets/icons/instance.svg",
+        //     imageURL: `./assets/images/instance.png`,
+        // },
+    ];
+
+    // APIs
+    window.env.ACCESS_API_URL = `${DOMAIN}/api/access`;
+
+    // Apps
+
+    window.env.ACCESS_APP_URL = `${DOMAIN}/access`;
+    window.env.SEARCH_APP_URL = `${DOMAIN}/search`;
+
+    window.env.FOOTER_LINKS = [
+        {
+        name: "Column 1 footer links",
+        children: [
+            {
+            name: "FAQ",
+            href: "https://telicent.io/faq",
+            },
+            {
+            name: "Application help",
+            href: "https://telicent.io/help",
+            },
+        ],
+        },
+        {
+        name: "Column 2 links",
+        children: [
+            {
+            name: "Accessibility statement",
+            href: "https://telicent.io/accessibility",
+            },
+            {
+            name: "GDPR",
+            href: "https://telicent.io/gdpr",
+            },
+            {
+            name: "Privacy Policy",
+            href: "https://telicent.io/privacy",
+            },
+        ],
+        },
+        {
+        name: "Column 3 links",
+        children: [
+            {
+            name: "Address 4DY 3LZ \nRegistered office",
+            href: "https://telicent.io/contact",
+            },
+        ],
+        },
+        { src: "telicent" },
+    ];
+
+    window.env.USER_PREF_API_URL = `${DOMAIN}/api/user-preferences`
+
+    window.feAppOptions = {
+    // 🚨 WARNING: ENCODE_SEARCH_PARAMS_MODE must be the same in search, graph, and user-portal 🚨
+    // ENCODE_SEARCH_PARAMS_MODE: "as uri component", // default if unset
+    ENCODE_SEARCH_PARAMS_MODE: 'as base64',
+    };
+
+{{- end }}
