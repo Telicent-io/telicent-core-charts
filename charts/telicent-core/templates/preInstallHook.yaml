@@ -49,7 +49,7 @@ spec:
                 --replication-factor 1 \
                 --if-not-exists \
                 --command-config=/app/config/kafka-auth/kafka-config.properties \
-                --bootstrap-server {{ .Values.global.kafkaBootstrapUrls }};
+                --bootstrap-server {{ .Values.global.kafka.bootstrapServers }};
             done
         volumeMounts:
         - mountPath: /app/config/kafka-auth/
@@ -61,8 +61,8 @@ spec:
       volumes:
       - name: kafka-auth-config
         secret:
-        {{- if .Values.global.existingKafkaConfigSecretName }}
-          secretName: {{ .Values.global.existingKafkaConfigSecretName }}
+        {{- if .Values.global.kafka.existingConfigSecretName }}
+          secretName: {{ .Values.global.kafka.existingConfigSecretName }}
         {{- else }}
           secretName: {{ include "telicent-core.kafkaAuthConfigSecretName" . }}
         {{- end }}
