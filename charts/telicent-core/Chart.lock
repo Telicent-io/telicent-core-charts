@@ -1,47 +1,39 @@
 dependencies:
-- name: access
-  repository: file://./charts/access
-  version: 0.1.2
-- name: access-ui
-  repository: file://./charts/access-ui
-  version: 0.1.2
-- name: graph-ui
-  repository: file://./charts/graph-ui
-  version: 0.1.2
-- name: query-ui
-  repository: file://./charts/query-ui
-  version: 0.1.2
-- name: search-ui
-  repository: file://./charts/search-ui
-  version: 0.1.2
-- name: graph
-  repository: file://./charts/graph
-  version: 0.1.2
-- name: search
-  repository: file://./charts/search
-  version: 0.1.4
-- name: search-projector
-  repository: file://./charts/search-projector
-  version: 0.1.4
-- name: user-preferences
-  repository: file://./charts/user-preferences
-  version: 0.1.2
-- name: oauth2-proxy
-  repository: file://./charts/oauth2-proxy
-  version: 0.1.0
-- name: paperback-writer
-  repository: file://./charts/paperback-writer
-  version: 0.1.0
-- name: data-catalog
-  repository: file://./charts/data-catalog
-  version: 0.1.0
-<<<<<<< Updated upstream
+  - name: access
+    repository: file://./charts/access
+    version: 0.1.2
+  - name: access-ui
+    repository: file://./charts/access-ui
+    version: 0.1.2
+  - name: graph-ui
+    repository: file://./charts/graph-ui
+    version: 0.1.2
+  - name: query-ui
+    repository: file://./charts/query-ui
+    version: 0.1.2
+  - name: search-ui
+    repository: file://./charts/search-ui
+    version: 0.1.2
+  - name: graph
+    repository: file://./charts/graph
+    version: 0.1.2
+  - name: search
+    repository: file://./charts/search
+    version: 0.1.4
+  - name: search-projector
+    repository: file://./charts/search-projector
+    version: 0.1.4
+  - name: user-preferences
+    repository: file://./charts/user-preferences
+    version: 0.1.2
+  - name: oauth2-proxy
+    repository: file://./charts/oauth2-proxy
+    version: 0.1.0
+  - name: paperback-writer
+    repository: file://./charts/paperback-writer
+    version: 0.1.0
+  - name: data-catalog
+    repository: file://./charts/data-catalog
+    version: 0.1.0
 digest: sha256:ff8834f83fca11047d862421bb7e1975026e402a52d5cbfc4fc2f728dcd222d6
 generated: "2025-10-02T10:34:51.428674+01:00"
-=======
-- name: traefik-reverse-proxy
-  repository: file://./charts/traefik-reverse-proxy
-  version: 0.1.0
-digest: sha256:427d64466d7ff2665bbcffa0d33aa099677bb5e74bccd12c75847940d7ed4725
-generated: "2025-10-03T15:55:18.091582+01:00"
->>>>>>> Stashed changes
