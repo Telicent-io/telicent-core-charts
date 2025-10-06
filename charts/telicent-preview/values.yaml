@@ -40,8 +40,8 @@ global:
   kafka:
     # @key global.kafka.bootstrapServers Comma separated list containing Kafka bootstrap servers
     bootstrapServers: "kafka-bootstrap.kafka.svc.cluster.local:9092"
-    # @key global.existingKafkaConfigSecretName Name of an existing secret containing Kafka configuration
-    existingKafkaConfigSecretName: ""
+    # @key global.kafka.existingConfigSecretName Name of an existing secret containing Kafka configuration
+    existingConfigSecretName: ""
     # @key global.kafka.username Username for Kafka authentication
     username: "your.kafka.username.here"
     # @key global.kafka.password Password for Kafka authentication
@@ -56,3 +56,13 @@ global:
   truststore:
     # @key global.truststore.mountPath The mount path for the truststore in the container
     mountPath: /app/config/truststore
+
+# @section paperback-writer Parameters
+paperback-writer:
+  # @key paperback-writer.enabled Enable or disable the paperback-writer component
+  enabled: true
+
+# @section data-catalog Parameters
+data-catalog:
+  # @key data-catalog.enabled Enable or disable the data-catalog component
+  enabled: true
