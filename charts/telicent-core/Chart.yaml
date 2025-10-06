@@ -69,14 +69,14 @@ dependencies:
     version: "^0.1.0"
     repository: file://./charts/oauth2-proxy
     condition: global.oauth2Proxy.enabled
-  - name: paperback-writer
-    version: "^0.1.0"
-    repository: file://./charts/paperback-writer
-    condition: global.enterprise, paperback-writer.enabled
-  - name: data-catalog
-    version: "^0.1.0"
-    repository: file://./charts/data-catalog
-    condition: global.enterprise, data-catalog.enabled
+  # - name: paperback-writer
+  #   version: "^0.1.0"
+  #   repository: file://./charts/paperback-writer
+  #   condition: global.enterprise, paperback-writer.enabled
+  # - name: data-catalog
+  #   version: "^0.1.0"
+  #   repository: file://./charts/data-catalog
+  #   condition: global.enterprise, data-catalog.enabled
 icon: "https://avatars.githubusercontent.com/u/65304240?s=200&v=4"
 
 # The name of the chart's maintainers.

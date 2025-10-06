@@ -37,6 +37,7 @@ global:
   # @key global.istioGatewayName Name of the Istio Gateway Resource (LB operating at the edge of the mesh)
   istioGatewayName: ingress-gateway
 
+  # @section Kafka Configuration
   kafka:
     # @key global.kafka.bootstrapServers Comma separated list containing Kafka bootstrap servers
     bootstrapServers: "kafka-bootstrap.kafka.svc.cluster.local:9092"
@@ -50,6 +51,8 @@ global:
     protocol: "SASL_SSL"
     # @key global.kafka.mechanism SASL mechanism used for Kafka authentication
     mechanism: "SCRAM-SHA-512"
+    # @key global.kafka.topics List of Kafka topics to be created during installation
+    topics: []
 
   # @key global.existingTruststoreSecretName Name of an existing secret containing the truststore
   existingTruststoreSecretName: ""
@@ -66,11 +69,6 @@ serviceAccount:
   name: ""
   # @key serviceAccount.annotations Additional custom annotations for the ServiceAccount
   annotations: {}
-
-# @section paperback-writer Parameters
-paperback-writer:
-  # @key paperback-writer.enabled Enable or disable the paperback-writer component
-  enabled: false
 
 kafkaTopics:
   # @key kafkaTopics.enabled Enable or disable the creation of Kafka topics during installation
