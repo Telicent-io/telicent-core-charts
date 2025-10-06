@@ -28,7 +28,14 @@ dependencies:
     version: "^0.1.0"
     repository: file://./charts/user-portal-ui
     condition: user-portal-ui.enabled
-
+  - name: paperback-writer
+    version: "^0.1.0"
+    repository: file://./charts/paperback-writer
+    condition: paperback-writer.enabled
+  - name: data-catalog
+    version: "^0.1.0"
+    repository: file://./charts/data-catalog
+    condition: data-catalog.enabled
 icon: "https://avatars.githubusercontent.com/u/65304240?s=200&v=4"
 
 # The name of the chart's maintainers.
