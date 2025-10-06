@@ -54,7 +54,7 @@ replicaCount: 1
 # @section Image Parameters
 image:
   # @key image.repository paperback-writer image repository
-  repository: quay.io/telicent/telicent-paperback-writer
+  repository: telicent/telicent-paperback-writer
   # @key image.pullPolicy paperback-writer image pull policy
   pullPolicy: IfNotPresent
   # @key image.tag paperback-writer image tag. If not set, defaults to chart appVersion

@@ -35,5 +35,13 @@ dependencies:
 - name: data-catalog
   repository: file://./charts/data-catalog
   version: 0.1.0
+<<<<<<< Updated upstream
 digest: sha256:ff8834f83fca11047d862421bb7e1975026e402a52d5cbfc4fc2f728dcd222d6
 generated: "2025-10-02T10:34:51.428674+01:00"
+=======
+- name: traefik-reverse-proxy
+  repository: file://./charts/traefik-reverse-proxy
+  version: 0.1.0
+digest: sha256:427d64466d7ff2665bbcffa0d33aa099677bb5e74bccd12c75847940d7ed4725
+generated: "2025-10-03T15:55:18.091582+01:00"
+>>>>>>> Stashed changes
