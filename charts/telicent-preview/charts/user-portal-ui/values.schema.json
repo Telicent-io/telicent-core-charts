@@ -1,0 +1,266 @@
+{
+    "title": "Chart Values",
+    "type": "object",
+    "properties": {
+        "global": {
+            "type": "object",
+            "properties": {
+                "imageRegistry": {
+                    "type": "string",
+                    "description": "Global image registry",
+                    "default": ""
+                },
+                "imagePullSecrets": {
+                    "type": "array",
+                    "description": "Global registry secret names as an array",
+                    "default": [],
+                    "items": {}
+                },
+                "appHostDomain": {
+                    "type": "string",
+                    "description": "Domain associated with Telicent application services",
+                    "default": "apps.telicent.io"
+                },
+                "authHostDomain": {
+                    "type": "string",
+                    "description": "Domain associated with Telicent authentication services, including OIDC providers",
+                    "default": "auth.telicent.io"
+                },
+                "istioNamespace": {
+                    "type": "string",
+                    "description": "Namespace in which Istio is deployed",
+                    "default": "istio-system"
+                },
+                "istioServiceAccountName": {
+                    "type": "string",
+                    "description": "Name of the Istio service account",
+                    "default": "istio-ingress"
+                },
+                "istioGatewayName": {
+                    "type": "string",
+                    "description": "Name of the Istio Gateway Resource (LB operating at the edge of the mesh)",
+                    "default": "ingress-gateway"
+                }
+            }
+        },
+        "replicaCount": {
+            "type": "number",
+            "description": "Number of replicas for the deployment",
+            "default": 1
+        },
+        "image": {
+            "type": "object",
+            "properties": {
+                "registry": {
+                    "type": "string",
+                    "description": "Query UI image registry",
+                    "default": "REGISTRY_NAME"
+                },
+                "repository": {
+                    "type": "string",
+                    "description": "Query UI image name",
+                    "default": "REPOSITORY_NAME/telicent-query"
+                },
+                "tag": {
+                    "type": "string",
+                    "description": "Query UI image tag. If not set, a tag is generated using the appVersion",
+                    "default": ""
+                },
+                "pullPolicy": {
+                    "type": "string",
+                    "description": "Query UI image pull policy",
+                    "default": "IfNotPresent"
+                },
+                "pullSecrets": {
+                    "type": "array",
+                    "description": "Specify registry secret names as an array",
+                    "default": [],
+                    "items": {}
+                }
+            }
+        },
+        "nameOverride": {
+            "type": "string",
+            "description": "Override the chart name",
+            "default": ""
+        },
+        "fullnameOverride": {
+            "type": "string",
+            "description": "Override the full chart name",
+            "default": ""
+        },
+        "serviceAccount": {
+            "type": "object",
+            "properties": {
+                "create": {
+                    "type": "boolean",
+                    "description": "Specifies whether a service account should be created",
+                    "default": true
+                },
+                "automount": {
+                    "type": "boolean",
+                    "description": "Automatically mount a ServiceAccount's API credentials?",
+                    "default": true
+                },
+                "annotations": {
+                    "type": "object",
+                    "description": "Annotations to add to the service account",
+                    "default": {}
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The name of the service account to use. If not set and create is true, a name is generated using the fullname template",
+                    "default": ""
+                }
+            }
+        },
+        "podAnnotations": {
+            "type": "object",
+            "description": "Annotations to add to the pod",
+            "default": {}
+        },
+        "podLabels": {
+            "type": "object",
+            "description": "Labels to add to the pod",
+            "default": {}
+        },
+        "podSecurityContext": {
+            "type": "object",
+            "description": "Pod security context",
+            "default": {}
+        },
+        "securityContext": {
+            "type": "object",
+            "description": "Container security context",
+            "default": {}
+        },
+        "service": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "description": "Service type",
+                    "default": "ClusterIP"
+                },
+                "port": {
+                    "type": "number",
+                    "description": "Service port",
+                    "default": 8080
+                }
+            }
+        },
+        "resources": {
+            "type": "object",
+            "description": "Resource limits and requests for the container",
+            "default": {}
+        },
+        "livenessProbe": {
+            "type": "object",
+            "properties": {
+                "httpGet": {
+                    "type": "object",
+                    "properties": {
+                        "path": {
+                            "type": "string",
+                            "description": "Liveness probe HTTP path",
+                            "default": "/user-portal/health"
+                        },
+                        "port": {
+                            "type": "string",
+                            "description": "Liveness probe HTTP port",
+                            "default": "http"
+                        }
+                    }
+                }
+            }
+        },
+        "readinessProbe": {
+            "type": "object",
+            "properties": {
+                "httpGet": {
+                    "type": "object",
+                    "properties": {
+                        "path": {
+                            "type": "string",
+                            "description": "Readiness probe HTTP path",
+                            "default": "/user-portal/health"
+                        },
+                        "port": {
+                            "type": "string",
+                            "description": "Readiness probe HTTP port",
+                            "default": "http"
+                        }
+                    }
+                }
+            }
+        },
+        "autoscaling": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable autoscaling",
+                    "default": false
+                },
+                "minReplicas": {
+                    "type": "number",
+                    "description": "Minimum number of replicas",
+                    "default": 1
+                },
+                "maxReplicas": {
+                    "type": "number",
+                    "description": "Maximum number of replicas",
+                    "default": 100
+                },
+                "targetCPUUtilizationPercentage": {
+                    "type": "number",
+                    "description": "Target CPU utilization percentage",
+                    "default": 80
+                }
+            }
+        },
+        "volumes": {
+            "type": "array",
+            "description": "Additional volumes on the output Deployment definition",
+            "default": [],
+            "items": {}
+        },
+        "volumeMounts": {
+            "type": "array",
+            "description": "Additional volumeMounts on the output Deployment definition",
+            "default": [],
+            "items": {}
+        },
+        "nodeSelector": {
+            "type": "object",
+            "description": "Node selector for pod assignment",
+            "default": {}
+        },
+        "tolerations": {
+            "type": "array",
+            "description": "Tolerations for pod assignment",
+            "default": [],
+            "items": {}
+        },
+        "affinity": {
+            "type": "object",
+            "description": "Affinity for pod assignment",
+            "default": {}
+        },
+        "istio": {
+            "type": "object",
+            "properties": {
+                "ingress": {
+                    "type": "object",
+                    "properties": {
+                        "principal": {
+                            "type": "string",
+                            "description": "Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName'",
+                            "default": ""
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
