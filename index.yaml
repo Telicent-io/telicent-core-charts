@@ -40,7 +40,7 @@ entries:
     version: 0.1.0
   demo-prereqs-gateways:
   - apiVersion: v2
-    created: "2025-09-18T14:49:42.930577833Z"
+    created: "2025-10-06T14:13:52.635108002Z"
     dependencies:
     - condition: gateway-apps.enabled
       name: gateway-apps
@@ -51,7 +51,7 @@ entries:
       repository: file://./charts/gateway-authn
       version: ^0.1.0
     description: Create Istio gateways and authn configuration for Telicent CORE demo
-    digest: 7bbe05f95f2f345b38f149708a92f9c78303d90e040badf7def681ece1d3641a
+    digest: c81fd0c3d86e461ab19465c0b6c6299a5a02fe9784d012c84b701d0b124bcb96
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -89,9 +89,9 @@ entries:
     version: 0.1.0
   demo-prereqs-kafka:
   - apiVersion: v2
-    created: "2025-09-18T14:49:42.930978746Z"
+    created: "2025-10-06T14:13:52.635317515Z"
     description: Create a kafka cluster and associated configuration
-    digest: 92f95f3d100689b1ebc1e2f065c83a0269cdf8831426bbffac9a1210f38c5089
+    digest: 50b6bfa0152a291665720857988fdc96a4b52abd113ca792a6a4dc32da549383
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -117,9 +117,9 @@ entries:
   demo-prereqs-keycloak:
   - apiVersion: v2
     appVersion: 26.3.0
-    created: "2025-09-18T14:49:42.93158798Z"
+    created: "2025-10-06T14:13:52.635700501Z"
     description: Provisions a dev mode instance of keycloak
-    digest: b3ca985df93c1235915030cfe73605a1b25c3359d0b100c5153389ffba1e8055
+    digest: aaec0a8a1372bcbc4f96e4a8b6991f3e84fe9aba9da78acbce834b9d6d6ad80e
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -159,9 +159,9 @@ entries:
     version: 0.1.0
   demo-prereqs-mongodb:
   - apiVersion: v2
-    created: "2025-09-18T14:49:42.932005334Z"
+    created: "2025-10-06T14:13:52.635964706Z"
     description: Create a mongodb instance and associated configuration
-    digest: cf4d8ace1f738312f83acd4b6a2aef206bbcac6d75f25a208c288abb7863815b
+    digest: 1a8680b407835a32039b185740a64a024579dac8b33b94f378887834412736a4
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -324,49 +324,58 @@ entries:
   telicent-core:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-09-18T14:49:42.947070886Z"
+    created: "2025-10-06T14:13:52.649818836Z"
     dependencies:
-    - name: access
+    - condition: access.enabled
+      name: access
       repository: file://./charts/access
       version: ^0.1.0
-    - name: access-ui
+    - condition: access-ui.enabled
+      name: access-ui
       repository: file://./charts/access-ui
       version: ^0.1.0
-    - condition: global.enterprise
+    - condition: global.enterprise graph-ui.enabled
       name: graph-ui
       repository: file://./charts/graph-ui
       version: ^0.1.0
-    - name: query-ui
+    - condition: query-ui.enabled
+      name: query-ui
       repository: file://./charts/query-ui
       version: ^0.1.0
-    - condition: global.enterprise
+    - condition: global.enterprise, search-ui.enabled
       name: search-ui
       repository: file://./charts/search-ui
       version: ^0.1.0
-    - name: graph
+    - condition: graph.enabled
+      name: graph
       repository: file://./charts/graph
       version: ^0.1.0
-    - condition: global.enterprise
+    - condition: global.enterprise search.enabled
       name: search
       repository: file://./charts/search
       version: ^0.1.1
-    - condition: global.enterprise
+    - condition: global.enterprise, search-projector.enabled
       name: search-projector
       repository: file://./charts/search-projector
       version: ^0.1.1
-    - condition: global.enterprise
+    - condition: global.enterprise, user-preferences.enabled
       name: user-preferences
       repository: file://./charts/user-preferences
       version: ^0.1.0
-    - name: oauth2-proxy
+    - condition: global.oauth2Proxy.enabled
+      name: oauth2-proxy
       repository: file://./charts/oauth2-proxy
       version: ^0.1.0
-    - condition: global.enterprise
+    - condition: global.enterprise, paperback-writer.enabled
       name: paperback-writer
       repository: file://./charts/paperback-writer
       version: ^0.1.0
-    description: A Helm chart for Kubernetes
-    digest: 4253a9d24530d2fabe633e888818efa633df0ccf29d942a082f4079cdda9d77a
+    - condition: global.enterprise, data-catalog.enabled
+      name: data-catalog
+      repository: file://./charts/data-catalog
+      version: ^0.1.0
+    description: Telicent CORE platform for knowledge graph and data management
+    digest: 00fcccfaf479fd42e1f89036c1c6f17e49c889d2ad626f5d34582daa1d0a05a0
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -1311,4 +1320,24 @@ entries:
     urls:
     - telicent-core-0.1.0.tgz
     version: 0.1.0
-generated: "2025-09-18T14:49:42.927851224Z"
+  telicent-preview:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2025-10-06T14:13:52.650855577Z"
+    dependencies:
+    - condition: user-portal-ui.enabled
+      name: user-portal-ui
+      repository: file://./charts/user-portal-ui
+      version: ^0.1.0
+    description: A Helm chart for Kubernetes
+    digest: 931c29afc0211bfc131ea1aca6f4341619d6e66d169f74763fbb11a010b9d66a
+    icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
+    maintainers:
+    - name: telicent
+      url: https://github.com/Telicent-IO
+    name: telicent-preview
+    type: application
+    urls:
+    - telicent-preview-0.2.0.tgz
+    version: 0.2.0
+generated: "2025-10-06T14:13:52.634181789Z"
