@@ -29,13 +29,6 @@ global:
   # NOTE: For Dex the endpoint would be https://{yourDexDomain}/keys
   jwksUrl: "https://{yourAuthdomain}/.well-known/jwks.json"
 
-<<<<<<< Updated upstream
-=======
-  # @key global.traefikEnabled Enable Traefik integration (either Istio or Traefik must be enabled, not both)
-  traefikEnabled: true
-  # @key global.istioEnabled Enable Istio integration (either Istio or Traefik must be enabled, not both)
-  istioEnabled: false
->>>>>>> Stashed changes
   # @key global.istioNamespace Namespace in which Istio is deployed
   # NOTE: Istio, by default, is deployed within the 'istio-system' namespace
   istioNamespace: istio-system
