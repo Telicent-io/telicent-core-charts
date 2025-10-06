@@ -58,7 +58,7 @@ Contains global parameters, these parameters are mirrored within the Telicent co
 | `global.istioServiceAccountName`             | Name of the Istio service account                                                 | `istio-ingress`                                  |
 | `global.istioGatewayName`                    | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)         | `ingress-gateway`                                |
 | `global.kafka.bootstrapServers`              | Comma separated list containing Kafka bootstrap servers                           | `kafka-bootstrap.kafka.svc.cluster.local:9092`   |
-| `global.kafka.existingKafkaConfigSecretName` | Name of an existing secret containing Kafka configuration                         | `""`                                             |
+| `global.kafka.existingConfigSecretName` | Name of an existing secret containing Kafka configuration                         | `""`                                             |
 | `global.kafka.username`                      | Username for Kafka authentication                                                 | `your.kafka.username.here`                       |
 | `global.kafka.password`                      | Password for Kafka authentication                                                 | `your.kafka.password.here`                       |
 | `global.kafka.protocol`                      | Protocol used for Kafka communication                                             | `SASL_SSL`                                       |

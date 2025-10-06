@@ -59,7 +59,7 @@ Contains global parameters, these parameters are mirrored within the Telicent co
 | `global.istioServiceAccountName`       | Name of the Istio service account                                                 | `istio-ingress`                                  |
 | `global.istioGatewayName`              | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)         | `ingress-gateway`                                |
 | `global.kafkaBootstrapUrls`            | Comma separated list containing Kafka bootstrap URLs                              | `kafka-bootstrap.kafka.svc.cluster.local:9092`   |
-| `global.existingKafkaConfigSecretName` | Name of an existing secret containing Kafka configuration                         | `""`                                             |
+| `global.existingConfigSecretName` | Name of an existing secret containing Kafka configuration                         | `""`                                             |
 | `global.existingTruststoreSecretName`  | Name of an existing secret containing the truststore                              | `""`                                             |
 | `global.truststore.mountPath`          | The mount path for the truststore in the container                                | `/app/config/truststore`                         |
 

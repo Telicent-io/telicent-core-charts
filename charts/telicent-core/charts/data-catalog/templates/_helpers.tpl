@@ -66,5 +66,5 @@ Create the name of the service account to use
 {{- end }}
 
 {{- define "data-catalog.kafkaSecretName" -}}
-{{- .Values.global.kafka.existingKafkaConfigSecretName | default (printf "%s-kafka-config" (include "your-subchart.fullname" .)) }}
+{{- .Values.global.kafka.existingConfigSecretName | default (printf "%s-kafka-config" (include "your-subchart.fullname" .)) }}
 {{- end -}}

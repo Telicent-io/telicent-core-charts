@@ -56,7 +56,7 @@
                     "description": "Comma separated list containing Kafka bootstrap URLs",
                     "default": "kafka-bootstrap.kafka.svc.cluster.local:9092"
                 },
-                "existingKafkaConfigSecretName": {
+                "existingConfigSecretName": {
                     "type": "string",
                     "description": "Name of an existing secret containing Kafka configuration",
                     "default": ""
