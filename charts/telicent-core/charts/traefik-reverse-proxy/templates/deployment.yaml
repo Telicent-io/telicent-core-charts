@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "traefik-reverse-proxy.fullname" . }}
+  labels:
+    {{- include "traefik-reverse-proxy.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "traefik-reverse-proxy.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "traefik-reverse-proxy.selectorLabels" . | nindent 8 }}
+      annotations:
+        # Force pod restart when config changes
+        checksum/static-config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+    spec:
+      {{- if .Values.serviceAccount.create }}
+      serviceAccountName: {{ include "traefik-reverse-proxy.serviceAccountName" . }}
+      {{- end }}
+      securityContext:
+        {{- toYaml .Values.securityContext | nindent 8 }}
+      containers:
+        - name: traefik
+          image: "{{ .Values.traefik.image.repository }}:{{ .Values.traefik.image.tag }}"
+          imagePullPolicy: {{ .Values.traefik.image.pullPolicy }}
+          args:
+            - --configfile=/etc/traefik/static/traefik.yml
+          ports:
+            - name: web
+              containerPort: 8080
+              protocol: TCP
+            - name: dashboard
+              containerPort: 8080
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /ping
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /ping
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: static-config
+              mountPath: /etc/traefik/static
+              readOnly: true
+            - name: dynamic-config
+              mountPath: /etc/traefik/dynamic
+              readOnly: true
+      volumes:
+        - name: static-config
+          configMap:
+            name: {{ include "traefik-reverse-proxy.fullname" . }}-static
+        - name: dynamic-config
+          configMap:
+            name: {{ include "traefik-reverse-proxy.fullname" . }}-dynamic
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

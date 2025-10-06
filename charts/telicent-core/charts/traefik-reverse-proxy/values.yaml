@@ -1,0 +1,118 @@
+# Traefik configuration
+global:
+  ## Current available global image parameters: imageRegistry and imagePullSecrets
+  ## Please, note that this will override the image parameters
+  # @key global.imageRegistry Global image registry
+  imageRegistry: ""
+  # E.g.
+  # imagePullSecrets:
+  #   - myRegistryKeySecretName
+  # @key global.imagePullSecrets Global registry secret names as an array
+  imagePullSecrets: []
+
+  # @key global.appHostDomain Domain associated with Telicent application services
+  appHostDomain: "apps.telicent.io"
+  # @key global.authHostDomain Domain associated with Telicent authentication services, including OIDC providers
+  authHostDomain: "auth.telicent.io"
+
+  # @key global.istioNamespace Namespace in which Istio is deployed
+  # NOTE: Istio, by default, is deployed within the 'istio-system' namespace
+  istioNamespace: istio-system
+  # @key global.istioServiceAccountName Name of the Istio service account
+  istioServiceAccountName: istio-ingress
+  # @key global.istioGatewayName Name of the Istio Gateway Resource (LB operating at the edge of the mesh)
+  istioGatewayName: ingress-gateway
+
+traefik:
+  image:
+    repository: traefik
+    tag: "v3.0"
+    pullPolicy: IfNotPresent
+
+  # Service configuration
+  service:
+    type: ClusterIP
+    port: 80
+    targetPort: 8080
+
+  # Traefik static configuration
+  config:
+    # API and dashboard
+    api:
+      dashboard: true
+      insecure: true # Set to false in production
+
+    # Entry points
+    entryPoints:
+      web:
+        address: ":8080"
+
+    # Providers - only file provider, no CRDs
+    providers:
+      file:
+        directory: /etc/traefik/dynamic
+        watch: true
+      # Explicitly disable Kubernetes providers
+      kubernetesIngress:
+        enabled: false
+      kubernetesCRD:
+        enabled: false
+
+    # Logging
+    log:
+      level: INFO
+
+    accessLog: {}
+
+  # Dynamic configuration for routing
+  routes: {}
+
+  # Middlewares configuration
+  middlewares: {}
+  # strip-prefix:
+  #   stripPrefix:
+  #     prefixes:
+  #       - "/app2"
+  # rate-limit:
+  #   rateLimit:
+  #     burst: 100
+  #     average: 50
+
+# Resource limits
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+# Pod security context
+securityContext:
+  runAsNonRoot: true
+  runAsUser: 185
+  fsGroup: 185
+
+# Node selector and tolerations
+nodeSelector: {}
+tolerations: []
+affinity: {}
+
+# Replica count
+replicaCount: 1
+
+# Service account
+serviceAccount:
+  create: true
+  name: ""
+  annotations: {}
+
+ingress:
+  enabled: true
+  # Used to create an Ingress record.
+  # If not set and ingress.enabled is true, the release name will be used.
+  hosts:
+    - host: apps.352.202.185.220.nip.io
+      paths:
+        - path: /
+          pathType: Prefix
