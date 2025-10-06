@@ -1,16 +1,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "user-portal.fullname" . }}
+  name: {{ include "user-portal-ui.fullname" . }}
   labels:
-    {{- include "user-portal.labels" . | nindent 4 }}
+    {{- include "user-portal-ui.labels" . | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
-  {{- end }}
   selector:
     matchLabels:
-      {{- include "user-portal.selectorLabels" . | nindent 6 }}
+      {{- include "user-portal-ui.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -18,7 +16,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "user-portal.labels" . | nindent 8 }}
+        {{- include "user-portal-ui.labels" . | nindent 8 }}
         {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -27,7 +25,7 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "user-portal.serviceAccountName" . }}
+      serviceAccountName: {{ include "user-portal-ui.serviceAccountName" . }}
       {{- with .Values.podSecurityContext }}
       securityContext:
         {{- toYaml . | nindent 8 }}
@@ -38,7 +36,7 @@ spec:
           securityContext:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          image: "{{ include "user-portal-ui.image" . }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
@@ -56,12 +54,22 @@ spec:
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- with .Values.volumeMounts }}
           volumeMounts:
+          - mountPath: /usr/local/nginx/html/env-config.js
+            name: app-config-volume
+            subPath: env-config.js
+          {{- with .Values.volumeMounts }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
-      {{- with .Values.volumes }}
       volumes:
+      - configMap:
+          {{- if .Values.existingUserPortalUIConfigName }}
+          name: {{ .Values.existingUserPortalUIConfigName }}
+          {{- else }}
+          name: {{ include "user-portal-ui.fullname" . }}
+          {{- end }}
+        name: app-config-volume
+      {{- with .Values.volumes }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
       {{- with .Values.nodeSelector }}
