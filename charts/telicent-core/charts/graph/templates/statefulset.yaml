@@ -93,27 +93,7 @@ spec:
         - mountPath: {{ .Values.global.truststore.mountPath | default "/app/config/truststore" }}
           name: truststore-volume
       {{- end }}
-      {{ if .Values.configuration.kafkaTopics }}
-      initContainers:
-      - name: kafka-topic-creation
-        image: apache/kafka:4.0.0
-        command: ['/bin/sh', '-c']
-        args:
-          - |
-            for i in $(echo {{ .Values.configuration.kafkaTopics | quote }} | tr -d "[]"); do
-              /opt/kafka/bin/kafka-topics.sh \
-                --create \
-                --topic $i \
-                --partitions 1 \
-                --replication-factor 1 \
-                --if-not-exists \
-                --command-config=/app/config/kafka-auth/kafka-config.properties \
-                --bootstrap-server {{ .Values.global.kafkaBootstrapUrls }};
-            done
-        volumeMounts:
-        - mountPath: /app/config/kafka-auth/
-          name: kafka-auth-config
-      {{- end }}
+
       volumes:
       - name: fuseki-config-volume
         configMap:
@@ -123,7 +103,7 @@ spec:
         {{- if .Values.global.existingKafkaConfigSecretName }}
           secretName: {{ .Values.global.existingKafkaConfigSecretName }}
         {{- else }}
-          secretName: {{ include "telicent-core.kafkaAuthConfigSecretName" . }}
+          secretName: {{ include "graph.fullname" . }}-kafka-config
         {{- end }}
         # TODO: Secret is created outside of Helm by using Ansible. Would potentially need cert-manager to remove this dependency.
 

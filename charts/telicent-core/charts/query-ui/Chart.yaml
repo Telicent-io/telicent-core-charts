@@ -2,8 +2,7 @@
 
 apiVersion: v2
 name: query-ui
-description: Telicent Query UI is a basic free to use app that provides a UI
-  interface to run SparQL and GraphQL (via GraphiQL) queries.
+description: Telicent Query UI for executing SPARQL and GraphQL queries against knowledge graphs
 type: application
 version: 0.1.2
 appVersion: "1.2.2"

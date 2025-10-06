@@ -38,11 +38,19 @@ global:
   # @key global.istioGatewayName Name of the Istio Gateway Resource (LB operating at the edge of the mesh)
   istioGatewayName: ingress-gateway
 
-  # @key global.kafkaBootstrapUrls Comma separated list containing Kafka bootstrap URLs
-  kafkaBootstrapUrls: "kafka-bootstrap.kafka.svc.cluster.local:9092"
-  # @key global.existingKafkaConfigSecretName Name of an existing secret containing Kafka configuration
-  existingKafkaConfigSecretName: ""
-
+  kafka:
+    # @key global.kafka.bootstrapServers Comma separated list containing Kafka bootstrap servers
+    bootstrapServers: "kafka-bootstrap.kafka.svc.cluster.local:9092"
+    # @key global.kafka.existingKafkaConfigSecretName Name of an existing secret containing Kafka configuration (preferred over individual settings below for security)
+    existingKafkaConfigSecretName: ""
+    # @key global.kafka.username Username for Kafka authentication
+    username: "your.kafka.username.here"
+    # @key global.kafka.password Password for Kafka authentication
+    password: "your.kafka.password.here"
+    # @key global.kafka.protocol Protocol used for Kafka communication
+    protocol: "SASL_SSL"
+    # @key global.kafka.mechanism SASL mechanism used for Kafka authentication
+    mechanism: "SCRAM-SHA-512"
 
   # @key global.existingTruststoreSecretName Name of an existing secret containing the truststore
   existingTruststoreSecretName: ""
@@ -69,8 +77,6 @@ configuration:
   # @key configuration.otelTracesExporter OpenTelemetry traces exporter
   # Options: otlp, none
   otelTracesExporter: none
-  # @key configuration.kafkaTopics Kafka topics for the application, created by a init container
-  kafkaTopics: []
 
 # @section Common Parameters
 # @key fullnameOverride String to fully override the generated release name
@@ -96,7 +102,7 @@ image:
   # @key image.pullPolicy Graph image pull policy
   pullPolicy: IfNotPresent
   # @key image.pullSecrets Specify registry secret names as an array
-  pullSecrets: [ ]
+  pullSecrets: []
 
 resources:
   requests:

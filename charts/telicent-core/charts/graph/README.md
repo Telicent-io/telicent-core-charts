@@ -46,35 +46,38 @@ The command removes all the Kubernetes components associated with the chart and 
 
 Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
 
-| Name                                   | Description                                                                       | Value                                            |
-| -------------------------------------- | --------------------------------------------------------------------------------- | ------------------------------------------------ |
-| `global.imageRegistry`                 | Global image registry                                                             | `""`                                             |
-| `global.imagePullSecrets`              | Global registry secret names as an array                                          | `[]`                                             |
-| `global.enterprise`                    | Enable enterprise mode, adding additional features and configurations             | `false`                                          |
-| `global.appHostDomain`                 | Domain associated with Telicent application services                              | `apps.telicent.io`                               |
-| `global.authHostDomain`                | Domain associated with Telicent authentication services, including OIDC providers | `auth.telicent.io`                               |
-| `global.groupsClaim`                   | Key used to retrieve groups from the OIDC provider                                | `groups`                                         |
-| `global.jwksUrl`                       | Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)     | `https://{yourAuthdomain}/.well-known/jwks.json` |
-| `global.istioNamespace`                | Namespace in which Istio is deployed                                              | `istio-system`                                   |
-| `global.istioServiceAccountName`       | Name of the Istio service account                                                 | `istio-ingress`                                  |
-| `global.istioGatewayName`              | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)         | `ingress-gateway`                                |
-| `global.kafkaBootstrapUrls`            | Comma separated list containing Kafka bootstrap URLs                              | `kafka-bootstrap.kafka.svc.cluster.local:9092`   |
-| `global.existingKafkaConfigSecretName` | Name of an existing secret containing Kafka configuration                         | `""`                                             |
-| `global.existingTruststoreSecretName`  | Name of an existing secret containing the truststore                              | `""`                                             |
-| `global.truststore.mountPath`          | The mount path for the truststore in the container                                | `/app/config/truststore`                         |
+| Name                                         | Description                                                                                                       | Value                                            |
+| -------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
+| `global.imageRegistry`                       | Global image registry                                                                                             | `""`                                             |
+| `global.imagePullSecrets`                    | Global registry secret names as an array                                                                          | `[]`                                             |
+| `global.enterprise`                          | Enable enterprise mode, adding additional features and configurations                                             | `false`                                          |
+| `global.appHostDomain`                       | Domain associated with Telicent application services                                                              | `apps.telicent.io`                               |
+| `global.authHostDomain`                      | Domain associated with Telicent authentication services, including OIDC providers                                 | `auth.telicent.io`                               |
+| `global.groupsClaim`                         | Key used to retrieve groups from the OIDC provider                                                                | `groups`                                         |
+| `global.jwksUrl`                             | Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)                                     | `https://{yourAuthdomain}/.well-known/jwks.json` |
+| `global.istioNamespace`                      | Namespace in which Istio is deployed                                                                              | `istio-system`                                   |
+| `global.istioServiceAccountName`             | Name of the Istio service account                                                                                 | `istio-ingress`                                  |
+| `global.istioGatewayName`                    | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)                                         | `ingress-gateway`                                |
+| `global.kafka.bootstrapServers`              | Comma separated list containing Kafka bootstrap servers                                                           | `kafka-bootstrap.kafka.svc.cluster.local:9092`   |
+| `global.kafka.existingKafkaConfigSecretName` | Name of an existing secret containing Kafka configuration (preferred over individual settings below for security) | `""`                                             |
+| `global.kafka.username`                      | Username for Kafka authentication                                                                                 | `your.kafka.username.here`                       |
+| `global.kafka.password`                      | Password for Kafka authentication                                                                                 | `your.kafka.password.here`                       |
+| `global.kafka.protocol`                      | Protocol used for Kafka communication                                                                             | `SASL_SSL`                                       |
+| `global.kafka.mechanism`                     | SASL mechanism used for Kafka authentication                                                                      | `SCRAM-SHA-512`                                  |
+| `global.existingTruststoreSecretName`        | Name of an existing secret containing the truststore                                                              | `""`                                             |
+| `global.truststore.mountPath`                | The mount path for the truststore in the container                                                                | `/app/config/truststore`                         |
 
 ### Configuration Parameters
 
 Contains configuration parameters specific to the Graph application
 
-| Name                                  | Description                                                   | Value                                                                                  |
-| ------------------------------------- | ------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
-| `configuration.userAttributesUrl`     | URL for the user details endpoint                             | `http://access.tc-system.svc.cluster.local:8080/users/lookup/{user}`                   |
-| `configuration.attributeHierarchyUrl` | URL for the user hierarchy endpoint                           | `http://access.tc-system.svc.cluster.local:8080/hierarchies/lookup/{name}`             |
-| `configuration.javaOptions`           | JVM options for the application                               | `-Xmx5120m -Xms2048m -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks` |
-| `configuration.otelMetricsExporter`   | OpenTelemetry metrics exporter                                | `prometheus`                                                                           |
-| `configuration.otelTracesExporter`    | OpenTelemetry traces exporter                                 | `none`                                                                                 |
-| `configuration.kafkaTopics`           | Kafka topics for the application, created by a init container | `[]`                                                                                   |
+| Name                                  | Description                         | Value                                                                                  |
+| ------------------------------------- | ----------------------------------- | -------------------------------------------------------------------------------------- |
+| `configuration.userAttributesUrl`     | URL for the user details endpoint   | `http://access.tc-system.svc.cluster.local:8080/users/lookup/{user}`                   |
+| `configuration.attributeHierarchyUrl` | URL for the user hierarchy endpoint | `http://access.tc-system.svc.cluster.local:8080/hierarchies/lookup/{name}`             |
+| `configuration.javaOptions`           | JVM options for the application     | `-Xmx5120m -Xms2048m -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks` |
+| `configuration.otelMetricsExporter`   | OpenTelemetry metrics exporter      | `prometheus`                                                                           |
+| `configuration.otelTracesExporter`    | OpenTelemetry traces exporter       | `none`                                                                                 |
 
 ### Common Parameters
 

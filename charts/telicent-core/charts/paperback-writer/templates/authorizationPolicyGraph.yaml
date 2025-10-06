@@ -1,0 +1,49 @@
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  name: {{ include "paperback-writer.fullname" .}}-graph
+spec:
+  action: ALLOW
+  rules:
+    - from:
+        - source:
+            principals:
+            - cluster.local/ns/{{ .Release.Namespace }}/sa/{{ include "paperback-writer.serviceAccountName" . }}
+      to:
+        - operation:
+            methods:
+              - GET
+              - POST
+            paths:
+              - /knowledge/update
+              - /knowledge/update/*
+              - /ontology/update
+              - /ontology/update/*
+              - /catalog/update
+              - /catalog/update/*
+              - /$/labels/catalog
+              - /$/labels/catalog/*
+      when:
+        - key: request.auth.claims[groups]
+          values:
+            - tc_write
+    - from:
+        - source:
+            principals:
+            - cluster.local/ns/{{ .Release.Namespace }}/sa/{{ include "paperback-writer.serviceAccountName" . }}
+      to:
+        - operation:
+            methods:
+              - GET
+              - POST
+            paths:
+              - /catalog/query
+              - /catalog/query/*
+      when:
+        - key: request.auth.claims[groups]
+          values:
+            - tc_read
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: "{{ .Release.Name }}"
+      app.kubernetes.io/name: "graph"

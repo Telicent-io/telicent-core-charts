@@ -79,8 +79,6 @@ configuration:
   # @key configuration.cacert Optional CA certificate data (PEM format) for validating the OIDC provider's TLS certificate
   cacert: ""
 
-
-
 # @key imagePullSecrets Registry secret names as an array for private image repositories
 imagePullSecrets: []
 
@@ -141,7 +139,6 @@ service:
   type: ClusterIP
   # @key service.port Service port
   port: 4080
-
 
 # @section Resources Parameters
 # @descStart

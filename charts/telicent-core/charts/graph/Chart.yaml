@@ -2,7 +2,7 @@
 
 apiVersion: v2
 name: graph
-description: A Helm chart for Kubernetes
+description: Telicent Smart Cache Graph for knowledge graph storage and querying
 # A chart can be either an 'application' or a 'library' chart.
 #
 # Application charts are a collection of templates that can be packaged into versioned archives

@@ -12,11 +12,13 @@ metadata:
 
   annotations:
     "helm.sh/hook": post-install  # only run after the required resources have been created
-    "helm.sh/hook-delete-policy": before-hook-creation
+    "helm.sh/hook-delete-policy": before-hook-creation, hook-succeeded
+    "sidecar.istio.io/inject": "false"
 
 spec:
   backoffLimit: 3
   activeDeadlineSeconds: 180 # once reached, all running Pods are terminated with Job status:Failed
+  ttlSecondsAfterFinished: 30 # once reached, Job is eligible to be automatically deleted
   template:
     metadata:
       annotations:

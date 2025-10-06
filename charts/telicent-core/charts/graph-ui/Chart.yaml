@@ -2,7 +2,7 @@
 
 apiVersion: v2
 name: graph-ui
-description: Telicent Graph UI
+description: Telicent Graph UI for interactive knowledge graph visualization and exploration
 type: application
 version: 0.1.2
 appVersion: "1.32.1"
