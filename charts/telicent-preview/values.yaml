@@ -60,4 +60,9 @@ global:
 # @section paperback-writer Parameters
 paperback-writer:
   # @key paperback-writer.enabled Enable or disable the paperback-writer component
-  enabled: false
+  enabled: true
+
+# @section data-catalog Parameters
+data-catalog:
+  # @key data-catalog.enabled Enable or disable the data-catalog component
+  enabled: true
