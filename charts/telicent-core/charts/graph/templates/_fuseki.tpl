@@ -314,7 +314,7 @@ Copyright (C) 2025 Telicent Limited
         .
     ## --------
     <#connector> rdf:type fk:Connector ;
-        fk:bootstrapServers    {{ .Values.global.kafkaBootstrapUrls | quote }};
+        fk:bootstrapServers    {{ .Values.global.kafka.bootstrapServers | quote }};
         fk:topic               "knowledge";
         fk:dlqTopic            "knowledge.dlq";
         ## This should refer to an authz:upload endpoint
@@ -332,7 +332,7 @@ Copyright (C) 2025 Telicent Limited
         fk:configFile       "env:{KAFKA_CONFIG_FILE_PATH:}"
         .
     <#ontologyConnector> rdf:type fk:Connector ;
-        fk:bootstrapServers    {{ .Values.global.kafkaBootstrapUrls | quote }};
+        fk:bootstrapServers    {{ .Values.global.kafka.bootstrapServers | quote }};
         fk:topic               "ontology";
         fk:dlqTopic            "ontology.dlq";
         ## This should refer to the target dataset
@@ -350,7 +350,7 @@ Copyright (C) 2025 Telicent Limited
         fk:configFile       "env:{KAFKA_CONFIG_FILE_PATH:}"
         .
     <#catalogConnector> rdf:type fk:Connector ;
-        fk:bootstrapServers    {{ .Values.global.kafkaBootstrapUrls | quote }};
+        fk:bootstrapServers    {{ .Values.global.kafka.bootstrapServers | quote }};
         fk:topic               "catalog";
         fk:dlqTopic            "catalog.dlq";
         ## This should refer to the target dataset
