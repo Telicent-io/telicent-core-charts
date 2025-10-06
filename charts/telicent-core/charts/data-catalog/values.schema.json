@@ -59,7 +59,7 @@
                 "repository": {
                     "type": "string",
                     "description": "Data Catalog image repository",
-                    "default": "quay.io/telicent/telicent-data-catalog"
+                    "default": "telicent/telicent-data-catalog"
                 },
                 "pullPolicy": {
                     "type": "string",
