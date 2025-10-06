@@ -82,7 +82,7 @@ image:
   # @key image.pullPolicy Graph UI image pull policy
   pullPolicy: IfNotPresent
 # @key imagePullSecrets Specify registry secret names as an array
-imagePullSecrets: [ ]
+imagePullSecrets: []
 
 resources:
   requests:
@@ -113,7 +113,6 @@ containerSecurityContext:
     # @key containerSecurityContext.seccompProfile.type Set container's Security Context seccomp profile
     type: RuntimeDefault
 
-
 podSecurityContext:
   # @key podSecurityContext.runAsUser Set the provisioning pod's Security Context runAsUser User ID
   runAsUser: 185
@@ -135,8 +134,7 @@ affinity: {}
 nodeSelector: {}
 # @key tolerations Tolerations for pod assignment
 # Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
-tolerations: [ ]
-
+tolerations: []
 # @section Traffic Exposure Parameters
 service:
   # @key service.port Graph UI service port

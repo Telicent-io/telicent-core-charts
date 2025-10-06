@@ -26,6 +26,11 @@
                     "description": "Domain associated with Telicent authentication services, including OIDC providers",
                     "default": "auth.telicent.io"
                 },
+                "groupsClaim": {
+                    "type": "string",
+                    "description": "Key used to retrieve groups from the OIDC provider",
+                    "default": "groups"
+                },
                 "istioNamespace": {
                     "type": "string",
                     "description": "Namespace in which Istio is deployed",
@@ -349,6 +354,21 @@
                             "type": "string",
                             "description": "Name of the Graph service account",
                             "default": "graph"
+                        }
+                    }
+                },
+                "paperback-writer": {
+                    "type": "object",
+                    "properties": {
+                        "principal": {
+                            "type": "string",
+                            "description": "Principal used for Paperback Writer traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'serviceAccountName' and the current namespace",
+                            "default": ""
+                        },
+                        "serviceAccountName": {
+                            "type": "string",
+                            "description": "Name of the Paperback Writer service account",
+                            "default": "paperback-writer"
                         }
                     }
                 }

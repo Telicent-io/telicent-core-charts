@@ -27,44 +27,59 @@ global:
   istioGatewayName: ingress-gateway
 
 # This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
+# @key replicaCount Number of replicas for the Data Catalog deployment
 replicaCount: 1
 
 # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
 image:
-  repository: quay.io/telicent/telicent-data-catalog
+  # @key image.repository Data Catalog image repository
+  repository: telicent/telicent-data-catalog
+  # @key image.pullPolicy Data Catalog image pull policy
   # This sets the pull policy for images.
   pullPolicy: IfNotPresent
+  # @key image.tag Data Catalog image tag (defaults to chart appVersion if not set)
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
 # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+# @key imagePullSecrets Specify registry secret names as an array
 imagePullSecrets: []
 # This is to override the chart name.
+# @key nameOverride String to partially override the chart name
 nameOverride: ""
+# @key fullnameOverride String to fully override the generated release name
 fullnameOverride: ""
 
 # This section builds out the service account more information can be found here: https://kubernetes.io/docs/concepts/security/service-accounts/
 serviceAccount:
+  # @key serviceAccount.create Specifies whether a service account should be created
   # Specifies whether a service account should be created
   create: true
+  # @key serviceAccount.automount Automatically mount a ServiceAccount's API credentials?
   # Automatically mount a ServiceAccount's API credentials?
   automount: true
+  # @key serviceAccount.annotations Annotations to add to the service account
   # Annotations to add to the service account
   annotations: {}
+  # @key serviceAccount.name The name of the service account to use
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
 # This is for setting Kubernetes Annotations to a Pod.
 # For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+# @key podAnnotations Annotations to add to the Data Catalog pods
 podAnnotations: {}
 # This is for setting Kubernetes Labels to a Pod.
 # For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+# @key podLabels Labels to add to the Data Catalog pods
 podLabels: {}
 
+# @key podSecurityContext Security context for the Data Catalog pods
 podSecurityContext: {}
   # fsGroup: 2000
 
+# @key securityContext Security context for the Data Catalog containers
 securityContext: {}
   # capabilities:
   #   drop:
@@ -75,11 +90,14 @@ securityContext: {}
 
 # This is for setting up a service more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/
 service:
+  # @key service.type The service type for the Data Catalog
   # This sets the service type more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
   type: ClusterIP
+  # @key service.port The service port for the Data Catalog
   # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
   port: 8080
 
+# @key resources Resource requests and limits for the Data Catalog
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
@@ -95,13 +113,18 @@ resources: {}
 # This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
 livenessProbe:
   httpGet:
+    # @key livenessProbe.httpGet.path The HTTP path for the liveness probe
     path: /
+    # @key livenessProbe.httpGet.port The HTTP port for the liveness probe
     port: http
 readinessProbe:
   httpGet:
+    # @key readinessProbe.httpGet.path The HTTP path for the readiness probe
     path: /
+    # @key readinessProbe.httpGet.port The HTTP port for the readiness probe
     port: http
 
+# @key volumes Additional volumes for the Data Catalog
 # Additional volumes on the output Deployment definition.
 volumes: []
 # - name: foo
@@ -109,16 +132,20 @@ volumes: []
 #     secretName: mysecret
 #     optional: false
 
+# @key volumeMounts Additional volume mounts for the Data Catalog
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts: []
 # - name: foo
 #   mountPath: "/etc/foo"
 #   readOnly: true
 
+# @key nodeSelector Node selector for the Data Catalog pods
 nodeSelector: {}
 
+# @key tolerations Tolerations for the Data Catalog pods
 tolerations: []
 
+# @key affinity Affinity rules for the Data Catalog pods
 affinity: {}
 
 istio:

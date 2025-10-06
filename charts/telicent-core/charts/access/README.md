@@ -120,15 +120,17 @@ Contains configuration parameters specific to the Access application
 
 ### Traffic Exposure Parameters
 
-| Name                              | Description                                                                                                                                                                                      | Value       |
-| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------- |
-| `service.port`                    | Access service port                                                                                                                                                                              | `8080`      |
-| `service.type`                    | Access service type                                                                                                                                                                              | `ClusterIP` |
-| `istio.ingress.principal`         | Principal used for ingress traffic to this application by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName' | `""`        |
-| `istio.search.principal`          | Principal used for Search traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'serviceAccountName' and the current namespace                                    | `""`        |
-| `istio.search.serviceAccountName` | Name of the Search service account                                                                                                                                                               | `search`    |
-| `istio.graph.principal`           | Principal used for Graph traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'serviceAccountName' and the current namespace                                     | `""`        |
-| `istio.graph.serviceAccountName`  | Name of the Graph service account                                                                                                                                                                | `graph`     |
+| Name                                        | Description                                                                                                                                                                                      | Value              |
+| ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------ |
+| `service.port`                              | Access service port                                                                                                                                                                              | `8080`             |
+| `service.type`                              | Access service type                                                                                                                                                                              | `ClusterIP`        |
+| `istio.ingress.principal`                   | Principal used for ingress traffic to this application by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName' | `""`               |
+| `istio.search.principal`                    | Principal used for Search traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'serviceAccountName' and the current namespace                                    | `""`               |
+| `istio.search.serviceAccountName`           | Name of the Search service account                                                                                                                                                               | `search`           |
+| `istio.graph.principal`                     | Principal used for Graph traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'serviceAccountName' and the current namespace                                     | `""`               |
+| `istio.graph.serviceAccountName`            | Name of the Graph service account                                                                                                                                                                | `graph`            |
+| `istio.paperback-writer.principal`          | Principal used for Paperback Writer traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'serviceAccountName' and the current namespace                          | `""`               |
+| `istio.paperback-writer.serviceAccountName` | Name of the Paperback Writer service account                                                                                                                                                     | `paperback-writer` |
 
 ### Service Account Parameters
 

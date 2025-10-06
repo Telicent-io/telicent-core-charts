@@ -64,3 +64,7 @@ Create the name of the service account to use
 {{- define "data-catalog.ingressPrincipal" -}}
 {{- .Values.istio.ingress.principal | default (printf "cluster.local/ns/%s/sa/%s" .Values.global.istioNamespace .Values.global.istioServiceAccountName) | quote }}
 {{- end }}
+
+{{- define "data-catalog.kafkaSecretName" -}}
+{{- .Values.global.kafka.existingConfigSecretName | default (printf "%s-kafka-config" (include "your-subchart.fullname" .)) }}
+{{- end -}}

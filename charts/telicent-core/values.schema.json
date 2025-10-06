@@ -31,6 +31,11 @@
                     "description": "Domain associated with Telicent authentication services, including OIDC providers",
                     "default": "auth.telicent.io"
                 },
+                "groupsClaim": {
+                    "type": "string",
+                    "description": "Key used to retrieve groups from the OIDC provider",
+                    "default": "groups"
+                },
                 "jwksUrl": {
                     "type": "string",
                     "description": "Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)",
@@ -51,35 +56,46 @@
                     "description": "Name of the Istio Gateway Resource (LB operating at the edge of the mesh)",
                     "default": "ingress-gateway"
                 },
-                "kafkaBootstrapUrls": {
-                    "type": "string",
-                    "description": "Comma separated list containing Kafka bootstrap URLs",
-                    "default": "kafka-bootstrap.kafka.svc.cluster.local:9092"
-                },
-                "existingKafkaConfigSecretName": {
-                    "type": "string",
-                    "description": "Name of an existing secret containing Kafka configuration",
-                    "default": ""
-                },
-                "kafkaConfigUsername": {
-                    "type": "string",
-                    "description": "Username for Kafka authentication",
-                    "default": "your.kafka.username.here"
-                },
-                "kafkaConfigPassword": {
-                    "type": "string",
-                    "description": "Password for Kafka authentication",
-                    "default": "your.kafka.password.here"
-                },
-                "kafkaConfigProtocol": {
-                    "type": "string",
-                    "description": "Protocol used for Kafka communication",
-                    "default": "SASL_SSL"
-                },
-                "kafkaConfigMechanism": {
-                    "type": "string",
-                    "description": "SASL mechanism used for Kafka authentication",
-                    "default": "SCRAM-SHA-512"
+                "kafka": {
+                    "type": "object",
+                    "properties": {
+                        "bootstrapServers": {
+                            "type": "string",
+                            "description": "Comma separated list containing Kafka bootstrap servers",
+                            "default": "kafka-bootstrap.kafka.svc.cluster.local:9092"
+                        },
+                        "existingConfigSecretName": {
+                            "type": "string",
+                            "description": "Name of an existing secret containing Kafka configuration",
+                            "default": ""
+                        },
+                        "username": {
+                            "type": "string",
+                            "description": "Username for Kafka authentication",
+                            "default": "your.kafka.username.here"
+                        },
+                        "password": {
+                            "type": "string",
+                            "description": "Password for Kafka authentication",
+                            "default": "your.kafka.password.here"
+                        },
+                        "protocol": {
+                            "type": "string",
+                            "description": "Protocol used for Kafka communication",
+                            "default": "SASL_SSL"
+                        },
+                        "mechanism": {
+                            "type": "string",
+                            "description": "SASL mechanism used for Kafka authentication",
+                            "default": "SCRAM-SHA-512"
+                        },
+                        "topics": {
+                            "type": "array",
+                            "description": "List of Kafka topics to be created during installation",
+                            "default": [],
+                            "items": {}
+                        }
+                    }
                 },
                 "existingTruststoreSecretName": {
                     "type": "string",
@@ -115,6 +131,42 @@
                     "type": "object",
                     "description": "Additional custom annotations for the ServiceAccount",
                     "default": {}
+                }
+            }
+        },
+        "paperback-writer": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable or disable the paperback-writer component",
+                    "default": false
+                }
+            }
+        },
+        "document-pipeline": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable or disable the document-pipeline component",
+                    "default": false
+                }
+            }
+        },
+        "kafkaTopics": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable or disable the creation of Kafka topics during installation",
+                    "default": false
+                },
+                "topics": {
+                    "type": "array",
+                    "description": "List of Kafka topics to be created",
+                    "default": [],
+                    "items": {}
                 }
             }
         }

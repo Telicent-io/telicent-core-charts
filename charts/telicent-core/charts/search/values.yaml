@@ -40,8 +40,8 @@ global:
 
   # @key global.kafkaBootstrapUrls Comma separated list containing Kafka bootstrap URLs
   kafkaBootstrapUrls: "kafka-bootstrap.kafka.svc.cluster.local:9092"
-  # @key global.existingKafkaConfigSecretName Name of an existing secret containing Kafka configuration
-  existingKafkaConfigSecretName: ""
+  # @key global.existingConfigSecretName Name of an existing secret containing Kafka configuration
+  existingConfigSecretName: ""
 
   # @key global.existingTruststoreSecretName Name of an existing secret containing the truststore
   existingTruststoreSecretName: ""
@@ -115,7 +115,7 @@ revisionHistoryLimit: 5
 # @key annotations Add extra annotations to the Deployment object
 annotations: {}
 # @key extraEnvs List of additional environment variables to set in the pod
-extraEnvs: [ ]
+extraEnvs: []
 
 image:
   # @key image.registry [default: REGISTRY_NAME] Search image registry
@@ -127,7 +127,7 @@ image:
   # @key image.pullPolicy Search image pull policy
   pullPolicy: IfNotPresent
   # @key image.pullSecrets Specify registry secret names as an array
-  pullSecrets: [ ]
+  pullSecrets: []
 
 resources:
   requests:

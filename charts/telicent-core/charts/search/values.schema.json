@@ -31,6 +31,11 @@
                     "description": "Domain associated with Telicent authentication services, including OIDC providers",
                     "default": "auth.telicent.io"
                 },
+                "groupsClaim": {
+                    "type": "string",
+                    "description": "Key used to retrieve groups from the OIDC provider",
+                    "default": "groups"
+                },
                 "jwksUrl": {
                     "type": "string",
                     "description": "Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)",
@@ -56,7 +61,7 @@
                     "description": "Comma separated list containing Kafka bootstrap URLs",
                     "default": "kafka-bootstrap.kafka.svc.cluster.local:9092"
                 },
-                "existingKafkaConfigSecretName": {
+                "existingConfigSecretName": {
                     "type": "string",
                     "description": "Name of an existing secret containing Kafka configuration",
                     "default": ""

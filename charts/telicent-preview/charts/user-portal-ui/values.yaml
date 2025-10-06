@@ -1,0 +1,173 @@
+# Copyright (C) 2025 Telicent Limited
+# Telicent User Portal UI stand-alone chart
+
+# @section Global Parameters
+# @descStart
+# Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
+# @descEnd
+
+global:
+  ## Current available global image parameters: imageRegistry and imagePullSecrets
+  ## Please, note that this will override the image parameters
+  # @key global.imageRegistry Global image registry
+  imageRegistry: ""
+  # E.g.
+  # imagePullSecrets:
+  #   - myRegistryKeySecretName
+  # @key global.imagePullSecrets Global registry secret names as an array
+  imagePullSecrets: []
+
+  # @key global.appHostDomain Domain associated with Telicent application services
+  appHostDomain: "apps.telicent.io"
+  # @key global.authHostDomain Domain associated with Telicent authentication services, including OIDC providers
+  authHostDomain: "auth.telicent.io"
+
+  # @key global.istioNamespace Namespace in which Istio is deployed
+  # NOTE: Istio, by default, is deployed within the 'istio-system' namespace
+  istioNamespace: istio-system
+  # @key global.istioServiceAccountName Name of the Istio service account
+  istioServiceAccountName: istio-ingress
+  # @key global.istioGatewayName Name of the Istio Gateway Resource (LB operating at the edge of the mesh)
+  istioGatewayName: ingress-gateway
+
+# @section Application Configuration
+
+# @key replicaCount Number of replicas for the deployment
+# This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
+replicaCount: 1
+
+image:
+  # @key image.registry [default: REGISTRY_NAME] Query UI image registry
+  registry: quay.io
+  # @key image.repository [default: REPOSITORY_NAME/telicent-query] Query UI image name
+  repository: telicent/telicent-user-portal
+  # @key image.tag Query UI image tag. If not set, a tag is generated using the appVersion
+  tag: ""
+  # @key image.pullPolicy Query UI image pull policy
+  pullPolicy: IfNotPresent
+  # @key image.pullSecrets Specify registry secret names as an array
+  pullSecrets: []
+
+# @key nameOverride Override the chart name
+nameOverride: ""
+# @key fullnameOverride Override the full chart name
+fullnameOverride: ""
+
+# @section Service Account Configuration
+# This section builds out the service account more information can be found here: https://kubernetes.io/docs/concepts/security/service-accounts/
+serviceAccount:
+  # @key serviceAccount.create Specifies whether a service account should be created
+  create: true
+  # @key serviceAccount.automount Automatically mount a ServiceAccount's API credentials?
+  automount: true
+  # @key serviceAccount.annotations Annotations to add to the service account
+  annotations: {}
+  # @key serviceAccount.name The name of the service account to use. If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+# @section Pod Configuration
+
+# @key podAnnotations Annotations to add to the pod
+# For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+podAnnotations: {}
+# @key podLabels Labels to add to the pod
+# For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+podLabels: {}
+
+# @key podSecurityContext Pod security context
+podSecurityContext: {}
+  # fsGroup: 2000
+
+# @key securityContext Container security context
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+# @section Service Configuration
+# This is for setting up a service more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/
+service:
+  # @key service.type Service type
+  # This sets the service type more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
+  type: ClusterIP
+  # @key service.port Service port
+  # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
+  port: 8080
+
+# @section Resource Configuration
+
+# @key resources Resource limits and requests for the container
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+# This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
+livenessProbe:
+  httpGet:
+    # @key livenessProbe.httpGet.path Liveness probe HTTP path
+    path: /user-portal/health
+    # @key livenessProbe.httpGet.port Liveness probe HTTP port
+    port: http
+readinessProbe:
+  httpGet:
+    # @key readinessProbe.httpGet.path Readiness probe HTTP path
+    path: /user-portal/health
+    # @key readinessProbe.httpGet.port Readiness probe HTTP port
+    port: http
+
+# @section Autoscaling Configuration
+# This section is for setting up autoscaling more information can be found here: https://kubernetes.io/docs/concepts/workloads/autoscaling/
+autoscaling:
+  # @key autoscaling.enabled Enable autoscaling
+  enabled: false
+  # @key autoscaling.minReplicas Minimum number of replicas
+  minReplicas: 1
+  # @key autoscaling.maxReplicas Maximum number of replicas
+  maxReplicas: 100
+  # @key autoscaling.targetCPUUtilizationPercentage Target CPU utilization percentage
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+# @section Volume Configuration
+
+# @key volumes Additional volumes on the output Deployment definition
+volumes: []
+# - name: foo
+#   secret:
+#     secretName: mysecret
+#     optional: false
+
+# @key volumeMounts Additional volumeMounts on the output Deployment definition
+volumeMounts: []
+# - name: foo
+#   mountPath: "/etc/foo"
+#   readOnly: true
+
+# @section Node Configuration
+
+# @key nodeSelector Node selector for pod assignment
+nodeSelector: {}
+
+# @key tolerations Tolerations for pod assignment
+tolerations: []
+
+# @key affinity Affinity for pod assignment
+affinity: {}
+
+# @section Istio Configuration
+
+istio:
+  ingress:
+    # @key istio.ingress.principal Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName'
+    principal: ""

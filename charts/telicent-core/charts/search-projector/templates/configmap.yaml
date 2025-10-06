@@ -15,7 +15,7 @@ data:
   JAVA_OPTIONS: {{ .Values.configuration.javaOptions | quote }}
   OTEL_METRICS_EXPORTER: {{ .Values.configuration.otelMetricsExporter | quote }}
   OTEL_TRACES_EXPORTER: {{ .Values.configuration.otelTracesExporter | quote }}
-  BOOTSTRAP_SERVERS: {{ .Values.global.kafkaBootstrapUrls | quote }}
+  BOOTSTRAP_SERVERS: {{ .Values.global.kafka.bootstrapServers | quote }}
   KAFKA_CONFIG_FILE_PATH: /app/config/kafka-auth/kafka-config.properties
   ELASTIC_HOST: {{ .Values.configuration.elasticHost | quote }}
   ELASTIC_PORT: {{ .Values.configuration.elasticPort | quote }}
