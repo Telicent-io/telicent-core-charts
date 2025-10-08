@@ -1,0 +1,144 @@
+{{- range $producerName, $producer := .Values.producers }}
+{{- if $producer.enabled }}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "telicent-data.fullname" $ }}-{{ $producerName }}
+  labels:
+    {{- include "telicent-data.labels" $ | nindent 4 }}
+    app.kubernetes.io/component: job
+    app.kubernetes.io/producer: {{ $producerName }}
+  {{- with $producer.podAnnotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  {{- if $producer.job }}
+  {{- if $producer.job.activeDeadlineSeconds }}
+  activeDeadlineSeconds: {{ $producer.job.activeDeadlineSeconds }}
+  {{- end }}
+  {{- if $producer.job.backoffLimit }}
+  backoffLimit: {{ $producer.job.backoffLimit }}
+  {{- else }}
+  backoffLimit: 3
+  {{- end }}
+  {{- if $producer.job.completions }}
+  completions: {{ $producer.job.completions }}
+  {{- end }}
+  {{- if $producer.job.parallelism }}
+  parallelism: {{ $producer.job.parallelism }}
+  {{- end }}
+  {{- if $producer.job.ttlSecondsAfterFinished }}
+  ttlSecondsAfterFinished: {{ $producer.job.ttlSecondsAfterFinished }}
+  {{- end }}
+  {{- else }}
+  backoffLimit: 3
+  {{- end }}
+  template:
+    metadata:
+      {{- with $producer.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "telicent-data.selectorLabels" $ | nindent 8 }}
+        app.kubernetes.io/component: job
+        app.kubernetes.io/producer: {{ $producerName }}
+        {{- with $producer.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with $producer.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if and $producer.serviceAccount $producer.serviceAccount.create }}
+      serviceAccountName: {{ $producer.serviceAccount.name | default (printf "%s-%s" (include "telicent-data.fullname" $) $producerName) }}
+      {{- else if and $producer.serviceAccount $producer.serviceAccount.name }}
+      serviceAccountName: {{ $producer.serviceAccount.name }}
+      {{- else }}
+      serviceAccountName: default
+      {{- end }}
+      {{- with $producer.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      restartPolicy: {{ $producer.restartPolicy | default "Never" }}
+      {{- with $producer.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with $producer.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with $producer.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if $producer.initContainers }}
+      initContainers:
+        {{- toYaml $producer.initContainers | nindent 8 }}
+      {{- end }}
+      containers:
+      - name: {{ $producerName }}
+        {{- with $producer.securityContext }}
+        securityContext:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        {{- $imageContext := dict "Values" $.Values "Chart" $.Chart "image" $producer.image }}
+        image: {{ include "telicent-data.image" $imageContext }}
+        imagePullPolicy: {{ $producer.image.pullPolicy }}
+        {{- if $producer.command }}
+        command:
+          {{- toYaml $producer.command | nindent 10 }}
+        {{- end }}
+        {{- if $producer.args }}
+        args:
+          {{- toYaml $producer.args | nindent 10 }}
+        {{- end }}
+        env:
+        - name: BOOTSTRAP_SERVERS
+          value: {{ $.Values.global.kafka.bootstrapServers | quote }}
+        - name: KAFKA_CONFIG_FILE_PATH
+          value: /app/config/kafka-auth/kafka-config.toml
+        - name: TARGET_TOPIC
+          value: {{ (index $producer "configuration" "targetTopic") | default "" | quote }}
+        - name: SOURCE_NAME
+          value: {{ (index $producer "configuration" "sourceName") | default "" | quote }}
+        {{- if $producer.env }}
+        {{- range $key, $value := $producer.env }}
+        - name: {{ $key }}
+          value: {{ $value | quote }}
+        {{- end }}
+        {{- end }}
+        {{- if $producer.envFrom }}
+        envFrom:
+          {{- toYaml $producer.envFrom | nindent 10 }}
+        {{- end }}
+        volumeMounts:
+        - mountPath: /app/config/kafka-auth/
+          name: kafka-auth-config
+        {{- with $producer.volumeMounts }}
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        {{- with $producer.resources }}
+        resources:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+      volumes:
+      - name: kafka-auth-config
+        secret:
+        {{- if $.Values.global.kafka.existingConfigSecretName }}
+          secretName: {{ $.Values.global.kafka.existingConfigSecretName }}
+        {{- else }}
+          secretName: {{ include "telicent-data.fullname" $ }}-kafka-config
+        {{- end }}
+      {{- with $producer.volumes }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}
+{{- end }}
+
+
