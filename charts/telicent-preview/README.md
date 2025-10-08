@@ -69,9 +69,15 @@ Contains global parameters, these parameters are mirrored across all Telicent Pr
 
 ### paperback-writer Parameters
 
-| Name                       | Description                                      | Value   |
-| -------------------------- | ------------------------------------------------ | ------- |
-| `paperback-writer.enabled` | Enable or disable the paperback-writer component | `false` |
+| Name                       | Description                                      | Value  |
+| -------------------------- | ------------------------------------------------ | ------ |
+| `paperback-writer.enabled` | Enable or disable the paperback-writer component | `true` |
+
+### data-catalog Parameters
+
+| Name                   | Description                                  | Value  |
+| ---------------------- | -------------------------------------------- | ------ |
+| `data-catalog.enabled` | Enable or disable the data-catalog component | `true` |
 
 ## Subchart configurations
 

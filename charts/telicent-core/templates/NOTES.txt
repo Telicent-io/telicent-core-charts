@@ -1,0 +1,271 @@
+{{/*
+Dynamic Component Detection using Helm Lookup
+The following variables use helm's lookup function to check what components are actually deployed
+in the cluster, rather than relying on static configuration values.
+This provides an accurate view of the current deployment state.
+
+Note: lookup returns empty if the resource doesn't exist or if running in --dry-run mode
+*/}}
+{{- $accessSvc := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "access") }}
+{{- $accessUI := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "access-ui") }}
+{{- $graphUI := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "graph-ui") }}
+{{- $queryUI := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "query-ui") }}
+{{- $searchUI := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "search-ui") }}
+{{- $searchSvc := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "search") }}
+{{- $searchProjector := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "search-projector") }}
+{{- $userPrefs := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "user-preferences") }}
+{{- $graphSvc := lookup "apps/v1" "StatefulSet" .Release.Namespace (printf "%s-%s" .Release.Name "graph") }}
+{{- $oauth2Proxy := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "oauth2-proxy") }}
+{{- $paperbackWriter := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "paperback-writer") }}
+{{- $dataCatalog := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "data-catalog") }}
+
+{{/*
+Check if we're in dry-run mode or if lookup is unavailable
+*/}}
+{{- $isDryRun := or (not $accessSvc) (not $accessUI) -}}
+{{- if and (not .Values.global.appHostDomain) $isDryRun -}}
+{{- $isDryRun = true -}}
+{{- end }}
+
+🎉 Telicent Core has been successfully deployed!
+
+█████████████████████████████████████████████████████████
+███████████████████ TELICENT CORE ███████████████████████
+█████████████████████████████████████████████████████████
+
+📋 DEPLOYMENT SUMMARY:
+======================
+Chart Version:        {{ .Chart.Version }}
+App Version:          {{ .Chart.AppVersion }}
+Release Name:         {{ .Release.Name }}
+Namespace:            {{ .Release.Namespace }}
+
+{{- $deployedCount := 0 }}
+{{- if $accessSvc }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
+{{- if $accessUI }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
+{{- if $graphSvc }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
+{{- if $graphUI }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
+{{- if $queryUI }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
+{{- if $searchUI }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
+{{- if $searchSvc }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
+{{- if $searchProjector }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
+{{- if $userPrefs }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
+{{- if $oauth2Proxy }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
+{{- if $paperbackWriter }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
+{{- if $dataCatalog }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
+
+{{- if .Values.global.enterprise }}
+🚀 Enterprise Mode:   ENABLED
+{{- else }}
+🏠 Community Mode:    ENABLED
+{{- end }}
+📊 Components:        {{ $deployedCount }} deployed
+{{- if $isDryRun }}
+
+⚠️  Note: Running in dry-run/template mode - component status reflects configuration, not actual deployment
+{{- end }}
+
+📦 DEPLOYED COMPONENTS:
+========================
+{{- if $isDryRun }}
+{{/* Show configuration-based status when lookup is not available */}}
+📋 Access Service     - Authentication & Authorization
+📋 Access UI          - Authentication Interface
+📋 Graph Service      - Graph Data Management
+📋 Query UI           - Data Query Interface
+{{- if .Values.global.enterprise }}
+📋 Graph UI           - Graph Data Visualization
+📋 Search UI          - Search Interface  
+📋 Search Service     - Search Backend
+📋 Search Projector   - Search Data Indexing
+📋 User Preferences   - User Settings Management
+{{- end }}
+
+{{- else }}
+{{/* Show actual deployment status using lookup */}}
+{{- if $accessSvc }}
+✅ Access Service     - Authentication & Authorization
+{{- else }}
+❌ Access Service     - Authentication & Authorization (not deployed)
+{{- end }}
+
+{{- if $accessUI }}
+✅ Access UI          - Authentication Interface
+{{- else }}
+❌ Access UI          - Authentication Interface (not deployed)
+{{- end }}
+
+{{- if $graphUI }}
+✅ Graph UI           - Graph Data Visualization
+{{- end }}
+
+{{- if $queryUI }}
+✅ Query UI           - Data Query Interface
+{{- end }}
+
+{{- if $searchUI }}
+✅ Search UI          - Search Interface
+{{- end }}
+
+{{- if $searchSvc }}
+✅ Search Service     - Search Backend
+{{- end }}
+
+{{- if $searchProjector }}
+✅ Search Projector   - Search Data Indexing
+{{- end }}
+
+{{- if $userPrefs }}
+✅ User Preferences   - User Settings Management
+{{- end }}
+
+{{- if $graphSvc }}
+✅ Graph Service      - Graph Data Management
+{{- else }}
+❌ Graph Service      - Graph Data Management (not deployed)
+{{- end }}
+
+{{- if $oauth2Proxy }}
+✅ OAuth2 Proxy       - Authentication Proxy
+{{- end }}
+
+{{- if $paperbackWriter }}
+✅ Paperback Writer   - Data Processing Pipeline
+{{- end }}
+
+{{- if $dataCatalog }}
+✅ Data Catalog       - Dataset Management & Discovery
+{{- end }}
+{{- end }}
+
+🌐 ACCESS INFORMATION:
+======================
+{{- if .Values.global.appHostDomain }}
+Application Domain:   {{ .Values.global.appHostDomain }}
+Authentication Domain: {{ .Values.global.authHostDomain | default "auth.telicent.io" }}
+
+🔗 Access your applications at:
+{{- if $accessUI }}
+- Access UI:         https://{{ .Values.global.appHostDomain }}/access
+{{- end }}
+{{- if $graphUI }}
+- Graph UI:          https://{{ .Values.global.appHostDomain }}/graph
+{{- end }}
+{{- if $queryUI }}
+- Query UI:          https://{{ .Values.global.appHostDomain }}/query
+{{- end }}
+{{- if $searchUI }}
+- Search UI:         https://{{ .Values.global.appHostDomain }}/search
+{{- end }}
+{{- if $dataCatalog }}
+- Data Catalog:      https://{{ .Values.global.appHostDomain }}/data-catalog
+{{- end }}
+{{- else }}
+⚠️  No appHostDomain configured. Access via port-forward or configure ingress manually.
+{{- end }}
+
+⚙️  CONFIGURATION:
+===================
+{{- if .Values.global.kafkaBootstrapUrls }}
+Kafka Bootstrap:     {{ .Values.global.kafkaBootstrapUrls }}
+{{- end }}
+{{- if .Values.global.jwksUrl }}
+JWKS URL:           {{ .Values.global.jwksUrl }}
+{{- end }}
+{{- if .Values.global.istioNamespace }}
+Istio Namespace:    {{ .Values.global.istioNamespace }}
+{{- end }}
+
+🛠️  HELPFUL COMMANDS:
+======================
+# View all pods
+kubectl get pods -n {{ .Release.Namespace }}
+
+# Check deployment status
+helm status {{ .Release.Name }} -n {{ .Release.Namespace }}
+
+# View service endpoints
+kubectl get svc -n {{ .Release.Namespace }}
+
+# Port-forward to access services locally (examples):
+{{- if $accessUI }}
+kubectl port-forward svc/{{ .Release.Name }}-access-ui 8083:80 -n {{ .Release.Namespace }}
+{{- end }}
+{{- if $graphUI }}
+kubectl port-forward svc/{{ .Release.Name }}-graph-ui 8080:80 -n {{ .Release.Namespace }}
+{{- end }}
+{{- if $queryUI }}
+kubectl port-forward svc/{{ .Release.Name }}-query-ui 8081:80 -n {{ .Release.Namespace }}
+{{- end }}
+{{- if $searchUI }}
+kubectl port-forward svc/{{ .Release.Name }}-search-ui 8082:80 -n {{ .Release.Namespace }}
+{{- end }}
+{{- if $dataCatalog }}
+kubectl port-forward svc/{{ .Release.Name }}-data-catalog 8084:80 -n {{ .Release.Namespace }}
+{{- end }}
+
+# View logs for specific components (examples):
+{{- if $graphSvc }}
+kubectl logs -l app.kubernetes.io/name=graph -n {{ .Release.Namespace }}
+{{- end }}
+{{- if $accessSvc }}
+kubectl logs -l app.kubernetes.io/name=access -n {{ .Release.Namespace }}
+{{- end }}
+{{- if $searchSvc }}
+kubectl logs -l app.kubernetes.io/name=search -n {{ .Release.Namespace }}
+{{- end }}
+
+🔧 CONFIGURATION UPDATES:
+==========================
+# Upgrade the release with new values:
+helm upgrade {{ .Release.Name }} ./charts/telicent-core -n {{ .Release.Namespace }} -f your-values.yaml
+
+# View current configuration:
+helm get values {{ .Release.Name }} -n {{ .Release.Namespace }}
+
+{{- $enterpriseFeatures := false }}
+{{- if or $graphUI $searchUI $searchSvc $searchProjector $userPrefs $dataCatalog }}
+{{- $enterpriseFeatures = true }}
+{{- end }}
+
+{{- if not $enterpriseFeatures }}
+💡 ENTERPRISE FEATURES:
+========================
+{{- if not .Values.global.enterprise }}
+Enterprise mode is disabled. To enable enterprise features:
+  helm upgrade {{ .Release.Name }} ./charts/telicent-core -n {{ .Release.Namespace }} --set global.enterprise=true
+
+Available enterprise features include:
+- Graph UI (Graph Data Visualization)
+- Search UI (Search Interface) 
+- Search Service (Search Backend)
+- Search Projector (Search Data Indexing)
+- User Preferences (User Settings Management)
+- Data Catalog (Dataset Management & Discovery)
+
+🏢 Need an enterprise license? Contact us at: https://telicent.io/contact-2/
+{{- else }}
+Enterprise mode is enabled but some enterprise components may not be deployed.
+Check individual component configurations or dependencies.
+{{- end }}
+{{- end }}
+
+⚠️  IMPORTANT NOTES:
+====================
+{{- if or (not .Values.global.jwksUrl) (contains "{yourAuthdomain}" .Values.global.jwksUrl) }}
+🔐 Configure JWKS URL: Update global.jwksUrl with your actual OIDC provider's JWKS endpoint
+{{- end }}
+{{- if contains "your.kafka" .Values.global.kafka.username }}
+📡 Configure Kafka: Update Kafka connection details in global.kafka.* values
+{{- end }}
+{{- if or (not .Values.global.appHostDomain) (eq .Values.global.appHostDomain "apps.telicent.io") }}
+🌍 Configure Domains: Set global.appHostDomain and global.authHostDomain for your environment
+{{- end }}
+
+📚 DOCUMENTATION:
+==================
+- Chart Documentation: https://github.com/Telicent-IO/telicent-core-charts
+- Telicent Documentation: https://docs.telicent.io
+- Support: https://github.com/Telicent-IO/telicent-core-charts/issues
+
+Thank you for using Telicent Core! 🚀

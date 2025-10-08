@@ -88,6 +88,12 @@
                             "type": "string",
                             "description": "SASL mechanism used for Kafka authentication",
                             "default": "SCRAM-SHA-512"
+                        },
+                        "topics": {
+                            "type": "array",
+                            "description": "List of Kafka topics to be created during installation",
+                            "default": [],
+                            "items": {}
                         }
                     }
                 },
@@ -125,16 +131,6 @@
                     "type": "object",
                     "description": "Additional custom annotations for the ServiceAccount",
                     "default": {}
-                }
-            }
-        },
-        "paperback-writer": {
-            "type": "object",
-            "properties": {
-                "enabled": {
-                    "type": "boolean",
-                    "description": "Enable or disable the paperback-writer component",
-                    "default": false
                 }
             }
         },
