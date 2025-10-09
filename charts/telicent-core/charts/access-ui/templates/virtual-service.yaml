@@ -2,13 +2,14 @@
 Copyright (C) 2025 Telicent Limited
 */}}
 
+{{- if .Values.global.istioVirtualServiceEnabled }}
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 
 metadata:
   name: {{ include "access-ui.fullname" . }}
   labels:
-  {{- include "access-ui.labels" . | nindent 4 }}
+    {{- include "access-ui.labels" . | nindent 4 }}
 
 spec:
   gateways:
@@ -29,3 +30,4 @@ spec:
         host: {{ include "access-ui.serviceName" . }}
         port:
           number: {{ .Values.service.port }}
+{{- end }}
