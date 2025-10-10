@@ -60,7 +60,10 @@ Contains global parameters, these parameters are mirrored across all Telicent Co
 | `global.istioGatewayName`           | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)         | `ingress-gateway`                                |
 | `global.istioVirtualServiceEnabled` | Enable Istio traffic routing to a named destination service                       | `true`                                           |
 
-### Kafka Configuration
+### Kafka Parameters
+
+Kafka configuration parameters. These settings will be used by all Telicent Core components that interact
+with Kafka, ensuring consistent connectivity and authentication across the platform.
 
 | Name                                    | Description                                               | Value                                          |
 | --------------------------------------- | --------------------------------------------------------- | ---------------------------------------------- |
@@ -77,18 +80,51 @@ Contains global parameters, these parameters are mirrored across all Telicent Co
 
 ### Service Account Parameters
 
-| Name                         | Description                                                                           | Value   |
-| ---------------------------- | ------------------------------------------------------------------------------------- | ------- |
-| `serviceAccount.name`        | Name of the ServiceAccount to use. If not set, a name is generated using the fullname | `""`    |
-| `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                  | `{}`    |
-| `kafkaTopics.enabled`        | Enable or disable the creation of Kafka topics during installation                    | `false` |
-| `kafkaTopics.topics`         | List of Kafka topics to be created                                                    | `[]`    |
+| Name                         | Description                                                                           | Value |
+| ---------------------------- | ------------------------------------------------------------------------------------- | ----- |
+| `serviceAccount.name`        | Name of the ServiceAccount to use. If not set, a name is generated using the fullname | `""`  |
+| `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                  | `{}`  |
+
+### Paperback Writer Parameters
+
+| Name                       | Description                                      | Value   |
+| -------------------------- | ------------------------------------------------ | ------- |
+| `paperback-writer.enabled` | Enable or disable the paperback-writer component | `false` |
+
+### Document Pipeline Parameters
+
+| Name                        | Description                                       | Value   |
+| --------------------------- | ------------------------------------------------- | ------- |
+| `document-pipeline.enabled` | Enable or disable the document-pipeline component | `false` |
+
+### Kafka Parameters
+
+| Name                  | Description                                                        | Value   |
+| --------------------- | ------------------------------------------------------------------ | ------- |
+| `kafkaTopics.enabled` | Enable or disable the creation of Kafka topics during installation | `false` |
+| `kafkaTopics.topics`  | List of Kafka topics to be created                                 | `[]`    |
 
 ## Subchart configurations
 
 This section contains configurations for the various subcharts included in the Telicent Core chart.
 Each subchart can be configured independently, allowing for flexibility in deployment.
 They are addressed by their names, and each subchart has its own set of configuration parameters.
+
+| Name | Description | Link |
+|------|-------------|------|
+| Access | XX | [access](./charts/access/README.md) |
+| Access UI | XX | [access-ui](./charts/access-ui/README.md) |
+| Data Catalogue | XX | [data-catalog](./charts/data-catalog/README.md) |
+| Document Pipeline | XX | [document-pipeline](./charts/document-pipeline/README.md) |
+| Graph | XX | [graph](./charts/graph/README.md) |
+| Graph UI | XX | [graph-ui](./charts/graph-ui/README.md) |
+| Oauth2 Proxy | XX | [oauth2-proxy](./charts/oauth2-proxy/README.md) |
+| Paperback Writer | XX | [paperback-writer](./charts/paperback-writer/README.md) |
+| Query UI | XX | [query-ui](./charts/query-ui/README.md) |
+| Search | XX | [search](./charts/search/README.md) |
+| Search Projector | XX | [search-projector](./charts/search-projector/README.md) |
+| Search UI | XX | [search-ui](./charts/search-ui/README.md) |
+| User Preferences | XX | [user-preferences](./charts/user-preferences/README.md) |
 
 ## License
 

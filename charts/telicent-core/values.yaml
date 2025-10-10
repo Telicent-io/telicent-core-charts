@@ -39,7 +39,11 @@ global:
   # @key global.istioVirtualServiceEnabled Enable Istio traffic routing to a named destination service
   istioVirtualServiceEnabled: true
 
-  # @section Kafka Configuration
+  # @section Kafka Parameters
+  # @descStart
+  # Kafka configuration parameters. These settings will be used by all Telicent Core components that interact
+  # with Kafka, ensuring consistent connectivity and authentication across the platform.
+  # @descEnd
   kafka:
     # @key global.kafka.bootstrapServers Comma separated list containing Kafka bootstrap servers
     bootstrapServers: "kafka-bootstrap.kafka.svc.cluster.local:9092"
@@ -72,6 +76,17 @@ serviceAccount:
   # @key serviceAccount.annotations Additional custom annotations for the ServiceAccount
   annotations: {}
 
+# @section Paperback Writer Parameters
+paperback-writer:
+  # @key paperback-writer.enabled Enable or disable the paperback-writer component
+  enabled: false
+
+# @section Document Pipeline Parameters
+document-pipeline:
+  # @key document-pipeline.enabled Enable or disable the document-pipeline component
+  enabled: false
+
+# @section Kafka Parameters
 kafkaTopics:
   # @key kafkaTopics.enabled Enable or disable the creation of Kafka topics during installation
   enabled: false
