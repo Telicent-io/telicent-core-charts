@@ -1,0 +1,129 @@
+{{- if .Values.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "content-indexer.fullname" . }}
+  labels:
+    {{- include "document-pipeline.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.contentIndexer.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "content-indexer.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.contentIndexer.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "document-pipeline.labels" . | nindent 8 }}
+        {{- include "content-indexer.selectorLabels" . | nindent 8 }}
+        {{- with .Values.contentIndexer.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.contentIndexer.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "document-pipeline.serviceAccountName" . }}
+      {{- with .Values.contentIndexer.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- $pullSecret := .Values.global.imagePullSecrets | default .Values.imagePullSecrets }}
+      {{- with $pullSecret }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 6 }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          {{- with .Values.contentIndexer.securityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          image: "{{ .Values.contentIndexer.image.repository }}:{{ .Values.contentIndexer.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.contentIndexer.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.contentIndexer.service.port }}
+              protocol: TCP
+          env:
+            - name: BOOTSTRAP_SERVERS
+              value: {{ .Values.global.kafkaBootstrapUrls | quote }}
+            - name: INPUT_TOPIC
+              value: {{ .Values.contentIndexer.configuration.inputTopic | quote }}
+            - name: ELASTIC_HOST
+              value: {{ .Values.contentIndexer.configuration.elasticsearchHost | quote }}
+            - name: ELASTIC_PORT
+              value: {{ .Values.contentIndexer.configuration.elasticsearchPort | quote }}
+            - name: ELASTIC_INDEX
+              value: {{ .Values.contentIndexer.configuration.elasticsearchIndex | quote }}
+            - name: JAVA_OPTIONS
+              value: {{ .Values.contentIndexer.configuration.javaOptions | quote }}
+            - name: OPENSEARCH_COMPATIBILITY
+              value: {{ .Values.contentIndexer.configuration.opensearchCompatibility | quote }}
+            - name: KAFKA_CONFIG_FILE_PATH
+              value: /app/config/kafka-auth/kafka-config.properties
+          envFrom:
+          {{- if .Values.contentIndexer.elasticSecrets.existingEnvironmentSecretName }}
+          - secretRef:
+              name: {{ .Values.contentIndexer.elasticSecrets.existingEnvironmentSecretName | quote }}
+              optional: true
+          {{- else }}
+          - secretRef:
+              name: {{ include "content-indexer.fullname" . }}
+              optional: true
+          {{- end }}
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 10101
+          readinessProbe:
+            httpGet:
+              path: /version-info
+              port: 10101
+          {{- with .Values.contentIndexer.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          volumeMounts:
+          {{- if .Values.global.existingTruststoreSecretName }}
+          - mountPath: {{ .Values.global.truststore.mountPath | default "/app/config/truststore" }}
+            name: truststore-volume
+          {{- end }}
+          - mountPath: /app/config/kafka-auth/
+            name: kafka-auth-config
+          {{- with .Values.contentIndexer.volumeMounts }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      volumes:
+      {{- if .Values.global.existingTruststoreSecretName }}
+      - name: truststore-volume
+        secret:
+          secretName: {{ .Values.global.existingTruststoreSecretName }}
+      {{- end }}
+      - name: kafka-auth-config
+        secret:
+        {{- if .Values.global.existingKafkaConfigSecretName }}
+          secretName: {{ .Values.global.existingKafkaConfigSecretName }}
+        {{- else }}
+          secretName: {{ include "telicent-core.kafkaAuthConfigSecretName" . }}
+        {{- end }}
+      {{- with .Values.contentIndexer.volumes }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.contentIndexer.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.contentIndexer.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.contentIndexer.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end -}}

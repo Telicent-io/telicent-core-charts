@@ -139,6 +139,26 @@
                 }
             }
         },
+        "paperback-writer": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable or disable the paperback-writer component",
+                    "default": false
+                }
+            }
+        },
+        "document-pipeline": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable or disable the document-pipeline component",
+                    "default": false
+                }
+            }
+        },
         "kafkaTopics": {
             "type": "object",
             "properties": {
