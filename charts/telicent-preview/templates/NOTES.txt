@@ -1,0 +1,202 @@
+{{/*
+Dynamic Component Detection using Helm Lookup
+The following variables use helm's lookup function to check what components are actually deployed
+in the cluster, rather than relying on static configuration values.
+This provides an accurate view of the current deployment state.
+
+Note: lookup returns empty if the resource doesn't exist or if running in --dry-run mode
+*/}}
+{{- $userPortalUI := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "user-portal-ui") }}
+{{- $paperbackWriter := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "paperback-writer") }}
+{{- $dataCatalog := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "data-catalog") }}
+
+{{/*
+Check if we're in dry-run mode or if lookup is unavailable
+*/}}
+{{- $isDryRun := not $userPortalUI -}}
+{{- if and (not .Values.global.appHostDomain) $isDryRun -}}
+{{- $isDryRun = true -}}
+{{- end }}
+
+🎉 Telicent Preview has been successfully deployed!
+
+█████████████████████████████████████████████████████████
+██████████████████ TELICENT PREVIEW █████████████████████
+█████████████████████████████████████████████████████████
+
+📋 DEPLOYMENT SUMMARY:
+======================
+Chart Version:        {{ .Chart.Version }}
+App Version:          {{ .Chart.AppVersion }}
+Release Name:         {{ .Release.Name }}
+Namespace:            {{ .Release.Namespace }}
+
+{{- $deployedCount := 0 }}
+{{- if $userPortalUI }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
+{{- if $paperbackWriter }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
+{{- if $dataCatalog }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
+
+{{- if .Values.global.enterprise }}
+🚀 Enterprise Mode:   ENABLED
+{{- else }}
+🏠 Community Mode:    ENABLED
+{{- end }}
+📊 Components:        {{ $deployedCount }} deployed
+{{- if $isDryRun }}
+
+⚠️  Note: Running in dry-run/template mode - component status reflects configuration, not actual deployment
+{{- end }}
+
+📦 DEPLOYED COMPONENTS:
+========================
+{{- if $isDryRun }}
+{{/* Show configuration-based status when lookup is not available */}}
+{{- $userPortalEnabled := true }}
+{{- if hasKey .Values "user-portal-ui" }}
+{{- $userPortalEnabled = (index .Values "user-portal-ui").enabled }}
+{{- end }}
+{{- $paperbackEnabled := false }}
+{{- if hasKey .Values "paperback-writer" }}
+{{- $paperbackEnabled = (index .Values "paperback-writer").enabled }}
+{{- end }}
+{{- $catalogEnabled := false }}
+{{- if hasKey .Values "data-catalog" }}
+{{- $catalogEnabled = (index .Values "data-catalog").enabled }}
+{{- end }}
+
+{{- if $userPortalEnabled }}
+📋 User Portal UI     - Centralized User Access & Navigation
+{{- end }}
+{{- if $paperbackEnabled }}
+📋 Paperback Writer   - Data Processing Pipeline
+{{- end }}
+{{- if $catalogEnabled }}
+📋 Data Catalog       - Dataset Management & Discovery
+{{- end }}
+
+{{- else }}
+{{/* Show actual deployment status using lookup */}}
+{{- if $userPortalUI }}
+✅ User Portal UI     - Centralized User Access & Navigation
+{{- else }}
+❌ User Portal UI     - Centralized User Access & Navigation (not deployed)
+{{- end }}
+
+{{- if $paperbackWriter }}
+✅ Paperback Writer   - Data Processing Pipeline
+{{- end }}
+
+{{- if $dataCatalog }}
+✅ Data Catalog       - Dataset Management & Discovery
+{{- end }}
+{{- end }}
+
+🌐 ACCESS INFORMATION:
+======================
+{{- if .Values.global.appHostDomain }}
+Application Domain:   {{ .Values.global.appHostDomain }}
+Authentication Domain: {{ .Values.global.authHostDomain | default "auth.telicent.io" }}
+
+🔗 Access your applications at:
+{{- if $userPortalUI }}
+- User Portal:       https://{{ .Values.global.appHostDomain }}/
+{{- end }}
+{{- if $dataCatalog }}
+- Data Catalog:      https://{{ .Values.global.appHostDomain }}/data-catalog
+{{- end }}
+{{- else }}
+⚠️  No appHostDomain configured. Access via port-forward or configure ingress manually.
+{{- end }}
+
+⚙️  CONFIGURATION:
+===================
+{{- if .Values.global.kafka.bootstrapServers }}
+Kafka Bootstrap:     {{ .Values.global.kafka.bootstrapServers }}
+{{- end }}
+{{- if .Values.global.jwksUrl }}
+JWKS URL:           {{ .Values.global.jwksUrl }}
+{{- end }}
+{{- if .Values.global.istioNamespace }}
+Istio Namespace:    {{ .Values.global.istioNamespace }}
+{{- end }}
+
+🛠️  HELPFUL COMMANDS:
+======================
+# View all pods
+kubectl get pods -n {{ .Release.Namespace }}
+
+# Check deployment status
+helm status {{ .Release.Name }} -n {{ .Release.Namespace }}
+
+# View service endpoints
+kubectl get svc -n {{ .Release.Namespace }}
+
+# Port-forward to access services locally (examples):
+{{- if $userPortalUI }}
+kubectl port-forward svc/{{ .Release.Name }}-user-portal-ui 8080:80 -n {{ .Release.Namespace }}
+{{- end }}
+{{- if $dataCatalog }}
+kubectl port-forward svc/{{ .Release.Name }}-data-catalog 8081:80 -n {{ .Release.Namespace }}
+{{- end }}
+
+# View logs for specific components (examples):
+{{- if $userPortalUI }}
+kubectl logs -l app.kubernetes.io/name=user-portal-ui -n {{ .Release.Namespace }}
+{{- end }}
+{{- if $paperbackWriter }}
+kubectl logs -l app.kubernetes.io/name=paperback-writer -n {{ .Release.Namespace }}
+{{- end }}
+{{- if $dataCatalog }}
+kubectl logs -l app.kubernetes.io/name=data-catalog -n {{ .Release.Namespace }}
+{{- end }}
+
+🔧 CONFIGURATION UPDATES:
+==========================
+# Upgrade the release with new values:
+helm upgrade {{ .Release.Name }} ./charts/telicent-preview -n {{ .Release.Namespace }} -f your-values.yaml
+
+# View current configuration:
+helm get values {{ .Release.Name }} -n {{ .Release.Namespace }}
+
+{{- $previewFeatures := false }}
+{{- if or $paperbackWriter $dataCatalog }}
+{{- $previewFeatures = true }}
+{{- end }}
+
+{{- if not $previewFeatures }}
+💡 PREVIEW FEATURES:
+====================
+To enable additional preview features:
+
+Paperback Writer (Data Processing Pipeline):
+  helm upgrade {{ .Release.Name }} ./charts/telicent-preview -n {{ .Release.Namespace }} --set paperback-writer.enabled=true
+
+Data Catalog (Dataset Management & Discovery):
+  helm upgrade {{ .Release.Name }} ./charts/telicent-preview -n {{ .Release.Namespace }} --set data-catalog.enabled=true
+
+Available preview features include:
+- Data Catalog (Dataset Management & Discovery)
+- Paperback Writer (Data Processing Pipeline)
+
+🧪 These are preview features - use with caution in production environments.
+{{- end }}
+
+⚠️  IMPORTANT NOTES:
+====================
+{{- if or (not .Values.global.jwksUrl) (contains "{yourAuthdomain}" .Values.global.jwksUrl) }}
+🔐 Configure JWKS URL: Update global.jwksUrl with your actual OIDC provider's JWKS endpoint
+{{- end }}
+{{- if contains "your.kafka" .Values.global.kafka.username }}
+📡 Configure Kafka: Update Kafka connection details in global.kafka.* values
+{{- end }}
+{{- if or (not .Values.global.appHostDomain) (eq .Values.global.appHostDomain "apps.telicent.io") }}
+🌍 Configure Domains: Set global.appHostDomain and global.authHostDomain for your environment
+{{- end }}
+
+📚 DOCUMENTATION:
+==================
+- Chart Documentation: https://github.com/Telicent-IO/telicent-core-charts
+- Telicent Documentation: https://docs.telicent.io
+- Support: https://github.com/Telicent-IO/telicent-core-charts/issues
+
+Thank you for using Telicent Preview! 🚀

@@ -114,7 +114,17 @@
                 "enabled": {
                     "type": "boolean",
                     "description": "Enable or disable the paperback-writer component",
-                    "default": false
+                    "default": true
+                }
+            }
+        },
+        "data-catalog": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable or disable the data-catalog component",
+                    "default": true
                 }
             }
         }
