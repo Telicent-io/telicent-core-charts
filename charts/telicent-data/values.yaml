@@ -53,9 +53,27 @@ global:
     # @key global.kafka.mechanism SASL mechanism used for Kafka authentication
     mechanism: "SCRAM-SHA-512"
 
+  # @key global.existingTruststoreSecretName Name of an existing secret containing the truststore
+  existingTruststoreSecretName: ""
+  truststore:
+    # @key global.truststore.mountPath The mount path for the truststore in the container
+    mountPath: /app/config/truststore
+
+serviceAccount:
+  create: true
+  automount: true
+  annotations: {}
+  name: "producer"
+
+kafkaTopics:
+  # @key kafkaTopics.enabled Enable or disable the creation of Kafka topics during installation
+  enabled: false
+  # @key kafkaTopics.topics List of Kafka topics to be created
+  topics: []
+
 producers:
   ies-regions-producer:
-    enabled: true
+    enabled: false
 
     image:
       # @key image.registry [default: REGISTRY_NAME] Access image registry
@@ -129,11 +147,11 @@ producers:
     affinity: {}
 
     configuration:
-      targetTopic: "ontology"
-      sourceName: "ies-ies-regions.generation.iso3166_ontology"
+      targetTopic: "knowledge"
+      sourceName: "ies-regions-ttls"
 
   ies-regions-ontology-adapter:
-    enabled: true
+    enabled: false
 
     image:
       # @key image.registry [default: REGISTRY_NAME] Access image registry
@@ -150,12 +168,6 @@ producers:
     imagePullSecrets: []
     nameOverride: ""
     fullnameOverride: ""
-
-    serviceAccount:
-      create: true
-      automount: true
-      annotations: {}
-      name: ""
 
     podAnnotations: {}
     podLabels: {}
@@ -211,7 +223,7 @@ producers:
       sourceName: "ies-ies-regions.generation.iso3166_ontology"
 
   ies-ontology-producer:
-    enabled: true
+    enabled: false
     image:
       # @key image.registry [default: REGISTRY_NAME] Access image registry
       registry: quay.io
@@ -285,10 +297,10 @@ producers:
 
     configuration:
       targetTopic: "ontology"
-      sourceName: "ies-ies-regions.generation.iso3166_ontology"
+      sourceName: "ies-ontology"
 
   ontologies-rdf-rdfs-owl-producer:
-    enabled: true
+    enabled: false
     image:
       # @key image.registry [default: REGISTRY_NAME] Access image registry
       registry: quay.io
@@ -362,4 +374,105 @@ producers:
 
     configuration:
       targetTopic: "ontology"
-      sourceName: "ies-ies-regions.generation.iso3166_ontology"
+      sourceName: "ies-ontology"
+
+mappers:
+  canonicals-event-validation-mapper:
+    enabled: false
+    image:
+      # @key image.registry [default: REGISTRY_NAME] Access image registry
+      registry: quay.io
+      # @key image.repository [default: REPOSITORY_NAME/telicent-access-api] Access image name
+      repository: telicent/telicent-canonicals-event-validation-mapper
+      # @key image.tag Access image tag. If not set, a tag is generated using the appVersion
+      tag: "0.5.2"
+      # @key image.pullPolicy Access image pull policy
+      pullPolicy: IfNotPresent
+      # @key image.pullSecrets Specify registry secret names as an array
+      pullSecrets: []
+
+    imagePullSecrets: []
+    nameOverride: ""
+    fullnameOverride: ""
+
+    podAnnotations: {}
+    podLabels: {}
+
+    podSecurityContext: {}
+    securityContext: {}
+
+    # Deployment-specific configuration
+    replicas: 1
+    command: []
+    args: []
+    env: {}
+    envFrom: []
+
+    service:
+      type: ClusterIP
+      port: 8000
+
+    resources: {}
+
+    livenessProbe: {}
+    readinessProbe: {}
+
+    volumes: []
+    volumeMounts: []
+
+    nodeSelector: {}
+    tolerations: []
+    affinity: {}
+
+    configuration:
+      dataNamespace: "http://telicent.io/data#"
+
+  canonicals-event-document-mapper:
+    enabled: true
+    image:
+      # @key image.registry [default: REGISTRY_NAME] Access image registry
+      registry: quay.io
+      # @key image.repository [default: REPOSITORY_NAME/telicent-access-api] Access image name
+      repository: telicent/telicent-canonicals-event-document-mapper
+      # @key image.tag Access image tag. If not set, a tag is generated using the appVersion
+      tag: "0.5.2"
+      # @key image.pullPolicy Access image pull policy
+      pullPolicy: IfNotPresent
+      # @key image.pullSecrets Specify registry secret names as an array
+      pullSecrets: []
+
+    imagePullSecrets: []
+    nameOverride: ""
+    fullnameOverride: ""
+
+    podAnnotations: {}
+    podLabels: {}
+
+    podSecurityContext: {}
+    securityContext: {}
+
+    # Deployment-specific configuration
+    replicas: 1
+    command: []
+    args: []
+    env: {}
+    envFrom: []
+
+    service:
+      type: ClusterIP
+      port: 8000
+
+    resources: {}
+
+    livenessProbe: {}
+    readinessProbe: {}
+
+    volumes: []
+    volumeMounts: []
+
+    nodeSelector: {}
+    tolerations: []
+    affinity: {}
+
+    configuration:
+      dataNamespace: "http://telicent.io/data#"

@@ -11,6 +11,7 @@ metadata:
     app.kubernetes.io/producer: {{ $producerName }}
   {{- with $producer.podAnnotations }}
   annotations:
+
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
@@ -37,8 +38,9 @@ spec:
   {{- end }}
   template:
     metadata:
-      {{- with $producer.podAnnotations }}
       annotations:
+        sidecar.istio.io/inject: "false"
+      {{- with $producer.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
@@ -49,17 +51,12 @@ spec:
         {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
-      {{- with $producer.imagePullSecrets }}
+      {{- $pullSecret := $.Values.global.imagePullSecrets | default $producer.image.pullSecrets }}
+      {{- with $pullSecret }}
       imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
+        {{- toYaml . | nindent 6 }}
       {{- end }}
-      {{- if and $producer.serviceAccount $producer.serviceAccount.create }}
-      serviceAccountName: {{ $producer.serviceAccount.name | default (printf "%s-%s" (include "telicent-data.fullname" $) $producerName) }}
-      {{- else if and $producer.serviceAccount $producer.serviceAccount.name }}
-      serviceAccountName: {{ $producer.serviceAccount.name }}
-      {{- else }}
-      serviceAccountName: default
-      {{- end }}
+      serviceAccountName: producer
       {{- with $producer.podSecurityContext }}
       securityContext:
         {{- toYaml . | nindent 8 }}
@@ -107,6 +104,8 @@ spec:
           value: {{ (index $producer "configuration" "targetTopic") | default "" | quote }}
         - name: SOURCE_NAME
           value: {{ (index $producer "configuration" "sourceName") | default "" | quote }}
+        - name: KAFKA_CONFIG_MODE
+          value: {{ (index $producer "configuration" "kafkaConfigMode") | default "toml" | quote }}
         {{- if $producer.env }}
         {{- range $key, $value := $producer.env }}
         - name: {{ $key }}
