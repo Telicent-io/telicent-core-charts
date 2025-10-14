@@ -1,9 +1,9 @@
 # Copyright (C) 2025 Telicent Limited
-# Canonicals Event Validation Mapper stand-alone chart
+# Telicent Canonicals Event Geo Mapper stand-alone chart
 
 # @section Global Parameters
 # @descStart
-# Contains global parameters. Not explicitly use in this chart, added to maintain consistency across Telicent charts.
+# Contains global parameters. Not explicitly used in this chart, added to maintain consistency across Telicent charts.
 # These parameters can be referenced in sub-charts as `.Values.global.<parameter-name>`.
 # @descEnd
 
@@ -39,6 +39,7 @@ global:
   # @key global.istioGatewayName Name of the Istio Gateway Resource (LB operating at the edge of the mesh)
   istioGatewayName: ingress-gateway
 
+  # @section Kafka Parameters
   kafka:
     # @key global.kafka.bootstrapServers Comma separated list containing Kafka bootstrap servers
     bootstrapServers: "kafka-bootstrap.kafka.svc.cluster.local:9092"
@@ -59,50 +60,57 @@ global:
     # @key global.truststore.mountPath The mount path for the truststore in the container
     mountPath: /app/config/truststore
 
-# This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
+# @section Deployment Parameters
+# @key replicaCount Number of replicas to deploy
 replicaCount: 1
 
 # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
+# @section Image Parameters
 image:
-  # @key image.registry [default: REGISTRY_NAME] Access image registry
+  # @key image.registry Container image registry
   registry: quay.io
-  # @key image.repository [default: REPOSITORY_NAME/telicent-access-api] Access image name
+  # @key image.repository Container image name
   repository: telicent/telicent-canonicals-event-document-mapper
-  # @key image.tag Access image tag. If not set, a tag is generated using the appVersion
+  # @key image.tag Container image tag. If not set, a tag is generated using the appVersion
   tag: ""
-  # @key image.pullPolicy Access image pull policy
+  # @key image.pullPolicy Container image pull policy
   pullPolicy: IfNotPresent
   # @key image.pullSecrets Specify registry secret names as an array
   pullSecrets: []
 
-# This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+# @section Common Parameters
+# @key imagePullSecrets Global Docker registry secret names as an array
 imagePullSecrets: []
-# This is to override the chart name.
+# @key nameOverride String to partially override fullname (will maintain the release name)
 nameOverride: ""
+# @key fullnameOverride String to fully override the generated release name
 fullnameOverride: ""
 
-# This section builds out the service account more information can be found here: https://kubernetes.io/docs/concepts/security/service-accounts/
+# @section Service Account Parameters
 serviceAccount:
-  # Specifies whether a service account should be created
+  # @key serviceAccount.create Specifies whether a service account should be created
   create: true
-  # Automatically mount a ServiceAccount's API credentials?
+  # @key serviceAccount.automount Automatically mount a ServiceAccount's API credentials?
   automount: true
-  # Annotations to add to the service account
+  # @key serviceAccount.annotations Additional custom annotations for the ServiceAccount
   annotations: {}
-  # The name of the service account to use.
+  # @key serviceAccount.name Name of the ServiceAccount to use. If not set and create is true, a name is generated using the fullname template
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
-# This is for setting Kubernetes Annotations to a Pod.
+# @section Pod Parameters
+# @key podAnnotations Additional custom annotations for pods
 # For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 podAnnotations: {}
-# This is for setting Kubernetes Labels to a Pod.
+# @key podLabels Additional custom labels for pods
 # For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 podLabels: {}
 
+# @key podSecurityContext Set pods' Security Context
 podSecurityContext: {}
   # fsGroup: 2000
 
+# @key securityContext Set containers' Security Context
 securityContext: {}
   # capabilities:
   #   drop:
@@ -111,13 +119,15 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
-# This is for setting up a service more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/
+# @section Traffic Exposure Parameters
 service:
-  # This sets the service type more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
+  # @key service.type Service type
   type: ClusterIP
-  # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
+  # @key service.port Service port
   port: 8000
 
+# @section Resource Parameters
+# @key resources Set containers' resource requests and limits
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
@@ -130,33 +140,48 @@ resources: {}
   #   cpu: 100m
   #   memory: 128Mi
 
-# This section is for setting up autoscaling more information can be found here: https://kubernetes.io/docs/concepts/workloads/autoscaling/
+# @section Autoscaling Parameters
 autoscaling:
+  # @key autoscaling.enabled Enable Horizontal Pod Autoscaler
   enabled: false
+  # @key autoscaling.minReplicas Minimum number of replicas
   minReplicas: 1
+  # @key autoscaling.maxReplicas Maximum number of replicas
   maxReplicas: 100
+  # @key autoscaling.targetCPUUtilizationPercentage Target CPU utilization percentage
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
-# Additional volumes on the output Deployment definition.
+# @section Volume Parameters
+# @key volumes Additional volumes on the output Deployment definition
 volumes: []
 # - name: foo
 #   secret:
 #     secretName: mysecret
 #     optional: false
 
-# Additional volumeMounts on the output Deployment definition.
+# @key volumeMounts Additional volumeMounts on the output Deployment definition
 volumeMounts: []
 # - name: foo
 #   mountPath: "/etc/foo"
 #   readOnly: true
 
+# @section Node Selection Parameters
+# @key nodeSelector Node labels for pods assignment
 nodeSelector: {}
 
+# @key tolerations Tolerations for pods assignment
 tolerations: []
 
+# @key affinity Affinity for pods assignment
 affinity: {}
 
+# @section Configuration Parameters
+# @descStart
+# Contains configuration parameters specific to the application
+# @descEnd
 configuration:
+  # @key configuration.dataNamespace Data namespace URI for RDF data
   dataNamespace: "http://telicent.io/data#"
+  # @key configuration.kafkaConfigMode Kafka configuration mode (toml, json, properties)
   kafkaConfigMode: "toml"

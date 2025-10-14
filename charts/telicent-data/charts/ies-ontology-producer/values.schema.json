@@ -1,0 +1,312 @@
+{
+    "title": "Chart Values",
+    "type": "object",
+    "properties": {
+        "global": {
+            "type": "object",
+            "properties": {
+                "imageRegistry": {
+                    "type": "string",
+                    "description": "Global image registry",
+                    "default": ""
+                },
+                "imagePullSecrets": {
+                    "type": "array",
+                    "description": "Global registry secret names as an array",
+                    "default": [],
+                    "items": {}
+                },
+                "enterprise": {
+                    "type": "boolean",
+                    "description": "Enable enterprise mode, adding additional features and configurations",
+                    "default": false
+                },
+                "appHostDomain": {
+                    "type": "string",
+                    "description": "Domain associated with Telicent application services",
+                    "default": "apps.telicent.io"
+                },
+                "authHostDomain": {
+                    "type": "string",
+                    "description": "Domain associated with Telicent authentication services, including OIDC providers",
+                    "default": "auth.telicent.io"
+                },
+                "groupsClaim": {
+                    "type": "string",
+                    "description": "Key used to retrieve groups from the OIDC provider",
+                    "default": "groups"
+                },
+                "jwksUrl": {
+                    "type": "string",
+                    "description": "Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)",
+                    "default": "https://{yourAuthdomain}/.well-known/jwks.json"
+                },
+                "istioNamespace": {
+                    "type": "string",
+                    "description": "Namespace in which Istio is deployed",
+                    "default": "istio-system"
+                },
+                "istioServiceAccountName": {
+                    "type": "string",
+                    "description": "Name of the Istio service account",
+                    "default": "istio-ingress"
+                },
+                "istioGatewayName": {
+                    "type": "string",
+                    "description": "Name of the Istio Gateway Resource (LB operating at the edge of the mesh)",
+                    "default": "ingress-gateway"
+                },
+                "kafka": {
+                    "type": "object",
+                    "properties": {
+                        "bootstrapServers": {
+                            "type": "string",
+                            "description": "Comma separated list containing Kafka bootstrap servers",
+                            "default": "kafka-bootstrap.kafka.svc.cluster.local:9092"
+                        },
+                        "existingConfigSecretName": {
+                            "type": "string",
+                            "description": "Name of an existing secret containing Kafka configuration (preferred over individual settings below for security)",
+                            "default": ""
+                        },
+                        "username": {
+                            "type": "string",
+                            "description": "Username for Kafka authentication",
+                            "default": "your.kafka.username.here"
+                        },
+                        "password": {
+                            "type": "string",
+                            "description": "Password for Kafka authentication",
+                            "default": "your.kafka.password.here"
+                        },
+                        "protocol": {
+                            "type": "string",
+                            "description": "Protocol used for Kafka communication",
+                            "default": "SASL_SSL"
+                        },
+                        "mechanism": {
+                            "type": "string",
+                            "description": "SASL mechanism used for Kafka authentication",
+                            "default": "SCRAM-SHA-512"
+                        }
+                    }
+                },
+                "existingTruststoreSecretName": {
+                    "type": "string",
+                    "description": "Name of an existing secret containing the truststore",
+                    "default": ""
+                },
+                "truststore": {
+                    "type": "object",
+                    "properties": {
+                        "mountPath": {
+                            "type": "string",
+                            "description": "The mount path for the truststore in the container",
+                            "default": "/app/config/truststore"
+                        }
+                    }
+                }
+            }
+        },
+        "replicaCount": {
+            "type": "number",
+            "description": "Number of replicas to deploy",
+            "default": 1
+        },
+        "image": {
+            "type": "object",
+            "properties": {
+                "registry": {
+                    "type": "string",
+                    "description": "Container image registry",
+                    "default": "quay.io"
+                },
+                "repository": {
+                    "type": "string",
+                    "description": "Container image name",
+                    "default": "telicent/tc-ies-ontology-producer"
+                },
+                "tag": {
+                    "type": "string",
+                    "description": "Container image tag. If not set, a tag is generated using the appVersion",
+                    "default": ""
+                },
+                "pullPolicy": {
+                    "type": "string",
+                    "description": "Container image pull policy",
+                    "default": "IfNotPresent"
+                },
+                "pullSecrets": {
+                    "type": "array",
+                    "description": "Specify registry secret names as an array",
+                    "default": [],
+                    "items": {}
+                }
+            }
+        },
+        "imagePullSecrets": {
+            "type": "array",
+            "description": "Global Docker registry secret names as an array",
+            "default": [],
+            "items": {}
+        },
+        "nameOverride": {
+            "type": "string",
+            "description": "String to partially override fullname (will maintain the release name)",
+            "default": ""
+        },
+        "fullnameOverride": {
+            "type": "string",
+            "description": "String to fully override the generated release name",
+            "default": ""
+        },
+        "job": {
+            "type": "object",
+            "properties": {
+                "activeDeadlineSeconds": {
+                    "type": "number",
+                    "description": "Maximum time in seconds a job can run",
+                    "default": 100
+                },
+                "backoffLimit": {
+                    "type": "number",
+                    "description": "Number of retries before marking this job as failed",
+                    "default": 3
+                },
+                "completions": {
+                    "type": "number",
+                    "description": "Number of successful completions before marking this job as complete",
+                    "default": 1
+                },
+                "parallelism": {
+                    "type": "number",
+                    "description": "Maximum number of pods that can run in parallel",
+                    "default": 1
+                },
+                "ttlSecondsAfterFinished": {
+                    "type": "number",
+                    "description": "Time to live (in seconds) for finished jobs before automatic cleanup",
+                    "default": 100
+                }
+            }
+        },
+        "serviceAccount": {
+            "type": "object",
+            "properties": {
+                "create": {
+                    "type": "boolean",
+                    "description": "Specifies whether a service account should be created",
+                    "default": true
+                },
+                "automount": {
+                    "type": "boolean",
+                    "description": "Automatically mount a ServiceAccount's API credentials?",
+                    "default": true
+                },
+                "annotations": {
+                    "type": "object",
+                    "description": "Additional custom annotations for the ServiceAccount",
+                    "default": {}
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the ServiceAccount to use. If not set and create is true, a name is generated using the fullname template",
+                    "default": ""
+                }
+            }
+        },
+        "podAnnotations": {
+            "type": "object",
+            "description": "Additional custom annotations for pods",
+            "default": {}
+        },
+        "podLabels": {
+            "type": "object",
+            "description": "Additional custom labels for pods",
+            "default": {}
+        },
+        "podSecurityContext": {
+            "type": "object",
+            "description": "Set pods' Security Context",
+            "default": {}
+        },
+        "securityContext": {
+            "type": "object",
+            "description": "Set containers' Security Context",
+            "default": {}
+        },
+        "resources": {
+            "type": "object",
+            "description": "Set containers' resource requests and limits",
+            "default": {}
+        },
+        "autoscaling": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable Horizontal Pod Autoscaler",
+                    "default": false
+                },
+                "minReplicas": {
+                    "type": "number",
+                    "description": "Minimum number of replicas",
+                    "default": 1
+                },
+                "maxReplicas": {
+                    "type": "number",
+                    "description": "Maximum number of replicas",
+                    "default": 100
+                },
+                "targetCPUUtilizationPercentage": {
+                    "type": "number",
+                    "description": "Target CPU utilization percentage",
+                    "default": 80
+                }
+            }
+        },
+        "volumes": {
+            "type": "array",
+            "description": "Additional volumes on the output Deployment definition",
+            "default": [],
+            "items": {}
+        },
+        "volumeMounts": {
+            "type": "array",
+            "description": "Additional volumeMounts on the output Deployment definition",
+            "default": [],
+            "items": {}
+        },
+        "nodeSelector": {
+            "type": "object",
+            "description": "Node labels for pods assignment",
+            "default": {}
+        },
+        "tolerations": {
+            "type": "array",
+            "description": "Tolerations for pods assignment",
+            "default": [],
+            "items": {}
+        },
+        "affinity": {
+            "type": "object",
+            "description": "Affinity for pods assignment",
+            "default": {}
+        },
+        "configuration": {
+            "type": "object",
+            "properties": {
+                "targetTopic": {
+                    "type": "string",
+                    "description": "Kafka topic to publish ontology data to",
+                    "default": "ontology"
+                },
+                "sourceName": {
+                    "type": "string",
+                    "description": "Source name or identifier for the data",
+                    "default": "ies-ontology"
+                }
+            }
+        }
+    }
+}

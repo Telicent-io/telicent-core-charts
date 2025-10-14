@@ -13,26 +13,6 @@ This chart bootstraps a data ingestion pipeline on a [Kubernetes](https://kubern
 - Access to a Kafka cluster (configured via global parameters)
 - Telicent Core platform (target for the ingested data)
 
-## Architecture
-
-The telicent-data chart implements a job-based data pipeline architecture:
-
-```
-┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
-│   Data Sources  │───▶│  Producer Jobs   │───▶│  Kafka Topics   │
-│                 │    │                  │    │                 │
-│ • Ontologies    │    │ • IES Ontology   │    │ • knowledge     │
-│ • Region Data   │    │ • Regions        │    │ • regions       │
-│ • RDF/OWL       │    │ • Adapters       │    │ • entities      │
-└─────────────────┘    └──────────────────┘    └─────────────────┘
-                                │
-                                ▼
-                       ┌─────────────────┐
-                       │ Telicent Core   │
-                       │ Applications    │
-                       └─────────────────┘
-```
-
 ## Installing the Chart
 
 To install the chart with the release name `telicent-data`:
@@ -120,31 +100,41 @@ kubectl delete jobs -l app.kubernetes.io/name=telicent-data --field-selector sta
 
 ### Global Parameters
 
-Contains global parameters. Not explicitly use in this chart, added to maintain consistency across Telicent charts.
+Contains global parameters. Not explicitly used in this chart, added to maintain consistency across Telicent charts.
 These parameters can be referenced in sub-charts as `.Values.global.<parameter-name>`.
 
-| Name                                    | Description                                                                                                       | Value                                            |
-| --------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
-| `global.imageRegistry`                  | Global image registry                                                                                             | `""`                                             |
-| `global.imagePullSecrets`               | Global registry secret names as an array                                                                          | `[]`                                             |
-| `global.enterprise`                     | Enable enterprise mode, adding additional features and configurations                                             | `false`                                          |
-| `global.appHostDomain`                  | Domain associated with Telicent application services                                                              | `apps.telicent.io`                               |
-| `global.authHostDomain`                 | Domain associated with Telicent authentication services, including OIDC providers                                 | `auth.telicent.io`                               |
-| `global.groupsClaim`                    | Key used to retrieve groups from the OIDC provider                                                                | `groups`                                         |
-| `global.jwksUrl`                        | Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)                                     | `https://{yourAuthdomain}/.well-known/jwks.json` |
-| `global.istioNamespace`                 | Namespace in which Istio is deployed                                                                              | `istio-system`                                   |
-| `global.istioServiceAccountName`        | Name of the Istio service account                                                                                 | `istio-ingress`                                  |
-| `global.istioGatewayName`               | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)                                         | `ingress-gateway`                                |
-| `global.kafka.bootstrapServers`         | Comma separated list containing Kafka bootstrap servers                                                           | `kafka-bootstrap.kafka.svc.cluster.local:9092`   |
-| `global.kafka.existingConfigSecretName` | Name of an existing secret containing Kafka configuration (preferred over individual settings below for security) | `""`                                             |
-| `global.kafka.username`                 | Username for Kafka authentication                                                                                 | `your.kafka.username.here`                       |
-| `global.kafka.password`                 | Password for Kafka authentication                                                                                 | `your.kafka.password.here`                       |
-| `global.kafka.protocol`                 | Protocol used for Kafka communication                                                                             | `SASL_SSL`                                       |
-| `global.kafka.mechanism`                | SASL mechanism used for Kafka authentication                                                                      | `SCRAM-SHA-512`                                  |
-| `global.existingTruststoreSecretName`   | Name of an existing secret containing the truststore                                                              | `""`                                             |
-| `global.truststore.mountPath`           | The mount path for the truststore in the container                                                                | `/app/config/truststore`                         |
-| `kafkaTopics.enabled`                   | Enable or disable the creation of Kafka topics during installation                                                | `false`                                          |
-| `kafkaTopics.topics`                    | List of Kafka topics to be created                                                                                | `[]`                                             |
+| Name                             | Description                                                                       | Value                                            |
+| -------------------------------- | --------------------------------------------------------------------------------- | ------------------------------------------------ |
+| `global.imageRegistry`           | Global image registry                                                             | `""`                                             |
+| `global.imagePullSecrets`        | Global registry secret names as an array                                          | `[]`                                             |
+| `global.enterprise`              | Enable enterprise mode, adding additional features and configurations             | `false`                                          |
+| `global.appHostDomain`           | Domain associated with Telicent application services                              | `apps.telicent.io`                               |
+| `global.authHostDomain`          | Domain associated with Telicent authentication services, including OIDC providers | `auth.telicent.io`                               |
+| `global.groupsClaim`             | Key used to retrieve groups from the OIDC provider                                | `groups`                                         |
+| `global.jwksUrl`                 | Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)     | `https://{yourAuthdomain}/.well-known/jwks.json` |
+| `global.istioNamespace`          | Namespace in which Istio is deployed                                              | `istio-system`                                   |
+| `global.istioServiceAccountName` | Name of the Istio service account                                                 | `istio-ingress`                                  |
+| `global.istioGatewayName`        | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)         | `ingress-gateway`                                |
+
+### Kafka Parameters
+
+| Name                                    | Description                                                                                                       | Value                                          |
+| --------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| `global.kafka.bootstrapServers`         | Comma separated list containing Kafka bootstrap servers                                                           | `kafka-bootstrap.kafka.svc.cluster.local:9092` |
+| `global.kafka.existingConfigSecretName` | Name of an existing secret containing Kafka configuration (preferred over individual settings below for security) | `""`                                           |
+| `global.kafka.username`                 | Username for Kafka authentication                                                                                 | `your.kafka.username.here`                     |
+| `global.kafka.password`                 | Password for Kafka authentication                                                                                 | `your.kafka.password.here`                     |
+| `global.kafka.protocol`                 | Protocol used for Kafka communication                                                                             | `SASL_SSL`                                     |
+| `global.kafka.mechanism`                | SASL mechanism used for Kafka authentication                                                                      | `SCRAM-SHA-512`                                |
+| `global.existingTruststoreSecretName`   | Name of an existing secret containing the truststore                                                              | `""`                                           |
+| `global.truststore.mountPath`           | The mount path for the truststore in the container                                                                | `/app/config/truststore`                       |
+
+### Kafka Topics Parameters
+
+| Name                  | Description                                                        | Value   |
+| --------------------- | ------------------------------------------------------------------ | ------- |
+| `kafkaTopics.enabled` | Enable or disable the creation of Kafka topics during installation | `false` |
+| `kafkaTopics.topics`  | List of Kafka topics to be created                                 | `[]`    |
 
 
 ## License

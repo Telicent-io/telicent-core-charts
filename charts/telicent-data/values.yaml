@@ -3,7 +3,7 @@
 
 # @section Global Parameters
 # @descStart
-# Contains global parameters. Not explicitly use in this chart, added to maintain consistency across Telicent charts.
+# Contains global parameters. Not explicitly used in this chart, added to maintain consistency across Telicent charts.
 # These parameters can be referenced in sub-charts as `.Values.global.<parameter-name>`.
 # @descEnd
 
@@ -39,6 +39,7 @@ global:
   # @key global.istioGatewayName Name of the Istio Gateway Resource (LB operating at the edge of the mesh)
   istioGatewayName: ingress-gateway
 
+  # @section Kafka Parameters
   kafka:
     # @key global.kafka.bootstrapServers Comma separated list containing Kafka bootstrap servers
     bootstrapServers: "kafka-bootstrap.kafka.svc.cluster.local:9092"
@@ -59,6 +60,7 @@ global:
     # @key global.truststore.mountPath The mount path for the truststore in the container
     mountPath: /app/config/truststore
 
+# @section Kafka Topics Parameters
 kafkaTopics:
   # @key kafkaTopics.enabled Enable or disable the creation of Kafka topics during installation
   enabled: false
