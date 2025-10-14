@@ -73,7 +73,6 @@ with Kafka, ensuring consistent connectivity and authentication across the platf
 | `global.kafka.password`                 | Password for Kafka authentication                         | `your.kafka.password.here`                     |
 | `global.kafka.protocol`                 | Protocol used for Kafka communication                     | `SASL_SSL`                                     |
 | `global.kafka.mechanism`                | SASL mechanism used for Kafka authentication              | `SCRAM-SHA-512`                                |
-| `global.kafka.topics`                   | List of Kafka topics to be created during installation    | `[]`                                           |
 | `global.existingTruststoreSecretName`   | Name of an existing secret containing the truststore      | `""`                                           |
 | `global.truststore.mountPath`           | The mount path for the truststore in the container        | `/app/config/truststore`                       |
 | `jobServiceAccountName`                 | Service account used for running jobs in Kubernetes.      | `producers`                                    |

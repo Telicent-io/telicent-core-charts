@@ -45,7 +45,7 @@ spec:
           {{- end }}
           env:
             - name: BOOTSTRAP_SERVERS
-              value: {{ .Values.global.kafkaBootstrapUrls | quote }}
+              value: {{ .Values.global.kafka.bootstrapServers | quote }}
             - name: INPUT_TOPIC
               value: {{ .Values.contentExtractor.configuration.inputTopic | quote }}
             - name: OUTPUT_TOPIC
@@ -83,7 +83,7 @@ spec:
         {{- if .Values.global.existingKafkaConfigSecretName }}
           secretName: {{ .Values.global.existingKafkaConfigSecretName }}
         {{- else }}
-          secretName: {{ include "telicent-core.kafkaAuthConfigSecretName" . }}
+          secretName: {{ include "document-pipeline.fullname" . }}-kafka-config
         {{- end }}
       {{- with .Values.contentExtractor.volumes }}
         {{- toYaml . | nindent 8 }}

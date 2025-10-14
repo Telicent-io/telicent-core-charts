@@ -51,26 +51,11 @@ Namespace:            {{ .Release.Namespace }}
 ========================
 {{- if $isDryRun }}
 {{/* Show configuration-based status when lookup is not available */}}
-{{- $userPortalEnabled := true }}
-{{- if hasKey .Values "user-portal-ui" }}
-{{- $userPortalEnabled = (index .Values "user-portal-ui").enabled }}
-{{- end }}
-{{- $paperbackEnabled := false }}
-{{- if hasKey .Values "paperback-writer" }}
-{{- $paperbackEnabled = (index .Values "paperback-writer").enabled }}
-{{- end }}
-{{- $catalogEnabled := false }}
-{{- if hasKey .Values "data-catalog" }}
-{{- $catalogEnabled = (index .Values "data-catalog").enabled }}
-{{- end }}
-
-{{- if $userPortalEnabled }}
 📋 User Portal UI     - Centralized User Access & Navigation
-{{- end }}
-{{- if $paperbackEnabled }}
+{{- if hasKey .Values "paperback-writer" }}
 📋 Paperback Writer   - Data Processing Pipeline
 {{- end }}
-{{- if $catalogEnabled }}
+{{- if hasKey .Values "data-catalog" }}
 📋 Data Catalog       - Dataset Management & Discovery
 {{- end }}
 

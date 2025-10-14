@@ -62,7 +62,7 @@ spec:
             - name: LOGGING_LEVEL
               value: {{ .Values.contentTagger.configuration.loggingLevel | quote }}
             - name: BOOTSTRAP_SERVERS
-              value: {{ .Values.global.kafkaBootstrapUrls | quote }}
+              value: {{ .Values.global.kafka.bootstrapServers | quote }}
             - name: KAFKA_CONFIG_FILE_PATH
               value: /app/config/kafka-auth/kafka-config.toml
             - name: KAFKA_CONFIG_MODE
@@ -101,7 +101,7 @@ spec:
           {{- if .Values.global.existingKafkaConfigSecretName }}
             secretName: {{ .Values.global.existingKafkaConfigSecretName }}
           {{- else }}
-            secretName: {{ include "telicent-core.kafkaAuthConfigSecretName" . }}
+            secretName: {{ include "document-pipeline.fullname" . }}-kafka-config
           {{- end }}
       {{- with .Values.contentTagger.volumes }}
         {{- toYaml . | nindent 8 }}

@@ -93,12 +93,6 @@
                             "type": "string",
                             "description": "SASL mechanism used for Kafka authentication",
                             "default": "SCRAM-SHA-512"
-                        },
-                        "topics": {
-                            "type": "array",
-                            "description": "List of Kafka topics to be created during installation",
-                            "default": [],
-                            "items": {}
                         }
                     }
                 },

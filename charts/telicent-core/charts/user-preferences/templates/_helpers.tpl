@@ -93,7 +93,7 @@ Create Server config name to use
 Create Kafka Auth Config name to use
 */}}
 {{- define "user-preferences.kafkaAuthConfig" -}}
-{{ include "user-preferences.fullname" . }}-kafka-auth-config
+{{ include "user-preferences.fullname" . }}-kafka-config
 {{- end }}
 
 {{/* 

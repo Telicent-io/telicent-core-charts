@@ -1,0 +1,12 @@
+dependencies:
+- name: user-portal-ui
+  repository: file://./charts/user-portal-ui
+  version: 0.1.0
+- name: paperback-writer
+  repository: file://./charts/paperback-writer
+  version: 0.1.0
+- name: data-catalog
+  repository: file://./charts/data-catalog
+  version: 0.1.0
+digest: sha256:363483ad0b28f62d2fab740aa6c915f609fcbd068714f6cac538dd2afd363441
+generated: "2025-10-14T10:52:32.829519+01:00"
