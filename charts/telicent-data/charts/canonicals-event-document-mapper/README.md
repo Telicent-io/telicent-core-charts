@@ -50,7 +50,7 @@ These parameters can be referenced in sub-charts as `.Values.global.<parameter-n
 | `global.enterprise`              | Enable enterprise mode, adding additional features and configurations             | `false`                                          |
 | `global.appHostDomain`           | Domain associated with Telicent application services                              | `apps.telicent.io`                               |
 | `global.authHostDomain`          | Domain associated with Telicent authentication services, including OIDC providers | `auth.telicent.io`                               |
-| `global.groupsClaim`             | Key used to retrieve groups from the OIDC provider                                | `groups`                                         |
+| `global.groupsClaim`             | Claim name for user groups in JWT tokens                                          | `groups`                                         |
 | `global.jwksUrl`                 | Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)     | `https://{yourAuthdomain}/.well-known/jwks.json` |
 | `global.istioNamespace`          | Namespace in which Istio is deployed                                              | `istio-system`                                   |
 | `global.istioServiceAccountName` | Name of the Istio service account                                                 | `istio-ingress`                                  |

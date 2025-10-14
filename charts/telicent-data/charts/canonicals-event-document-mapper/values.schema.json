@@ -33,7 +33,7 @@
                 },
                 "groupsClaim": {
                     "type": "string",
-                    "description": "Key used to retrieve groups from the OIDC provider",
+                    "description": "Claim name for user groups in JWT tokens",
                     "default": "groups"
                 },
                 "jwksUrl": {

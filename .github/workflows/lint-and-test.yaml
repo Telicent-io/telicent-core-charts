@@ -3,11 +3,21 @@ name: Lint and Test Charts
 on: pull_request
 
 jobs:
+  documentation-checker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run Metadata Updater
+        run: |
+          chmod +x .dev/metadataUpdater.sh
+          .dev/metadataUpdater.sh
+
   lint-test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
