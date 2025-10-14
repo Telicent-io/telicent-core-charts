@@ -5,9 +5,7 @@ metadata:
   labels:
     {{- include "acled-participants-mapper.labels" . | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
-  {{- end }}
   selector:
     matchLabels:
       {{- include "acled-participants-mapper.selectorLabels" . | nindent 6 }}

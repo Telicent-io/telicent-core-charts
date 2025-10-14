@@ -1,0 +1,39 @@
+dependencies:
+- name: ies-ontology-producer
+  repository: file://./charts/ies-ontology-producer
+  version: 0.1.0
+- name: ies-regions-ontology-adapter
+  repository: file://./charts/ies-regions-ontology-adapter
+  version: 0.1.0
+- name: ies-regions-producer
+  repository: file://./charts/ies-regions-producer
+  version: 0.1.0
+- name: ontologies-rdf-rdfs-owl-producer
+  repository: file://./charts/ontologies-rdf-rdfs-owl-producer
+  version: 0.1.0
+- name: producer-acled-ontology
+  repository: file://./charts/producer-acled-ontology
+  version: 0.1.0
+- name: canonicals-event-validation-mapper
+  repository: file://./charts/canonicals-event-validation-mapper
+  version: 0.1.0
+- name: canonicals-event-geo-mapper
+  repository: file://./charts/canonicals-event-geo-mapper
+  version: 0.1.0
+- name: canonicals-event-knowledge-mapper
+  repository: file://./charts/canonicals-event-knowledge-mapper
+  version: 0.1.0
+- name: acled-locations-mapper
+  repository: file://./charts/acled-locations-mapper
+  version: 0.1.0
+- name: acled-participants-mapper
+  repository: file://./charts/acled-participants-mapper
+  version: 0.1.0
+- name: acled-validation-mapper
+  repository: file://./charts/acled-validation-mapper
+  version: 0.1.0
+- name: canonicals-event-document-mapper
+  repository: file://./charts/canonicals-event-document-mapper
+  version: 0.1.0
+digest: sha256:72257c25cdae6417321af105bab3469f34dd47955b51b14a4e9858ec0a0db7a6
+generated: "2025-10-14T10:57:28.362938+01:00"

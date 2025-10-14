@@ -23,6 +23,13 @@ version: 0.1.0
 # It is recommended to use it with quotes.
 appVersion: "1.16.0"
 
+icon: "https://avatars.githubusercontent.com/u/65304240?s=200&v=4"
+
+# The name of the chart's maintainers.
+maintainers:
+  - name: telicent
+    url: https://github.com/Telicent-IO
+
 dependencies:
   - name: ies-ontology-producer
     version: 0.1.0
@@ -36,3 +43,27 @@ dependencies:
   - name: ontologies-rdf-rdfs-owl-producer
     version: 0.1.0
     repository: "file://./charts/ontologies-rdf-rdfs-owl-producer"
+  - name: producer-acled-ontology
+    version: 0.1.0
+    repository: "file://./charts/producer-acled-ontology"
+  - name: canonicals-event-validation-mapper
+    version: 0.1.0
+    repository: "file://./charts/canonicals-event-validation-mapper"
+  - name: canonicals-event-geo-mapper
+    version: 0.1.0
+    repository: "file://./charts/canonicals-event-geo-mapper"
+  - name: canonicals-event-knowledge-mapper
+    version: 0.1.0
+    repository: "file://./charts/canonicals-event-knowledge-mapper"
+  - name: acled-locations-mapper
+    version: 0.1.0
+    repository: "file://./charts/acled-locations-mapper"
+  - name: acled-participants-mapper
+    version: 0.1.0
+    repository: "file://./charts/acled-participants-mapper"
+  - name: acled-validation-mapper
+    version: 0.1.0
+    repository: "file://./charts/acled-validation-mapper"
+  - name: canonicals-event-document-mapper
+    version: 0.1.0
+    repository: "file://./charts/canonicals-event-document-mapper"
