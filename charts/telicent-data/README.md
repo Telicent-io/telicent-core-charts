@@ -120,149 +120,31 @@ kubectl delete jobs -l app.kubernetes.io/name=telicent-data --field-selector sta
 
 ### Global Parameters
 
-Global configuration parameters shared across Telicent components. These configure the target environment and infrastructure.
+Contains global parameters. Not explicitly use in this chart, added to maintain consistency across Telicent charts.
+These parameters can be referenced in sub-charts as `.Values.global.<parameter-name>`.
 
-| Name | Description | Value |
-|------|-------------|-------|
-| `global.imageRegistry` | Global image registry | `""` |
-| `global.imagePullSecrets` | Global registry secret names as an array | `[]` |
-| `global.appHostDomain` | Domain of the target Telicent Core application | `apps.telicent.io` |
-| `global.kafka.bootstrapServers` | Kafka cluster endpoint for data ingestion | `kafka-bootstrap.kafka.svc.cluster.local:9092` |
-| `global.kafka.username` | Username for Kafka authentication | `your.kafka.username.here` |
-| `global.kafka.password` | Password for Kafka authentication | `your.kafka.password.here` |
-
-### Producer Configuration
-
-Each producer can be configured independently with its own image, resources, and job parameters.
-
-#### Common Producer Parameters
-
-| Parameter | Description | Default |
-|-----------|-------------|---------|
-| `producers.<name>.enabled` | Enable/disable the producer | `true` |
-| `producers.<name>.image.repository` | Container image repository | varies by producer |
-| `producers.<name>.image.tag` | Container image tag | `""` (uses Chart.AppVersion) |
-| `producers.<name>.image.pullPolicy` | Image pull policy | `IfNotPresent` |
-| `producers.<name>.resources` | Resource requests and limits | `{}` |
-| `producers.<name>.env` | Environment variables | `{}` |
-| `producers.<name>.job.backoffLimit` | Number of retries for failed jobs | `3` |
-| `producers.<name>.job.completions` | Number of successful completions required | `1` |
-| `producers.<name>.job.parallelism` | Number of parallel executions | `1` |
-| `producers.<name>.job.ttlSecondsAfterFinished` | TTL for completed jobs | `null` |
-
-#### Available Producers
-
-| Producer | Image | Purpose |
-|----------|-------|---------|
-| `ies-ontology-producer` | `telicent/tc-ies-ontology-producer` | Core IES ontology ingestion |
-| `ies-regions-producer` | `telicent/tc-ies-regions-producer` | Geographical region data processing |
-| `ies-regions-ontology-adapter` | `telicent/tc-ies-regions-ontology-adapter` | Region data format adaptation |
-| `ontologies-rdf-rdfs-owl-producer` | `telicent/tc-ontologies-rdf-rdfs-owl-producer` | RDF/RDFS/OWL ontology ingestion |
-
-### Example Configuration
-
-```yaml
-global:
-  appHostDomain: "my-telicent.example.com"
-  kafka:
-    bootstrapServers: "my-kafka-cluster:9092"
-    username: "data-pipeline-user"
-    password: "secure-password"
-
-producers:
-  ies-regions-producer:
-    enabled: true
-    resources:
-      requests:
-        memory: "512Mi"
-        cpu: "200m"
-      limits:
-        memory: "1Gi"
-        cpu: "500m"
-    env:
-      BATCH_SIZE: "1000"
-      LOG_LEVEL: "INFO"
-    job:
-      backoffLimit: 5
-      ttlSecondsAfterFinished: 3600
-
-  ies-ontology-producer:
-    enabled: false  # Disable this producer
-```
-
-## Troubleshooting
-
-### Common Issues
-
-#### Jobs Stuck in Pending State
-```console
-# Check node resources
-kubectl describe nodes
-
-# Check image pull issues
-kubectl describe job <job-name>
-```
-
-#### Jobs Failing Repeatedly
-```console
-# Check job logs
-kubectl logs -l app.kubernetes.io/producer=<producer-name>
-
-# Check Kafka connectivity
-kubectl exec -it <pod-name> -- curl -v kafka-bootstrap.kafka.svc.cluster.local:9092
-```
-
-#### Data Not Appearing in Core
-1. Verify Kafka topics exist and contain data
-2. Check Telicent Core application logs
-3. Validate data format and schema compatibility
-
-### Useful Commands
-
-```console
-# View all producer jobs
-kubectl get jobs -l app.kubernetes.io/name=telicent-data
-
-# Check job completion status
-kubectl get jobs -l app.kubernetes.io/name=telicent-data -o wide
-
-# Delete failed jobs for retry
-kubectl delete jobs -l app.kubernetes.io/name=telicent-data --field-selector status.failed=1
-
-# Scale job parallelism
-helm upgrade telicent-data ./charts/telicent-data --set producers.ies-regions-producer.job.parallelism=3
-```
-
-## Integration with Telicent Core
-
-This chart is designed to work with the broader Telicent ecosystem:
-
-- **Telicent Core**: The target platform that consumes the ingested data
-- **Kafka**: Message broker for reliable data streaming
-- **Istio** (optional): Service mesh for secure communication
-- **Monitoring**: Prometheus/Grafana integration for job monitoring
-
-## Development
-
-### Adding New Producers
-
-1. Add producer configuration to `values.yaml`
-2. Ensure the producer image follows Telicent data pipeline conventions
-3. Configure appropriate Kafka topics and data formats
-4. Test with both enabled and disabled states
-
-### Custom Data Sources
-
-To add custom data sources:
-
-1. Create a new producer entry in `values.yaml`
-2. Configure the container image and environment variables
-3. Set appropriate resource limits based on data volume
-4. Configure job retry and cleanup policies
-
-## Configuration and installation details
-
-## Parameters
+| Name                                    | Description                                                                                                       | Value                                            |
+| --------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
+| `global.imageRegistry`                  | Global image registry                                                                                             | `""`                                             |
+| `global.imagePullSecrets`               | Global registry secret names as an array                                                                          | `[]`                                             |
+| `global.enterprise`                     | Enable enterprise mode, adding additional features and configurations                                             | `false`                                          |
+| `global.appHostDomain`                  | Domain associated with Telicent application services                                                              | `apps.telicent.io`                               |
+| `global.authHostDomain`                 | Domain associated with Telicent authentication services, including OIDC providers                                 | `auth.telicent.io`                               |
+| `global.groupsClaim`                    | Key used to retrieve groups from the OIDC provider                                                                | `groups`                                         |
+| `global.jwksUrl`                        | Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)                                     | `https://{yourAuthdomain}/.well-known/jwks.json` |
+| `global.istioNamespace`                 | Namespace in which Istio is deployed                                                                              | `istio-system`                                   |
+| `global.istioServiceAccountName`        | Name of the Istio service account                                                                                 | `istio-ingress`                                  |
+| `global.istioGatewayName`               | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)                                         | `ingress-gateway`                                |
+| `global.kafka.bootstrapServers`         | Comma separated list containing Kafka bootstrap servers                                                           | `kafka-bootstrap.kafka.svc.cluster.local:9092`   |
+| `global.kafka.existingConfigSecretName` | Name of an existing secret containing Kafka configuration (preferred over individual settings below for security) | `""`                                             |
+| `global.kafka.username`                 | Username for Kafka authentication                                                                                 | `your.kafka.username.here`                       |
+| `global.kafka.password`                 | Password for Kafka authentication                                                                                 | `your.kafka.password.here`                       |
+| `global.kafka.protocol`                 | Protocol used for Kafka communication                                                                             | `SASL_SSL`                                       |
+| `global.kafka.mechanism`                | SASL mechanism used for Kafka authentication                                                                      | `SCRAM-SHA-512`                                  |
+| `global.existingTruststoreSecretName`   | Name of an existing secret containing the truststore                                                              | `""`                                             |
+| `global.truststore.mountPath`           | The mount path for the truststore in the container                                                                | `/app/config/truststore`                         |
+| `kafkaTopics.enabled`                   | Enable or disable the creation of Kafka topics during installation                                                | `false`                                          |
+| `kafkaTopics.topics`                    | List of Kafka topics to be created                                                                                | `[]`                                             |
 
 
 ## License

@@ -51,7 +51,7 @@ spec:
               protocol: TCP
           env:
             - name: BOOTSTRAP_SERVERS
-              value: {{ .Values.global.kafkaBootstrapUrls | quote }}
+              value: {{ .Values.global.kafka.bootstrapServers | quote }}
             - name: INPUT_TOPIC
               value: {{ .Values.contentIndexer.configuration.inputTopic | quote }}
             - name: ELASTIC_HOST
@@ -109,7 +109,8 @@ spec:
         {{- if .Values.global.existingKafkaConfigSecretName }}
           secretName: {{ .Values.global.existingKafkaConfigSecretName }}
         {{- else }}
-          secretName: {{ include "telicent-core.kafkaAuthConfigSecretName" . }}
+          secretName: {{ include "document-pipeline.fullname" . }}-kafka-config
+
         {{- end }}
       {{- with .Values.contentIndexer.volumes }}
         {{- toYaml . | nindent 8 }}

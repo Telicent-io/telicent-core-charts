@@ -94,7 +94,7 @@ Create a fuseki config name to use
 Create Kafka Auth Config name to use
 */}}
 {{- define "graph.kafkaAuthConfig" -}}
-{{ include "graph.fullname" . }}-kafka-auth-config
+{{ include "graph.fullname" . }}-kafka-config
 {{- end }}
 
 {{/*

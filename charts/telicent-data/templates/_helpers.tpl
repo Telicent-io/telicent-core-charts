@@ -66,5 +66,5 @@ Create the name of the service account to use
 {{- end }}
 
 {{- define "telicent-data.kafkaAuthConfigSecretName" -}}
-{{ .Release.Name }}-kafka-auth-config
+{{ .Release.Name }}-kafka-config
 {{- end }}

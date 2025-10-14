@@ -47,7 +47,7 @@ spec:
             - name: ROUTE_CONFIG_DIRECTORY
               value: /etc/http-ingester/
             - name: BOOTSTRAP_SERVERS
-              value: {{ .Values.global.kafkaBootstrapUrls | quote }}
+              value: {{ .Values.global.kafka.bootstrapServers | quote }}
             - name: JWKS_URL
               value: {{ .Values.global.jwksUrl | quote }}
             - name: JAVA_OPTIONS
@@ -110,7 +110,7 @@ spec:
           {{- if .Values.global.existingKafkaConfigSecretName }}
             secretName: {{ .Values.global.existingKafkaConfigSecretName }}
           {{- else }}
-            secretName: {{ include "telicent-core.kafkaAuthConfigSecretName" . }}
+            secretName: {{ include "document-pipeline.fullname" . }}-kafka-config
           {{- end }}
       {{- with .Values.httpIngester.volumes }}
         {{- toYaml . | nindent 8 }}

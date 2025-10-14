@@ -1,0 +1,99 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "canonicals-event-knowledge-mapper.fullname" . }}
+  labels:
+    {{- include "canonicals-event-knowledge-mapper.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "canonicals-event-knowledge-mapper.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "canonicals-event-knowledge-mapper.labels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- $pullSecret := .Values.global.imagePullSecrets | default .Values.image.pullSecrets }}
+      {{- with $pullSecret }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 6 }}
+      {{- end }}
+      serviceAccountName: {{ include "canonicals-event-knowledge-mapper.serviceAccountName" . }}
+      {{- with .Values.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          {{- with .Values.securityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          image: {{ include "canonicals-event-knowledge-mapper.image" . }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          env:
+          - name: BOOTSTRAP_SERVERS
+            value: {{ .Values.global.kafka.bootstrapServers | quote }}
+          - name: KAFKA_CONFIG_FILE_PATH
+            value: /app/config/kafka-auth/kafka-config.toml
+          - name: KAFKA_CONFIG_MODE
+            value: {{ .Values.configuration.kafkaConfigMode | default "toml" | quote }}
+          - name: MAPPER_NAME
+            value: {{ include "canonicals-event-knowledge-mapper.name" . | quote }}
+          - name: DEFAULT_DATA_NAMESPACE
+            value: {{ .Values.configuration.dataNamespace | default "default" | quote }}
+          {{- with .Values.livenessProbe }}
+          livenessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.readinessProbe }}
+          readinessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          volumeMounts:
+          - mountPath: /app/config/kafka-auth/
+            name: kafka-auth-config
+          {{- with .Values.volumeMounts }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      volumes:
+      - name: kafka-auth-config
+        secret:
+        {{- if .Values.global.kafka.existingConfigSecretName }}
+          secretName: {{ .Values.global.kafka.existingConfigSecretName }}
+        {{- else }}
+          secretName: {{ include "canonicals-event-knowledge-mapper.fullname" . }}-kafka-config
+        {{- end }}
+      {{- with .Values.volumes }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
