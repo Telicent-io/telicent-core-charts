@@ -20,8 +20,8 @@ spec:
               - {{ include "oauth2-proxy.ingressPrincipal" . }}
       to:
         - operation:
-          methods:
-          - '*'
+            methods:
+            - '*'
   selector:
     matchLabels:
       app.kubernetes.io/app: {{ include "oauth2-proxy.name" . }}
