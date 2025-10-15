@@ -4,7 +4,6 @@ Copyright (C) 2025 Telicent Limited
 
 apiVersion: apps/v1
 kind: Deployment
-
 metadata:
   name: {{ include "access-ui.fullname" . }}
   labels:
@@ -40,12 +39,10 @@ spec:
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         resources: {{- toYaml .Values.resources | nindent 10 }}
         securityContext: {{- toYaml .Values.containerSecurityContext | nindent 10 }}
-           
         ports:
         - name: http
           containerPort: {{ .Values.service.port }}
           protocol: TCP
-      
         readinessProbe:
           httpGet:
             path: /access/health
@@ -62,12 +59,10 @@ spec:
           initialDelaySeconds: 60
           periodSeconds: 30
           timeoutSeconds: 2
-
         volumeMounts:
         - mountPath: /usr/local/nginx/html/env-config.js
           name: app-config-volume
           subPath: env-config.js
-      
       volumes:
       - configMap:
           name: {{ include "access-ui.configMapName" . }}

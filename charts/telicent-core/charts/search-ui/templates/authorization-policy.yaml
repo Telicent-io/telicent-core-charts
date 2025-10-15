@@ -17,7 +17,7 @@ spec:
     - from:
         - source:
             principals:
-              - {{ include "search-ui.ingressPrincipal" . }}
+            - {{ include "search-ui.ingressPrincipal" . }}
       to:
         - operation:
             methods:

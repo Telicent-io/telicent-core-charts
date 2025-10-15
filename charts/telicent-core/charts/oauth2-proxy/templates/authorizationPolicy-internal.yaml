@@ -21,7 +21,7 @@ spec:
       to:
         - operation:
             methods:
-            - '*'
+              - '*'
   selector:
     matchLabels:
       app.kubernetes.io/app: {{ include "oauth2-proxy.name" . }}
