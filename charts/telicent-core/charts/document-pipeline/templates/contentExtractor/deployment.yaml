@@ -52,6 +52,8 @@ spec:
               value: {{ .Values.contentExtractor.configuration.outputTopic | quote }}
             - name: KAFKA_CONFIG_FILE_PATH
               value: /app/config/kafka-auth/kafka-config.properties
+            - name: DLQ_TOPIC
+              value: {{ .Values.contentExtractor.configuration.dlqTopic | quote }}
 
           image: "{{ .Values.contentExtractor.image.repository }}:{{ .Values.contentExtractor.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.contentExtractor.image.pullPolicy }}

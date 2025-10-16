@@ -150,7 +150,7 @@ httpIngester:
       # @key httpIngester.configuration.routes[0].name A unique name for the route
       - name: local
         # @key httpIngester.configuration.routes[0].topic The destination Kafka topic for the route
-        topic: ingested_content
+        topic: document.extractrequest
         # @key httpIngester.configuration.routes[0].securityLabel In this test configuration the label is simply test=true
         securityLabel: dGVzdD10cnVl
         # @key httpIngester.configuration.routes[0].namespace The Namespace URI that will be used to assign a unique URI to a document URIs are generated deterministically based on this and the ingested document content
@@ -286,9 +286,11 @@ contentExtractor:
 
   configuration:
     # @key contentExtractor.configuration.inputTopic The Kafka topic from which the content extractor will consume messages
-    inputTopic: ingested_content
+    inputTopic: document.extractrequest
     # @key contentExtractor.configuration.outputTopic The Kafka topic to which the content extractor will produce messages
-    outputTopic: extracted_content
+    outputTopic: document.textandmetadata
+    # @key contentExtractor.configuration.dlqTopic The Kafka topic to which the content extractor will produce dead-lettered messages
+    dlqTopic: document.extractrequest.dlq
 
 # @section Content Indexer
 # @descStart
@@ -389,7 +391,7 @@ contentIndexer:
 
   configuration:
     # @key contentIndexer.configuration.inputTopic The Kafka topic from which the content indexer will consume messages
-    inputTopic: extracted_content
+    inputTopic: document.textandmetadata,document.entities
     # @key contentIndexer.configuration.elasticsearchHost The hostname for the Elasticsearch instance
     elasticsearchHost: elasticsearch-master
     # @key contentIndexer.configuration.elasticsearchPort The port for the Elasticsearch instance
@@ -400,6 +402,9 @@ contentIndexer:
     javaOptions: ""
     # @key contentIndexer.configuration.opensearchCompatibility Whether to enable OpenSearch compatibility mode
     opensearchCompatibility: true
+    # @key contentIndexer.configuration.dlqTopic The Kafka topic to which the content indexer will produce dead-lettered messages
+    dlqTopic: document.textandmetadata.dlq
+
   # @section OpenSearch secrets - Search Projector
   # Note: It is recommended to use a Kubernetes secret for sensitive information like passwords
   elasticSecrets:
@@ -499,15 +504,17 @@ catalogueUpdater:
 
   configuration:
     # @key catalogueUpdater.configuration.inputTopic The Kafka topic from which the catalogue updater will consume messages
-    inputTopic: extracted_content
+    inputTopic: document.textandmetadata
     # @key catalogueUpdater.configuration.outputTopic The Kafka topic to which the catalogue updater will produce
-    outputTopic: catalogue_updates
+    outputTopic: catalog
     # @key catalogueUpdater.configuration.debounceWindowMs The debounce window in milliseconds
     debounceWindowMs: 30000
     # @key catalogueUpdater.configuration.flushIntervalMs The flush interval in milliseconds
     flushIntervalMs: 60000
     # @key catalogueUpdater.configuration.maxBufferSize The maximum buffer size
     maxBufferSize: 100
+    # @key catalogueUpdater.configuration.dlqTopic The Kafka topic to which the catalogue updater will produce dead-lettered messages
+    dlqTopic: document.extractrequest.dlq
 
 # @section Content Tagger
 # @descStart
