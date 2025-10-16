@@ -41,10 +41,11 @@ spec:
         resources: {{- toYaml .Values.resources | nindent 10 }}
         securityContext: {{- toYaml .Values.containerSecurityContext | nindent 10 }}
 
-        {{- if or .Values.existingCacertConfigmap .Values.cacert }}
         env:
+        {{- if or .Values.existingCacertConfigmap .Values.cacert }}
         - name: NODE_EXTRA_CA_CERTS
           value: "/certs/ca.crt"
+        {{- end }}
         - name: MONGO_PWD
           valueFrom:
             secretKeyRef:
@@ -55,12 +56,9 @@ spec:
               {{- else }}
               name: {{ include "access.envSecretName" . }}
               {{- end }}
-        {{- end }}
         envFrom:
         - configMapRef:
             name: {{ include "access.envConfigmapName" . }}
-
-            
         ports:
         - name: http
           containerPort: {{ .Values.service.port }} 
