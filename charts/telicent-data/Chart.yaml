@@ -46,24 +46,32 @@ dependencies:
   - name: producer-acled-ontology
     version: 0.1.0
     repository: "file://./charts/producer-acled-ontology"
+    condition: global.enterprise
   - name: canonicals-event-validation-mapper
     version: 0.1.0
     repository: "file://./charts/canonicals-event-validation-mapper"
+    condition: global.enterprise
   - name: canonicals-event-geo-mapper
     version: 0.1.0
     repository: "file://./charts/canonicals-event-geo-mapper"
+    condition: global.enterprise
   - name: canonicals-event-knowledge-mapper
     version: 0.1.0
     repository: "file://./charts/canonicals-event-knowledge-mapper"
+    condition: global.enterprise
   - name: acled-locations-mapper
     version: 0.1.0
     repository: "file://./charts/acled-locations-mapper"
+    condition: global.enterprise
   - name: acled-participants-mapper
     version: 0.1.0
     repository: "file://./charts/acled-participants-mapper"
+    condition: global.enterprise
   - name: acled-validation-mapper
     version: 0.1.0
     repository: "file://./charts/acled-validation-mapper"
+    condition: global.enterprise
   - name: canonicals-event-document-mapper
     version: 0.1.0
     repository: "file://./charts/canonicals-event-document-mapper"
+    condition: global.enterprise
