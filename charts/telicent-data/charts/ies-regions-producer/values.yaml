@@ -97,7 +97,7 @@ job:
   # @key job.parallelism Specifies the maximum desired number of pods the job should run at any given time
   parallelism: 1
   # @key job.ttlSecondsAfterFinished Specifies the time to live for finished Jobs, in seconds
-  ttlSecondsAfterFinished: 100
+  ttlSecondsAfterFinished: 0
 
 # @section Service Account Parameters
 serviceAccount:

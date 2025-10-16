@@ -99,7 +99,7 @@ job:
   # @key job.parallelism Maximum number of pods that can run in parallel
   parallelism: 1
   # @key job.ttlSecondsAfterFinished Time to live (in seconds) for finished jobs before automatic cleanup
-  ttlSecondsAfterFinished: 100
+  ttlSecondsAfterFinished: 0
 
 # @section Service Account Parameters
 serviceAccount:
