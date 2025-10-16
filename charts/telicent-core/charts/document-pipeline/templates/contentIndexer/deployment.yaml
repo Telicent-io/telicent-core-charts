@@ -66,6 +66,9 @@ spec:
               value: {{ .Values.contentIndexer.configuration.opensearchCompatibility | quote }}
             - name: KAFKA_CONFIG_FILE_PATH
               value: /app/config/kafka-auth/kafka-config.properties
+            - name: DLQ_TOPIC
+              value: {{ .Values.contentIndexer.configuration.dlqTopic | quote }}
+              
           envFrom:
           {{- if .Values.contentIndexer.elasticSecrets.existingEnvironmentSecretName }}
           - secretRef:
