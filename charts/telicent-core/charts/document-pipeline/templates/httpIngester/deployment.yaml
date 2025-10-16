@@ -107,8 +107,8 @@ spec:
             {{- end }}
         - name: kafka-auth-config
           secret:
-          {{- if .Values.global.existingKafkaConfigSecretName }}
-            secretName: {{ .Values.global.existingKafkaConfigSecretName }}
+          {{- if .Values.global.kafka.existingConfigSecretName }}
+            secretName: {{ .Values.global.kafka.existingConfigSecretName }}
           {{- else }}
             secretName: {{ include "document-pipeline.fullname" . }}-kafka-config
           {{- end }}
