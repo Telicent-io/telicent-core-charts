@@ -603,7 +603,7 @@ contentTagger:
 
   configuration:
     # @key contentTagger.configuration.inputTopic The Kafka topic from which the content tagger will consume messages
-    inputTopic: extracted_content
+    inputTopic: document.textandmetadata
     # @key contentTagger.configuration.outputTopic The Kafka topic to which the content tagger will produce
     outputTopic: knowledge
     # @key contentTagger.configuration.rdfTaggerDataUriStub The URI for the RDF Tagger service
