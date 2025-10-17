@@ -97,12 +97,12 @@ Create the name of environment variable secrets
 */}}
 
 {{- define "search.userAttributesUrl" -}}
-{{- .Values.configuration.userAttributesUrl | default (printf "%s-access.%s.svc.cluster.local:8080/users/lookup/{user}" .Release.Name .Release.Namespace ) | quote }}
+{{- .Values.configuration.userAttributesUrl | default (printf "http://%s-access.%s.svc.cluster.local:8080/users/lookup/{user}" .Release.Name .Release.Namespace ) | quote }}
 {{- end }}
 
 {{/* Create the attribute hierarchy service URL
 */}}
 
 {{- define "search.attributeHierarchyUrl" -}}
-{{- .Values.configuration.attributeHierarchyUrl | default (printf "%s-access.%s.svc.cluster.local:8080/hierarchies/lookup/{name}" .Release.Name .Release.Namespace ) | quote }}
+{{- .Values.configuration.attributeHierarchyUrl | default (printf "http://%s-access.%s.svc.cluster.local:8080/hierarchies/lookup/{name}" .Release.Name .Release.Namespace ) | quote }}
 {{- end }}
