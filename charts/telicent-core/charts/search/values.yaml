@@ -59,9 +59,9 @@ global:
 # @descEnd
 configuration:
   # @key configuration.userAttributesUrl URL for the user details endpoint
-  userAttributesUrl: http://access.tc-system.svc.cluster.local:8080/users/lookup/{user}
+  userAttributesUrl: ""
   # @key configuration.attributeHierarchyUrl URL for the user hierarchy endpoint
-  attributeHierarchyUrl: http://access.tc-system.svc.cluster.local:8080/hierarchies/lookup/{name}
+  attributeHierarchyUrl: ""
 
   # @key configuration.javaOptions JVM options for the application
   javaOptions: -XX:MaxRAMPercentage=70.0 -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks
