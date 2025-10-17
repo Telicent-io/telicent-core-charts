@@ -12,8 +12,8 @@ metadata:
 
 data:
   # Environment variables for the search container
-  USER_ATTRIBUTES_URL: {{ .Values.configuration.userAttributesUrl | quote }}
-  ATTRIBUTE_HIERARCHY_URL: {{ .Values.configuration.attributeHierarchyUrl | quote }}
+  USER_ATTRIBUTES_URL: {{ include "search.userAttributesUrl" . }}
+  ATTRIBUTE_HIERARCHY_URL: {{ include "search.attributeHierarchyUrl" . }}
   JAVA_OPTIONS: {{ .Values.configuration.javaOptions | quote }}
   OTEL_METRICS_EXPORTER: {{ .Values.configuration.otelMetricsExporter | quote }}
   OTEL_TRACES_EXPORTER: {{ .Values.configuration.otelTracesExporter | quote }}
