@@ -17,4 +17,4 @@ spec:
         - GET
   selector:
     matchLabels:
-      {{ include "data-catalog.selectorLabels" . }}
+    {{ include "data-catalog.selectorLabels" . | nindent 6 }}

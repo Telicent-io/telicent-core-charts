@@ -15,4 +15,4 @@ spec:
         - GET
   selector:
     matchLabels:
-      {{ include "user-portal-ui.selectorLabels" . }}
+    {{ include "user-portal-ui.selectorLabels" . | nindent 6 }}

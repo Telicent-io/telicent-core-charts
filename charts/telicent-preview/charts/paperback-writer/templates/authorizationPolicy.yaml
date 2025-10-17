@@ -36,4 +36,4 @@ spec:
       - tc_write
   selector:
     matchLabels:
-      {{ include "paperback-writer.selectorLabels" . }}
+    {{ include "paperback-writer.selectorLabels" . | nindent 6 }}
