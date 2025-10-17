@@ -1,0 +1,18 @@
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  name: allow-internal-access-to-api
+spec:
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        principals:
+        - cluster.local/ns/{{ .Release.Namespace }}/sa/{{ include "document-pipeline.serviceAccountName" . }}
+    to:
+    - operation:
+        methods:
+        - '*'
+  selector:
+    matchLabels:
+    {{- include "http-ingester.selectorLabels" . | nindent 6 }}
