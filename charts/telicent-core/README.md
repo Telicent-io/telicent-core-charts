@@ -84,18 +84,6 @@ with Kafka, ensuring consistent connectivity and authentication across the platf
 | `serviceAccount.name`        | Name of the ServiceAccount to use. If not set, a name is generated using the fullname | `""`  |
 | `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                  | `{}`  |
 
-### Paperback Writer Parameters
-
-| Name                       | Description                                      | Value   |
-| -------------------------- | ------------------------------------------------ | ------- |
-| `paperback-writer.enabled` | Enable or disable the paperback-writer component | `false` |
-
-### Document Pipeline Parameters
-
-| Name                        | Description                                       | Value   |
-| --------------------------- | ------------------------------------------------- | ------- |
-| `document-pipeline.enabled` | Enable or disable the document-pipeline component | `false` |
-
 ### Kafka Parameters
 
 | Name                  | Description                                                        | Value   |

@@ -253,6 +253,11 @@
                             "description": "Java options to pass to the JVM",
                             "default": "-Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks"
                         },
+                        "jwksUrl": {
+                            "type": "string",
+                            "description": "Override the global JWKS URL for the HTTP Ingester",
+                            "default": ""
+                        },
                         "routes": {
                             "type": "array",
                             "description": "A unique name for the route",
@@ -461,12 +466,17 @@
                         "inputTopic": {
                             "type": "string",
                             "description": "The Kafka topic from which the content extractor will consume messages",
-                            "default": "ingested_content"
+                            "default": "document.extractrequest"
                         },
                         "outputTopic": {
                             "type": "string",
                             "description": "The Kafka topic to which the content extractor will produce messages",
-                            "default": "extracted_content"
+                            "default": "document.textandmetadata"
+                        },
+                        "dlqTopic": {
+                            "type": "string",
+                            "description": "The Kafka topic to which the content extractor will produce dead-lettered messages",
+                            "default": "document.extractrequest.dlq"
                         }
                     }
                 }
@@ -630,7 +640,7 @@
                         "inputTopic": {
                             "type": "string",
                             "description": "The Kafka topic from which the content indexer will consume messages",
-                            "default": "extracted_content"
+                            "default": "document.textandmetadata,document.entities"
                         },
                         "elasticsearchHost": {
                             "type": "string",
@@ -656,6 +666,11 @@
                             "type": "boolean",
                             "description": "Whether to enable OpenSearch compatibility mode",
                             "default": true
+                        },
+                        "dlqTopic": {
+                            "type": "string",
+                            "description": "The Kafka topic to which the content indexer will produce dead-lettered messages",
+                            "default": "document.textandmetadata.dlq"
                         }
                     }
                 },
@@ -804,12 +819,12 @@
                         "inputTopic": {
                             "type": "string",
                             "description": "The Kafka topic from which the catalogue updater will consume messages",
-                            "default": "extracted_content"
+                            "default": "document.textandmetadata"
                         },
                         "outputTopic": {
                             "type": "string",
                             "description": "The Kafka topic to which the catalogue updater will produce",
-                            "default": "catalogue_updates"
+                            "default": "catalog"
                         },
                         "debounceWindowMs": {
                             "type": "number",
@@ -825,6 +840,11 @@
                             "type": "number",
                             "description": "The maximum buffer size",
                             "default": 100
+                        },
+                        "dlqTopic": {
+                            "type": "string",
+                            "description": "The Kafka topic to which the catalogue updater will produce dead-lettered messages",
+                            "default": "document.extractrequest.dlq"
                         }
                     }
                 }
@@ -948,7 +968,7 @@
                         "inputTopic": {
                             "type": "string",
                             "description": "The Kafka topic from which the content tagger will consume messages",
-                            "default": "extracted_content"
+                            "default": "document.textandmetadata"
                         },
                         "outputTopic": {
                             "type": "string",

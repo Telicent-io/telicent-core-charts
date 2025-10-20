@@ -146,6 +146,8 @@ httpIngester:
   configuration:
     # @key httpIngester.configuration.javaOpts Java options to pass to the JVM
     javaOpts: "-Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks"
+    # @key httpIngester.configuration.jwksUrl Override the global JWKS URL for the HTTP Ingester
+    jwksUrl: ""
     routes:
       # @key httpIngester.configuration.routes[0].name A unique name for the route
       - name: local

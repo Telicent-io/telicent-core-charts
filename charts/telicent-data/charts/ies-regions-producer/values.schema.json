@@ -186,7 +186,7 @@
                 "ttlSecondsAfterFinished": {
                     "type": "number",
                     "description": "Specifies the time to live for finished Jobs, in seconds",
-                    "default": 100
+                    "default": 0
                 }
             }
         },
