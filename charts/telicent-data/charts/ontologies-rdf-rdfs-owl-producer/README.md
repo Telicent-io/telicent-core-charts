@@ -101,7 +101,7 @@ These parameters can be referenced in sub-charts as `.Values.global.<parameter-n
 | `job.backoffLimit`            | Number of retries before marking this job as failed                  | `3`   |
 | `job.completions`             | Number of successful completions before marking this job as complete | `1`   |
 | `job.parallelism`             | Maximum number of pods that can run in parallel                      | `1`   |
-| `job.ttlSecondsAfterFinished` | Time to live (in seconds) for finished jobs before automatic cleanup | `100` |
+| `job.ttlSecondsAfterFinished` | Time to live (in seconds) for finished jobs before automatic cleanup | `0`   |
 
 ### Service Account Parameters
 

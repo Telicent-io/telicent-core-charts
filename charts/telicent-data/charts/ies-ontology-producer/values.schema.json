@@ -186,7 +186,7 @@
                 "ttlSecondsAfterFinished": {
                     "type": "number",
                     "description": "Time to live (in seconds) for finished jobs before automatic cleanup",
-                    "default": 100
+                    "default": 0
                 }
             }
         },

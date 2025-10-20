@@ -101,7 +101,7 @@ These parameters can be referenced in sub-charts as `.Values.global.<parameter-n
 | `job.backoffLimit`            | Specifies the number of retries before marking this job as failed                                                                                              | `3`   |
 | `job.completions`             | Specifies the desired number of successfully finished pods the job should be run with                                                                          | `1`   |
 | `job.parallelism`             | Specifies the maximum desired number of pods the job should run at any given time                                                                              | `1`   |
-| `job.ttlSecondsAfterFinished` | Specifies the time to live for finished Jobs, in seconds                                                                                                       | `100` |
+| `job.ttlSecondsAfterFinished` | Specifies the time to live for finished Jobs, in seconds                                                                                                       | `0`   |
 
 ### Service Account Parameters
 
