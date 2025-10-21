@@ -31,7 +31,7 @@ dependencies:
   - name: paperback-writer
     version: "^0.1.0"
     repository: file://./charts/paperback-writer
-    condition: paperback-writer.enabled
+    condition: global.enterprise, paperback-writer.enabled
   - name: data-catalog
     version: "^0.1.0"
     repository: file://./charts/data-catalog

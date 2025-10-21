@@ -144,10 +144,15 @@
                 "image": {
                     "type": "object",
                     "properties": {
+                        "registry": {
+                            "type": "string",
+                            "description": "image registry",
+                            "default": "REGISTRY_NAME"
+                        },
                         "repository": {
                             "type": "string",
                             "description": "The container image repository for the HTTP Ingester",
-                            "default": "quay.io/telicent/telicent-document-http-ingester"
+                            "default": "telicent/telicent-document-http-ingester"
                         },
                         "pullPolicy": {
                             "type": "string",
@@ -319,10 +324,15 @@
                 "image": {
                     "type": "object",
                     "properties": {
+                        "registry": {
+                            "type": "string",
+                            "description": "image registry",
+                            "default": "REGISTRY_NAME"
+                        },
                         "repository": {
                             "type": "string",
                             "description": "The container image repository for the Content Extractor",
-                            "default": "quay.io/telicent/telicent-document-content-extractor"
+                            "default": "telicent/telicent-document-content-extractor"
                         },
                         "pullPolicy": {
                             "type": "string",
@@ -493,10 +503,15 @@
                 "image": {
                     "type": "object",
                     "properties": {
+                        "registry": {
+                            "type": "string",
+                            "description": "image registry",
+                            "default": "REGISTRY_NAME"
+                        },
                         "repository": {
                             "type": "string",
                             "description": "The container image repository for the Content Indexer",
-                            "default": "quay.io/telicent/telicent-document-content-indexer"
+                            "default": "telicent/telicent-document-content-indexer"
                         },
                         "pullPolicy": {
                             "type": "string",
@@ -712,10 +727,15 @@
                 "image": {
                     "type": "object",
                     "properties": {
+                        "registry": {
+                            "type": "string",
+                            "description": "image registry",
+                            "default": "REGISTRY_NAME"
+                        },
                         "repository": {
                             "type": "string",
                             "description": "The container image repository for the Catalogue Updater",
-                            "default": "quay.io/telicent/telicent-document-catalogue-updater"
+                            "default": "telicent/telicent-document-catalogue-updater"
                         },
                         "pullPolicy": {
                             "type": "string",
@@ -861,10 +881,15 @@
                 "image": {
                     "type": "object",
                     "properties": {
+                        "registry": {
+                            "type": "string",
+                            "description": "image registry",
+                            "default": "REGISTRY_NAME"
+                        },
                         "repository": {
                             "type": "string",
                             "description": "The container image repository for the Content Tagger",
-                            "default": "quay.io/telicent/telicent-rdf-document-tagger-dc"
+                            "default": "telicent/telicent-rdf-document-tagger-dc"
                         },
                         "pullPolicy": {
                             "type": "string",
@@ -1004,6 +1029,145 @@
                             "type": "string",
                             "description": "The logging level for the Content Tagger, e.g., DEBUG, INFO, WARN, ERROR",
                             "default": "INFO"
+                        },
+                        "kafkaConfigMode": {
+                            "type": "string",
+                            "description": "The configuration mode for Kafka, either 'basic' or 'toml'",
+                            "default": "toml"
+                        }
+                    }
+                }
+            }
+        },
+        "entityExtractor": {
+            "type": "object",
+            "properties": {
+                "replicaCount": {
+                    "type": "number",
+                    "description": "The number of replicas for the Entity Extractor",
+                    "default": 1
+                },
+                "image": {
+                    "type": "object",
+                    "properties": {
+                        "registry": {
+                            "type": "string",
+                            "description": "image registry",
+                            "default": "REGISTRY_NAME"
+                        },
+                        "repository": {
+                            "type": "string",
+                            "description": "The container image repository for the Entity Extractor",
+                            "default": "telicent/telicent-rdf-document-tagger-dc"
+                        },
+                        "pullPolicy": {
+                            "type": "string",
+                            "description": "The image pull policy for the Entity Extractor",
+                            "default": "IfNotPresent"
+                        },
+                        "tag": {
+                            "type": "string",
+                            "description": "The image tag for the Entity Extractor",
+                            "default": "2.0.0"
+                        }
+                    }
+                },
+                "imagePullSecrets": {
+                    "type": "array",
+                    "description": "Secrets for pulling an image from a private repository",
+                    "default": [],
+                    "items": {}
+                },
+                "nameOverride": {
+                    "type": "string",
+                    "description": "Override the chart name for the Entity Extractor",
+                    "default": ""
+                },
+                "fullnameOverride": {
+                    "type": "string",
+                    "description": "Override the full name for the Entity Extractor",
+                    "default": ""
+                },
+                "podAnnotations": {
+                    "type": "object",
+                    "description": "Annotations to add to the Entity Extractor pods",
+                    "default": {}
+                },
+                "podLabels": {
+                    "type": "object",
+                    "description": "Labels to add to the Entity Extractor pods",
+                    "default": {}
+                },
+                "podSecurityContext": {
+                    "type": "object",
+                    "description": "Security context for the Entity Extractor pods",
+                    "default": {}
+                },
+                "securityContext": {
+                    "type": "object",
+                    "description": "Security context for the Entity Extractor containers",
+                    "default": {}
+                },
+                "service": {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "description": "The service type for the Entity Extractor",
+                            "default": "ClusterIP"
+                        },
+                        "port": {
+                            "type": "number",
+                            "description": "The service port for the Entity Extractor",
+                            "default": 80
+                        }
+                    }
+                },
+                "resources": {
+                    "type": "object",
+                    "description": "Resource requests and limits for the Entity Extractor",
+                    "default": {}
+                },
+                "volumes": {
+                    "type": "array",
+                    "description": "Additional volumes for the Entity Extractor",
+                    "default": [],
+                    "items": {}
+                },
+                "volumeMounts": {
+                    "type": "array",
+                    "description": "Additional volume mounts for the Entity Extractor",
+                    "default": [],
+                    "items": {}
+                },
+                "nodeSelector": {
+                    "type": "object",
+                    "description": "Node selector for the Entity Extractor pods",
+                    "default": {}
+                },
+                "tolerations": {
+                    "type": "array",
+                    "description": "Tolerations for the Entity Extractor pods",
+                    "default": [],
+                    "items": {}
+                },
+                "affinity": {
+                    "type": "object",
+                    "description": "Affinity rules for the Entity Extractor pods",
+                    "default": {}
+                },
+                "configuration": {
+                    "type": "object",
+                    "properties": {
+                        "inputTopic": {
+                            "type": "string",
+                            "description": "The Kafka topic from which the content tagger will consume messages",
+                            "default": "document.textandmetadata"
+                        },
+                        "outputTopic": {
+                            "type": "string",
+                            "description": "The Kafka topic to which the content tagger will produce",
+                            "default": "knowledge"
                         },
                         "kafkaConfigMode": {
                             "type": "string",
