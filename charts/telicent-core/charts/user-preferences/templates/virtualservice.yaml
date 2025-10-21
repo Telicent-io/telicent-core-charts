@@ -29,4 +29,4 @@ spec:
         host: {{ include "user-preferences.serviceName" . }}
         port:
           number: {{ .Values.service.port }}
-{{- end}}
+{{- end }}

@@ -45,6 +45,11 @@
                     "type": "string",
                     "description": "Name of the Istio Gateway Resource (LB operating at the edge of the mesh)",
                     "default": "ingress-gateway"
+                },
+                "istioVirtualServiceEnabled": {
+                    "type": "boolean",
+                    "description": "Enable Istio traffic routing to a named destination service",
+                    "default": true
                 }
             }
         },
@@ -65,6 +70,11 @@
                     "type": "boolean",
                     "description": "Enable SCIM user management",
                     "default": true
+                },
+                "telicentPreviewReleaseName": {
+                    "type": "string",
+                    "description": "Release name of the Telicent Preview chart",
+                    "default": "telicent-preview"
                 }
             }
         },

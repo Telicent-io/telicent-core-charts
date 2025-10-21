@@ -18,6 +18,8 @@ _dev/
 /before.yaml
 /after.yaml
 /values.yaml
+/install.yaml
+/template.yaml
 **/*.tgz
 **/charts/*.tgz
 **/charts/**/charts/*.tgz

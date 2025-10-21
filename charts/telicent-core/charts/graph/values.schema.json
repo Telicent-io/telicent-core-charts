@@ -56,6 +56,11 @@
                     "description": "Name of the Istio Gateway Resource (LB operating at the edge of the mesh)",
                     "default": "ingress-gateway"
                 },
+                "istioVirtualServiceEnabled": {
+                    "type": "boolean",
+                    "description": "Enable Istio traffic routing to a named destination service",
+                    "default": true
+                },
                 "kafka": {
                     "type": "object",
                     "properties": {
@@ -135,6 +140,11 @@
                     "type": "string",
                     "description": "OpenTelemetry traces exporter",
                     "default": "none"
+                },
+                "enableLabelsQuery": {
+                    "type": "boolean",
+                    "description": "Enable labels query endpoint",
+                    "default": true
                 }
             }
         },

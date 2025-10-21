@@ -47,26 +47,28 @@ The command removes all the Kubernetes components associated with the chart and 
 
 Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
 
-| Name                             | Description                                                                       | Value              |
-| -------------------------------- | --------------------------------------------------------------------------------- | ------------------ |
-| `global.imageRegistry`           | Global image registry                                                             | `""`               |
-| `global.imagePullSecrets`        | Global registry secret names as an array                                          | `[]`               |
-| `global.appHostDomain`           | Domain associated with Telicent application services                              | `apps.telicent.io` |
-| `global.authHostDomain`          | Domain associated with Telicent authentication services, including OIDC providers | `auth.telicent.io` |
-| `global.groupsClaim`             | Key used to retrieve groups from the OIDC provider                                | `groups`           |
-| `global.istioNamespace`          | Namespace in which Istio is deployed                                              | `istio-system`     |
-| `global.istioServiceAccountName` | Name of the Istio service account                                                 | `istio-ingress`    |
-| `global.istioGatewayName`        | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)         | `ingress-gateway`  |
+| Name                                | Description                                                                       | Value              |
+| ----------------------------------- | --------------------------------------------------------------------------------- | ------------------ |
+| `global.imageRegistry`              | Global image registry                                                             | `""`               |
+| `global.imagePullSecrets`           | Global registry secret names as an array                                          | `[]`               |
+| `global.appHostDomain`              | Domain associated with Telicent application services                              | `apps.telicent.io` |
+| `global.authHostDomain`             | Domain associated with Telicent authentication services, including OIDC providers | `auth.telicent.io` |
+| `global.groupsClaim`                | Key used to retrieve groups from the OIDC provider                                | `groups`           |
+| `global.istioNamespace`             | Namespace in which Istio is deployed                                              | `istio-system`     |
+| `global.istioServiceAccountName`    | Name of the Istio service account                                                 | `istio-ingress`    |
+| `global.istioGatewayName`           | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)         | `ingress-gateway`  |
+| `global.istioVirtualServiceEnabled` | Enable Istio traffic routing to a named destination service                       | `true`             |
 
 ### Configuration Parameters
 
 Contains configuration parameters specific to the Access application
 
-| Name                              | Description                  | Value                      |
-| --------------------------------- | ---------------------------- | -------------------------- |
-| `configuration.debug`             | Enable debug logging         | `true`                     |
-| `configuration.openidProviderUrl` | The URL of the OIDC provider | `https://oidc.example.com` |
-| `configuration.scimEnabled`       | Enable SCIM user management  | `true`                     |
+| Name                                       | Description                                | Value                      |
+| ------------------------------------------ | ------------------------------------------ | -------------------------- |
+| `configuration.debug`                      | Enable debug logging                       | `true`                     |
+| `configuration.openidProviderUrl`          | The URL of the OIDC provider               | `https://oidc.example.com` |
+| `configuration.scimEnabled`                | Enable SCIM user management                | `true`                     |
+| `configuration.telicentPreviewReleaseName` | Release name of the Telicent Preview chart | `telicent-preview`         |
 
 ### Common Parameters
 
