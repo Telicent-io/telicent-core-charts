@@ -55,7 +55,7 @@ spec:
             - name: DLQ_TOPIC
               value: {{ .Values.contentExtractor.configuration.dlqTopic | quote }}
 
-          image: "{{ .Values.contentExtractor.image.repository }}:{{ .Values.contentExtractor.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.contentExtractor.image.registry | default .Values.global.imageRegistry }}/{{ .Values.contentExtractor.image.repository }}:{{ .Values.contentExtractor.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.contentExtractor.image.pullPolicy }}
           ports:
             - name: http
