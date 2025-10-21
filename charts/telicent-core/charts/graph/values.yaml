@@ -77,6 +77,8 @@ configuration:
   # @key configuration.otelTracesExporter OpenTelemetry traces exporter
   # Options: otlp, none
   otelTracesExporter: none
+  # @key configuration.enableLabelsQuery Enable labels query endpoint
+  enableLabelsQuery: true
 
 # @section Common Parameters
 # @key fullnameOverride String to fully override the generated release name
