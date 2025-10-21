@@ -113,5 +113,5 @@ Create the name of the CA config map
 {{- end }}
 
 {{- define "access.paperbackWriterPrincipal" -}}
-{{- index .Values "istio" "paperback-writer" "principal" | default (printf "cluster.local/ns/%s/sa/%s-%s" .Release.Namespace .Release.Name (index .Values "istio" "paperback-writer" "serviceAccountName")) | quote }}
+{{- index .Values "istio" "paperback-writer" "principal" | default (printf "cluster.local/ns/%s/sa/%s-%s" .Release.Namespace .Values.configuration.telicentPreviewReleaseName (index .Values "istio" "paperback-writer" "serviceAccountName")) | quote }}
 {{- end }}

@@ -168,7 +168,7 @@ configuration:
   # @key configuration.accessApiUrl URL for the Access API. Defaults to http://release-name-access-api.release-namespace.svc.cluster.local:8080
   accessApiUrl: ""
   # @key configuration.cacertPath Path to CA certs in the container
-  cacertPath: "/etc/ssl/certs/ca.crt"
+  cacertPath: ""
 
 # @key existingConfigMapName Name of an existing ConfigMap to use for configuration
 existingConfigMapName: ""
