@@ -61,15 +61,15 @@
                     "description": "If set to true, Graph UI links will be available within Graph UI",
                     "default": true
                 },
+                "searchUiDeployed": {
+                    "type": "boolean",
+                    "description": "If set to true, Search UI links will be available within Graph UI",
+                    "default": true
+                },
                 "dataCatalogUiDeployed": {
                     "type": "boolean",
                     "description": "If set to true, Data Catalog UI links will be available within Graph UI",
                     "default": true
-                },
-                "signOutUrl": {
-                    "type": "string",
-                    "description": "The URL to be used for signing out",
-                    "default": "https://your.host.here/logout"
                 },
                 "graphUiMaptilerToken": {
                     "type": "string",

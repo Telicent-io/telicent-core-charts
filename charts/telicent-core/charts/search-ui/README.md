@@ -63,16 +63,15 @@ Contains configuration parameters specific to the Search UI application
 If set, it will default to a single vector style from any map service that adheres to the Mapbox style spec.
 If set, it can generate multiple layers from any map service that adheres to the Mapbox style spec.
 
-| Name                                        | Description                                                              | Value                           |
-| ------------------------------------------- | ------------------------------------------------------------------------ | ------------------------------- |
-| `configuration.userPortalUiDeployed`        | If set to true, User Portal links will be available within Search UI     | `true`                          |
-| `configuration.graphUiDeployed`             | If set to true, Graph UI links will be available within Search UI        | `true`                          |
-| `configuration.dataCatalogUiDeployed`       | If set to true, Data Catalog UI links will be available within Search UI | `true`                          |
-| `configuration.signOutUrl`                  | The URL to be used for signing out                                       | `https://your.host.here/logout` |
-| `configuration.searchUiMaptilerToken`       | MapTiler token for Search UI                                             | `your.maptiler.token.here`      |
-| `configuration.searchUiMapboxStyleSpecUrl`  | Mapbox style spec URL for Search UI                                      | `""`                            |
-| `configuration.searchUiArcgisToken`         | ArcGIS token for Search UI                                               | `""`                            |
-| `configuration.existingMapConfigSecretName` | The name of an existing secret containing map configuration              | `""`                            |
+| Name                                        | Description                                                              | Value                      |
+| ------------------------------------------- | ------------------------------------------------------------------------ | -------------------------- |
+| `configuration.userPortalUiDeployed`        | If set to true, User Portal links will be available within Search UI     | `true`                     |
+| `configuration.graphUiDeployed`             | If set to true, Graph UI links will be available within Search UI        | `true`                     |
+| `configuration.dataCatalogUiDeployed`       | If set to true, Data Catalog UI links will be available within Search UI | `true`                     |
+| `configuration.searchUiMaptilerToken`       | MapTiler token for Search UI                                             | `your.maptiler.token.here` |
+| `configuration.searchUiMapboxStyleSpecUrl`  | Mapbox style spec URL for Search UI                                      | `""`                       |
+| `configuration.searchUiArcgisToken`         | ArcGIS token for Search UI                                               | `""`                       |
+| `configuration.existingMapConfigSecretName` | The name of an existing secret containing map configuration              | `""`                       |
 
 ### Common Parameters
 

@@ -31,8 +31,7 @@ data:
     window.USER_PREF_API_URL = "https://{{ .Values.global.appHostDomain }}/api/user-preferences";
 
     // Signout
-    // window.SIGN_OUT_URL = "https://{{ .Values.global.appHostDomain }}/oauth2/sign_out?rd=/oauth2/authorize";
-    window.SIGN_OUT_URL;
+    window.SIGN_OUT_URL = "https://{{ .Values.global.appHostDomain }}/oauth2/sign_out?rd=/oauth2/authorize";
 
     // Additional apps not currently deployed
     window.GEO_APP_URL;

@@ -44,8 +44,6 @@ configuration:
   graphUiDeployed: true
   # @key configuration.dataCatalogUiDeployed If set to true, Data Catalog UI links will be available within Search UI
   dataCatalogUiDeployed: true
-  # @key configuration.signOutUrl The URL to be used for signing out
-  signOutUrl: "https://your.host.here/logout"
 
   # @key configuration.searchUiMaptilerToken MapTiler token for Search UI
   searchUiMaptilerToken: "your.maptiler.token.here"

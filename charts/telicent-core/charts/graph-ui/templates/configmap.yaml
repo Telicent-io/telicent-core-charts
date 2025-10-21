@@ -20,7 +20,9 @@ data:
     {{ if .Values.configuration.graphUiDeployed }}
     window.GRAPH_APP_URL = "https://{{ .Values.global.appHostDomain }}/graph";
     {{ end }}
+    {{ if .Values.configuration.searchUiDeployed }}
     window.SEARCH_APP_URL = "https://{{ .Values.global.appHostDomain }}/search";
+    {{ end }}
     {{ if .Values.configuration.userPortalUiDeployed }}
     window.USER_PORTAL_URL = "https://{{ .Values.global.appHostDomain }}/user-portal/";
     {{ end }}
@@ -34,8 +36,7 @@ data:
     window.USER_PREF_API_URL = "https://{{ .Values.global.appHostDomain }}/api/user-preferences";
 
     // Signout
-    // window.SIGN_OUT_URL = "https://{{ .Values.global.appHostDomain }}/oauth2/sign_out?rd=/oauth2/authorize";
-    window.SIGN_OUT_URL;
+    window.SIGN_OUT_URL = "https://{{ .Values.global.appHostDomain }}/oauth2/sign_out?rd=/oauth2/authorize";
 
     // Additional apps not currently deployed
     window.GEO_APP_URL;
@@ -55,12 +56,12 @@ data:
             icon: "/search/assets/icons/UserPortalDark.svg",
         },
     {{ end }}
-    {{ if .Values.configuration.graphUiDeployed }}
+    {{ if .Values.configuration.searchUiDeployed }}
         {
-            id: "telicent-graph",
-            name: "graph",
-            url: window.GRAPH_APP_URL,
-            icon: "/search/assets/icons/GraphDark.svg",
+            id: "telicent-search",
+            name: "search",
+            url: window.SEARCH_APP_URL,
+            icon: "/search/assets/icons/SearchDark.svg",
         },
     {{ end }}
     {{ if .Values.configuration.dataCatalogUiDeployed }}
