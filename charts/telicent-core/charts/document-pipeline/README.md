@@ -292,31 +292,31 @@ The application configuration is contained within the 'configuration' key
 This section builds out the Entity Extractor configuration
 The application configuration is contained within the 'configuration' key
 
-| Name                                            | Description                                                         | Value                                      |
-| ----------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------ |
-| `entityExtractor.replicaCount`                  | The number of replicas for the Entity Extractor                     | `1`                                        |
-| `entityExtractor.image.registry`                | image registry                                                      | `REGISTRY_NAME`                            |
-| `entityExtractor.image.repository`              | The container image repository for the Entity Extractor             | `telicent/telicent-rdf-document-tagger-dc` |
-| `entityExtractor.image.pullPolicy`              | The image pull policy for the Entity Extractor                      | `IfNotPresent`                             |
-| `entityExtractor.image.tag`                     | The image tag for the Entity Extractor                              | `2.0.0`                                    |
-| `entityExtractor.imagePullSecrets`              | Secrets for pulling an image from a private repository              | `[]`                                       |
-| `entityExtractor.nameOverride`                  | Override the chart name for the Entity Extractor                    | `""`                                       |
-| `entityExtractor.fullnameOverride`              | Override the full name for the Entity Extractor                     | `""`                                       |
-| `entityExtractor.podAnnotations`                | Annotations to add to the Entity Extractor pods                     | `{}`                                       |
-| `entityExtractor.podLabels`                     | Labels to add to the Entity Extractor pods                          | `{}`                                       |
-| `entityExtractor.podSecurityContext`            | Security context for the Entity Extractor pods                      | `{}`                                       |
-| `entityExtractor.securityContext`               | Security context for the Entity Extractor containers                | `{}`                                       |
-| `entityExtractor.service.type`                  | The service type for the Entity Extractor                           | `ClusterIP`                                |
-| `entityExtractor.service.port`                  | The service port for the Entity Extractor                           | `80`                                       |
-| `entityExtractor.resources`                     | Resource requests and limits for the Entity Extractor               | `{}`                                       |
-| `entityExtractor.volumes`                       | Additional volumes for the Entity Extractor                         | `[]`                                       |
-| `entityExtractor.volumeMounts`                  | Additional volume mounts for the Entity Extractor                   | `[]`                                       |
-| `entityExtractor.nodeSelector`                  | Node selector for the Entity Extractor pods                         | `{}`                                       |
-| `entityExtractor.tolerations`                   | Tolerations for the Entity Extractor pods                           | `[]`                                       |
-| `entityExtractor.affinity`                      | Affinity rules for the Entity Extractor pods                        | `{}`                                       |
-| `entityExtractor.configuration.inputTopic`      | The Kafka topic from which the content tagger will consume messages | `document.textandmetadata`                 |
-| `entityExtractor.configuration.outputTopic`     | The Kafka topic to which the content tagger will produce            | `knowledge`                                |
-| `entityExtractor.configuration.kafkaConfigMode` | The configuration mode for Kafka, either 'basic' or 'toml'          | `toml`                                     |
+| Name                                            | Description                                                         | Value                                          |
+| ----------------------------------------------- | ------------------------------------------------------------------- | ---------------------------------------------- |
+| `entityExtractor.replicaCount`                  | The number of replicas for the Entity Extractor                     | `1`                                            |
+| `entityExtractor.image.registry`                | image registry                                                      | `REGISTRY_NAME`                                |
+| `entityExtractor.image.repository`              | The container image repository for the Entity Extractor             | `telicent/telicent-pipeline-entity-extraction` |
+| `entityExtractor.image.pullPolicy`              | The image pull policy for the Entity Extractor                      | `IfNotPresent`                                 |
+| `entityExtractor.image.tag`                     | The image tag for the Entity Extractor                              | `3.0.1`                                        |
+| `entityExtractor.imagePullSecrets`              | Secrets for pulling an image from a private repository              | `[]`                                           |
+| `entityExtractor.nameOverride`                  | Override the chart name for the Entity Extractor                    | `""`                                           |
+| `entityExtractor.fullnameOverride`              | Override the full name for the Entity Extractor                     | `""`                                           |
+| `entityExtractor.podAnnotations`                | Annotations to add to the Entity Extractor pods                     | `{}`                                           |
+| `entityExtractor.podLabels`                     | Labels to add to the Entity Extractor pods                          | `{}`                                           |
+| `entityExtractor.podSecurityContext`            | Security context for the Entity Extractor pods                      | `{}`                                           |
+| `entityExtractor.securityContext`               | Security context for the Entity Extractor containers                | `{}`                                           |
+| `entityExtractor.service.type`                  | The service type for the Entity Extractor                           | `ClusterIP`                                    |
+| `entityExtractor.service.port`                  | The service port for the Entity Extractor                           | `80`                                           |
+| `entityExtractor.resources`                     | Resource requests and limits for the Entity Extractor               | `{}`                                           |
+| `entityExtractor.volumes`                       | Additional volumes for the Entity Extractor                         | `[]`                                           |
+| `entityExtractor.volumeMounts`                  | Additional volume mounts for the Entity Extractor                   | `[]`                                           |
+| `entityExtractor.nodeSelector`                  | Node selector for the Entity Extractor pods                         | `{}`                                           |
+| `entityExtractor.tolerations`                   | Tolerations for the Entity Extractor pods                           | `[]`                                           |
+| `entityExtractor.affinity`                      | Affinity rules for the Entity Extractor pods                        | `{}`                                           |
+| `entityExtractor.configuration.inputTopic`      | The Kafka topic from which the content tagger will consume messages | `document.textandmetadata`                     |
+| `entityExtractor.configuration.outputTopic`     | The Kafka topic to which the content tagger will produce            | `knowledge`                                    |
+| `entityExtractor.configuration.kafkaConfigMode` | The configuration mode for Kafka, either 'basic' or 'toml'          | `toml`                                         |
 
 
 ## License
