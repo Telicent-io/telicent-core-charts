@@ -37,6 +37,8 @@ global:
   istioServiceAccountName: istio-ingress
   # @key global.istioGatewayName Name of the Istio Gateway Resource (LB operating at the edge of the mesh)
   istioGatewayName: ingress-gateway
+  # @key global.istioVirtualServiceEnabled Enable Istio traffic routing to a named destination service
+  istioVirtualServiceEnabled: true
 
   kafka:
     # @key global.kafka.bootstrapServers Comma separated list containing Kafka bootstrap servers

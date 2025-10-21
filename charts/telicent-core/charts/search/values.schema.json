@@ -56,6 +56,11 @@
                     "description": "Name of the Istio Gateway Resource (LB operating at the edge of the mesh)",
                     "default": "ingress-gateway"
                 },
+                "istioVirtualServiceEnabled": {
+                    "type": "boolean",
+                    "description": "Enable Istio traffic routing to a named destination service",
+                    "default": true
+                },
                 "kafkaBootstrapUrls": {
                     "type": "string",
                     "description": "Comma separated list containing Kafka bootstrap URLs",

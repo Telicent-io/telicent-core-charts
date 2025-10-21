@@ -58,6 +58,7 @@ Contains global parameters, these parameters are mirrored within the Telicent co
 | `global.istioNamespace`                 | Namespace in which Istio is deployed                                                                              | `istio-system`                                   |
 | `global.istioServiceAccountName`        | Name of the Istio service account                                                                                 | `istio-ingress`                                  |
 | `global.istioGatewayName`               | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)                                         | `ingress-gateway`                                |
+| `global.istioVirtualServiceEnabled`     | Enable Istio traffic routing to a named destination service                                                       | `true`                                           |
 | `global.kafka.bootstrapServers`         | Comma separated list containing Kafka bootstrap servers                                                           | `kafka-bootstrap.kafka.svc.cluster.local:9092`   |
 | `global.kafka.existingConfigSecretName` | Name of an existing secret containing Kafka configuration (preferred over individual settings below for security) | `""`                                             |
 | `global.kafka.username`                 | Username for Kafka authentication                                                                                 | `your.kafka.username.here`                       |
@@ -78,6 +79,7 @@ Contains configuration parameters specific to the Graph application
 | `configuration.javaOptions`           | JVM options for the application     | `-Xmx5120m -Xms2048m -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks` |
 | `configuration.otelMetricsExporter`   | OpenTelemetry metrics exporter      | `prometheus`                                                                           |
 | `configuration.otelTracesExporter`    | OpenTelemetry traces exporter       | `none`                                                                                 |
+| `configuration.enableLabelsQuery`     | Enable labels query endpoint        | `true`                                                                                 |
 
 ### Common Parameters
 
