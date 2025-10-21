@@ -68,7 +68,7 @@ spec:
             - name: KAFKA_CONFIG_MODE
               value: {{ .Values.contentTagger.configuration.kafkaConfigMode | quote }}
 
-          image: "{{ .Values.contentTagger.image.repository }}:{{ .Values.contentTagger.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.contentTagger.image.registry | default .Values.global.imageRegistry }}/{{ .Values.contentTagger.image.repository }}:{{ .Values.contentTagger.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.contentTagger.image.pullPolicy }}
           {{- with .Values.contentTagger.resources }}
           resources:

@@ -43,7 +43,7 @@ spec:
           securityContext:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          image: "{{ .Values.catalogueUpdater.image.repository }}:{{ .Values.catalogueUpdater.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.catalogueUpdater.image.registry | default .Values.global.imageRegistry }}/{{ .Values.catalogueUpdater.image.repository }}:{{ .Values.catalogueUpdater.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.catalogueUpdater.image.pullPolicy }}
           ports:
             - name: http

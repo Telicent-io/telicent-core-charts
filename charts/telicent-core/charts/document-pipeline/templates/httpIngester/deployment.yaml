@@ -55,7 +55,7 @@ spec:
             - name: KAFKA_CONFIG_FILE_PATH
               value: /app/config/kafka-auth/kafka-config.properties
 
-          image: "{{ .Values.httpIngester.image.repository }}:{{ .Values.httpIngester.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.httpIngester.image.registry | default .Values.global.imageRegistry }}/{{ .Values.httpIngester.image.repository }}:{{ .Values.httpIngester.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.httpIngester.image.pullPolicy }}
           ports:
             - name: http

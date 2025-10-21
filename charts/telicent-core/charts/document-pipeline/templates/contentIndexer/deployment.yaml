@@ -43,7 +43,7 @@ spec:
           securityContext:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          image: "{{ .Values.contentIndexer.image.repository }}:{{ .Values.contentIndexer.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.contentIndexer.image.registry | default .Values.global.imageRegistry }}/{{ .Values.contentIndexer.image.repository }}:{{ .Values.contentIndexer.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.contentIndexer.image.pullPolicy }}
           ports:
             - name: http
