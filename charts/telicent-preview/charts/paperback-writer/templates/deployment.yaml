@@ -44,8 +44,10 @@ spec:
           envFrom:
             - configMapRef:
                 name: {{ include "paperback-writer.configMapName" . }}
+            
             - secretRef:
                 name: {{ include "paperback-writer.secretName" . }}
+                optional: true
           image: {{ include "paperback-writer.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
