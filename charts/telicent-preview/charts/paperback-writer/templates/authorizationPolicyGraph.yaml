@@ -46,6 +46,5 @@ spec:
             - tc_read
   selector:
     matchLabels:
-      app.kubernetes.io/instance: "{{ .Release.Name }}"
       app.kubernetes.io/name: "graph"
 {{- end -}}

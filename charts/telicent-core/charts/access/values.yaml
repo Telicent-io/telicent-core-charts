@@ -42,6 +42,8 @@ configuration:
   openidProviderUrl: "https://oidc.example.com"
   # @key configuration.scimEnabled Enable SCIM user management
   scimEnabled: true
+  # @key configuration.telicentPreviewReleaseName Release name of the Telicent Preview chart
+  telicentPreviewReleaseName: "telicent-preview"
 
 # @section Common Parameters
 # @key fullnameOverride String to fully override the generated release name
@@ -142,7 +144,6 @@ service:
   type: ClusterIP
 
 istio:
-
   ingress:
     # @key istio.ingress.principal Principal used for ingress traffic to this application by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName'
     principal: ""
