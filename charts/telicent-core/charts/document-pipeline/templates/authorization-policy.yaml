@@ -2,7 +2,7 @@
 apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
 metadata:
-  name: 
+  name: allow-internal-access-to-api
 spec:
   action: ALLOW
   rules:
