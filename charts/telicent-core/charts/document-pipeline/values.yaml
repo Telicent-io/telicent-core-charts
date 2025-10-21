@@ -2,7 +2,7 @@
 # Telicent Document Pipeline stand-alone chart
 
 # @key enabled Enable Document Pipeline chart
-enabled: true
+enabled: false
 
 # @section Global Parameters
 # @descStart
@@ -79,8 +79,10 @@ httpIngester:
   replicaCount: 1
 
   image:
+    # @key httpIngester.image.registry [default: REGISTRY_NAME] image registry
+    registry: quay.io
     # @key httpIngester.image.repository The container image repository for the HTTP Ingester
-    repository: quay.io/telicent/telicent-document-http-ingester
+    repository: telicent/telicent-document-http-ingester
     # @key httpIngester.image.pullPolicy The image pull policy for the HTTP Ingester
     pullPolicy: IfNotPresent
     # @key httpIngester.image.tag The image tag for the HTTP Ingester
@@ -199,8 +201,10 @@ contentExtractor:
   replicaCount: 1
 
   image:
+    # @key contentExtractor.image.registry [default: REGISTRY_NAME] image registry
+    registry: quay.io
     # @key contentExtractor.image.repository The container image repository for the Content Extractor
-    repository: quay.io/telicent/telicent-document-content-extractor
+    repository: telicent/telicent-document-content-extractor
     # @key contentExtractor.image.pullPolicy The image pull policy for the Content Extractor
     pullPolicy: IfNotPresent
     # @key contentExtractor.image.tag The image tag for the Content Extractor
@@ -304,8 +308,10 @@ contentIndexer:
   replicaCount: 1
 
   image:
+    # @key contentIndexer.image.registry [default: REGISTRY_NAME] image registry
+    registry: quay.io
     # @key contentIndexer.image.repository The container image repository for the Content Indexer
-    repository: quay.io/telicent/telicent-document-content-indexer
+    repository: telicent/telicent-document-content-indexer
     # @key contentIndexer.image.pullPolicy The image pull policy for the Content Indexer
     pullPolicy: IfNotPresent
     # @key contentIndexer.image.tag The image tag for the Content Indexer
@@ -429,8 +435,10 @@ catalogueUpdater:
   replicaCount: 1
 
   image:
+    # @key catalogueUpdater.image.registry [default: REGISTRY_NAME] image registry
+    registry: quay.io
     # @key catalogueUpdater.image.repository The container image repository for the Catalogue Updater
-    repository: quay.io/telicent/telicent-document-catalogue-updater
+    repository: telicent/telicent-document-catalogue-updater
     # @key catalogueUpdater.image.pullPolicy The image pull policy for the Catalogue Updater
     pullPolicy: IfNotPresent
     # @key catalogueUpdater.image.tag The image tag for the Catalogue Updater
@@ -528,8 +536,10 @@ contentTagger:
   replicaCount: 1
 
   image:
+    # @key contentTagger.image.registry [default: REGISTRY_NAME] image registry
+    registry: quay.io
     # @key contentTagger.image.repository The container image repository for the Content Tagger
-    repository: quay.io/telicent/telicent-rdf-document-tagger-dc
+    repository: telicent/telicent-rdf-document-tagger-dc
     # @key contentTagger.image.pullPolicy The image pull policy for the Content Tagger
     pullPolicy: IfNotPresent
     # @key contentTagger.image.tag The image tag for the Content Tagger
@@ -621,4 +631,99 @@ contentTagger:
     # @key contentTagger.configuration.loggingLevel The logging level for the Content Tagger, e.g., DEBUG, INFO, WARN, ERROR
     loggingLevel: INFO
     # @key contentTagger.configuration.kafkaConfigMode The configuration mode for Kafka, either 'basic' or 'toml'
+    kafkaConfigMode: toml
+
+# @section Entity Extractor
+# @descStart
+# This section builds out the Entity Extractor configuration
+# The application configuration is contained within the 'configuration' key
+# @descEnd
+entityExtractor:
+  # @key entityExtractor.replicaCount The number of replicas for the Entity Extractor
+  replicaCount: 1
+
+  image:
+    # @key entityExtractor.image.registry [default: REGISTRY_NAME] image registry
+    registry: quay.io
+    # @key entityExtractor.image.repository The container image repository for the Entity Extractor
+    repository: telicent/telicent-pipeline-entity-extraction
+    # @key entityExtractor.image.pullPolicy The image pull policy for the Entity Extractor
+    pullPolicy: IfNotPresent
+    # @key entityExtractor.image.tag The image tag for the Entity Extractor
+    tag: "3.0.1"
+
+  # @key entityExtractor.imagePullSecrets Secrets for pulling an image from a private repository
+  imagePullSecrets: []
+  # @key entityExtractor.nameOverride Override the chart name for the Entity Extractor
+  nameOverride: ""
+  # @key entityExtractor.fullnameOverride Override the full name for the Entity Extractor
+  fullnameOverride: ""
+
+  # @key entityExtractor.podAnnotations Annotations to add to the Entity Extractor pods
+  podAnnotations: {}
+  # @key entityExtractor.podLabels Labels to add to the Entity Extractor pods
+  podLabels: {}
+
+  # @key entityExtractor.podSecurityContext Security context for the Entity Extractor pods
+  podSecurityContext: {}
+    # fsGroup: 2000
+
+  # @key entityExtractor.securityContext Security context for the Entity Extractor containers
+  securityContext: {}
+    # capabilities:
+    #   drop:
+    #   - ALL
+    # readOnlyRootFilesystem: true
+    # runAsNonRoot: true
+    # runAsUser: 1000
+
+  service:
+    # @key entityExtractor.service.type The service type for the Entity Extractor
+    type: ClusterIP
+    # @key entityExtractor.service.port The service port for the Entity Extractor
+    port: 80
+
+  # @key entityExtractor.resources Resource requests and limits for the Entity Extractor
+  resources: {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+
+  # This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
+
+  # @key entityExtractor.volumes Additional volumes for the Entity Extractor
+  volumes: []
+  # - name: foo
+  #   secret:
+  #     secretName: mysecret
+  #     optional: false
+
+  # @key entityExtractor.volumeMounts Additional volume mounts for the Entity Extractor
+  volumeMounts: []
+  # - name: foo
+  #   mountPath: "/etc/foo"
+  #   readOnly: true
+
+  # @key entityExtractor.nodeSelector Node selector for the Entity Extractor pods
+  nodeSelector: {}
+
+  # @key entityExtractor.tolerations Tolerations for the Entity Extractor pods
+  tolerations: []
+
+  # @key entityExtractor.affinity Affinity rules for the Entity Extractor pods
+  affinity: {}
+
+  configuration:
+    # @key entityExtractor.configuration.inputTopic The Kafka topic from which the content tagger will consume messages
+    inputTopic: document.textandmetadata
+    # @key entityExtractor.configuration.outputTopic The Kafka topic to which the content tagger will produce
+    outputTopic: knowledge
+    # @key entityExtractor.configuration.kafkaConfigMode The configuration mode for Kafka, either 'basic' or 'toml'
     kafkaConfigMode: toml

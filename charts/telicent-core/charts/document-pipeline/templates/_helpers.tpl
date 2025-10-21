@@ -174,3 +174,25 @@ app.kubernetes.io/name: {{ include "document-pipeline.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 app.kubernetes.io/component: content-tagger
 {{- end }}
+
+{{/*
+************************
+*** Entity Extractor ***
+************************
+*/}}
+
+{{/*
+Fullname
+*/}}
+{{- define "entity-extractor.fullname" -}}
+{{ printf "%s-%s" (include "document-pipeline.fullname" .) "entity-extractor" }}
+{{- end }}
+
+{{/*
+Selector labels
+*/}}
+{{- define "entity-extractor.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "document-pipeline.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/component: entity-extractor
+{{- end }}

@@ -1,7 +1,8 @@
+{{- if .Values.enabled -}}
 apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
 metadata:
-  name: allow-internal-access-to-api
+  name: 
 spec:
   action: ALLOW
   rules:
@@ -16,3 +17,4 @@ spec:
   selector:
     matchLabels:
     {{- include "http-ingester.selectorLabels" . | nindent 6 }}
+{{- end -}}

@@ -1,0 +1,109 @@
+{{- if .Values.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "entity-extractor.fullname" . }}
+  labels:
+    {{- include "document-pipeline.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.entityExtractor.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "entity-extractor.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.entityExtractor.podAnnotations }}a
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "document-pipeline.labels" . | nindent 8 }}
+        {{- include "entity-extractor.selectorLabels" . | nindent 8 }}
+        {{- with .Values.entityExtractor.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.entityExtractor.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "document-pipeline.serviceAccountName" . }}
+      {{- with .Values.entityExtractor.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- $pullSecret := .Values.global.imagePullSecrets | default .Values.imagePullSecrets }}
+      {{- with $pullSecret }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 6 }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          {{- with .Values.entityExtractor.securityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          # command: ["tail", "-f", "/dev/null"]
+          env:
+            - name: SOURCE_TOPIC
+              value: {{ .Values.entityExtractor.configuration.inputTopic | quote }}
+            - name: TARGET_TOPIC
+              value: {{ .Values.entityExtractor.configuration.outputTopic | quote }}
+            - name: BOOTSTRAP_SERVERS
+              value: {{ .Values.global.kafka.bootstrapServers | quote }}
+            - name: KAFKA_CONFIG_FILE_PATH
+              value: /app/config/kafka-auth/kafka-config.toml
+            - name: KAFKA_CONFIG_MODE
+              value: {{ .Values.entityExtractor.configuration.kafkaConfigMode | quote }}
+
+          image: "{{ .Values.entityExtractor.image.registry | default .Values.global.imageRegistry }}/{{ .Values.entityExtractor.image.repository }}:{{ .Values.entityExtractor.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.entityExtractor.image.pullPolicy }}
+          {{- with .Values.entityExtractor.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          volumeMounts:
+          {{- if or .Values.entityExtractor.cacert .Values.entityExtractor.existingCacertConfigmapName }}
+          - name: certs
+            mountPath: /app/config/truststore/
+            readOnly: true
+          {{- end }}
+          - mountPath: /app/config/kafka-auth/
+            name: kafka-auth-config
+          {{- with .Values.entityExtractor.volumeMounts }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      volumes:
+        {{- if or .Values.entityExtractor.cacert .Values.entityExtractor.existingCacertConfigmapName }}
+        - name: certs
+          configMap:
+            {{- if .Values.entityExtractor.existingCacertConfigmapName }}
+            name: {{ .Values.entityExtractor.existingCacertConfigmapName }}
+            {{- else if .Values.entityExtractor.cacert }}
+            name: {{ include "entity-extractor.fullname" . }}-cacert
+            {{- end }}
+            optional: true
+        {{- end }}
+        - name: kafka-auth-config
+          secret:
+          {{- if .Values.global.kafka.existingConfigSecretName }}
+            secretName: {{ .Values.global.kafka.existingConfigSecretName }}
+          {{- else }}
+            secretName: {{ include "document-pipeline.fullname" . }}-kafka-config
+          {{- end }}
+      {{- with .Values.entityExtractor.volumes }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.entityExtractor.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.entityExtractor.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.entityExtractor.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end -}}

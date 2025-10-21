@@ -8,5 +8,5 @@ dependencies:
 - name: data-catalog
   repository: file://./charts/data-catalog
   version: 0.1.0
-digest: sha256:363483ad0b28f62d2fab740aa6c915f609fcbd068714f6cac538dd2afd363441
-generated: "2025-10-14T10:52:32.829519+01:00"
+digest: sha256:a31dce84fbbcdc8421fcfa1eee0a66d9c9629fcd1e2b78e85ba611999bb15dc6
+generated: "2025-10-21T10:04:09.780111+01:00"

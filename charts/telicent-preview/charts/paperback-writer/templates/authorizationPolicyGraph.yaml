@@ -1,3 +1,4 @@
+{{- if .Values.enabled -}}
 apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
 metadata:
@@ -47,3 +48,4 @@ spec:
     matchLabels:
       app.kubernetes.io/instance: "{{ .Release.Name }}"
       app.kubernetes.io/name: "graph"
+{{- end -}}
