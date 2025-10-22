@@ -27,11 +27,11 @@ global:
   # @key global.authHostDomain Domain associated with Telicent authentication services, including OIDC providers
   authHostDomain: "auth.telicent.io"
   # @key global.jwksUrl Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)
-  # NOTE: For Dex the endpoint would be https://{yourDexDomain}/keys
+  # Note: For Dex the endpoint would be https://{yourDexDomain}/keys
   jwksUrl: "https://{yourAuthdomain}/.well-known/jwks.json"
 
   # @key global.istioNamespace Namespace in which Istio is deployed
-  # NOTE: Istio, by default, is deployed within the 'istio-system' namespace
+  # Note: By default, Istio namespace is set to 'istio-system'
   istioNamespace: istio-system
   # @key global.istioServiceAccountName Name of the Istio service account
   istioServiceAccountName: istio-ingress

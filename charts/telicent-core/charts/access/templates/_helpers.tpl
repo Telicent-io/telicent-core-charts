@@ -100,18 +100,3 @@ Create the name of the CA config map
 {{- end }}
 {{- end }}
 
-{{- define "access.ingressPrincipal" -}}
-{{- .Values.istio.ingress.principal | default (printf "cluster.local/ns/%s/sa/%s" .Values.global.istioNamespace .Values.global.istioServiceAccountName) | quote }}
-{{- end }}
-
-{{- define "access.graphPrincipal" -}}
-{{- .Values.istio.graph.principal | default (printf "cluster.local/ns/%s/sa/%s-%s" .Release.Namespace .Release.Name  .Values.istio.graph.serviceAccountName) | quote }}
-{{- end }}
-
-{{- define "access.searchPrincipal" -}}
-{{- .Values.istio.search.principal | default (printf "cluster.local/ns/%s/sa/%s-%s" .Release.Namespace .Release.Name .Values.istio.search.serviceAccountName) | quote }}
-{{- end }}
-
-{{- define "access.paperbackWriterPrincipal" -}}
-{{- index .Values "istio" "paperback-writer" "principal" | default (printf "cluster.local/ns/%s/sa/%s-%s" .Release.Namespace .Values.configuration.telicentPreviewReleaseName (index .Values "istio" "paperback-writer" "serviceAccountName")) | quote }}
-{{- end }}

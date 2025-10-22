@@ -16,6 +16,11 @@
                     "default": [],
                     "items": {}
                 },
+                "enterprise": {
+                    "type": "boolean",
+                    "description": "Enable enterprise mode, adding additional features and configurations",
+                    "default": false
+                },
                 "appHostDomain": {
                     "type": "string",
                     "description": "Domain associated with Telicent application services",
@@ -342,7 +347,7 @@
                     "properties": {
                         "principal": {
                             "type": "string",
-                            "description": "Principal used for Search traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'serviceAccountName' and the current namespace",
+                            "description": "Principal used for Search traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release name, 'serviceAccountName' and the current namespace",
                             "default": ""
                         },
                         "serviceAccountName": {
@@ -357,7 +362,7 @@
                     "properties": {
                         "principal": {
                             "type": "string",
-                            "description": "Principal used for Graph traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'serviceAccountName' and the current namespace",
+                            "description": "Principal used for Graph traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release name, 'serviceAccountName' and the current namespace",
                             "default": ""
                         },
                         "serviceAccountName": {
