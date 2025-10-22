@@ -22,11 +22,11 @@ global:
   # @key global.groupsClaim Key used to retrieve groups from the OIDC provider
   groupsClaim: "groups"
   # @key global.jwksUrl Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)
-  # NOTE: For Dex the endpoint would be https://{yourDexDomain}/keys
+  # Note: For Dex the endpoint would be https://{yourDexDomain}/keys
   jwksUrl: "https://{yourAuthdomain}/.well-known/jwks.json"
 
   # @key global.istioNamespace Namespace in which Istio is deployed
-  # NOTE: Istio, by default, is deployed within the 'istio-system' namespace
+  # Note: By default, Istio namespace is set to 'istio-system'
   istioNamespace: istio-system
   # @key global.istioServiceAccountName Name of the Istio service account
   istioServiceAccountName: istio-ingress
@@ -50,7 +50,7 @@ mongo:
   # @key mongo.username MongoDB username
   username: user-preferences
   # @key mongo.password MongoDB password
-  # NOTE: If you have an existing secret for the password, you can use existingMongoPasswordSecret
+  # Note: If you have an existing secret for the password, you can use existingMongoPasswordSecret
   password: "your.mongo.password.here"
   # @key mongo.database MongoDB database
   database: user-preferences
