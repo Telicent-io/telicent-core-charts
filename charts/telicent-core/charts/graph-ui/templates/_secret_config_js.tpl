@@ -49,10 +49,12 @@ mapConfigExamples.VECTOR_AND_TILE_SETS = {
         label: 'Satellite',
         uri: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
         image: mapImgSrc.SATELLITE,
+        attribution: 'Powered by ArcGIS',
     }, {
         label: 'Street',
         uri: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
         image: mapImgSrc.STREET,
+        attribution: 'Powered by ArcGIS',
     }, ],
 };
 // MAP_CONFIG example with 2 tile sets source
@@ -61,10 +63,12 @@ mapConfigExamples.ONLY_TILE_SETS = {
         label: 'Satellite',
         uri: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
         image: mapImgSrc.SATELLITE,
+        attribution: 'Powered by ArcGIS',
     }, {
         label: 'Street',
         uri: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
         image: mapImgSrc.STREET,
+        attribution: 'Powered by ArcGIS',
     }, ],
 };
 // MAP_CONFIG example with 1 style source
