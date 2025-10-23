@@ -98,6 +98,11 @@
             "description": "Name of the existing configmap for extra certificates",
             "default": ""
         },
+        "existingCacertSecretName": {
+            "type": "string",
+            "description": "Name of the secret containing extra CA certificates",
+            "default": ""
+        },
         "cacert": {
             "type": "string",
             "description": "Path to the CA certificate file",

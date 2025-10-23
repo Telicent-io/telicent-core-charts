@@ -58,6 +58,8 @@ fullnameOverride: ""
 existingConfigmap: ""
 # @key existingCacertConfigmap Name of the existing configmap for extra certificates
 existingCacertConfigmap: ""
+# @key existingCacertSecretName Name of the secret containing extra CA certificates
+existingCacertSecretName: ""
 # @key cacert Path to the CA certificate file
 cacert: ""
 
