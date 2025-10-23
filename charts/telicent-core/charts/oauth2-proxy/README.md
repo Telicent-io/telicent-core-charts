@@ -60,6 +60,7 @@ References to existing ConfigMaps or Secrets for environment and CA certificates
 | ----------------------------- | ------------------------------------------------------- | ----- |
 | `existingEnvConfigmapName`    | Name of an existing ConfigMap for environment variables | `""`  |
 | `existingCacertConfigmapName` | Name of an existing ConfigMap for CA certificates       | `""`  |
+| `existingCacertSecretName`    | Name of the secret containing the CA certificates       | `""`  |
 | `existingEnvSecretName`       | Name of an existing Secret for environment variables    | `""`  |
 
 ### Image Parameters

@@ -67,7 +67,7 @@ spec:
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- if or .Values.existingCacertConfigmapName .Values.configuration.cacert }}
+          {{- if or .Values.existingCacertConfigmapName .Values.existingCacertSecretName .Values.configuration.cacert }}
           volumeMounts:
           - name: cert-volume
             mountPath: /etc/ssl/certs
@@ -77,12 +77,18 @@ spec:
               name: {{ include "oauth2-proxy.envSecretName" . }}
           - configMapRef:
               name: {{ include "oauth2-proxy.internalEnvConfigmapName" . }}
-      {{- if or .Values.existingCacertConfigmapName .Values.configuration.cacert }}
+      {{- if or .Values.existingCacertConfigmapName .Values.existingCacertSecretName .Values.configuration.cacert }}
       volumes:
       - name: cert-volume
+        {{- if .Values.existingCacertSecretName }}
+        secret:
+          secretName: {{ .Values.existingCacertSecretName }}
+        {{- else }}
         configMap:
           name: {{ include "oauth2-proxy.cacertConfigmapName" . }}
+        {{- end }}
       {{- end }}
+
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
