@@ -185,6 +185,10 @@ tolerations: []
 # @key affinity Affinity rules for pod scheduling
 affinity: {}
 
+# @section Extra Containers Parameters
+# @key extraContainers Additional containers to be added to the pod
+extraContainers: []
+
 istio:
   ingress:
     # @key istio.ingress.principal Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName'

@@ -7,6 +7,12 @@
             "description": "Enable Document Pipeline chart",
             "default": false
         },
+        "extraContainers": {
+            "type": "array",
+            "description": "Additional containers to be added to all pods in the document pipeline",
+            "default": [],
+            "items": {}
+        },
         "global": {
             "type": "object",
             "properties": {

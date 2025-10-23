@@ -420,6 +420,12 @@
                 }
             }
         },
+        "extraContainers": {
+            "type": "array",
+            "description": "Additional containers to be added to the pod",
+            "default": [],
+            "items": {}
+        },
         "serviceAccount": {
             "type": "object",
             "properties": {

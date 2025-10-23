@@ -252,6 +252,12 @@
             "description": "Affinity rules for pod scheduling",
             "default": {}
         },
+        "extraContainers": {
+            "type": "array",
+            "description": "Additional containers to be added to the pod",
+            "default": [],
+            "items": {}
+        },
         "istio": {
             "type": "object",
             "properties": {

@@ -199,6 +199,10 @@ istio:
     # @key istio.graph.serviceAccountName Name of the Graph service account
     serviceAccountName: "graph"
 
+# @section Extra Containers Parameters
+# @key extraContainers Additional containers to be added to the pod
+extraContainers: []
+
 # @section Service Account Parameters - Search
 serviceAccount:
   # @key serviceAccount.name Name of the created ServiceAccount. If not set, a name is generated using the fullname template

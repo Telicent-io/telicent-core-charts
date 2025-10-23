@@ -139,6 +139,12 @@ Contains configuration parameters specific to the Search Projector application
 | `service.port` | Search Projector service port | `8181`      |
 | `service.type` | Search Projector service port | `ClusterIP` |
 
+### Extra Containers Parameters
+
+| Name              | Description                                  | Value |
+| ----------------- | -------------------------------------------- | ----- |
+| `extraContainers` | Additional containers to be added to the pod | `[]`  |
+
 ### Service Account Parameters - Search Projector
 
 | Name                         | Description                                                                           | Value |

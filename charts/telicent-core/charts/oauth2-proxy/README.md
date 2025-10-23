@@ -158,9 +158,15 @@ Additional volumes and volume mounts for the deployment.
 
 Node selection, tolerations, and affinity for pod scheduling.
 
+| Name           | Description                       | Value |
+| -------------- | --------------------------------- | ----- |
+| `nodeSelector` | Node selector for pod scheduling  | `{}`  |
+| `tolerations`  | Tolerations for pod scheduling    | `[]`  |
+| `affinity`     | Affinity rules for pod scheduling | `{}`  |
+
+### Extra Containers Parameters
+
 | Name                      | Description                                                                                                                                                                  | Value |
 | ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
-| `nodeSelector`            | Node selector for pod scheduling                                                                                                                                             | `{}`  |
-| `tolerations`             | Tolerations for pod scheduling                                                                                                                                               | `[]`  |
-| `affinity`                | Affinity rules for pod scheduling                                                                                                                                            | `{}`  |
+| `extraContainers`         | Additional containers to be added to the pod                                                                                                                                 | `[]`  |
 | `istio.ingress.principal` | Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName' | `""`  |

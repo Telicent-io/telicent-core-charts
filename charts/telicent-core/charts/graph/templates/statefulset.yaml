@@ -88,10 +88,12 @@ spec:
         - mountPath: /fuseki/backups
           name: backups-volume
         - mountPath: /app/config/kafka-auth/
-          name: kafka-auth-config
-      {{- if .Values.global.existingTruststoreSecretName }}
+          name: kafka-auth-config        {{- if .Values.global.existingTruststoreSecretName }}
         - mountPath: {{ .Values.global.truststore.mountPath | default "/app/config/truststore" }}
           name: truststore-volume
+        {{- end }}
+      {{- with .Values.extraContainers }}
+        {{- toYaml . | nindent 6 }}
       {{- end }}
 
       volumes:

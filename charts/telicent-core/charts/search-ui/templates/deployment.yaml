@@ -74,6 +74,9 @@ spec:
         - name: secret-config-js-volume
           mountPath: /usr/local/nginx/html/secret-config.js
           subPath: secret-config.js
+      {{- with .Values.extraContainers }}
+        {{- toYaml . | nindent 6 }}
+      {{- end }}
 
       volumes:
       - configMap:

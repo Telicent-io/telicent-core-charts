@@ -143,6 +143,10 @@ istio:
     # @key istio.ingress.principal Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName'
     principal: ""
 
+# @section Extra Containers Parameters
+# @key extraContainers Additional containers to be added to the pod
+extraContainers: []
+
 # @section Service Account Parameters
 serviceAccount:
   # @key serviceAccount.name Name of the ServiceAccount to use. If not set, a name is generated using the fullname

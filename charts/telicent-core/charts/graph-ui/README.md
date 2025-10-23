@@ -118,6 +118,12 @@ Contains configuration parameters specific to the Graph UI application
 | `service.type`            | Graph UI service type                                                                                                                                                        | `ClusterIP` |
 | `istio.ingress.principal` | Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName' | `""`        |
 
+### Extra Containers Parameters
+
+| Name              | Description                                  | Value |
+| ----------------- | -------------------------------------------- | ----- |
+| `extraContainers` | Additional containers to be added to the pod | `[]`  |
+
 ### Service Account Parameters
 
 | Name                         | Description                                                                           | Value |

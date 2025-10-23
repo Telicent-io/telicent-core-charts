@@ -48,6 +48,12 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ## Parameters
 
+### Extra Containers Parameters
+
+| Name              | Description                                                            | Value |
+| ----------------- | ---------------------------------------------------------------------- | ----- |
+| `extraContainers` | Additional containers to be added to all pods in the document pipeline | `[]`  |
+
 ### Global Parameters
 
 Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart

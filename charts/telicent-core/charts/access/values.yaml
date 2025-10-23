@@ -175,6 +175,16 @@ istio:
     # @key istio.paperback-writer.serviceAccountName Name of the Paperback Writer service account
     serviceAccountName: "paperback-writer"
 
+# @section Extra Containers Parameters
+# @key extraContainers Additional containers to be added to the pod
+extraContainers: []
+# Example:
+# extraContainers:
+#   - name: sidecar
+#     image: nginx:alpine
+#     ports:
+#       - containerPort: 80
+
 # @section Service Account Parameters
 serviceAccount:
   # @key serviceAccount.name Name of the ServiceAccount to use. If not set, a name is generated using the fullname

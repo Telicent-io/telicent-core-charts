@@ -85,6 +85,9 @@ spec:
           {{- with .Values.contentTagger.volumeMounts }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
+      {{- with .Values.extraContainers }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       volumes:
         {{- if or .Values.contentTagger.cacert .Values.contentTagger.existingCacertConfigmapName }}
         - name: certs
