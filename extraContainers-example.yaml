@@ -1,0 +1,56 @@
+# Example showing how to use extraContainers in telicent-core subcharts
+# This file demonstrates how to add sidecar containers to any of the telicent-core subcharts
+
+# Example 1: Adding a logging sidecar to the access chart
+access:
+  extraContainers:
+    - name: logging-sidecar
+      image: fluent/fluent-bit:latest
+      ports:
+        - containerPort: 24224
+      volumeMounts:
+        - name: logs-volume
+          mountPath: /var/log/app
+      env:
+        - name: FLUENT_CONF
+          value: fluent-bit.conf
+
+# Example 2: Adding a monitoring sidecar to search
+search:
+  extraContainers:
+    - name: prometheus-exporter
+      image: prom/node-exporter:latest
+      ports:
+        - containerPort: 9100
+      args:
+        - --path.procfs=/host/proc
+        - --path.rootfs=/rootfs
+        - --path.sysfs=/host/sys
+        - --collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)
+
+# Example 3: Adding multiple sidecars to graph
+graph:
+  extraContainers:
+    - name: backup-agent
+      image: backup-agent:v1.0.0
+      env:
+        - name: BACKUP_SCHEDULE
+          value: "0 2 * * *"
+      volumeMounts:
+        - name: backup-storage
+          mountPath: /backups
+    - name: security-scanner
+      image: security-scanner:latest
+      securityContext:
+        runAsNonRoot: true
+        readOnlyRootFilesystem: true
+
+# Example 4: Adding a debug container to document-pipeline
+document-pipeline:
+  extraContainers:
+    - name: debug-tools
+      image: nicolaka/netshoot:latest
+      command: ["sleep", "3600"]
+      securityContext:
+        capabilities:
+          add: ["NET_ADMIN", "NET_RAW"]

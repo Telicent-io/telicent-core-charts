@@ -73,6 +73,9 @@ spec:
           {{- with .Values.entityExtractor.volumeMounts }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
+      {{- with .Values.extraContainers }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       volumes:
         {{- if or .Values.entityExtractor.cacert .Values.entityExtractor.existingCacertConfigmapName }}
         - name: certs

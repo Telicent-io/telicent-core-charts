@@ -101,6 +101,9 @@ spec:
           {{- with .Values.contentIndexer.volumeMounts }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
+      {{- with .Values.extraContainers }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       volumes:
       {{- if .Values.global.existingTruststoreSecretName }}
       - name: truststore-volume

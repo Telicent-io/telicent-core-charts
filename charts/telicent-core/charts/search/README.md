@@ -147,6 +147,12 @@ Contains configuration parameters specific to the Smart Cach Search application
 | `istio.graph.principal`          | Principal used for Graph traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'serviceAccountName' and the current namespace                 | `""`        |
 | `istio.graph.serviceAccountName` | Name of the Graph service account                                                                                                                                            | `graph`     |
 
+### Extra Containers Parameters
+
+| Name              | Description                                  | Value |
+| ----------------- | -------------------------------------------- | ----- |
+| `extraContainers` | Additional containers to be added to the pod | `[]`  |
+
 ### Service Account Parameters - Search
 
 | Name                         | Description                                                                                     | Value |

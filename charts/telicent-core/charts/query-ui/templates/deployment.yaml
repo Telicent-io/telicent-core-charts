@@ -71,6 +71,9 @@ spec:
         - mountPath: /usr/local/nginx/html/env-config.js
           name: app-config-volume
           subPath: env-config.js
+      {{- with .Values.extraContainers }}
+        {{- toYaml . | nindent 6 }}
+      {{- end }}
 
       volumes:
       - configMap:

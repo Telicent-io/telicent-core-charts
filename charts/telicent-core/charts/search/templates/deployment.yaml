@@ -103,6 +103,9 @@ spec:
         - mountPath: {{ .Values.global.truststore.mountPath | default "/app/config/truststore" }}
           name: java-truststore
         {{- end }}
+      {{- with .Values.extraContainers }}
+        {{- toYaml . | nindent 6 }}
+      {{- end }}
      
       {{- if .Values.global.existingTruststoreSecretName }}
       volumes:

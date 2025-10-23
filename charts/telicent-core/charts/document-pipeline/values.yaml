@@ -4,6 +4,10 @@
 # @key enabled Enable Document Pipeline chart
 enabled: false
 
+# @section Extra Containers Parameters
+# @key extraContainers Additional containers to be added to all pods in the document pipeline
+extraContainers: []
+
 # @section Global Parameters
 # @descStart
 # Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart

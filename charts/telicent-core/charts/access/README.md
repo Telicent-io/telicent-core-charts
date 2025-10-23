@@ -136,6 +136,12 @@ Contains configuration parameters specific to the Access application
 | `istio.paperback-writer.principal`          | Principal used for Paperback Writer traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'serviceAccountName' and the current namespace                          | `""`               |
 | `istio.paperback-writer.serviceAccountName` | Name of the Paperback Writer service account                                                                                                                                                     | `paperback-writer` |
 
+### Extra Containers Parameters
+
+| Name              | Description                                  | Value |
+| ----------------- | -------------------------------------------- | ----- |
+| `extraContainers` | Additional containers to be added to the pod | `[]`  |
+
 ### Service Account Parameters
 
 | Name                         | Description                                                                           | Value |

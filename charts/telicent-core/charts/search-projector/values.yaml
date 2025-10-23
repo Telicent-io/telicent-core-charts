@@ -186,6 +186,10 @@ service:
   # @key service.type Search Projector service port
   type: ClusterIP
 
+# @section Extra Containers Parameters
+# @key extraContainers Additional containers to be added to the pod
+extraContainers: []
+
 # @section Service Account Parameters - Search Projector
 serviceAccount:
   # @key serviceAccount.name Name of the ServiceAccount to use. If not set, a name is generated using the fullname
