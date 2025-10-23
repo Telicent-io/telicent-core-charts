@@ -63,6 +63,11 @@
             "description": "Name of an existing ConfigMap for CA certificates",
             "default": ""
         },
+        "existingCacertSecretName": {
+            "type": "string",
+            "description": "Name of the secret containing the CA certificates",
+            "default": ""
+        },
         "existingEnvSecretName": {
             "type": "string",
             "description": "Name of an existing Secret for environment variables",

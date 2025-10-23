@@ -41,6 +41,9 @@ replicaCount: 1
 existingEnvConfigmapName: ""
 # @key existingCacertConfigmapName Name of an existing ConfigMap for CA certificates
 existingCacertConfigmapName: ""
+# @key existingCacertSecretName Name of the secret containing the CA certificates
+existingCacertSecretName: ""
+
 # @key existingEnvSecretName Name of an existing Secret for environment variables
 existingEnvSecretName: ""
 
