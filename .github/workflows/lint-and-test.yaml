@@ -37,6 +37,8 @@ jobs:
         run: |
           helm repo add  telicent-core-charts 'https://charts.telicent.io'
           helm dependency update ./charts/telicent-core
+          helm dependency update ./charts/telicent-preview
+          helm dependency update ./charts/telicent-data
           ct lint --config .github/ct.yaml
 
       # Uncomment the following lines if you want to create a kind cluster and run chart-testing install
