@@ -42,7 +42,7 @@ spec:
         securityContext: {{- toYaml .Values.containerSecurityContext | nindent 10 }}
 
         env:
-        {{- if or .Values.existingCacertConfigmap .Values.cacert }}
+        {{- if or .Values.existingCacertConfigmap .Values.existingCacertSecretName .Values.cacert }}
         - name: NODE_EXTRA_CA_CERTS
           value: "/certs/ca.crt"
         {{- end }}
@@ -65,7 +65,7 @@ spec:
           protocol: TCP
               
         volumeMounts:
-        {{- if or .Values.existingCacertConfigmap .Values.cacert }}
+        {{- if or .Values.existingCacertConfigmap .Values.existingCacertSecretName .Values.cacert }}
         - name: cert-volume
           mountPath: /certs
         {{- end }}
@@ -75,10 +75,15 @@ spec:
       {{- end }}
 
       volumes:
-      {{- if or .Values.existingCacertConfigmap .Values.cacert }}
+      {{- if or .Values.existingCacertConfigmap .Values.existingCacertSecretName .Values.cacert }}
       - name: cert-volume
+        {{- if .Values.existingCacertSecretName }}
+        secret:
+          secretName: {{ .Values.existingCacertSecretName }}
+        {{- else }}
         configMap:
           name: {{ include "access.cacertConfigmapName" . }}
+        {{- end }}
       {{- end }}
       {{- if .Values.mongo.existingCaSecret }}
       - name: ca-certificate-volume

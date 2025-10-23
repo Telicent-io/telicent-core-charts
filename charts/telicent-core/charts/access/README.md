@@ -73,12 +73,13 @@ Contains configuration parameters specific to the Access application
 
 ### Common Parameters
 
-| Name                      | Description                                           | Value |
-| ------------------------- | ----------------------------------------------------- | ----- |
-| `fullnameOverride`        | String to fully override the generated release name   | `""`  |
-| `existingConfigmap`       | Name of the existing configmap for configuration      | `""`  |
-| `existingCacertConfigmap` | Name of the existing configmap for extra certificates | `""`  |
-| `cacert`                  | Path to the CA certificate file                       | `""`  |
+| Name                       | Description                                           | Value |
+| -------------------------- | ----------------------------------------------------- | ----- |
+| `fullnameOverride`         | String to fully override the generated release name   | `""`  |
+| `existingConfigmap`        | Name of the existing configmap for configuration      | `""`  |
+| `existingCacertConfigmap`  | Name of the existing configmap for extra certificates | `""`  |
+| `existingCacertSecretName` | Name of the secret containing extra CA certificates   | `""`  |
+| `cacert`                   | Path to the CA certificate file                       | `""`  |
 
 ### MongoDB Parameters
 
