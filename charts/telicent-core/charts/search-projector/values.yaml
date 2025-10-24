@@ -50,9 +50,9 @@ global:
     # @key global.kafka.mechanism SASL mechanism used for Kafka authentication
     mechanism: "SCRAM-SHA-512"
 
-  # @key global.existingTruststoreSecretName Name of an existing secret containing the truststore
-  existingTruststoreSecretName: ""
   truststore:
+    # @key global.truststore.existingSecretName Name of an existing secret containing the truststore
+    existingSecretName: ""
     # @key global.truststore.mountPath The mount path for the truststore in the container
     mountPath: /app/config/truststore
 

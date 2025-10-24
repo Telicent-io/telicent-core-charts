@@ -42,7 +42,7 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ## Parameters
 
-### Global Parameters
+### Global Parameters - Common
 
 Contains global parameters, these parameters are mirrored across all Telicent Core sub charts, these values will be authoritative.
 
@@ -60,7 +60,7 @@ Contains global parameters, these parameters are mirrored across all Telicent Co
 | `global.istioGatewayName`           | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)         | `ingress-gateway`                                |
 | `global.istioVirtualServiceEnabled` | Enable Istio traffic routing to a named destination service                       | `true`                                           |
 
-### Kafka Parameters
+### Global Parameters - Kafka
 
 Kafka configuration parameters. These settings will be used by all Telicent Core components that interact
 with Kafka, ensuring consistent connectivity and authentication across the platform.
@@ -73,18 +73,25 @@ with Kafka, ensuring consistent connectivity and authentication across the platf
 | `global.kafka.password`                 | Password for Kafka authentication                         | `your.kafka.password.here`                     |
 | `global.kafka.protocol`                 | Protocol used for Kafka communication                     | `SASL_SSL`                                     |
 | `global.kafka.mechanism`                | SASL mechanism used for Kafka authentication              | `SCRAM-SHA-512`                                |
-| `global.existingTruststoreSecretName`   | Name of an existing secret containing the truststore      | `""`                                           |
-| `global.truststore.mountPath`           | The mount path for the truststore in the container        | `/app/config/truststore`                       |
-| `jobServiceAccountName`                 | Service account used for running jobs in Kubernetes.      | `producers`                                    |
+
+### Global Parameters - Truststore
+
+Contains global truststore parameters, these parameters are mirrored across Telicent Core sub charts.
+
+| Name                                   | Description                                          | Value                    |
+| -------------------------------------- | ---------------------------------------------------- | ------------------------ |
+| `global.truststore.existingSecretName` | Name of an existing secret containing the truststore | `""`                     |
+| `global.truststore.mountPath`          | The mount path for the truststore in the container   | `/app/config/truststore` |
 
 ### Service Account Parameters
 
-| Name                         | Description                                                                           | Value |
-| ---------------------------- | ------------------------------------------------------------------------------------- | ----- |
-| `serviceAccount.name`        | Name of the ServiceAccount to use. If not set, a name is generated using the fullname | `""`  |
-| `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                  | `{}`  |
+| Name                         | Description                                                                           | Value       |
+| ---------------------------- | ------------------------------------------------------------------------------------- | ----------- |
+| `serviceAccount.name`        | Name of the ServiceAccount to use. If not set, a name is generated using the fullname | `""`        |
+| `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                  | `{}`        |
+| `jobServiceAccountName`      | Service account used for running jobs in Kubernetes.                                  | `producers` |
 
-### Kafka Parameters
+### Kafka Topics Parameters
 
 | Name                  | Description                                                        | Value   |
 | --------------------- | ------------------------------------------------------------------ | ------- |

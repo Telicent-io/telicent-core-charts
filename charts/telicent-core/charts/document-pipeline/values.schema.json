@@ -97,14 +97,14 @@
                         }
                     }
                 },
-                "existingTruststoreSecretName": {
-                    "type": "string",
-                    "description": "Name of an existing secret containing the truststore",
-                    "default": ""
-                },
                 "truststore": {
                     "type": "object",
                     "properties": {
+                        "existingSecretName": {
+                            "type": "string",
+                            "description": "Name of an existing secret containing the truststore",
+                            "default": ""
+                        },
                         "mountPath": {
                             "type": "string",
                             "description": "The mount path for the truststore in the container",
@@ -168,7 +168,7 @@
                         "tag": {
                             "type": "string",
                             "description": "The image tag for the HTTP Ingester",
-                            "default": "3.1.2"
+                            "default": "3.1.4"
                         }
                     }
                 },
@@ -348,7 +348,7 @@
                         "tag": {
                             "type": "string",
                             "description": "The image tag for the Content Extractor",
-                            "default": "3.1.3"
+                            "default": "3.1.4"
                         }
                     }
                 },
@@ -527,7 +527,7 @@
                         "tag": {
                             "type": "string",
                             "description": "The image tag for the Content Indexer",
-                            "default": "3.1.2"
+                            "default": "3.1.4"
                         }
                     }
                 },
@@ -751,7 +751,7 @@
                         "tag": {
                             "type": "string",
                             "description": "The image tag for the Catalogue Updater",
-                            "default": "3.1.3"
+                            "default": "3.1.4"
                         }
                     }
                 },

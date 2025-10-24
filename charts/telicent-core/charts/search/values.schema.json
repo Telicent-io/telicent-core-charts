@@ -71,14 +71,14 @@
                     "description": "Name of an existing secret containing Kafka configuration",
                     "default": ""
                 },
-                "existingTruststoreSecretName": {
-                    "type": "string",
-                    "description": "Name of an existing secret containing the truststore",
-                    "default": ""
-                },
                 "truststore": {
                     "type": "object",
                     "properties": {
+                        "existingSecretName": {
+                            "type": "string",
+                            "description": "Name of an existing secret containing the truststore",
+                            "default": ""
+                        },
                         "mountPath": {
                             "type": "string",
                             "description": "The mount path for the truststore in the container",

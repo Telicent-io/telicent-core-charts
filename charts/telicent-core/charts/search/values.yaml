@@ -45,9 +45,9 @@ global:
   # @key global.existingConfigSecretName Name of an existing secret containing Kafka configuration
   existingConfigSecretName: ""
 
-  # @key global.existingTruststoreSecretName Name of an existing secret containing the truststore
-  existingTruststoreSecretName: ""
   truststore:
+    # @key global.truststore.existingSecretName Name of an existing secret containing the truststore
+    existingSecretName: ""
     # @key global.truststore.mountPath The mount path for the truststore in the container
     mountPath: /app/config/truststore
 

@@ -81,7 +81,7 @@ spec:
           timeoutSeconds: 5
        
         volumeMounts:
-        {{- if .Values.global.existingTruststoreSecretName }}
+        {{- if .Values.global.truststore.existingSecretName }}
         - name: truststore-volume
           mountPath: /app/config/truststore
         {{- end }}
@@ -95,10 +95,10 @@ spec:
       {{- end }}
 
       volumes:
-      {{- if .Values.global.existingTruststoreSecretName }}
+      {{- if .Values.global.truststore.existingSecretName }}
       - name: truststore-volume
         secret:
-          secretName: {{ .Values.global.existingTruststoreSecretName }}
+          secretName: {{ .Values.global.truststore.existingSecretName }}
           optional: true
       {{- end }}
       {{- if .Values.mongo.existingCaSecret }}
