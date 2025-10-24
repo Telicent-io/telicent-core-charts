@@ -58,9 +58,6 @@ These parameters can be referenced in sub-charts as `.Values.global.<parameter-n
 
 ### Kafka Parameters
 
-
-### Kafka Parameters
-
 | Name                                    | Description                                                                                                       | Value                                          |
 | --------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
 | `global.kafka.bootstrapServers`         | Comma separated list containing Kafka bootstrap servers                                                           | `kafka-bootstrap.kafka.svc.cluster.local:9092` |
@@ -80,9 +77,6 @@ These parameters can be referenced in sub-charts as `.Values.global.<parameter-n
 
 ### Image Parameters
 
-
-### Image Parameters
-
 | Name                | Description                                                              | Value                                                        |
 | ------------------- | ------------------------------------------------------------------------ | ------------------------------------------------------------ |
 | `image.registry`    | Container image registry                                                 | `quay.io`                                                    |
@@ -96,9 +90,7 @@ These parameters can be referenced in sub-charts as `.Values.global.<parameter-n
 | Name               | Description                                                            | Value |
 | ------------------ | ---------------------------------------------------------------------- | ----- |
 | `imagePullSecrets` | Global Docker registry secret names as an array                        | `[]`  |
-| `imagePullSecrets` | Global Docker registry secret names as an array                        | `[]`  |
 | `nameOverride`     | String to partially override fullname (will maintain the release name) | `""`  |
-| `fullnameOverride` | String to fully override the generated release name                    | `""`  |
 | `fullnameOverride` | String to fully override the generated release name                    | `""`  |
 
 ### Service Account Parameters
@@ -117,8 +109,6 @@ These parameters can be referenced in sub-charts as `.Values.global.<parameter-n
 | `podAnnotations`     | Additional custom annotations for pods | `{}`  |
 | `podLabels`          | Additional custom labels for pods      | `{}`  |
 | `podSecurityContext` | Set pods' Security Context             | `{}`  |
-| `podSecurityContext` | Set pods' Security Context             | `{}`  |
-| `securityContext`    | Set containers' Security Context       | `{}`  |
 | `securityContext`    | Set containers' Security Context       | `{}`  |
 
 ### Traffic Exposure Parameters
@@ -127,12 +117,6 @@ These parameters can be referenced in sub-charts as `.Values.global.<parameter-n
 | -------------- | ------------ | ----------- |
 | `service.type` | Service type | `ClusterIP` |
 | `service.port` | Service port | `8000`      |
-
-### Resource Parameters
-
-| Name        | Description                                  | Value |
-| ----------- | -------------------------------------------- | ----- |
-| `resources` | Set containers' resource requests and limits | `{}`  |
 
 ### Resource Parameters
 
@@ -152,21 +136,8 @@ These parameters can be referenced in sub-charts as `.Values.global.<parameter-n
 | Name           | Description                     | Value |
 | -------------- | ------------------------------- | ----- |
 | `nodeSelector` | Node labels for pods assignment | `{}`  |
-
-### Node Selection Parameters
-
-| Name           | Description                     | Value |
-| -------------- | ------------------------------- | ----- |
-| `nodeSelector` | Node labels for pods assignment | `{}`  |
-| `tolerations`  | Tolerations for pods assignment | `[]`  |
 | `tolerations`  | Tolerations for pods assignment | `[]`  |
 | `affinity`     | Affinity for pods assignment    | `{}`  |
-| `affinity`     | Affinity for pods assignment    | `{}`  |
-
-### Configuration Parameters
-
-Contains configuration parameters specific to the application
-
 
 ### Configuration Parameters
 
@@ -175,8 +146,5 @@ Contains configuration parameters specific to the application
 | Name                            | Description                                       | Value                    |
 | ------------------------------- | ------------------------------------------------- | ------------------------ |
 | `configuration.kafkaConfigMode` | Kafka configuration mode (toml, json, properties) | `toml`                   |
-| `configuration.kafkaConfigMode` | Kafka configuration mode (toml, json, properties) | `toml`                   |
 | `configuration.sourceTopic`     | Kafka topic to consume events from                | `validated-acled-events` |
-| `configuration.sourceTopic`     | Kafka topic to consume events from                | `validated-acled-events` |
-| `configuration.targetTopic`     | Kafka topic to publish processed events to        | `knowledge`              |
 | `configuration.targetTopic`     | Kafka topic to publish processed events to        | `knowledge`              |

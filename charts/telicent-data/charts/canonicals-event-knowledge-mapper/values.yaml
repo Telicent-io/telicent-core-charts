@@ -40,7 +40,6 @@ global:
   istioGatewayName: ingress-gateway
 
   # @section Kafka Parameters
-  # @section Kafka Parameters
   kafka:
     # @key global.kafka.bootstrapServers Comma separated list containing Kafka bootstrap servers
     bootstrapServers: "kafka-bootstrap.kafka.svc.cluster.local:9092"
@@ -81,11 +80,9 @@ image:
 
 # @section Common Parameters
 # @key imagePullSecrets Global Docker registry secret names as an array
-# @key imagePullSecrets Global Docker registry secret names as an array
 imagePullSecrets: []
 # @key nameOverride String to partially override fullname (will maintain the release name)
 nameOverride: ""
-# @key fullnameOverride String to fully override the generated release name
 # @key fullnameOverride String to fully override the generated release name
 fullnameOverride: ""
 
@@ -107,11 +104,9 @@ podAnnotations: {}
 podLabels: {}
 
 # @key podSecurityContext Set pods' Security Context
-# @key podSecurityContext Set pods' Security Context
 podSecurityContext: {}
   # fsGroup: 2000
 
-# @key securityContext Set containers' Security Context
 # @key securityContext Set containers' Security Context
 securityContext: {}
   # capabilities:

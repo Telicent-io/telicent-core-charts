@@ -58,9 +58,6 @@ These parameters can be referenced in sub-charts as `.Values.global.<parameter-n
 
 ### Kafka Parameters
 
-
-### Kafka Parameters
-
 | Name                                    | Description                                                                                                       | Value                                          |
 | --------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
 | `global.kafka.bootstrapServers`         | Comma separated list containing Kafka bootstrap servers                                                           | `kafka-bootstrap.kafka.svc.cluster.local:9092` |
@@ -72,9 +69,6 @@ These parameters can be referenced in sub-charts as `.Values.global.<parameter-n
 | `global.existingTruststoreSecretName`   | Name of an existing secret containing the truststore                                                              | `""`                                           |
 | `global.truststore.mountPath`           | The mount path for the truststore in the container                                                                | `/app/config/truststore`                       |
 | `replicaCount`                          | Number of  replicas to deploy                                                                                     | `1`                                            |
-
-### Image Parameters
-
 
 ### Image Parameters
 
@@ -91,9 +85,7 @@ These parameters can be referenced in sub-charts as `.Values.global.<parameter-n
 | Name               | Description                                                            | Value |
 | ------------------ | ---------------------------------------------------------------------- | ----- |
 | `imagePullSecrets` | Global Docker registry secret names as an array                        | `[]`  |
-| `imagePullSecrets` | Global Docker registry secret names as an array                        | `[]`  |
 | `nameOverride`     | String to partially override fullname (will maintain the release name) | `""`  |
-| `fullnameOverride` | String to fully override the generated release name                    | `""`  |
 | `fullnameOverride` | String to fully override the generated release name                    | `""`  |
 
 ### Service Account Parameters
@@ -112,8 +104,6 @@ These parameters can be referenced in sub-charts as `.Values.global.<parameter-n
 | `podAnnotations`     | Additional custom annotations for pods | `{}`  |
 | `podLabels`          | Additional custom labels for pods      | `{}`  |
 | `podSecurityContext` | Set pods' Security Context             | `{}`  |
-| `podSecurityContext` | Set pods' Security Context             | `{}`  |
-| `securityContext`    | Set containers' Security Context       | `{}`  |
 | `securityContext`    | Set containers' Security Context       | `{}`  |
 
 ### Traffic Exposure Parameters
@@ -122,12 +112,6 @@ These parameters can be referenced in sub-charts as `.Values.global.<parameter-n
 | -------------- | ------------ | ----------- |
 | `service.type` | service type | `ClusterIP` |
 | `service.port` | service port | `8000`      |
-
-### Resource Parameters
-
-| Name        | Description                                  | Value |
-| ----------- | -------------------------------------------- | ----- |
-| `resources` | Set containers' resource requests and limits | `{}`  |
 
 ### Resource Parameters
 
@@ -147,31 +131,15 @@ These parameters can be referenced in sub-charts as `.Values.global.<parameter-n
 | Name           | Description                                            | Value |
 | -------------- | ------------------------------------------------------ | ----- |
 | `nodeSelector` | Node labels for ACLED Locations Mapper pods assignment | `{}`  |
-
-### Node Selection Parameters
-
-| Name           | Description                                            | Value |
-| -------------- | ------------------------------------------------------ | ----- |
-| `nodeSelector` | Node labels for pods assignment                        | `{}`  |
 | `tolerations`  | Tolerations for ACLED Locations Mapper pods assignment | `[]`  |
-| `tolerations`  | Tolerations for pods assignment                        | `[]`  |
 | `affinity`     | Affinity for ACLED Locations Mapper pods assignment    | `{}`  |
-| `affinity`     | Affinity for pods assignment                           | `{}`  |
 
 ### Configuration Parameters
 
 Contains configuration parameters specific to the ACLED Locations Mapper application
 
-
-### Configuration Parameters
-
-Contains configuration parameters specific to the application
-
 | Name                            | Description                                       | Value                    |
 | ------------------------------- | ------------------------------------------------- | ------------------------ |
 | `configuration.kafkaConfigMode` | Kafka configuration mode (toml, json, properties) | `toml`                   |
-| `configuration.kafkaConfigMode` | Kafka configuration mode (toml, json, properties) | `toml`                   |
 | `configuration.sourceTopic`     | Kafka topic to consume ACLED events from          | `validated-acled-events` |
-| `configuration.sourceTopic`     | Kafka topic to consume events from                | `validated-acled-events` |
 | `configuration.targetTopic`     | Kafka topic to publish enriched events to         | `knowledge`              |
-| `configuration.targetTopic`     | Kafka topic to publish processed events to        | `knowledge`              |

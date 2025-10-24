@@ -44,15 +44,33 @@ helm uninstall my-release
 
 The `telicent-core` chart includes the following sub-charts:
 
-- **[access](charts/telicent-core/charts/access/README.md)** - Access control service
-- **[access-ui](./charts/telicent-core/charts/access-ui/README.md)** - Access control user interface
-- **[graph-ui](./charts/telicent-core/charts/graph-ui/README.md)** - Graph visualization interface
-- **[query-ui](./charts/telicent-core/charts/query-ui/README.md)** - Query interface for data exploration
-- **[search-ui](./charts/telicent-core/charts/search-ui/README.md)** - Search interface
-- **[graph](charts/telicent-core/charts/graph/README.md)** - Graph data caching service
-- **[search](charts/telicent-core/charts/search/README.md)** - Search data caching service
-- **[search-projector](charts/telicent-core/charts/search-projector/README.md)** - Search projector/indexer service
-- **[user-preferences](charts/telicent-core/charts/user-preferences/README.md)** - User preferences management API
+- **[access](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-core/charts/access/README.md)** - Access control service
+- **[access-ui](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-core/charts/access-ui/README.md)** - Access control user interface
+- **[graph-ui](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-core/charts/graph-ui/README.md)** - Graph visualization interface
+- **[query-ui](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-core/charts/query-ui/README.md)** - Query interface for data exploration
+- **[search-ui](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-core/charts/search-ui/README.md)** - Search interface
+- **[graph](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-core/charts/graph/README.md)** - Graph data caching service
+- **[search](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-core/charts/search/README.md)** - Search data caching service
+- **[search-projector](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-core/charts/search-projector/README.md)** - Search projector/indexer service
+- **[user-preferences](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-core/charts/user-preferences/README.md)** - User preferences management API
+
+### Data Components
+#### ACLED 
+- **[acled-locations-mapper](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-data/charts/acled-locations-mapper/README.md)** - ACLED Locations mapper
+- **[acled-participants-mapper](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-data/charts/acled-participants-mapper/README.md)** - ACLED Participants mapper
+- **[acled-validation-mapper](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-data/charts/acled-validation-mapper/README.md)** - ACLED Validation mapper
+- **[producer-acled-ontology](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-data/charts/producer-acled-ontology/README.md)** - ACLED Ontology Producer
+#### Canonical Event 
+- **[canonicals-event-knowledge-mapper](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-data/charts/canonicals-event-knowledge-mapper/README.md)** - Canonicals Event Knowledge Mapper
+- **[canonicals-event-validation-mapper](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-data/charts/canonicals-event-validation-mapper/README.md)** - Canonicals Event Validation Mapper
+- **[ies-regions-producer](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-data/charts/ies-regions-producer/README.md)** - IES Regions Producer
+- **[canonicals-event-document-mapper](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-data/charts/canonicals-event-document-mapper/README.md)** - Canonicals Event Document Mapper
+- **[canonicals-event-geo-mapper](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-data/charts/canonicals-event-geo-mapper/README.md)** - Canonicals Event Geo Mapper
+#### IES / RDF
+- **[ies-regions-ontology-adapter](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-data/charts/ies-regions-ontology-adapter/README.md)** - IES Regions Ontology Adapter
+- **[ies-ontology-producer](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-data/charts/ies-ontology-producer/README.md)** - IES Ontology Producer
+- **[ontologies-rdf-rdfs-owl-producer](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-data/charts/ontologies-rdf-rdfs-owl-producer/README.md)** - Ontologies RDF RDFS Owl Producer
+
 
 ### Demo Prerequisites
 
@@ -79,6 +97,7 @@ helm install my-release ./telicent-core -f values.yaml
 2. Review the chart-specific README for configuration options
 3. Create your custom `values.yaml` file
 4. Install using the Helm commands above
+5. More configuration information can be found [here](https://docs.telicent.io/core/getting-started/installation/helm/)
 
 For more detailed information about each component, please consult the individual chart documentation.
 

@@ -323,7 +323,7 @@
                 "cacertPath": {
                     "type": "string",
                     "description": "Path to CA certs in the container",
-                    "default": "/etc/ssl/certs/ca.crt"
+                    "default": ""
                 }
             }
         },
