@@ -96,14 +96,14 @@
                         }
                     }
                 },
-                "existingTruststoreSecretName": {
-                    "type": "string",
-                    "description": "Name of an existing secret containing the truststore",
-                    "default": ""
-                },
                 "truststore": {
                     "type": "object",
                     "properties": {
+                        "existingSecretName": {
+                            "type": "string",
+                            "description": "Name of an existing secret containing the truststore",
+                            "default": ""
+                        },
                         "mountPath": {
                             "type": "string",
                             "description": "The mount path for the truststore in the container",
@@ -112,11 +112,6 @@
                     }
                 }
             }
-        },
-        "jobServiceAccountName": {
-            "type": "string",
-            "description": "Service account used for running jobs in Kubernetes.",
-            "default": "producers"
         },
         "serviceAccount": {
             "type": "object",
@@ -132,6 +127,11 @@
                     "default": {}
                 }
             }
+        },
+        "jobServiceAccountName": {
+            "type": "string",
+            "description": "Service account used for running jobs in Kubernetes.",
+            "default": "producers"
         },
         "kafkaTopics": {
             "type": "object",

@@ -92,7 +92,7 @@ spec:
             {{- toYaml . | nindent 12 }}
           {{- end }}
           volumeMounts:
-          {{- if .Values.global.existingTruststoreSecretName }}
+          {{- if .Values.global.truststore.existingSecretName }}
           - mountPath: {{ .Values.global.truststore.mountPath | default "/app/config/truststore" }}
             name: truststore-volume
           {{- end }}
@@ -105,10 +105,10 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       volumes:
-      {{- if .Values.global.existingTruststoreSecretName }}
+      {{- if .Values.global.truststore.existingSecretName }}
       - name: truststore-volume
         secret:
-          secretName: {{ .Values.global.existingTruststoreSecretName }}
+          secretName: {{ .Values.global.truststore.existingSecretName }}
       {{- end }}
       - name: kafka-auth-config
         secret:
@@ -116,7 +116,6 @@ spec:
           secretName: {{ .Values.global.kafka.existingConfigSecretName }}
         {{- else }}
           secretName: {{ include "document-pipeline.fullname" . }}-kafka-config
-
         {{- end }}
       {{- with .Values.contentIndexer.volumes }}
         {{- toYaml . | nindent 8 }}

@@ -46,23 +46,23 @@ The command removes all the Kubernetes components associated with the chart and 
 
 Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
 
-| Name                                  | Description                                                                       | Value                                            |
-| ------------------------------------- | --------------------------------------------------------------------------------- | ------------------------------------------------ |
-| `global.imageRegistry`                | Global image registry                                                             | `""`                                             |
-| `global.imagePullSecrets`             | Global registry secret names as an array                                          | `[]`                                             |
-| `global.enterprise`                   | Enable enterprise mode, adding additional features and configurations             | `false`                                          |
-| `global.appHostDomain`                | Domain associated with Telicent application services                              | `apps.telicent.io`                               |
-| `global.authHostDomain`               | Domain associated with Telicent authentication services, including OIDC providers | `auth.telicent.io`                               |
-| `global.groupsClaim`                  | Key used to retrieve groups from the OIDC provider                                | `groups`                                         |
-| `global.jwksUrl`                      | Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)     | `https://{yourAuthdomain}/.well-known/jwks.json` |
-| `global.istioNamespace`               | Namespace in which Istio is deployed                                              | `istio-system`                                   |
-| `global.istioServiceAccountName`      | Name of the Istio service account                                                 | `istio-ingress`                                  |
-| `global.istioGatewayName`             | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)         | `ingress-gateway`                                |
-| `global.istioVirtualServiceEnabled`   | Enable Istio traffic routing to a named destination service                       | `true`                                           |
-| `global.kafkaBootstrapUrls`           | Comma separated list containing Kafka bootstrap URLs                              | `kafka-bootstrap.kafka.svc.cluster.local:9092`   |
-| `global.existingConfigSecretName`     | Name of an existing secret containing Kafka configuration                         | `""`                                             |
-| `global.existingTruststoreSecretName` | Name of an existing secret containing the truststore                              | `""`                                             |
-| `global.truststore.mountPath`         | The mount path for the truststore in the container                                | `/app/config/truststore`                         |
+| Name                                   | Description                                                                       | Value                                            |
+| -------------------------------------- | --------------------------------------------------------------------------------- | ------------------------------------------------ |
+| `global.imageRegistry`                 | Global image registry                                                             | `""`                                             |
+| `global.imagePullSecrets`              | Global registry secret names as an array                                          | `[]`                                             |
+| `global.enterprise`                    | Enable enterprise mode, adding additional features and configurations             | `false`                                          |
+| `global.appHostDomain`                 | Domain associated with Telicent application services                              | `apps.telicent.io`                               |
+| `global.authHostDomain`                | Domain associated with Telicent authentication services, including OIDC providers | `auth.telicent.io`                               |
+| `global.groupsClaim`                   | Key used to retrieve groups from the OIDC provider                                | `groups`                                         |
+| `global.jwksUrl`                       | Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)     | `https://{yourAuthdomain}/.well-known/jwks.json` |
+| `global.istioNamespace`                | Namespace in which Istio is deployed                                              | `istio-system`                                   |
+| `global.istioServiceAccountName`       | Name of the Istio service account                                                 | `istio-ingress`                                  |
+| `global.istioGatewayName`              | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)         | `ingress-gateway`                                |
+| `global.istioVirtualServiceEnabled`    | Enable Istio traffic routing to a named destination service                       | `true`                                           |
+| `global.kafkaBootstrapUrls`            | Comma separated list containing Kafka bootstrap URLs                              | `kafka-bootstrap.kafka.svc.cluster.local:9092`   |
+| `global.existingConfigSecretName`      | Name of an existing secret containing Kafka configuration                         | `""`                                             |
+| `global.truststore.existingSecretName` | Name of an existing secret containing the truststore                              | `""`                                             |
+| `global.truststore.mountPath`          | The mount path for the truststore in the container                                | `/app/config/truststore`                         |
 
 ### Search Parameters
 

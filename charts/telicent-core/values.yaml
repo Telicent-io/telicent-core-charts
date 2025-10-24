@@ -1,7 +1,7 @@
 # Copyright (C) 2025 Telicent Limited
 # Telicent Core umbrella chart
 
-# @section Global Parameters
+# @section Global Parameters - Common
 # @descStart
 # Contains global parameters, these parameters are mirrored across all Telicent Core sub charts, these values will be authoritative.
 # @descEnd
@@ -39,7 +39,7 @@ global:
   # @key global.istioVirtualServiceEnabled Enable Istio traffic routing to a named destination service
   istioVirtualServiceEnabled: true
 
-  # @section Kafka Parameters
+  # @section Global Parameters - Kafka
   # @descStart
   # Kafka configuration parameters. These settings will be used by all Telicent Core components that interact
   # with Kafka, ensuring consistent connectivity and authentication across the platform.
@@ -58,14 +58,15 @@ global:
     # @key global.kafka.mechanism SASL mechanism used for Kafka authentication
     mechanism: "SCRAM-SHA-512"
 
-  # @key global.existingTruststoreSecretName Name of an existing secret containing the truststore
-  existingTruststoreSecretName: ""
+  # @section Global Parameters - Truststore
+  # @descStart
+  # Contains global truststore parameters, these parameters are mirrored across Telicent Core sub charts.
+  # @descEnd
   truststore:
+    # @key global.truststore.existingSecretName Name of an existing secret containing the truststore
+    existingSecretName: ""
     # @key global.truststore.mountPath The mount path for the truststore in the container
     mountPath: /app/config/truststore
-
-# @key jobServiceAccountName Service account used for running jobs in Kubernetes.
-jobServiceAccountName: producers
 
 # @section Service Account Parameters
 serviceAccount:
@@ -74,7 +75,10 @@ serviceAccount:
   # @key serviceAccount.annotations Additional custom annotations for the ServiceAccount
   annotations: {}
 
-# @section Kafka Parameters
+# @key jobServiceAccountName Service account used for running jobs in Kubernetes.
+jobServiceAccountName: producers
+
+# @section Kafka Topics Parameters
 kafkaTopics:
   # @key kafkaTopics.enabled Enable or disable the creation of Kafka topics during installation
   enabled: false
