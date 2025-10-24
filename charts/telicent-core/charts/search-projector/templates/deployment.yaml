@@ -96,7 +96,7 @@ spec:
         volumeMounts:
         - mountPath: /app/config/kafka-auth/
           name: kafka-auth-config
-        {{- if .Values.global.truststore.secretName }}
+        {{- if .Values.global.truststore.existingSecretName }}
         - mountPath: {{ .Values.global.truststore.mountPath | default "/app/config/truststore" }}
           name: truststore-volume
         {{- end }}
