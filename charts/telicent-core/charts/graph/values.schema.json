@@ -173,6 +173,12 @@
             "description": "Add extra annotations to the Statefulset object",
             "default": {}
         },
+        "extraEnvs": {
+            "type": "array",
+            "description": "List of additional environment variables to set in the pod",
+            "default": [],
+            "items": {}
+        },
         "image": {
             "type": "object",
             "properties": {

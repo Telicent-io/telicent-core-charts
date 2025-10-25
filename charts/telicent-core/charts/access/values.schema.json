@@ -116,6 +116,11 @@
                     "description": "MongoDB connection URL",
                     "default": "mongodb://example.mongodb.net"
                 },
+                "existingSecret": {
+                    "type": "string",
+                    "description": "Name of an existing secret resource containing the MongoDB username & password",
+                    "default": ""
+                },
                 "username": {
                     "type": "string",
                     "description": "MongoDB username",
@@ -140,11 +145,6 @@
                     "type": "string",
                     "description": "Enable Retryable Writes",
                     "default": "false"
-                },
-                "existingMongoPasswordSecret": {
-                    "type": "string",
-                    "description": "Existing secret containing the MongoDB password",
-                    "default": ""
                 },
                 "existingCaSecret": {
                     "type": "string",

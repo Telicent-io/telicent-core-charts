@@ -22,12 +22,13 @@ spec:
         prometheus.io/path: /
         prometheus.io/port: "9464"
         prometheus.io/scrape: "true"
-
-      {{- range $key, $value := .Values.annotations }}
-        {{ $key }}: {{ $value | quote }}
-      {{- end }}
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        {{- range $key, $value := .Values.annotations }}
+          {{ $key }}: {{ $value | quote }}
+        {{- end }}
       labels:
         {{- include "search-projector.labels" . | nindent 8 }}
+
     spec:
       serviceAccountName: {{ include "search-projector.serviceAccountName" . }}
       securityContext: {{- toYaml .Values.podSecurityContext | nindent 8 }}
@@ -44,30 +45,26 @@ spec:
         resources: {{- toYaml .Values.resources | nindent 10 }}
         securityContext: {{- toYaml .Values.containerSecurityContext | nindent 10 }}
 
-        {{- with .Values.extraEnvs }}
         env:
-        {{- range . }}
-        - name: {{ .name }}
-          value: {{ .value | quote }}
+        {{- range $key, $value := .Values.extraEnv }}
+        - name: {{ $key }}
+          value: {{ $value }}
         {{- end }}
-        {{- end }}
+        - name: ELASTIC_USER
+          valueFrom:
+            secretKeyRef:
+              key: username
+              name: {{ include "search-projector.elasticSecretName" . }}
+        - name: ELASTIC_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: password
+              name: {{ include "search-projector.elasticSecretName" . }}
+
         envFrom:
-        {{- if .Values.elasticSecrets.existingEnvironmentSecretName }}
-        - secretRef:
-            name: {{ .Values.elasticSecrets.existingEnvironmentSecretName | quote }}
-            optional: true
-        {{- else }}
-        - secretRef:
-            name: {{ include "search-projector.fullname" . }}
-            optional: true
-        {{- end }}
         - configMapRef:
             name: {{ include "search-projector.envConfigmapName" . }}
-        {{- if .Values.extraEnvs }}
-        {{- range $key, $value := .Values.extraEnvs }}
-        {{- end }}
-        {{- end }}
-
+       
         ports:
         - name: metrics
           containerPort: 9464
@@ -112,7 +109,6 @@ spec:
         {{- else }}
           secretName: {{ include "search-projector.fullname" . }}-kafka-config
         {{- end }}
-
       {{- if .Values.global.truststore.existingSecretName }}
       - name: truststore-volume
         secret:

@@ -15,9 +15,9 @@ spec:
   action: ALLOW
   rules:
     - from:
-        - source:
-            principals:
-            - {{ include "search.ingressPrincipal" . }}
+      - source:
+          principals:
+          - {{ include "search.ingressPrincipal" . }}
       to:
         - operation:
             paths:

@@ -63,7 +63,7 @@ Contains global parameters, these parameters are mirrored within the Telicent co
 | `global.kafka.password`                 | Password for Kafka authentication                                                 | `your.kafka.password.here`                       |
 | `global.kafka.protocol`                 | Protocol used for Kafka communication                                             | `SASL_SSL`                                       |
 | `global.kafka.mechanism`                | SASL mechanism used for Kafka authentication                                      | `SCRAM-SHA-512`                                  |
-| `global.truststore.existingSecretName`  | Name of an existing secret containing the truststore                              | `""`                                             |
+| `global.truststore.existingSecret`      | Name of an existing secret containing the truststore                              | `""`                                             |
 | `global.truststore.mountPath`           | The mount path for the truststore in the container                                | `/app/config/truststore`                         |
 
 ### Search Projector Parameters
@@ -87,14 +87,13 @@ Contains configuration parameters specific to the Search Projector application
 | `configuration.dlqTopic`                | Dead-letter topic for failed messages | `knowledge.dlq`                                                                              |
 | `configuration.indexBatchSize`          | Batch size for indexing documents     | `500`                                                                                        |
 
-### OpenSearch secrets - Search Projector
+### OpenSearch/Elastic secret - Search Projector
 
-| Name                                           | Description                            | Value |
-| ---------------------------------------------- | -------------------------------------- | ----- |
-| `elasticSecrets.elasticUser`                   | OpenSearch username                    | `""`  |
-| `elasticSecrets.elasticPassword`               | OpenSearch user password               | `""`  |
-| `elasticSecrets.truststorePass`                | Password for the truststore            | `""`  |
-| `elasticSecrets.existingEnvironmentSecretName` | Name of an existing environment secret | `""`  |
+| Name                           | Description                                                            | Value |
+| ------------------------------ | ---------------------------------------------------------------------- | ----- |
+| `elasticSecret.existingSecret` | Name of an existing secret resource containing the username & password | `""`  |
+| `elasticSecret.username`       | OpenSearch/Elastic username                                            | `""`  |
+| `elasticSecret.password`       | OpenSearch/Elastic user password                                       | `""`  |
 
 ### Deployment Parameters - Search Projector
 

@@ -51,8 +51,8 @@ global:
     mechanism: "SCRAM-SHA-512"
 
   truststore:
-    # @key global.truststore.existingSecretName Name of an existing secret containing the truststore
-    existingSecretName: ""
+    # @key global.truststore.existingSecret Name of an existing secret containing the truststore
+    existingSecret: ""
     # @key global.truststore.mountPath The mount path for the truststore in the container
     mountPath: /app/config/truststore
 
@@ -95,17 +95,15 @@ configuration:
   # @key configuration.indexBatchSize Batch size for indexing documents
   indexBatchSize: "500"
 
-# @section OpenSearch secrets - Search Projector
+# @section OpenSearch/Elastic secret - Search Projector
 # Note: It is recommended to use a Kubernetes secret for sensitive information like passwords
-elasticSecrets:
-  # @key elasticSecrets.elasticUser OpenSearch username
-  elasticUser: ""
-  # @key elasticSecrets.elasticPassword OpenSearch user password
-  elasticPassword: ""
-  # @key elasticSecrets.truststorePass Password for the truststore
-  truststorePass: ""
-  # @key elasticSecrets.existingEnvironmentSecretName Name of an existing environment secret
-  existingEnvironmentSecretName: ""
+elasticSecret:
+  # @key elasticSecret.existingSecret Name of an existing secret resource containing the username & password
+  existingSecret: ""
+  # @key elasticSecret.username OpenSearch/Elastic username
+  username: ""
+  # @key elasticSecret.password OpenSearch/Elastic user password
+  password: ""
 
 # @section Deployment Parameters - Search Projector
 # @key replicas Number of Search Projector replicas to deploy

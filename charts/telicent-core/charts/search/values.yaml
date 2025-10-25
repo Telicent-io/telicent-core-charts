@@ -91,17 +91,15 @@ configuration:
   # This is a comma-separated list of fields to be used for search, with optional weights
   searchFieldOptions: primaryName^2,*
 
-# @section OpenSearch secrets - Search
+# @section OpenSearch/Elastic secret - Search
 # Note: It is recommended to use a Kubernetes secret for sensitive information like passwords
-elasticSecrets:
-  # @key elasticSecrets.elasticUser OpenSearch username
-  elasticUser: ""
-  # @key elasticSecrets.elasticPassword OpenSearch user password
-  elasticPassword: ""
-  # @key elasticSecrets.truststorePass Password for the truststore
-  truststorePass: ""
-  # @key elasticSecrets.existingEnvironmentSecretName Name of an existing environment secret
-  existingEnvironmentSecretName: ""
+elasticSecret:
+  # @key elasticSecret.existingSecret Name of an existing secret resource containing the username & password
+  existingSecret: ""
+  # @key elasticSecret.username OpenSearch/Elastic username
+  username: ""
+  # @key elasticSecret.password OpenSearch/Elastic user password
+  password: ""
 
 # @section Common Parameters - Search
 # @key fullnameOverride String to fully override the generated release name
