@@ -9,7 +9,6 @@ kind: ConfigMap
 
 metadata:
   name: {{ include "access.cacertConfigmapName" . }}
-  namespace: {{ .Release.Namespace }}
   labels:
     {{- include "access.labels" . | nindent 4 }}
 

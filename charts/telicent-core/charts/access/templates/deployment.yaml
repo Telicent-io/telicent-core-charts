@@ -23,8 +23,11 @@ spec:
     {{- include "access.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
       labels:
       {{- include "access.selectorLabels" . | nindent 8 }}
+
     spec:
       serviceAccountName: {{ include "access.serviceAccountName" . }}
       securityContext: {{- toYaml .Values.podSecurityContext | nindent 8 }}
@@ -42,20 +45,24 @@ spec:
         securityContext: {{- toYaml .Values.containerSecurityContext | nindent 10 }}
 
         env:
+        {{- range $key, $value := .Values.extraEnv }}
+        - name: {{ $key }}
+          value: {{ $value }}
+        {{- end }}
         {{- if or .Values.existingCacertConfigmap .Values.existingCacertSecretName .Values.cacert }}
         - name: NODE_EXTRA_CA_CERTS
           value: "/certs/ca.crt"
         {{- end }}
+        - name: MONGO_USER
+          valueFrom:
+            secretKeyRef:
+              key: username
+              name: {{ include "access.mongoSecretName" . }}
         - name: MONGO_PWD
           valueFrom:
             secretKeyRef:
               key: password
-              {{- /* Allow use of an existing secret if provided */}}
-              {{- if .Values.mongo.existingMongoPasswordSecret }}
-              name: {{ .Values.mongo.existingMongoPasswordSecret }}
-              {{- else }}
-              name: {{ include "access.envSecretName" . }}
-              {{- end }}
+              name: {{ include "access.mongoSecretName" . }}
         envFrom:
         - configMapRef:
             name: {{ include "access.envConfigmapName" . }}

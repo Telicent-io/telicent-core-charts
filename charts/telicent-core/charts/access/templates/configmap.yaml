@@ -8,7 +8,6 @@ kind: ConfigMap
 
 metadata:
   name: {{ include "access.envConfigmapName" . }}
-  namespace: {{ .Release.Namespace }}
   labels:
     {{- include "access.labels" . | nindent 4 }}
 
@@ -17,7 +16,6 @@ data:
   DEPLOYED_DOMAIN: "https://{{ .Values.global.appHostDomain }}"
   OPENID_PROVIDER_URL: {{ .Values.configuration.openidProviderUrl | quote }}
   MONGO_URL: {{ .Values.mongo.url | quote }}
-  MONGO_USER: {{ .Values.mongo.username | quote }}
   MONGO_COLLECTION: {{ .Values.mongo.collection | quote }}
   MONGO_CONNECTION_STRING_OPTIONS: {{ .Values.mongo.connectionStringOptions | quote }}
   MONGO_RETRY_REWRITES: {{ .Values.mongo.retryRewrites | quote }}

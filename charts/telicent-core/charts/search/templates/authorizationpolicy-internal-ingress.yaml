@@ -9,7 +9,7 @@ kind: AuthorizationPolicy
 metadata:
   name: {{ include "search.fullname" . }}-internal-ingress
   labels:
-  {{- include "search.labels" . | nindent 4 }}
+    {{- include "search.labels" . | nindent 4 }}
 
 spec:
   action: ALLOW

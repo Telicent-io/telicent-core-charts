@@ -95,6 +95,8 @@ replicas: 1
 revisionHistoryLimit: 5
 # @key annotations Add extra annotations to the Statefulset object
 annotations: {}
+# @key extraEnvs List of additional environment variables to set in the pod
+extraEnvs: []
 
 image:
   # @key image.registry [default: REGISTRY_NAME] Graph image registry

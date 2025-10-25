@@ -12,7 +12,7 @@ spec:
       {{- include "entity-extractor.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.entityExtractor.podAnnotations }}a
+      {{- with .Values.entityExtractor.podAnnotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
       {{- end }}

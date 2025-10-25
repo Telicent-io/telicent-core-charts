@@ -85,14 +85,13 @@ Contains configuration parameters specific to the Smart Cach Search application
 | `configuration.elasticIndexNames`       | OpenSearch index name(s)            | `search,doc-content`                                                                         |
 | `configuration.searchFieldOptions`      | Field options for search            | `primaryName^2,*`                                                                            |
 
-### OpenSearch secrets - Search
+### OpenSearch/Elastic secret - Search
 
-| Name                                           | Description                            | Value |
-| ---------------------------------------------- | -------------------------------------- | ----- |
-| `elasticSecrets.elasticUser`                   | OpenSearch username                    | `""`  |
-| `elasticSecrets.elasticPassword`               | OpenSearch user password               | `""`  |
-| `elasticSecrets.truststorePass`                | Password for the truststore            | `""`  |
-| `elasticSecrets.existingEnvironmentSecretName` | Name of an existing environment secret | `""`  |
+| Name                           | Description                                                            | Value |
+| ------------------------------ | ---------------------------------------------------------------------- | ----- |
+| `elasticSecret.existingSecret` | Name of an existing secret resource containing the username & password | `""`  |
+| `elasticSecret.username`       | OpenSearch/Elastic username                                            | `""`  |
+| `elasticSecret.password`       | OpenSearch/Elastic user password                                       | `""`  |
 
 ### Common Parameters - Search
 

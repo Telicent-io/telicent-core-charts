@@ -148,27 +148,22 @@
                 }
             }
         },
-        "elasticSecrets": {
+        "elasticSecret": {
             "type": "object",
             "properties": {
-                "elasticUser": {
+                "existingSecret": {
                     "type": "string",
-                    "description": "OpenSearch username",
+                    "description": "Name of an existing secret resource containing the username & password",
                     "default": ""
                 },
-                "elasticPassword": {
+                "username": {
                     "type": "string",
-                    "description": "OpenSearch user password",
+                    "description": "OpenSearch/Elastic username",
                     "default": ""
                 },
-                "truststorePass": {
+                "password": {
                     "type": "string",
-                    "description": "Password for the truststore",
-                    "default": ""
-                },
-                "existingEnvironmentSecretName": {
-                    "type": "string",
-                    "description": "Name of an existing environment secret",
+                    "description": "OpenSearch/Elastic user password",
                     "default": ""
                 }
             }
