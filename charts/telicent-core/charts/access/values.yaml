@@ -65,16 +65,16 @@ cacert: ""
 
 # @section MongoDB Parameters
 mongo:
-  # @key mongo.url MongoDB connection URL
-  url: "mongodb://example.mongodb.net"
+  # @key mongo.host MongoDB One or more host addresses, 'host1[:port1][,...hostN[:portN]]'
+  host: "<host1>:<port1>,<host2>:<port2>,<host3>:<port3>"
   # @key mongo.existingSecret Name of an existing secret resource containing the MongoDB username & password
   existingSecret: ""
   # @key mongo.username MongoDB username
-  username: root
+  username: ""
   # @key mongo.password MongoDB password
   password: ""
-  # @key mongo.collection MongoDB collection
-  collection: access
+  # @key mongo.database MongoDB database
+  database: access
   # @key mongo.connectionStringOptions MongoDB additional connection values
   connectionStringOptions: "authMechanism=SCRAM-SHA-1&retryWrites=false"
   # @key mongo.retryRewrites Enable Retryable Writes

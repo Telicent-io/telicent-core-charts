@@ -111,10 +111,10 @@
         "mongo": {
             "type": "object",
             "properties": {
-                "url": {
+                "host": {
                     "type": "string",
-                    "description": "MongoDB connection URL",
-                    "default": "mongodb://example.mongodb.net"
+                    "description": "MongoDB One or more host addresses, 'host1[:port1][,...hostN[:portN]]'",
+                    "default": "<host1>:<port1>,<host2>:<port2>,<host3>:<port3>"
                 },
                 "existingSecret": {
                     "type": "string",
@@ -124,16 +124,16 @@
                 "username": {
                     "type": "string",
                     "description": "MongoDB username",
-                    "default": "root"
+                    "default": ""
                 },
                 "password": {
                     "type": "string",
                     "description": "MongoDB password",
                     "default": ""
                 },
-                "collection": {
+                "database": {
                     "type": "string",
-                    "description": "MongoDB collection",
+                    "description": "MongoDB database",
                     "default": "access"
                 },
                 "connectionStringOptions": {

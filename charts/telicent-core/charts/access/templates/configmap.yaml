@@ -15,8 +15,8 @@ data:
   DEBUG: {{ .Values.configuration.debug | quote }}
   DEPLOYED_DOMAIN: "https://{{ .Values.global.appHostDomain }}"
   OPENID_PROVIDER_URL: {{ .Values.configuration.openidProviderUrl | quote }}
-  MONGO_URL: {{ .Values.mongo.url | quote }}
-  MONGO_COLLECTION: {{ .Values.mongo.collection | quote }}
+  MONGO_URL: {{ .Values.mongo.host | quote }}
+  MONGO_COLLECTION: {{ .Values.mongo.database | quote }}
   MONGO_CONNECTION_STRING_OPTIONS: {{ .Values.mongo.connectionStringOptions | quote }}
   MONGO_RETRY_REWRITES: {{ .Values.mongo.retryRewrites | quote }}
   SCIM_ENABLED: {{ .Values.configuration.scimEnabled | quote }}
