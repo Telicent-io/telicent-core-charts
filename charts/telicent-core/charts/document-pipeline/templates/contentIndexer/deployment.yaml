@@ -72,12 +72,12 @@ spec:
               valueFrom:
                 secretKeyRef:
                   key: username
-                  name: {{ include "content-indexer.elasticSecretName" . }}
+                  name: {{ include "contentIndexer.elasticSecretName" . }}
             - name: ELASTIC_PASSWORD
               valueFrom:
                 secretKeyRef:
                   key: password
-                  name: {{ include "content-indexer.elasticSecretName" . }}
+                  name: {{ include "contentIndexer.elasticSecretName" . }}
               
 
           livenessProbe:
