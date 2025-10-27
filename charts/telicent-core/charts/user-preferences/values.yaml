@@ -35,6 +35,12 @@ global:
   # @key global.istioVirtualServiceEnabled Enable Istio traffic routing to a named destination service
   istioVirtualServiceEnabled: true
 
+  truststore:
+    # @key global.truststore.existingSecretName Name of an existing secret containing the truststore
+    existingSecretName: ""
+    # @key global.truststore.mountPath The mount path for the truststore in the container
+    mountPath: /app/config/truststore
+
 # @section Configuration Parameters
 # @descStart
 # Contains configuration parameters specific to the User Preferences API application
@@ -45,17 +51,18 @@ configuration:
 
 # @section MongoDB Parameters
 mongo:
-  # @key mongo.url MongoDB connection URL
-  url: mongodb://mongodb-demo-prereqs-mongodb-svc.mongodb-dev.svc.cluster.local:27017/user-preferences?authSource=admin
-  # @key mongo.username MongoDB username
-  username: user-preferences
-  # @key mongo.password MongoDB password
-  # Note: If you have an existing secret for the password, you can use existingMongoPasswordSecret
-  password: "your.mongo.password.here"
+  # @key mongo.url MongoDB connection URL (database value can be omitted in favour of populating 'database' property)
+  url: "mongodb://<host1>:<port1>,<host2>:<port2>,<host3>:<port3>/?retryWrites=false"
   # @key mongo.database MongoDB database
-  database: user-preferences
-  # @key mongo.existingMongoPasswordSecret Existing secret containing the MongoDB password
-  existingMongoPasswordSecret: ""
+  database: "user-preferences"
+  # @key mongo.existingSecret Name of an existing secret resource containing the MongoDB username & password
+  existingSecret: ""
+  # @key mongo.username MongoDB username
+  username: ""
+  # @key mongo.password MongoDB password
+  password: ""
+  # @key mongo.authDatabase The authentication database to use for the given user
+  authDatabase: "admin"
   # @key mongo.existingCaSecret If you have an existing secret for the CA certificate, you can specify it here. If you've specified to use TLS in the url, you must provide a CA certificate.
   existingCaSecret: ""
   # @key mongo.cacertPath Path to the CA certificate file, must be set if TLS is enabled in the url and mirror the path in the connectionStringOptions
