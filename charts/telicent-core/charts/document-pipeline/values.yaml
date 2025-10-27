@@ -417,17 +417,15 @@ contentIndexer:
     # @key contentIndexer.configuration.dlqTopic The Kafka topic to which the content indexer will produce dead-lettered messages
     dlqTopic: document.textandmetadata.dlq
 
-  # @section OpenSearch secrets - Search Projector
+  # @section OpenSearch/Elastic secrets - Content Indexer
   # Note: It is recommended to use a Kubernetes secret for sensitive information like passwords
-  elasticSecrets:
-    # @key contentIndexer.elasticSecrets.elasticUser OpenSearch username
-    elasticUser: ""
-    # @key contentIndexer.elasticSecrets.elasticPassword OpenSearch user password
-    elasticPassword: ""
-    # @key contentIndexer.elasticSecrets.truststorePass Password for the truststore
-    truststorePass: ""
-    # @key contentIndexer.elasticSecrets.existingEnvironmentSecretName Name of an existing environment secret
-    existingEnvironmentSecretName: ""
+  elasticSecret:
+    # @key contentIndexer.elasticSecret.existingSecret Name of an existing secret resource containing the username & password
+    existingSecret: ""
+    # @key contentIndexer.elasticSecret.username OpenSearch/Elastic username
+    username: ""
+    # @key contentIndexer.elasticSecret.password OpenSearch/Elastic user password
+    password: ""
 
 # @section Catalogue Updater
 # @descStart
