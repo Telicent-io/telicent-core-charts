@@ -728,6 +728,6 @@ entityExtractor:
     # @key entityExtractor.configuration.inputTopic The Kafka topic from which the content tagger will consume messages
     inputTopic: document.textandmetadata
     # @key entityExtractor.configuration.outputTopic The Kafka topic to which the content tagger will produce
-    outputTopic: knowledge
+    outputTopic: document.entities
     # @key entityExtractor.configuration.kafkaConfigMode The configuration mode for Kafka, either 'basic' or 'toml'
     kafkaConfigMode: toml
