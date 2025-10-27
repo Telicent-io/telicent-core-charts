@@ -7,7 +7,7 @@ This repository contains Helm charts for deploying the Telicent CORE platform an
 To install the Telicent CORE Helm chart, use the following commands:
 
 ```sh
-helm repo add --username <GithubUsername> --password <GithubPAT*> telicent-core-charts 'https://raw.githubusercontent.com/Telicent-io/telicent-core-charts/gh-pages'
+helm repo add telicent-core-charts 'https://charts.telicent.io'
 helm repo update
 helm search repo telicent-charts
 helm install my-release telicent-core --values <path-to-your-values-file.yaml>
@@ -15,14 +15,12 @@ helm install my-release telicent-core --values <path-to-your-values-file.yaml>
 
 Replace `my-release` with your desired release name.
 
-\*For details [see here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) (PAT must have read access to this repo)
-
 ## Upgrading
 
 To upgrade an existing release:
 
 ```sh
-helm upgrade my-release telicent/core
+helm upgrade my-release 
 ```
 
 ## Uninstalling
