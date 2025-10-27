@@ -213,14 +213,13 @@ The application configuration is contained within the 'configuration' key
 | `contentIndexer.configuration.opensearchCompatibility` | Whether to enable OpenSearch compatibility mode                                  | `true`                                       |
 | `contentIndexer.configuration.dlqTopic`                | The Kafka topic to which the content indexer will produce dead-lettered messages | `document.textandmetadata.dlq`               |
 
-### OpenSearch secrets - Search Projector
+### OpenSearch/Elastic secrets - Content Indexer
 
-| Name                                                          | Description                            | Value |
-| ------------------------------------------------------------- | -------------------------------------- | ----- |
-| `contentIndexer.elasticSecrets.elasticUser`                   | OpenSearch username                    | `""`  |
-| `contentIndexer.elasticSecrets.elasticPassword`               | OpenSearch user password               | `""`  |
-| `contentIndexer.elasticSecrets.truststorePass`                | Password for the truststore            | `""`  |
-| `contentIndexer.elasticSecrets.existingEnvironmentSecretName` | Name of an existing environment secret | `""`  |
+| Name                                          | Description                                                            | Value |
+| --------------------------------------------- | ---------------------------------------------------------------------- | ----- |
+| `contentIndexer.elasticSecret.existingSecret` | Name of an existing secret resource containing the username & password | `""`  |
+| `contentIndexer.elasticSecret.username`       | OpenSearch/Elastic username                                            | `""`  |
+| `contentIndexer.elasticSecret.password`       | OpenSearch/Elastic user password                                       | `""`  |
 
 ### Catalogue Updater
 
