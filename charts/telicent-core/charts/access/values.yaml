@@ -67,16 +67,16 @@ cacert: ""
 mongo:
   # @key mongo.host MongoDB One or more host addresses, 'host1[:port1][,...hostN[:portN]]'
   host: "<host1>:<port1>,<host2>:<port2>,<host3>:<port3>"
+  # @key mongo.database MongoDB database
+  database: "access"
   # @key mongo.existingSecret Name of an existing secret resource containing the MongoDB username & password
   existingSecret: ""
   # @key mongo.username MongoDB username
   username: ""
   # @key mongo.password MongoDB password
   password: ""
-  # @key mongo.database MongoDB database
-  database: access
   # @key mongo.connectionStringOptions MongoDB additional connection values
-  connectionStringOptions: "authMechanism=SCRAM-SHA-1&retryWrites=false"
+  connectionStringOptions: "authMechanism=SCRAM-SHA-256&retryWrites=false"
   # @key mongo.retryRewrites Enable Retryable Writes
   retryRewrites: "false"
  # @key mongo.existingCaSecret existingCaSecret If you have an existing secret for the CA certificate, you can specify it here. If you've specified to use TLS in the url, you must provide a CA certificate.

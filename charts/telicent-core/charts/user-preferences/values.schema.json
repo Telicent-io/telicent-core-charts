@@ -60,6 +60,21 @@
                     "type": "boolean",
                     "description": "Enable Istio traffic routing to a named destination service",
                     "default": true
+                },
+                "truststore": {
+                    "type": "object",
+                    "properties": {
+                        "existingSecretName": {
+                            "type": "string",
+                            "description": "Name of an existing secret containing the truststore",
+                            "default": ""
+                        },
+                        "mountPath": {
+                            "type": "string",
+                            "description": "The mount path for the truststore in the container",
+                            "default": "/app/config/truststore"
+                        }
+                    }
                 }
             }
         },
@@ -78,28 +93,33 @@
             "properties": {
                 "url": {
                     "type": "string",
-                    "description": "MongoDB connection URL",
-                    "default": "mongodb://mongodb-demo-prereqs-mongodb-svc.mongodb-dev.svc.cluster.local:27017/user-preferences?authSource=admin"
-                },
-                "username": {
-                    "type": "string",
-                    "description": "MongoDB username",
-                    "default": "user-preferences"
-                },
-                "password": {
-                    "type": "string",
-                    "description": "MongoDB password",
-                    "default": "your.mongo.password.here"
+                    "description": "MongoDB connection URL (database value can be omitted in favour of populating 'database' property)",
+                    "default": "mongodb://<host1>:<port1>,<host2>:<port2>,<host3>:<port3>/?retryWrites=false"
                 },
                 "database": {
                     "type": "string",
                     "description": "MongoDB database",
                     "default": "user-preferences"
                 },
-                "existingMongoPasswordSecret": {
+                "existingSecret": {
                     "type": "string",
-                    "description": "Existing secret containing the MongoDB password",
+                    "description": "Name of an existing secret resource containing the MongoDB username & password",
                     "default": ""
+                },
+                "username": {
+                    "type": "string",
+                    "description": "MongoDB username",
+                    "default": ""
+                },
+                "password": {
+                    "type": "string",
+                    "description": "MongoDB password",
+                    "default": ""
+                },
+                "authDatabase": {
+                    "type": "string",
+                    "description": "The authentication database to use for the given user",
+                    "default": "admin"
                 },
                 "existingCaSecret": {
                     "type": "string",

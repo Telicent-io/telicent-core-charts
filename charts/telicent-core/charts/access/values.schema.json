@@ -116,6 +116,11 @@
                     "description": "MongoDB One or more host addresses, 'host1[:port1][,...hostN[:portN]]'",
                     "default": "<host1>:<port1>,<host2>:<port2>,<host3>:<port3>"
                 },
+                "database": {
+                    "type": "string",
+                    "description": "MongoDB database",
+                    "default": "access"
+                },
                 "existingSecret": {
                     "type": "string",
                     "description": "Name of an existing secret resource containing the MongoDB username & password",
@@ -131,15 +136,10 @@
                     "description": "MongoDB password",
                     "default": ""
                 },
-                "database": {
-                    "type": "string",
-                    "description": "MongoDB database",
-                    "default": "access"
-                },
                 "connectionStringOptions": {
                     "type": "string",
                     "description": "MongoDB additional connection values",
-                    "default": "authMechanism=SCRAM-SHA-1&retryWrites=false"
+                    "default": "authMechanism=SCRAM-SHA-256&retryWrites=false"
                 },
                 "retryRewrites": {
                     "type": "string",
