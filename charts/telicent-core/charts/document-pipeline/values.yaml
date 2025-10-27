@@ -409,7 +409,7 @@ contentIndexer:
     # @key contentIndexer.configuration.elasticsearchPort The port for the Elasticsearch instance
     elasticsearchPort: "9200"
     # @key contentIndexer.configuration.elasticsearchIndex The Elasticsearch index to which documents will be indexed
-    elasticsearchIndex: documents
+    elasticsearchIndex: doc-content
     # @key contentIndexer.configuration.javaOptions Additional Java options for the Content Indexer
     javaOptions: ""
     # @key contentIndexer.configuration.opensearchCompatibility Whether to enable OpenSearch compatibility mode
