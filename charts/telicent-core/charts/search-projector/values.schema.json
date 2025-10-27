@@ -89,7 +89,7 @@
                 "truststore": {
                     "type": "object",
                     "properties": {
-                        "existingSecret": {
+                        "existingSecretName": {
                             "type": "string",
                             "description": "Name of an existing secret containing the truststore",
                             "default": ""
