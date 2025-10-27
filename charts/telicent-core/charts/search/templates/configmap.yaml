@@ -24,6 +24,7 @@ data:
   ELASTIC_INDEX: {{ .Values.configuration.elasticIndexNames | quote }}
   FIELD_OPTIONS: {{ .Values.configuration.searchFieldOptions | quote }}
   JWKS_URL: {{ .Values.global.jwksUrl | quote }}
+  INDEX_BATCH_SIZE: {{ .Values.configuration.indexBatchSize | quote }}
 {{- with .Values.extraEnvs }}
 {{- toYaml . | nindent 2 }}
 {{- end }}

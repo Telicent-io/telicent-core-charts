@@ -676,7 +676,7 @@
                         "elasticsearchIndex": {
                             "type": "string",
                             "description": "The Elasticsearch index to which documents will be indexed",
-                            "default": "documents"
+                            "default": "doc-content"
                         },
                         "javaOptions": {
                             "type": "string",
@@ -1173,7 +1173,7 @@
                         "outputTopic": {
                             "type": "string",
                             "description": "The Kafka topic to which the content tagger will produce",
-                            "default": "knowledge"
+                            "default": "document.entities"
                         },
                         "kafkaConfigMode": {
                             "type": "string",

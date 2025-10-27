@@ -144,7 +144,7 @@
                 "elasticIndex": {
                     "type": "string",
                     "description": "Name of the index in OpenSearch",
-                    "default": "search"
+                    "default": "search,doc-content"
                 },
                 "topic": {
                     "type": "string",

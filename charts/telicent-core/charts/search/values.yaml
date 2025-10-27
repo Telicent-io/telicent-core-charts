@@ -90,6 +90,8 @@ configuration:
   # @key configuration.searchFieldOptions Field options for search
   # This is a comma-separated list of fields to be used for search, with optional weights
   searchFieldOptions: primaryName^2,*
+  # @key configuration.indexBatchSize Number of documents to index in a single batch operation
+  indexBatchSize: 100
 
 # @section OpenSearch/Elastic secret - Search
 # Note: It is recommended to use a Kubernetes secret for sensitive information like passwords
