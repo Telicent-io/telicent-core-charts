@@ -208,7 +208,7 @@ The application configuration is contained within the 'configuration' key
 | `contentIndexer.configuration.inputTopic`              | The Kafka topic from which the content indexer will consume messages             | `document.textandmetadata,document.entities` |
 | `contentIndexer.configuration.elasticsearchHost`       | The hostname for the Elasticsearch instance                                      | `elasticsearch-master`                       |
 | `contentIndexer.configuration.elasticsearchPort`       | The port for the Elasticsearch instance                                          | `9200`                                       |
-| `contentIndexer.configuration.elasticsearchIndex`      | The Elasticsearch index to which documents will be indexed                       | `documents`                                  |
+| `contentIndexer.configuration.elasticsearchIndex`      | The Elasticsearch index to which documents will be indexed                       | `doc-content`                                |
 | `contentIndexer.configuration.javaOptions`             | Additional Java options for the Content Indexer                                  | `""`                                         |
 | `contentIndexer.configuration.opensearchCompatibility` | Whether to enable OpenSearch compatibility mode                                  | `true`                                       |
 | `contentIndexer.configuration.dlqTopic`                | The Kafka topic to which the content indexer will produce dead-lettered messages | `document.textandmetadata.dlq`               |
@@ -321,7 +321,7 @@ The application configuration is contained within the 'configuration' key
 | `entityExtractor.tolerations`                   | Tolerations for the Entity Extractor pods                           | `[]`                                           |
 | `entityExtractor.affinity`                      | Affinity rules for the Entity Extractor pods                        | `{}`                                           |
 | `entityExtractor.configuration.inputTopic`      | The Kafka topic from which the content tagger will consume messages | `document.textandmetadata`                     |
-| `entityExtractor.configuration.outputTopic`     | The Kafka topic to which the content tagger will produce            | `knowledge`                                    |
+| `entityExtractor.configuration.outputTopic`     | The Kafka topic to which the content tagger will produce            | `document.entities`                            |
 | `entityExtractor.configuration.kafkaConfigMode` | The configuration mode for Kafka, either 'basic' or 'toml'          | `toml`                                         |
 
 

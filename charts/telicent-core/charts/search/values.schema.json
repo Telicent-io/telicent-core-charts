@@ -145,6 +145,11 @@
                     "type": "string",
                     "description": "Field options for search",
                     "default": "primaryName^2,*"
+                },
+                "indexBatchSize": {
+                    "type": "number",
+                    "description": "Number of documents to index in a single batch operation",
+                    "default": 100
                 }
             }
         },

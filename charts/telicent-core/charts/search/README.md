@@ -71,19 +71,20 @@ Contains global parameters, these parameters are mirrored within the Telicent co
 
 Contains configuration parameters specific to the Smart Cach Search application
 
-| Name                                    | Description                         | Value                                                                                        |
-| --------------------------------------- | ----------------------------------- | -------------------------------------------------------------------------------------------- |
-| `configuration.userAttributesUrl`       | URL for the user details endpoint   | `""`                                                                                         |
-| `configuration.attributeHierarchyUrl`   | URL for the user hierarchy endpoint | `""`                                                                                         |
-| `configuration.javaOptions`             | JVM options for the application     | `-XX:MaxRAMPercentage=70.0 -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks` |
-| `configuration.otelMetricsExporter`     | OpenTelemetry metrics exporter      | `prometheus`                                                                                 |
-| `configuration.otelTracesExporter`      | OpenTelemetry traces exporter       | `none`                                                                                       |
-| `configuration.elasticHost`             | OpenSearch host                     | `https://your.opensearch.host.here:443`                                                      |
-| `configuration.elasticPort`             | OpenSearch port number              | `443`                                                                                        |
-| `configuration.elasticClusterPort`      | OpenSearch cluster port             | `9200`                                                                                       |
-| `configuration.opensearchCompatibility` | Enable OpenSearch compatibility     | `true`                                                                                       |
-| `configuration.elasticIndexNames`       | OpenSearch index name(s)            | `search,doc-content`                                                                         |
-| `configuration.searchFieldOptions`      | Field options for search            | `primaryName^2,*`                                                                            |
+| Name                                    | Description                                              | Value                                                                                        |
+| --------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| `configuration.userAttributesUrl`       | URL for the user details endpoint                        | `""`                                                                                         |
+| `configuration.attributeHierarchyUrl`   | URL for the user hierarchy endpoint                      | `""`                                                                                         |
+| `configuration.javaOptions`             | JVM options for the application                          | `-XX:MaxRAMPercentage=70.0 -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks` |
+| `configuration.otelMetricsExporter`     | OpenTelemetry metrics exporter                           | `prometheus`                                                                                 |
+| `configuration.otelTracesExporter`      | OpenTelemetry traces exporter                            | `none`                                                                                       |
+| `configuration.elasticHost`             | OpenSearch host                                          | `https://your.opensearch.host.here:443`                                                      |
+| `configuration.elasticPort`             | OpenSearch port number                                   | `443`                                                                                        |
+| `configuration.elasticClusterPort`      | OpenSearch cluster port                                  | `9200`                                                                                       |
+| `configuration.opensearchCompatibility` | Enable OpenSearch compatibility                          | `true`                                                                                       |
+| `configuration.elasticIndexNames`       | OpenSearch index name(s)                                 | `search,doc-content`                                                                         |
+| `configuration.searchFieldOptions`      | Field options for search                                 | `primaryName^2,*`                                                                            |
+| `configuration.indexBatchSize`          | Number of documents to index in a single batch operation | `100`                                                                                        |
 
 ### OpenSearch/Elastic secret - Search
 
