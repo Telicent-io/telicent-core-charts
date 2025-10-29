@@ -40,7 +40,6 @@ global:
   istioGatewayName: ingress-gateway
 
   # @section Kafka Parameters
-  # @section Kafka Parameters
   kafka:
     # @key global.kafka.bootstrapServers Comma separated list containing Kafka bootstrap servers
     bootstrapServers: "kafka-bootstrap.kafka.svc.cluster.local:9092"
@@ -66,7 +65,6 @@ global:
 replicaCount: 1
 
 # @section Image Parameters
-# @section Image Parameters
 image:
   # @key image.registry Container image registry
   registry: quay.io
@@ -81,11 +79,9 @@ image:
 
 # @section Common Parameters
 # @key imagePullSecrets Global Docker registry secret names as an array
-# @key imagePullSecrets Global Docker registry secret names as an array
 imagePullSecrets: []
 # @key nameOverride String to partially override fullname (will maintain the release name)
 nameOverride: ""
-# @key fullnameOverride String to fully override the generated release name
 # @key fullnameOverride String to fully override the generated release name
 fullnameOverride: ""
 
@@ -107,11 +103,9 @@ podAnnotations: {}
 podLabels: {}
 
 # @key podSecurityContext Set pods' Security Context
-# @key podSecurityContext Set pods' Security Context
 podSecurityContext: {}
   # fsGroup: 2000
 
-# @key securityContext Set containers' Security Context
 # @key securityContext Set containers' Security Context
 securityContext: {}
   # capabilities:
@@ -128,8 +122,6 @@ service:
   # @key service.port Service port
   port: 8000
 
-# @section Resource Parameters
-# @key resources Set containers' resource requests and limits
 # @section Resource Parameters
 # @key resources Set containers' resource requests and limits
 resources: {}
@@ -160,15 +152,11 @@ volumeMounts: []
 
 # @section Node Selection Parameters
 # @key nodeSelector Node labels for pods assignment
-# @section Node Selection Parameters
-# @key nodeSelector Node labels for pods assignment
 nodeSelector: {}
 
 # @key tolerations Tolerations for pods assignment
-# @key tolerations Tolerations for pods assignment
 tolerations: []
 
-# @key affinity Affinity for pods assignment
 # @key affinity Affinity for pods assignment
 affinity: {}
 
@@ -176,17 +164,10 @@ affinity: {}
 # @descStart
 # Contains configuration parameters specific to the application
 # @descEnd
-# @section Configuration Parameters
-# @descStart
-# Contains configuration parameters specific to the application
-# @descEnd
 configuration:
-  # @key configuration.kafkaConfigMode Kafka configuration mode (toml, json, properties)
   # @key configuration.kafkaConfigMode Kafka configuration mode (toml, json, properties)
   kafkaConfigMode: "toml"
   # @key configuration.sourceTopic Kafka topic to consume events from
-  # @key configuration.sourceTopic Kafka topic to consume events from
   sourceTopic: "validated-acled-events"
-  # @key configuration.targetTopic Kafka topic to publish processed events to
   # @key configuration.targetTopic Kafka topic to publish processed events to
   targetTopic: "knowledge"

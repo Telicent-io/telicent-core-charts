@@ -40,7 +40,6 @@ global:
   istioGatewayName: ingress-gateway
 
   # @section Kafka Parameters
-  # @section Kafka Parameters
   kafka:
     # @key global.kafka.bootstrapServers Comma separated list containing Kafka bootstrap servers
     bootstrapServers: "kafka-bootstrap.kafka.svc.cluster.local:9092"
@@ -65,7 +64,6 @@ global:
 # @key replicaCount Number of replicas to deploy
 replicaCount: 1
 
-# @section Image Parameters
 # @section Image Parameters
 image:
   # @key image.registry Container image registry

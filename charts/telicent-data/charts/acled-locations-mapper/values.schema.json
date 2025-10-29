@@ -239,18 +239,18 @@
         },
         "nodeSelector": {
             "type": "object",
-            "description": "Node labels for pods assignment",
+            "description": "Node labels for ACLED Locations Mapper pods assignment",
             "default": {}
         },
         "tolerations": {
             "type": "array",
-            "description": "Tolerations for pods assignment",
+            "description": "Tolerations for ACLED Locations Mapper pods assignment",
             "default": [],
             "items": {}
         },
         "affinity": {
             "type": "object",
-            "description": "Affinity for pods assignment",
+            "description": "Affinity for ACLED Locations Mapper pods assignment",
             "default": {}
         },
         "configuration": {
@@ -263,12 +263,12 @@
                 },
                 "sourceTopic": {
                     "type": "string",
-                    "description": "Kafka topic to consume events from",
+                    "description": "Kafka topic to consume ACLED events from",
                     "default": "validated-acled-events"
                 },
                 "targetTopic": {
                     "type": "string",
-                    "description": "Kafka topic to publish processed events to",
+                    "description": "Kafka topic to publish enriched events to",
                     "default": "knowledge"
                 }
             }

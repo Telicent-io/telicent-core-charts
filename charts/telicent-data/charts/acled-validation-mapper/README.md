@@ -58,9 +58,6 @@ These parameters can be referenced in sub-charts as `.Values.global.<parameter-n
 
 ### Kafka Parameters
 
-
-### Kafka Parameters
-
 | Name                                    | Description                                                                                                       | Value                                          |
 | --------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
 | `global.kafka.bootstrapServers`         | Comma separated list containing Kafka bootstrap servers                                                           | `kafka-bootstrap.kafka.svc.cluster.local:9092` |
@@ -77,9 +74,6 @@ These parameters can be referenced in sub-charts as `.Values.global.<parameter-n
 | Name           | Description                  | Value |
 | -------------- | ---------------------------- | ----- |
 | `replicaCount` | Number of replicas to deploy | `1`   |
-
-### Image Parameters
-
 
 ### Image Parameters
 

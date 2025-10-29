@@ -58,9 +58,6 @@ These parameters can be referenced in sub-charts as `.Values.global.<parameter-n
 
 ### Kafka Parameters
 
-
-### Kafka Parameters
-
 | Name                                    | Description                                                                                                       | Value                                          |
 | --------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
 | `global.kafka.bootstrapServers`         | Comma separated list containing Kafka bootstrap servers                                                           | `kafka-bootstrap.kafka.svc.cluster.local:9092` |
@@ -96,9 +93,7 @@ These parameters can be referenced in sub-charts as `.Values.global.<parameter-n
 | Name               | Description                                                            | Value |
 | ------------------ | ---------------------------------------------------------------------- | ----- |
 | `imagePullSecrets` | Global Docker registry secret names as an array                        | `[]`  |
-| `imagePullSecrets` | Global Docker registry secret names as an array                        | `[]`  |
 | `nameOverride`     | String to partially override fullname (will maintain the release name) | `""`  |
-| `fullnameOverride` | String to fully override the generated release name                    | `""`  |
 | `fullnameOverride` | String to fully override the generated release name                    | `""`  |
 
 ### Service Account Parameters
@@ -117,8 +112,6 @@ These parameters can be referenced in sub-charts as `.Values.global.<parameter-n
 | `podAnnotations`     | Additional custom annotations for pods | `{}`  |
 | `podLabels`          | Additional custom labels for pods      | `{}`  |
 | `podSecurityContext` | Set pods' Security Context             | `{}`  |
-| `podSecurityContext` | Set pods' Security Context             | `{}`  |
-| `securityContext`    | Set containers' Security Context       | `{}`  |
 | `securityContext`    | Set containers' Security Context       | `{}`  |
 
 ### Traffic Exposure Parameters
