@@ -1,5 +1,37 @@
 # Changelog
 
+## [0.5.0](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v0.4.2...telicent-core-v0.5.0) (2025-10-29)
+
+
+### Features
+
+* adds acled and canonicals ([3244782](https://github.com/Telicent-io/telicent-core-charts/commit/3244782c3de0a6590cad87a5d6bf3a282e188d2a))
+* Adds conditional for parent chart to toggle the children ([ac1b4e6](https://github.com/Telicent-io/telicent-core-charts/commit/ac1b4e6acaf639e30dff856e9f37b0896c3407dc))
+* adds data catalog chart ([3fe7ec9](https://github.com/Telicent-io/telicent-core-charts/commit/3fe7ec910e160fd4c53f75d485018402a0dc4f52))
+* Adds document pipeline ([b581894](https://github.com/Telicent-io/telicent-core-charts/commit/b5818948941b95883cdef3c330ef72d534d0231c))
+* Adds paperback writer ([aded282](https://github.com/Telicent-io/telicent-core-charts/commit/aded282509d3374a3e092975560bf731a9fc729c))
+* adds sidecar support ([8d983d0](https://github.com/Telicent-io/telicent-core-charts/commit/8d983d06bac41fb57650cdb3becc1f47344ed8cd))
+* adds sidecar support ([97c8697](https://github.com/Telicent-io/telicent-core-charts/commit/97c8697b1c426c22d6fbf7c6a5dd93d1f64e201f))
+* adds user portal to telicent PREVIEW ([9cf1b4b](https://github.com/Telicent-io/telicent-core-charts/commit/9cf1b4bf4ccb657f823bfc0158eb247b7d04dea8))
+* enable or disable istio virtualservice ([8b56448](https://github.com/Telicent-io/telicent-core-charts/commit/8b5644826a2e3b32fa92084fc24ac1a2f327b129))
+* enable or disable istio virtualservice ([51cda8a](https://github.com/Telicent-io/telicent-core-charts/commit/51cda8a3cd8f59d38a3da5f1a513dbc1d79909a2))
+* ies, rdf producers added ([f5ef457](https://github.com/Telicent-io/telicent-core-charts/commit/f5ef4571634d447ff89fa00e2d95941c48b271c0))
+* upversion search to 4.17.1 ([230ea91](https://github.com/Telicent-io/telicent-core-charts/commit/230ea91397d16ba6275a86b61e79cc3180a38471))
+* upversion search to 4.17.1 ([b10810e](https://github.com/Telicent-io/telicent-core-charts/commit/b10810e43a7e32c7205a947db79d8cd12bc445ca))
+
+
+### Bug Fixes
+
+* adds utility for cacert ([63bd2c7](https://github.com/Telicent-io/telicent-core-charts/commit/63bd2c761ea2363acb2060c38eb612bc8a3ad294))
+* Default sparql Group ([3ecce30](https://github.com/Telicent-io/telicent-core-charts/commit/3ecce3013b517d807db2cd877280a3f3f7cca303))
+* indentation on VirtualService ([7b968df](https://github.com/Telicent-io/telicent-core-charts/commit/7b968df4539603c89f2d75c05a866887fadb78d4))
+* indentation on VirtualService ([2a17f15](https://github.com/Telicent-io/telicent-core-charts/commit/2a17f15ea9e58c41b2f2ed95970ec328ff2567a1))
+* make CA cert volume override work as expected ([163aa3f](https://github.com/Telicent-io/telicent-core-charts/commit/163aa3f9f02c7647378b231209a2663e8214c5d1))
+* make CA cert volume override work as expected ([e807b1e](https://github.com/Telicent-io/telicent-core-charts/commit/e807b1e13885d38bdfbc97dbcebef72980c65bfc))
+* move topic creation to helm hook ([7f6cb2a](https://github.com/Telicent-io/telicent-core-charts/commit/7f6cb2a7260f8d25f3e9d52ed744f764a42d0d79))
+* move topic creation to helm hook ([45e70e6](https://github.com/Telicent-io/telicent-core-charts/commit/45e70e64f18d218256b8d50674b16d77c876f4f1))
+* parent chart dependency ([cdd0d18](https://github.com/Telicent-io/telicent-core-charts/commit/cdd0d18d8da6feb9bfc0403bdfda3f2e5b148f97))
+
 ## [0.4.2](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v0.4.1...telicent-core-v0.4.2) (2025-09-09)
 
 
