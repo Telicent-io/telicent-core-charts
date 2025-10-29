@@ -7,7 +7,7 @@ This repository contains Helm charts for deploying the Telicent CORE platform an
 To install the Telicent CORE Helm chart, use the following commands:
 
 ```sh
-helm repo add --username <GithubUsername> --password <GithubPAT*> telicent-core-charts 'https://raw.githubusercontent.com/Telicent-io/telicent-core-charts/gh-pages'
+helm repo add telicent-core-charts 'https://charts.telicent.io'
 helm repo update
 helm search repo telicent-charts
 helm install my-release telicent-core --values <path-to-your-values-file.yaml>
@@ -15,14 +15,12 @@ helm install my-release telicent-core --values <path-to-your-values-file.yaml>
 
 Replace `my-release` with your desired release name.
 
-\*For details [see here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) (PAT must have read access to this repo)
-
 ## Upgrading
 
 To upgrade an existing release:
 
 ```sh
-helm upgrade my-release telicent/core
+helm upgrade my-release 
 ```
 
 ## Uninstalling
@@ -37,22 +35,42 @@ helm uninstall my-release
 
 ### Main Charts
 
-- **[telicent-core](./charts/telicent-core/README.md)** - The main Telicent CORE platform chart
-- **[telicent-pipelines](./charts/telicent-pipelines/README.md)** - Telicent data processing pipelines
+- **[telicent-CORE](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-core/README.md)** - The main Telicent CORE platform chart.
+- **[telicent-DATA](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-data/README.md)** -  Supplmentary Chart to provide some premade Producers.
+- **[telicent-PREVIEW](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-preview/README.md)** - Secondary chart with items still under active development.
+
 
 ### Core Components
 
 The `telicent-core` chart includes the following sub-charts:
 
-- **[access](charts/telicent-core/charts/access/README.md)** - Access control service
-- **[access-ui](./charts/telicent-core/charts/access-ui/README.md)** - Access control user interface
-- **[graph-ui](./charts/telicent-core/charts/graph-ui/README.md)** - Graph visualization interface
-- **[query-ui](./charts/telicent-core/charts/query-ui/README.md)** - Query interface for data exploration
-- **[search-ui](./charts/telicent-core/charts/search-ui/README.md)** - Search interface
-- **[graph](charts/telicent-core/charts/graph/README.md)** - Graph data caching service
-- **[search](charts/telicent-core/charts/search/README.md)** - Search data caching service
-- **[search-projector](charts/telicent-core/charts/search-projector/README.md)** - Search projector/indexer service
-- **[user-preferences](charts/telicent-core/charts/user-preferences/README.md)** - User preferences management API
+- **[access](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-core/charts/access/README.md)** - Access control service
+- **[access-ui](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-core/charts/access-ui/README.md)** - Access control user interface
+- **[graph-ui](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-core/charts/graph-ui/README.md)** - Graph visualization interface
+- **[query-ui](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-core/charts/query-ui/README.md)** - Query interface for data exploration
+- **[search-ui](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-core/charts/search-ui/README.md)** - Search interface
+- **[graph](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-core/charts/graph/README.md)** - Graph data caching service
+- **[search](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-core/charts/search/README.md)** - Search data caching service
+- **[search-projector](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-core/charts/search-projector/README.md)** - Search projector/indexer service
+- **[user-preferences](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-core/charts/user-preferences/README.md)** - User preferences management API
+
+### Data Components
+#### ACLED 
+- **[acled-locations-mapper](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-data/charts/acled-locations-mapper/README.md)** - ACLED Locations mapper
+- **[acled-participants-mapper](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-data/charts/acled-participants-mapper/README.md)** - ACLED Participants mapper
+- **[acled-validation-mapper](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-data/charts/acled-validation-mapper/README.md)** - ACLED Validation mapper
+- **[producer-acled-ontology](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-data/charts/producer-acled-ontology/README.md)** - ACLED Ontology Producer
+#### Canonical Event 
+- **[canonicals-event-knowledge-mapper](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-data/charts/canonicals-event-knowledge-mapper/README.md)** - Canonicals Event Knowledge Mapper
+- **[canonicals-event-validation-mapper](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-data/charts/canonicals-event-validation-mapper/README.md)** - Canonicals Event Validation Mapper
+- **[ies-regions-producer](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-data/charts/ies-regions-producer/README.md)** - IES Regions Producer
+- **[canonicals-event-document-mapper](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-data/charts/canonicals-event-document-mapper/README.md)** - Canonicals Event Document Mapper
+- **[canonicals-event-geo-mapper](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-data/charts/canonicals-event-geo-mapper/README.md)** - Canonicals Event Geo Mapper
+#### IES / RDF
+- **[ies-regions-ontology-adapter](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-data/charts/ies-regions-ontology-adapter/README.md)** - IES Regions Ontology Adapter
+- **[ies-ontology-producer](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-data/charts/ies-ontology-producer/README.md)** - IES Ontology Producer
+- **[ontologies-rdf-rdfs-owl-producer](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-data/charts/ontologies-rdf-rdfs-owl-producer/README.md)** - Ontologies RDF RDFS Owl Producer
+
 
 ### Demo Prerequisites
 
@@ -79,6 +97,7 @@ helm install my-release ./telicent-core -f values.yaml
 2. Review the chart-specific README for configuration options
 3. Create your custom `values.yaml` file
 4. Install using the Helm commands above
+5. More configuration information can be found [here](https://docs.telicent.io/core/getting-started/installation/helm/)
 
 For more detailed information about each component, please consult the individual chart documentation.
 
