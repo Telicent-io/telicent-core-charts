@@ -1,14 +1,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "canonicals-ontology.fullname" . }}
+  name: {{ include "canonicals-ontology.fullname" . }}-validator
   labels:
     {{- include "canonicals-ontology.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      {{- include "canonicals-ontology.selectorLabels" . | nindent 6 }}
+      {{- include "canonicals-ontology-validator.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
