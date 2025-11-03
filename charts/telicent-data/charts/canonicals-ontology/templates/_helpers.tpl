@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "canonicals-ontology.fullname" -}}
+{{- define "canonicals-ontology.fullname" -}} 
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -35,7 +35,6 @@ Common labels
 */}}
 {{- define "canonicals-ontology.labels" -}}
 helm.sh/chart: {{ include "canonicals-ontology.chart" . }}
-{{ include "canonicals-ontology.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -43,10 +42,18 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 
 {{/*
-Selector labels
+Validator Selector labels
 */}}
-{{- define "canonicals-ontology.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "canonicals-ontology.name" . }}
+{{- define "canonicals-ontology-validator.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "canonicals-ontology.name" . }}-validator
+app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
+
+{{/*
+Mapper Selector labels
+*/}}
+{{- define "canonicals-ontology-mapper.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "canonicals-ontology.name" . }}-mapper
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
