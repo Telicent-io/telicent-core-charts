@@ -38,6 +38,13 @@ spec:
           securityContext:
             {{- toYaml . | nindent 12 }}
           {{- end }}
+          env:
+          - name: KAFKA_CONFIG_FILE_PATH
+            value: /app/config/kafka-auth/kafka-config.toml
+          - name: KAFKA_CONFIG_MODE
+            value: {{ .Values.configuration.kafkaConfigMode | default "toml" | quote }}
+          - name: MAPPER_NAME
+            value: canonical_ontology_validation_mapper
           image: {{ include "canonicals-ontology-validation-mapper.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
