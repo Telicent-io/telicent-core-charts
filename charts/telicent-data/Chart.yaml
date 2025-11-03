@@ -75,3 +75,7 @@ dependencies:
     version: 0.1.0
     repository: "file://./charts/canonicals-event-document-mapper"
     condition: global.enterprise
+  - name: canonicals-ontology
+    version: 0.1.0
+    repository: "file://./charts/canonicals-ontology"
+    condition: global.enterprise
