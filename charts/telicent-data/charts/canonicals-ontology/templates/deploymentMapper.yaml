@@ -1,14 +1,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "canonicals-ontology.fullname" . }}
+  name: {{ include "canonicals-ontology.fullname" . }}-mapper
   labels:
     {{- include "canonicals-ontology.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      {{- include "canonicals-ontology.selectorLabels" . | nindent 6 }}
+      {{- include "canonicals-ontology-mapper.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -17,6 +17,7 @@ spec:
       {{- end }}
       labels:
         {{- include "canonicals-ontology.labels" . | nindent 8 }}
+        {{- include "canonicals-ontology-mapper.selectorLabels" . | nindent 8 }}
         {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -44,14 +45,12 @@ spec:
               containerPort: {{ .Values.service.port }}
               protocol: TCP
           env:
-          - name: BOOTSTRAP_SERVERS
-            value: {{ .Values.global.kafka.bootstrapServers | quote }}
           - name: KAFKA_CONFIG_FILE_PATH
             value: /app/config/kafka-auth/kafka-config.toml
           - name: KAFKA_CONFIG_MODE
             value: {{ .Values.configuration.kafkaConfigMode | default "toml" | quote }}
           - name: MAPPER_NAME
-            value: {{ include "canonicals-ontology.name" . | quote }}
+            value: canonical_ontology_mapper
           - name: DEFAULT_DATA_NAMESPACE
             value: {{ .Values.configuration.dataNamespace | default "default" | quote }}
           {{- with .Values.livenessProbe }}

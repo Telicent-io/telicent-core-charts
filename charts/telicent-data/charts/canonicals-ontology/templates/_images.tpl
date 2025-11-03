@@ -20,7 +20,7 @@ Returns the image registry
 Returns the image
 */}}
 {{- define "canonicals-ontology-mapper.image" -}}
-{{- printf "%s/%s:%s" (include "canonicals-ontology-mapper.imageRegistry" .) .Values.image.repository (include "canonicals-ontology-mapper.version" .) }}
+{{- printf "%s/%s:%s" (include "canonicals-ontology-mapper.imageRegistry" .) .Values.image.mapperRepository (include "canonicals-ontology-mapper.version" .) }}
 {{- end -}}
 
 
@@ -42,5 +42,5 @@ Returns the image registry
 Returns the image
 */}}
 {{- define "canonicals-ontology-validation-mapper.image" -}}
-{{- printf "%s/%s:%s" (include "canonicals-ontology-validation-mapper.imageRegistry" .) .Values.image.repository (include "canonicals-ontology-validation-mapper.version" .) }}
+{{- printf "%s/%s:%s" (include "canonicals-ontology-validation-mapper.imageRegistry" .) .Values.image.validationRepository (include "canonicals-ontology-validation-mapper.version" .) }}
 {{- end -}}
