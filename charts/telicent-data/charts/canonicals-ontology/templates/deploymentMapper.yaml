@@ -45,14 +45,12 @@ spec:
               containerPort: {{ .Values.service.port }}
               protocol: TCP
           env:
-          - name: BOOTSTRAP_SERVERS
-            value: {{ .Values.global.kafka.bootstrapServers | quote }}
           - name: KAFKA_CONFIG_FILE_PATH
             value: /app/config/kafka-auth/kafka-config.toml
           - name: KAFKA_CONFIG_MODE
             value: {{ .Values.configuration.kafkaConfigMode | default "toml" | quote }}
           - name: MAPPER_NAME
-            value: {{ include "canonicals-ontology.name" . | quote }}
+            value: canonical_ontology_mapper
           - name: DEFAULT_DATA_NAMESPACE
             value: {{ .Values.configuration.dataNamespace | default "default" | quote }}
           {{- with .Values.livenessProbe }}
