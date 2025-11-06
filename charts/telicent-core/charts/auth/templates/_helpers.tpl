@@ -61,6 +61,24 @@ Create the name of the service account to use
 {{- end }}
 {{- end }}
 
+{{/*
+Create the name of the service to use
+*/}}
+{{- define "auth.serviceName" -}}
+{{- include "auth.fullname" . }}
+{{- end }}
+
+{{/*
+Create the name of the config map
+*/}}
+{{- define "auth.envConfigmapName" -}}
+{{- if .Values.existingConfigmap }}
+{{- .Values.existingConfigmap }}
+{{- else }}
+{{- printf "%s-%s" (include "auth.fullname" .) "env" }}
+{{- end }}
+{{- end }}
+
 {{- define "auth.ingressPrincipal" -}}
 {{- .Values.istio.ingress.principal | default (printf "cluster.local/ns/%s/sa/%s" .Values.global.istioNamespace .Values.global.istioServiceAccountName) | quote }}
 {{- end }}

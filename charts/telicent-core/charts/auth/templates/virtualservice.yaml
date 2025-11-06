@@ -13,15 +13,25 @@ metadata:
 
 spec:
   gateways:
-  - {{ .Values.global.istioNamespace }}/{{ .Values.global.istioGatewayName }}
+    - {{ .Values.global.istioNamespace }}/{{ .Values.global.istioGatewayName }}
   hosts:
-  - {{ .Values.global.appHostDomain }}
+    - {{ .Values.global.appHostDomain }}
   http:
-  - match:
-    - uri:
-        prefix: /api/auth
-    rewrite:
-      uriRegexRewrite:
-        match: ^/api/auth(/|$)(.*)
-        rewrite: /\2
+    - match:
+        - uri:
+            exact: /api/auth
+      redirect:
+        uri: /api/auth/
+    - match:
+        - uri:
+            prefix: /api/auth
+      rewrite:
+        uriRegexRewrite:
+          match: ^/api/auth(/|$)(.*)
+          rewrite: /\2
+      route:
+        - destination:
+            host: {{ include "auth.serviceName" . }}
+            port:
+              number: {{ .Values.service.port }}
 {{- end }}

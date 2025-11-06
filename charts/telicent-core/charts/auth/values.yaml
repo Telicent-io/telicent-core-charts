@@ -10,7 +10,7 @@ global:
   ## Current available global image parameters: imageRegistry and imagePullSecrets
   ## Please, note that this will override the image parameters
   # @key global.imageRegistry Global image registry
-  imageRegistry: ""
+  imageRegistry:
   # E.g.
   # imagePullSecrets:
   #   - myRegistryKeySecretName
@@ -37,17 +37,56 @@ global:
   # @key global.istioVirtualServiceEnabled Enable Istio traffic routing to a named destination service
   istioVirtualServiceEnabled: true
 
+# @section Configuration Parameters
+# Contains configuration parameters specific to the Auth application
+configuration:
+  # @key configuration.tokenIssuerUrl JWT token issuer URL
+  tokenIssuerUrl: {baseUrl}
+  # @key configuration.forwardAuthSecret ForwardAuth security secret
+  forwardAuthSecret: dumbySecret <andreasb>
+  # @key configuration.superUserIdentifier Super user identification if blank all users will be super users
+  superUserIdentifier: <robv>
+  # @key configuration.cookieParentDomain Cookie domain scope
+  cookieParentDomain: .telicent.localhost
+  # @key configuration.cookieSecure Enable secure cookies
+  cookieSecure: true
+
+# @section External IDP secret - Auth
+# Note: It is recommended to use a Kubernetes secret for sensitive information like passwords and secrets
+externalIdpSecret:
+  # @key postgresSecret.existingSecret Name of an existing secret resource containing the uri, username and password
+  existingSecret:
+  # @key configuration.externalIdpUrl External identity provider URL
+  externalIdpUrl:
+  # @key configuration.externalIdpClientId OAuth2 client ID
+  externalIdpClientId:
+  # @key configuration.externalIdpClientSecret OAuth2 client secret
+  externalIdpClientSecret:
+  # @key configuration.externalIdpClientName Identity provider display name
+  externalIdpClientName: Enterprise
+
+# @section PostgreSQL secret - Auth
+# Note: It is recommended to use a Kubernetes secret for sensitive information like passwords and secrets
+postgresSecret:
+  # @key postgresSecret.existingSecret Name of an existing secret resource containing the uri, username and password
+  existingSecret: ""
+  # @key postgresSecret.uri PostgreSQL connection URL
+  uri: ""
+  # @key postgresSecret.username PostgreSQL username
+  username: ""
+  # @key postgresSecret.password PostgreSQL password
+  password: ""
 
 # This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
 replicaCount: 1
 
 # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
 image:
-  repository: nginx
+  repository: telicent-auth-server
   # This sets the pull policy for images.
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag:
 
 # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []
