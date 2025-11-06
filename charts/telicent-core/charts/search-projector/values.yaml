@@ -86,7 +86,7 @@ configuration:
   # @key configuration.opensearchCompatibility Enable OpenSearch compatibility
   opensearchCompatibility: "true"
   # @key configuration.elasticIndex Name of the index in OpenSearch
-  elasticIndex: search,doc-content
+  elasticIndex: search
 
   # @key configuration.topic Topic to consume messages from
   topic: knowledge
