@@ -82,7 +82,7 @@ Contains configuration parameters specific to the Search Projector application
 | `configuration.elasticPort`             | OpenSearch port number                | `443`                                                                                        |
 | `configuration.elasticClusterPort`      | OpenSearch cluster port               | `9200`                                                                                       |
 | `configuration.opensearchCompatibility` | Enable OpenSearch compatibility       | `true`                                                                                       |
-| `configuration.elasticIndex`            | Name of the index in OpenSearch       | `search,doc-content`                                                                         |
+| `configuration.elasticIndex`            | Name of the index in OpenSearch       | `search`                                                                                     |
 | `configuration.topic`                   | Topic to consume messages from        | `knowledge`                                                                                  |
 | `configuration.dlqTopic`                | Dead-letter topic for failed messages | `knowledge.dlq`                                                                              |
 | `configuration.indexBatchSize`          | Batch size for indexing documents     | `500`                                                                                        |

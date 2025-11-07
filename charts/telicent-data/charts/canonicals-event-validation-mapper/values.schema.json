@@ -124,7 +124,7 @@
                 "repository": {
                     "type": "string",
                     "description": "Container image name",
-                    "default": "telicent/telicent-canonicals-event-document-mapper"
+                    "default": "telicent/telicent-canonicals-event-validation-mapper"
                 },
                 "tag": {
                     "type": "string",

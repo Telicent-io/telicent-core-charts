@@ -121,12 +121,22 @@
                     "description": "Container image registry",
                     "default": "quay.io"
                 },
-                "repository": {
+                "mapperRepository": {
                     "type": "string",
                     "description": "Container image name",
-                    "default": "telicent/telicent-canonicals-event-document-mapper"
+                    "default": "telicent/telicent-canonicals-ontology-mapper"
                 },
-                "tag": {
+                "mapperTag": {
+                    "type": "string",
+                    "description": "Container image tag. If not set, a tag is generated using the appVersion",
+                    "default": ""
+                },
+                "validationRepository": {
+                    "type": "string",
+                    "description": "Container image name",
+                    "default": "telicent/telicent-canonicals-ontology-validation-mapper"
+                },
+                "validationTag": {
                     "type": "string",
                     "description": "Container image tag. If not set, a tag is generated using the appVersion",
                     "default": ""

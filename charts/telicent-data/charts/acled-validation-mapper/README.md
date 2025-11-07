@@ -77,13 +77,13 @@ These parameters can be referenced in sub-charts as `.Values.global.<parameter-n
 
 ### Image Parameters
 
-| Name                | Description                                                              | Value                                                          |
-| ------------------- | ------------------------------------------------------------------------ | -------------------------------------------------------------- |
-| `image.registry`    | Container image registry                                                 | `quay.io`                                                      |
-| `image.repository`  | Container image name                                                     | `telicent/telicent-acled-pipeline-mapper-events-with-location` |
-| `image.tag`         | Container image tag. If not set, a tag is generated using the appVersion | `""`                                                           |
-| `image.pullPolicy`  | Container image pull policy                                              | `IfNotPresent`                                                 |
-| `image.pullSecrets` | Specify registry secret names as an array                                | `[]`                                                           |
+| Name                | Description                                                              | Value                                                |
+| ------------------- | ------------------------------------------------------------------------ | ---------------------------------------------------- |
+| `image.registry`    | Container image registry                                                 | `quay.io`                                            |
+| `image.repository`  | Container image name                                                     | `telicent/telicent-acled-pipeline-mapper-validation` |
+| `image.tag`         | Container image tag. If not set, a tag is generated using the appVersion | `""`                                                 |
+| `image.pullPolicy`  | Container image pull policy                                              | `IfNotPresent`                                       |
+| `image.pullSecrets` | Specify registry secret names as an array                                | `[]`                                                 |
 
 ### Common Parameters
 
@@ -146,5 +146,5 @@ Contains configuration parameters specific to the application
 | Name                            | Description                                       | Value                    |
 | ------------------------------- | ------------------------------------------------- | ------------------------ |
 | `configuration.kafkaConfigMode` | Kafka configuration mode (toml, json, properties) | `toml`                   |
-| `configuration.sourceTopic`     | Kafka topic to consume events from                | `validated-acled-events` |
-| `configuration.targetTopic`     | Kafka topic to publish processed events to        | `knowledge`              |
+| `configuration.sourceTopic`     | Kafka topic to consume events from                | `raw-acled-events`       |
+| `configuration.targetTopic`     | Kafka topic to publish processed events to        | `validated-acled-events` |
