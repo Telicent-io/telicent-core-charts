@@ -35,6 +35,9 @@ dependencies:
   - name: access-ui
     version: "^0.1.0"
     repository: file://./charts/access-ui
+  - name: auth
+    version: "^0.1.0"
+    repository: file://./charts/auth
   - name: graph-ui
     version: "^0.1.0"
     repository: file://./charts/graph-ui
