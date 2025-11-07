@@ -124,7 +124,7 @@
                 "repository": {
                     "type": "string",
                     "description": "Container image name",
-                    "default": "telicent/telicent-acled-pipeline-mapper-events-with-location"
+                    "default": "telicent/telicent-acled-pipeline-mapper-validation"
                 },
                 "tag": {
                     "type": "string",
@@ -264,12 +264,12 @@
                 "sourceTopic": {
                     "type": "string",
                     "description": "Kafka topic to consume events from",
-                    "default": "validated-acled-events"
+                    "default": "raw-acled-events"
                 },
                 "targetTopic": {
                     "type": "string",
                     "description": "Kafka topic to publish processed events to",
-                    "default": "knowledge"
+                    "default": "validated-acled-events"
                 }
             }
         }

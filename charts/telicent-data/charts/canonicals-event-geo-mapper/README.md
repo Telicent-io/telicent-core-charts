@@ -77,13 +77,13 @@ These parameters can be referenced in sub-charts as `.Values.global.<parameter-n
 
 ### Image Parameters
 
-| Name                | Description                                                              | Value                                                |
-| ------------------- | ------------------------------------------------------------------------ | ---------------------------------------------------- |
-| `image.registry`    | Container image registry                                                 | `quay.io`                                            |
-| `image.repository`  | Container image name                                                     | `telicent/telicent-canonicals-event-document-mapper` |
-| `image.tag`         | Container image tag. If not set, a tag is generated using the appVersion | `""`                                                 |
-| `image.pullPolicy`  | Container image pull policy                                              | `IfNotPresent`                                       |
-| `image.pullSecrets` | Specify registry secret names as an array                                | `[]`                                                 |
+| Name                | Description                                                              | Value                                           |
+| ------------------- | ------------------------------------------------------------------------ | ----------------------------------------------- |
+| `image.registry`    | Container image registry                                                 | `quay.io`                                       |
+| `image.repository`  | Container image name                                                     | `telicent/telicent-canonicals-event-geo-mapper` |
+| `image.tag`         | Container image tag. If not set, a tag is generated using the appVersion | `""`                                            |
+| `image.pullPolicy`  | Container image pull policy                                              | `IfNotPresent`                                  |
+| `image.pullSecrets` | Specify registry secret names as an array                                | `[]`                                            |
 
 ### Common Parameters
 
