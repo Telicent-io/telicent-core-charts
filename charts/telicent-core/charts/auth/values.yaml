@@ -58,6 +58,7 @@ configuration:
 # @section Clients
 # @descStart
 # List of registered clients
+# @descEnd
 clients:
   # @key clients.public A list of public client objects
   public: []
