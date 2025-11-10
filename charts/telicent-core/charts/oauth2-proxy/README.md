@@ -13,7 +13,7 @@ For more information about OAuth2 Proxy, see the [official documentation](https:
 ## Prerequisites
 
 - Kubernetes 1.23+
-- Helm 3.8.0+
+- Helm 3.9+
 
 ## Installing the Chart
 
@@ -44,129 +44,117 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ## Parameters
 
-### Replica Parameters
+### Global Parameters
 
-Controls the number of pod replicas for the deployment.
+Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
 
-| Name           | Description                      | Value |
-| -------------- | -------------------------------- | ----- |
-| `replicaCount` | Number of pod replicas to deploy | `1`   |
-
-### Existing Config/Secret Parameters
-
-References to existing ConfigMaps or Secrets for environment and CA certificates.
-
-| Name                          | Description                                             | Value |
-| ----------------------------- | ------------------------------------------------------- | ----- |
-| `existingEnvConfigmapName`    | Name of an existing ConfigMap for environment variables | `""`  |
-| `existingCacertConfigmapName` | Name of an existing ConfigMap for CA certificates       | `""`  |
-| `existingCacertSecretName`    | Name of the secret containing the CA certificates       | `""`  |
-| `existingEnvSecretName`       | Name of an existing Secret for environment variables    | `""`  |
-
-### Image Parameters
-
-Container image configuration for the OAuth2 Proxy.
-
-| Name               | Description                                         | Value                               |
-| ------------------ | --------------------------------------------------- | ----------------------------------- |
-| `image.repository` | Container image repository                          | `quay.io/oauth2-proxy/oauth2-proxy` |
-| `image.pullPolicy` | Image pull policy                                   | `IfNotPresent`                      |
-| `image.tag`        | Image tag (defaults to chart appVersion if not set) | `v7.12.0`                           |
+| Name                                | Description                                                                       | Value              |
+| ----------------------------------- | --------------------------------------------------------------------------------- | ------------------ |
+| `global.imageRegistry`              | Global image registry                                                             | `""`               |
+| `global.imagePullSecrets`           | Global registry secret names as an array                                          | `[]`               |
+| `global.appHostDomain`              | Domain associated with Telicent application services                              | `apps.telicent.io` |
+| `global.authHostDomain`             | Domain associated with Telicent authentication services, including OIDC providers | `auth.telicent.io` |
+| `global.groupsClaim`                | Key used to retrieve groups from the OIDC provider                                | `groups`           |
+| `global.istioNamespace`             | Namespace in which Istio is deployed                                              | `istio-system`     |
+| `global.istioServiceAccountName`    | Name of the Istio service account                                                 | `istio-ingress`    |
+| `global.istioGatewayName`           | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)         | `ingress-gateway`  |
+| `global.istioVirtualServiceEnabled` | Enable Istio traffic routing to a named destination service                       | `true`             |
 
 ### Configuration Parameters
 
 Application Specific configuration for the OAuth2 Proxy.
 
-| Name                                | Description                                                                                   | Value                                  |
-| ----------------------------------- | --------------------------------------------------------------------------------------------- | -------------------------------------- |
-| `configuration.cookieDomain`        | Domain that the cookie is valid for                                                           | `127.0.0.1.nip.io`                     |
-| `configuration.cookieExpire`        | Cookie expiration duration                                                                    | `15m`                                  |
-| `configuration.cookieRefresh`       | Cookie refresh duration                                                                       | `10m`                                  |
-| `configuration.cookieSecret`        | Cookie secret (should be set via existingEnvSecretName) defaults to a random value if not set | `""`                                   |
-| `configuration.oidcIssuerUrl`       | OIDC issuer URL                                                                               | `https://127.0.0.1.nip.io/realms/core` |
-| `configuration.redirectUrlOverride` | OIDC redirect URL override (if not set, appHostDomain + /oauth2/callback will be used)        | `""`                                   |
-| `configuration.oidcClientID`        | OIDC client ID                                                                                | `change-me`                            |
-| `configuration.clientSecret`        | OIDC client secret (should be set via existingEnvSecretName)                                  | `change-me`                            |
-| `configuration.cacert`              | Optional CA certificate data (PEM format) for validating the OIDC provider's TLS certificate  | `""`                                   |
-| `imagePullSecrets`                  | Registry secret names as an array for private image repositories                              | `[]`                                   |
+| Name                                   | Description                                                                                     | Value                                  |
+| -------------------------------------- | ----------------------------------------------------------------------------------------------- | -------------------------------------- |
+| `configuration.existingEnvConfigMap`   | Name of existing configmap containing Oauth2 Proxy Environment Configuration                    | `""`                                   |
+| `configuration.oidcIssuerUrl`          | The OpenID Connect issuer URL                                                                   | `https://127.0.0.1.nip.io/realms/core` |
+| `configuration.redirectUrl`            | OIDC redirect URL override. If not set, 'authHostDomain' + '/oauth2/callback' will be used      | `""`                                   |
+| `configuration.cookieDomains`          | Domains that the cookie is valid for. If not set, 'appHostDomain' will be used                  | `""`                                   |
+| `configuration.cookieWhiteListDomains` | Allowed domains for redirection after authentication. If not set, 'apphHostDomain' will be used | `""`                                   |
+| `configuration.cookieExpire`           | Expire timeframe for cookie                                                                     | `50m`                                  |
+| `configuration.cookieCsrfExpire`       | Expire timeframe for CSRF cookie                                                                | `50m`                                  |
+| `configuration.cookieRefresh`          | Refresh the cookie after this duration                                                          | `30m`                                  |
 
-### Chart Naming Parameters
+### OAuth Client Secret Parameters
 
-Override chart and release naming conventions.
+OAuth client secret contains the Client ID and Client Secret to be used when connecting to the Identity Provider.
+Cookie Secret is used as the seed string for secure cookies.
 
-| Name               | Description                                         | Value |
-| ------------------ | --------------------------------------------------- | ----- |
-| `nameOverride`     | String to partially override the chart name         | `""`  |
-| `fullnameOverride` | String to fully override the generated release name | `""`  |
+| Name                               | Description                                                                                            | Value |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------ | ----- |
+| `oauthClientSecret.existingSecret` | Name of an existing secret. The secret must contain 3 keys: 'clientid', 'clientsecret', 'cookiesecret' | `""`  |
+| `oauthClientSecret.clientId`       | The OAuth Client ID                                                                                    | `""`  |
+| `oauthClientSecret.clientSecret`   | The OAuth Client Secret                                                                                | `""`  |
+| `oauthClientSecret.cookieSecret`   | The seed string for secure cookies                                                                     | `""`  |
+
+### TLS Parameters
+
+| Name                       | Description                                                                                                                                 | Value |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| `tls.ca.existingSecret`    | Name of an existing secret that contains CA certificate(s). The secret must contains 1 key: 'ca.crt' containing the CA certificate(s)       | `""`  |
+| `tls.ca.existingConfigMap` | Name of an existing configmap that contains CA certificate(s). The configmap must contains 1 key: 'ca.crt' containing the CA certificate(s) | `""`  |
+| `tls.ca.certificate`       | The PEM-encoded certificate(s) of the CA (certificate authority)                                                                            | `""`  |
+
+### Common Parameters
+
+| Name                | Description                                                            | Value |
+| ------------------- | ---------------------------------------------------------------------- | ----- |
+| `nameOverride`      | String to partially override fullname (will maintain the release name) | `""`  |
+| `fullnameOverride`  | String to fully override the generated release name                    | `""`  |
+| `namespaceOverride` | String to fully override all deployed resources namespace              | `""`  |
+| `commonLabels`      | Add labels to all the deployed resources                               | `{}`  |
+
+### Deployment Parameters
+
+| Name                                                | Description                                                                 | Value                          |
+| --------------------------------------------------- | --------------------------------------------------------------------------- | ------------------------------ |
+| `replicas`                                          | Number of Ouath2 Proxy replicas to deploy                                   | `1`                            |
+| `revisionHistoryLimit`                              | Number of controller revisions to keep                                      | `5`                            |
+| `annotations`                                       | Add extra annotations to the Deployment Object                              | `{}`                           |
+| `podLabels`                                         | Add extra labels to the Oauth2 Proxy pod                                    | `{}`                           |
+| `podAnnotations`                                    | Add extra annotations to the Oauth2 Proxy pod                               | `{}`                           |
+| `extraEnvs`                                         | List of Additional environment variables to set in the pod                  | `[]`                           |
+| `extraContainers`                                   | Additional containers to be added to the pod                                | `[]`                           |
+| `image.registry`                                    | Oauth2 Proxy image registry                                                 | `REGISTRY_NAME`                |
+| `image.repository`                                  | Oauth2 Proxy image name                                                     | `REPOSITORY_NAME/oauth2-proxy` |
+| `image.tag`                                         | Oauth2 Proxy image tag. If not set, a tag is generated using the appVersion | `""`                           |
+| `image.pullPolicy`                                  | Oauth2 Proxy image pull policy                                              | `IfNotPresent`                 |
+| `imagePullSecrets`                                  | Specify registry secret names as an array                                   | `[]`                           |
+| `resources.requests.cpu`                            | Set containers' CPU request                                                 | `300m`                         |
+| `resources.requests.memory`                         | Set containers' memory request                                              | `512Mi`                        |
+| `resources.limits.cpu`                              | Set containers' CPU limit                                                   | `500m`                         |
+| `resources.limits.memory`                           | Set containers' memory limit                                                | `800Mi`                        |
+| `containerSecurityContext.runAsUser`                | Set containers' Security Context runAsUser User ID                          | `185`                          |
+| `containerSecurityContext.runAsGroup`               | Set containers' Security Context runAsGroup Group ID                        | `185`                          |
+| `containerSecurityContext.runAsNonRoot`             | Set container's Security Context runAsNonRoot                               | `true`                         |
+| `containerSecurityContext.allowPrivilegeEscalation` | Set container's Security Context allowPrivilegeEscalation                   | `false`                        |
+| `containerSecurityContext.capabilities.drop`        | List of capabilities to be dropped                                          | `["ALL"]`                      |
+| `containerSecurityContext.seccompProfile.type`      | Set container's Security Context seccomp profile                            | `RuntimeDefault`               |
+| `podSecurityContext.runAsUser`                      | Set the provisioning pod's Security Context runAsUser User ID               | `185`                          |
+| `podSecurityContext.runAsGroup`                     | Set the provisioning pod's Security Context runAsGroup Group ID             | `185`                          |
+| `podSecurityContext.runAsNonRoot`                   | Set the provisioning pod's Security Context runAsNonRoot                    | `true`                         |
+| `podSecurityContext.fsGroup`                        | Set the provisioning pod's Group ID for the mounted volumes' filesystem     | `185`                          |
+| `podSecurityContext.seccompProfile.type`            | Set the provisioning pod's Security Context seccomp profile                 | `RuntimeDefault`               |
+| `affinity`                                          | Affinity for pod assignment                                                 | `{}`                           |
+| `nodeSelector`                                      | Node labels for pod assignment                                              | `{}`                           |
+| `tolerations`                                       | Tolerations for pod assignment                                              | `[]`                           |
 
 ### Service Account Parameters
 
-Service account configuration for the deployment.
+| Name                         | Description                                                                           | Value  |
+| ---------------------------- | ------------------------------------------------------------------------------------- | ------ |
+| `serviceAccount.create`      | Specifies whether a service account should be created                                 | `true` |
+| `serviceAccount.name`        | Name of the ServiceAccount to use. If not set, a name is generated using the fullname | `""`   |
+| `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                  | `{}`   |
+| `serviceAccount.automount`   | Automatically mount a ServiceAccount's API credentials                                | `true` |
 
-| Name                         | Description                                            | Value  |
-| ---------------------------- | ------------------------------------------------------ | ------ |
-| `serviceAccount.create`      | Specifies whether a service account should be created  | `true` |
-| `serviceAccount.automount`   | Automatically mount a ServiceAccount's API credentials | `true` |
-| `serviceAccount.annotations` | Annotations to add to the service account              | `{}`   |
-| `serviceAccount.name`        | The name of the service account to use                 | `""`   |
+### Oauth2 Proxy Exposure Parameters
 
-### Pod Metadata Parameters
-
-Pod-level annotations and labels.
-
-| Name             | Description                   | Value |
-| ---------------- | ----------------------------- | ----- |
-| `podAnnotations` | Annotations to add to the pod | `{}`  |
-| `podLabels`      | Labels to add to the pod      | `{}`  |
-
-### Security Context Parameters
-
-Security context for the pod and container.
-
-| Name                 | Description                      | Value |
-| -------------------- | -------------------------------- | ----- |
-| `podSecurityContext` | Pod-level security context       | `{}`  |
-| `securityContext`    | Container-level security context | `{}`  |
-
-### Service Parameters
-
-Kubernetes Service configuration.
-
-| Name           | Description                                      | Value       |
-| -------------- | ------------------------------------------------ | ----------- |
-| `service.type` | Service type (ClusterIP, NodePort, LoadBalancer) | `ClusterIP` |
-| `service.port` | Service port                                     | `4080`      |
-
-### Resources Parameters
-
-Resource requests and limits for the container.
-
-| Name        | Description                                    | Value |
-| ----------- | ---------------------------------------------- | ----- |
-| `resources` | Resource requests and limits for the container | `{}`  |
-
-### Additional Volumes and Mounts
-
-Additional volumes and volume mounts for the deployment.
-
-| Name           | Description                                           | Value |
-| -------------- | ----------------------------------------------------- | ----- |
-| `volumes`      | Additional volumes to be added to the pod             | `[]`  |
-| `volumeMounts` | Additional volume mounts to be added to the container | `[]`  |
-
-### Scheduling Parameters
-
-Node selection, tolerations, and affinity for pod scheduling.
-
-| Name           | Description                       | Value |
-| -------------- | --------------------------------- | ----- |
-| `nodeSelector` | Node selector for pod scheduling  | `{}`  |
-| `tolerations`  | Tolerations for pod scheduling    | `[]`  |
-| `affinity`     | Affinity rules for pod scheduling | `{}`  |
-
-### Extra Containers Parameters
-
-| Name                      | Description                                                                                                                                                                  | Value |
-| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
-| `extraContainers`         | Additional containers to be added to the pod                                                                                                                                 | `[]`  |
-| `istio.ingress.principal` | Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName' | `""`  |
+| Name                               | Description                                                                                                                                              | Value           |
+| ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- |
+| `service.port`                     | Oauth2 Proxy service port                                                                                                                                | `4080`          |
+| `service.type`                     | Oauth2 Proxy service type                                                                                                                                | `ClusterIP`     |
+| `istio.virtualService.enabled`     | Enable Istio traffic into Traefik Proxy                                                                                                                  | `false`         |
+| `istio.virtualService.host`        | Host associated with Oauth2 Proxy. If not set, 'appHostDomain' will be used                                                                              | `""`            |
+| `istio.ingress.principal`          | Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName | `""`            |
+| `istio.ingress.serviceAccountName` | Name of the Ingress service account (traefik and istio supported)                                                                                        | `traefik-proxy` |

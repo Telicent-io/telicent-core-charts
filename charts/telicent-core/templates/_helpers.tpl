@@ -59,7 +59,7 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 Create the name of the service account to use
 */}}
 {{- define "telicent-core.serviceAccountName" -}}
-{{- default (include "telicent-core.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "telicent-core.name" .) .Values.serviceAccount.name }}
 {{- end }}
 
 {{- define "telicent-core.kafkaAuthConfigSecretName" -}}

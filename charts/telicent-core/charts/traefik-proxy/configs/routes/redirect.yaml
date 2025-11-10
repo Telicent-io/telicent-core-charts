@@ -1,0 +1,16 @@
+# Declare routers / services / middlewares
+http:
+  routers:    
+    root-redirect:
+      rule: {{ printf "Host(`%s`)" .Values.global.appHostDomain }}
+      service: noop@internal
+      entryPoints:
+        - web
+      middleWares:
+        - search-ui-redirect
+
+  middlewares:
+    search-ui-redirect:
+      redirectregex:
+        regex: "^https?://([^/]+)/?$"
+        replacement: "https://$1/search"

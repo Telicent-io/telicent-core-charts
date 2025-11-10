@@ -55,7 +55,7 @@ Create the name of the service account to use
 */}}
 {{- define "document-pipeline.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "document-pipeline.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "document-pipeline.name" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}

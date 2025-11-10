@@ -1,0 +1,33 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
+{{- if and .Values.global.enterprise .Values.global.istioVirtualServiceEnabled }}
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+
+metadata:
+  name: {{ include "graph-ui.fullname" . }}
+  labels:
+    {{- include "graph-ui.labels" . | nindent 4 }}
+
+spec:
+  gateways:
+  - {{ .Values.global.istioNamespace }}/{{ .Values.global.istioGatewayName }}
+  hosts:
+  - {{ .Values.global.appHostDomain }}
+  http:
+  - match:
+    - uri:
+        exact: "/graph"
+    redirect:
+      uri: /graph/
+  - match:
+    - uri:
+        prefix: /graph/
+    route:
+    - destination:
+        host: {{ include "graph-ui.serviceName" . }}
+        port:
+          number: {{ .Values.service.port }}
+{{- end }}

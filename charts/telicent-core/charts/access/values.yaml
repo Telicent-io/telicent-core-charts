@@ -52,6 +52,8 @@ configuration:
   telicentPreviewReleaseName: "telicent-preview"
 
 # @section Common Parameters
+# @key nameOverride String to partially override fullname (will maintain the release name)
+nameOverride: ""
 # @key fullnameOverride String to fully override the generated release name
 fullnameOverride: ""
 # @key existingConfigmap Name of the existing configmap for configuration
@@ -89,6 +91,8 @@ mongo:
 replicas: 1
 # @key revisionHistoryLimit Number of controller revisions to keep
 revisionHistoryLimit: 5
+# @key extraEnvs List of Additional environment variables to set in the pod
+extraEnvs: []
 
 image:
   # @key image.registry [default: REGISTRY_NAME] Access image registry
@@ -153,26 +157,25 @@ service:
 
 istio:
   ingress:
-    # @key istio.ingress.principal Principal used for ingress traffic to this application by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName'
+    # @key istio.ingress.principal Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName
     principal: ""
+    # @key istio.ingress.serviceAccountName Name of the Ingress service account (traefik and istio supported)
+    serviceAccountName: "traefik-proxy"
 
   search:
-    # @key istio.search.principal Principal used for Search traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release name, 'serviceAccountName' and the current namespace
-    # Note: principal must be overridden when installing access via a sub chart, as the auto-generated principal (based on the release name) will be incorrect.
+    # @key istio.search.principal Principal used for Search traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName
     principal: ""
     # @key istio.search.serviceAccountName Name of the Search service account
     serviceAccountName: "search"
 
   graph:
-    # @key istio.graph.principal Principal used for Graph traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release name, 'serviceAccountName' and the current namespace
-    # Note: principal must be overridden when installing access via a sub chart, as the auto-generated principal (based on the release name) will be incorrect.
+    # @key istio.graph.principal Principal used for Graph traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName
     principal: ""
     # @key istio.graph.serviceAccountName Name of the Graph service account
     serviceAccountName: "graph"
 
   paperback-writer:
-    # @key istio.paperback-writer.principal Principal used for Paperback Writer traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'serviceAccountName' and the current namespace
-    # Note: principal must be overridden when installing access via a sub chart, as the auto-generated principal (based on the release name) will be incorrect.
+    # @key istio.paperback-writer.principal Principal used for Paperback Writer traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName
     principal: ""
     # @key istio.paperback-writer.serviceAccountName Name of the Paperback Writer service account
     serviceAccountName: "paperback-writer"

@@ -57,7 +57,7 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 Create the name of the service account to use
 */}}
 {{- define "search-projector.serviceAccountName" -}}
-{{- default (printf "%s" (include "search-projector.fullname" .)) .Values.serviceAccount.name }}
+{{- default (include "search-projector.name" .) .Values.serviceAccount.name }}
 {{- end }}
 
 {{/*
@@ -70,9 +70,9 @@ Create the name of the service to use
 {{/*
 Create the name of the config map
 */}}
-{{- define "search-projector.envConfigmapName" -}}
-{{- if .Values.existingConfigmap }}
-{{- .Values.existingConfigmap }}
+{{- define "search-projector.envConfigMapName" -}}
+{{- if .Values.configuration.existingEnvConfigMap }}
+{{- .Values.configuration.existingEnvConfigMap }}
 {{- else }}
 {{- printf "%s-%s" (include "search-projector.fullname" .) "env" }}
 {{- end }}

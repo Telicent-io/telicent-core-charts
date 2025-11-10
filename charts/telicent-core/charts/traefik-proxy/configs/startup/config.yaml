@@ -1,0 +1,33 @@
+entryPoints:
+  web:
+    address: ":8080/tcp"
+  ping:
+    address: ":8081/tcp"
+
+global:
+  checkNewVersion: false
+  sendAnonymousUsage: false
+
+ping:
+  entryPoint: ping
+
+providers:
+  file:
+    directory: "/app/config/routes"
+    watch: false
+
+log:
+  level: {{ .Values.logs.general.level | upper }}
+
+# Note: enable access logs for development purposes only
+{{- if .Values.logs.access.enabled }}
+accessLog:
+  format: common
+{{- end }}
+
+# Note: enable dashboards for development purposes only
+{{- if .Values.dashboard.enabled }}
+api:
+  dashboard: true
+  basepath: {{ .Values.dashboard.basepath | quote }}
+{{- end }}

@@ -58,7 +58,7 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 Create the name of the service account to use
 */}}
 {{- define "graph.serviceAccountName" -}}
-{{- default (include "graph.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "graph.name" .) .Values.serviceAccount.name }}
 {{ end }}
 
 {{/*
@@ -71,9 +71,9 @@ Create the name of the service to use
 {{/*
 Create the name of the config map
 */}}
-{{- define "graph.envConfigmapName" -}}
-{{- if .Values.existingConfigmap }}
-{{- .Values.existingConfigmap }}
+{{- define "graph.envConfigMapName" -}}
+{{- if .Values.configuration.existingEnvConfigMap }}
+{{- .Values.configuration.existingEnvConfigMap }}
 {{- else }}
 {{- printf "%s-%s" (include "graph.fullname" .) "env" }}
 {{- end }}
@@ -118,8 +118,4 @@ Default Atrribute Hierarchy URL
 */}}
 {{- define "graph.attributeHierachyUrl" -}}
 {{- printf "http://%s-access:8080/hierarchies/lookup/{name}" (.Release.Name) }}
-{{- end }}
-
-{{- define "graph.ingressPrincipal" -}}
-{{- .Values.istio.ingress.principal | default (printf "cluster.local/ns/%s/sa/%s" .Values.global.istioNamespace .Values.global.istioServiceAccountName) | quote }}
 {{- end }}

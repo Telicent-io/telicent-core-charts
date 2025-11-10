@@ -65,6 +65,10 @@ global:
 # Contains configuration parameters specific to the Graph application
 # @descEnd
 configuration:
+  # @key configuration.existingEnvConfigMap Name of existing configmap containing Graph Environment Configuration
+  # Note: When it's set it will disable configmap creation.
+  existingEnvConfigMap: ""
+
   # @key configuration.userAttributesUrl URL for the user details endpoint
   userAttributesUrl: ""
   # @key configuration.attributeHierarchyUrl URL for the user hierarchy endpoint
@@ -88,7 +92,7 @@ fullnameOverride: ""
 # @key nameOverride String to partially override fullname (will maintain the release name)
 nameOverride: ""
 
-# @section Graph Statefulset Parameters
+# @section Statefulset Parameters
 # @key replicas Number of Graph replicas to deploy
 replicas: 1
 # @key revisionHistoryLimit Number of controller revisions to keep
@@ -182,8 +186,10 @@ service:
 
 istio:
   ingress:
-    # @key istio.ingress.principal Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName'
+    # @key istio.ingress.principal Principal used for ingress traffic by the Istio AuthorizationPolicy.  If not set, a principal is generated using Release namespace and serviceAccountName
     principal: ""
+    # @key istio.ingress.serviceAccountName Name of the Ingress service account (traefik and istio supported)
+    serviceAccountName: "traefik-proxy"
 
 # @section Extra Containers Parameters
 # @key extraContainers Additional containers to be added to the pod

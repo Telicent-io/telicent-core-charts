@@ -1,0 +1,13 @@
+# Declare routers / services / middlewares
+{{- if .Values.dashboard.enabled }}
+http:
+  routers:
+    dashboard:
+      rule: {{ printf "Host(`%s`) && PathPrefix(`%s`)" ( .Values.dashboard.domain | default .Values.global.appHostDomain ) .Values.dashboard.basepath }}
+      service: api@internal
+      entryPoints:
+        - web
+      middleWares:
+        - oauth2
+
+{{- end }}

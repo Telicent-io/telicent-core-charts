@@ -46,6 +46,10 @@ global:
 # Contains configuration parameters specific to the User Preferences API application
 # @descEnd
 configuration:
+  # @key configuration.existingEnvConfigMap Name of existing configmap containing User Preferences Environment Configuration
+  # Note: When it's set it will disable configmap creation.
+  existingEnvConfigMap: ""
+
   # @key configuration.javaOptions JVM options for the application
   javaOptions: "-Xms512m -Xmx512m"
 
@@ -68,6 +72,13 @@ mongo:
   # @key mongo.cacertPath Path to the CA certificate file, must be set if TLS is enabled in the url and mirror the path in the connectionStringOptions
   cacertPath: ""
 
+
+# @section Common Parameters
+# @key nameOverride String to partially override fullname (will maintain the release name)
+nameOverride: ""
+# @key fullnameOverride String to fully override the generated release name
+fullnameOverride: ""
+
 # @section User Preferences API Deployment Parameters
 # @key replicas Number of User Preferences API replicas to deploy
 replicas: 1
@@ -75,6 +86,8 @@ replicas: 1
 revisionHistoryLimit: 5
 # @key annotations Add extra annotations to the Deployment object
 annotations: {}
+# @key extraEnvs List of Additional environment variables to set in the pod
+extraEnvs: []
 
 image:
   # @key image.registry [default: REGISTRY_NAME] User Preferences API image registry
@@ -147,8 +160,10 @@ service:
 
 istio:
   ingress:
-    # @key istio.ingress.principal Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName'
+    # @key istio.ingress.principal Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName
     principal: ""
+    # @key istio.ingress.serviceAccountName Name of the Ingress service account (traefik and istio supported)
+    serviceAccountName: "traefik-proxy"
 
 # @section Extra Containers Parameters
 # @key extraContainers Additional containers to be added to the pod

@@ -56,15 +56,15 @@ global:
     # @key global.truststore.mountPath The mount path for the truststore in the container
     mountPath: /app/config/truststore
 
-# -----------------------------------------------------------------------------
-# @section  Search Projector Parameters
-# -----------------------------------------------------------------------------
-
-# @section Configuration Parameters - Search Projector
+# @section Configuration Parameters
 # @descStart
 # Contains configuration parameters specific to the Search Projector application
 # @descEnd
 configuration:
+  # @key configuration.existingEnvConfigMap Name of existing configmap containing Search Projector Environment Configuration
+  # Note: When it's set it will disable configmap creation.
+  existingEnvConfigMap: ""
+
   # @key configuration.javaOptions JVM options for the application
   javaOptions: -XX:MaxRAMPercentage=70.0 -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks
 
@@ -105,7 +105,13 @@ elasticSecret:
   # @key elasticSecret.password OpenSearch/Elastic user password
   password: ""
 
-# @section Deployment Parameters - Search Projector
+# @section Common Parameters
+# @key fullnameOverride String to fully override the generated release name
+fullnameOverride: ""
+# @key nameOverride String to partially override fullname (will maintain the release name)
+nameOverride: ""
+
+# @section Deployment Parameters
 # @key replicas Number of Search Projector replicas to deploy
 replicas: 1
 # @key revisionHistoryLimit Number of controller revisions to keep
@@ -169,7 +175,7 @@ podSecurityContext:
     # @key podSecurityContext.seccompProfile.type Set the provisioning pod's Security Context seccomp profile
     type: RuntimeDefault
 
-# @section Metrics Parameters - Search Projector
+# @section Metrics Parameters
 metrics:
   service:
     # @key metrics.service.name Name for the Prometheus service
@@ -177,7 +183,7 @@ metrics:
     # @key metrics.service.port Port for the Prometheus service
     port: 9464
 
-# @section Traffic Exposure Parameters - Search Projector
+# @section Traffic Exposure Parameters
 service:
   # @key service.port Search Projector service port
   port: 8181
@@ -188,7 +194,7 @@ service:
 # @key extraContainers Additional containers to be added to the pod
 extraContainers: []
 
-# @section Service Account Parameters - Search Projector
+# @section Service Account Parameters
 serviceAccount:
   # @key serviceAccount.name Name of the ServiceAccount to use. If not set, a name is generated using the fullname
   name: ""

@@ -45,7 +45,7 @@ spec:
         securityContext: {{- toYaml .Values.containerSecurityContext | nindent 10 }}
 
         env:
-        {{- range $key, $value := .Values.extraEnv }}
+        {{- range $key, $value := .Values.extraEnvs }}
         - name: {{ $key }}
           value: {{ $value }}
         {{- end }}

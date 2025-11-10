@@ -1,0 +1,31 @@
+# Declare routers / services / middlewares
+# AB test purposes - be removed afterwards.
+http:
+  routers:
+    whoami:
+      rule: {{ printf "Host(`%s`) && PathPrefix(`/whoami`)" .Values.global.appHostDomain }}
+      service: whoami
+      entryPoints:
+        - web
+      middleWares:
+        - oauth2
+        - path-whoami
+        - host-whoami
+
+  services:
+    whoami:
+      loadBalancer:
+        servers:
+          - url: http://{{ .Values.hosts.whoami | default (printf "%s.%s:8080" (include "traefik-proxy.routesService" (list . "whoami")) .Release.Namespace) }}
+
+  middlewares:
+    path-whoami:
+      replacePathRegex:
+        regex: "^/whoami/(.*)"
+        replacement: "/$1"
+
+    host-whoami:
+      headers:
+        customRequestHeaders:
+          host: {{ .Values.hosts.whoami | default (printf "%s.%s:8080" (include "traefik-proxy.routesService" (list . "whoami")) .Release.Namespace) }}
+

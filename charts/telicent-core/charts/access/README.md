@@ -73,13 +73,14 @@ Contains configuration parameters specific to the Access application
 
 ### Common Parameters
 
-| Name                       | Description                                           | Value |
-| -------------------------- | ----------------------------------------------------- | ----- |
-| `fullnameOverride`         | String to fully override the generated release name   | `""`  |
-| `existingConfigmap`        | Name of the existing configmap for configuration      | `""`  |
-| `existingCacertConfigmap`  | Name of the existing configmap for extra certificates | `""`  |
-| `existingCacertSecretName` | Name of the secret containing extra CA certificates   | `""`  |
-| `cacert`                   | Path to the CA certificate file                       | `""`  |
+| Name                       | Description                                                            | Value |
+| -------------------------- | ---------------------------------------------------------------------- | ----- |
+| `nameOverride`             | String to partially override fullname (will maintain the release name) | `""`  |
+| `fullnameOverride`         | String to fully override the generated release name                    | `""`  |
+| `existingConfigmap`        | Name of the existing configmap for configuration                       | `""`  |
+| `existingCacertConfigmap`  | Name of the existing configmap for extra certificates                  | `""`  |
+| `existingCacertSecretName` | Name of the secret containing extra CA certificates                    | `""`  |
+| `cacert`                   | Path to the CA certificate file                                        | `""`  |
 
 ### MongoDB Parameters
 
@@ -101,6 +102,7 @@ Contains configuration parameters specific to the Access application
 | --------------------------------------------------- | ----------------------------------------------------------------------- | ------------------------------------- |
 | `replicas`                                          | Number of Access replicas to deploy                                     | `1`                                   |
 | `revisionHistoryLimit`                              | Number of controller revisions to keep                                  | `5`                                   |
+| `extraEnvs`                                         | List of Additional environment variables to set in the pod              | `[]`                                  |
 | `image.registry`                                    | Access image registry                                                   | `REGISTRY_NAME`                       |
 | `image.repository`                                  | Access image name                                                       | `REPOSITORY_NAME/telicent-access-api` |
 | `image.tag`                                         | Access image tag. If not set, a tag is generated using the appVersion   | `""`                                  |
@@ -124,17 +126,18 @@ Contains configuration parameters specific to the Access application
 
 ### Traffic Exposure Parameters
 
-| Name                                        | Description                                                                                                                                                                                      | Value              |
-| ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------ |
-| `service.port`                              | Access service port                                                                                                                                                                              | `8080`             |
-| `service.type`                              | Access service type                                                                                                                                                                              | `ClusterIP`        |
-| `istio.ingress.principal`                   | Principal used for ingress traffic to this application by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName' | `""`               |
-| `istio.search.principal`                    | Principal used for Search traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release name, 'serviceAccountName' and the current namespace                      | `""`               |
-| `istio.search.serviceAccountName`           | Name of the Search service account                                                                                                                                                               | `search`           |
-| `istio.graph.principal`                     | Principal used for Graph traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release name, 'serviceAccountName' and the current namespace                       | `""`               |
-| `istio.graph.serviceAccountName`            | Name of the Graph service account                                                                                                                                                                | `graph`            |
-| `istio.paperback-writer.principal`          | Principal used for Paperback Writer traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'serviceAccountName' and the current namespace                          | `""`               |
-| `istio.paperback-writer.serviceAccountName` | Name of the Paperback Writer service account                                                                                                                                                     | `paperback-writer` |
+| Name                                        | Description                                                                                                                                                       | Value              |
+| ------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
+| `service.port`                              | Access service port                                                                                                                                               | `8080`             |
+| `service.type`                              | Access service type                                                                                                                                               | `ClusterIP`        |
+| `istio.ingress.principal`                   | Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName          | `""`               |
+| `istio.ingress.serviceAccountName`          | Name of the Ingress service account (traefik and istio supported)                                                                                                 | `traefik-proxy`    |
+| `istio.search.principal`                    | Principal used for Search traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName           | `""`               |
+| `istio.search.serviceAccountName`           | Name of the Search service account                                                                                                                                | `search`           |
+| `istio.graph.principal`                     | Principal used for Graph traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName            | `""`               |
+| `istio.graph.serviceAccountName`            | Name of the Graph service account                                                                                                                                 | `graph`            |
+| `istio.paperback-writer.principal`          | Principal used for Paperback Writer traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName | `""`               |
+| `istio.paperback-writer.serviceAccountName` | Name of the Paperback Writer service account                                                                                                                      | `paperback-writer` |
 
 ### Extra Containers Parameters
 

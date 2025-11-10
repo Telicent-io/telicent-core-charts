@@ -71,20 +71,21 @@ Contains global parameters, these parameters are mirrored within the Telicent co
 
 Contains configuration parameters specific to the Smart Cach Search application
 
-| Name                                    | Description                                              | Value                                                                                        |
-| --------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| `configuration.userAttributesUrl`       | URL for the user details endpoint                        | `""`                                                                                         |
-| `configuration.attributeHierarchyUrl`   | URL for the user hierarchy endpoint                      | `""`                                                                                         |
-| `configuration.javaOptions`             | JVM options for the application                          | `-XX:MaxRAMPercentage=70.0 -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks` |
-| `configuration.otelMetricsExporter`     | OpenTelemetry metrics exporter                           | `prometheus`                                                                                 |
-| `configuration.otelTracesExporter`      | OpenTelemetry traces exporter                            | `none`                                                                                       |
-| `configuration.elasticHost`             | OpenSearch host                                          | `https://your.opensearch.host.here:443`                                                      |
-| `configuration.elasticPort`             | OpenSearch port number                                   | `443`                                                                                        |
-| `configuration.elasticClusterPort`      | OpenSearch cluster port                                  | `9200`                                                                                       |
-| `configuration.opensearchCompatibility` | Enable OpenSearch compatibility                          | `true`                                                                                       |
-| `configuration.elasticIndexNames`       | OpenSearch index name(s)                                 | `search,doc-content`                                                                         |
-| `configuration.searchFieldOptions`      | Field options for search                                 | `primaryName^2,*`                                                                            |
-| `configuration.indexBatchSize`          | Number of documents to index in a single batch operation | `100`                                                                                        |
+| Name                                    | Description                                                            | Value                                                                                        |
+| --------------------------------------- | ---------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| `configuration.existingEnvConfigMap`    | Name of existing configmap containing Search Environment Configuration | `""`                                                                                         |
+| `configuration.userAttributesUrl`       | URL for the user details endpoint                                      | `""`                                                                                         |
+| `configuration.attributeHierarchyUrl`   | URL for the user hierarchy endpoint                                    | `""`                                                                                         |
+| `configuration.javaOptions`             | JVM options for the application                                        | `-XX:MaxRAMPercentage=70.0 -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks` |
+| `configuration.otelMetricsExporter`     | OpenTelemetry metrics exporter                                         | `prometheus`                                                                                 |
+| `configuration.otelTracesExporter`      | OpenTelemetry traces exporter                                          | `none`                                                                                       |
+| `configuration.elasticHost`             | OpenSearch host                                                        | `https://your.opensearch.host.here:443`                                                      |
+| `configuration.elasticPort`             | OpenSearch port number                                                 | `443`                                                                                        |
+| `configuration.elasticClusterPort`      | OpenSearch cluster port                                                | `9200`                                                                                       |
+| `configuration.opensearchCompatibility` | Enable OpenSearch compatibility                                        | `true`                                                                                       |
+| `configuration.elasticIndexNames`       | OpenSearch index name(s)                                               | `search,doc-content`                                                                         |
+| `configuration.searchFieldOptions`      | Field options for search                                               | `primaryName^2,*`                                                                            |
+| `configuration.indexBatchSize`          | Number of documents to index in a single batch operation               | `100`                                                                                        |
 
 ### OpenSearch/Elastic secret - Search
 
@@ -139,13 +140,14 @@ Contains configuration parameters specific to the Smart Cach Search application
 
 ### Traffic Exposure Parameters - Search
 
-| Name                             | Description                                                                                                                                                                  | Value       |
-| -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| `service.port`                   | Search service port                                                                                                                                                          | `8181`      |
-| `service.type`                   | Search service port                                                                                                                                                          | `ClusterIP` |
-| `istio.ingress.principal`        | Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName' | `""`        |
-| `istio.graph.principal`          | Principal used for Graph traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'serviceAccountName' and the current namespace                 | `""`        |
-| `istio.graph.serviceAccountName` | Name of the Graph service account                                                                                                                                            | `graph`     |
+| Name                               | Description                                                                                                                                                  | Value           |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------- |
+| `service.port`                     | Search service port                                                                                                                                          | `8181`          |
+| `service.type`                     | Search service port                                                                                                                                          | `ClusterIP`     |
+| `istio.ingress.principal`          | Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName     | `""`            |
+| `istio.ingress.serviceAccountName` | Name of the Ingress service account (traefik and istio supported)                                                                                            | `traefik-proxy` |
+| `istio.graph.principal`            | Principal used for Graph traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'serviceAccountName' and the current namespace | `""`            |
+| `istio.graph.serviceAccountName`   | Name of the Graph service account                                                                                                                            | `graph`         |
 
 ### Extra Containers Parameters
 

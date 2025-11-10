@@ -46,7 +46,7 @@ spec:
         securityContext: {{- toYaml .Values.containerSecurityContext | nindent 10 }}
 
         env:
-        {{- range $key, $value := .Values.extraEnv }}
+        {{- range $key, $value := .Values.extraEnvs }}
         - name: {{ $key }}
           value: {{ $value }}
         {{- end }}
@@ -63,7 +63,7 @@ spec:
 
         envFrom:
         - configMapRef:
-            name: {{ include "search-projector.envConfigmapName" . }}
+            name: {{ include "search-projector.envConfigMapName" . }}
        
         ports:
         - name: metrics

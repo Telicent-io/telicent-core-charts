@@ -1,0 +1,15 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
+apiVersion: security.istio.io/v1
+kind: PeerAuthentication
+
+metadata:
+  name: {{ include "telicent-core.fullname" . }}-auth-strict
+  labels:
+  {{- include "telicent-core.labels" . | nindent 4 }}
+
+spec:
+  mtls:
+    mode: STRICT

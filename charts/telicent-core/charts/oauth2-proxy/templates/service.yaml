@@ -1,0 +1,23 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: {{ include "oauth2-proxy.fullname" . }}
+  namespace: {{ include "oauth2-prox.namespace" . | quote }}
+  labels:
+    {{- include "oauth2-proxy.labels" . | nindent 4 }}
+
+spec:
+  type: {{ .Values.service.type }}
+  selector:
+    {{- include "oauth2-proxy.selectorLabels" . | nindent 4 }}
+  ports:
+  - name: http
+    port: {{ .Values.service.port }}
+    appProtocol: http
+    protocol: TCP
+    targetPort: {{ .Values.service.port }}

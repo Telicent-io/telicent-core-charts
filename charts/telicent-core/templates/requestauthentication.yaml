@@ -3,16 +3,11 @@ Copyright (C) 2025 Telicent Limited
 */}}
 
 apiVersion: security.istio.io/v1
-kind: RequestAuthentication
+kind: AuthorizationPolicy
 
 metadata:
-  name: {{ include "telicent-core.fullname" . }}-users
+  name: {{ include "telicent-core.fullname" . }}-deny-all
   labels:
   {{- include "telicent-core.labels" . | nindent 4 }}
 
-spec:
-  jwtRules:
-  - forwardOriginalToken: true
-    issuer: {{ include "telicent-core.jwtIssuer" . }}
-    jwksUri: {{ .Values.global.jwksUrl | quote }}
- 
+spec: {}

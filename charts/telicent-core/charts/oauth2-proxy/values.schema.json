@@ -53,116 +53,324 @@
                 }
             }
         },
-        "replicaCount": {
-            "type": "number",
-            "description": "Number of pod replicas to deploy",
-            "default": 1
-        },
-        "existingEnvConfigmapName": {
-            "type": "string",
-            "description": "Name of an existing ConfigMap for environment variables",
-            "default": ""
-        },
-        "existingCacertConfigmapName": {
-            "type": "string",
-            "description": "Name of an existing ConfigMap for CA certificates",
-            "default": ""
-        },
-        "existingCacertSecretName": {
-            "type": "string",
-            "description": "Name of the secret containing the CA certificates",
-            "default": ""
-        },
-        "existingEnvSecretName": {
-            "type": "string",
-            "description": "Name of an existing Secret for environment variables",
-            "default": ""
-        },
-        "image": {
-            "type": "object",
-            "properties": {
-                "repository": {
-                    "type": "string",
-                    "description": "Container image repository",
-                    "default": "quay.io/oauth2-proxy/oauth2-proxy"
-                },
-                "pullPolicy": {
-                    "type": "string",
-                    "description": "Image pull policy",
-                    "default": "IfNotPresent"
-                },
-                "tag": {
-                    "type": "string",
-                    "description": "Image tag (defaults to chart appVersion if not set)",
-                    "default": "v7.12.0"
-                }
-            }
-        },
         "configuration": {
             "type": "object",
             "properties": {
-                "cookieDomain": {
+                "existingEnvConfigMap": {
                     "type": "string",
-                    "description": "Domain that the cookie is valid for",
-                    "default": "127.0.0.1.nip.io"
-                },
-                "cookieExpire": {
-                    "type": "string",
-                    "description": "Cookie expiration duration",
-                    "default": "15m"
-                },
-                "cookieRefresh": {
-                    "type": "string",
-                    "description": "Cookie refresh duration",
-                    "default": "10m"
-                },
-                "cookieSecret": {
-                    "type": "string",
-                    "description": "Cookie secret (should be set via existingEnvSecretName) defaults to a random value if not set",
+                    "description": "Name of existing configmap containing Oauth2 Proxy Environment Configuration",
                     "default": ""
                 },
                 "oidcIssuerUrl": {
                     "type": "string",
-                    "description": "OIDC issuer URL",
+                    "description": "The OpenID Connect issuer URL",
                     "default": "https://127.0.0.1.nip.io/realms/core"
                 },
-                "redirectUrlOverride": {
+                "redirectUrl": {
                     "type": "string",
-                    "description": "OIDC redirect URL override (if not set, appHostDomain + /oauth2/callback will be used)",
+                    "description": "OIDC redirect URL override. If not set, 'authHostDomain' + '/oauth2/callback' will be used",
                     "default": ""
                 },
-                "oidcClientID": {
+                "cookieDomains": {
                     "type": "string",
-                    "description": "OIDC client ID",
-                    "default": "change-me"
+                    "description": "Domains that the cookie is valid for. If not set, 'appHostDomain' will be used",
+                    "default": ""
+                },
+                "cookieWhiteListDomains": {
+                    "type": "string",
+                    "description": "Allowed domains for redirection after authentication. If not set, 'apphHostDomain' will be used",
+                    "default": ""
+                },
+                "cookieExpire": {
+                    "type": "string",
+                    "description": "Expire timeframe for cookie",
+                    "default": "50m"
+                },
+                "cookieCsrfExpire": {
+                    "type": "string",
+                    "description": "Expire timeframe for CSRF cookie",
+                    "default": "50m"
+                },
+                "cookieRefresh": {
+                    "type": "string",
+                    "description": "Refresh the cookie after this duration",
+                    "default": "30m"
+                }
+            }
+        },
+        "oauthClientSecret": {
+            "type": "object",
+            "properties": {
+                "existingSecret": {
+                    "type": "string",
+                    "description": "Name of an existing secret. The secret must contain 3 keys: 'clientid', 'clientsecret', 'cookiesecret'",
+                    "default": ""
+                },
+                "clientId": {
+                    "type": "string",
+                    "description": "The OAuth Client ID",
+                    "default": ""
                 },
                 "clientSecret": {
                     "type": "string",
-                    "description": "OIDC client secret (should be set via existingEnvSecretName)",
-                    "default": "change-me"
+                    "description": "The OAuth Client Secret",
+                    "default": ""
                 },
-                "cacert": {
+                "cookieSecret": {
                     "type": "string",
-                    "description": "Optional CA certificate data (PEM format) for validating the OIDC provider's TLS certificate",
+                    "description": "The seed string for secure cookies ",
                     "default": ""
                 }
             }
         },
-        "imagePullSecrets": {
-            "type": "array",
-            "description": "Registry secret names as an array for private image repositories",
-            "default": [],
-            "items": {}
+        "tls": {
+            "type": "object",
+            "properties": {
+                "ca": {
+                    "type": "object",
+                    "properties": {
+                        "existingSecret": {
+                            "type": "string",
+                            "description": "Name of an existing secret that contains CA certificate(s). The secret must contains 1 key: 'ca.crt' containing the CA certificate(s)",
+                            "default": ""
+                        },
+                        "existingConfigMap": {
+                            "type": "string",
+                            "description": "Name of an existing configmap that contains CA certificate(s). The configmap must contains 1 key: 'ca.crt' containing the CA certificate(s)",
+                            "default": ""
+                        },
+                        "certificate": {
+                            "type": "string",
+                            "description": "The PEM-encoded certificate(s) of the CA (certificate authority)",
+                            "default": ""
+                        }
+                    }
+                }
+            }
         },
         "nameOverride": {
             "type": "string",
-            "description": "String to partially override the chart name",
+            "description": "String to partially override fullname (will maintain the release name)",
             "default": ""
         },
         "fullnameOverride": {
             "type": "string",
             "description": "String to fully override the generated release name",
             "default": ""
+        },
+        "namespaceOverride": {
+            "type": "string",
+            "description": "String to fully override all deployed resources namespace",
+            "default": ""
+        },
+        "commonLabels": {
+            "type": "object",
+            "description": "Add labels to all the deployed resources",
+            "default": {}
+        },
+        "replicas": {
+            "type": "number",
+            "description": "Number of Ouath2 Proxy replicas to deploy",
+            "default": 1
+        },
+        "revisionHistoryLimit": {
+            "type": "number",
+            "description": "Number of controller revisions to keep",
+            "default": 5
+        },
+        "annotations": {
+            "type": "object",
+            "description": "Add extra annotations to the Deployment Object",
+            "default": {}
+        },
+        "podLabels": {
+            "type": "object",
+            "description": "Add extra labels to the Oauth2 Proxy pod",
+            "default": {}
+        },
+        "podAnnotations": {
+            "type": "object",
+            "description": "Add extra annotations to the Oauth2 Proxy pod",
+            "default": {}
+        },
+        "extraEnvs": {
+            "type": "array",
+            "description": "List of Additional environment variables to set in the pod",
+            "default": [],
+            "items": {}
+        },
+        "extraContainers": {
+            "type": "array",
+            "description": "Additional containers to be added to the pod",
+            "default": [],
+            "items": {}
+        },
+        "image": {
+            "type": "object",
+            "properties": {
+                "registry": {
+                    "type": "string",
+                    "description": "Oauth2 Proxy image registry",
+                    "default": "REGISTRY_NAME"
+                },
+                "repository": {
+                    "type": "string",
+                    "description": "Oauth2 Proxy image name",
+                    "default": "REPOSITORY_NAME/oauth2-proxy"
+                },
+                "tag": {
+                    "type": "string",
+                    "description": "Oauth2 Proxy image tag. If not set, a tag is generated using the appVersion",
+                    "default": ""
+                },
+                "pullPolicy": {
+                    "type": "string",
+                    "description": "Oauth2 Proxy image pull policy",
+                    "default": "IfNotPresent"
+                }
+            }
+        },
+        "imagePullSecrets": {
+            "type": "array",
+            "description": "Specify registry secret names as an array",
+            "default": [],
+            "items": {}
+        },
+        "resources": {
+            "type": "object",
+            "properties": {
+                "requests": {
+                    "type": "object",
+                    "properties": {
+                        "cpu": {
+                            "type": "string",
+                            "description": "Set containers' CPU request",
+                            "default": "300m"
+                        },
+                        "memory": {
+                            "type": "string",
+                            "description": "Set containers' memory request",
+                            "default": "512Mi"
+                        }
+                    }
+                },
+                "limits": {
+                    "type": "object",
+                    "properties": {
+                        "cpu": {
+                            "type": "string",
+                            "description": "Set containers' CPU limit",
+                            "default": "500m"
+                        },
+                        "memory": {
+                            "type": "string",
+                            "description": "Set containers' memory limit",
+                            "default": "800Mi"
+                        }
+                    }
+                }
+            }
+        },
+        "containerSecurityContext": {
+            "type": "object",
+            "properties": {
+                "runAsUser": {
+                    "type": "number",
+                    "description": "Set containers' Security Context runAsUser User ID",
+                    "default": 185
+                },
+                "runAsGroup": {
+                    "type": "number",
+                    "description": "Set containers' Security Context runAsGroup Group ID",
+                    "default": 185
+                },
+                "runAsNonRoot": {
+                    "type": "boolean",
+                    "description": "Set container's Security Context runAsNonRoot",
+                    "default": true
+                },
+                "allowPrivilegeEscalation": {
+                    "type": "boolean",
+                    "description": "Set container's Security Context allowPrivilegeEscalation",
+                    "default": false
+                },
+                "capabilities": {
+                    "type": "object",
+                    "properties": {
+                        "drop": {
+                            "type": "array",
+                            "description": "List of capabilities to be dropped",
+                            "default": [
+                                "ALL"
+                            ],
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "seccompProfile": {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "description": "Set container's Security Context seccomp profile",
+                            "default": "RuntimeDefault"
+                        }
+                    }
+                }
+            }
+        },
+        "podSecurityContext": {
+            "type": "object",
+            "properties": {
+                "runAsUser": {
+                    "type": "number",
+                    "description": "Set the provisioning pod's Security Context runAsUser User ID",
+                    "default": 185
+                },
+                "runAsGroup": {
+                    "type": "number",
+                    "description": "Set the provisioning pod's Security Context runAsGroup Group ID",
+                    "default": 185
+                },
+                "runAsNonRoot": {
+                    "type": "boolean",
+                    "description": "Set the provisioning pod's Security Context runAsNonRoot",
+                    "default": true
+                },
+                "fsGroup": {
+                    "type": "number",
+                    "description": "Set the provisioning pod's Group ID for the mounted volumes' filesystem",
+                    "default": 185
+                },
+                "seccompProfile": {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "description": "Set the provisioning pod's Security Context seccomp profile",
+                            "default": "RuntimeDefault"
+                        }
+                    }
+                }
+            }
+        },
+        "affinity": {
+            "type": "object",
+            "description": "Affinity for pod assignment",
+            "default": {}
+        },
+        "nodeSelector": {
+            "type": "object",
+            "description": "Node labels for pod assignment",
+            "default": {}
+        },
+        "tolerations": {
+            "type": "array",
+            "description": "Tolerations for pod assignment",
+            "default": [],
+            "items": {}
         },
         "serviceAccount": {
             "type": "object",
@@ -172,107 +380,68 @@
                     "description": "Specifies whether a service account should be created",
                     "default": true
                 },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the ServiceAccount to use. If not set, a name is generated using the fullname",
+                    "default": ""
+                },
+                "annotations": {
+                    "type": "object",
+                    "description": "Additional custom annotations for the ServiceAccount",
+                    "default": {}
+                },
                 "automount": {
                     "type": "boolean",
                     "description": "Automatically mount a ServiceAccount's API credentials",
                     "default": true
-                },
-                "annotations": {
-                    "type": "object",
-                    "description": "Annotations to add to the service account",
-                    "default": {}
-                },
-                "name": {
-                    "type": "string",
-                    "description": "The name of the service account to use",
-                    "default": ""
                 }
             }
-        },
-        "podAnnotations": {
-            "type": "object",
-            "description": "Annotations to add to the pod",
-            "default": {}
-        },
-        "podLabels": {
-            "type": "object",
-            "description": "Labels to add to the pod",
-            "default": {}
-        },
-        "podSecurityContext": {
-            "type": "object",
-            "description": "Pod-level security context",
-            "default": {}
-        },
-        "securityContext": {
-            "type": "object",
-            "description": "Container-level security context",
-            "default": {}
         },
         "service": {
             "type": "object",
             "properties": {
-                "type": {
-                    "type": "string",
-                    "description": "Service type (ClusterIP, NodePort, LoadBalancer)",
-                    "default": "ClusterIP"
-                },
                 "port": {
                     "type": "number",
-                    "description": "Service port",
+                    "description": "Oauth2 Proxy service port",
                     "default": 4080
+                },
+                "type": {
+                    "type": "string",
+                    "description": "Oauth2 Proxy service type",
+                    "default": "ClusterIP"
                 }
             }
-        },
-        "resources": {
-            "type": "object",
-            "description": "Resource requests and limits for the container",
-            "default": {}
-        },
-        "volumes": {
-            "type": "array",
-            "description": "Additional volumes to be added to the pod",
-            "default": [],
-            "items": {}
-        },
-        "volumeMounts": {
-            "type": "array",
-            "description": "Additional volume mounts to be added to the container",
-            "default": [],
-            "items": {}
-        },
-        "nodeSelector": {
-            "type": "object",
-            "description": "Node selector for pod scheduling",
-            "default": {}
-        },
-        "tolerations": {
-            "type": "array",
-            "description": "Tolerations for pod scheduling",
-            "default": [],
-            "items": {}
-        },
-        "affinity": {
-            "type": "object",
-            "description": "Affinity rules for pod scheduling",
-            "default": {}
-        },
-        "extraContainers": {
-            "type": "array",
-            "description": "Additional containers to be added to the pod",
-            "default": [],
-            "items": {}
         },
         "istio": {
             "type": "object",
             "properties": {
+                "virtualService": {
+                    "type": "object",
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean",
+                            "description": "Enable Istio traffic into Traefik Proxy",
+                            "default": false
+                        },
+                        "host": {
+                            "type": "string",
+                            "description": "Host associated with Oauth2 Proxy. If not set, 'appHostDomain' will be used",
+                            "default": ""
+                        }
+                    }
+                },
                 "ingress": {
                     "type": "object",
                     "properties": {
                         "principal": {
                             "type": "string",
-                            "description": "Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName'",
+                            "description": "Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName",
                             "default": ""
+                        },
+                        "serviceAccountName": {
+                            "type": "string",
+                            "description": "Name of the Ingress service account (traefik and istio supported)",
+                            "default": "traefik-proxy"
                         }
                     }
                 }
