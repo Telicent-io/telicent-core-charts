@@ -52,7 +52,7 @@ spec:
                 name: {{ include "auth.postgresSecretName" . }}
           {{- with .Values.containerSecurityContext }}
           securityContext:
-            {{- toYaml . | nindent 10 }}
+            {{- toYaml . | nindent 12 }}
           {{- end }}
           image: {{ include "auth.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
