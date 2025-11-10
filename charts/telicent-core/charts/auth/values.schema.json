@@ -334,7 +334,7 @@
                         "memory": {
                             "type": "string",
                             "description": "Set containers' memory request",
-                            "default": "4000Mi"
+                            "default": "2000Mi"
                         }
                     }
                 },
@@ -344,12 +344,12 @@
                         "cpu": {
                             "type": "string",
                             "description": "Set containers' CPU limit",
-                            "default": "1000m"
+                            "default": "2000m"
                         },
                         "memory": {
                             "type": "string",
                             "description": "Set containers' memory limit",
-                            "default": "8000Mi"
+                            "default": "4000Mi"
                         }
                     }
                 }
