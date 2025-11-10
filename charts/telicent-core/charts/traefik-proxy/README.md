@@ -59,16 +59,16 @@ Contains global parameters, these parameters are mirrored within the Telicent co
 
 ### Traefik Proxy Logs Parameters
 
-| Name                  | Description                                                                        | Value  |
-| --------------------- | ---------------------------------------------------------------------------------- | ------ |
-| `logs.general.level`  | Set logging levels, values are: TRACE, DEBUG, INFO, WARN, ERROR, FATAL, and PANIC. | `INFO` |
-| `logs.access.enabled` | Enable access logging. Note: should only be enabled in development environments.   | `true` |
+| Name                  | Description                                                                        | Value   |
+| --------------------- | ---------------------------------------------------------------------------------- | ------- |
+| `logs.general.level`  | Set logging levels, values are: TRACE, DEBUG, INFO, WARN, ERROR, FATAL, and PANIC. | `INFO`  |
+| `logs.access.enabled` | Enable access logging. Note: should only be enabled in development environments.   | `false` |
 
 ### Traefik Proxy Dashboard Parameters
 
 | Name                 | Description                                                                         | Value      |
 | -------------------- | ----------------------------------------------------------------------------------- | ---------- |
-| `dashboard.enabled`  | Enable Traefik dashboard. Note: should only be enabled in development environments. | `true`     |
+| `dashboard.enabled`  | Enable Traefik dashboard. Note: should only be enabled in development environments. | `false`    |
 | `dashboard.domain`   | Domain associated with Traefik dashboard. If not set, 'appHostDomain' will be used  | `""`       |
 | `dashboard.basepath` | Set the base path to be used for accessing the dashboard                            | `/traefik` |
 
@@ -134,7 +134,7 @@ Contains global parameters, these parameters are mirrored within the Telicent co
 | `istio.virtualService.enabled`     | Enable Istio traffic into Traefik Proxy                                                                                                                  | `true`                                           |
 | `istio.virtualService.extraHosts`  | Additional hosts (excluding appHostDomain) to be managed by Traefik Proxy                                                                                | `[]`                                             |
 | `istio.ingress.principal`          | Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName | `cluster.local/ns/istio-system/sa/istio-ingress` |
-| `istio.ingress.serviceAccountName` | Name of the Ingress service account (traefik and istio supported)                                                                                        | `istio-ingress`                                  |
+| `istio.ingress.serviceAccountName` | Name of the Ingress service account (istio currently supported)                                                                                          | `istio-ingress`                                  |
 
 ### Traefik Proxy Hosts Parameters
 

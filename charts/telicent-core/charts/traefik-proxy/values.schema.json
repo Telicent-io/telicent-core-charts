@@ -72,7 +72,7 @@
                         "enabled": {
                             "type": "boolean",
                             "description": "Enable access logging. Note: should only be enabled in development environments.",
-                            "default": true
+                            "default": false
                         }
                     }
                 }
@@ -84,7 +84,7 @@
                 "enabled": {
                     "type": "boolean",
                     "description": "Enable Traefik dashboard. Note: should only be enabled in development environments.",
-                    "default": true
+                    "default": false
                 },
                 "domain": {
                     "type": "string",
@@ -391,7 +391,7 @@
                         },
                         "serviceAccountName": {
                             "type": "string",
-                            "description": "Name of the Ingress service account (traefik and istio supported)",
+                            "description": "Name of the Ingress service account (istio currently supported)",
                             "default": "istio-ingress"
                         }
                     }

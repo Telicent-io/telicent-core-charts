@@ -2,7 +2,7 @@
 Copyright (C) 2025 Telicent Limited
 */}}
 
-{{- if .Values.global.istioVirtualServiceEnabled }}
+{{- if .Values.istio.virtualService.enabled }}
 apiVersion: networking.istio.io/v1
 kind: VirtualService
 
@@ -14,7 +14,7 @@ metadata:
 
 spec:
   gateways:
-  - {{ .Values.global.istioNamespace }}/{{ .Values.global.istioGatewayName }}
+  - {{ required "A valid .Values.global.istioNamespace entry required!" .Values.global.istioNamespace }}/{{ required "A valid .Values.global.istioGatewayName entry required!" .Values.global.istioGatewayName }}
   hosts:
   - {{ .Values.istio.virtualService.host | default .Values.global.appHostDomain }}
   http:
