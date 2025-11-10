@@ -9,7 +9,7 @@ metadata:
   labels:
     {{- include "auth.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: 1
   selector:
     matchLabels:
       {{- include "auth.selectorLabels" . | nindent 6 }}
@@ -21,13 +21,11 @@ spec:
       {{- end }}
       labels:
         {{- include "auth.labels" . | nindent 8 }}
-        {{- with .Values.podLabels }}
-        {{- toYaml . | nindent 8 }}
-        {{- end }}
     spec:
-      {{- with .Values.imagePullSecrets }}
+      {{- $pullSecret := .Values.global.imagePullSecrets | default .Values.image.pullSecrets }}
+      {{- with $pullSecret }}
       imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
+        {{- toYaml . | nindent 6 }}
       {{- end }}
       serviceAccountName: {{ include "auth.serviceAccountName" . }}
       {{- with .Values.podSecurityContext }}
@@ -52,9 +50,9 @@ spec:
                 name: {{ include "auth.forwardAuthSecretName" . }}
             - secretRef:
                 name: {{ include "auth.postgresSecretName" . }}
-          {{- with .Values.securityContext }}
+          {{- with .Values.containerSecurityContext }}
           securityContext:
-            {{- toYaml . | nindent 12 }}
+            {{- toYaml . | nindent 10 }}
           {{- end }}
           image: {{ include "auth.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
