@@ -43,14 +43,14 @@ logs:
     level: "INFO"
   access:
     # @key logs.access.enabled Enable access logging. Note: should only be enabled in development environments.
-    enabled: true
+    enabled: false
 
 #
 # @section Traefik Proxy Dashboard Parameters
 #
 dashboard:
   # @key dashboard.enabled Enable Traefik dashboard. Note: should only be enabled in development environments.
-  enabled: true
+  enabled: false
   # @key dashboard.domain Domain associated with Traefik dashboard. If not set, 'appHostDomain' will be used
   domain: ""
   # @key dashboard.basepath Set the base path to be used for accessing the dashboard
@@ -181,7 +181,7 @@ istio:
   ingress:
     # @key istio.ingress.principal Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName
     principal: "cluster.local/ns/istio-system/sa/istio-ingress"
-    # @key istio.ingress.serviceAccountName Name of the Ingress service account (traefik and istio supported)
+    # @key istio.ingress.serviceAccountName Name of the Ingress service account (istio currently supported)
     serviceAccountName: "istio-ingress"
 
 #

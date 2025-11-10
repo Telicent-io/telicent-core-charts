@@ -17,7 +17,9 @@ spec:
   - {{ .Values.global.istioNamespace }}/{{ .Values.global.istioGatewayName }}
   hosts:
   - {{ .Values.global.appHostDomain }}
-  {{- toYaml .Values.istio.virtualService.extraHosts | nindent 2 }}
+  {{- if .Values.istio.virtualService.extraHosts }}
+    {{- toYaml .Values.istio.virtualService.extraHosts | nindent 2 }}
+  {{- end }}
   http:
    - route:
       - destination:
