@@ -154,9 +154,9 @@ Note: It is recommended to use a Kubernetes secret for sensitive information lik
 | `service.port`              | Auth server service port       | `9000`      |
 | `service.type`              | Auth server service port       | `ClusterIP` |
 | `resources.requests.cpu`    | Set containers' CPU request    | `500m`      |
-| `resources.requests.memory` | Set containers' memory request | `4000Mi`    |
-| `resources.limits.cpu`      | Set containers' CPU limit      | `1000m`     |
-| `resources.limits.memory`   | Set containers' memory limit   | `8000Mi`    |
+| `resources.requests.memory` | Set containers' memory request | `2000Mi`    |
+| `resources.limits.cpu`      | Set containers' CPU limit      | `2000m`     |
+| `resources.limits.memory`   | Set containers' memory limit   | `4000Mi`    |
 
 ### Probes This is to setup the liveness and readiness probes, more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
 
