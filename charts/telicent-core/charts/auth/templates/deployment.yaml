@@ -43,7 +43,7 @@ spec:
           {{- end }}
           envFrom:
             - configMapRef:
-                name: {{ include "auth.envConfigmapName" . }}
+                name: {{ include "auth.envConfigMapName" . }}
             - secretRef:
                 name: {{ include "auth.externalIdpSecretName" . }}
             - secretRef:
@@ -72,12 +72,18 @@ spec:
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- with .Values.volumeMounts }}
           volumeMounts:
+            - name: clients
+              mountPath: data/registered-clients/data.yml
+              readOnly: true
+          {{- with .Values.volumeMounts }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
-      {{- with .Values.volumes }}
       volumes:
+        - name: clients
+          configMap:
+            name: {{ include "auth.clientsConfigMapName" . }}
+      {{- with .Values.volumes }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
       {{- with .Values.nodeSelector }}
