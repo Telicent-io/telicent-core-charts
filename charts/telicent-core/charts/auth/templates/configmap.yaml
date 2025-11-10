@@ -12,9 +12,8 @@ metadata:
 
 data:
   TOKEN_ISSUER_URL: {{ .Values.configuration.tokenIssuerUrl | quote }}
-  FORWARD_AUTH_SECRET: {{ .Values.configuration.forwardAuthSecret | quote }} 
-  SUPER_USER_IDENTIFIER: {{ .Values.configuration.superUserIdentifier | quote }} 
-  COOKIE_PARENT_DOMAIN: {{ .Values.configuration.cookieParentDomain | quote }} 
+  SUPER_USER_IDENTIFIER: {{ .Values.configuration.superUserIdentifier | quote }}
+  COOKIE_PARENT_DOMAIN: {{ .Values.configuration.cookieParentDomain | quote }}
   COOKIE_SECURE: {{ .Values.configuration.cookieSecure | quote }}
 
   # External IDP
