@@ -73,6 +73,16 @@ Contains configuration parameters specific to the Auth application
 | `configuration.cookieParentDomain`  | Cookie domain scope                                              | `.telicent.localhost` |
 | `configuration.cookieSecure`        | Enable secure cookies                                            | `true`                |
 
+### Clients
+
+List of registered clients
+
+| Name                        | Description                                                                                                                                                                           | Value |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| `clients.public`            | A list of public client objects                                                                                                                                                       | `[]`  |
+| `clients.confidential`      | A list of confidential client objects                                                                                                                                                 | `[]`  |
+| `clients.existingConfigMap` | Name of an existing config map resource containing all required public and confidential clients. If specified, the values for clients.public and clients.confidential will be ignored | `""`  |
+
 ### External IDP
 
 Note: It is recommended to use a Kubernetes secret for sensitive information like passwords

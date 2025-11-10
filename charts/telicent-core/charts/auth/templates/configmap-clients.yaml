@@ -1,0 +1,20 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
+{{- if not .Values.clients.existingConfigMap }}
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: {{ include "auth.clientsConfigMapName" . }}
+  labels:
+    {{- include "auth.labels" . | nindent 4 }}
+
+data:
+  clients: |
+    public:
+      {{- toYaml .Values.clients.public | nindent 6 }}
+    confidential:
+      {{- toYaml .Values.clients.confidential | nindent 6 }}
+{{- end }}

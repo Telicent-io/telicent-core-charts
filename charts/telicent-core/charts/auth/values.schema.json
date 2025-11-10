@@ -83,6 +83,28 @@
                 }
             }
         },
+        "clients": {
+            "type": "object",
+            "properties": {
+                "public": {
+                    "type": "array",
+                    "description": "A list of public client objects",
+                    "default": [],
+                    "items": {}
+                },
+                "confidential": {
+                    "type": "array",
+                    "description": "A list of confidential client objects",
+                    "default": [],
+                    "items": {}
+                },
+                "existingConfigMap": {
+                    "type": "string",
+                    "description": "Name of an existing config map resource containing all required public and confidential clients. If specified, the values for clients.public and clients.confidential will be ignored",
+                    "default": ""
+                }
+            }
+        },
         "externalIdp": {
             "type": "object",
             "properties": {

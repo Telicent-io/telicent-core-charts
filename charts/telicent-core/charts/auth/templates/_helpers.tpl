@@ -65,13 +65,20 @@ Create the name of the service to use
 {{- end }}
 
 {{/*
-Create the name of the config map
+Create the name of the environment variables config map
 */}}
-{{- define "auth.envConfigmapName" -}}
-{{- if .Values.existingConfigmap }}
-{{- .Values.existingConfigmap }}
-{{- else }}
+{{- define "auth.envConfigMapName" -}}
 {{- printf "%s-%s" (include "auth.fullname" .) "env" }}
+{{- end }}
+
+{{/*
+Create the name of the clients config map
+*/}}
+{{- define "auth.clientsConfigMapName" -}}
+{{- if .Values.clients.existingConfigmap }}
+{{- .Values.clients.existingConfigmap }}
+{{- else }}
+{{- printf "%s-%s" (include "auth.fullname" .) "clients" }}
 {{- end }}
 {{- end }}
 
