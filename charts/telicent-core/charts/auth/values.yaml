@@ -10,7 +10,7 @@ global:
   ## Current available global image parameters: imageRegistry and imagePullSecrets
   ## Please, note that this will override the image parameters
   # @key global.imageRegistry Global image registry
-  imageRegistry:
+  imageRegistry: ""
   # E.g.
   # imagePullSecrets:
   #   - myRegistryKeySecretName
@@ -68,8 +68,7 @@ externalIdp:
   clientId: ""
   # @key externalIdp.clientSecret OAuth2 client secret
   clientSecret: ""
-  # @key externalIdp.existingSecret Name of an existing secret resource containing the OAuth2 client ID and secret
-  # Note: If specified, existing secret must contain data for EXTERNAL_IDP_CLIENT_ID and EXTERNAL_IDP_CLIENT_SECRET, and values for externalIdp.clientId and externalIdp.clientSecret will be ignored
+  # @key externalIdp.existingSecret Name of an existing secret resource containing the OAuth2 client ID and secret. If specified, existing secret must contain data for EXTERNAL_IDP_CLIENT_ID and EXTERNAL_IDP_CLIENT_SECRET, and values for externalIdp.clientId and externalIdp.clientSecret will be ignored
   existingSecret: ""
 
 # @section ForwardAuth
@@ -79,10 +78,8 @@ externalIdp:
 forwardAuth:
   # @key forwardAuth.secretValue ForwardAuth security secret
   secretValue: ""
-  # @key forwardAuth.existingSecret Name of an existing secret resource containing the ForwardAuth secret value
-  # Note: If specified, existing secret must contain data for POSTGRES_PASSWORD, and the value for postgres.password will be ignored
+  # @key forwardAuth.existingSecret Name of an existing secret resource containing the ForwardAuth secret value. If specified, existing secret must contain data for POSTGRES_PASSWORD, and the value for postgres.password will be ignored
   existingSecret: ""
-  # @descEnd
 
 # @section PostgreSQL
 # @descStart
@@ -95,8 +92,7 @@ postgres:
   username: ""
   # @key postgres.password PostgreSQL password
   password: ""
-  # @key postgres.existingSecret Name of an existing secret resource containing the PostgreSQL password
-  # Note: If specified, existing secret must contain data for POSTGRES_PASSWORD, and the value for postgres.password will be ignored
+  # @key postgres.existingSecret Name of an existing secret resource containing the PostgreSQL password. If specified, existing secret must contain data for POSTGRES_PASSWORD, and the value for postgres.password will be ignored
   existingSecret: ""
 
 # @section Common Parameters
@@ -126,7 +122,7 @@ serviceAccount:
   annotations: {}
 
 # @section Deployment Parameters For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
-# @key annotations Add extra annotations to the Deployment object
+# @key podAnnotations Add extra annotations to the Deployment object
 podAnnotations: {}
 # @key extraEnvs List of additional environment variables to set in the pod
 extraEnvs: []
@@ -183,14 +179,18 @@ resources:
 # @section Probes This is to setup the liveness and readiness probes, more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
 livenessProbe:
   httpGet:
+    # @key livenessProbe.httpGet.path The path to use for the Auth server liveness probe
     path: /actuator/health
+    # @key livenessProbe.httpGet.port The port to use for the Auth server liveness probe
     port: http
 readinessProbe:
   httpGet:
+    # @key readinessProbe.httpGet.path The path to use for the Auth server liveness probe
     path: /actuator/health
+    # @key readinessProbe.httpGet.port The port to use for the Auth server liveness probe
     port: http
 
-# @ section Node Selection
+# @section Node Selection
 # @key nodeSelector Allows you to schedule pods on a node with a label matching the given key-value pair.
 nodeSelector: {}
 # @key affinity Allows you to define affinity rules for scheduling pods, see: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
