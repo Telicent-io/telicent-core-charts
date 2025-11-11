@@ -16,18 +16,18 @@ providers:
     directory: "/app/config/routes"
     watch: false
 
-log:
-  level: {{ .Values.logs.general.level | upper }}
-
 {{- if .Values.logs.access.enabled }}
-# Note: enable access logs for development purposes only
 accessLog:
   format: common
 {{- end }}
 
 {{- if .Values.dashboard.enabled }}
-# Note: enable dashboards for development purposes only
 api:
   dashboard: true
   basepath: {{ .Values.dashboard.basepath | quote }}
 {{- end }}
+
+log:
+  level: {{ .Values.logs.general.level | upper }}
+
+# end config
