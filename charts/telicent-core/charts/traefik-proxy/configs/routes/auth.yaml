@@ -9,7 +9,7 @@ http:
         - web
       middleWares:
         - oauth2
-        - path-auth-api
+        #- path-auth-api
         - host-auth
 
     auth-oauth2:
@@ -18,7 +18,7 @@ http:
       entryPoints:
         - web
       middleWares:
-        - path-auth-oauth2
+        #- path-auth-oauth2
         - host-auth
 
   services:
