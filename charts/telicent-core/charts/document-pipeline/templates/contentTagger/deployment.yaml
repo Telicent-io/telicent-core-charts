@@ -4,7 +4,7 @@ kind: Deployment
 metadata:
   name: {{ include "content-tagger.fullname" . }}
   labels:
-    {{- include "document-pipeline.labels" . | nindent 4 }}
+    {{- include "content-tagger.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.contentTagger.replicaCount }}
   selector:
@@ -17,8 +17,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "document-pipeline.labels" . | nindent 8 }}
-        {{- include "content-tagger.selectorLabels" . | nindent 8 }}
+        {{- include "content-tagger.labels" . | nindent 8 }}
         {{- with .Values.contentTagger.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}

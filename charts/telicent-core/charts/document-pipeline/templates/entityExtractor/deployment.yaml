@@ -4,7 +4,7 @@ kind: Deployment
 metadata:
   name: {{ include "entity-extractor.fullname" . }}
   labels:
-    {{- include "document-pipeline.labels" . | nindent 4 }}
+    {{- include "entity-extractor.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.entityExtractor.replicaCount }}
   selector:
@@ -17,8 +17,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "document-pipeline.labels" . | nindent 8 }}
-        {{- include "entity-extractor.selectorLabels" . | nindent 8 }}
+        {{- include "entity-extractor.labels" . | nindent 8 }}
         {{- with .Values.entityExtractor.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}

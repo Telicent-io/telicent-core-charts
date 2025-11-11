@@ -4,7 +4,7 @@ kind: Deployment
 metadata:
   name: {{ include "catalogue-updater.fullname" . }}
   labels:
-    {{- include "document-pipeline.labels" . | nindent 4 }}
+    {{- include "catalogue-updater.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.catalogueUpdater.replicaCount }}
   selector:
@@ -17,8 +17,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "document-pipeline.labels" . | nindent 8 }}
-        {{- include "catalogue-updater.selectorLabels" . | nindent 8 }}
+        {{- include "catalogue-updater.labels" . | nindent 8 }}
         {{- with .Values.catalogueUpdater.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}

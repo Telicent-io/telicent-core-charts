@@ -4,7 +4,7 @@ kind: Deployment
 metadata:
   name: {{ include "content-extractor.fullname" . }}
   labels:
-    {{- include "document-pipeline.labels" . | nindent 4 }}
+    {{- include "content-extractor.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.contentExtractor.replicaCount }}
   selector:
@@ -17,8 +17,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "document-pipeline.labels" . | nindent 8 }}
-        {{- include "content-extractor.selectorLabels" . | nindent 8 }}
+        {{- include "content-extractor.labels" . | nindent 8 }}
         {{- with .Values.contentExtractor.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
