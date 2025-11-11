@@ -13,7 +13,7 @@ http:
         - host-auth
 
     auth-oauth2:
-      rule: {{ printf "Host(`%s`) && PathPrefix(`/oauth2`)" .Values.global.appHostDomain } }
+      rule: {{ printf "Host(`%s`) && PathPrefix(`/oauth2`)" .Values.global.appHostDomain }}
       service: auth
       entryPoints:
         - web
