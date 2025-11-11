@@ -2,23 +2,12 @@
 http:
   routers:
 
-    auth-api:
-      rule: {{ printf "Host(`%s`)" .Values.global.authHostDomain }}
+    auth:
+      rule: {{ printf "Host(`oauth.system-integration.telicent-sandbox.telicent.live`)"  }}
       service: auth
       entryPoints:
         - web
       middleWares:
-        #- oauth2
-        #- path-auth-api
-        - host-auth
-
-    auth-oauth2:
-      rule: {{ printf "Host(`%s`)" .Values.global.authHostDomain }}
-      service: auth
-      entryPoints:
-        - web
-      middleWares:
-        #- path-auth-oauth2
         - host-auth
 
   services:
@@ -28,16 +17,6 @@ http:
           - url: http://{{ .Values.hosts.auth | default (printf "%s.%s:9000" (include "traefik-proxy.routesService" (list . "auth")) .Release.Namespace) }}
 
   middlewares:
-    path-auth-api:
-      replacePathRegex:
-        regex: "^/api/auth/(.*)"
-        replacement: "/api/auth/$1"
-
-    path-auth-oauth2:
-      replacePathRegex:
-        regex: "^/oauth2(.*)"
-        replacement: "/oauth2/$1"
-
     host-auth:
       headers:
         customRequestHeaders:
