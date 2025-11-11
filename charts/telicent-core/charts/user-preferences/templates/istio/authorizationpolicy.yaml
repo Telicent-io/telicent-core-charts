@@ -12,13 +12,17 @@ metadata:
     {{- include "user-preferences.labels" . | nindent 4 }}
 
 spec:
+  selector:
+    matchLabels:
+    {{- include "user-preferences.selectorLabels" . | nindent 6 }}
+
   action: ALLOW
+
   rules:
   - from:
     - source:
         principals:
         - {{ include "user-preferences.ingressPrincipal" . }}
-
     to:
     - operation:
         methods:
@@ -30,7 +34,4 @@ spec:
         - PUT
         - PATCH
 
-  selector:
-    matchLabels:
-    {{- include "user-preferences.selectorLabels" . | nindent 6 }}
 {{- end }}
