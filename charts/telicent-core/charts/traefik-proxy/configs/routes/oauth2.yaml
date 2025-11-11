@@ -34,7 +34,7 @@ http:
 
     oauth2-verify:
       forwardAuth:
-        address: http://{{ .Values.hosts.oauth2Proxy | default (printf "%s.%s:4080" (include "traefik-proxy.routesService" (list . "oauth2-proxy")) .Release.Namespace) }}/oauth2
+        address: http://{{ .Values.hosts.auth | default (printf "%s.%s:9000" (include "traefik-proxy.routesService" (list . "auth")) .Release.Namespace) }}/oauth2
 
         trustForwardHeader: true
         authResponseHeaders:

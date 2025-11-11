@@ -1,13 +1,24 @@
 # Declare routers / services / middlewares
 http:
   routers:
-    auth:
+
+    auth-api:
       rule: {{ printf "Host(`%s`) && PathPrefix(`/api/auth`)" .Values.global.appHostDomain }}
       service: auth
       entryPoints:
         - web
       middleWares:
-        - path-auth
+        - oauth2
+        - path-auth-api
+        - host-auth
+
+    auth-oauth2:
+      rule: {{ printf "Host(`%s`) && PathPrefix(`/oauth2`)" .Values.global.appHostDomain } }
+      service: auth
+      entryPoints:
+        - web
+      middleWares:
+        - path-auth-oauth2
         - host-auth
 
   services:
@@ -17,10 +28,15 @@ http:
           - url: http://{{ .Values.hosts.auth | default (printf "%s.%s:9000" (include "traefik-proxy.routesService" (list . "auth")) .Release.Namespace) }}
 
   middlewares:
-    path-auth:
+    path-auth-api:
       replacePathRegex:
         regex: "^/api/auth/(.*)"
-        replacement: "/$1"
+        replacement: "/api/auth/$1"
+
+    path-auth-oauth2:
+      replacePathRegex:
+        regex: "^/oauth2(.*)"
+        replacement: "/oauth2/$1"
 
     host-auth:
       headers:
