@@ -3,17 +3,17 @@ http:
   routers:
 
     auth-api:
-      rule: {{ printf "Host(`%s`) && PathPrefix(`/api/auth`)" .Values.global.appHostDomain }}
+      rule: {{ printf "Host(`%s`) .Values.global.authHostDomain }}
       service: auth
       entryPoints:
         - web
       middleWares:
-        - oauth2
+        #- oauth2
         #- path-auth-api
         - host-auth
 
     auth-oauth2:
-      rule: {{ printf "Host(`%s`) && PathPrefix(`/oauth2`)" .Values.global.appHostDomain }}
+      rule: {{ printf "Host(`%s`) && PathPrefix(`/oauth2`)" .Values.global.authHostDomain }}
       service: auth
       entryPoints:
         - web

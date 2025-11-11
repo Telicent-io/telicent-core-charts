@@ -17,6 +17,7 @@ spec:
   - {{ required "A valid .Values.global.istioNamespace entry required!" .Values.global.istioNamespace }}/{{ required "A valid .Values.global.istioGatewayName entry required!"  .Values.global.istioGatewayName }}
   hosts:
   - {{ required "A valid .Values.global.appHostDomain entry required!" .Values.global.appHostDomain }}
+  - {{ required "A valid .Values.global.authHostDomain entry required!" .Values.global.authHostDomain }}
   {{- if .Values.istio.virtualService.extraHosts }}
     {{- toYaml .Values.istio.virtualService.extraHosts | nindent 2 }}
   {{- end }}
