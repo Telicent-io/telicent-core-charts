@@ -144,7 +144,7 @@ Example: overriding Search UI chart value `fullnameOverride: "search-ui"` the co
 
 | Name                    | Description                                                                                                                                                | Value |
 | ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
-| `hosts.auth`            | Auth host value, If not set a host is generated using service:'auth',port:'8080' and Release namespace & name.                                             | `""`  |
+| `hosts.auth`            | Auth host value, If not set a host is generated using service:'auth',port:'9000' and Release namespace & name.                                             | `""`  |
 | `hosts.access`          | Access host value, If not set a host is generated using service:'access',port:'8080' and Release namespace & name.                                         | `""`  |
 | `hosts.accessUi`        | Access host value, If not set a host is generated using service:'access-ui',port:'8080' and Release namespace & name.                                      | `""`  |
 | `hosts.searchUi`        | Access host value, If not set a host is generated using service:'search-ui',port:'8080' and Release namespace & name.                                      | `""`  |

@@ -403,7 +403,7 @@
             "properties": {
                 "auth": {
                     "type": "string",
-                    "description": "Auth host value, If not set a host is generated using service:'auth',port:'8080' and Release namespace & name.",
+                    "description": "Auth host value, If not set a host is generated using service:'auth',port:'9000' and Release namespace & name.",
                     "default": ""
                 },
                 "access": {
