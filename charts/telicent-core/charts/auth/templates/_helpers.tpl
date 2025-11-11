@@ -82,6 +82,3 @@ Create the name of the clients config map
 {{- end }}
 {{- end }}
 
-{{- define "auth.ingressPrincipal" -}}
-{{- .Values.istio.ingress.principal | default (printf "cluster.local/ns/%s/sa/%s" .Values.global.istioNamespace .Values.global.istioServiceAccountName) | quote }}
-{{- end }}
