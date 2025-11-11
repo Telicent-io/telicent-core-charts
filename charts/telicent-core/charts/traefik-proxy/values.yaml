@@ -21,7 +21,7 @@ global:
   # @key global.appHostDomain Domain associated with Telicent application services
   appHostDomain: "apps.telicent.io"
   # @key global.authHostDomain Domain associated with Telicent authentication services, including OIDC providers
-  authHostDomain: "auth.telicent.io"
+  authHostDomain: "oauth.system-integration.telicent-sandbox.telicent.live"
   # @key global.groupsClaim Key used to retrieve groups from the OIDC provider
   groupsClaim: "groups"
   # @key global.istioNamespace Namespace in which Istio is deployed
