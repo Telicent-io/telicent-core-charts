@@ -401,54 +401,59 @@
         "hosts": {
             "type": "object",
             "properties": {
+                "auth": {
+                    "type": "string",
+                    "description": "Auth host value, If not set a host is generated using service:'auth',port:'8080' and Release namespace & name.",
+                    "default": ""
+                },
                 "access": {
                     "type": "string",
-                    "description": "Access host value, If not set a host is generated using service:'access', port:'8080' and Release namespace & name.",
+                    "description": "Access host value, If not set a host is generated using service:'access',port:'8080' and Release namespace & name.",
                     "default": ""
                 },
                 "accessUi": {
                     "type": "string",
-                    "description": "Access host value, If not set a host is generated using service:'access-ui', port:'8080' and Release namespace & name.",
+                    "description": "Access host value, If not set a host is generated using service:'access-ui',port:'8080' and Release namespace & name.",
                     "default": ""
                 },
                 "searchUi": {
                     "type": "string",
-                    "description": "Access host value, If not set a host is generated using service:'search-ui', port:'8080' and Release namespace & name.",
+                    "description": "Access host value, If not set a host is generated using service:'search-ui',port:'8080' and Release namespace & name.",
                     "default": ""
                 },
                 "graphUi": {
                     "type": "string",
-                    "description": "Graph UI host value, If not set a host is generated using service:'graph-ui', port:'8080' and Release namespace & name.",
+                    "description": "Graph UI host value, If not set a host is generated using service:'graph-ui',port:'8080' and Release namespace & name.",
                     "default": ""
                 },
                 "queryUi": {
                     "type": "string",
-                    "description": "Query UI host value, If not set a host is generated using service:'query-ui', port:'8080' and Release namespace & name.",
+                    "description": "Query UI host value, If not set a host is generated using service:'query-ui',port:'8080' and Release namespace & name.",
                     "default": ""
                 },
                 "search": {
                     "type": "string",
-                    "description": "Search host value, If not set a host is generated using service:'search', port:'8181' and Release namespace & name.",
+                    "description": "Search host value, If not set a host is generated using service:'search',port:'8181' and Release namespace & name.",
                     "default": ""
                 },
                 "graph": {
                     "type": "string",
-                    "description": "Graph host value, If not set a host is generated using service:'graph', port:'3030' and Release namespace & name.",
+                    "description": "Graph host value, If not set a host is generated using service:'graph',port:'3030' and Release namespace & name.",
                     "default": ""
                 },
                 "userPreferences": {
                     "type": "string",
-                    "description": "User Preferences host value, If not set a host is generated using service:'user-preferences', port:'11111' and Release namespace & name.",
+                    "description": "User Preferences host value, If not set a host is generated using service:'user-preferences',port:'11111' and Release namespace & name.",
                     "default": ""
                 },
                 "oauth2Proxy": {
                     "type": "string",
-                    "description": "Oauth2 Proxy host value, If not set a host is generated using service:'oauth2-proxy', port:'4080' and Release namespace & name.",
+                    "description": "Oauth2 Proxy host value, If not set a host is generated using service:'oauth2-proxy',port:'4080' and Release namespace & name.",
                     "default": ""
                 },
                 "whoami": {
                     "type": "string",
-                    "description": "Whoami host value, If not set a host is generated using service:'whoami', port:'8080' and Release namespace & name. AB:test purposes, be removed afterwards",
+                    "description": "Whoami host value, If not set a host is generated using service:'whoami',port:'8080' and Release namespace & name. AB:test purposes, be removed afterwards",
                     "default": ""
                 }
             }

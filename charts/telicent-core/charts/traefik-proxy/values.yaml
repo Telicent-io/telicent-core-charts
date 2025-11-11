@@ -193,23 +193,25 @@ istio:
 # Example: overriding Search UI chart value `fullnameOverride: "search-ui"` the correct host value would be `searchUi:"search-ui:8080"`
 # @descEnd
 hosts:
-  # @key hosts.access Access host value, If not set a host is generated using service:'access', port:'8080' and Release namespace & name.
+  # @key hosts.auth Auth host value, If not set a host is generated using service:'auth',port:'9000' and Release namespace & name.
+  auth: ""
+  # @key hosts.access Access host value, If not set a host is generated using service:'access',port:'8080' and Release namespace & name.
   access: ""
-  # @key hosts.accessUi Access host value, If not set a host is generated using service:'access-ui', port:'8080' and Release namespace & name.
+  # @key hosts.accessUi Access host value, If not set a host is generated using service:'access-ui',port:'8080' and Release namespace & name.
   accessUi: ""
-  # @key hosts.searchUi Access host value, If not set a host is generated using service:'search-ui', port:'8080' and Release namespace & name.
+  # @key hosts.searchUi Access host value, If not set a host is generated using service:'search-ui',port:'8080' and Release namespace & name.
   searchUi: ""
-  # @key hosts.graphUi Graph UI host value, If not set a host is generated using service:'graph-ui', port:'8080' and Release namespace & name.
+  # @key hosts.graphUi Graph UI host value, If not set a host is generated using service:'graph-ui',port:'8080' and Release namespace & name.
   graphUi: ""
-  # @key hosts.queryUi Query UI host value, If not set a host is generated using service:'query-ui', port:'8080' and Release namespace & name.
+  # @key hosts.queryUi Query UI host value, If not set a host is generated using service:'query-ui',port:'8080' and Release namespace & name.
   queryUi: ""
-  # @key hosts.search Search host value, If not set a host is generated using service:'search', port:'8181' and Release namespace & name.
+  # @key hosts.search Search host value, If not set a host is generated using service:'search',port:'8181' and Release namespace & name.
   search: ""
-  # @key hosts.graph Graph host value, If not set a host is generated using service:'graph', port:'3030' and Release namespace & name.
+  # @key hosts.graph Graph host value, If not set a host is generated using service:'graph',port:'3030' and Release namespace & name.
   graph: ""
-  # @key hosts.userPreferences User Preferences host value, If not set a host is generated using service:'user-preferences', port:'11111' and Release namespace & name.
+  # @key hosts.userPreferences User Preferences host value, If not set a host is generated using service:'user-preferences',port:'11111' and Release namespace & name.
   userPreferences: ""
-  # @key hosts.oauth2Proxy Oauth2 Proxy host value, If not set a host is generated using service:'oauth2-proxy', port:'4080' and Release namespace & name.
+  # @key hosts.oauth2Proxy Oauth2 Proxy host value, If not set a host is generated using service:'oauth2-proxy',port:'4080' and Release namespace & name.
   oauth2Proxy: ""
-  # @key hosts.whoami Whoami host value, If not set a host is generated using service:'whoami', port:'8080' and Release namespace & name. AB:test purposes, be removed afterwards
+  # @key hosts.whoami Whoami host value, If not set a host is generated using service:'whoami',port:'8080' and Release namespace & name. AB:test purposes, be removed afterwards
   whoami: ""
