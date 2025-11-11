@@ -146,8 +146,10 @@ service:
 
 istio:
   ingress:
-    # @key istio.ingress.principal Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName'
+    # @key istio.ingress.principal Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName
     principal: ""
+    # @key istio.ingress.serviceAccountName Name of the Ingress service account (traefik and istio supported)
+    serviceAccountName: "traefik-proxy"
 
 # @section Extra Containers Parameters
 # @key extraContainers Additional containers to be added to the pod

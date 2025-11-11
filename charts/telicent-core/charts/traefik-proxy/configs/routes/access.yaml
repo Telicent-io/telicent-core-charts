@@ -1,0 +1,30 @@
+# Declare routers / services / middlewares
+http:
+  routers:
+    access:
+      rule: {{ printf "Host(`%s`) && PathPrefix(`/api/access`)" .Values.global.appHostDomain }}
+      service: access
+      entryPoints:
+        - web
+      middleWares:
+        - oauth2
+        - path-access
+        - host-access
+
+  services:
+    access:
+      loadBalancer:
+        servers:
+          - url: http://{{ .Values.hosts.access | default (printf "%s.%s:8080" (include "traefik-proxy.routesService" (list . "access")) .Release.Namespace) }}
+
+  middlewares:
+    path-access:
+      replacePathRegex:
+        regex: "^/api/access/(.*)"
+        replacement: "/$1"
+
+    host-access:
+      headers:
+        customRequestHeaders:
+          host: {{ .Values.hosts.access | default (printf "%s.%s:8080" (include "traefik-proxy.routesService" (list . "access")) .Release.Namespace) }}
+

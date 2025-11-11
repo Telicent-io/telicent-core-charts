@@ -57,7 +57,7 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 Create the name of the service account to use
 */}}
 {{- define "access-ui.serviceAccountName" -}}
-{{- default (include "access-ui.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "access-ui.name" .) .Values.serviceAccount.name }}
 {{- end }}
 
 {{/*
@@ -74,6 +74,3 @@ Create the name of the config map
 {{- printf "%s-%s" (include "access-ui.fullname" .) "env-config" }}
 {{- end }}
 
-{{- define "access-ui.ingressPrincipal" -}}
-{{- .Values.istio.ingress.principal | default (printf "cluster.local/ns/%s/sa/%s" .Values.global.istioNamespace .Values.global.istioServiceAccountName) | quote }}
-{{- end }}

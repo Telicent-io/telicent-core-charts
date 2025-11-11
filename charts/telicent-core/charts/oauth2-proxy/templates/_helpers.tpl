@@ -1,9 +1,24 @@
 {{/*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
+{{/*
 Expand the name of the chart.
 */}}
 {{- define "oauth2-proxy.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
+
+{{/*
+Allow the release namespace to be overridden.
+*/}}
+{{- define "oauth2-prox.namespace" -}}
+{{- if .Values.namespaceOverride -}}
+{{- .Values.namespaceOverride -}}
+{{- else -}}
+{{- .Release.Namespace -}}
+{{- end -}}
+{{- end -}}
 
 {{/*
 Create a default fully qualified app name.
@@ -30,55 +45,27 @@ Create chart name and version as used by the chart label.
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
-
 {{/*
 Common labels
 */}}
 {{- define "oauth2-proxy.labels" -}}
 helm.sh/chart: {{ include "oauth2-proxy.chart" . }}
-{{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
-{{- end }}
-app.kubernetes.io/app: {{ include "oauth2-proxy.name" . }}
+{{ include "oauth2-proxy.selectorLabels" . }}
+app.kubernetes.io/version: {{ include "oauth2-proxy.version" . | quote }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
+telicent.io/resource: "true"
+app: {{ include "oauth2-proxy.name" . }}
+{{- range $key, $value := .Values.commonLabels }}
+{{ $key }}: {{ $value | quote }}
+{{- end }}
 {{- end }}
 
 {{/*
-Internal labels
+Selector labels
 */}}
-{{- define "oauth2-proxy.internalLabels" -}}
-helm.sh/chart: {{ include "oauth2-proxy.chart" . }}
-{{ include "oauth2-proxy.internalSelectorLabels" . }}
-{{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
-{{- end }}
-app.kubernetes.io/managed-by: {{ .Release.Service }}
-{{- end }}
-
-{{/*
-External labels
-*/}}
-{{- define "oauth2-proxy.externalLabels" -}}
-helm.sh/chart: {{ include "oauth2-proxy.chart" . }}
-{{ include "oauth2-proxy.externalSelectorLabels" . }}
-{{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
-{{- end }}
-app.kubernetes.io/managed-by: {{ .Release.Service }}
-{{- end }}
-
-{{/*
-Internal Selector labels
-*/}}
-{{- define "oauth2-proxy.internalSelectorLabels" -}}
-app.kubernetes.io/component: internal
-{{- end }}
-
-{{/*
-Internal Selector labels
-*/}}
-{{- define "oauth2-proxy.externalSelectorLabels" -}}
-app.kubernetes.io/component: external
+{{- define "oauth2-proxy.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "oauth2-proxy.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
@@ -86,71 +73,16 @@ Create the name of the service account to use
 */}}
 {{- define "oauth2-proxy.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "oauth2-proxy.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "oauth2-proxy.name" .) .Values.serviceAccount.name }}
 {{- else }}
-{{- default "default" .Values.serviceAccount.name }}
+{{- .Values.serviceAccount.name | default "default" }}
 {{- end }}
 {{- end }}
 
 {{/*
-Create the name of the environment secrets
+Create the name of the service to use
 */}}
-{{- define "oauth2-proxy.envSecretName" -}}
-{{- if .Values.existingEnvSecretName -}}
-{{- .Values.existingEnvSecretName }}
-{{- else }}
-{{- printf "%s-%s" (include "oauth2-proxy.fullname" .) "env" }}
-{{- end }}
+{{- define "oauth2-proxy.serviceName" -}}
+{{- include "oauth2-proxy.fullname" . }}
 {{- end }}
 
-{{/*
-Create the name of the internal configMap
-*/}}
-{{- define "oauth2-proxy.internalEnvConfigmapName" -}}
-{{- if .Values.existingEnvConfigmapName -}}
-{{- .Values.existingEnvConfigmapName }}
-{{- else }}
-{{- printf "%s-%s-%s" (include "oauth2-proxy.fullname" .) "internal" "env" }}
-{{- end }}
-{{- end }}
-
-{{/*
-Create the name of the external configMap
-*/}}
-{{- define "oauth2-proxy.externalEnvConfigmapName" -}}
-{{- if .Values.existingEnvConfigmapName -}}
-{{- .Values.existingEnvConfigmapName }}
-{{- else }}
-{{- printf "%s-%s-%s" (include "oauth2-proxy.fullname" .) "external" "env" }}
-{{- end }}
-{{- end }}
-
-{{/*
-Create the name of the config map
-*/}}
-{{- define "oauth2-proxy.cacertConfigmapName" -}}
-{{- if .Values.existingCacertConfigmapName -}}
-{{- .Values.existingCacertConfigmapName }}
-{{- else }}
-{{- printf "%s-%s" (include "oauth2-proxy.fullname" .) "cacert" }}
-{{- end }}
-{{- end }}
-
-{{/*
-Create the oidcRedirectURL
-*/}}
-{{- define "oauth2-proxy.oidcRedirectUrl" -}}
-{{- if .Values.configuration.redirectURLOverride }}
-{{- .Values.configuration.redirectUrlOverride }}
-{{- else }}
-{{- printf "https://%s/oauth2/callback" .Values.global.appHostDomain }}
-{{- end }}
-{{- end }}
-
-{{/*
-{{- printf "%s/oauth2/callback" .Values.global.appHostDomain }}
-*/}}
-
-{{- define "oauth2-proxy.ingressPrincipal" -}}
-{{- .Values.istio.ingress.principal | default (printf "cluster.local/ns/%s/sa/%s" .Values.global.istioNamespace .Values.global.istioServiceAccountName) | quote }}
-{{- end }}

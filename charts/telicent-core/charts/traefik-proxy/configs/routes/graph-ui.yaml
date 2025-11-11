@@ -1,0 +1,30 @@
+# Declare routers / services / middlewares
+http:
+  routers:
+    graph-ui:
+      rule: {{ printf "Host(`%s`) && PathPrefix(`/graph`)" .Values.global.appHostDomain }}
+      service: graph-ui
+      entryPoints:
+        - web
+      middleWares:
+        - oauth2
+        - path-graph-ui
+        - host-graph-ui
+
+  services:
+    graph-ui:
+      loadBalancer:
+        servers:
+          - url: http://{{ .Values.hosts.graphUi | default (printf "%s.%s:8080" (include "traefik-proxy.routesService" (list . "graph-ui")) .Release.Namespace) }}
+
+  middlewares:
+    path-graph-ui:
+      replacePathRegex:
+        regex: "^/graph(.*)"
+        replacement: "/graph/$1"
+
+    host-graph-ui:
+      headers:
+        customRequestHeaders:
+          host: {{ .Values.hosts.graphUi | default (printf "%s.%s:8080" (include "traefik-proxy.routesService" (list . "graph-ui")) .Release.Namespace) }}
+

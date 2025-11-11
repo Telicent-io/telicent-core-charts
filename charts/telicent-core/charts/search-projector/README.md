@@ -66,26 +66,24 @@ Contains global parameters, these parameters are mirrored within the Telicent co
 | `global.truststore.existingSecretName`  | Name of an existing secret containing the truststore                              | `""`                                             |
 | `global.truststore.mountPath`           | The mount path for the truststore in the container                                | `/app/config/truststore`                         |
 
-### Search Projector Parameters
-
-
-### Configuration Parameters - Search Projector
+### Configuration Parameters
 
 Contains configuration parameters specific to the Search Projector application
 
-| Name                                    | Description                           | Value                                                                                        |
-| --------------------------------------- | ------------------------------------- | -------------------------------------------------------------------------------------------- |
-| `configuration.javaOptions`             | JVM options for the application       | `-XX:MaxRAMPercentage=70.0 -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks` |
-| `configuration.otelMetricsExporter`     | OpenTelemetry metrics exporter        | `prometheus`                                                                                 |
-| `configuration.otelTracesExporter`      | OpenTelemetry traces exporter         | `none`                                                                                       |
-| `configuration.elasticHost`             | OpenSearch host                       | `https://your.opensearch.host.here:443`                                                      |
-| `configuration.elasticPort`             | OpenSearch port number                | `443`                                                                                        |
-| `configuration.elasticClusterPort`      | OpenSearch cluster port               | `9200`                                                                                       |
-| `configuration.opensearchCompatibility` | Enable OpenSearch compatibility       | `true`                                                                                       |
-| `configuration.elasticIndex`            | Name of the index in OpenSearch       | `search`                                                                                     |
-| `configuration.topic`                   | Topic to consume messages from        | `knowledge`                                                                                  |
-| `configuration.dlqTopic`                | Dead-letter topic for failed messages | `knowledge.dlq`                                                                              |
-| `configuration.indexBatchSize`          | Batch size for indexing documents     | `500`                                                                                        |
+| Name                                    | Description                                                                      | Value                                                                                        |
+| --------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| `configuration.existingEnvConfigMap`    | Name of existing configmap containing Search Projector Environment Configuration | `""`                                                                                         |
+| `configuration.javaOptions`             | JVM options for the application                                                  | `-XX:MaxRAMPercentage=70.0 -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks` |
+| `configuration.otelMetricsExporter`     | OpenTelemetry metrics exporter                                                   | `prometheus`                                                                                 |
+| `configuration.otelTracesExporter`      | OpenTelemetry traces exporter                                                    | `none`                                                                                       |
+| `configuration.elasticHost`             | OpenSearch host                                                                  | `https://your.opensearch.host.here:443`                                                      |
+| `configuration.elasticPort`             | OpenSearch port number                                                           | `443`                                                                                        |
+| `configuration.elasticClusterPort`      | OpenSearch cluster port                                                          | `9200`                                                                                       |
+| `configuration.opensearchCompatibility` | Enable OpenSearch compatibility                                                  | `true`                                                                                       |
+| `configuration.elasticIndex`            | Name of the index in OpenSearch                                                  | `search`                                                                                     |
+| `configuration.topic`                   | Topic to consume messages from                                                   | `knowledge`                                                                                  |
+| `configuration.dlqTopic`                | Dead-letter topic for failed messages                                            | `knowledge.dlq`                                                                              |
+| `configuration.indexBatchSize`          | Batch size for indexing documents                                                | `500`                                                                                        |
 
 ### OpenSearch/Elastic secret - Search Projector
 
@@ -95,7 +93,14 @@ Contains configuration parameters specific to the Search Projector application
 | `elasticSecret.username`       | OpenSearch/Elastic username                                            | `""`  |
 | `elasticSecret.password`       | OpenSearch/Elastic user password                                       | `""`  |
 
-### Deployment Parameters - Search Projector
+### Common Parameters
+
+| Name               | Description                                                            | Value |
+| ------------------ | ---------------------------------------------------------------------- | ----- |
+| `fullnameOverride` | String to fully override the generated release name                    | `""`  |
+| `nameOverride`     | String to partially override fullname (will maintain the release name) | `""`  |
+
+### Deployment Parameters
 
 | Name                                                | Description                                                                     | Value                                       |
 | --------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------- |
@@ -124,14 +129,14 @@ Contains configuration parameters specific to the Search Projector application
 | `podSecurityContext.fsGroup`                        | Set the provisioning pod's Group ID for the mounted volumes' filesystem         | `185`                                       |
 | `podSecurityContext.seccompProfile.type`            | Set the provisioning pod's Security Context seccomp profile                     | `RuntimeDefault`                            |
 
-### Metrics Parameters - Search Projector
+### Metrics Parameters
 
 | Name                   | Description                     | Value     |
 | ---------------------- | ------------------------------- | --------- |
 | `metrics.service.name` | Name for the Prometheus service | `metrics` |
 | `metrics.service.port` | Port for the Prometheus service | `9464`    |
 
-### Traffic Exposure Parameters - Search Projector
+### Traffic Exposure Parameters
 
 | Name           | Description                   | Value       |
 | -------------- | ----------------------------- | ----------- |
@@ -144,7 +149,7 @@ Contains configuration parameters specific to the Search Projector application
 | ----------------- | -------------------------------------------- | ----- |
 | `extraContainers` | Additional containers to be added to the pod | `[]`  |
 
-### Service Account Parameters - Search Projector
+### Service Account Parameters
 
 | Name                         | Description                                                                           | Value |
 | ---------------------------- | ------------------------------------------------------------------------------------- | ----- |

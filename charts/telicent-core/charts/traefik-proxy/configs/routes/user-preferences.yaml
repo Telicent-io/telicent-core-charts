@@ -1,0 +1,30 @@
+# Declare routers / services / middlewares
+http:
+  routers:
+    user-preferences:
+      rule: {{ printf "Host(`%s`) && PathPrefix(`/api/user-preferences`)" .Values.global.appHostDomain }}
+      service: user-preferences
+      entryPoints:
+        - web
+      middleWares:
+        - oauth2
+        - path-user-preferences
+        - host-user-preferences
+
+  services:
+    user-preferences:
+      loadBalancer:
+        servers:
+          - url: http://{{ .Values.hosts.userPreferences | default (printf "%s.%s:11111" (include "traefik-proxy.routesService" (list . "user-preferences")) .Release.Namespace) }}
+
+  middlewares:
+    path-user-preferences:
+      replacePathRegex:
+        regex: "^/api/user-preferences/(.*)"
+        replacement: "/$1"
+
+    host-user-preferences:
+      headers:
+        customRequestHeaders:
+          host: {{ .Values.hosts.userPeferences | default (printf "%s.%s:11111" (include "traefik-proxy.routesService" (list . "user-preferences")) .Release.Namespace) }}
+

@@ -1,0 +1,30 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
+{{- if .Values.istio.virtualService.enabled }}
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+
+metadata:
+  name: {{ include "oauth2-proxy.fullname" . }}
+  namespace: {{ include "oauth2-prox.namespace" . | quote }}
+  labels:
+    {{- include "oauth2-proxy.labels" . | nindent 4 }}
+
+spec:
+  gateways:
+  - {{ required "A valid .Values.global.istioNamespace entry required!" .Values.global.istioNamespace }}/{{ required "A valid .Values.global.istioGatewayName entry required!" .Values.global.istioGatewayName }}
+  hosts:
+  - {{ .Values.istio.virtualService.host | default .Values.global.appHostDomain }}
+  http:
+  - match:
+    - uri:
+        prefix: /oauth2
+    route:
+    - destination:
+        host: {{ include "oauth2-proxy.serviceName" . }}
+        port:
+          number: {{ .Values.service.port }}
+
+{{- end }}

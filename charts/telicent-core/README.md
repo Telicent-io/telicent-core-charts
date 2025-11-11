@@ -113,6 +113,7 @@ They are addressed by their names, and each subchart has its own set of configur
 | Graph | XX | [graph](./charts/graph/README.md) |
 | Graph UI | XX | [graph-ui](./charts/graph-ui/README.md) |
 | Oauth2 Proxy | XX | [oauth2-proxy](charts/oauth2-proxy/README.md) |
+| Traefik Proxy | XX | [traefik-proxy](charts/traefik-proxy/README.md) |
 | Paperback Writer | XX | [paperback-writer](./charts/paperback-writer/README.md) |
 | Query UI | XX | [query-ui](./charts/query-ui/README.md) |
 | Search | XX | [search](./charts/search/README.md) |

@@ -1,10 +1,20 @@
 {{- if .Values.enabled -}}
+
 apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
+
 metadata:
-  name: allow-internal-access-to-api
+  name: {{ include "document-pipeline.fullname" . }}-ingress
+  labels:
+  {{- include "document-pipeline.labels" . | nindent 4 }}
+
 spec:
+  selector:
+    matchLabels:
+    {{- include "http-ingester.selectorLabels" . | nindent 6 }}
+
   action: ALLOW
+
   rules:
   - from:
     - source:
@@ -14,7 +24,5 @@ spec:
     - operation:
         methods:
         - '*'
-  selector:
-    matchLabels:
-    {{- include "http-ingester.selectorLabels" . | nindent 6 }}
+
 {{- end -}}

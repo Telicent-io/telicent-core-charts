@@ -1,0 +1,30 @@
+# Declare routers / services / middlewares
+http:
+  routers:
+    search:
+      rule: {{ printf "Host(`%s`) && PathPrefix(`/api/search`)" .Values.global.appHostDomain }}
+      service: search
+      entryPoints:
+        - web
+      middleWares:
+        - oauth2
+        - path-search
+        - host-search
+
+  services:
+    search:
+      loadBalancer:
+        servers:
+          - url: http://{{ .Values.hosts.search | default (printf "%s.%s:8181" (include "traefik-proxy.routesService" (list . "search")) .Release.Namespace) }}
+
+  middlewares:
+    path-search:
+      replacePathRegex:
+        regex: "^/api/search/(.*)"
+        replacement: "/$1"
+
+    host-search:
+      headers:
+        customRequestHeaders:
+          host: {{ .Values.hosts.search | default (printf "%s.%s:8181" (include "traefik-proxy.routesService" (list . "search")) .Release.Namespace) }}
+

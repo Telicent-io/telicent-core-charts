@@ -87,6 +87,7 @@ If set, it can generate multiple layers from any map service that adheres to the
 | --------------------------------------------------- | ------------------------------------------------------------------------- | --------------------------------- |
 | `replicas`                                          | Number of Search UI replicas to deploy                                    | `1`                               |
 | `revisionHistoryLimit`                              | Number of controller revisions to keep                                    | `5`                               |
+| `annotations`                                       | Add extra annotations to the Deployment Object                            | `{}`                              |
 | `image.registry`                                    | Search UI image registry                                                  | `REGISTRY_NAME`                   |
 | `image.repository`                                  | Search UI image name                                                      | `REPOSITORY_NAME/telicent-search` |
 | `image.tag`                                         | Seearch UI image tag. If not set, a tag is generated using the appVersion | `""`                              |
@@ -113,11 +114,12 @@ If set, it can generate multiple layers from any map service that adheres to the
 
 ### Traffic Exposure Parameters
 
-| Name                      | Description                                                                                                                                                                  | Value       |
-| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| `service.port`            | Search UI service port                                                                                                                                                       | `8080`      |
-| `service.type`            | Search UI service type                                                                                                                                                       | `ClusterIP` |
-| `istio.ingress.principal` | Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName' | `""`        |
+| Name                               | Description                                                                                                                                              | Value           |
+| ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- |
+| `service.port`                     | Search UI service port                                                                                                                                   | `8080`          |
+| `service.type`                     | Search UI service type                                                                                                                                   | `ClusterIP`     |
+| `istio.ingress.principal`          | Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName | `""`            |
+| `istio.ingress.serviceAccountName` | Name of the Ingress service account (traefik and istio supported)                                                                                        | `traefik-proxy` |
 
 ### Extra Containers Parameters
 

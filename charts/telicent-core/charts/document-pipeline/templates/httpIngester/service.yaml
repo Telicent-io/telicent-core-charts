@@ -4,8 +4,7 @@ kind: Service
 metadata:
   name: {{ include "http-ingester.fullname" . }}
   labels:
-    {{- include "document-pipeline.labels" . | nindent 4 }}
-    {{- include "http-ingester.selectorLabels" . | nindent 4 }}
+    {{- include "http-ingester.labels" . | nindent 4 }}
 spec:
   type: ClusterIP
   ports:

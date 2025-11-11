@@ -57,7 +57,7 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 Create the name of the service account to use
 */}}
 {{- define "access.serviceAccountName" -}}
-{{- default (include "access.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "access.name" .) .Values.serviceAccount.name }}
 {{- end }}
 
 {{/*
@@ -79,17 +79,6 @@ Create the name of the config map
 {{- end }}
 
 {{/*
-Create the name of the environment secrets
-*/}}
-{{- define "access.envSecretName" -}}
-{{- if .Values.mongo.existingMongoPasswordSecret }}
-{{- .Values.mongo.existingMongoPasswordSecret }}
-{{- else }}
-{{- printf "%s-%s" (include "access.fullname" .) "env" }}
-{{- end }}
-{{- end -}}
-
-{{/*
 Create the name of the CA config map
 */}}
 {{- define "access.cacertConfigmapName" -}}
@@ -99,4 +88,3 @@ Create the name of the CA config map
 {{- printf "%s-%s" (include "access.fullname" .) "cacert" }}
 {{- end }}
 {{- end }}
-

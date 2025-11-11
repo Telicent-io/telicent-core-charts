@@ -72,14 +72,15 @@ Contains global parameters, these parameters are mirrored within the Telicent co
 
 Contains configuration parameters specific to the Graph application
 
-| Name                                  | Description                         | Value                                                                                  |
-| ------------------------------------- | ----------------------------------- | -------------------------------------------------------------------------------------- |
-| `configuration.userAttributesUrl`     | URL for the user details endpoint   | `""`                                                                                   |
-| `configuration.attributeHierarchyUrl` | URL for the user hierarchy endpoint | `""`                                                                                   |
-| `configuration.javaOptions`           | JVM options for the application     | `-Xmx5120m -Xms2048m -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks` |
-| `configuration.otelMetricsExporter`   | OpenTelemetry metrics exporter      | `prometheus`                                                                           |
-| `configuration.otelTracesExporter`    | OpenTelemetry traces exporter       | `none`                                                                                 |
-| `configuration.enableLabelsQuery`     | Enable labels query endpoint        | `true`                                                                                 |
+| Name                                  | Description                                                           | Value                                                                                  |
+| ------------------------------------- | --------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| `configuration.existingEnvConfigMap`  | Name of existing configmap containing Graph Environment Configuration | `""`                                                                                   |
+| `configuration.userAttributesUrl`     | URL for the user details endpoint                                     | `""`                                                                                   |
+| `configuration.attributeHierarchyUrl` | URL for the user hierarchy endpoint                                   | `""`                                                                                   |
+| `configuration.javaOptions`           | JVM options for the application                                       | `-Xmx5120m -Xms2048m -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks` |
+| `configuration.otelMetricsExporter`   | OpenTelemetry metrics exporter                                        | `prometheus`                                                                           |
+| `configuration.otelTracesExporter`    | OpenTelemetry traces exporter                                         | `none`                                                                                 |
+| `configuration.enableLabelsQuery`     | Enable labels query endpoint                                          | `true`                                                                                 |
 
 ### Common Parameters
 
@@ -88,7 +89,7 @@ Contains configuration parameters specific to the Graph application
 | `fullnameOverride` | String to fully override the generated release name                    | `""`  |
 | `nameOverride`     | String to partially override fullname (will maintain the release name) | `""`  |
 
-### Graph Statefulset Parameters
+### Statefulset Parameters
 
 | Name                                                | Description                                                             | Value                               |
 | --------------------------------------------------- | ----------------------------------------------------------------------- | ----------------------------------- |
@@ -135,11 +136,12 @@ Contains configuration parameters specific to the Graph application
 
 ### Traffic Exposure Parameters
 
-| Name                      | Description                                                                                                                                                                  | Value       |
-| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| `service.port`            | Graph service port                                                                                                                                                           | `3030`      |
-| `service.type`            | Graph service type                                                                                                                                                           | `ClusterIP` |
-| `istio.ingress.principal` | Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName' | `""`        |
+| Name                               | Description                                                                                                                                               | Value           |
+| ---------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- |
+| `service.port`                     | Graph service port                                                                                                                                        | `3030`          |
+| `service.type`                     | Graph service type                                                                                                                                        | `ClusterIP`     |
+| `istio.ingress.principal`          | Principal used for ingress traffic by the Istio AuthorizationPolicy.  If not set, a principal is generated using Release namespace and serviceAccountName | `""`            |
+| `istio.ingress.serviceAccountName` | Name of the Ingress service account (traefik and istio supported)                                                                                         | `traefik-proxy` |
 
 ### Extra Containers Parameters
 

@@ -81,6 +81,11 @@
         "configuration": {
             "type": "object",
             "properties": {
+                "existingEnvConfigMap": {
+                    "type": "string",
+                    "description": "Name of existing configmap containing User Preferences Environment Configuration",
+                    "default": ""
+                },
                 "javaOptions": {
                     "type": "string",
                     "description": "JVM options for the application",
@@ -133,6 +138,16 @@
                 }
             }
         },
+        "nameOverride": {
+            "type": "string",
+            "description": "String to partially override fullname (will maintain the release name)",
+            "default": ""
+        },
+        "fullnameOverride": {
+            "type": "string",
+            "description": "String to fully override the generated release name",
+            "default": ""
+        },
         "replicas": {
             "type": "number",
             "description": "Number of User Preferences API replicas to deploy",
@@ -147,6 +162,12 @@
             "type": "object",
             "description": "Add extra annotations to the Deployment object",
             "default": {}
+        },
+        "extraEnvs": {
+            "type": "array",
+            "description": "List of Additional environment variables to set in the pod",
+            "default": [],
+            "items": {}
         },
         "image": {
             "type": "object",
@@ -342,8 +363,13 @@
                     "properties": {
                         "principal": {
                             "type": "string",
-                            "description": "Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName'",
+                            "description": "Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName",
                             "default": ""
+                        },
+                        "serviceAccountName": {
+                            "type": "string",
+                            "description": "Name of the Ingress service account (traefik and istio supported)",
+                            "default": "traefik-proxy"
                         }
                     }
                 }

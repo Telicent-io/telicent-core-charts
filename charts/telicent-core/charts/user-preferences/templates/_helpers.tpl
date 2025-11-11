@@ -57,7 +57,7 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 Create the name of the service account to use
 */}}
 {{- define "user-preferences.serviceAccountName" -}}
-{{- default (include "user-preferences.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "user-preferences.name" .) .Values.serviceAccount.name }}
 {{ end }}
 
 {{/*
@@ -74,9 +74,9 @@ Create the name of the service to use
 {{/*
 Create the name of the config map
 */}}
-{{- define "user-preferences.envConfigmapName" -}}
-{{- if .Values.existingConfigmap }}
-{{- .Values.existingConfigmap }}
+{{- define "user-preferences.envConfigMapName" -}}
+{{- if .Values.configuration.existingEnvConfigMap }}
+{{- .Values.configuration.existingEnvConfigMap }}
 {{- else }}
 {{- printf "%s-%s" (include "user-preferences.fullname" .) "env" }}
 {{- end }}
@@ -103,6 +103,3 @@ Create MongoPassword name to use
 {{ include "user-preferences.fullname" . }}-secret
 {{- end }}
 
-{{- define "user-preferences.ingressPrincipal" -}}
-{{- .Values.istio.ingress.principal | default (printf "cluster.local/ns/%s/sa/%s" .Values.global.istioNamespace .Values.global.istioServiceAccountName) | quote }}
-{{- end }}

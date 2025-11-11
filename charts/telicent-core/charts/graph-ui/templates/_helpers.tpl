@@ -57,7 +57,7 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 Create the name of the service account to use
 */}}
 {{- define "graph-ui.serviceAccountName" -}}
-{{- default (include "graph-ui.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "graph-ui.name" .) .Values.serviceAccount.name }}
 {{- end }}
 
 {{/*
@@ -81,6 +81,3 @@ Create the name of the config secret
 {{- printf "%s-%s" (include "graph-ui.fullname" .) "secret-config-js" }}
 {{- end }}
 
-{{- define "graph-ui.ingressPrincipal" -}}
-{{- .Values.istio.ingress.principal | default (printf "cluster.local/ns/%s/sa/%s" .Values.global.istioNamespace .Values.global.istioServiceAccountName) | quote }}
-{{- end }}

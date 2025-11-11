@@ -60,6 +60,10 @@ global:
 # Contains configuration parameters specific to the Smart Cach Search application
 # @descEnd
 configuration:
+  # @key configuration.existingEnvConfigMap Name of existing configmap containing Search Environment Configuration
+  # Note: When it's set it will disable configmap creation.
+  existingEnvConfigMap: ""
+  
   # @key configuration.userAttributesUrl URL for the user details endpoint
   userAttributesUrl: ""
   # @key configuration.attributeHierarchyUrl URL for the user hierarchy endpoint
@@ -190,8 +194,10 @@ service:
 
 istio:
   ingress:
-    # @key istio.ingress.principal Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName'
+    # @key istio.ingress.principal Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName
     principal: ""
+    # @key istio.ingress.serviceAccountName Name of the Ingress service account (traefik and istio supported)
+    serviceAccountName: "traefik-proxy"
 
   graph:
     # @key istio.graph.principal Principal used for Graph traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'serviceAccountName' and the current namespace

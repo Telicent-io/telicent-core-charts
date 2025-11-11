@@ -1,0 +1,129 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: {{ include "traefik-proxy.fullname" . }}
+  namespace: {{ include "traefik-proxy.namespace" . | quote }}
+  labels:
+    {{- include "traefik-proxy.labels" . | nindent 4 }}
+  {{- with .Values.annotations }}
+  annotations: 
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+
+spec:
+  replicas: {{ .Values.replicas }}
+  revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      {{- include "traefik-proxy.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "traefik-proxy.selectorLabels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap-routes.yaml") . | sha256sum }}
+        {{- with .Values.podAnnotations }}
+          {{- toYaml . | nindent 4 }}
+        {{- end }}
+    
+    spec:
+      serviceAccountName: {{ include "traefik-proxy.serviceAccountName" . }}
+      securityContext: {{- toYaml .Values.podSecurityContext | nindent 8 }}
+     
+      {{- $pullSecret := .Values.global.imagePullSecrets | default .Values.image.pullSecrets }}
+      {{- with $pullSecret }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 6 }}
+      {{- end }}
+      containers:
+      - name: traefik-proxy
+        image: {{ include "traefik-proxy.image" . }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        resources: {{- toYaml .Values.resources | nindent 10 }}
+        securityContext: {{- toYaml .Values.containerSecurityContext | nindent 10 }}
+
+        args:
+          - --configFile=/app/config/config.yaml
+       
+        ports:
+        # "web" HTTP listener
+        - name: http-web
+          protocol: TCP
+          containerPort: {{ .Values.service.port }}
+
+        # "ping" HTTP
+        - name: http-ping
+          protocol: TCP
+          containerPort: 8081
+
+        # traefik api + dashboard
+        {{- if .Values.dashboard.enabled }}
+        - name: http-api
+          protocol: TCP
+          containerPort: 9000
+        {{- end }}
+
+        readinessProbe:
+          httpGet:
+            path: /ping
+            port: http-ping
+            scheme: HTTP
+          initialDelaySeconds: 3
+          periodSeconds: 10
+          timeoutSeconds: 2
+
+        livenessProbe:
+          httpGet:
+            path: /ping
+            port: http-ping
+            scheme: HTTP
+          initialDelaySeconds: 3
+          periodSeconds: 30
+          timeoutSeconds: 2
+
+        volumeMounts:
+          - name: traefik-config-volume
+            mountPath: /app/config
+            readOnly: true
+
+          - name: traefik-routes-volume
+            mountPath: /app/config/routes
+            readOnly: true
+
+        {{- with .Values.extraContainers }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+
+      volumes:
+        - name: traefik-config-volume
+          configMap:
+            name: {{ include "traefik-proxy.startupConfigMapName" . }}
+        - name: traefik-routes-volume
+          configMap:
+            name: {{ include "traefik-proxy.routesConfigMapName" . }}
+
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

@@ -55,7 +55,7 @@ Create the name of the service account to use
 */}}
 {{- define "document-pipeline.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "document-pipeline.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "document-pipeline.name" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
@@ -85,6 +85,14 @@ app.kubernetes.io/component: http-ingester
 {{- end }}
 
 {{/*
+Common labels
+*/}}
+{{- define "http-ingester.labels" -}}
+app.kubernetes.io/component: http-ingester
+{{ include "document-pipeline.labels" . }}
+{{- end }}
+
+{{/*
 *************************
 *** Content Extractor ***
 *************************
@@ -105,6 +113,14 @@ Selector labels
 app.kubernetes.io/name: {{ include "document-pipeline.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 app.kubernetes.io/component: content-extractor
+{{- end }}
+
+{{/*
+Common labels
+*/}}
+{{- define "content-extractor.labels" -}}
+app.kubernetes.io/component: content-extractor
+{{ include "document-pipeline.labels" . }}
 {{- end }}
 
 {{/*
@@ -131,6 +147,14 @@ app.kubernetes.io/component: content-indexer
 {{- end }}
 
 {{/*
+Common labels
+*/}}
+{{- define "content-indexer.labels" -}}
+app.kubernetes.io/component: content-indexer
+{{ include "document-pipeline.labels" . }}
+{{- end }}
+
+{{/*
 *************************
 *** Catalogue Updater ***
 *************************
@@ -151,6 +175,14 @@ Selector labels
 app.kubernetes.io/name: {{ include "document-pipeline.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 app.kubernetes.io/component: catalogue-updater
+{{- end }}
+
+{{/*
+Common labels
+*/}}
+{{- define "catalogue-updater.labels" -}}
+app.kubernetes.io/component: catalogue-updater
+{{ include "document-pipeline.labels" . }}
 {{- end }}
 
 {{/*
@@ -176,6 +208,14 @@ app.kubernetes.io/component: content-tagger
 {{- end }}
 
 {{/*
+Common labels
+*/}}
+{{- define "content-tagger.labels" -}}
+app.kubernetes.io/component: content-tagger
+{{ include "document-pipeline.labels" . }}
+{{- end }}
+
+{{/*
 ************************
 *** Entity Extractor ***
 ************************
@@ -195,4 +235,12 @@ Selector labels
 app.kubernetes.io/name: {{ include "document-pipeline.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 app.kubernetes.io/component: entity-extractor
+{{- end }}
+
+{{/*
+Common labels
+*/}}
+{{- define "entity-extractor.labels" -}}
+app.kubernetes.io/component: entity-extractor
+{{ include "document-pipeline.labels" . }}
 {{- end }}

@@ -1,0 +1,33 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+
+metadata:
+  name: {{ include "access.fullname" . }}-internal-ingress
+  labels:
+  {{- include "access.labels" . | nindent 4 }}
+
+spec:
+  selector:
+    matchLabels:
+    {{- include "access.selectorLabels" . | nindent 6 }}
+
+  action: ALLOW
+
+  rules:
+  - from:
+    - source:
+        principals:
+        - {{ include "access.ingressPrincipal" . }}
+        - {{ include "access.graphPrincipal" . }}
+        {{- if .Values.global.enterprise }}
+        - {{ include "access.searchPrincipal" . }}
+        - {{ include "access.paperbackWriterPrincipal" . }}
+        {{- end }}
+    to:
+    - operation:
+        methods:
+        - GET

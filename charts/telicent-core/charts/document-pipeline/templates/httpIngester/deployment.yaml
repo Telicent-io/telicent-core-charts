@@ -4,7 +4,7 @@ kind: Deployment
 metadata:
   name: {{ include "http-ingester.fullname" . }}
   labels:
-    {{- include "document-pipeline.labels" . | nindent 4 }}
+    {{- include "http-ingester.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.httpIngester.replicaCount }}
   selector:
@@ -17,8 +17,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "document-pipeline.labels" . | nindent 8 }}
-        {{- include "http-ingester.selectorLabels" . | nindent 8 }}
+        {{- include "http-ingester.labels" . | nindent 8 }}
         {{- with .Values.httpIngester.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}

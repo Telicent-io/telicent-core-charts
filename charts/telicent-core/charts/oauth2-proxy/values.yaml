@@ -1,6 +1,12 @@
 # Copyright (C) 2025 Telicent Limited
-# Telicent OAuth2 Proxy Internal stand-alone chart
+# Telicent OAuth2 Proxy stand-alone chart
 
+#
+# @section Global Parameters
+#
+# @descStart
+# Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
+# @descEnd
 global:
   ## Current available global image parameters: imageRegistry and imagePullSecrets
   ## Please, note that this will override the image parameters
@@ -28,170 +34,191 @@ global:
   # @key global.istioVirtualServiceEnabled Enable Istio traffic routing to a named destination service
   istioVirtualServiceEnabled: true
 
-# @section Replica Parameters
-# @descStart
-# Controls the number of pod replicas for the deployment.
-# @descEnd
-# @key replicaCount Number of pod replicas to deploy
-replicaCount: 1
-
-# @section Existing Config/Secret Parameters
-# @descStart
-# References to existing ConfigMaps or Secrets for environment and CA certificates.
-# @descEnd
-# @key existingEnvConfigmapName Name of an existing ConfigMap for environment variables
-existingEnvConfigmapName: ""
-# @key existingCacertConfigmapName Name of an existing ConfigMap for CA certificates
-existingCacertConfigmapName: ""
-# @key existingCacertSecretName Name of the secret containing the CA certificates
-existingCacertSecretName: ""
-
-# @key existingEnvSecretName Name of an existing Secret for environment variables
-existingEnvSecretName: ""
-
-# @section Image Parameters
-# @descStart
-# Container image configuration for the OAuth2 Proxy.
-# @descEnd
-image:
-  # @key image.repository Container image repository
-  repository: quay.io/oauth2-proxy/oauth2-proxy
-  # @key image.pullPolicy Image pull policy
-  pullPolicy: IfNotPresent
-  # @key image.tag Image tag (defaults to chart appVersion if not set)
-  tag: "v7.12.0"
+#
 # @section Configuration Parameters
+#
 # @descStart
 # Application Specific configuration for the OAuth2 Proxy.
 # @descEnd
 configuration:
-  # @key configuration.cookieDomain Domain that the cookie is valid for
-  cookieDomain: "127.0.0.1.nip.io"
-  # @key configuration.cookieExpire Cookie expiration duration
-  cookieExpire: "15m"
-  # @key configuration.cookieRefresh Cookie refresh duration
-  cookieRefresh: "10m"
-  # @key configuration.cookieSecret Cookie secret (should be set via existingEnvSecretName) defaults to a random value if not set
-  cookieSecret: ""
-  # @key configuration.oidcIssuerUrl OIDC issuer URL
+  # @key configuration.existingEnvConfigMap Name of existing configmap containing Oauth2 Proxy Environment Configuration
+  # Note: When it's set it will disable configmap creation.
+  existingEnvConfigMap: ""
+
+  # @key configuration.oidcIssuerUrl The OpenID Connect issuer URL
   oidcIssuerUrl: "https://127.0.0.1.nip.io/realms/core"
-  # @key configuration.redirectUrlOverride OIDC redirect URL override (if not set, appHostDomain + /oauth2/callback will be used)
-  redirectUrlOverride: ""
-  # @key configuration.oidcClientID OIDC client ID
-  oidcClientID: "change-me"
-  # @key configuration.clientSecret OIDC client secret (should be set via existingEnvSecretName)
-  clientSecret: "change-me"
-  # @key configuration.cacert Optional CA certificate data (PEM format) for validating the OIDC provider's TLS certificate
-  cacert: ""
+  # @key configuration.redirectUrl OIDC redirect URL override. If not set, 'authHostDomain' + '/oauth2/callback' will be used
+  redirectUrl: ""
+  # Note: For more information on the below cookie values, please visit: https://oauth2-proxy.github.io/oauth2-proxy/configuration/overview/#cookie-options
+  # @key configuration.cookieDomains Domains that the cookie is valid for. If not set, 'appHostDomain' will be used
+  cookieDomains: ""
+    # @key configuration.cookieWhiteListDomains Allowed domains for redirection after authentication. If not set, 'apphHostDomain' will be used
+  cookieWhiteListDomains: ""
+  # @key configuration.cookieExpire Expire timeframe for cookie
+  cookieExpire: "50m"
+  # @key configuration.cookieCsrfExpire Expire timeframe for CSRF cookie
+  cookieCsrfExpire: "50m"
+  # @key configuration.cookieRefresh Refresh the cookie after this duration
+  cookieRefresh: "30m"
 
-# @key imagePullSecrets Registry secret names as an array for private image repositories
-imagePullSecrets: []
-
-# @section Chart Naming Parameters
+#
+# @section OAuth Client Secret Parameters
+#
 # @descStart
-# Override chart and release naming conventions.
+# OAuth client secret contains the Client ID and Client Secret to be used when connecting to the Identity Provider.
+# Cookie Secret is used as the seed string for secure cookies.
 # @descEnd
-# @key nameOverride String to partially override the chart name
+oauthClientSecret:
+  # @key oauthClientSecret.existingSecret Name of an existing secret. The secret must contain 3 keys: 'clientid', 'clientsecret', 'cookiesecret'
+  # Note: When it's set it will disable secret creation.
+  existingSecret: ""
+  # @key oauthClientSecret.clientId The OAuth Client ID
+  clientId: ""
+  # @key oauthClientSecret.clientSecret The OAuth Client Secret
+  clientSecret: ""
+  # @key oauthClientSecret.cookieSecret The seed string for secure cookies 
+  cookieSecret: "" 
+
+#
+# @section TLS Parameters
+#
+# Allow for additional CA certificates that should be used when connecting to the provider. If not specified, the default Go trust sources are used instead.
+# @descEnd
+tls:
+  ca:
+   # @key tls.ca.existingSecret Name of an existing secret that contains CA certificate(s). The secret must contains 1 key: 'ca.crt' containing the CA certificate(s)
+   # Note: When it's set it will disable secret creation.
+   existingSecret: ""
+   # @key tls.ca.existingConfigMap  Name of an existing configmap that contains CA certificate(s). The configmap must contains 1 key: 'ca.crt' containing the CA certificate(s)
+   existingConfigMap: ""
+   # @key tls.ca.certificate The PEM-encoded certificate(s) of the CA (certificate authority)
+   certificate: ""
+
+#
+# @section Common Parameters
+#
+# @key nameOverride String to partially override fullname (will maintain the release name)
 nameOverride: ""
 # @key fullnameOverride String to fully override the generated release name
 fullnameOverride: ""
+# @key namespaceOverride String to fully override all deployed resources namespace
+namespaceOverride: ""
+# @key commonLabels Add labels to all the deployed resources
+commonLabels: {}
 
-# @section Service Account Parameters
-# @descStart
-# Service account configuration for the deployment.
-# @descEnd
-serviceAccount:
-  # @key serviceAccount.create Specifies whether a service account should be created
-  create: true
-  # @key serviceAccount.automount Automatically mount a ServiceAccount's API credentials
-  automount: true
-  # @key serviceAccount.annotations Annotations to add to the service account
-  annotations: {}
-  # @key serviceAccount.name The name of the service account to use
-  name: ""
-
-# @section Pod Metadata Parameters
-# @descStart
-# Pod-level annotations and labels.
-# @descEnd
-# @key podAnnotations Annotations to add to the pod
-podAnnotations: {}
-# @key podLabels Labels to add to the pod
+#
+# @section Deployment Parameters
+#
+# @key replicas Number of Ouath2 Proxy replicas to deploy
+replicas: 1
+# @key revisionHistoryLimit Number of controller revisions to keep
+revisionHistoryLimit: 5
+# @key annotations Add extra annotations to the Deployment Object
+annotations: {}
+# @key podLabels Add extra labels to the Oauth2 Proxy pod
 podLabels: {}
-
-# @section Security Context Parameters
-# @descStart
-# Security context for the pod and container.
-# @descEnd
-# @key podSecurityContext Pod-level security context
-podSecurityContext: {}
-  # fsGroup: 2000
-# @key securityContext Container-level security context
-securityContext: {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
-
-# @section Service Parameters
-# @descStart
-# Kubernetes Service configuration.
-# @descEnd
-service:
-  # @key service.type Service type (ClusterIP, NodePort, LoadBalancer)
-  type: ClusterIP
-  # @key service.port Service port
-  port: 4080
-
-# @section Resources Parameters
-# @descStart
-# Resource requests and limits for the container.
-# @descEnd
-# @key resources Resource requests and limits for the container
-resources: {}
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
-
-# @section Additional Volumes and Mounts
-# @descStart
-# Additional volumes and volume mounts for the deployment.
-# @descEnd
-# @key volumes Additional volumes to be added to the pod
-volumes: []
-# - name: foo
-#   secret:
-#     secretName: mysecret
-#     optional: false
-# @key volumeMounts Additional volume mounts to be added to the container
-volumeMounts: []
-# - name: foo
-#   mountPath: "/etc/foo"
-#   readOnly: true
-
-# @section Scheduling Parameters
-# @descStart
-# Node selection, tolerations, and affinity for pod scheduling.
-# @descEnd
-# @key nodeSelector Node selector for pod scheduling
-nodeSelector: {}
-
-# @key tolerations Tolerations for pod scheduling
-tolerations: []
-
-# @key affinity Affinity rules for pod scheduling
-affinity: {}
-
-# @section Extra Containers Parameters
+# @key podAnnotations Add extra annotations to the Oauth2 Proxy pod
+podAnnotations: {}
+# @key extraEnvs List of Additional environment variables to set in the pod
+extraEnvs: []
 # @key extraContainers Additional containers to be added to the pod
 extraContainers: []
 
+image:
+  # @key image.registry [default: REGISTRY_NAME] Oauth2 Proxy image registry
+  registry: quay.io
+  # @key image.repository [default: REPOSITORY_NAME/oauth2-proxy] Oauth2 Proxy image name
+  repository: oauth2-proxy/oauth2-proxy
+  # @key image.tag Oauth2 Proxy image tag. If not set, a tag is generated using the appVersion
+  tag: ""
+  # @key image.pullPolicy  Oauth2 Proxy image pull policy
+  pullPolicy: IfNotPresent
+# @key imagePullSecrets Specify registry secret names as an array
+imagePullSecrets: []
+
+resources:
+  requests:
+    # @key resources.requests.cpu Set containers' CPU request
+    cpu: "300m"
+    # @key resources.requests.memory Set containers' memory request
+    memory: "512Mi"
+  limits:
+    # @key resources.limits.cpu Set containers' CPU limit
+    cpu: "500m"
+    # @key resources.limits.memory Set containers' memory limit
+    memory: "800Mi"
+
+containerSecurityContext:
+  # @key containerSecurityContext.runAsUser Set containers' Security Context runAsUser User ID
+  runAsUser: 185
+  # @key containerSecurityContext.runAsGroup Set containers' Security Context runAsGroup Group ID
+  runAsGroup: 185
+  # @key containerSecurityContext.runAsNonRoot Set container's Security Context runAsNonRoot
+  runAsNonRoot: true
+  # @key containerSecurityContext.allowPrivilegeEscalation Set container's Security Context allowPrivilegeEscalation
+  allowPrivilegeEscalation: false
+  capabilities:
+    # @key containerSecurityContext.capabilities.drop List of capabilities to be dropped
+    drop:
+      - ALL
+  seccompProfile:
+    # @key containerSecurityContext.seccompProfile.type Set container's Security Context seccomp profile
+    type: RuntimeDefault
+
+podSecurityContext:
+  # @key podSecurityContext.runAsUser Set the provisioning pod's Security Context runAsUser User ID
+  runAsUser: 185
+  # @key podSecurityContext.runAsGroup Set the provisioning pod's Security Context runAsGroup Group ID
+  runAsGroup: 185
+  # @key podSecurityContext.runAsNonRoot Set the provisioning pod's Security Context runAsNonRoot
+  runAsNonRoot: true
+  # @key podSecurityContext.fsGroup Set the provisioning pod's Group ID for the mounted volumes' filesystem
+  fsGroup: 185
+  seccompProfile:
+    # @key podSecurityContext.seccompProfile.type Set the provisioning pod's Security Context seccomp profile
+    type: RuntimeDefault
+
+# @key affinity Affinity for pod assignment
+# Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+affinity: {}
+# @key nodeSelector Node labels for pod assignment
+# Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
+nodeSelector: {}
+# @key tolerations Tolerations for pod assignment
+# Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+tolerations: []
+
+#
+# @section Service Account Parameters
+#
+serviceAccount:
+  # @key serviceAccount.create Specifies whether a service account should be created
+  create: true
+  # @key serviceAccount.name Name of the ServiceAccount to use. If not set, a name is generated using the fullname
+  name: ""
+  # @key serviceAccount.annotations Additional custom annotations for the ServiceAccount
+  annotations: {}
+  # @key serviceAccount.automount Automatically mount a ServiceAccount's API credentials
+  automount: true
+
+#
+# @section Oauth2 Proxy Exposure Parameters
+#
+service:
+  # @key service.port Oauth2 Proxy service port
+  port: 4080
+  # @key service.type Oauth2 Proxy service type
+  type: ClusterIP
+
 istio:
+  virtualService:
+    # @key istio.virtualService.enabled Enable Istio traffic into Traefik Proxy
+    enabled: false
+    # @key istio.virtualService.host Host associated with Oauth2 Proxy. If not set, 'appHostDomain' will be used
+    host: ""
+
   ingress:
-    # @key istio.ingress.principal Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName'
+    # @key istio.ingress.principal Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName
     principal: ""
+    # @key istio.ingress.serviceAccountName Name of the Ingress service account (traefik and istio supported)
+    serviceAccountName: "traefik-proxy"

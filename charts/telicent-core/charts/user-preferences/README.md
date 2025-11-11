@@ -47,9 +47,10 @@ The command removes all the Kubernetes components associated with the chart and 
 
 Contains configuration parameters specific to the User Preferences API application
 
-| Name                        | Description                     | Value               |
-| --------------------------- | ------------------------------- | ------------------- |
-| `configuration.javaOptions` | JVM options for the application | `-Xms512m -Xmx512m` |
+| Name                                 | Description                                                                      | Value               |
+| ------------------------------------ | -------------------------------------------------------------------------------- | ------------------- |
+| `configuration.existingEnvConfigMap` | Name of existing configmap containing User Preferences Environment Configuration | `""`                |
+| `configuration.javaOptions`          | JVM options for the application                                                  | `-Xms512m -Xmx512m` |
 
 ### MongoDB Parameters
 
@@ -64,6 +65,13 @@ Contains configuration parameters specific to the User Preferences API applicati
 | `mongo.existingCaSecret` | If you have an existing secret for the CA certificate, you can specify it here. If you've specified to use TLS in the url, you must provide a CA certificate. | `""`                                                                           |
 | `mongo.cacertPath`       | Path to the CA certificate file, must be set if TLS is enabled in the url and mirror the path in the connectionStringOptions                                  | `""`                                                                           |
 
+### Common Parameters
+
+| Name               | Description                                                            | Value |
+| ------------------ | ---------------------------------------------------------------------- | ----- |
+| `nameOverride`     | String to partially override fullname (will maintain the release name) | `""`  |
+| `fullnameOverride` | String to fully override the generated release name                    | `""`  |
+
 ### User Preferences API Deployment Parameters
 
 | Name                                                | Description                                                                         | Value                                               |
@@ -71,6 +79,7 @@ Contains configuration parameters specific to the User Preferences API applicati
 | `replicas`                                          | Number of User Preferences API replicas to deploy                                   | `1`                                                 |
 | `revisionHistoryLimit`                              | Number of controller revisions to keep                                              | `5`                                                 |
 | `annotations`                                       | Add extra annotations to the Deployment object                                      | `{}`                                                |
+| `extraEnvs`                                         | List of Additional environment variables to set in the pod                          | `[]`                                                |
 | `image.registry`                                    | User Preferences API image registry                                                 | `REGISTRY_NAME`                                     |
 | `image.repository`                                  | User Preferences API image name                                                     | `REPOSITORY_NAME/telicent-user-preferences-service` |
 | `image.tag`                                         | User Preferences API image tag. If not set, a tag is generated using the appVersion | `""`                                                |
@@ -101,11 +110,12 @@ Contains configuration parameters specific to the User Preferences API applicati
 
 ### Traffic Exposure Parameters
 
-| Name                      | Description                                                                                                                                                                  | Value       |
-| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| `service.port`            | User Preferences API service port                                                                                                                                            | `11111`     |
-| `service.type`            | User Preferences API service type                                                                                                                                            | `ClusterIP` |
-| `istio.ingress.principal` | Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName' | `""`        |
+| Name                               | Description                                                                                                                                              | Value           |
+| ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- |
+| `service.port`                     | User Preferences API service port                                                                                                                        | `11111`         |
+| `service.type`                     | User Preferences API service type                                                                                                                        | `ClusterIP`     |
+| `istio.ingress.principal`          | Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName | `""`            |
+| `istio.ingress.serviceAccountName` | Name of the Ingress service account (traefik and istio supported)                                                                                        | `traefik-proxy` |
 
 ### Extra Containers Parameters
 

@@ -57,7 +57,7 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 Create the name of the service account to use
 */}}
 {{- define "search.serviceAccountName" -}}
-{{- default (printf "%s" (include "search.fullname" .)) .Values.serviceAccount.name }}
+{{- default (include "search.name" .) .Values.serviceAccount.name }}
 {{- end }}
 
 {{/*
@@ -70,9 +70,9 @@ Create the name of the service to use
 {{/*
 Create the name of the config map
 */}}
-{{- define "search.envConfigmapName" -}}
-{{- if .Values.existingConfigmap }}
-{{- .Values.existingConfigmap }}
+{{- define "search.envConfigMapName" -}}
+{{- if .Values.configuration.existingEnvConfigMap }}
+{{- .Values.configuration.existingEnvConfigMap }}
 {{- else }}
 {{- printf "%s-%s" (include "search.fullname" .) "env" }}
 {{- end }}
@@ -83,14 +83,6 @@ Create the name of environment variable secrets
 */}}
 {{- define "search.envSecretName" -}}
 {{ include "search.fullname" . }}
-{{- end }}
-
-{{- define "search.ingressPrincipal" -}}
-{{- .Values.istio.ingress.principal | default (printf "cluster.local/ns/%s/sa/%s" .Values.global.istioNamespace .Values.global.istioServiceAccountName) | quote }}
-{{- end }}
-
-{{- define "search.graphPrincipal" -}}
-{{- .Values.istio.graph.principal | default (printf "cluster.local/ns/%s/sa/%s-%s" .Release.Namespace .Release.Name .Values.istio.graph.serviceAccountName ) | quote }}
 {{- end }}
 
 {{/* Create the user attributes service URL
