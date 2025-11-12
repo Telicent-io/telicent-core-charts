@@ -37,5 +37,23 @@ http:
         address: http://{{ .Values.hosts.auth | default (printf "%s.%s:9000" (include "traefik-proxy.routesService" (list . "auth")) .Release.Namespace) }}/auth/forward
 
         trustForwardHeader: true
+        authRequestHeaders:
+         - Authorization
+         - Cookie
+         - Origin
+         - Accept
+         - Accept-Language
+         - Accept-Encoding
+         - Sec-Fetch-Mode
+         - Sec-Fetch-Site
+         - Sec-Fetch-Dest
+         - X-Requested-With
+         - X-Forwarded-For
+         - X-Real-IP
+         - X-Forwarded
+         - Forwarded
+
         authResponseHeaders:
           - Authorization
+          - X-Auth-User
+          - X-Auth-Session-Id
