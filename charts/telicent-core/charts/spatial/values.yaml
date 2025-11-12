@@ -1,5 +1,5 @@
 # Copyright (C) 2025 Telicent Limited
-# Telicent Graph stand-alone chart
+# Telicent Spatial stand-alone chart
 
 # @section Global Parameters
 # @descStart
@@ -59,10 +59,13 @@ global:
     existingSecretName: ""
     # @key global.truststore.mountPath The mount path for the truststore in the container
     mountPath: /app/config/truststore
-# This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
-replicaCount: 1
 
+# @section configuration
+# @descStart
+# Application specific configuration settings
+# @descEnd
 configuration:
+  # @key configuration.sourceTopic source topic from which to pull data
   sourceTopic: geo
 
 # @section PostgreSQL
@@ -76,111 +79,109 @@ postgres:
   username: ""
   # @key postgres.password PostgreSQL password
   password: ""
-  # @key postrgres.db PostgreSQL Database name
+  # @key postgres.db PostgreSQL Database name
   db: ""
   # @key postgres.existingSecret Name of an existing secret resource containing the PostgreSQL password. If specified, existing secret must contain data for POSTGRES_PASSWORD, and the value for postgres.password will be ignored
   existingSecret: ""
 
-# This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
+# @section image This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
 image:
+  # @key image.registry Auth server image registry
+  registry: quay.io
+  # @key image.repository Auth server image name
   repository: 098669589541.dkr.ecr.eu-west-2.amazonaws.com/telicent-smart-cache-spatial-api # This sets the pull policy for images.
+  # @key image.pullPolicy Auth server image pull policy
   pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: "2.4.0"
+  # @key image.tag Auth server image tag. If not set, a tag is generated using the appVersion
+  tag: ""
+  # @key image.pullSecrets Specify registry secret names as an array
+  pullSecrets: []
 
-# This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
-imagePullSecrets: []
-# This is to override the chart name.
-nameOverride: ""
-fullnameOverride: ""
-
-# This section builds out the service account more information can be found here: https://kubernetes.io/docs/concepts/security/service-accounts/
+# @section Service Account Parameters This section builds out the service account more information can be found here: https://kubernetes.io/docs/concepts/security/service-accounts/
 serviceAccount:
-  # Specifies whether a service account should be created
-  create: true
-  # Automatically mount a ServiceAccount's API credentials?
-  automount: true
-  # Annotations to add to the service account
-  annotations: {}
-  # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
+  # @key serviceAccount.name Name of the created ServiceAccount. If not set, a name is generated using the fullname template
   name: ""
+  # @key serviceAccount.annotations Additional custom annotations for the ServiceAccount
+  annotations: {}
 
-# This is for setting Kubernetes Annotations to a Pod.
-# For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+# @section Deployment Parameters For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+# @key podAnnotations Add extra annotations to the Deployment object
 podAnnotations: {}
-# This is for setting Kubernetes Labels to a Pod.
-# For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
-podLabels: {}
+# @key extraEnvs List of additional environment variables to set in the pod
+extraEnvs: []
 
-podSecurityContext: {}
-  # fsGroup: 2000
+podSecurityContext:
+  # @key podSecurityContext.runAsUser Set the provisioning pod's Security Context runAsUser User ID
+  runAsUser: 185
+  # @key podSecurityContext.runAsGroup Set the provisioning pod's Security Context runAsGroup Group ID
+  runAsGroup: 185
+  # @key podSecurityContext.runAsNonRoot Set the provisioning pod's Security Context runAsNonRoot
+  runAsNonRoot: true
+  # @key podSecurityContext.fsGroup Set the provisioning pod's Group ID for the mounted volumes' filesystem
+  fsGroup: 185
+  seccompProfile:
+    # @key podSecurityContext.seccompProfile.type Set the provisioning pod's Security Context seccomp profile
+    type: RuntimeDefault
 
-securityContext: {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
+containerSecurityContext:
+  # @key containerSecurityContext.runAsUser Set containers' Security Context runAsUser User ID
+  runAsUser: 185
+  # @key containerSecurityContext.runAsGroup Set containers' Security Context runAsGroup Group ID
+  runAsGroup: 185
+  # @key containerSecurityContext.runAsNonRoot Set container's Security Context runAsNonRoot
+  runAsNonRoot: true
+  # @key containerSecurityContext.allowPrivilegeEscalation Set container's Security Context allowPrivilegeEscalation
+  allowPrivilegeEscalation: false
+  capabilities:
+    # @key containerSecurityContext.capabilities.drop List of capabilities to be dropped
+    drop:
+      - ALL
+  seccompProfile:
+    # @key containerSecurityContext.seccompProfile.type Set container's Security Context seccomp profile
+    type: RuntimeDefault
 
-# This is for setting up a service more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/
+# @section Traffic Exposure Parameters
 service:
-  # This sets the service type more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
+  # @key service.port Auth server service port
+  port: 9000
+  # @key service.type Auth server service port
   type: ClusterIP
-  # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
-  port: 80
 
-resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
+resources:
+  requests:
+    # @key resources.requests.cpu Set containers' CPU request
+    cpu: ""
+    # @key resources.requests.memory Set containers' memory request
+    memory: ""
+  limits:
+    # @key resources.limits.cpu Set containers' CPU limit
+    cpu: ""
+    # @key resources.limits.memory Set containers' memory limit
+    memory: ""
 
-# This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
+# @section Probes This is to setup the liveness and readiness probes, more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
 livenessProbe:
   httpGet:
+    # @key livenessProbe.httpGet.path The path to use for the Auth server liveness probe
     path: /
+    # @key livenessProbe.httpGet.port The port to use for the Auth server liveness probe
     port: http
 readinessProbe:
   httpGet:
+    # @key readinessProbe.httpGet.path The path to use for the Auth server liveness probe
     path: /
+    # @key readinessProbe.httpGet.port The port to use for the Auth server liveness probe
     port: http
 
-# This section is for setting up autoscaling more information can be found here: https://kubernetes.io/docs/concepts/workloads/autoscaling/
-autoscaling:
-  enabled: false
-  minReplicas: 1
-  maxReplicas: 100
-  targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
-
-# Additional volumes on the output Deployment definition.
-volumes: []
-# - name: foo
-#   secret:
-#     secretName: mysecret
-#     optional: false
-
-# Additional volumeMounts on the output Deployment definition.
-volumeMounts: []
-# - name: foo
-#   mountPath: "/etc/foo"
-#   readOnly: true
-
+# @section Node Selection
+# @key nodeSelector Allows you to schedule pods on a node with a label matching the given key-value pair.
 nodeSelector: {}
-
-tolerations: []
-
+# @key affinity Allows you to define affinity rules for scheduling pods, see: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
 affinity: {}
+# @key tolerations ALlows you to schedule pods on nodes with specified taints, see: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
+tolerations: []
 
 istio:
   ingress:
-    # @key istio.ingress.principal Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName'
+    # @key istio.ingress.principal Principal used for ingress traffic to this application by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName'
     principal: ""

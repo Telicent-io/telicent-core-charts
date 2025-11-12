@@ -5,9 +5,9 @@ apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
 
 metadata:
-  name: {{ include "spatial.fullname" . }}-ingress
+  name: {{ include "spatial-projector.fullname" . }}-ingress
   labels:
-  {{- include "spatial.labels" . | nindent 4 }}
+  {{- include "spatial-projector.labels" . | nindent 4 }}
 
 spec:
   action: ALLOW
@@ -15,7 +15,7 @@ spec:
     - from:
         - source:
             principals:
-            - {{ include "spatial.ingressPrincipal" . }}
+            - {{ include "spatial-projector.ingressPrincipal" . }}
   selector:
     matchLabels:
-    {{- include "spatial.selectorLabels" . | nindent 6 }}
+    {{- include "spatial-projector.selectorLabels" . | nindent 6 }}

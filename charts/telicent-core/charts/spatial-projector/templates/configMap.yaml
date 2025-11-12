@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "spatial.name" . }}-config
+  name: {{ include "spatial-projector.name" . }}-config
   labels:
-    {{- include "spatial.labels" . | nindent 4 }}
+    {{- include "spatial-projector.labels" . | nindent 4 }}
 data:
   BOOTSTRAP_SERVERS: {{ .Values.global.kafkaBootstrapUrls }}
   SOURCE_TOPIC: {{ .Values.configuration.sourceTopic}}

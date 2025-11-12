@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "spatial.fullname" . }}
+  name: {{ include "spatial-projector.fullname" . }}
   labels:
-    {{- include "spatial.labels" . | nindent 4 }}
+    {{- include "spatial-projector.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -12,4 +12,4 @@ spec:
       protocol: TCP
       name: http
   selector:
-    {{- include "spatial.selectorLabels" . | nindent 4 }}
+    {{- include "spatial-projector.selectorLabels" . | nindent 4 }}

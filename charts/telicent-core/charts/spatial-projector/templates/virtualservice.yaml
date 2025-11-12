@@ -7,9 +7,9 @@ apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 
 metadata:
-  name: {{ include "spatial.fullname" . }}
+  name: {{ include "spatial-projector.fullname" . }}
   labels:
-    {{- include "spatial.labels" . | nindent 4 }}
+    {{- include "spatial-projector.labels" . | nindent 4 }}
 
 spec:
   gateways:
@@ -19,10 +19,10 @@ spec:
   http:
   - match:
     - uri:
-        prefix: /api/spatial
+        prefix: /api/spatial-projector
     route:
     - destination:
-        host: {{ include "spatial.fullname" . }}
+        host: {{ include "spatial-projector.fullname" . }}
         port:
           number: {{ .Values.service.port }}
 {{- end }}
