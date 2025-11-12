@@ -63,9 +63,9 @@ clients:
   # @key clients.public A list of public client objects
   public: []
     # - client_id: spa-client
-    #   redirect_uris: 
+    #   redirect_uris:
     #     - http://spa.telicent.localhost/callback.html
-    #   post_logout_redirect_uris: 
+    #   post_logout_redirect_uris:
     #     - http://spa.telicent.localhost/
   # @key clients.confidential A list of confidential client objects
   confidential: []
@@ -128,7 +128,7 @@ image:
   # @key image.registry Auth server image registry
   registry: quay.io
   # @key image.repository Auth server image name
-  repository: telicent-auth-server
+  repository: telicent/telicent-auth-server
   # @key image.pullPolicy Auth server image pull policy
   pullPolicy: IfNotPresent
   # @key image.tag Auth server image tag. If not set, a tag is generated using the appVersion
