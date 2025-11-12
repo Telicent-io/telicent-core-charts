@@ -85,10 +85,10 @@ data:
         ENCODE_SEARCH_PARAMS_MODE: 'as base64',
     };
 
-window.AUTH_V2_CONFIG = {
-  authServerUrl: "https://oauth.system-integration.telicent-sandbox.telicent.live/api/auth",
-  clientId: "telicent-search-ui",
-  scope: "openid profile offline_access",
-  redirectUri: "https://apps.system-integration.telicent-sandbox.telicent.live/search",
-  popupRedirectUri: "https://apps.system-integration.telicent-sandbox.telicent.live/search/auth-redirect-uri",
-};
+    window.AUTH_V2_CONFIG = {
+      authServerUrl: "https://oauth.system-integration.telicent-sandbox.telicent.live/api/auth",
+      clientId: "telicent-search-ui",
+      scope: "openid profile offline_access",
+      redirectUri: "https://apps.system-integration.telicent-sandbox.telicent.live/search",
+      popupRedirectUri: "https://apps.system-integration.telicent-sandbox.telicent.live/search/auth-redirect-uri",
+    };
