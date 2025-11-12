@@ -29,6 +29,8 @@ data:
     window.ONTOLOGY_SERVICE_URL = "https://{{ .Values.global.appHostDomain }}/api/sparql";
     window.SEARCH_API_URL = "https://{{ .Values.global.appHostDomain }}/api/search";
     window.USER_PREF_API_URL = "https://{{ .Values.global.appHostDomain }}/api/user-preferences";
+    
+    
 
     // Signout
     window.SIGN_OUT_URL = "https://{{ .Values.global.appHostDomain }}/oauth2/sign_out?rd=/oauth2/authorize";
@@ -45,6 +47,7 @@ data:
     window.TEXT_AI_API_URL = "https://{{ .Values.global.appHostDomain }}/api/barry";
     window.featureFlags = {
         FF_AI_TRANSLATE: false,
+        FF_AUTH_V2: true,
     };
     {{ end }}
 
@@ -81,3 +84,11 @@ data:
         //ENCODE_SEARCH_PARAMS_MODE: "as uri component", // default if unset
         ENCODE_SEARCH_PARAMS_MODE: 'as base64',
     };
+
+window.AUTH_V2_CONFIG = {
+  authServerUrl: "https://oauth.system-integration.telicent-sandbox.telicent.live/api/auth",
+  clientId: "telicent-search-ui",
+  scope: "openid profile offline_access",
+  redirectUri: "https://apps.system-integration.telicent-sandbox.telicent.live/search",
+  popupRedirectUri: "https://apps.system-integration.telicent-sandbox.telicent.live/search/auth-redirect-uri",
+};
