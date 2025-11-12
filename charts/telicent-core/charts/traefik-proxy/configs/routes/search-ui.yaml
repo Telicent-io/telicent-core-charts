@@ -7,7 +7,6 @@ http:
       entryPoints:
         - web
       middleWares:
-        - oauth2
         - path-search-ui
         - host-search-ui
 
