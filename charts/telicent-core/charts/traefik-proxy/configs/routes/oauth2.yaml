@@ -4,10 +4,10 @@ http:
     oauth2:
       chain:
         middlewares:
-         # - headers-security
+          - headers-security
           - forward-secret
           - oauth2-verify
-         # - headers-strip
+          - headers-strip
     headers-security:
       headers:
         browserXssFilter: true      # X-XSS-Protection=1; mode=block
