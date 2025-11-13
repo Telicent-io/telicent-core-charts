@@ -6,9 +6,8 @@ http:
       rule: {{ printf "Host(`%s`) && PathPrefix(`/api/sparql`)" .Values.global.appHostDomain }}
       service: graph
       entryPoints:
-        - web
+        - web-api
       middleWares:
-        - oauth2
         - path-graph-sparql
         - host-graph
 
@@ -16,9 +15,8 @@ http:
       rule: {{ printf "Host(`%s`) && PathPrefix(`/api/graphql`)" .Values.global.appHostDomain }}
       service: graph
       entryPoints:
-        - web
+        - web-api
       middleWares:
-        - oauth2
         - path-graph-graphql
         - host-graph
 

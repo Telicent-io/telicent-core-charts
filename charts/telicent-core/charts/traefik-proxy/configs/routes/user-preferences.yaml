@@ -5,9 +5,8 @@ http:
       rule: {{ printf "Host(`%s`) && PathPrefix(`/api/user-preferences`)" .Values.global.appHostDomain }}
       service: user-preferences
       entryPoints:
-        - web
+        - web-api
       middleWares:
-        - oauth2
         - path-user-preferences
         - host-user-preferences
 

@@ -5,7 +5,7 @@ http:
       rule: {{ printf "Host(`%s`) && PathPrefix(`/api/search`)" .Values.global.appHostDomain }}
       service: search
       entryPoints:
-        - web
+        - web-api
       middleWares:
         - path-search
         - host-search
@@ -26,4 +26,3 @@ http:
       headers:
         customRequestHeaders:
           host: {{ .Values.hosts.search | default (printf "%s.%s:8181" (include "traefik-proxy.routesService" (list . "search")) .Release.Namespace) }}
-

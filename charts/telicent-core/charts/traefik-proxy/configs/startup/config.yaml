@@ -1,8 +1,18 @@
 entryPoints:
-  web:
+  web-ui:
     address: ":8080/tcp"
-  ping:
+    http:
+      middlewares:
+        - "headers-security@file"
+  web-api:
     address: ":8081/tcp"
+    http:
+      middlewares:
+        - "headers-security@file"
+        - "oauth2@file"
+
+  ping:
+    address: ":9000/tcp"
 
 global:
   checkNewVersion: false
