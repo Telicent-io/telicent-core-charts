@@ -304,7 +304,7 @@
                 "sourceName": {
                     "type": "string",
                     "description": "Source name or identifier for the data",
-                    "default": "ies-ies-regions.generation.iso3166_ontology"
+                    "default": "ies-regions.generation.iso3166_ontology"
                 }
             }
         }

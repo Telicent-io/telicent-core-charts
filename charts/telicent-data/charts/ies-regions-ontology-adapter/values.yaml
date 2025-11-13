@@ -190,4 +190,4 @@ configuration:
   # @key configuration.targetTopic Kafka topic to publish ontology data to
   targetTopic: "ontology"
   # @key configuration.sourceName Source name or identifier for the data
-  sourceName: "ies-ies-regions.generation.iso3166_ontology"
+  sourceName: "ies-regions.generation.iso3166_ontology"
