@@ -77,7 +77,7 @@ spec:
 
         # traefik api + dashboard
         {{- if .Values.dashboard.enabled }}
-        - name: http-api
+        - name: http-dashboard
           protocol: TCP
           containerPort: 9001
         {{- end }}
