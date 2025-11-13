@@ -62,18 +62,24 @@ spec:
         # "web" HTTP listener
         - name: http-web
           protocol: TCP
-          containerPort: {{ .Values.service.port }}
+          containerPort: {{ .Values.service.web.port }}
+
+        # "api" HTTP listener
+        - name: http-web
+          protocol: TCP
+          containerPort: {{ .Values.service.api.port }}
+
 
         # "ping" HTTP
         - name: http-ping
           protocol: TCP
-          containerPort: 8081
+          containerPort: 9000
 
         # traefik api + dashboard
         {{- if .Values.dashboard.enabled }}
         - name: http-api
           protocol: TCP
-          containerPort: 9000
+          containerPort: 9001
         {{- end }}
 
         readinessProbe:

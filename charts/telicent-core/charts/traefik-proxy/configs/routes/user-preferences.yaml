@@ -26,4 +26,3 @@ http:
       headers:
         customRequestHeaders:
           host: {{ .Values.hosts.userPeferences | default (printf "%s.%s:11111" (include "traefik-proxy.routesService" (list . "user-preferences")) .Release.Namespace) }}
-

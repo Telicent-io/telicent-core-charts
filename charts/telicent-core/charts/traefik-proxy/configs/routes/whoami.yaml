@@ -6,7 +6,7 @@ http:
       rule: {{ printf "Host(`%s`) && PathPrefix(`/whoami`)" .Values.global.appHostDomain }}
       service: whoami
       entryPoints:
-        - web-ui
+        - web
       middleWares:
         - path-whoami
         - host-whoami

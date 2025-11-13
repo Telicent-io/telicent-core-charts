@@ -24,7 +24,7 @@
                 "authHostDomain": {
                     "type": "string",
                     "description": "Domain associated with Telicent authentication services, including OIDC providers",
-                    "default": "auth.telicent.io"
+                    "default": "oauth.system-integration.telicent-sandbox.telicent.live"
                 },
                 "groupsClaim": {
                     "type": "string",
@@ -350,15 +350,35 @@
         "service": {
             "type": "object",
             "properties": {
-                "port": {
-                    "type": "number",
-                    "description": "Traefik Proxy service port",
-                    "default": 8080
+                "web": {
+                    "type": "object",
+                    "properties": {
+                        "port": {
+                            "type": "number",
+                            "description": "Traefik Proxy Web service port",
+                            "default": 8080
+                        },
+                        "type": {
+                            "type": "string",
+                            "description": "Traefik Proxy Web service type",
+                            "default": "ClusterIP"
+                        }
+                    }
                 },
-                "type": {
-                    "type": "string",
-                    "description": "Traefik Proxy service type",
-                    "default": "ClusterIP"
+                "api": {
+                    "type": "object",
+                    "properties": {
+                        "port": {
+                            "type": "number",
+                            "description": "Traefik Proxy Api service port",
+                            "default": 8081
+                        },
+                        "type": {
+                            "type": "string",
+                            "description": "Traefik Proxy Api service type",
+                            "default": "ClusterIP"
+                        }
+                    }
                 }
             }
         },

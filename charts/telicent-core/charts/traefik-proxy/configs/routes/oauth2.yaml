@@ -1,7 +1,6 @@
 # Declare routers / services / middlewares
 http:
   middlewares:
-
     headers-security:
       chain:
         middlewares:

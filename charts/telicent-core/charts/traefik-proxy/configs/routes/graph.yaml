@@ -1,7 +1,6 @@
 # Declare routers / services / middlewares
 http:
   routers:
-  
     graph-sparql:
       rule: {{ printf "Host(`%s`) && PathPrefix(`/api/sparql`)" .Values.global.appHostDomain }}
       service: graph
@@ -10,7 +9,6 @@ http:
       middleWares:
         - path-graph-sparql
         - host-graph
-
     graph-graphql:
       rule: {{ printf "Host(`%s`) && PathPrefix(`/api/graphql`)" .Values.global.appHostDomain }}
       service: graph
@@ -19,7 +17,6 @@ http:
       middleWares:
         - path-graph-graphql
         - host-graph
-
   services:
     graph:
       loadBalancer:
@@ -31,14 +28,11 @@ http:
       replacePathRegex:
         regex: "^/api/sparql/(.*)"
         replacement: "/$1"
-
     path-graph-graphql:
       replacePathRegex:
         regex: "^/api/graphql/(.*)"
         replacement: "/$1"
-
     host-graph:
       headers:
         customRequestHeaders:
            host: {{ .Values.hosts.graph | default (printf "%s.%s:3030" (include "traefik-proxy.routesService" (list . "graph")) .Release.Namespace) }}
-

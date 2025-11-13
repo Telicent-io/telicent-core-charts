@@ -167,10 +167,16 @@ serviceAccount:
 # @section Traefik Proxy Exposure Parameters
 #
 service:
-  # @key service.port Traefik Proxy service port
-  port: 8080
-  # @key service.type Traefik Proxy service type
-  type: ClusterIP
+  web:
+    # @key service.web.port Traefik Proxy Web service port
+    port: 8080
+    # @key service.web.type Traefik Proxy Web service type
+    type: ClusterIP
+  api:
+    # @key service.api.port Traefik Proxy Api service port
+    port: 8081
+    # @key service.api.type Traefik Proxy Api service type
+    type: ClusterIP
 
 istio:
   virtualService:
