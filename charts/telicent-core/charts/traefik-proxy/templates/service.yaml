@@ -21,6 +21,7 @@ spec:
     protocol: TCP
     port: {{ .Values.service.web.port }}
     targetPort: http-web
+
   - name: http-api
     appProtocol: http
     protocol: TCP
