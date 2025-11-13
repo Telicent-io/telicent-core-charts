@@ -1,1 +1,67 @@
-# Declare routers / services / middlewareshttp:  middlewares:    oauth2:      chain:        middlewares:         # - headers-security          - forward-secret          - oauth2-verify         # - headers-strip    headers-security:      headers:        browserXssFilter: true      # X-XSS-Protection=1; mode=block        contentTypeNosniff: true    # X-Content-Type-Options=nosniff        frameDeny: true             # X-Frame-Options=deny        referrerPolicy: "strict-origin-when-cross-origin"        sslRedirect: true           # redirect http > https        forceSTSHeader: true        # Add the Strict-Transport-Security header even when the connection is HTTP        stsSeconds: 63072000        # Set the max-age of the Strict-Transport-Security header (63072000 = 2 years)        stsIncludeSubdomains: true  # Add includeSubdomains to the Strict-Transport-Security headers        stsPreload: true            # Add a preload flag appended to the Strict-Transport-Security header                customRequestHeaders:          # avoiding the need for 302 redirects (used in conjunction with trustForwardHeader: false)          X-Forwarded-Proto: "https"                customResponseHeaders:          X-Robots-Tag: "none,noarchive,nosnippet,notranslate,noimageindex"        headers-strip:      headers:        customResponseHeaders:          # Empty string removes the specified header          Authorization: ""          Gap-Auth: ""    forward-secret:      headers:        customRequestHeaders:          X-ForwardAuth-Secret: "fruit"    oauth2-verify:      forwardAuth:        address: http://{{ .Values.hosts.auth | default (printf "%s.%s:9000" (include "traefik-proxy.routesService" (list . "auth")) .Release.Namespace) }}/auth/forward        trustForwardHeader: true        authRequestHeaders:         - Authorization         - Cookie         - Origin         - Accept         - Accept-Language         - Accept-Encoding         - Sec-Fetch-Mode         - Sec-Fetch-Site         - Sec-Fetch-Dest         - X-Requested-With         - X-Forwarded-For         - X-Real-IP         - X-Forwarded         - Forwarded        authResponseHeaders:          - Authorization          - X-Auth-User          - X-Auth-Session-Id
+# Declare routers / services / middlewares
+http:
+  middlewares:
+    oauth2:
+      chain:
+        middlewares:
+         # - headers-security
+          - forward-secret
+          - oauth2-verify
+         # - headers-strip
+    headers-security:
+      headers:
+        browserXssFilter: true      # X-XSS-Protection=1; mode=block
+        contentTypeNosniff: true    # X-Content-Type-Options=nosniff
+        frameDeny: true             # X-Frame-Options=deny
+        referrerPolicy: "strict-origin-when-cross-origin"
+        sslRedirect: true           # redirect http > https
+        forceSTSHeader: true        # Add the Strict-Transport-Security header even when the connection is HTTP
+        stsSeconds: 63072000        # Set the max-age of the Strict-Transport-Security header (63072000 = 2 years)
+        stsIncludeSubdomains: true  # Add includeSubdomains to the Strict-Transport-Security headers
+        stsPreload: true            # Add a preload flag appended to the Strict-Transport-Security header
+        
+        customRequestHeaders:
+          # avoiding the need for 302 redirects (used in conjunction with trustForwardHeader: false)
+          X-Forwarded-Proto: "https"
+        
+        customResponseHeaders:
+          X-Robots-Tag: "none,noarchive,nosnippet,notranslate,noimageindex"
+    
+    headers-strip:
+      headers:
+        customResponseHeaders:
+          # Empty string removes the specified header
+          Authorization: ""
+          Gap-Auth: ""
+
+    forward-secret:
+      headers:
+        customRequestHeaders:
+          X-ForwardAuth-Secret: "fruit"
+
+    oauth2-verify:
+      forwardAuth:
+        address: http://{{ .Values.hosts.auth | default (printf "%s.%s:9000" (include "traefik-proxy.routesService" (list . "auth")) .Release.Namespace) }}/auth/forward
+
+        trustForwardHeader: true
+
+        authRequestHeaders:
+         - Authorization
+         - Cookie
+         - Origin
+         - Accept
+         - Accept-Language
+         - Accept-Encoding
+         - Sec-Fetch-Mode
+         - Sec-Fetch-Site
+         - Sec-Fetch-Dest
+         - X-Requested-With
+         - X-Forwarded-For
+         - X-Real-IP
+         - X-Forwarded
+         - Forwarded
+
+        authResponseHeaders:
+          - Authorization
+          - X-Auth-User
+          - X-Auth-Session-Id
