@@ -3,9 +3,9 @@ http:
     oauth2:
       chain:
         middlewares:
-          - headers-security
+         # - headers-security
           - oauth2-verify
-          - headers-strip
+         # - headers-strip
     headers-security:
       headers:
         browserXssFilter: true      # X-XSS-Protection=1; mode=block
@@ -37,6 +37,10 @@ http:
         address: http://{{ .Values.hosts.auth | default (printf "%s.%s:9000" (include "traefik-proxy.routesService" (list . "auth")) .Release.Namespace) }}/auth/forward
 
         trustForwardHeader: true
+
+        customRequestHeaders:
+          X-ForwardAuth-Secret: "fruit"
+
         authRequestHeaders:
          - Authorization
          - Cookie
