@@ -62,6 +62,7 @@ http:
          - X-Real-IP
          - X-Forwarded
          - Forwarded
+         - X-ForwardAuth-Secret
 
         authResponseHeaders:
           - Authorization
