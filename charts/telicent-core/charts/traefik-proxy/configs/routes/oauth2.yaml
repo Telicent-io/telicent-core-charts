@@ -38,6 +38,8 @@ http:
       headers:
         customRequestHeaders:
           X-ForwardAuth-Secret: "fruit"
+        customResponseHeaders:
+          X-ForwardAuth-Secret: "fruit"
 
     oauth2-verify:
       forwardAuth:
