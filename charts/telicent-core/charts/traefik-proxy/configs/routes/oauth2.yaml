@@ -1,9 +1,11 @@
+# Declare routers / services / middlewares
 http:
   middlewares:
     oauth2:
       chain:
         middlewares:
          # - headers-security
+          - forward-secret
           - oauth2-verify
          # - headers-strip
     headers-security:
@@ -32,14 +34,16 @@ http:
           Authorization: ""
           Gap-Auth: ""
 
+    forward-secret:
+      customRequestHeaders:
+        X-ForwardAuth-Secret: "fruit"
+
     oauth2-verify:
       forwardAuth:
         address: http://{{ .Values.hosts.auth | default (printf "%s.%s:9000" (include "traefik-proxy.routesService" (list . "auth")) .Release.Namespace) }}/auth/forward
 
         trustForwardHeader: true
 
-        customRequestHeaders:
-          X-ForwardAuth-Secret: "fruit"
 
         authRequestHeaders:
          - Authorization
@@ -61,3 +65,4 @@ http:
           - Authorization
           - X-Auth-User
           - X-Auth-Session-Id
+
