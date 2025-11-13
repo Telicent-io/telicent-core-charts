@@ -65,7 +65,7 @@ spec:
           containerPort: {{ .Values.service.web.port }}
 
         # "api" HTTP listener
-        - name: http-web
+        - name: http-api
           protocol: TCP
           containerPort: {{ .Values.service.api.port }}
 
