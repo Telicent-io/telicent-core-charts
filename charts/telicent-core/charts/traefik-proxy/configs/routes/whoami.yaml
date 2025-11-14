@@ -8,6 +8,7 @@ http:
       entryPoints:
         - web-app
       middleWares:
+        - oauth2-proxy-verify
         - path-whoami
         - host-whoami
 
