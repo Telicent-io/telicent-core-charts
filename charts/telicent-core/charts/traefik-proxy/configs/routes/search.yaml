@@ -7,7 +7,7 @@ http:
       entryPoints:
         - web-api
       middleWares:
-        - oauth2-proxy-verify
+        - oauth2
         - path-search
         - host-search
 
