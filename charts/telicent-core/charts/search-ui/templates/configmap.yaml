@@ -87,7 +87,7 @@ data:
     };
 
     window.AUTH_V2_CONFIG = {
-      authServerUrl: "https://{{ .Values.global.authHostDomain }}/api/auth",
+      authServerUrl: "https://{{ .Values.global.authHostDomain }}",
       clientId: "{{ .Values.configuration.oauthClientId }}",
       scope: "{{ .Values.configuration.oauthScope }}",
       redirectUri: "https://{{ .Values.global.appHostDomain }}/search",
