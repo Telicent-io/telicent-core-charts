@@ -50,7 +50,7 @@ Contains global parameters, these parameters are mirrored within the Telicent co
 | `global.imageRegistry`              | Global image registry                                                             | `""`                 |
 | `global.imagePullSecrets`           | Global registry secret names as an array                                          | `[]`                 |
 | `global.appHostDomain`              | Domain associated with Telicent application/ui services                           | `apps.telicent.io`   |
-| `global.apiHostDomain`              | Domain associated with Telicent Api application services                          | `api.telicent.io`    |
+| `global.apiHostDomain`              | Domain associated with Telicent Api services                                      | `api.telicent.io`    |
 | `global.authHostDomain`             | Domain associated with Telicent authentication services, including OIDC providers | `auth.telicent.live` |
 | `global.groupsClaim`                | Key used to retrieve groups from the OIDC provider                                | `groups`             |
 | `global.istioNamespace`             | Namespace in which Istio is deployed                                              | `istio-system`       |

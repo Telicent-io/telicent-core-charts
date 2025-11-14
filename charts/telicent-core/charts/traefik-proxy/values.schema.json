@@ -23,7 +23,7 @@
                 },
                 "apiHostDomain": {
                     "type": "string",
-                    "description": "Domain associated with Telicent Api application services",
+                    "description": "Domain associated with Telicent Api services",
                     "default": "api.telicent.io"
                 },
                 "authHostDomain": {
