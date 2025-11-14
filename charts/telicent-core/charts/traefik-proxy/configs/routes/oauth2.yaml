@@ -45,9 +45,7 @@ http:
     oauth2-verify:
       forwardAuth:
         address: http://{{ .Values.hosts.auth | default (printf "%s.%s:9000" (include "traefik-proxy.routesService" (list . "auth")) .Release.Namespace) }}/auth/forward
-
         trustForwardHeader: true
-
         authRequestHeaders:
          - Authorization
          - Cookie
@@ -64,8 +62,12 @@ http:
          - X-Forwarded
          - Forwarded
          - X-ForwardAuth-Secret
-
         authResponseHeaders:
           - Authorization
           - X-Auth-User
           - X-Auth-Session-Id
+
+    forward-secret:
+      headers:
+        customRequestHeaders:
+          X-ForwardAuth-Secret: "fruit"
