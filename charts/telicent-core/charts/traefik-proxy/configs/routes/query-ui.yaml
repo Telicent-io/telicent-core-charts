@@ -7,6 +7,7 @@ http:
       entryPoints:
         - web-app
       middleWares:
+        - oauth2
         - path-query-ui
         - host-query-ui
 
