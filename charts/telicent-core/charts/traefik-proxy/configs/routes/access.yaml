@@ -8,6 +8,7 @@ http:
         - web-api
       middleWares:
         - oauth2
+        - path-access
         - host-access
 
   services:
@@ -19,7 +20,7 @@ http:
   middlewares:
     path-access:
       replacePathRegex:
-        regex: "^/api/access/(.*)"
+        regex: "^/access/(.*)"
         replacement: "/$1"
     host-access:
       headers:
