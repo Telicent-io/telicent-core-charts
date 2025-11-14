@@ -8,7 +8,6 @@ http:
         - web-api
       middleWares:
         - oauth2
-        - path-access
         - host-access
 
   services:
