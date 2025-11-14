@@ -9,7 +9,7 @@ entryPoints:
     http:
       middlewares:
         - "headers-security@file"
-        - "oauth2@file"
+        #- "oauth2@file"
 
   ping:
     address: ":9000/tcp"
