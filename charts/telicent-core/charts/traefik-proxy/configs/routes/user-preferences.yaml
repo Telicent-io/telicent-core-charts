@@ -2,12 +2,11 @@
 http:
   routers:
     user-preferences:
-      rule: {{ printf "Host(`%s`) && PathPrefix(`/api/user-preferences`)" .Values.global.appHostDomain }}
+      rule: {{ printf "Host(`%s`) && PathPrefix(`/user-preferences`)" .Values.global.apiHostDomain }}
       service: user-preferences
       entryPoints:
         - web-api
       middleWares:
-        - path-user-preferences
         - host-user-preferences
 
   services:

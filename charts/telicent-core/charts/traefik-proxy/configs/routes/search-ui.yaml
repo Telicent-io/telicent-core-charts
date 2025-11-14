@@ -5,7 +5,7 @@ http:
       rule: {{ printf "Host(`%s`) && PathPrefix(`/search`)" .Values.global.appHostDomain }}
       service: search-ui
       entryPoints:
-        - web
+        - web-app
       middleWares:
         - path-search-ui
         - host-search-ui

@@ -1,5 +1,5 @@
 entryPoints:
-  web-ui:
+  web-app:
     address: ":8080/tcp"
     http:
       middlewares:

@@ -5,7 +5,7 @@ http:
       rule: {{ printf "Host(`%s`) && PathPrefix(`/graph`)" .Values.global.appHostDomain }}
       service: graph-ui
       entryPoints:
-        - web
+        - web-app
       middleWares:
         - path-graph-ui
         - host-graph-ui

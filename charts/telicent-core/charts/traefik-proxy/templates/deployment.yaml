@@ -59,10 +59,10 @@ spec:
           - --configFile=/app/config/config.yaml
        
         ports:
-        # "web" HTTP listener
-        - name: http-web
+        # "app" HTTP listener
+        - name: http-app
           protocol: TCP
-          containerPort: {{ .Values.service.web.port }}
+          containerPort: {{ .Values.service.app.port }}
 
         # "api" HTTP listener
         - name: http-api

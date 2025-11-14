@@ -45,17 +45,18 @@ The command removes all the Kubernetes components associated with the chart and 
 
 Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
 
-| Name                                | Description                                                                       | Value                                                     |
-| ----------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------- |
-| `global.imageRegistry`              | Global image registry                                                             | `""`                                                      |
-| `global.imagePullSecrets`           | Global registry secret names as an array                                          | `[]`                                                      |
-| `global.appHostDomain`              | Domain associated with Telicent application services                              | `apps.telicent.io`                                        |
-| `global.authHostDomain`             | Domain associated with Telicent authentication services, including OIDC providers | `oauth.system-integration.telicent-sandbox.telicent.live` |
-| `global.groupsClaim`                | Key used to retrieve groups from the OIDC provider                                | `groups`                                                  |
-| `global.istioNamespace`             | Namespace in which Istio is deployed                                              | `istio-system`                                            |
-| `global.istioServiceAccountName`    | Name of the Istio service account                                                 | `istio-ingress`                                           |
-| `global.istioGatewayName`           | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)         | `ingress-gateway`                                         |
-| `global.istioVirtualServiceEnabled` | Enable Istio traffic routing to a named destination service                       | `true`                                                    |
+| Name                                | Description                                                                       | Value                |
+| ----------------------------------- | --------------------------------------------------------------------------------- | -------------------- |
+| `global.imageRegistry`              | Global image registry                                                             | `""`                 |
+| `global.imagePullSecrets`           | Global registry secret names as an array                                          | `[]`                 |
+| `global.appHostDomain`              | Domain associated with Telicent application/ui services                           | `apps.telicent.io`   |
+| `global.apiHostDomain`              | Domain associated with Telicent Api application services                          | `api.telicent.io`    |
+| `global.authHostDomain`             | Domain associated with Telicent authentication services, including OIDC providers | `auth.telicent.live` |
+| `global.groupsClaim`                | Key used to retrieve groups from the OIDC provider                                | `groups`             |
+| `global.istioNamespace`             | Namespace in which Istio is deployed                                              | `istio-system`       |
+| `global.istioServiceAccountName`    | Name of the Istio service account                                                 | `istio-ingress`      |
+| `global.istioGatewayName`           | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)         | `ingress-gateway`    |
+| `global.istioVirtualServiceEnabled` | Enable Istio traffic routing to a named destination service                       | `true`               |
 
 ### Traefik Proxy Logs Parameters
 
@@ -129,8 +130,8 @@ Contains global parameters, these parameters are mirrored within the Telicent co
 
 | Name                               | Description                                                                                                                                              | Value                                            |
 | ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
-| `service.web.port`                 | Traefik Proxy Web service port                                                                                                                           | `8080`                                           |
-| `service.web.type`                 | Traefik Proxy Web service type                                                                                                                           | `ClusterIP`                                      |
+| `service.app.port`                 | Traefik Proxy App/UI service port                                                                                                                        | `8080`                                           |
+| `service.app.type`                 | Traefik Proxy App/UI service type                                                                                                                        | `ClusterIP`                                      |
 | `service.api.port`                 | Traefik Proxy Api service port                                                                                                                           | `8081`                                           |
 | `service.api.type`                 | Traefik Proxy Api service type                                                                                                                           | `ClusterIP`                                      |
 | `istio.virtualService.enabled`     | Enable Istio traffic into Traefik Proxy                                                                                                                  | `true`                                           |

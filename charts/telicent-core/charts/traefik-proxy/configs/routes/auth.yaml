@@ -5,7 +5,7 @@ http:
       rule: {{ printf "Host(`oauth.system-integration.telicent-sandbox.telicent.live`)"  }}
       service: auth
       entryPoints:
-        - web
+        - web-app
       middleWares:
         - host-auth
 

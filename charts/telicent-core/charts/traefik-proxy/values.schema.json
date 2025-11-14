@@ -18,13 +18,18 @@
                 },
                 "appHostDomain": {
                     "type": "string",
-                    "description": "Domain associated with Telicent application services",
+                    "description": "Domain associated with Telicent application/ui services",
                     "default": "apps.telicent.io"
+                },
+                "apiHostDomain": {
+                    "type": "string",
+                    "description": "Domain associated with Telicent Api application services",
+                    "default": "api.telicent.io"
                 },
                 "authHostDomain": {
                     "type": "string",
                     "description": "Domain associated with Telicent authentication services, including OIDC providers",
-                    "default": "oauth.system-integration.telicent-sandbox.telicent.live"
+                    "default": "auth.telicent.live"
                 },
                 "groupsClaim": {
                     "type": "string",
@@ -350,17 +355,17 @@
         "service": {
             "type": "object",
             "properties": {
-                "web": {
+                "app": {
                     "type": "object",
                     "properties": {
                         "port": {
                             "type": "number",
-                            "description": "Traefik Proxy Web service port",
+                            "description": "Traefik Proxy App/UI service port",
                             "default": 8080
                         },
                         "type": {
                             "type": "string",
-                            "description": "Traefik Proxy Web service type",
+                            "description": "Traefik Proxy App/UI service type",
                             "default": "ClusterIP"
                         }
                     }

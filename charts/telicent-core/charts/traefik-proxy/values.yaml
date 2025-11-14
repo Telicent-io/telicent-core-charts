@@ -18,10 +18,12 @@ global:
   # @key global.imagePullSecrets Global registry secret names as an array
   imagePullSecrets: []
 
-  # @key global.appHostDomain Domain associated with Telicent application services
+  # @key global.appHostDomain Domain associated with Telicent application/ui services
   appHostDomain: "apps.telicent.io"
+  # @key global.apiHostDomain Domain associated with Telicent Api application services
+  apiHostDomain: "api.telicent.io"
   # @key global.authHostDomain Domain associated with Telicent authentication services, including OIDC providers
-  authHostDomain: "oauth.system-integration.telicent-sandbox.telicent.live"
+  authHostDomain: "auth.telicent.live"
   # @key global.groupsClaim Key used to retrieve groups from the OIDC provider
   groupsClaim: "groups"
   # @key global.istioNamespace Namespace in which Istio is deployed
@@ -167,10 +169,10 @@ serviceAccount:
 # @section Traefik Proxy Exposure Parameters
 #
 service:
-  web:
-    # @key service.web.port Traefik Proxy Web service port
+  app:
+    # @key service.app.port Traefik Proxy App/UI service port
     port: 8080
-    # @key service.web.type Traefik Proxy Web service type
+    # @key service.app.type Traefik Proxy App/UI service type
     type: ClusterIP
   api:
     # @key service.api.port Traefik Proxy Api service port

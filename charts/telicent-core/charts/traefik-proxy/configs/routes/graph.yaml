@@ -2,20 +2,18 @@
 http:
   routers:
     graph-sparql:
-      rule: {{ printf "Host(`%s`) && PathPrefix(`/api/sparql`)" .Values.global.appHostDomain }}
+      rule: {{ printf "Host(`%s`) && PathPrefix(`/sparql`)" .Values.global.apiHostDomain }}
       service: graph
       entryPoints:
         - web-api
       middleWares:
-        - path-graph-sparql
         - host-graph
     graph-graphql:
-      rule: {{ printf "Host(`%s`) && PathPrefix(`/api/graphql`)" .Values.global.appHostDomain }}
+      rule: {{ printf "Host(`%s`) && PathPrefix(`/graphql`)" .Values.global.apiHostDomain }}
       service: graph
       entryPoints:
         - web-api
       middleWares:
-        - path-graph-graphql
         - host-graph
   services:
     graph:

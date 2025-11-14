@@ -2,7 +2,7 @@
 http:
   routers:
     access:
-      rule: {{ printf "Host(`%s`) && PathPrefix(`/api/access`)" .Values.global.appHostDomain }}
+      rule: {{ printf "Host(`%s`) && PathPrefix(`/access`)" .Values.global.apiHostDomain }}
       service: access
       entryPoints:
         - web-api

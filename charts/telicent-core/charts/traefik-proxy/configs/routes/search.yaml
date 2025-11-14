@@ -2,12 +2,11 @@
 http:
   routers:
     search:
-      rule: {{ printf "Host(`%s`) && PathPrefix(`/api/search`)" .Values.global.appHostDomain }}
+      rule: {{ printf "Host(`%s`) && PathPrefix(`/search`)" .Values.global.apiHostDomain }}
       service: search
       entryPoints:
         - web-api
       middleWares:
-        - path-search
         - host-search
 
   services:

@@ -6,5 +6,5 @@ http:
       rule: {{ printf "Host(`%s`) && PathPrefix(`%s`)" ( .Values.dashboard.domain | default .Values.global.appHostDomain ) .Values.dashboard.basepath }}
       service: api@internal
       entryPoints:
-        - web
+        - web-app
 {{- end }}

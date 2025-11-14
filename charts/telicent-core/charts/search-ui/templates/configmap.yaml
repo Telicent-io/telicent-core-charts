@@ -24,11 +24,11 @@ data:
     {{ end }}
 
     // APIs
-    window.ACCESS_URL = "https://{{ .Values.global.appHostDomain }}/api/access";
-    window.GRAPHQL_API_URL = "https://{{ .Values.global.appHostDomain }}/api/graphql/knowledge";
-    window.ONTOLOGY_SERVICE_URL = "https://{{ .Values.global.appHostDomain }}/api/sparql";
-    window.SEARCH_API_URL = "https://{{ .Values.global.appHostDomain }}/api/search";
-    window.USER_PREF_API_URL = "https://{{ .Values.global.appHostDomain }}/api/user-preferences";
+    window.ACCESS_URL = "https://{{ .Values.global.apiHostDomain }}/access";
+    window.GRAPHQL_API_URL = "https://{{ .Values.global.apiHostDomain }}/graphql/knowledge";
+    window.ONTOLOGY_SERVICE_URL = "https://{{ .Values.global.apiHostDomain }}/sparql";
+    window.SEARCH_API_URL = "https://{{ .Values.global.apiHostDomain }}/search";
+    window.USER_PREF_API_URL = "https://{{ .Values.global.apiHostDomain }}/user-preferences";
     
     
 
@@ -44,7 +44,7 @@ data:
     window.ENTITY_EXTRACTION_API_URL;
 
     {{ if .Values.configuration.textAiApiDeployed | default false }}
-    window.TEXT_AI_API_URL = "https://{{ .Values.global.appHostDomain }}/api/barry";
+    window.TEXT_AI_API_URL = "https://{{ .Values.global.apiHostDomain }}/barry";
     {{ end }}
 
     // `appList` configures the menu that allows users to switch between different apps
@@ -81,17 +81,16 @@ data:
     };
 
     window.feAppOptions = {
-        // 🚨 WARNING: ENCODE_SEARCH_PARAMS_MODE must be the same in search, graph, and user-portal 🚨
-        //ENCODE_SEARCH_PARAMS_MODE: "as uri component", // default if unset
-        ENCODE_SEARCH_PARAMS_MODE: 'as base64',
+      // 🚨 WARNING: ENCODE_SEARCH_PARAMS_MODE must be the same in search, graph, and user-portal 🚨
+      //ENCODE_SEARCH_PARAMS_MODE: "as uri component", // default if unset
+      ENCODE_SEARCH_PARAMS_MODE: 'as base64',
     };
 
     window.AUTH_V2_CONFIG = {
-      authServerUrl: "https://oauth.system-integration.telicent-sandbox.telicent.live/api/auth",
-      clientId: "telicent-search-ui",
-      scope: "openid profile offline_access",
-      redirectUri: "https://apps.system-integration.telicent-sandbox.telicent.live/search",
-      popupRedirectUri: "https://apps.system-integration.telicent-sandbox.telicent.live/search/auth-redirect-uri",
+      authServerUrl: "https://{{ .Values.global.authHostDomain }}/api/auth",
+      clientId: "{{ .Values.configuration.oauthClientId }}",
+      scope: "{{ .Values.configuration.oauthScope }}",
+      redirectUri: "https://{{ .Values.global.appHostDomain }}/search",
+      popupRedirectUri: "https://{{ .Values.global.appHostDomain }}/search/auth-redirect-uri",
     };
-    
     
