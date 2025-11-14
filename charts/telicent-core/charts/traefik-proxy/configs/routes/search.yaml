@@ -9,7 +9,7 @@ http:
       middleWares:
         - path-search
         - host-search
-        - oauth2-verify
+        - oauth2
 
   services:
     search:
