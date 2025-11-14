@@ -8,7 +8,7 @@ http:
         - web-api
       middleWares:
         - oauth2-proxy-verify
-        - host-path
+        - path-search
         - host-search
 
   services:
