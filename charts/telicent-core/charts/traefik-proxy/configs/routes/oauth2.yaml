@@ -77,4 +77,4 @@ http:
     forward-secret:
       headers:
         customRequestHeaders:
-          X-ForwardAuth-Secret: "fruit"
+          X-ForwardAuth-Secret: "F3nkCKqpiTQDmYrh45NY2yzcY2s"
