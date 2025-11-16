@@ -62,7 +62,7 @@ forwardAuth:
 logs:
   general:
     # @key logs.general.level Set logging levels, values are: TRACE, DEBUG, INFO, WARN, ERROR, FATAL, and PANIC.
-    level: "INFO"
+    level: "DEBUG"
   access:
     # @key logs.access.enabled Enable access logging. Note: should only be enabled in development environments.
     enabled: false
