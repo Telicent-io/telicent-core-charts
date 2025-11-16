@@ -9,7 +9,8 @@ entryPoints:
     http:
       middlewares:
         - "headers-security@file"
-        - "oauth2@file"
+        # disable when using oauth2-proxy, otherwise you'll receive 401
+        # - "oauth2@file"
 
   ping:
     address: ":9000/tcp"
