@@ -9,6 +9,7 @@ entryPoints:
     http:
       middlewares:
         - "headers-security@file"
+        - "cors@file"
         - "oauth2@file"
 
   ping:

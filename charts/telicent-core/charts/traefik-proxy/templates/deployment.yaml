@@ -105,7 +105,7 @@ spec:
             port: http-ping
             scheme: HTTP
           initialDelaySeconds: 10
-          periodSeconds: 30
+          periodSeconds: 10
           timeoutSeconds: 2
         livenessProbe:
           httpGet:
