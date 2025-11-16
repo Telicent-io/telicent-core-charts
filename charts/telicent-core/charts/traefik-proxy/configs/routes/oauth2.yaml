@@ -48,6 +48,7 @@ http:
         trustForwardHeader: true
         authResponseHeaders:
           - Cookie # required by oauth2-proxy cookie: __Secure-session
+          - Authorization
 
     oauth2-verify:
       forwardAuth:
