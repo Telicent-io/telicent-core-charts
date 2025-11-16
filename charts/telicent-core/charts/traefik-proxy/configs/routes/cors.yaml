@@ -13,3 +13,6 @@ http:
         # Disables credential support (incompatible with wildcard origin)
         accessControlAllowCredentials: true
         # accessControlAllowOriginList is defined within each cors-[api,*] route.
+        accessControlAllowOriginList:
+          - {{ printf "%s%s" "https://" .Values.global.authHostDomain | quote }}
+          - {{ printf "%s%s" "https://" .Values.global.appHostDomain | quote }}

@@ -8,7 +8,7 @@ entryPoints:
     address: ":8081/tcp"
     http:
       middlewares:
-        - cors-api@file
+        - cors@file
         - "headers-security@file"
         # disable when using oauth2-proxy, to avoid 401 error
         # - "oauth2@file"
