@@ -31,3 +31,4 @@ spec:
         - PUT
         - PATCH
         - OPTIONS
+        - HEAD
