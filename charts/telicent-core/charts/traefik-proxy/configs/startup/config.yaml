@@ -4,6 +4,7 @@ entryPoints:
     http:
       middlewares:
         - "headers-security@file"
+        - "cors@file"
   web-api:
     address: ":8081/tcp"
     http:
