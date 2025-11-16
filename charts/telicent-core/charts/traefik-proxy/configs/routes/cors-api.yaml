@@ -1,11 +1,24 @@
 # Declare routers / services / middlewares
 http:
   routers:
-    cors-api:
+    cors-api-options:
       rule: {{ printf "Host(`%s`) && Method(`OPTIONS`)" .Values.global.apiHostDomain }}
       service: noop@internal
       priority: 999
       entryPoints:
         - web-api
       middleWares:
-        - cors
+        - cors-api
+
+  middlewares:
+    cors-api:
+      chain:
+        middlewares:
+          - cors
+          - cors-api-origin
+
+    cors-api-origin:
+      headers:
+        accessControlAllowOriginList:
+          - {{ printf "%s%s" "https://" .Values.global.authHostDomain | quote }}
+          - {{ printf "%s%s" "https://" .Values.global.appHostDomain | quote }}

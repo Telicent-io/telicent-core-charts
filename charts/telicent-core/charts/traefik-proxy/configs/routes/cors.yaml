@@ -3,25 +3,13 @@ http:
   middlewares:
     cors:
       headers:
-        accessControlAllowCredentials: true
         # Set to true, determines whether the `Vary` header should be added or modified to
         # demonstrate that server responses can differ based on the value of the origin header.
         addVaryHeader: true
-        # Cache preflight response for 24 hours
+        # Cache preflight response for 24 hours (86400)
         accessControlMaxAge: "10"
-        # Set the allowed methods during requests
-        # accessControlAllowMethods: [ GET,POST,PUT,PATCH,DELETE,OPTIONS,HEAD ]
-        accessControlAllowMethods: "*"
-        accessControlAllowHeaders: "*"
-        # Set the allowed headers in the requests
-        # accessControlAllowHeaders:
-        #  - Authorization
-        #  - Content-Type
-        #  - Accept
-        #  - X-Requested-With
-        #  - Request-ID
-        # Set the allowed orgin list
-        accessControlAllowOriginList: "*"
-        #accessControlAllowOriginList:
-        #  - {{ printf "%s%s" "https://" .Values.global.authHostDomain | quote }}
-        #  - {{ printf "%s%s" "https://" .Values.global.appHostDomain | quote }}
+        accessControlAllowMethods: [ GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS ]
+        accessControlAllowHeaders: [ Authorization,Content-Type,Accept,X-Requested-With,Request-ID ]
+        # Disables credential support (incompatible with wildcard origin)
+        accessControlAllowCredentials: true
+        # accessControlAllowOriginList is defined within each cors-[api,*] route.

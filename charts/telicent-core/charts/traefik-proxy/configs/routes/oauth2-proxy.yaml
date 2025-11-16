@@ -2,12 +2,11 @@
 http:
   routers:
     oauth2-proxy:
-      rule: {{ printf "Host(`%s`) && PathPrefix(`/oauth2`)" .Values.global.appHostDomain }}
+      rule: {{ printf "Host(`%s`) && PathPrefix(`/oauth2`)" .Values.global.apiHostDomain }}
       service: oauth2-proxy
       entryPoints:
-        - web-app
+        - web-api
       middleWares:
-        - cors
         - host-oauth2-proxy
 
   services:
