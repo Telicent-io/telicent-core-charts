@@ -183,9 +183,9 @@
             "description": "Add extra annotations to the Statefulset object",
             "default": {}
         },
-        "extraEnvs": {
+        "extraEnvVars": {
             "type": "array",
-            "description": "List of additional environment variables to set in the pod",
+            "description": "Array with extra environment variables to add to *Auth* pod",
             "default": [],
             "items": {}
         },

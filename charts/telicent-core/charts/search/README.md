@@ -109,7 +109,7 @@ Contains configuration parameters specific to the Smart Cach Search application
 | `replicas`                                          | Number of Search replicas to deploy                                     | `1`                                 |
 | `revisionHistoryLimit`                              | Number of controller revisions to keep                                  | `5`                                 |
 | `annotations`                                       | Add extra annotations to the Deployment object                          | `{}`                                |
-| `extraEnvs`                                         | List of additional environment variables to set in the pod              | `[]`                                |
+| `extraEnvVars`                                      | Array with extra environment variables to add to *Auth* pod             | `[]`                                |
 | `image.registry`                                    | Search image registry                                                   | `REGISTRY_NAME`                     |
 | `image.repository`                                  | Search image name                                                       | `REPOSITORY_NAME/search-api-server` |
 | `image.tag`                                         | Search image tag. If not set, a tag is generated using the appVersion   | `""`                                |

@@ -48,11 +48,11 @@ spec:
           - --config
           - /fuseki/config/config.ttl
 
-        {{- if .Values.extraEnv }}
+        {{- if .Values.extraEnvVars }}
         env:
-        {{- range $key, $value := .Values.extraEnvs }}
-        - name: {{ $key }}
-          value: {{ $value }}
+        {{- range .Values.extraEnvVars }}
+        - name: {{ .name }}
+          value: {{ .value }}
         {{- end }}
         {{- end }}
         envFrom:

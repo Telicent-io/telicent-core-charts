@@ -22,7 +22,7 @@ spec:
         prometheus.io/path: /
         prometheus.io/port: "9464"
         prometheus.io/scrape: "true"
-        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        checksum/config: {{ include (print $.Template.BasePath "/configmap-env.yaml") . | sha256sum }}
         {{- range $key, $value := .Values.annotations }}
           {{ $key }}: {{ $value | quote }}
         {{- end }}
@@ -46,10 +46,6 @@ spec:
         securityContext: {{- toYaml .Values.containerSecurityContext | nindent 10 }}
         
         env:
-        {{- range $key, $value := .Values.extraEnvs }}
-        - name: {{ $key }}
-          value: {{ $value }}
-        {{- end }}
         - name: ELASTIC_USER
           valueFrom:
             secretKeyRef:
@@ -61,6 +57,10 @@ spec:
               key: password
               name: {{ include "search.elasticSecretName" . }}
         
+        {{- range .Values.extraEnvVars }}
+        - name: {{ .name }}
+          value: {{ .value }}
+        {{- end }}
         envFrom:
         - configMapRef:
             name: {{ include "search.envConfigMapName" . }}

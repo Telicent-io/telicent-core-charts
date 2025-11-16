@@ -119,8 +119,12 @@ replicas: 1
 revisionHistoryLimit: 5
 # @key annotations Add extra annotations to the Deployment object
 annotations: {}
-# @key extraEnvs List of additional environment variables to set in the pod
-extraEnvs: []
+# @key extraEnvVars Array with extra environment variables to add to *Auth* pod
+# Example:
+# extraEnvVars:
+# - name: FOO
+# - value: instance
+extraEnvVars: []
 
 image:
   # @key image.registry [default: REGISTRY_NAME] Search image registry
