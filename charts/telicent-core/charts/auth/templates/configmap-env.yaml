@@ -1,0 +1,30 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: {{ include "auth.envConfigMapName" . }}
+  namespace: {{ include "auth.namespace" . | quote }}
+  labels:
+    {{- include "auth.labels" . | nindent 4 }}
+
+data:
+
+  JAVA_OPTS:  {{ .Values.configuration.javaOptions | quote }}
+  SUPER_USER_IDENTIFIER: {{ .Values.configuration.superUserIdentifier | quote }}
+  COOKIE_PARENT_DOMAIN: {{ .Values.configuration.cookieParentDomain | quote }}
+  COOKIE_SECURE: {{ .Values.configuration.cookieSecure }}
+  TOKEN_ISSUER_URL: {{ printf "%s%s" "https://" .Values.global.authHostDomain | quote }}
+
+  # IDP
+  EXTERNAL_IDP_URL: {{ .Values.idp.issuerUrl | quote }}
+  EXTERNAL_IDP_CLIENT_NAME: {{ .Values.idp.clientName | quote }}
+  EXTERNAL_IDP_ID_CLAIM: {{ .Values.idp.emailClaim | quote }}
+  EXTERNAL_IDP_AUTHORIZE_ENDPOINT:  {{ .Values.idp.authorizationPath | quote }}
+  EXTERNAL_IDP_JWK_SET_ENDPOINT:  {{ .Values.idp.jwksPath | quote }}
+
+  # PostgreSQL
+  POSTGRES_URI: {{ .Values.postgresSql.uri | quote }}

@@ -28,9 +28,6 @@ global:
   authHostDomain: "auth.telicent.io"
   # @key global.groupsClaim Key used to retrieve groups from the OIDC provider
   groupsClaim: "groups"
-  # @key global.jwksUrl Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)
-  # Note: For Dex the endpoint would be https://{yourDexDomain}/keys
-  jwksUrl: "https://{yourAuthdomain}/.well-known/jwks.json"
 
   # @key global.istioNamespace Namespace in which Istio is deployed
   # Note: By default, Istio namespace is set to 'istio-system'

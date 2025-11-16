@@ -74,7 +74,7 @@ If set, it can generate multiple layers from any map service that adheres to the
 | `configuration.searchUiMapboxStyleSpecUrl`  | Mapbox style spec URL for Search UI                                      | `""`                            |
 | `configuration.searchUiArcgisToken`         | ArcGIS token for Search UI                                               | `""`                            |
 | `configuration.existingMapConfigSecretName` | The name of an existing secret containing map configuration              | `""`                            |
-| `configuration.oauthClientId`               | The OAuth client id to be used by Search UI                              | `telicent-search-ui`            |
+| `configuration.oauthClientId`               | The OAuth client id to be used by Search UI                              | `search-ui`                     |
 | `configuration.oauthScope`                  | List of OAuth scopes to be used by Search UI                             | `openid profile offline_access` |
 
 ### Common Parameters

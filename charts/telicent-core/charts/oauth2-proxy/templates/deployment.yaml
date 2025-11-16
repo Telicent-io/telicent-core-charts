@@ -7,7 +7,7 @@ kind: Deployment
 
 metadata:
   name: {{ include "oauth2-proxy.fullname" . }}
-  namespace: {{ include "oauth2-prox.namespace" . | quote }}
+  namespace: {{ include "oauth2-proxy.namespace" . | quote }}
   labels:
     {{- include "oauth2-proxy.labels" . | nindent 4 }}
   {{- with .Values.annotations }}
@@ -29,14 +29,16 @@ spec:
   template:
     metadata:
       labels:
-        {{- include "oauth2-proxy.labels" . | nindent 8 }}
-        {{- with .Values.podLabels }}
-          {{- toYaml . | nindent 8 }}
-        {{- end }}
+      {{- include "oauth2-proxy.labels" . | nindent 8 }}
+      {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       annotations:
-        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        checksum/configEnv: {{ include (print $.Template.BasePath "/configmap-env.yaml") . | sha256sum }}
+        checksum/secretOauth: {{ include (print $.Template.BasePath "/secret-idp.yaml") . | sha256sum }}
+        checksum/secretCa: {{ include (print $.Template.BasePath "/secret-ca.yaml") . | sha256sum }}
         {{- with .Values.podAnnotations }}
-          {{- toYaml . | nindent 4 }}
+          {{- toYaml . | nindent 8 }}
         {{- end }}
 
     spec:
@@ -47,6 +49,12 @@ spec:
       {{- with $pullSecret }}
       imagePullSecrets:
         {{- toYaml . | nindent 6 }}
+      {{- end }}
+      {{- if .Values.initContainers }}
+      initContainers:
+      {{- with .Values.initContainers }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       {{- end }}
       containers:
       - name: oauth2-proxy
@@ -60,51 +68,52 @@ spec:
           valueFrom:
             secretKeyRef:
               key: clientid
-              name: {{ include "oauth2-proxy.oauthSecretName" . }}
+              name: {{ include "oauth2-proxy.idpSecretName" . }}
         - name: OAUTH2_PROXY_CLIENT_SECRET
           valueFrom:
             secretKeyRef:
               key: clientsecret
-              name: {{ include "oauth2-proxy.oauthSecretName" . }}
+              name: {{ include "oauth2-proxy.idpSecretName" . }}
         - name: OAUTH2_PROXY_COOKIE_SECRET
           valueFrom:
             secretKeyRef:
               key: cookiesecret
-              name: {{ include "oauth2-proxy.oauthSecretName" . }}
-        {{- if or (not (include "oauth2-proxy.caSecretName" . | empty)) .Values.tls.ca.existingConfigMap }}
+              name: {{ include "oauth2-proxy.idpSecretName" . }}
+        {{- if or (not (include "oauth2-proxy.caSecretName" . | empty )) .Values.tls.ca.existingConfigMap }}
         - name: OAUTH2_PROXY_PROVIDER_CA_FILES
           value: "/app/config/ca/ca.crt"
         - name: OAUTH2_PROXY_USE_SYSTEM_TRUST_STORE
           value: "true"
         {{- end }}
-        {{- range $key, $value := .Values.extraEnvs }}
-        - name: {{ $key }}
-          value: {{ $value }}
+        {{- range .Values.extraEnvVars }}
+        - name: {{ .name }}
+          value: {{ .value }}
         {{- end }}
         envFrom:
         - configMapRef:
             name: {{ include "oauth2-proxy.envConfigMapName" . }}
 
         ports:
-          - name: http
-            containerPort: {{ .Values.service.port }}
-            protocol: TCP
+        - name: http
+          containerPort: {{ .Values.service.port }}
+          protocol: TCP
 
         readinessProbe:
           httpGet:
             path: /ready
             port: http
             scheme: HTTP
-          periodSeconds: 10
-          successThreshold: 1
-          timeoutSeconds: 5
-        
+          initialDelaySeconds: 30
+          periodSeconds: 30
+          timeoutSeconds: 3
         livenessProbe:
           httpGet:
             path: /ping
             port: http
             scheme: HTTP
-          timeoutSeconds: 1
+          initialDelaySeconds: 30
+          periodSeconds: 30
+          timeoutSeconds: 3
 
         {{- if or (not (include "oauth2-proxy.caSecretName" . | empty)) .Values.tls.ca.existingConfigMap }}
         volumeMounts:
@@ -112,10 +121,9 @@ spec:
           mountPath: /app/config/ca
         {{- end }}
 
-        {{- with .Values.extraContainers }}
-          {{- toYaml . | nindent 8 }}
-        {{- end }}
-        
+      {{- with .Values.sidecars }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       {{- if or (not (include "oauth2-proxy.caSecretName" . | empty)) .Values.tls.ca.existingConfigMap }}
       volumes:
       - name: ca-volume

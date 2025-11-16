@@ -41,11 +41,6 @@
                     "description": "Key used to retrieve groups from the OIDC provider",
                     "default": "groups"
                 },
-                "jwksUrl": {
-                    "type": "string",
-                    "description": "Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)",
-                    "default": "https://{yourAuthdomain}/.well-known/jwks.json"
-                },
                 "istioNamespace": {
                     "type": "string",
                     "description": "Namespace in which Istio is deployed",

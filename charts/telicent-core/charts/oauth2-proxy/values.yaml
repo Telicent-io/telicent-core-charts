@@ -1,5 +1,5 @@
 # Copyright (C) 2025 Telicent Limited
-# Telicent OAuth2 Proxy stand-alone chart
+# Telicent *OAuth2 Proxy* stand-alone chart
 
 #
 # @section Global Parameters
@@ -18,6 +18,9 @@ global:
   # @key global.imagePullSecrets Global registry secret names as an array
   imagePullSecrets: []
 
+  # @key global.enterprise Enable enterprise mode, adding additional features and configurations
+  enterprise: false
+
   # @key global.appHostDomain Domain associated with Telicent application/ui services
   appHostDomain: "apps.telicent.io"
   # @key global.apiHostDomain Domain associated with Telicent Api services
@@ -26,6 +29,7 @@ global:
   authHostDomain: "auth.telicent.io"
   # @key global.groupsClaim Key used to retrieve groups from the OIDC provider
   groupsClaim: "groups"
+
   # @key global.istioNamespace Namespace in which Istio is deployed
   # Note: By default, Istio namespace is set to 'istio-system'
   istioNamespace: istio-system
@@ -34,21 +38,21 @@ global:
   # @key global.istioGatewayName Name of the Istio Gateway Resource (LB operating at the edge of the mesh)
   istioGatewayName: ingress-gateway
   # @key global.istioVirtualServiceEnabled Enable Istio traffic routing to a named destination service
-  istioVirtualServiceEnabled: true
+  istioVirtualServiceEnabled: false
 
 #
 # @section Configuration Parameters
 #
 # @descStart
-# Application Specific configuration for the OAuth2 Proxy.
+# Application Specific configuration for the *OAuth2 Proxy*.
 # @descEnd
 configuration:
-  # @key configuration.existingEnvConfigMap Name of existing configmap containing Oauth2 Proxy Environment Configuration
-  # Note: When it's set it will disable configmap creation.
+  # @key configuration.existingEnvConfigMap Name of existing configmap containing *Oauth2 Proxy* Environment Configuration
+  # Note: When it's set, it will disable configmap creation.
   existingEnvConfigMap: ""
 
   # @key configuration.oidcIssuerUrl The OpenID Connect issuer URL
-  oidcIssuerUrl: "https://127.0.0.1.nip.io/realms/core"
+  oidcIssuerUrl: "your.host/realms/core"
   # @key configuration.redirectUrl OIDC redirect URL override. If not set, 'authHostDomain' + '/oauth2/callback' will be used
   redirectUrl: ""
   # Note: For more information on the below cookie values, please visit: https://oauth2-proxy.github.io/oauth2-proxy/configuration/overview/#cookie-options
@@ -64,21 +68,24 @@ configuration:
   cookieRefresh: "30m"
 
 #
-# @section OAuth Client Secret Parameters
+# @section Identity Provider (IDP) Parameters and Secret
 #
 # @descStart
-# OAuth client secret contains the Client ID and Client Secret to be used when connecting to the Identity Provider.
-# Cookie Secret is used as the seed string for secure cookies.
+# Contains details pertinent to the OIDC Identity Provider to be used by *Oauth2 Proxy*.
+# It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
+# For Quick Start purposes, a secret named `tc-auth-gen-idp-oauth2-proxy` will be created if one is not set.
 # @descEnd
-oauthClientSecret:
-  # @key oauthClientSecret.existingSecret Name of an existing secret. The secret must contain 3 keys: 'clientid', 'clientsecret', 'cookiesecret'
-  # Note: When it's set it will disable secret creation.
+idp:
+  # @key idp.issuerUrl The OpenID Connect issuer URL
+  issuerUrl: ""
+  # @key idp.existingSecret Name of an existing secret. The secret must contain 3 keys: 'clientid', 'clientsecret', 'cookiesecret'
+  # Note: Left unset, it will create a secret named: tc-auth-gen-idp-oauth2-proxy
   existingSecret: ""
-  # @key oauthClientSecret.clientId The OAuth Client ID
+  # @key idp.clientId The OAuth Client ID
   clientId: ""
-  # @key oauthClientSecret.clientSecret The OAuth Client Secret
+  # @key idp.clientSecret The OAuth Client Secret
   clientSecret: ""
-  # @key oauthClientSecret.cookieSecret The seed string for secure cookies 
+  # @key idp.cookieSecret The seed string for secure cookies
   cookieSecret: "" 
 
 #
@@ -91,7 +98,7 @@ tls:
    # @key tls.ca.existingSecret Name of an existing secret that contains CA certificate(s). The secret must contains 1 key: 'ca.crt' containing the CA certificate(s)
    # Note: When it's set it will disable secret creation.
    existingSecret: ""
-   # @key tls.ca.existingConfigMap  Name of an existing configmap that contains CA certificate(s). The configmap must contains 1 key: 'ca.crt' containing the CA certificate(s)
+   # @key tls.ca.existingConfigMap Name of an existing configmap that contains CA certificate(s). The configmap must contains 1 key: 'ca.crt' containing the CA certificate(s)
    existingConfigMap: ""
    # @key tls.ca.certificate The PEM-encoded certificate(s) of the CA (certificate authority)
    certificate: ""
@@ -111,32 +118,49 @@ commonLabels: {}
 #
 # @section Deployment Parameters
 #
-# @key replicas Number of Ouath2 Proxy replicas to deploy
+# @key replicas Number of *Ouath2 Proxy* replicas to deploy
 replicas: 1
 # @key revisionHistoryLimit Number of controller revisions to keep
 revisionHistoryLimit: 5
 # @key annotations Add extra annotations to the Deployment Object
 annotations: {}
-# @key podLabels Add extra labels to the Oauth2 Proxy pod
+# @key podLabels Add extra labels to the *Oauth2 Proxy* pod
 podLabels: {}
-# @key podAnnotations Add extra annotations to the Oauth2 Proxy pod
+# @key podAnnotations Add extra annotations to the *Oauth2 Proxy* pod
 podAnnotations: {}
-# @key extraEnvs List of Additional environment variables to set in the pod
-extraEnvs: []
-# @key extraContainers Additional containers to be added to the pod
-extraContainers: []
+# @key extraEnvVars Array with extra environment variables to add to *Oauth2 Proxy* pod
+# Example:
+# extraEnvVars:
+# - name: FOO
+# - value: instance
+extraEnvVars: []
+# @key extraVolumes Additional containers to be added to the *Auth* pod
+extraVolumes: []
+# @key extraVolumeMounts Optionally specify extra list of additional volumeMounts
+extraVolumeMounts: []
+# @key initContainers Add init containers to the pod
+initContainers: []
+# Example:
+# sidecars:
+# - name: your-image-name
+#   image: your-image
+#   ports:
+#   - name: portname
+#     containerPort: 1234
+# @key sidecars Add sidecars to the pod.
+sidecars: []
 
 image:
-  # @key image.registry [default: REGISTRY_NAME] Oauth2 Proxy image registry
+  # @key image.registry [default: REGISTRY_NAME] *Oauth2 Proxy* image registry
   registry: quay.io
-  # @key image.repository [default: REPOSITORY_NAME/oauth2-proxy] Oauth2 Proxy image name
+  # @key image.repository [default: REPOSITORY_NAME/oauth2-proxy] *Oauth2 Proxy* image name
   repository: oauth2-proxy/oauth2-proxy
-  # @key image.tag Oauth2 Proxy image tag. If not set, a tag is generated using the appVersion
+  # @key image.tag *Oauth2 Proxy* image tag. If not set, a tag is generated using the appVersion
   tag: ""
-  # @key image.pullPolicy  Oauth2 Proxy image pull policy
+  # @key image.pullPolicy *Oauth2 Proxy* image pull policy
   pullPolicy: IfNotPresent
-# @key imagePullSecrets Specify registry secret names as an array
-imagePullSecrets: []
+  # @key image.pullSecrets Specify registry secret names as an array
+  pullSecrets: []
 
 resources:
   requests:
@@ -204,23 +228,25 @@ serviceAccount:
   automount: true
 
 #
-# @section Oauth2 Proxy Exposure Parameters
+# @section Traffic Exposure Parameters
 #
 service:
-  # @key service.port Oauth2 Proxy service port
+  # @key service.port *Oauth2 Proxy* service port
   port: 4080
-  # @key service.type Oauth2 Proxy service type
+  # @key service.type *Oauth2 Proxy* service type
   type: ClusterIP
 
+#
+# @section Istio Parameters
+#
 istio:
-  virtualService:
-    # @key istio.virtualService.enabled Enable Istio traffic into Traefik Proxy
-    enabled: false
-    # @key istio.virtualService.host Host associated with Oauth2 Proxy. If not set, 'appHostDomain' will be used
-    host: ""
-
   ingress:
     # @key istio.ingress.principal Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName
     principal: ""
     # @key istio.ingress.serviceAccountName Name of the Ingress service account (traefik and istio supported)
     serviceAccountName: "traefik-proxy"
+  virtualService:
+    # @key istio.virtualService.enabled Enable Istio traffic into *Oauth2 Proxy*
+    enabled: false
+    # @key istio.virtualService.host Host associated with *Oauth2 Proxy* If not set, 'appHostDomain' will be used
+    host: ""

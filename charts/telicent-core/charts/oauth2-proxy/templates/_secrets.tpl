@@ -3,13 +3,13 @@ Copyright (C) 2025 Telicent Limited
 */}}
 
 {{/*
-Create the name of oauth secret
+Create the name of the IDP secret
 */}}
-{{- define "oauth2-proxy.oauthSecretName" -}}
-{{- if .Values.oauthClientSecret.existingSecret }}
-{{- .Values.oauthClientSecret.existingSecret }}
+{{- define "oauth2-proxy.idpSecretName" -}}
+{{- if .Values.idp.existingSecret }}
+{{- .Values.idp.existingSecret }}
 {{- else }}
-{{- printf "%s-tc-auth-gen-%s" (include "oauth2-proxy.fullname" .) "oauth" }}
+{{- printf "tc-auth-gen-%s-%s" "idp" .Chart.Name  }}
 {{- end }}
 {{- end -}}
 

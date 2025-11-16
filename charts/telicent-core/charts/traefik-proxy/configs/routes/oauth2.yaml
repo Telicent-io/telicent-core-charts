@@ -77,4 +77,4 @@ http:
     forward-secret:
       headers:
         customRequestHeaders:
-          X-ForwardAuth-Secret: "F3nkCKqpiTQDmYrh45NY2yzcY2s"
+          X-ForwardAuth-Secret: ${X_FORWARD_AUTH}

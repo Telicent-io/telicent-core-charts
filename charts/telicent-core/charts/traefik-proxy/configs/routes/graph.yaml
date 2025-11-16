@@ -7,7 +7,7 @@ http:
       entryPoints:
         - web-api
       middleWares:
-        - oauth2
+        - path-graph-sparql
         - host-graph
     graph-graphql:
       rule: {{ printf "Host(`%s`) && PathPrefix(`/graphql`)" .Values.global.apiHostDomain }}
@@ -15,6 +15,7 @@ http:
       entryPoints:
         - web-api
       middleWares:
+        - path-graph-graphql
         - host-graph
   services:
     graph:
@@ -25,11 +26,11 @@ http:
   middlewares:
     path-graph-sparql:
       replacePathRegex:
-        regex: "^/api/sparql/(.*)"
+        regex: "^/sparql/(.*)"
         replacement: "/$1"
     path-graph-graphql:
       replacePathRegex:
-        regex: "^/api/graphql/(.*)"
+        regex: "^/graphql/(.*)"
         replacement: "/$1"
     host-graph:
       headers:

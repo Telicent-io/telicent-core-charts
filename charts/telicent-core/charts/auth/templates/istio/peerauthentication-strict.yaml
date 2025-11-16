@@ -6,9 +6,10 @@ apiVersion: security.istio.io/v1
 kind: PeerAuthentication
 
 metadata:
-  name: {{ include "telicent-core.fullname" . }}-auth-strict
+  name: {{ include "auth.name" . }}-strict
+  namespace: {{ include "auth.namespace" . | quote }}
   labels:
-  {{- include "telicent-core.labels" . | nindent 4 }}
+  {{- include "auth.labels" . | nindent 4 }}
 
 spec:
   mtls:

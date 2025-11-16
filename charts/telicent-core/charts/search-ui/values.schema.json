@@ -99,7 +99,7 @@
                 "oauthClientId": {
                     "type": "string",
                     "description": "The OAuth client id to be used by Search UI",
-                    "default": "telicent-search-ui"
+                    "default": "search-ui"
                 },
                 "oauthScope": {
                     "type": "string",

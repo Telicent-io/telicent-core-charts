@@ -7,7 +7,7 @@ http:
       entryPoints:
         - web-api
       middleWares:
-        - oauth2
+        - path-user-preferences
         - host-user-preferences
 
   services:
@@ -19,7 +19,7 @@ http:
   middlewares:
     path-user-preferences:
       replacePathRegex:
-        regex: "^/api/user-preferences/(.*)"
+        regex: "^/user-preferences/(.*)"
         replacement: "/$1"
 
     host-user-preferences:
