@@ -77,4 +77,4 @@ http:
     forward-secret:
       headers:
         customRequestHeaders:
-          X-ForwardAuth-Secret: {{{{env "X_FORWARD_AUTH"}}}}
+          X-ForwardAuth-Secret: '{{{{env "X_FORWARD_AUTH"}}}}'
