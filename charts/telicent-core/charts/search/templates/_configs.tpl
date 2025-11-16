@@ -9,6 +9,6 @@ Create the name of the config map
 {{- if .Values.configuration.existingEnvConfigMap }}
 {{- .Values.configuration.existingEnvConfigMap }}
 {{- else }}
-{{- printf "tc-%s-%s" (include "search.fullname" .) "env" }}
+{{- printf "tc-%s-%s" .Chart.Name "env" }}
 {{- end }}
 {{- end }}

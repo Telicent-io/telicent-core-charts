@@ -20,6 +20,6 @@ Create the name of ca secret, the name will be empty when no CA has been provide
 {{- if .Values.tls.ca.existingSecret }}
 {{- .Values.tls.ca.existingSecret }}
 {{- else if .Values.tls.ca.certificate }}
-{{- printf "%s-tc-auth-ca-%s" (include "oauth2-proxy.fullname" .) "root" }}
+{{- printf "tc-auth-ca-%s" "root" .Chart.Name }}
 {{- end }}
 {{- end -}}

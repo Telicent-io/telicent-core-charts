@@ -9,7 +9,7 @@ Create the name of the config map
 {{- if .Values.configuration.existingEnvConfigMap }}
 {{- .Values.configuration.existingEnvConfigMap }}
 {{- else }}
-{{- printf "tc-%s-%s" (include "graph.fullname" .) "env" }}
+{{- printf "tc-%s-%s" .Chart.Name "env" }}
 {{- end }}
 {{- end }}
 
@@ -18,12 +18,12 @@ Create the name of the config map
 Create a fuseki config name to use
 */}}
 {{- define "graph.fusekiConfig" -}}
-{{- printf "tc-%s-%s" (include "graph.fullname" .) "fuseki" }}
+{{- printf "tc-%s-%s" .Chart.Name "fuseki" }}
 {{- end }}
 
 {{/*
 Create Kafka Auth Config name to use
 */}}
 {{- define "graph.kafkaAuthConfig" -}}
-{{- printf "tc-%s-%s" (include "graph.fullname" .) "kafka-config" }}
+{{- printf "tc-%s-%s" .Chart.Name "kafka-config" }}
 {{- end }}
