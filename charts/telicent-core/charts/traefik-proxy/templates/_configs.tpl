@@ -6,7 +6,7 @@ Copyright (C) 2025 Telicent Limited
 Create the name of the startup config map
 */}}
 {{- define "traefik-proxy.startupConfigMapName" -}}
-{{- printf "%tc-s-%s" (include "traefik-proxy.fullname" .) "startup" }}
+{{- printf "tc-%s-%s" (include "traefik-proxy.fullname" .) "startup" }}
 {{- end }}
 
 {{/*
