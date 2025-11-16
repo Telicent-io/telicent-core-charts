@@ -47,7 +47,7 @@ http:
         address: http://{{ .Values.hosts.auth | default (printf "%s.%s:4080" (include "traefik-proxy.routesService" (list . "oauth2-proxy")) .Release.Namespace) }}/oauth2
         trustForwardHeader: true
         authResponseHeaders:
-          - Authorization
+          - Cookie # required by oauth2-proxy cookie: __Secure-session
 
     oauth2-verify:
       forwardAuth:
