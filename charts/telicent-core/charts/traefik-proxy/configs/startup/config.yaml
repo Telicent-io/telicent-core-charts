@@ -3,13 +3,11 @@ entryPoints:
     address: ":8080/tcp"
     http:
       middlewares:
-        - "cors@file"
         - "headers-security@file"
   web-api:
     address: ":8081/tcp"
     http:
       middlewares:
-        - "cors@file"
         - "headers-security@file"
         - "oauth2@file"
 
