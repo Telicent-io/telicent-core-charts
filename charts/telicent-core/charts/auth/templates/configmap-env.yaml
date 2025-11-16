@@ -16,7 +16,7 @@ data:
   JAVA_OPTS:  {{ .Values.configuration.javaOptions | quote }}
   SUPER_USER_IDENTIFIER: {{ .Values.configuration.superUserIdentifier | quote }}
   COOKIE_PARENT_DOMAIN: {{ .Values.configuration.cookieParentDomain | quote }}
-  COOKIE_SECURE: {{ .Values.configuration.cookieSecure }}
+  COOKIE_SECURE: {{ .Values.configuration.cookieSecure | quote  }}
   TOKEN_ISSUER_URL: {{ printf "%s%s" "https://" .Values.global.authHostDomain | quote }}
 
   # IDP
