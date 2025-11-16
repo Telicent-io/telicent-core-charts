@@ -119,6 +119,8 @@ replicas: 1
 revisionHistoryLimit: 5
 # @key annotations Add extra annotations to the Deployment object
 annotations: {}
+# @key podAnnotations Add extra annotations to the *Auth* pod
+podAnnotations: {}
 # @key extraEnvVars Array with extra environment variables to add to *Auth* pod
 # Example:
 # extraEnvVars:

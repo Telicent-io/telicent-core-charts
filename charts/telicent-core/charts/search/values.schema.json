@@ -203,6 +203,11 @@
             "description": "Add extra annotations to the Deployment object",
             "default": {}
         },
+        "podAnnotations": {
+            "type": "object",
+            "description": "Add extra annotations to the *Auth* pod",
+            "default": {}
+        },
         "extraEnvVars": {
             "type": "array",
             "description": "Array with extra environment variables to add to *Auth* pod",
