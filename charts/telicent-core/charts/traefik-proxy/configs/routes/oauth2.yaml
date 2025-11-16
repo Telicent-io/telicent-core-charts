@@ -11,7 +11,7 @@ http:
       chain:
         middlewares:
           - forward-secret
-          - oauth2-verify
+          #- oauth2-verify
 
     headers-ssl:
       headers:
