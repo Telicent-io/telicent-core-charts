@@ -22,7 +22,7 @@ spec:
       - source:
           principals:
           - {{ include "auth.ingressPrincipal" . }}
-          - cluster.local/ns/tc-core/sa/graph                                                                                                                                             │
+          - cluster.local/ns/tc-core/sa/graph
           - cluster.local/ns/tc-core/sa/search
     to:
       - operation:
