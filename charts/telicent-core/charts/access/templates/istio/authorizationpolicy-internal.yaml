@@ -21,7 +21,6 @@ spec:
   - from:
     - source:
         principals:
-        - {{ include "access.ingressPrincipal" . }}
         - {{ include "access.graphPrincipal" . }}
         {{- if .Values.global.enterprise }}
         - {{ include "access.searchPrincipal" . }}

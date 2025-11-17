@@ -68,34 +68,12 @@ Create the name of the service to use
 {{ include "graph.fullname" . }}
 {{- end }}
 
-{{/*
-Create the name of the config map
-*/}}
-{{- define "graph.envConfigMapName" -}}
-{{- if .Values.configuration.existingEnvConfigMap }}
-{{- .Values.configuration.existingEnvConfigMap }}
-{{- else }}
-{{- printf "%s-%s" (include "graph.fullname" .) "env" }}
-{{- end }}
-{{- end }}
+
 
 {{- define "graph.envSecretName" -}}
 {{ include "graph.fullname" . }}
 {{- end }}
 
-{{/*
-Create a fuseki config name to use
-*/}}
-{{- define "graph.fusekiConfig" -}}
-{{ include "graph.fullname" . }}-fuseki
-{{- end }}
-
-{{/* 
-Create Kafka Auth Config name to use
-*/}}
-{{- define "graph.kafkaAuthConfig" -}}
-{{ include "graph.fullname" . }}-kafka-config
-{{- end }}
 
 {{/*
 Search API URL

@@ -20,8 +20,10 @@ global:
   # @key global.enterprise Enable enterprise mode, adding additional features and configurations
   enterprise: false
 
-  # @key global.appHostDomain Domain associated with Telicent application services
+  # @key global.appHostDomain Domain associated with Telicent application/ui services
   appHostDomain: "apps.telicent.io"
+  # @key global.apiHostDomain Domain associated with Telicent Api services
+  apiHostDomain: "api.telicent.io"
   # @key global.authHostDomain Domain associated with Telicent authentication services, including OIDC providers
   authHostDomain: "auth.telicent.io"
 
@@ -63,6 +65,11 @@ configuration:
   searchUiArcgisToken: ""
   # @key configuration.existingMapConfigSecretName The name of an existing secret containing map configuration
   existingMapConfigSecretName: ""
+
+  # @key configuration.oauthClientId The OAuth client id to be used by Search UI
+  oauthClientId: "search-ui"
+  # @key configuration.oauthScope List of OAuth scopes to be used by Search UI
+  oauthScope: "openid profile offline_access"
 
 # @section Common Parameters
 

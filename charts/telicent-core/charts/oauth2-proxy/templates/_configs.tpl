@@ -9,7 +9,7 @@ Create the name of oauth2 proxy env config map
 {{- if .Values.configuration.existingEnvConfigMap }}
 {{- .Values.configuration.existingEnvConfigMap }}
 {{- else }}
-{{- printf "%s-%s" (include "oauth2-proxy.fullname" .) "env" }}
+{{- printf "tc-%s-%s" .Chart.Name "env" }}
 {{- end }}
 {{- end -}}
 

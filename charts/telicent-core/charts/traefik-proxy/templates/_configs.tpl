@@ -6,14 +6,14 @@ Copyright (C) 2025 Telicent Limited
 Create the name of the startup config map
 */}}
 {{- define "traefik-proxy.startupConfigMapName" -}}
-{{- printf "%s-%s" (include "traefik-proxy.fullname" .) "startup" }}
+{{- printf "tc-%s-%s" .Chart.Name "startup" }}
 {{- end }}
 
 {{/*
 Create the name of the routes config map
 */}}
 {{- define "traefik-proxy.routesConfigMapName" -}}
-{{- printf "%s-%s" (include "traefik-proxy.fullname" .) "routes" }}
+{{- printf "tc-%s-%s" .Chart.Name "routes" }}
 {{- end }}
 
 {{/*

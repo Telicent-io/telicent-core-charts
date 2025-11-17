@@ -16,10 +16,20 @@
                     "default": [],
                     "items": {}
                 },
+                "enterprise": {
+                    "type": "boolean",
+                    "description": "Enable enterprise mode, adding additional features and configurations",
+                    "default": false
+                },
                 "appHostDomain": {
                     "type": "string",
-                    "description": "Domain associated with Telicent application services",
+                    "description": "Domain associated with Telicent application/ui services",
                     "default": "apps.telicent.io"
+                },
+                "apiHostDomain": {
+                    "type": "string",
+                    "description": "Domain associated with Telicent Api services",
+                    "default": "api.telicent.io"
                 },
                 "authHostDomain": {
                     "type": "string",
@@ -53,6 +63,21 @@
                 }
             }
         },
+        "forwardAuth": {
+            "type": "object",
+            "properties": {
+                "existingSecret": {
+                    "type": "string",
+                    "description": "Name of an existing secret. The secret must contain 1 key: 'secret'",
+                    "default": ""
+                },
+                "header": {
+                    "type": "string",
+                    "description": "The secret value to be associated with the `X-ForwardAuth-Secret`.",
+                    "default": ""
+                }
+            }
+        },
         "logs": {
             "type": "object",
             "properties": {
@@ -62,7 +87,7 @@
                         "level": {
                             "type": "string",
                             "description": "Set logging levels, values are: TRACE, DEBUG, INFO, WARN, ERROR, FATAL, and PANIC.",
-                            "default": "INFO"
+                            "default": "DEBUG"
                         }
                     }
                 },
@@ -83,12 +108,12 @@
             "properties": {
                 "enabled": {
                     "type": "boolean",
-                    "description": "Enable Traefik dashboard. Note: should only be enabled in development environments.",
+                    "description": "Enable *Traefik Proxy* dashboard. Note: should only be enabled in development environments.",
                     "default": false
                 },
                 "domain": {
                     "type": "string",
-                    "description": "Domain associated with Traefik dashboard. If not set, 'appHostDomain' will be used",
+                    "description": "Domain associated with *Traefik Proxy* dashboard. If not set, 'appHostDomain' will be used",
                     "default": ""
                 },
                 "basepath": {
@@ -120,7 +145,7 @@
         },
         "replicas": {
             "type": "number",
-            "description": "Number of Traefik Proxy replicas to deploy",
+            "description": "Number of *Traefik Proxy* replicas to deploy",
             "default": 1
         },
         "revisionHistoryLimit": {
@@ -135,23 +160,41 @@
         },
         "podLabels": {
             "type": "object",
-            "description": "Add extra labels to the Traefik Proxy pod",
+            "description": "Add extra labels to the *Traefik Proxy* pod",
             "default": {}
         },
         "podAnnotations": {
             "type": "object",
-            "description": "Add extra annotations to the Traefik Proxy pod",
+            "description": "Add extra annotations to the *Traefik Proxy* pod",
             "default": {}
         },
-        "extraEnvs": {
+        "extraEnvVars": {
             "type": "array",
-            "description": "List of Additional environment variables to set in the pod",
+            "description": "Array with extra environment variables to add to *Traefik Proxy* pod",
             "default": [],
             "items": {}
         },
-        "extraContainers": {
+        "extraVolumes": {
             "type": "array",
-            "description": "Additional containers to be added to the pod",
+            "description": "Additional containers to be added to the *Traefik Proxy* pod",
+            "default": [],
+            "items": {}
+        },
+        "extraVolumeMounts": {
+            "type": "array",
+            "description": "Optionally specify extra list of additional volumeMounts",
+            "default": [],
+            "items": {}
+        },
+        "initContainers": {
+            "type": "array",
+            "description": "Add init containers to the pod",
+            "default": [],
+            "items": {}
+        },
+        "sidecars": {
+            "type": "array",
+            "description": "Add sidecars to the pod.",
             "default": [],
             "items": {}
         },
@@ -160,31 +203,31 @@
             "properties": {
                 "registry": {
                     "type": "string",
-                    "description": "Traefik Proxy image registry",
+                    "description": "*Traefik Proxy* image registry",
                     "default": "REGISTRY_NAME"
                 },
                 "repository": {
                     "type": "string",
-                    "description": "Traefik Proxy image name",
+                    "description": "*Traefik Proxy* image name",
                     "default": "REPOSITORY_NAME/traefik"
                 },
                 "tag": {
                     "type": "string",
-                    "description": "Traefik Proxy image tag. If not set, a tag is generated using the appVersion",
+                    "description": "*Traefik Proxy* image tag. If not set, a tag is generated using the appVersion",
                     "default": ""
                 },
                 "pullPolicy": {
                     "type": "string",
-                    "description": "Traefik Proxy image pull policy",
+                    "description": "*Traefik Proxy* image pull policy",
                     "default": "IfNotPresent"
+                },
+                "pullSecrets": {
+                    "type": "array",
+                    "description": "Specify registry secret names as an array",
+                    "default": [],
+                    "items": {}
                 }
             }
-        },
-        "imagePullSecrets": {
-            "type": "array",
-            "description": "Specify registry secret names as an array",
-            "default": [],
-            "items": {}
         },
         "resources": {
             "type": "object",
@@ -350,15 +393,35 @@
         "service": {
             "type": "object",
             "properties": {
-                "port": {
-                    "type": "number",
-                    "description": "Traefik Proxy service port",
-                    "default": 8080
+                "app": {
+                    "type": "object",
+                    "properties": {
+                        "port": {
+                            "type": "number",
+                            "description": "*Traefik Proxy* APP/UI service port",
+                            "default": 8080
+                        },
+                        "type": {
+                            "type": "string",
+                            "description": "*Traefik Proxy* APP/UI service type",
+                            "default": "ClusterIP"
+                        }
+                    }
                 },
-                "type": {
-                    "type": "string",
-                    "description": "Traefik Proxy service type",
-                    "default": "ClusterIP"
+                "api": {
+                    "type": "object",
+                    "properties": {
+                        "port": {
+                            "type": "number",
+                            "description": "*Traefik Proxy* service port",
+                            "default": 8081
+                        },
+                        "type": {
+                            "type": "string",
+                            "description": "*Traefik Proxy* service type",
+                            "default": "ClusterIP"
+                        }
+                    }
                 }
             }
         },
@@ -370,12 +433,12 @@
                     "properties": {
                         "enabled": {
                             "type": "boolean",
-                            "description": "Enable Istio traffic into Traefik Proxy",
+                            "description": "Enable Istio traffic into *Traefik Proxy*",
                             "default": true
                         },
                         "extraHosts": {
                             "type": "array",
-                            "description": "Additional hosts (excluding appHostDomain) to be managed by Traefik Proxy",
+                            "description": "Additional hosts (excluding appHostDomain) to be managed by *Traefik Proxy*",
                             "default": [],
                             "items": {}
                         }
@@ -401,54 +464,59 @@
         "hosts": {
             "type": "object",
             "properties": {
+                "auth": {
+                    "type": "string",
+                    "description": "Auth host value, If not set a host is generated using service:'auth',port:'9000' and Release namespace & name.",
+                    "default": ""
+                },
                 "access": {
                     "type": "string",
-                    "description": "Access host value, If not set a host is generated using service:'access', port:'8080' and Release namespace & name.",
+                    "description": "Access host value, If not set a host is generated using service:'access',port:'8080' and Release namespace & name.",
                     "default": ""
                 },
                 "accessUi": {
                     "type": "string",
-                    "description": "Access host value, If not set a host is generated using service:'access-ui', port:'8080' and Release namespace & name.",
+                    "description": "Access host value, If not set a host is generated using service:'access-ui',port:'8080' and Release namespace & name.",
                     "default": ""
                 },
                 "searchUi": {
                     "type": "string",
-                    "description": "Access host value, If not set a host is generated using service:'search-ui', port:'8080' and Release namespace & name.",
+                    "description": "Access host value, If not set a host is generated using service:'search-ui',port:'8080' and Release namespace & name.",
                     "default": ""
                 },
                 "graphUi": {
                     "type": "string",
-                    "description": "Graph UI host value, If not set a host is generated using service:'graph-ui', port:'8080' and Release namespace & name.",
+                    "description": "Graph UI host value, If not set a host is generated using service:'graph-ui',port:'8080' and Release namespace & name.",
                     "default": ""
                 },
                 "queryUi": {
                     "type": "string",
-                    "description": "Query UI host value, If not set a host is generated using service:'query-ui', port:'8080' and Release namespace & name.",
+                    "description": "Query UI host value, If not set a host is generated using service:'query-ui',port:'8080' and Release namespace & name.",
                     "default": ""
                 },
                 "search": {
                     "type": "string",
-                    "description": "Search host value, If not set a host is generated using service:'search', port:'8181' and Release namespace & name.",
+                    "description": "Search host value, If not set a host is generated using service:'search',port:'8181' and Release namespace & name.",
                     "default": ""
                 },
                 "graph": {
                     "type": "string",
-                    "description": "Graph host value, If not set a host is generated using service:'graph', port:'3030' and Release namespace & name.",
+                    "description": "Graph host value, If not set a host is generated using service:'graph',port:'3030' and Release namespace & name.",
                     "default": ""
                 },
                 "userPreferences": {
                     "type": "string",
-                    "description": "User Preferences host value, If not set a host is generated using service:'user-preferences', port:'11111' and Release namespace & name.",
+                    "description": "User Preferences host value, If not set a host is generated using service:'user-preferences',port:'11111' and Release namespace & name.",
                     "default": ""
                 },
                 "oauth2Proxy": {
                     "type": "string",
-                    "description": "Oauth2 Proxy host value, If not set a host is generated using service:'oauth2-proxy', port:'4080' and Release namespace & name.",
+                    "description": "Oauth2 Proxy host value, If not set a host is generated using service:'oauth2-proxy',port:'4080' and Release namespace & name.",
                     "default": ""
                 },
                 "whoami": {
                     "type": "string",
-                    "description": "Whoami host value, If not set a host is generated using service:'whoami', port:'8080' and Release namespace & name. AB:test purposes, be removed afterwards",
+                    "description": "Whoami host value, If not set a host is generated using service:'whoami',port:'8080' and Release namespace & name. AB:test purposes, be removed afterwards",
                     "default": ""
                 }
             }

@@ -23,8 +23,13 @@
                 },
                 "appHostDomain": {
                     "type": "string",
-                    "description": "Domain associated with Telicent application services",
+                    "description": "Domain associated with Telicent application/ui services",
                     "default": "apps.telicent.io"
+                },
+                "apiHostDomain": {
+                    "type": "string",
+                    "description": "Domain associated with Telicent Api services",
+                    "default": "api.telicent.io"
                 },
                 "authHostDomain": {
                     "type": "string",
@@ -178,9 +183,14 @@
             "description": "Add extra annotations to the Statefulset object",
             "default": {}
         },
-        "extraEnvs": {
+        "podAnnotations": {
+            "type": "object",
+            "description": "Add extra annotations to the *Auth* pod",
+            "default": {}
+        },
+        "extraEnvVars": {
             "type": "array",
-            "description": "List of additional environment variables to set in the pod",
+            "description": "Array with extra environment variables to add to *Auth* pod",
             "default": [],
             "items": {}
         },

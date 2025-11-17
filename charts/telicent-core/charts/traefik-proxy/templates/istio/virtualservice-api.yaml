@@ -7,7 +7,7 @@ apiVersion: networking.istio.io/v1
 kind: VirtualService
 
 metadata:
-  name: {{ include "traefik-proxy.fullname" . }}
+  name: {{ include "traefik-proxy.fullname" . }}-api
   namespace: {{ include "traefik-proxy.namespace" . | quote }}
   labels:
     {{- include "traefik-proxy.labels" . | nindent 4 }}
@@ -16,15 +16,12 @@ spec:
   gateways:
   - {{ required "A valid .Values.global.istioNamespace entry required!" .Values.global.istioNamespace }}/{{ required "A valid .Values.global.istioGatewayName entry required!"  .Values.global.istioGatewayName }}
   hosts:
-  - {{ required "A valid .Values.global.appHostDomain entry required!" .Values.global.appHostDomain }}
-  {{- if .Values.istio.virtualService.extraHosts }}
-    {{- toYaml .Values.istio.virtualService.extraHosts | nindent 2 }}
-  {{- end }}
+  - {{ required "A valid .Values.global.apiHostDomain entry required!" .Values.global.apiHostDomain }}
   http:
    - route:
       - destination:
           host: {{ include "traefik-proxy.serviceName" . }}
           port:
-            number: {{ .Values.service.port }}
+            number: {{ .Values.service.api.port }}
 
 {{- end }}

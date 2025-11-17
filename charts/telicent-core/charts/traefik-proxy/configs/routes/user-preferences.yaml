@@ -2,12 +2,11 @@
 http:
   routers:
     user-preferences:
-      rule: {{ printf "Host(`%s`) && PathPrefix(`/api/user-preferences`)" .Values.global.appHostDomain }}
+      rule: {{ printf "Host(`%s`) && PathPrefix(`/user-preferences`)" .Values.global.apiHostDomain }}
       service: user-preferences
       entryPoints:
-        - web
+        - web-api
       middleWares:
-        - oauth2
         - path-user-preferences
         - host-user-preferences
 
@@ -20,11 +19,10 @@ http:
   middlewares:
     path-user-preferences:
       replacePathRegex:
-        regex: "^/api/user-preferences/(.*)"
+        regex: "^/user-preferences/(.*)"
         replacement: "/$1"
 
     host-user-preferences:
       headers:
         customRequestHeaders:
           host: {{ .Values.hosts.userPeferences | default (printf "%s.%s:11111" (include "traefik-proxy.routesService" (list . "user-preferences")) .Release.Namespace) }}
-

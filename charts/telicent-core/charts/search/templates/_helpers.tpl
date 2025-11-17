@@ -68,17 +68,6 @@ Create the name of the service to use
 {{- end }}
 
 {{/*
-Create the name of the config map
-*/}}
-{{- define "search.envConfigMapName" -}}
-{{- if .Values.configuration.existingEnvConfigMap }}
-{{- .Values.configuration.existingEnvConfigMap }}
-{{- else }}
-{{- printf "%s-%s" (include "search.fullname" .) "env" }}
-{{- end }}
-{{- end }}
-
-{{/*
 Create the name of environment variable secrets
 */}}
 {{- define "search.envSecretName" -}}
