@@ -40,7 +40,7 @@ spec:
       {{- end }}
       containers:
       - name: search-ui
-        image: 098669589541.dkr.ecr.eu-west-2.amazonaws.com/telicent-search:4.18.0
+        image: {{ include "search-ui.image" . }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         resources: {{- toYaml .Values.resources | nindent 10 }}
         securityContext: {{- toYaml .Values.containerSecurityContext | nindent 10 }}
