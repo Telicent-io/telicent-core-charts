@@ -96,7 +96,7 @@ Copyright (C) 2025 Telicent Limited
     # :dataset rdf:type ja:MemoryDataset .
     ## Dataset with security labels / ABAC.
     ## Transactional in-memory dataset.
-    :datasetAuth rdf:type authz:DatasetAuthz ;
+    # :datasetAuth rdf:type authz:DatasetAuthz ;
         ## Config item where labels are stored (only define if not in memory)
         authz:labelsStore [ authz:labelsStorePath "/fuseki/databases/knowledgeLabels.db" ] ;
         authz:dataset :datasetAuthBase;
