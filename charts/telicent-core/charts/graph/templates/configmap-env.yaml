@@ -11,8 +11,6 @@ metadata:
     {{- include "graph.labels" . | nindent 4 }}
        
 data:
-  # to be removed - old auth ATTRIBUTE_HIERARCHY_URL: {{ .Values.configuration.attributeHierarchyUrl | default (include "graph.attributeHierachyUrl" .) | quote }}
-  # to be removed - old auth USER_ATTRIBUTES_URL: {{ .Values.configuration.userAttributesUrl | default (include "graph.userPreferencesUrl" .) | quote }}
   FEATURE_FLAG_AUTHZ: "true"
   ENABLE_BACKUPS: "false"
   ENABLE_LABELS_QUERY: {{ .Values.configuration.enableLabelsQuery | default "false" | quote }}
