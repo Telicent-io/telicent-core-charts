@@ -196,7 +196,7 @@
                 "repository": {
                     "type": "string",
                     "description": "Auth server image name",
-                    "default": "telicent-auth-server"
+                    "default": "telicent/telicent-auth-server"
                 },
                 "pullPolicy": {
                     "type": "string",

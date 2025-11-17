@@ -124,13 +124,13 @@ Note: It is recommended to use a Kubernetes secret for sensitive information lik
 
 ### image This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
 
-| Name                | Description                                                                | Value                  |
-| ------------------- | -------------------------------------------------------------------------- | ---------------------- |
-| `image.registry`    | Auth server image registry                                                 | `quay.io`              |
-| `image.repository`  | Auth server image name                                                     | `telicent-auth-server` |
-| `image.pullPolicy`  | Auth server image pull policy                                              | `IfNotPresent`         |
-| `image.tag`         | Auth server image tag. If not set, a tag is generated using the appVersion | `""`                   |
-| `image.pullSecrets` | Specify registry secret names as an array                                  | `[]`                   |
+| Name                | Description                                                                | Value                           |
+| ------------------- | -------------------------------------------------------------------------- | ------------------------------- |
+| `image.registry`    | Auth server image registry                                                 | `quay.io`                       |
+| `image.repository`  | Auth server image name                                                     | `telicent/telicent-auth-server` |
+| `image.pullPolicy`  | Auth server image pull policy                                              | `IfNotPresent`                  |
+| `image.tag`         | Auth server image tag. If not set, a tag is generated using the appVersion | `""`                            |
+| `image.pullSecrets` | Specify registry secret names as an array                                  | `[]`                            |
 
 ### Service Account Parameters This section builds out the service account more information can be found here: https://kubernetes.io/docs/concepts/security/service-accounts/
 
