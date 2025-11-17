@@ -11,9 +11,6 @@ metadata:
     {{- include "search.labels" . | nindent 4 }}
 
 data:
-  # Environment variables for the search container
-  # to be removed - old auth USER_ATTRIBUTES_URL: {{ include "search.userAttributesUrl" . }}
-  # to be removed - old auth ATTRIBUTE_HIERARCHY_URL: {{ include "search.attributeHierarchyUrl" . }}
   FEATURE_FLAG_AUTHZ: "true"
   JAVA_OPTIONS: {{ .Values.configuration.javaOptions | quote }}
   OTEL_METRICS_EXPORTER: {{ .Values.configuration.otelMetricsExporter | quote }}
