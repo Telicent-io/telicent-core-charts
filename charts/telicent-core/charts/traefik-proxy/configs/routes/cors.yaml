@@ -11,7 +11,7 @@ http:
         accessControlAllowMethods: [ GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS ]
         accessControlAllowHeaders: [ Authorization,Content-Type,Accept,X-Requested-With,Request-ID, Cache-Control, Cookie ]
         # Disables credential support (incompatible with wildcard origin)
-        accessControlAllowCredentials: false
+        accessControlAllowCredentials: true
         accessControlAllowOriginList:
           - {{ printf "%s%s" "https://" .Values.global.authHostDomain | quote }}
           - {{ printf "%s%s" "https://" .Values.global.appHostDomain | quote }}
