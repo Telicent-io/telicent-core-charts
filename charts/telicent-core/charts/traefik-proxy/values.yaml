@@ -245,6 +245,8 @@ hosts:
   auth: ""
   # @key hosts.access Access host value, If not set a host is generated using service:'access',port:'8080' and Release namespace & name.
   access: ""
+  # @key hosts.adminUi Admin UI host value, If not set a host is generated using service:'admin-ui',port:'8080' and Release namespace & name.
+  adminUi: ""
   # @key hosts.accessUi Access host value, If not set a host is generated using service:'access-ui',port:'8080' and Release namespace & name.
   accessUi: ""
   # @key hosts.searchUi Access host value, If not set a host is generated using service:'search-ui',port:'8080' and Release namespace & name.
