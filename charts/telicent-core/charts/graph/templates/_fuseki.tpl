@@ -113,6 +113,7 @@ Copyright (C) 2025 Telicent Limited
         ## OLD AUTH APPROACH
         # authz:attributesURL <env:USER_ATTRIBUTES_URL>;
         # authz:hierarchiesURL <env:ATTRIBUTE_HIERARCHY_URL>;
+        authz:authServer true;
         .
     ## Storage of data in memory.
     #:datasetAuthBase rdf:type ja:MemoryDataset .
@@ -210,6 +211,7 @@ Copyright (C) 2025 Telicent Limited
         ## OLD AUTH APPROACH
         # authz:attributesURL <env:USER_ATTRIBUTES_URL>;
         # authz:hierarchiesURL <env:ATTRIBUTE_HIERARCHY_URL>;
+        authz:authServer true;
         .
     ## Storage of data in memory.
     #:datasetOntoBase rdf:type ja:MemoryDataset .
@@ -308,6 +310,7 @@ Copyright (C) 2025 Telicent Limited
         ## OLD AUTH APPROACH
         # authz:attributesURL <env:USER_ATTRIBUTES_URL>;
         # authz:hierarchiesURL <env:ATTRIBUTE_HIERARCHY_URL>;
+        authz:authServer true;
         .
     ## Storage of data in memory.
     #:datasetCatBase rdf:type ja:MemoryDataset .
