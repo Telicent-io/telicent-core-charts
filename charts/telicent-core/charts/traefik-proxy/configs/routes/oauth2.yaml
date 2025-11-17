@@ -11,7 +11,7 @@ http:
       chain:
         middlewares:
           - forward-secret
-          #- oauth2-verify
+          - oauth2-verify
 
     headers-ssl:
       headers:
@@ -62,6 +62,7 @@ http:
          - Cookie
          - Origin
          - Accept
+         - User-Agent
          - Accept-Language
          - Accept-Encoding
          - Sec-Fetch-Mode

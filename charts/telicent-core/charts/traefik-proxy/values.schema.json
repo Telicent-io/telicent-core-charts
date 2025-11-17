@@ -474,6 +474,11 @@
                     "description": "Access host value, If not set a host is generated using service:'access',port:'8080' and Release namespace & name.",
                     "default": ""
                 },
+                "adminUi": {
+                    "type": "string",
+                    "description": "Admin UI host value, If not set a host is generated using service:'admin-ui',port:'8080' and Release namespace & name.",
+                    "default": ""
+                },
                 "accessUi": {
                     "type": "string",
                     "description": "Access host value, If not set a host is generated using service:'access-ui',port:'8080' and Release namespace & name.",
