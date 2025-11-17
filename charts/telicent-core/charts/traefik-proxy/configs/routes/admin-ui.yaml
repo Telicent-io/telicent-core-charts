@@ -1,0 +1,27 @@
+# Declare routers / services / middlewares
+http:
+  routers:
+    admin-ui:
+      rule: {{ printf "Host(`%s`) && PathPrefix(`/admin`)" .Values.global.appHostDomain }}
+      service: admin-ui
+      entryPoints:
+        - web-app
+      middleWares:
+        - path-admin-ui
+        - host-admin-ui
+
+  services:
+    admin-ui:
+      loadBalancer:
+        servers:
+          - url: http://{{ .Values.hosts.adminUi | default (printf "%s.%s:8080" (include "traefik-proxy.routesService" (list . "admin-ui")) .Release.Namespace) }}
+
+  middlewares:
+    path-admin-ui:
+      replacePathRegex:
+        regex: "^/admin(.*)"
+        replacement: "/admin/$1"
+    host-admin-ui:
+      headers:
+        customRequestHeaders:
+          host: {{ .Values.hosts.adminUi | default (printf "%s.%s:8080" (include "traefik-proxy.routesService" (list . "admin-ui")) .Release.Namespace) }}
