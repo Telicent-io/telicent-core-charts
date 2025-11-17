@@ -7,8 +7,11 @@ http:
       entryPoints:
         - web-api
       middleWares:
+        # todo: revert back to main config once testing is complete.
+        - cors
         - path-graph-sparql
         - host-graph
+        - oauth2
     graph-graphql:
       rule: {{ printf "Host(`%s`) && PathPrefix(`/graphql`)" .Values.global.apiHostDomain }}
       service: graph

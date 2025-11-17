@@ -1,17 +1,18 @@
 entryPoints:
   web-app:
     address: ":8080/tcp"
-    http:
-      middlewares:
-        - "headers-security@file"
+    # http:
+      # todo: re-enable all default routes VS current testing - explicitly defined on each.
+      # middlewares:
+      # - "headers-security@file"
   web-api:
     address: ":8081/tcp"
-    http:
-      middlewares:
-        - cors@file
-        - "headers-security@file"
-        # disable when using oauth2-proxy, to avoid 401 error
-        # - "oauth2@file"
+    #http:
+      # todo: re-enable all default routes VS current testing - explicitly defined on each.
+      # middlewares:
+        # - cors@file
+        # - headers-security@file
+        # - oauth2@file
 
   ping:
     address: ":9000/tcp"
