@@ -23,7 +23,7 @@ data:
   FIELD_OPTIONS: {{ .Values.configuration.searchFieldOptions | quote }}
   INDEX_BATCH_SIZE: {{ .Values.configuration.indexBatchSize | quote }}
   JWKS_URL: {{ printf "%s%s%s" "https://" .Values.global.authHostDomain "/oauth2/jwks" | quote }}
-  USERINFO_URL: {{ printf "%s%s%s" "https://" .Values.global.authHostDomain "/userinfo" | quote }}
+  USERINFO_URL: {{ printf "http://%s.%s:%s%s" "auth" .Release.Namespace "9000" "/userinfo" | quote }}
 {{- with .Values.extraEnvs }}
 {{- toYaml . | nindent 2 }}
 {{- end }}

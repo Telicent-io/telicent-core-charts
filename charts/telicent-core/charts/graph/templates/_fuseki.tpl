@@ -96,7 +96,7 @@ Copyright (C) 2025 Telicent Limited
     # :dataset rdf:type ja:MemoryDataset .
     ## Dataset with security labels / ABAC.
     ## Transactional in-memory dataset.
-    # :datasetAuth rdf:type authz:DatasetAuthz ;
+    :datasetAuth rdf:type authz:DatasetAuthz ;
         ## Config item where labels are stored (only define if not in memory)
         authz:labelsStore [ authz:labelsStorePath "/fuseki/databases/knowledgeLabels.db" ] ;
         authz:dataset :datasetAuthBase;
@@ -110,9 +110,10 @@ Copyright (C) 2025 Telicent Limited
         ## Local attribute store for dev use only
         # authz:attributes <file:attribute-store.ttl>;
         # ABAC endpoint for user attributes
+        ## OLD AUTH APPROACH
         # authz:attributesURL <env:USER_ATTRIBUTES_URL>;
         # authz:hierarchiesURL <env:ATTRIBUTE_HIERARCHY_URL>;
-        # .
+        .
     ## Storage of data in memory.
     #:datasetAuthBase rdf:type ja:MemoryDataset .
     ## Storage of data on filesystem.
@@ -192,11 +193,11 @@ Copyright (C) 2025 Telicent Limited
         #.
     ## With security labels.
     ## --- ABAC dataset
-    ##:ontologyDataset rdf:type authz:DatasetAuthz ;
+    :ontologyDataset rdf:type authz:DatasetAuthz ;
         ## Config item where labels are stored (only define if not in memory)
-        ## authz:labelsStore [ authz:labelsStorePath "/fuseki/databases/ontologyLabels.db" ] ;
-        ## authz:dataset :datasetOntoBase;
-        ## authz:tripleDefaultLabels "!";
+        authz:labelsStore [ authz:labelsStorePath "/fuseki/databases/ontologyLabels.db" ] ;
+        authz:dataset :datasetOntoBase;
+        authz:tripleDefaultLabels "!";
         ## This substitutes the value of the environment variable
         ## or Java system property "USER_ATTRIBUTES_URL".
         ##
@@ -206,9 +207,10 @@ Copyright (C) 2025 Telicent Limited
         # Local attribute store for dev
         # authz:attributes <file:attribute-store.ttl>;
         # ABAC endpoint for user attributes
+        ## OLD AUTH APPROACH
         # authz:attributesURL <env:USER_ATTRIBUTES_URL>;
         # authz:hierarchiesURL <env:ATTRIBUTE_HIERARCHY_URL>;
-        # .
+        .
     ## Storage of data in memory.
     #:datasetOntoBase rdf:type ja:MemoryDataset .
     ## Storage of data on filesystem.
@@ -303,9 +305,10 @@ Copyright (C) 2025 Telicent Limited
         # Local attribute store for dev
         # authz:attributes <file:attribute-store.ttl>;
         # ABAC endpoint for user attributes
+        ## OLD AUTH APPROACH
         # authz:attributesURL <env:USER_ATTRIBUTES_URL>;
         # authz:hierarchiesURL <env:ATTRIBUTE_HIERARCHY_URL>;
-        # .
+        .
     ## Storage of data in memory.
     #:datasetCatBase rdf:type ja:MemoryDataset .
     ## Storage of data on filesystem.
