@@ -37,10 +37,10 @@ http:
       headers:
         customResponseHeaders:
           # Empty string removes the specified header
-          Authorization: ""
-          Gap-Auth: ""
-          Server: ""
-          X-Powered-By: ""
+          #Authorization: ""
+          #Gap-Auth: ""
+          #Server: ""
+          #X-Powered-By: ""
 
     oauth2-proxy-verify:
       forwardAuth:
@@ -51,6 +51,7 @@ http:
           - Cookie  # required by oauth2-proxy cookie: __Secure-session
         authResponseHeaders:
           - Authorization
+    
 
     oauth2-verify:
       forwardAuth:
