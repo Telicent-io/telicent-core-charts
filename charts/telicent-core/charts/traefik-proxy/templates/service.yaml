@@ -16,8 +16,14 @@ spec:
   selector:
     {{- include "traefik-proxy.selectorLabels" . | nindent 4 }}
   ports:
-  - name: http-web
+  - name: http-app
     appProtocol: http
     protocol: TCP
-    port: {{ .Values.service.port }}
-    targetPort: http-web
+    port: {{ .Values.service.app.port }}
+    targetPort: http-app
+
+  - name: http-api
+    appProtocol: http
+    protocol: TCP
+    port: {{ .Values.service.api.port }}
+    targetPort: http-api

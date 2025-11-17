@@ -12,7 +12,7 @@ Expand the name of the chart.
 {{/*
 Allow the release namespace to be overridden.
 */}}
-{{- define "oauth2-prox.namespace" -}}
+{{- define "oauth2-proxy.namespace" -}}
 {{- if .Values.namespaceOverride -}}
 {{- .Values.namespaceOverride -}}
 {{- else -}}

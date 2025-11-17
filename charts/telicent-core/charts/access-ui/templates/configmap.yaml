@@ -15,5 +15,5 @@ metadata:
 
 data:
   env-config.js: |
-    window.ACCESS_API_URL = "https://{{ .Values.global.appHostDomain }}/api/access";
+    window.ACCESS_API_URL = "https://{{ .Values.global.apiHostDomain }}/access";
     window.SIGN_OUT_URL = "{{ .Values.configuration.signOutUrl }}";

@@ -8,7 +8,7 @@ kind: ConfigMap
 
 metadata:
   name: {{ include "oauth2-proxy.envConfigMapName" . }}
-  namespace: {{ include "oauth2-prox.namespace" . | quote }}
+  namespace: {{ include "oauth2-proxy.namespace" . | quote }}
   labels:
     {{- include "oauth2-proxy.labels" . | nindent 4 }}
 

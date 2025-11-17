@@ -51,7 +51,8 @@ Contains global parameters, these parameters are mirrored within the Telicent co
 | `global.imageRegistry`                  | Global image registry                                                                                             | `""`                                             |
 | `global.imagePullSecrets`               | Global registry secret names as an array                                                                          | `[]`                                             |
 | `global.enterprise`                     | Enable enterprise mode, adding additional features and configurations                                             | `false`                                          |
-| `global.appHostDomain`                  | Domain associated with Telicent application services                                                              | `apps.telicent.io`                               |
+| `global.appHostDomain`                  | Domain associated with Telicent application/ui services                                                           | `apps.telicent.io`                               |
+| `global.apiHostDomain`                  | Domain associated with Telicent Api services                                                                      | `api.telicent.io`                                |
 | `global.authHostDomain`                 | Domain associated with Telicent authentication services, including OIDC providers                                 | `auth.telicent.io`                               |
 | `global.groupsClaim`                    | Key used to retrieve groups from the OIDC provider                                                                | `groups`                                         |
 | `global.jwksUrl`                        | Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)                                     | `https://{yourAuthdomain}/.well-known/jwks.json` |
@@ -96,7 +97,8 @@ Contains configuration parameters specific to the Graph application
 | `replicas`                                          | Number of Graph replicas to deploy                                      | `1`                                 |
 | `revisionHistoryLimit`                              | Number of controller revisions to keep                                  | `5`                                 |
 | `annotations`                                       | Add extra annotations to the Statefulset object                         | `{}`                                |
-| `extraEnvs`                                         | List of additional environment variables to set in the pod              | `[]`                                |
+| `podAnnotations`                                    | Add extra annotations to the *Auth* pod                                 | `{}`                                |
+| `extraEnvVars`                                      | Array with extra environment variables to add to *Auth* pod             | `[]`                                |
 | `image.registry`                                    | Graph image registry                                                    | `REGISTRY_NAME`                     |
 | `image.repository`                                  | Graph image name                                                        | `REPOSITORY_NAME/smart-cache-graph` |
 | `image.tag`                                         | Graph image tag. If not set, a tag is generated using the appVersion    | `""`                                |

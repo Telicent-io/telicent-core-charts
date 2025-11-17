@@ -5,9 +5,9 @@ http:
       rule: {{ printf "Host(`%s`) && PathPrefix(`/access`)" .Values.global.appHostDomain }}
       service: access-ui
       entryPoints:
-        - web
+        - web-app
       middleWares:
-        - oauth2
+        - oauth2-proxy-verify
         - path-access-ui
         - host-access-ui
 
@@ -22,9 +22,7 @@ http:
       replacePathRegex:
         regex: "^/access(.*)"
         replacement: "/access/$1"
-
     host-access-ui:
       headers:
         customRequestHeaders:
           host: {{ .Values.hosts.accessUi | default (printf "%s.%s:8080" (include "traefik-proxy.routesService" (list . "access-ui")) .Release.Namespace) }}
-

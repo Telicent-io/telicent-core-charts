@@ -6,6 +6,17 @@ Expand the name of the chart.
 {{- end }}
 
 {{/*
+Allow the release namespace to be overridden.
+*/}}
+{{- define "auth.namespace" -}}
+{{- if .Values.namespaceOverride -}}
+{{- .Values.namespaceOverride -}}
+{{- else -}}
+{{- .Release.Namespace -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
 Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
@@ -62,26 +73,4 @@ Create the name of the service to use
 */}}
 {{- define "auth.serviceName" -}}
 {{- include "auth.fullname" . }}
-{{- end }}
-
-{{/*
-Create the name of the environment variables config map
-*/}}
-{{- define "auth.envConfigMapName" -}}
-{{- printf "%s-%s" (include "auth.fullname" .) "env" }}
-{{- end }}
-
-{{/*
-Create the name of the clients config map
-*/}}
-{{- define "auth.clientsConfigMapName" -}}
-{{- if .Values.clients.existingConfigmap }}
-{{- .Values.clients.existingConfigmap }}
-{{- else }}
-{{- printf "%s-%s" (include "auth.fullname" .) "clients" }}
-{{- end }}
-{{- end }}
-
-{{- define "auth.ingressPrincipal" -}}
-{{- .Values.istio.ingress.principal | default (printf "cluster.local/ns/%s/sa/%s" .Values.global.istioNamespace .Values.global.istioServiceAccountName) | quote }}
 {{- end }}

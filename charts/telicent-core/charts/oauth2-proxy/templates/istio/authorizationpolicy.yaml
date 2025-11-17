@@ -7,7 +7,7 @@ kind: AuthorizationPolicy
 
 metadata:
   name: {{ include "oauth2-proxy.fullname" . }}-ingress
-  namespace: {{ include "oauth2-prox.namespace" . | quote }}
+  namespace: {{ include "oauth2-proxy.namespace" . | quote }}
   labels:
     {{ include "oauth2-proxy.labels" . | nindent 4 }}
 

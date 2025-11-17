@@ -3,13 +3,24 @@ Copyright (C) 2025 Telicent Limited
 */}}
 
 {{/*
-Create the name of the external IDP secret
+Create the name of the PostgreSQL secret
 */}}
-{{- define "auth.externalIdpSecretName" -}}
-{{- if .Values.externalIdp.existingSecret }}
-{{- .Values.externalIdp.existingSecret }}
+{{- define "auth.postgresSqlSecretName" -}}
+{{- if .Values.postgresSql.existingSecret }}
+{{- .Values.postgresSql.existingSecret }}
 {{- else }}
-{{- printf "%s-tc-auth-usr-%s" (include "auth.fullname" .) "external-idp" }}
+{{- printf "tc-auth-usr-%s-%s" "psql" .Chart.Name }}
+{{- end }}
+{{- end -}}
+
+{{/*
+Create the name of the IDP secret
+*/}}
+{{- define "auth.idpSecretName" -}}
+{{- if .Values.idp.existingSecret }}
+{{- .Values.idp.existingSecret }}
+{{- else }}
+{{- printf "tc-auth-gen-%s-%s" "idp" .Chart.Name  }}
 {{- end }}
 {{- end -}}
 
@@ -20,17 +31,6 @@ Create the name of the ForwardAuth secret
 {{- if .Values.forwardAuth.existingSecret }}
 {{- .Values.forwardAuth.existingSecret }}
 {{- else }}
-{{- printf "%s-tc-auth-usr-%s" (include "auth.fullname" .) "forward-auth" }}
-{{- end }}
-{{- end -}}
-
-{{/*
-Create the name of the PostgreSQL secret
-*/}}
-{{- define "auth.postgresSecretName" -}}
-{{- if .Values.postgres.existingSecret }}
-{{- .Values.postgres.existingSecret }}
-{{- else }}
-{{- printf "%s-tc-auth-usr-%s" (include "auth.fullname" .) "postgres" }}
+{{- printf "tc-auth-gen-%s-%s" "forward" .Chart.Name }}
 {{- end }}
 {{- end -}}

@@ -5,9 +5,9 @@ http:
       rule: {{ printf "Host(`%s`) && PathPrefix(`/query`)" .Values.global.appHostDomain }}
       service: query-ui
       entryPoints:
-        - web
+        - web-app
       middleWares:
-        - oauth2
+        - oauth2-proxy-verify
         - path-query-ui
         - host-query-ui
 

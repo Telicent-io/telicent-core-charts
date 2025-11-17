@@ -7,20 +7,22 @@ kind: AuthorizationPolicy
 
 metadata:
   name: {{ include "auth.fullname" . }}-ingress
+  namespace: {{ include "auth.namespace" . | quote }}
   labels:
   {{- include "auth.labels" . | nindent 4 }}
 
 spec:
-  action: ALLOW
-  rules:
-    - from:
-        - source:
-            principals:
-            - {{ include "auth.ingressPrincipal" . }}
-      to:
-        - operation:
-            methods:
-              - '*'
   selector:
     matchLabels:
     {{- include "auth.selectorLabels" . | nindent 6 }}
+
+  action: ALLOW
+  rules:
+  - from:
+      - source:
+          principals:
+          - {{ include "auth.ingressPrincipal" . }}
+    to:
+      - operation:
+          methods:
+            - '*'

@@ -51,7 +51,8 @@ Contains global parameters, these parameters are mirrored within the Telicent co
 | `global.imageRegistry`              | Global image registry                                                             | `""`               |
 | `global.imagePullSecrets`           | Global registry secret names as an array                                          | `[]`               |
 | `global.enterprise`                 | Enable enterprise mode, adding additional features and configurations             | `false`            |
-| `global.appHostDomain`              | Domain associated with Telicent application services                              | `apps.telicent.io` |
+| `global.appHostDomain`              | Domain associated with Telicent application/ui services                           | `apps.telicent.io` |
+| `global.apiHostDomain`              | Domain associated with Telicent Api services                                      | `api.telicent.io`  |
 | `global.authHostDomain`             | Domain associated with Telicent authentication services, including OIDC providers | `auth.telicent.io` |
 | `global.istioNamespace`             | Namespace in which Istio is deployed                                              | `istio-system`     |
 | `global.istioServiceAccountName`    | Name of the Istio service account                                                 | `istio-ingress`    |
@@ -64,15 +65,17 @@ Contains configuration parameters specific to the Search UI application
 If set, it will default to a single vector style from any map service that adheres to the Mapbox style spec.
 If set, it can generate multiple layers from any map service that adheres to the Mapbox style spec.
 
-| Name                                        | Description                                                              | Value                      |
-| ------------------------------------------- | ------------------------------------------------------------------------ | -------------------------- |
-| `configuration.userPortalUiDeployed`        | If set to true, User Portal links will be available within Search UI     | `true`                     |
-| `configuration.graphUiDeployed`             | If set to true, Graph UI links will be available within Search UI        | `true`                     |
-| `configuration.dataCatalogUiDeployed`       | If set to true, Data Catalog UI links will be available within Search UI | `true`                     |
-| `configuration.searchUiMaptilerToken`       | MapTiler token for Search UI                                             | `your.maptiler.token.here` |
-| `configuration.searchUiMapboxStyleSpecUrl`  | Mapbox style spec URL for Search UI                                      | `""`                       |
-| `configuration.searchUiArcgisToken`         | ArcGIS token for Search UI                                               | `""`                       |
-| `configuration.existingMapConfigSecretName` | The name of an existing secret containing map configuration              | `""`                       |
+| Name                                        | Description                                                              | Value                           |
+| ------------------------------------------- | ------------------------------------------------------------------------ | ------------------------------- |
+| `configuration.userPortalUiDeployed`        | If set to true, User Portal links will be available within Search UI     | `true`                          |
+| `configuration.graphUiDeployed`             | If set to true, Graph UI links will be available within Search UI        | `true`                          |
+| `configuration.dataCatalogUiDeployed`       | If set to true, Data Catalog UI links will be available within Search UI | `true`                          |
+| `configuration.searchUiMaptilerToken`       | MapTiler token for Search UI                                             | `your.maptiler.token.here`      |
+| `configuration.searchUiMapboxStyleSpecUrl`  | Mapbox style spec URL for Search UI                                      | `""`                            |
+| `configuration.searchUiArcgisToken`         | ArcGIS token for Search UI                                               | `""`                            |
+| `configuration.existingMapConfigSecretName` | The name of an existing secret containing map configuration              | `""`                            |
+| `configuration.oauthClientId`               | The OAuth client id to be used by Search UI                              | `search-ui`                     |
+| `configuration.oauthScope`                  | List of OAuth scopes to be used by Search UI                             | `openid profile offline_access` |
 
 ### Common Parameters
 

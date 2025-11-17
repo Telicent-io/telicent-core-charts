@@ -20,15 +20,14 @@ global:
   # @key global.enterprise Enable enterprise mode, adding additional features and configurations
   enterprise: false
 
-  # @key global.appHostDomain Domain associated with Telicent application services
+  # @key global.appHostDomain Domain associated with Telicent application/ui services
   appHostDomain: "apps.telicent.io"
+  # @key global.apiHostDomain Domain associated with Telicent Api services
+  apiHostDomain: "api.telicent.io"
   # @key global.authHostDomain Domain associated with Telicent authentication services, including OIDC providers
   authHostDomain: "auth.telicent.io"
   # @key global.groupsClaim Key used to retrieve groups from the OIDC provider
   groupsClaim: "groups"
-  # @key global.jwksUrl Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)
-  # Note: For Dex the endpoint would be https://{yourDexDomain}/keys
-  jwksUrl: "https://{yourAuthdomain}/.well-known/jwks.json"
 
   # @key global.istioNamespace Namespace in which Istio is deployed
   # Note: By default, Istio namespace is set to 'istio-system'
@@ -120,8 +119,14 @@ replicas: 1
 revisionHistoryLimit: 5
 # @key annotations Add extra annotations to the Deployment object
 annotations: {}
-# @key extraEnvs List of additional environment variables to set in the pod
-extraEnvs: []
+# @key podAnnotations Add extra annotations to the *Auth* pod
+podAnnotations: {}
+# @key extraEnvVars Array with extra environment variables to add to *Auth* pod
+# Example:
+# extraEnvVars:
+# - name: FOO
+# - value: instance
+extraEnvVars: []
 
 image:
   # @key image.registry [default: REGISTRY_NAME] Search image registry

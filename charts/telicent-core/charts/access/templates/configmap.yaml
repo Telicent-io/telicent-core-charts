@@ -13,7 +13,7 @@ metadata:
 
 data:
   DEBUG: {{ .Values.configuration.debug | quote }}
-  DEPLOYED_DOMAIN: "https://{{ .Values.global.appHostDomain }}"
+  DEPLOYED_DOMAIN: "https://{{ .Values.global.apiHostDomain }}"
   OPENID_PROVIDER_URL: {{ .Values.configuration.openidProviderUrl | quote }}
   MONGO_URL: {{ .Values.mongo.host | quote }}
   MONGO_COLLECTION: {{ .Values.mongo.database | quote }}

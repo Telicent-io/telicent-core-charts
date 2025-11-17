@@ -1,5 +1,5 @@
 # Copyright (C) 2025 Telicent Limited
-# Telicent Traefik Proxy stand-alone chart
+# Telicent *Traefik Proxy* stand-alone chart
 
 #
 # @section Global Parameters
@@ -18,12 +18,18 @@ global:
   # @key global.imagePullSecrets Global registry secret names as an array
   imagePullSecrets: []
 
-  # @key global.appHostDomain Domain associated with Telicent application services
+  # @key global.enterprise Enable enterprise mode, adding additional features and configurations
+  enterprise: false
+
+  # @key global.appHostDomain Domain associated with Telicent application/ui services
   appHostDomain: "apps.telicent.io"
+  # @key global.apiHostDomain Domain associated with Telicent Api services
+  apiHostDomain: "api.telicent.io"
   # @key global.authHostDomain Domain associated with Telicent authentication services, including OIDC providers
   authHostDomain: "auth.telicent.io"
   # @key global.groupsClaim Key used to retrieve groups from the OIDC provider
   groupsClaim: "groups"
+
   # @key global.istioNamespace Namespace in which Istio is deployed
   # Note: By default, Istio namespace is set to 'istio-system'
   istioNamespace: istio-system
@@ -35,23 +41,39 @@ global:
   istioVirtualServiceEnabled: true
 
 #
-# @section Traefik Proxy Logs Parameters
+# @section ForwardAuth Parameters and Secret
+#
+# @descStart
+# When making requests to the *Auth* Application endpoint `/auth/forward`, `X-ForwardAuth-Secret` header is required.
+# The secret associated with that header is defined within this section.
+# It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
+# For Quick Start purposes, a secret named `tc-auth-gen-forward-traefik-proxy` will be created if one is not set.
+# @descEnd
+forwardAuth:
+  # @key forwardAuth.existingSecret Name of an existing secret. The secret must contain 1 key: 'secret'
+  # Note: Left unset, it will create a secret named: tc-auth-gen-forward-traefik-proxy
+  existingSecret: ""
+  # @key forwardAuth.header The secret value to be associated with the `X-ForwardAuth-Secret`.
+  header: ""
+
+#
+# @section *Traefik Proxy* Logs Parameters
 #
 logs:
   general:
     # @key logs.general.level Set logging levels, values are: TRACE, DEBUG, INFO, WARN, ERROR, FATAL, and PANIC.
-    level: "INFO"
+    level: "DEBUG"
   access:
     # @key logs.access.enabled Enable access logging. Note: should only be enabled in development environments.
     enabled: false
 
 #
-# @section Traefik Proxy Dashboard Parameters
+# @section *Traefik Proxy* Dashboard Parameters
 #
 dashboard:
-  # @key dashboard.enabled Enable Traefik dashboard. Note: should only be enabled in development environments.
+  # @key dashboard.enabled Enable *Traefik Proxy* dashboard. Note: should only be enabled in development environments.
   enabled: false
-  # @key dashboard.domain Domain associated with Traefik dashboard. If not set, 'appHostDomain' will be used
+  # @key dashboard.domain Domain associated with *Traefik Proxy* dashboard. If not set, 'appHostDomain' will be used
   domain: ""
   # @key dashboard.basepath Set the base path to be used for accessing the dashboard
   basepath: "/traefik"
@@ -71,32 +93,49 @@ commonLabels: {}
 #
 # @section Deployment Parameters
 #
-# @key replicas Number of Traefik Proxy replicas to deploy
+# @key replicas Number of *Traefik Proxy* replicas to deploy
 replicas: 1
 # @key revisionHistoryLimit Number of controller revisions to keep
 revisionHistoryLimit: 5
 # @key annotations Add extra annotations to the Deployment Object
 annotations: {}
-# @key podLabels Add extra labels to the Traefik Proxy pod
+# @key podLabels Add extra labels to the *Traefik Proxy* pod
 podLabels: {}
-# @key podAnnotations Add extra annotations to the Traefik Proxy pod
+# @key podAnnotations Add extra annotations to the *Traefik Proxy* pod
 podAnnotations: {}
-# @key extraEnvs List of Additional environment variables to set in the pod
-extraEnvs: []
-# @key extraContainers Additional containers to be added to the pod
-extraContainers: []
+# @key extraEnvVars Array with extra environment variables to add to *Traefik Proxy* pod
+# Example:
+# extraEnvVars:
+# - name: FOO
+# - value: instance
+extraEnvVars: []
+# @key extraVolumes Additional containers to be added to the *Traefik Proxy* pod
+extraVolumes: []
+# @key extraVolumeMounts Optionally specify extra list of additional volumeMounts
+extraVolumeMounts: []
+# @key initContainers Add init containers to the pod
+initContainers: []
+# Example:
+# sidecars:
+# - name: your-image-name
+#   image: your-image
+#   ports:
+#   - name: portname
+#     containerPort: 1234
+# @key sidecars Add sidecars to the pod.
+sidecars: []
 
 image:
-  # @key image.registry [default: REGISTRY_NAME] Traefik Proxy image registry
+  # @key image.registry [default: REGISTRY_NAME] *Traefik Proxy* image registry
   registry: docker.io
-  # @key image.repository [default: REPOSITORY_NAME/traefik] Traefik Proxy image name
+  # @key image.repository [default: REPOSITORY_NAME/traefik] *Traefik Proxy* image name
   repository: traefik
-  # @key image.tag Traefik Proxy image tag. If not set, a tag is generated using the appVersion
+  # @key image.tag *Traefik Proxy* image tag. If not set, a tag is generated using the appVersion
   tag: ""
-  # @key image.pullPolicy Traefik Proxy image pull policy
+  # @key image.pullPolicy *Traefik Proxy* image pull policy
   pullPolicy: IfNotPresent
-# @key imagePullSecrets Specify registry secret names as an array
-imagePullSecrets: []
+  # @key image.pullSecrets Specify registry secret names as an array
+  pullSecrets: []
 
 resources:
   requests:
@@ -164,19 +203,28 @@ serviceAccount:
   automount: true
 
 #
-# @section Traefik Proxy Exposure Parameters
+# @section Traffic Exposure Parameters
 #
 service:
-  # @key service.port Traefik Proxy service port
-  port: 8080
-  # @key service.type Traefik Proxy service type
-  type: ClusterIP
+  app:
+    # @key service.app.port *Traefik Proxy* APP/UI service port
+    port: 8080
+    # @key service.app.type *Traefik Proxy* APP/UI service type
+    type: ClusterIP
+  api:
+    # @key service.api.port *Traefik Proxy* service port
+    port: 8081
+    # @key service.api.type *Traefik Proxy* service type
+    type: ClusterIP
 
+#
+# @section Istio Parameters
+#
 istio:
   virtualService:
-    # @key istio.virtualService.enabled Enable Istio traffic into Traefik Proxy
+    # @key istio.virtualService.enabled Enable Istio traffic into *Traefik Proxy*
     enabled: true
-    # @key istio.virtualService.extraHosts Additional hosts (excluding appHostDomain) to be managed by Traefik Proxy
+    # @key istio.virtualService.extraHosts Additional hosts (excluding appHostDomain) to be managed by *Traefik Proxy*
     extraHosts: []
   ingress:
     # @key istio.ingress.principal Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName
@@ -185,31 +233,33 @@ istio:
     serviceAccountName: "istio-ingress"
 
 #
-# @section Traefik Proxy Hosts Parameters
+# @section *Traefik Proxy* Hosts Parameters
 #
 # @descStart
-# Traefik Proxy routes traffic to the various Telicent Apps using their default service names and ports.
+# *Traefik Proxy* routes traffic to the various Telicent Apps using their default service names and ports.
 # If either of those details changes, you can use this section to correctly referer to those apps.
 # Example: overriding Search UI chart value `fullnameOverride: "search-ui"` the correct host value would be `searchUi:"search-ui:8080"`
 # @descEnd
 hosts:
-  # @key hosts.access Access host value, If not set a host is generated using service:'access', port:'8080' and Release namespace & name.
+  # @key hosts.auth Auth host value, If not set a host is generated using service:'auth',port:'9000' and Release namespace & name.
+  auth: ""
+  # @key hosts.access Access host value, If not set a host is generated using service:'access',port:'8080' and Release namespace & name.
   access: ""
-  # @key hosts.accessUi Access host value, If not set a host is generated using service:'access-ui', port:'8080' and Release namespace & name.
+  # @key hosts.accessUi Access host value, If not set a host is generated using service:'access-ui',port:'8080' and Release namespace & name.
   accessUi: ""
-  # @key hosts.searchUi Access host value, If not set a host is generated using service:'search-ui', port:'8080' and Release namespace & name.
+  # @key hosts.searchUi Access host value, If not set a host is generated using service:'search-ui',port:'8080' and Release namespace & name.
   searchUi: ""
-  # @key hosts.graphUi Graph UI host value, If not set a host is generated using service:'graph-ui', port:'8080' and Release namespace & name.
+  # @key hosts.graphUi Graph UI host value, If not set a host is generated using service:'graph-ui',port:'8080' and Release namespace & name.
   graphUi: ""
-  # @key hosts.queryUi Query UI host value, If not set a host is generated using service:'query-ui', port:'8080' and Release namespace & name.
+  # @key hosts.queryUi Query UI host value, If not set a host is generated using service:'query-ui',port:'8080' and Release namespace & name.
   queryUi: ""
-  # @key hosts.search Search host value, If not set a host is generated using service:'search', port:'8181' and Release namespace & name.
+  # @key hosts.search Search host value, If not set a host is generated using service:'search',port:'8181' and Release namespace & name.
   search: ""
-  # @key hosts.graph Graph host value, If not set a host is generated using service:'graph', port:'3030' and Release namespace & name.
+  # @key hosts.graph Graph host value, If not set a host is generated using service:'graph',port:'3030' and Release namespace & name.
   graph: ""
-  # @key hosts.userPreferences User Preferences host value, If not set a host is generated using service:'user-preferences', port:'11111' and Release namespace & name.
+  # @key hosts.userPreferences User Preferences host value, If not set a host is generated using service:'user-preferences',port:'11111' and Release namespace & name.
   userPreferences: ""
-  # @key hosts.oauth2Proxy Oauth2 Proxy host value, If not set a host is generated using service:'oauth2-proxy', port:'4080' and Release namespace & name.
+  # @key hosts.oauth2Proxy Oauth2 Proxy host value, If not set a host is generated using service:'oauth2-proxy',port:'4080' and Release namespace & name.
   oauth2Proxy: ""
-  # @key hosts.whoami Whoami host value, If not set a host is generated using service:'whoami', port:'8080' and Release namespace & name. AB:test purposes, be removed afterwards
+  # @key hosts.whoami Whoami host value, If not set a host is generated using service:'whoami',port:'8080' and Release namespace & name. AB:test purposes, be removed afterwards
   whoami: ""
