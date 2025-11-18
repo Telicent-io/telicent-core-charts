@@ -8,6 +8,8 @@ Note: lookup returns empty if the resource doesn't exist or if running in --dry-
 */}}
 {{- $accessSvc := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "access") }}
 {{- $accessUI := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "access-ui") }}
+{{- $adminUI := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "admin-ui") }}
+{{- $authSvc := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "auth") }}
 {{- $graphUI := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "graph-ui") }}
 {{- $queryUI := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "query-ui") }}
 {{- $searchUI := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "search-ui") }}
@@ -43,6 +45,8 @@ Namespace:            {{ .Release.Namespace }}
 {{- $deployedCount := 0 }}
 {{- if $accessSvc }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
 {{- if $accessUI }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
+{{- if $adminUI }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
+{{- if $authSvc }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
 {{- if $graphSvc }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
 {{- if $graphUI }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
 {{- if $queryUI }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
@@ -71,9 +75,11 @@ Namespace:            {{ .Release.Namespace }}
 {{/* Show configuration-based status when lookup is not available */}}
 📋 Access Service     - Authentication & Authorization
 📋 Access UI          - Authentication Interface
+📋 Auth Service       - Authentication Brokering
 📋 Graph Service      - Graph Data Management
 📋 Query UI           - Data Query Interface
 {{- if .Values.global.enterprise }}
+📋 Admin UI           - Administration Interface
 📋 Graph UI           - Graph Data Visualization
 📋 Search UI          - Search Interface  
 📋 Search Service     - Search Backend
@@ -93,6 +99,18 @@ Namespace:            {{ .Release.Namespace }}
 ✅ Access UI          - Authentication Interface
 {{- else }}
 ❌ Access UI          - Authentication Interface (not deployed)
+{{- end }}
+
+{{- if $accessUI }}
+✅ Admin UI          - Administration Interface
+{{- else }}
+❌ Admin UI          - Administration Interface (not deployed)
+{{- end }}
+
+{{- if $accessUI }}
+✅ Auth Service      - Authentication Brokering
+{{- else }}
+❌ Auth Service      - Authentication Brokering (not deployed)
 {{- end }}
 
 {{- if $graphUI }}
@@ -148,6 +166,9 @@ Authentication Domain: {{ .Values.global.authHostDomain | default "auth.telicent
 {{- if $accessUI }}
 - Access UI:         https://{{ .Values.global.appHostDomain }}/access
 {{- end }}
+{{- if $adminUI }}
+- Admin UI:         https://{{ .Values.global.appHostDomain }}/admin
+{{- end }}
 {{- if $graphUI }}
 - Graph UI:          https://{{ .Values.global.appHostDomain }}/graph
 {{- end }}
@@ -191,6 +212,9 @@ kubectl get svc -n {{ .Release.Namespace }}
 {{- if $accessUI }}
 kubectl port-forward svc/{{ .Release.Name }}-access-ui 8083:80 -n {{ .Release.Namespace }}
 {{- end }}
+{{- if $adminUI }}
+kubectl port-forward svc/{{ .Release.Name }}-admin-ui 8085:80 -n {{ .Release.Namespace }}
+{{- end }}
 {{- if $graphUI }}
 kubectl port-forward svc/{{ .Release.Name }}-graph-ui 8080:80 -n {{ .Release.Namespace }}
 {{- end }}
@@ -205,11 +229,14 @@ kubectl port-forward svc/{{ .Release.Name }}-data-catalog 8084:80 -n {{ .Release
 {{- end }}
 
 # View logs for specific components (examples):
-{{- if $graphSvc }}
-kubectl logs -l app.kubernetes.io/name=graph -n {{ .Release.Namespace }}
-{{- end }}
 {{- if $accessSvc }}
 kubectl logs -l app.kubernetes.io/name=access -n {{ .Release.Namespace }}
+{{- end }}
+{{- if $authSvc }}
+kubectl logs -l app.kubernetes.io/name=auth -n {{ .Release.Namespace }}
+{{- end }}
+{{- if $graphSvc }}
+kubectl logs -l app.kubernetes.io/name=graph -n {{ .Release.Namespace }}
 {{- end }}
 {{- if $searchSvc }}
 kubectl logs -l app.kubernetes.io/name=search -n {{ .Release.Namespace }}
@@ -224,7 +251,7 @@ helm upgrade {{ .Release.Name }} ./charts/telicent-core -n {{ .Release.Namespace
 helm get values {{ .Release.Name }} -n {{ .Release.Namespace }}
 
 {{- $enterpriseFeatures := false }}
-{{- if or $graphUI $searchUI $searchSvc $searchProjector $userPrefs $dataCatalog }}
+{{- if or $adminUI $graphUI $searchUI $searchSvc $searchProjector $userPrefs $dataCatalog }}
 {{- $enterpriseFeatures = true }}
 {{- end }}
 
@@ -236,6 +263,7 @@ Enterprise mode is disabled. To enable enterprise features:
   helm upgrade {{ .Release.Name }} ./charts/telicent-core -n {{ .Release.Namespace }} --set global.enterprise=true
 
 Available enterprise features include:
+- Admin UI (Administration Interface)
 - Graph UI (Graph Data Visualization)
 - Search UI (Search Interface) 
 - Search Service (Search Backend)

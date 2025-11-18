@@ -1,0 +1,64 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "admin-ui.configMapName" . }}
+  labels:
+    {{- include "admin-ui.labels" . | nindent 4 }}
+
+data:
+  env-config.js: |
+    window._env_ = window._env_ || {};
+    
+    window._env_.BETA = true;
+    window._env_.APP_SWITCH_LIBRARY = [
+      {
+        id: "telicent-graph",
+        name: "graph",
+        url: "hhttps://{{ .Values.global.appHostDomain }}/graph",
+        icon: "./data-catalog/assets/icons/graph.svg",
+      },
+      {
+        id: "telicent-search",
+        name: "search",
+        url: "https://{{ .Values.global.appHostDomain }}/search",
+        icon: "./data-catalog/assets/icons/search.svg",
+      },
+      {
+        id: "telicent-catalog",
+        name: "catalog",
+        url: "https://{{ .Values.global.appHostDomain }}/data-catalog",
+        icon: "./data-catalog/assets/icons/catalog.svg",
+      },
+    ];
+
+
+    // Apis & services
+    window._env_.SIGN_OUT_URL = "https://{{ .Values.global.appHostDomain }}/oauth2/sign_out?rd=/oauth2/authorize";
+    window._env_.ACCESS_API_URL = "https://{{ .Values.global.appHostDomain }}/access";
+    window._env_.AUTH_API_URL = "https://{{ .Values.global.appHostDomain }}/api/auth";
+
+    // Apps
+    window._env_.ACCESS_APP_URL = "https://{{ .Values.global.appHostDomain }}/access";
+    window._env_.GEO_APP_URL = "https://{{ .Values.global.appHostDomain }}/geo";
+    window._env_.GRAPH_APP_URL = "https://{{ .Values.global.appHostDomain }}/graph";
+    window._env_.PARALOG_APP_URL = "";
+    window._env_.AUTH_V2_CONFIG = {
+      authServerUrl: "https://{{ .Values.global.appHostDomain }}/api/auth",
+      clientId: "telicent-access-ui",
+      scope: "openid profile offline_access",
+      redirectUri: "https://{{ .Values.global.appHostDomain }}",
+      popupRedirectUri: "https://{{ .Values.global.appHostDomain }}/search/auth-redirect-uri",
+      onLogout: () => {
+        console.log("You are now logged out. Redirecting");
+        window.location.href = "/search";
+      },
+    };
+
+    window.featureFlags = {
+      FF_SKIP_AUTH: true,
+      FF_AUTH_V2: true,
+    }

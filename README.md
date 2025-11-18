@@ -39,13 +39,13 @@ helm uninstall my-release
 - **[telicent-DATA](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-data/README.md)** -  Supplmentary Chart to provide some premade Producers.
 - **[telicent-PREVIEW](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-preview/README.md)** - Secondary chart with items still under active development.
 
-
 ### Core Components
 
 The `telicent-core` chart includes the following sub-charts:
 
 - **[access](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-core/charts/access/README.md)** - Access control service
 - **[access-ui](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-core/charts/access-ui/README.md)** - Access control user interface
+- **[admin-ui](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-core/charts/admin-ui/README.md)** - Administration user interface
 - **[auth](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-core/charts/auth/README.md)** - Auth service
 - **[graph-ui](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-core/charts/graph-ui/README.md)** - Graph visualization interface
 - **[query-ui](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-core/charts/query-ui/README.md)** - Query interface for data exploration
@@ -56,7 +56,9 @@ The `telicent-core` chart includes the following sub-charts:
 - **[user-preferences](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-core/charts/user-preferences/README.md)** - User preferences management API
 
 ### Data Components
+
 #### ACLED 
+
 - **[acled-locations-mapper](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-data/charts/acled-locations-mapper/README.md)** - ACLED Locations mapper
 - **[acled-participants-mapper](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-data/charts/acled-participants-mapper/README.md)** - ACLED Participants mapper
 - **[acled-validation-mapper](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-data/charts/acled-validation-mapper/README.md)** - ACLED Validation mapper

@@ -35,6 +35,10 @@ dependencies:
   - name: access-ui
     version: "^0.1.0"
     repository: file://./charts/access-ui
+  - name: admin-ui
+    version: "^0.1.0"
+    repository: file://./charts/admin-ui
+    condition: global.enterprise
   - name: auth
     version: "^0.1.0"
     repository: file://./charts/auth
