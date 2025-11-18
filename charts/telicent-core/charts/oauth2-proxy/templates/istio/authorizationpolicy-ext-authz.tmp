@@ -1,0 +1,32 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+
+For ref only, as it needs to be deployed into istio namespace to function.
+*/}}
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: {{ include "oauth2-proxy.name" . }}-ext-authz
+  namespace: istio-system
+  labels:
+  {{- include "oauth2-proxy.labels" . | nindent 4 }}
+
+spec:
+  action: CUSTOM
+  provider:
+    name: "ext-authz-oauth2-proxy"
+  rules:
+  - to:
+    - operation:
+        hosts:
+        - {{ .Values.istio.virtualService.host | default .Values.global.appHostDomain }}
+        - {{ .Values.istio.virtualService.host | default .Values.global.appHostDomain }}:*
+        notPaths:
+        - /oauth2/*
+        - /oauth2
+        paths:
+        - /*
+        - /
+  selector:
+    matchLabels:
+     istio: ingress

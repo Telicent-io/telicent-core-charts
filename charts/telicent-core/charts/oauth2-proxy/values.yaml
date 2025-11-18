@@ -78,6 +78,8 @@ configuration:
 idp:
   # @key idp.issuerUrl The OpenID Connect issuer URL
   issuerUrl: ""
+  # @key idp.jwksPath The path to use in combination with the issuer URL for JWKS
+  jwksPath: "/keys"
   # @key idp.existingSecret Name of an existing secret. The secret must contain 3 keys: 'clientid', 'clientsecret', 'cookiesecret'
   # Note: Left unset, it will create a secret named: tc-auth-gen-idp-oauth2-proxy
   existingSecret: ""

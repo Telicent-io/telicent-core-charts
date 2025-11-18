@@ -126,13 +126,14 @@ Contains details pertinent to the OIDC Identity Provider to be used by *Oauth2 P
 It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
 For Quick Start purposes, a secret named `tc-auth-gen-idp-oauth2-proxy` will be created if one is not set.
 
-| Name                 | Description                                                                                            | Value |
-| -------------------- | ------------------------------------------------------------------------------------------------------ | ----- |
-| `idp.issuerUrl`      | The OpenID Connect issuer URL                                                                          | `""`  |
-| `idp.existingSecret` | Name of an existing secret. The secret must contain 3 keys: 'clientid', 'clientsecret', 'cookiesecret' | `""`  |
-| `idp.clientId`       | The OAuth Client ID                                                                                    | `""`  |
-| `idp.clientSecret`   | The OAuth Client Secret                                                                                | `""`  |
-| `idp.cookieSecret`   | The seed string for secure cookies                                                                     | `""`  |
+| Name                 | Description                                                                                            | Value   |
+| -------------------- | ------------------------------------------------------------------------------------------------------ | ------- |
+| `idp.issuerUrl`      | The OpenID Connect issuer URL                                                                          | `""`    |
+| `idp.jwksPath`       | The path to use in combination with the issuer URL for JWKS                                            | `/keys` |
+| `idp.existingSecret` | Name of an existing secret. The secret must contain 3 keys: 'clientid', 'clientsecret', 'cookiesecret' | `""`    |
+| `idp.clientId`       | The OAuth Client ID                                                                                    | `""`    |
+| `idp.clientSecret`   | The OAuth Client Secret                                                                                | `""`    |
+| `idp.cookieSecret`   | The seed string for secure cookies                                                                     | `""`    |
 
 ### TLS Parameters
 

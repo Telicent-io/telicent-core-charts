@@ -66,11 +66,3 @@ Create the name of the service to use
 {{- define "access-ui.serviceName" -}}
 {{- include "access-ui.fullname" . }}
 {{- end }}
-
-{{/*
-Create the name of the config map
-*/}}
-{{- define "access-ui.configMapName" -}}
-{{- printf "%s-%s" (include "access-ui.fullname" .) "env-config" }}
-{{- end }}
-
