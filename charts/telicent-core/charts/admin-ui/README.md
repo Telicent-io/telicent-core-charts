@@ -52,7 +52,7 @@ The command removes all the Kubernetes components associated with the chart and 
 | `global.istioNamespace`             | Namespace in which Istio is deployed                                              | `istio-system`     |
 | `global.istioServiceAccountName`    | Name of the Istio service account                                                 | `istio-ingress`    |
 | `global.istioGatewayName`           | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)         | `ingress-gateway`  |
-| `global.istioVirtualServiceEnabled` | Enable Istio traffic routing to a named destination service                       | `true`             |
+| `global.istioVirtualServiceEnabled` | Enable Istio traffic routing to a named destination service                       | `false`            |
 
 ### Admin UI Parameters
 
@@ -120,12 +120,12 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ### Node Selection
 
-| Name                      | Description                                                                                                                                                                                      | Value |
-| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----- |
-| `nodeSelector`            | Allows you to schedule pods on a node with a label matching the given key-value pair.                                                                                                            | `{}`  |
-| `affinity`                | Allows you to define affinity rules for scheduling pods, see: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/                                                           | `{}`  |
-| `tolerations`             | ALlows you to schedule pods on nodes with specified taints, see: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/                                                   | `[]`  |
-| `istio.ingress.principal` | Principal used for ingress traffic to this application by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName' | `""`  |
+| Name                      | Description                                                                                                                                                                                      | Value                                       |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------- |
+| `nodeSelector`            | Allows you to schedule pods on a node with a label matching the given key-value pair.                                                                                                            | `{}`                                        |
+| `affinity`                | Allows you to define affinity rules for scheduling pods, see: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/                                                           | `{}`                                        |
+| `tolerations`             | ALlows you to schedule pods on nodes with specified taints, see: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/                                                   | `[]`                                        |
+| `istio.ingress.principal` | Principal used for ingress traffic to this application by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName' | `cluster.local/ns/tc-core/sa/traefik-proxy` |
 
 ## License
 

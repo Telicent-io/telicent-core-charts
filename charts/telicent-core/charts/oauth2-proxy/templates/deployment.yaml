@@ -95,7 +95,7 @@ spec:
 
         ports:
         - name: http
-          containerPort: {{ .Values.service.port }}
+          containerPort: 4080
           protocol: TCP
 
         readinessProbe:
