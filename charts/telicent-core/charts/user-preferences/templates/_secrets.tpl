@@ -9,6 +9,6 @@ Create the name of mongo secret
 {{- if .Values.mongo.existingSecret }}
 {{- .Values.mongo.existingSecret }}
 {{- else }}
-{{- printf "%s-tc-auth-usr-%s" (include "user-preferences.fullname" .) "mongo" }}
+{{- printf "tc-auth-usr-%s-%s" "mongo" .Chart.Name }}
 {{- end }}
 {{- end -}}

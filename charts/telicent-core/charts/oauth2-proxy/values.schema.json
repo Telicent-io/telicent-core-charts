@@ -116,6 +116,11 @@
                     "description": "The OpenID Connect issuer URL",
                     "default": ""
                 },
+                "jwksPath": {
+                    "type": "string",
+                    "description": "The path to use in combination with the issuer URL for JWKS",
+                    "default": "/keys"
+                },
                 "existingSecret": {
                     "type": "string",
                     "description": "Name of an existing secret. The secret must contain 3 keys: 'clientid', 'clientsecret', 'cookiesecret'",

@@ -9,6 +9,6 @@ Create the name of the elastic / opensearch secret
 {{- if .Values.contentIndexer.elasticSecret.existingSecret }}
 {{- .Values.contentIndexer.elasticSecret.existingSecret }}
 {{- else }}
-{{- printf "%s-tc-auth-usr-%s" (include "content-indexer.fullname" .) "elastic" }}
+{{- printf "tc-auth-usr-%s-%s" "elastic" (include "content-indexer.name" .) }}
 {{- end }}
 {{- end -}}

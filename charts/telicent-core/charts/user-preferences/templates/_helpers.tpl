@@ -71,24 +71,6 @@ Create the name of the service to use
 {{ include "user-preferences.fullname" . }}-server
 {{- end }}
 
-{{/*
-Create the name of the config map
-*/}}
-{{- define "user-preferences.envConfigMapName" -}}
-{{- if .Values.configuration.existingEnvConfigMap }}
-{{- .Values.configuration.existingEnvConfigMap }}
-{{- else }}
-{{- printf "%s-%s" (include "user-preferences.fullname" .) "env" }}
-{{- end }}
-{{- end }}
-
-{{/*
-Create Server config name to use
-*/}}
-{{- define "user-preferences.serverConfig" -}}
-{{ include "user-preferences.fullname" . }}-server-config
-{{- end }}
-
 {{/* 
 Create Kafka Auth Config name to use
 */}}
