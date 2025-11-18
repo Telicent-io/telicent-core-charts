@@ -90,7 +90,7 @@ data:
       authServerUrl: "https://{{ .Values.global.authHostDomain }}",
       clientId: "{{ .Values.configuration.oauthClientId }}",
       scope: "{{ .Values.configuration.oauthScope }}",
-      redirectUri: "https://{{ .Values.global.appHostDomain }}/search",
+      redirectUri: "https://{{ .Values.global.appHostDomain }}/search/callback",
       popupRedirectUri: "https://{{ .Values.global.appHostDomain }}/search/auth-redirect-uri",
     };
     
