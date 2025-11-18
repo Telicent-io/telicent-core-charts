@@ -22,7 +22,7 @@ global:
   # @key global.istioGatewayName Name of the Istio Gateway Resource (LB operating at the edge of the mesh)
   istioGatewayName: ingress-gateway
   # @key global.istioVirtualServiceEnabled Enable Istio traffic routing to a named destination service
-  istioVirtualServiceEnabled: true
+  istioVirtualServiceEnabled: false
 
 # -----------------------------------------------------------------------------
 # @section Admin UI Parameters
@@ -143,4 +143,4 @@ tolerations: []
 istio:
   ingress:
     # @key istio.ingress.principal Principal used for ingress traffic to this application by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName'
-    principal: ""
+    principal: cluster.local/ns/tc-core/sa/traefik-proxy
