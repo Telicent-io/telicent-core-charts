@@ -27,6 +27,7 @@ To uninstall/delete the `my-release` deployment:
 ```console
 helm delete my-release
 ```
+
 The command removes all the Kubernetes components associated with the chart and deletes the release.
 
 ## Automating README and schema generation
@@ -108,6 +109,8 @@ They are addressed by their names, and each subchart has its own set of configur
 |------|-------------|------|
 | Access | XX | [access](./charts/access/README.md) |
 | Access UI | XX | [access-ui](./charts/access-ui/README.md) |
+| Admin UI | XX | [access-ui](./charts/admin-ui/README.md) |
+| Auth | XX | [access-ui](./charts/auth-ui/README.md) |
 | Data Catalogue | XX | [data-catalog](./charts/data-catalog/README.md) |
 | Document Pipeline | XX | [document-pipeline](./charts/document-pipeline/README.md) |
 | Graph | XX | [graph](./charts/graph/README.md) |
