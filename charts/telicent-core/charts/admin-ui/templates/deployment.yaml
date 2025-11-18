@@ -66,12 +66,22 @@ spec:
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- with .Values.volumeMounts }}
           volumeMounts:
+            - mountPath: /usr/local/nginx/html/env-config.js
+              name: app-config-volume
+              subPath: env-config.js
+          {{- with .Values.volumeMounts }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
-      {{- with .Values.volumes }}
       volumes:
+        - name: app-config-volume
+          configMap:
+            {{- if .Values.configMap.existingConfigMapName }}
+            name: {{ .Values.configMap.existingConfigMapName }}
+            {{- else }}
+            name: {{ include "admin-ui.configMapName" . }}
+            {{- end }}
+      {{- with .Values.volumes }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
       {{- with .Values.nodeSelector }}

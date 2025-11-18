@@ -60,3 +60,10 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Create the name of the config map
+*/}}
+{{- define "admin-ui.configMapName" -}}
+{{- printf "%s-%s" (include "admin-ui.fullname" .) "env-configjs" }}
+{{- end }}

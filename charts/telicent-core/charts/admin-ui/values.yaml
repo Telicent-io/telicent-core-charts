@@ -47,6 +47,11 @@ image:
   # @key image.tag Auth server image tag. If not set, a tag is generated using the appVersion
   tag: ""
 
+# @section image This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/configuration/configmap/
+configMap:
+  # @key configMap.existingConfigMapName The name of an existing config map containing env-config.js. If omitted, a new config map using settings from this values file will be created
+  existingConfigMapName: ""
+
 # @section Service Account Parameters This section builds out the service account more information can be found here: https://kubernetes.io/docs/concepts/security/service-accounts/
 serviceAccount:
   # @key serviceAccount.create Whether a service account should be created
