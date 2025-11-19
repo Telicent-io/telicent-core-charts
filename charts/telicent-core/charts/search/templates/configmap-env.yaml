@@ -11,7 +11,6 @@ metadata:
     {{- include "search.labels" . | nindent 4 }}
 
 data:
-  FEATURE_FLAG_AUTHZ: "true"
   JAVA_OPTIONS: {{ .Values.configuration.javaOptions | quote }}
   OTEL_METRICS_EXPORTER: {{ .Values.configuration.otelMetricsExporter | quote }}
   OTEL_TRACES_EXPORTER: {{ .Values.configuration.otelTracesExporter | quote }}
@@ -24,6 +23,7 @@ data:
   INDEX_BATCH_SIZE: {{ .Values.configuration.indexBatchSize | quote }}
   JWKS_URL: {{ printf "%s%s%s" "https://" .Values.global.authHostDomain "/oauth2/jwks" | quote }}
   USERINFO_URL: {{ printf "http://%s.%s:%s%s" "auth" .Release.Namespace "9000" "/userinfo" | quote }}
+  FEATURE_FLAG_AUTHZ: "true"
 {{- with .Values.extraEnvs }}
 {{- toYaml . | nindent 2 }}
 {{- end }}

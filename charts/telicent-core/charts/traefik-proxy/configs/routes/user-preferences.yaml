@@ -14,7 +14,7 @@ http:
     user-preferences:
       loadBalancer:
         servers:
-          - url: http://{{ .Values.hosts.userPreferences | default (printf "%s.%s:11111" (include "traefik-proxy.routesService" (list . "user-preferences")) .Release.Namespace) }}
+          - url: http://{{ .Values.hosts.userPreferences | default (printf "%s.%s:8080" (include "traefik-proxy.routesService" (list . "user-preferences")) .Release.Namespace) }}
 
   middlewares:
     path-user-preferences:
@@ -25,4 +25,4 @@ http:
     host-user-preferences:
       headers:
         customRequestHeaders:
-          host: {{ .Values.hosts.userPreferences | default (printf "%s.%s:11111" (include "traefik-proxy.routesService" (list . "user-preferences")) .Release.Namespace) }}
+          host: {{ .Values.hosts.userPreferences | default (printf "%s.%s:8080" (include "traefik-proxy.routesService" (list . "user-preferences")) .Release.Namespace) }}

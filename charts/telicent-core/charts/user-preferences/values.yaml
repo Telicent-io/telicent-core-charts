@@ -156,7 +156,7 @@ metrics:
 # @section Traffic Exposure Parameters
 service:
   # @key service.port User Preferences API service port
-  port: 11111
+  port: 8080
   # @key service.type User Preferences API service type
   type: ClusterIP
 
