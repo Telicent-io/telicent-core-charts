@@ -3,6 +3,7 @@ http:
   routers:
     auth-forward:
       rule: {{ printf "Host(`%s`) && PathPrefix(`/auth/forward`)" .Values.global.authHostDomain }}
+      priority: 9
       service: auth
       entryPoints:
         - web-app
@@ -11,27 +12,30 @@ http:
 
     auth-user-info:
       rule: {{ printf "Host(`%s`) && PathPrefix(`/userinfo`)" .Values.global.authHostDomain }}
+      priority: 8
       service: auth
       entryPoints:
         - web-api
       middleWares:
         - host-auth
 
-    auth-oauth2:
-      rule: {{ printf "Host(`%s`) && PathRegexp(`^/(oauth2|session|login|logout)`)" .Values.global.authHostDomain }}
+    auth-oidc:
+      rule: {{ printf "Host(`%s`) && PathPrefix(`/.well-known`)" .Values.global.authHostDomain }}
+      priority: 7
       service: auth
       entryPoints:
         - web-app
       middleWares:
         - host-auth
 
-#    auth-oidc:
-#      rule: {{ printf "Host(`%s`) && PathPrefix(`/.well-known`)" .Values.global.authHostDomain }}
-#      service: auth
-#      entryPoints:
-#        - web-app
-#      middleWares:
-#        - host-auth
+    auth-oauth2:
+      rule: {{ printf "Host(`%s`) && PathRegexp(`^/(oauth2|session|login|logout)`)" .Values.global.authHostDomain }}
+      priority: 6
+      service: auth
+      entryPoints:
+        - web-app
+      middleWares:
+        - host-auth
 
   services:
     auth:
