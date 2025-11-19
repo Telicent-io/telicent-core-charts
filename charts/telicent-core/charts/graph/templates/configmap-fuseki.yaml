@@ -16,4 +16,4 @@ data:
   config.ttl: {{- (include "graph.fuseki" . ) | toYaml | indent 6 }}
 {{- end }}
 
-{{-end }}
+{{- end }}
