@@ -23,7 +23,7 @@ http:
       middleWares:
         - host-auth
     auth-oidc:
-      rule: {{ printf "Host(`%s`) && PathPrefix(`\.well-known`)" .Values.global.authHostDomain }}
+      rule: {{ printf "Host(`%s`) && PathPrefix(`\\.well-known`)" .Values.global.authHostDomain }}
       service: auth
       entryPoints:
         - web-app
