@@ -15,7 +15,7 @@ http:
     paperbackWriter:
       loadBalancer:
         servers:
-          - url: http://{{ .Values.hosts.search | default (printf "%s.%s:8181" (include "traefik-proxy.routesService" (list . "search")) .Release.Namespace) }}
+          - url: http://{{ .Values.hosts.paperbackWriter | default (printf "%s.%s:8181" (include "traefik-proxy.routesService" (list . "paperbackWriter")) .Release.Namespace) }}
 
   middlewares:
     path-paperbackWriter:
