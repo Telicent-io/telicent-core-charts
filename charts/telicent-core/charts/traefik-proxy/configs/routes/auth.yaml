@@ -1,6 +1,14 @@
 # Declare routers / services / middlewares
 http:
   routers:
+    userinfo:
+      rule: {{ printf "Host(`%s`) && PathPrefix(`/userinfo`)" .Values.global.authHostDomain }} 
+      service: auth
+      entryPoints:
+        - web-app
+      middleWares:
+        - host-auth
+        - oauth2
     auth:
       rule: {{ printf "Host(`%s`)" .Values.global.authHostDomain }}
       service: auth
