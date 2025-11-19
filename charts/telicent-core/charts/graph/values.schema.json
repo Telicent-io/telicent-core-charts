@@ -124,12 +124,12 @@
                 "existingEnvConfigMap": {
                     "type": "string",
                     "description": "Name of existing configmap containing Graph Environment Configuration",
-                    "default": "env"
+                    "default": ""
                 },
                 "existingFusekiConfigMap": {
                     "type": "string",
                     "description": "Name of existing configmap containing Fuseki Configuration",
-                    "default": "env-f"
+                    "default": ""
                 },
                 "userAttributesUrl": {
                     "type": "string",

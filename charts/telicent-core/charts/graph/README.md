@@ -75,8 +75,8 @@ Contains configuration parameters specific to the Graph application
 
 | Name                                    | Description                                                           | Value                                                                                  |
 | --------------------------------------- | --------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
-| `configuration.existingEnvConfigMap`    | Name of existing configmap containing Graph Environment Configuration | `env`                                                                                  |
-| `configuration.existingFusekiConfigMap` | Name of existing configmap containing Fuseki Configuration            | `env-f`                                                                                |
+| `configuration.existingEnvConfigMap`    | Name of existing configmap containing Graph Environment Configuration | `""`                                                                                   |
+| `configuration.existingFusekiConfigMap` | Name of existing configmap containing Fuseki Configuration            | `""`                                                                                   |
 | `configuration.userAttributesUrl`       | URL for the user details endpoint                                     | `""`                                                                                   |
 | `configuration.attributeHierarchyUrl`   | URL for the user hierarchy endpoint                                   | `""`                                                                                   |
 | `configuration.javaOptions`             | JVM options for the application                                       | `-Xmx5120m -Xms2048m -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks` |
