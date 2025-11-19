@@ -7,11 +7,8 @@ http:
       entryPoints:
         - web-api
       middleWares:
-        # todo: revert back to main config once testing is complete.
-        - cors
         - path-search
         - host-search
-        - oauth2
 
   services:
     search:
