@@ -1,0 +1,146 @@
+# Copyright (C) 2025 Telicent Limited
+# Telicent Admin UI stand-alone chart
+
+# -----------------------------------------------------------------------------
+# @section Global Parameters
+# -----------------------------------------------------------------------------
+
+global:
+  # @key global.enterprise Enable enterprise mode, adding additional features and configurations
+  enterprise: false
+
+  # @key global.appHostDomain Domain associated with Telicent application services
+  appHostDomain: "apps.telicent.io"
+  # @key global.authHostDomain Domain associated with Telicent authentication services, including OIDC providers
+  authHostDomain: "auth.telicent.io"
+
+  # @key global.istioNamespace Namespace in which Istio is deployed
+  # Note: By default, Istio namespace is set to 'istio-system'
+  istioNamespace: istio-system
+  # @key global.istioServiceAccountName Name of the Istio service account
+  istioServiceAccountName: istio-ingress
+  # @key global.istioGatewayName Name of the Istio Gateway Resource (LB operating at the edge of the mesh)
+  istioGatewayName: ingress-gateway
+  # @key global.istioVirtualServiceEnabled Enable Istio traffic routing to a named destination service
+  istioVirtualServiceEnabled: false
+
+# -----------------------------------------------------------------------------
+# @section Admin UI Parameters
+# -----------------------------------------------------------------------------
+
+# @section Common Parameters
+# @key fullnameOverride String to fully override the generated release name
+fullnameOverride: ""
+# @key nameOverride String to partially override fullname (will maintain the release name)
+nameOverride: ""
+
+# @section image This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
+image:
+  # @key image.registry Auth server image registry
+  registry: quay.io
+  # @key image.repository Auth server image name
+  repository: telicent-admin-ui
+  # @key image.pullPolicy Auth server image pull policy
+  pullPolicy: IfNotPresent
+  # @key image.pullSecrets Specify registry secret names as an array
+  pullSecrets: []
+  # @key image.tag Auth server image tag. If not set, a tag is generated using the appVersion
+  tag: ""
+
+# @section image This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/configuration/configmap/
+configMap:
+  # @key configMap.existingConfigMapName The name of an existing config map containing env-config.js. If omitted, a new config map using settings from this values file will be created
+  existingConfigMapName: ""
+
+# @section Service Account Parameters This section builds out the service account more information can be found here: https://kubernetes.io/docs/concepts/security/service-accounts/
+serviceAccount:
+  # @key serviceAccount.create Whether a service account should be created
+  create: true
+  # @key serviceAccount.automount Whether to automatically mount a ServiceAccount's API credentials?
+  automount: true
+  # @key serviceAccount.annotations Additional custom annotations for the ServiceAccount
+  annotations: {}
+  # @key serviceAccount.name Name of the created ServiceAccount. If not set, a name is generated using the fullname template
+  name: ""
+
+# @section Deployment Parameters For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+# @key podAnnotations Add extra annotations to the Deployment object
+podAnnotations: {}
+# @key extraEnvs List of additional environment variables to set in the pod
+extraEnvs: []
+
+podSecurityContext:
+  # @key podSecurityContext.runAsUser Set the provisioning pod's Security Context runAsUser User ID
+  runAsUser: 185
+  # @key podSecurityContext.runAsGroup Set the provisioning pod's Security Context runAsGroup Group ID
+  runAsGroup: 185
+  # @key podSecurityContext.runAsNonRoot Set the provisioning pod's Security Context runAsNonRoot
+  runAsNonRoot: true
+  # @key podSecurityContext.fsGroup Set the provisioning pod's Group ID for the mounted volumes' filesystem
+  fsGroup: 185
+  seccompProfile:
+    # @key podSecurityContext.seccompProfile.type Set the provisioning pod's Security Context seccomp profile
+    type: RuntimeDefault
+
+containerSecurityContext:
+  # @key containerSecurityContext.runAsUser Set containers' Security Context runAsUser User ID
+  runAsUser: 185
+  # @key containerSecurityContext.runAsGroup Set containers' Security Context runAsGroup Group ID
+  runAsGroup: 185
+  # @key containerSecurityContext.runAsNonRoot Set container's Security Context runAsNonRoot
+  runAsNonRoot: true
+  # @key containerSecurityContext.allowPrivilegeEscalation Set container's Security Context allowPrivilegeEscalation
+  allowPrivilegeEscalation: false
+  capabilities:
+    # @key containerSecurityContext.capabilities.drop List of capabilities to be dropped
+    drop:
+      - ALL
+  seccompProfile:
+    # @key containerSecurityContext.seccompProfile.type Set container's Security Context seccomp profile
+    type: RuntimeDefault
+
+# @section Traffic Exposure Parameters
+service:
+  # @key service.port Auth server service port
+  port: 8080
+  # @key service.type Auth server service port
+  type: ClusterIP
+
+resources:
+  requests:
+    # @key resources.requests.cpu Set containers' CPU request
+    cpu: "250m"
+    # @key resources.requests.memory Set containers' memory request
+    memory: "500Mi"
+  limits:
+    # @key resources.limits.cpu Set containers' CPU limit
+    cpu: "5000m"
+    # @key resources.limits.memory Set containers' memory limit
+    memory: "1000Mi"
+
+# # @section Probes This is to setup the liveness and readiness probes, more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
+# livenessProbe:
+#   httpGet:
+#     # @key livenessProbe.httpGet.path The path to use for the Auth server liveness probe
+#     path: /actuator/health
+#     # @key livenessProbe.httpGet.port The port to use for the Auth server liveness probe
+#     port: http
+# readinessProbe:
+#   httpGet:
+#     # @key readinessProbe.httpGet.path The path to use for the Auth server liveness probe
+#     path: /actuator/health
+#     # @key readinessProbe.httpGet.port The port to use for the Auth server liveness probe
+#     port: http
+
+# @section Node Selection
+# @key nodeSelector Allows you to schedule pods on a node with a label matching the given key-value pair.
+nodeSelector: {}
+# @key affinity Allows you to define affinity rules for scheduling pods, see: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
+affinity: {}
+# @key tolerations ALlows you to schedule pods on nodes with specified taints, see: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
+tolerations: []
+
+istio:
+  ingress:
+    # @key istio.ingress.principal Principal used for ingress traffic to this application by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName'
+    principal: cluster.local/ns/tc-core/sa/traefik-proxy

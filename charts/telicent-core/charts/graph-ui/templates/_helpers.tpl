@@ -66,18 +66,3 @@ Create the name of the service to use
 {{- define "graph-ui.serviceName" -}}
 {{- include "graph-ui.fullname" . }}
 {{- end }}
-
-{{/*
-Create the name of the config map
-*/}}
-{{- define "graph-ui.configMapName" -}}
-{{- printf "%s-%s" (include "graph-ui.fullname" .) "env-configjs" }}
-{{- end }}
-
-{{/*
-Create the name of the config secret
-*/}}
-{{- define "graph-ui.configSecretName" -}}
-{{- printf "%s-%s" (include "graph-ui.fullname" .) "secret-config-js" }}
-{{- end }}
-

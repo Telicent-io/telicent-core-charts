@@ -11,9 +11,7 @@ metadata:
     {{- include "search.labels" . | nindent 4 }}
 
 data:
-  # Environment variables for the search container
-  USER_ATTRIBUTES_URL: {{ include "search.userAttributesUrl" . }}
-  ATTRIBUTE_HIERARCHY_URL: {{ include "search.attributeHierarchyUrl" . }}
+  FEATURE_FLAG_AUTHZ: "true"
   JAVA_OPTIONS: {{ .Values.configuration.javaOptions | quote }}
   OTEL_METRICS_EXPORTER: {{ .Values.configuration.otelMetricsExporter | quote }}
   OTEL_TRACES_EXPORTER: {{ .Values.configuration.otelTracesExporter | quote }}
@@ -23,8 +21,9 @@ data:
   OPENSEARCH_COMPATIBILITY: {{ .Values.configuration.opensearchCompatibility | quote }}
   ELASTIC_INDEX: {{ .Values.configuration.elasticIndexNames | quote }}
   FIELD_OPTIONS: {{ .Values.configuration.searchFieldOptions | quote }}
-  JWKS_URL: {{ .Values.global.jwksUrl | quote }}
   INDEX_BATCH_SIZE: {{ .Values.configuration.indexBatchSize | quote }}
+  JWKS_URL: {{ printf "%s%s%s" "https://" .Values.global.authHostDomain "/oauth2/jwks" | quote }}
+  USERINFO_URL: {{ printf "http://%s.%s:%s%s" "auth" .Release.Namespace "9000" "/userinfo" | quote }}
 {{- with .Values.extraEnvs }}
 {{- toYaml . | nindent 2 }}
 {{- end }}

@@ -66,12 +66,3 @@ Create the name of the service to use
 {{- define "search-ui.serviceName" -}}
 {{- include "search-ui.fullname" . }}
 {{- end }}
-
-{{/*
-Create the name of the config map
-*/}}
-{{- define "search-ui.configMapName" -}}
-{{- printf "%s-%s" (include "search-ui.fullname" .) "env-configjs" }}
-{{- end }}
-
-

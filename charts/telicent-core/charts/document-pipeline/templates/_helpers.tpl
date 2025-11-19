@@ -137,6 +137,10 @@ Fullname
 {{ printf "%s-%s" (include "document-pipeline.fullname" .) "content-indexer"}}
 {{- end }}
 
+{{- define "content-indexer.name" -}}
+{{ printf "%s-%s" (include "document-pipeline.name" .) "content-indexer"}}
+{{- end }}
+
 {{/*
 Selector labels
 */}}

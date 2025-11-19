@@ -110,8 +110,10 @@ Copyright (C) 2025 Telicent Limited
         ## Local attribute store for dev use only
         # authz:attributes <file:attribute-store.ttl>;
         # ABAC endpoint for user attributes
-        authz:attributesURL <env:USER_ATTRIBUTES_URL>;
-        authz:hierarchiesURL <env:ATTRIBUTE_HIERARCHY_URL>;
+        ## OLD AUTH APPROACH
+        # authz:attributesURL <env:USER_ATTRIBUTES_URL>;
+        # authz:hierarchiesURL <env:ATTRIBUTE_HIERARCHY_URL>;
+        authz:authServer true;
         .
     ## Storage of data in memory.
     #:datasetAuthBase rdf:type ja:MemoryDataset .
@@ -206,8 +208,10 @@ Copyright (C) 2025 Telicent Limited
         # Local attribute store for dev
         # authz:attributes <file:attribute-store.ttl>;
         # ABAC endpoint for user attributes
-        authz:attributesURL <env:USER_ATTRIBUTES_URL>;
-        authz:hierarchiesURL <env:ATTRIBUTE_HIERARCHY_URL>;
+        ## OLD AUTH APPROACH
+        # authz:attributesURL <env:USER_ATTRIBUTES_URL>;
+        # authz:hierarchiesURL <env:ATTRIBUTE_HIERARCHY_URL>;
+        authz:authServer true;
         .
     ## Storage of data in memory.
     #:datasetOntoBase rdf:type ja:MemoryDataset .
@@ -303,8 +307,10 @@ Copyright (C) 2025 Telicent Limited
         # Local attribute store for dev
         # authz:attributes <file:attribute-store.ttl>;
         # ABAC endpoint for user attributes
-        authz:attributesURL <env:USER_ATTRIBUTES_URL>;
-        authz:hierarchiesURL <env:ATTRIBUTE_HIERARCHY_URL>;
+        ## OLD AUTH APPROACH
+        # authz:attributesURL <env:USER_ATTRIBUTES_URL>;
+        # authz:hierarchiesURL <env:ATTRIBUTE_HIERARCHY_URL>;
+        authz:authServer true;
         .
     ## Storage of data in memory.
     #:datasetCatBase rdf:type ja:MemoryDataset .

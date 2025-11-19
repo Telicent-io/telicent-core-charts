@@ -2,14 +2,16 @@
 http:
   routers:
     search:
-      rule: {{ printf "Host(`%s`) && PathPrefix(`/api/search`)" .Values.global.appHostDomain }}
+      rule: {{ printf "Host(`%s`) && PathPrefix(`/search`)" .Values.global.apiHostDomain }}
       service: search
       entryPoints:
-        - web
+        - web-api
       middleWares:
-        - oauth2
+        # todo: revert back to main config once testing is complete.
+        - cors
         - path-search
         - host-search
+        - oauth2
 
   services:
     search:
@@ -20,11 +22,10 @@ http:
   middlewares:
     path-search:
       replacePathRegex:
-        regex: "^/api/search/(.*)"
+        regex: "^/search/(.*)"
         replacement: "/$1"
 
     host-search:
       headers:
         customRequestHeaders:
           host: {{ .Values.hosts.search | default (printf "%s.%s:8181" (include "traefik-proxy.routesService" (list . "search")) .Release.Namespace) }}
-

@@ -30,3 +30,5 @@ spec:
         - DELETE
         - PUT
         - PATCH
+        - OPTIONS
+        - HEAD

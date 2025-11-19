@@ -12,11 +12,11 @@ metadata:
 
 data:
   env-config.js: |
-    const DOMAIN = "{{ .Values.global.appHostDomain }}"; 
+    const API_DOMAIN = "{{ .Values.global.apiHostDomain }}"; 
     // Configure the GraphQL API endpoint as used by the client browser.
-    window.GRAPHQL_URL = `https://${DOMAIN}/api/graphql/knowledge/graphql`;
+    window.GRAPHQL_URL = `https://${API_DOMAIN}/graphql/knowledge/graphql`;
     // Configure the Graph SPARQL API endpoint as used by the client browser.
-    window.SPARQL_URL = `https://${DOMAIN}/api/sparql/knowledge/sparql`;
+    window.SPARQL_URL = `https://${API_DOMAIN}/sparql/knowledge/sparql`;
     // Configure the Access endpoint as used by the client browser.
-    window.ACCESS_URL = `https://${DOMAIN}/api/access`;
+    window.ACCESS_URL = `https://${API_DOMAIN}/access`;
     window.BETA = false;

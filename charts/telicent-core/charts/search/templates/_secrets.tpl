@@ -9,6 +9,6 @@ Create the name of the elastic / opensearch secret
 {{- if .Values.elasticSecret.existingSecret }}
 {{- .Values.elasticSecret.existingSecret }}
 {{- else }}
-{{- printf "%s-tc-auth-usr-%s" (include "search.fullname" .) "elastic" }}
+{{- printf "tc-auth-usr-%s-%s" "elastic" .Chart.Name }}
 {{- end }}
 {{- end -}}

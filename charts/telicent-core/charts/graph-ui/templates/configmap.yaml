@@ -28,12 +28,12 @@ data:
     {{ end }}
 
     // APIs
-    window.ACCESS_URL = "https://{{ .Values.global.appHostDomain }}/api/access";
-    window.GRAPHQL_URL = "https://{{ .Values.global.appHostDomain }}/api/graphql/knowledge";
-    window.SPARQL_URL = 'https://{{ .Values.global.appHostDomain }}/api/sparql/knowledge/sparql';
-    window.ONTOLOGY_SERVICE_URL = "https://{{ .Values.global.appHostDomain }}/api/sparql";
-    window.SEARCH_API_URL = "https://{{ .Values.global.appHostDomain }}/api/search";
-    window.USER_PREF_API_URL = "https://{{ .Values.global.appHostDomain }}/api/user-preferences";
+    window.ACCESS_URL = "https://{{ .Values.global.apiHostDomain }}/access";
+    window.GRAPHQL_URL = "https://{{ .Values.global.apiHostDomain }}/graphql/knowledge";
+    window.SPARQL_URL = 'https://{{ .Values.global.apiHostDomain }}/sparql/knowledge/sparql';
+    window.ONTOLOGY_SERVICE_URL = "https://{{ .Values.global.apiHostDomain }}/sparql";
+    window.SEARCH_API_URL = "https://{{ .Values.global.apiHostDomain }}/search";
+    window.USER_PREF_API_URL = "https://{{ .Values.global.apiHostDomain }}/user-preferences";
 
     // Signout
     window.SIGN_OUT_URL = "https://{{ .Values.global.appHostDomain }}/oauth2/sign_out?rd=/oauth2/authorize";

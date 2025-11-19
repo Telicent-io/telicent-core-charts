@@ -17,8 +17,10 @@ global:
   # @key global.imagePullSecrets Global registry secret names as an array
   imagePullSecrets: []
 
-  # @key global.appHostDomain Domain associated with Telicent application services
+  # @key global.appHostDomain Domain associated with Telicent application/ui services
   appHostDomain: "apps.telicent.io"
+  # @key global.apiHostDomain Domain associated with Telicent Api services
+  apiHostDomain: "api.telicent.io"
   # @key global.authHostDomain Domain associated with Telicent authentication services, including OIDC providers
   authHostDomain: "auth.telicent.io"
 

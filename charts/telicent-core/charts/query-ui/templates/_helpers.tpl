@@ -66,11 +66,3 @@ Create the name of the service to use
 {{- define "query-ui.serviceName" -}}
 {{- include "query-ui.fullname" . }}
 {{- end }}
-
-{{/*
-Create the name of the config map
-*/}}
-{{- define "query-ui.configMapName" -}}
-{{- printf "%s-%s" (include "query-ui.fullname" .) "env-configjs" }}
-{{- end }}
-

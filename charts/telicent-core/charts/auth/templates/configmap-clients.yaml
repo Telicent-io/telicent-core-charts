@@ -8,6 +8,7 @@ kind: ConfigMap
 
 metadata:
   name: {{ include "auth.clientsConfigMapName" . }}
+  namespace: {{ include "auth.namespace" . | quote }}
   labels:
     {{- include "auth.labels" . | nindent 4 }}
 

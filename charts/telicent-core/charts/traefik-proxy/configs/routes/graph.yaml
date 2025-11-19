@@ -1,27 +1,25 @@
 # Declare routers / services / middlewares
 http:
   routers:
-  
     graph-sparql:
-      rule: {{ printf "Host(`%s`) && PathPrefix(`/api/sparql`)" .Values.global.appHostDomain }}
+      rule: {{ printf "Host(`%s`) && PathPrefix(`/sparql`)" .Values.global.apiHostDomain }}
       service: graph
       entryPoints:
-        - web
+        - web-api
       middleWares:
-        - oauth2
+        # todo: revert back to main config once testing is complete.
+        - cors
         - path-graph-sparql
         - host-graph
-
+        - oauth2
     graph-graphql:
-      rule: {{ printf "Host(`%s`) && PathPrefix(`/api/graphql`)" .Values.global.appHostDomain }}
+      rule: {{ printf "Host(`%s`) && PathPrefix(`/graphql`)" .Values.global.apiHostDomain }}
       service: graph
       entryPoints:
-        - web
+        - web-api
       middleWares:
-        - oauth2
         - path-graph-graphql
         - host-graph
-
   services:
     graph:
       loadBalancer:
@@ -31,16 +29,13 @@ http:
   middlewares:
     path-graph-sparql:
       replacePathRegex:
-        regex: "^/api/sparql/(.*)"
+        regex: "^/sparql/(.*)"
         replacement: "/$1"
-
     path-graph-graphql:
       replacePathRegex:
-        regex: "^/api/graphql/(.*)"
+        regex: "^/graphql/(.*)"
         replacement: "/$1"
-
     host-graph:
       headers:
         customRequestHeaders:
            host: {{ .Values.hosts.graph | default (printf "%s.%s:3030" (include "traefik-proxy.routesService" (list . "graph")) .Release.Namespace) }}
-

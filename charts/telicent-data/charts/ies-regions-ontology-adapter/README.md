@@ -155,7 +155,7 @@ These parameters can be referenced in sub-charts as `.Values.global.<parameter-n
 
 Contains configuration parameters specific to the application
 
-| Name                        | Description                             | Value                                         |
-| --------------------------- | --------------------------------------- | --------------------------------------------- |
-| `configuration.targetTopic` | Kafka topic to publish ontology data to | `ontology`                                    |
-| `configuration.sourceName`  | Source name or identifier for the data  | `ies-ies-regions.generation.iso3166_ontology` |
+| Name                        | Description                             | Value                                     |
+| --------------------------- | --------------------------------------- | ----------------------------------------- |
+| `configuration.targetTopic` | Kafka topic to publish ontology data to | `ontology`                                |
+| `configuration.sourceName`  | Source name or identifier for the data  | `ies-regions.generation.iso3166_ontology` |

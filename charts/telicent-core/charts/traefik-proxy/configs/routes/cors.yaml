@@ -1,0 +1,17 @@
+# Declare routers / services / middlewares
+http:
+  middlewares:
+    cors:
+      headers:
+        # Set to true, determines whether the `Vary` header should be added or modified to
+        # demonstrate that server responses can differ based on the value of the origin header.
+        addVaryHeader: true
+        # Cache preflight response for 24 hours (86400)
+        accessControlMaxAge: "10"
+        accessControlAllowMethods: [ GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS ]
+        accessControlAllowHeaders: [ Authorization,Content-Type,Accept,X-Requested-With,Request-ID,Cache-Control,expires,Cookie ]
+        # Disables credential support (incompatible with wildcard origin)
+        accessControlAllowCredentials: true
+        accessControlAllowOriginList:
+          - {{ printf "%s%s" "https://" .Values.global.authHostDomain | quote }}
+          - {{ printf "%s%s" "https://" .Values.global.appHostDomain | quote }}

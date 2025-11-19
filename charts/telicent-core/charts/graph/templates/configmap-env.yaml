@@ -11,16 +11,15 @@ metadata:
     {{- include "graph.labels" . | nindent 4 }}
        
 data:
-  ATTRIBUTE_HIERARCHY_URL: {{ .Values.configuration.attributeHierarchyUrl | default (include "graph.attributeHierachyUrl" .) | quote }}
+  FEATURE_FLAG_AUTHZ: "true"
   ENABLE_BACKUPS: "false"
   ENABLE_LABELS_QUERY: {{ .Values.configuration.enableLabelsQuery | default "false" | quote }}
   JAVA_OPTIONS: {{ .Values.configuration.javaOptions | quote }}
-  JWKS_URL: {{ .Values.global.jwksUrl | quote }}
   KAFKA_CONFIG_FILE_PATH: /app/config/kafka-auth/kafka-config.properties
   OTEL_METRICS_EXPORTER: {{ .Values.configuration.otelMetricsExporter | quote }}
   OTEL_TRACES_EXPORTER: {{ .Values.configuration.otelTracesExporter | quote }}
   {{- if .Values.global.enterprise}}
   SEARCH_API_URL: {{ include "graph.searchUrl" . | quote }}
   {{- end}}
-  USER_ATTRIBUTES_URL: {{ .Values.configuration.userAttributesUrl | default (include "graph.userPreferencesUrl" .) | quote }}
-  FEATURE_FLAG_AUTHZ: "false"
+  JWKS_URL: {{ printf "%s%s%s" "https://" .Values.global.authHostDomain "/oauth2/jwks" | quote }}
+  USERINFO_URL: {{ printf "http://%s.%s:%s%s" "auth" .Release.Namespace "9000" "/userinfo" | quote }}

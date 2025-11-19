@@ -1,27 +1,35 @@
+# Declare routers / services / middlewares
 http:
   middlewares:
+    headers-security:
+      chain:
+        middlewares:
+          - headers-ssl
+          - headers-strip
+
     oauth2:
       chain:
         middlewares:
-          - headers-security
+          - forward-secret
           - oauth2-verify
-          - headers-strip
-    headers-security:
+
+    headers-ssl:
       headers:
         browserXssFilter: true      # X-XSS-Protection=1; mode=block
         contentTypeNosniff: true    # X-Content-Type-Options=nosniff
-        frameDeny: true             # X-Frame-Options=deny
-        referrerPolicy: "strict-origin-when-cross-origin"
         sslRedirect: true           # redirect http > https
         forceSTSHeader: true        # Add the Strict-Transport-Security header even when the connection is HTTP
         stsSeconds: 63072000        # Set the max-age of the Strict-Transport-Security header (63072000 = 2 years)
         stsIncludeSubdomains: true  # Add includeSubdomains to the Strict-Transport-Security headers
         stsPreload: true            # Add a preload flag appended to the Strict-Transport-Security header
-        
+        #referrerPolicy: "strict-origin-when-cross-origin"
+        #frameDeny: true             # X-Frame-Options=deny
+        #customFrameOptionsValue: "SAMEORIGIN"
+
         customRequestHeaders:
           # avoiding the need for 302 redirects (used in conjunction with trustForwardHeader: false)
           X-Forwarded-Proto: "https"
-        
+          X-Forwarded-Port: 443
         customResponseHeaders:
           X-Robots-Tag: "none,noarchive,nosnippet,notranslate,noimageindex"
     
@@ -29,13 +37,49 @@ http:
       headers:
         customResponseHeaders:
           # Empty string removes the specified header
-          Authorization: ""
-          Gap-Auth: ""
+          #Authorization: ""
+          #Gap-Auth: ""
+          #Server: ""
+          X-Powered-By: ""
+
+    oauth2-proxy-verify:
+      forwardAuth:
+        address: http://{{ .Values.hosts.auth | default (printf "%s.%s:4080" (include "traefik-proxy.routesService" (list . "oauth2-proxy")) .Release.Namespace) }}/oauth2
+        trustForwardHeader: true
+        authRequestHeaders:
+          - Authorization
+          - Cookie  # required by oauth2-proxy cookie: __Secure-session
+        authResponseHeaders:
+          - Authorization
+
 
     oauth2-verify:
       forwardAuth:
-        address: http://{{ .Values.hosts.oauth2Proxy | default (printf "%s.%s:4080" (include "traefik-proxy.routesService" (list . "oauth2-proxy")) .Release.Namespace) }}/oauth2
-
+        address: http://{{ .Values.hosts.auth | default (printf "%s.%s:9000" (include "traefik-proxy.routesService" (list . "auth")) .Release.Namespace) }}/auth/forward
         trustForwardHeader: true
+        authRequestHeaders:
+         - Authorization
+         - Cookie
+         - Origin
+         - Accept
+         - User-Agent
+         - Accept-Language
+         - Accept-Encoding
+         - Sec-Fetch-Mode
+         - Sec-Fetch-Site
+         - Sec-Fetch-Dest
+         - X-Requested-With
+         - X-Forwarded-For
+         - X-Real-IP
+         - X-Forwarded
+         - Forwarded
+         - X-ForwardAuth-Secret
         authResponseHeaders:
           - Authorization
+          - X-Auth-User
+          - X-Auth-Session-Id
+
+    forward-secret:
+      headers:
+        customRequestHeaders:
+          X-ForwardAuth-Secret: '{{`{{env "X_FORWARD_AUTH"}}`}}'

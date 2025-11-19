@@ -23,8 +23,13 @@
                 },
                 "appHostDomain": {
                     "type": "string",
-                    "description": "Domain associated with Telicent application services",
+                    "description": "Domain associated with Telicent application/ui services",
                     "default": "apps.telicent.io"
+                },
+                "apiHostDomain": {
+                    "type": "string",
+                    "description": "Domain associated with Telicent Api services",
+                    "default": "api.telicent.io"
                 },
                 "authHostDomain": {
                     "type": "string",
@@ -54,32 +59,127 @@
                 "istioVirtualServiceEnabled": {
                     "type": "boolean",
                     "description": "Enable Istio traffic routing to a named destination service",
-                    "default": true
+                    "default": false
                 }
             }
         },
         "configuration": {
             "type": "object",
             "properties": {
-                "tokenIssuerUrl": {
+                "existingEnvConfigMap": {
                     "type": "string",
-                    "description": "JWT token issuer URL",
-                    "default": "{baseUrl}"
-                },
-                "superUserIdentifier": {
-                    "type": "string",
-                    "description": "Super user identification if blank all users will be super users",
+                    "description": "Name of existing configmap containing *Auth* Environment Configuration",
                     "default": ""
+                },
+                "javaOptions": {
+                    "type": "string",
+                    "description": "JVM options for the application",
+                    "default": "-XX:MaxRAMPercentage=80.0"
                 },
                 "cookieParentDomain": {
                     "type": "string",
                     "description": "Cookie domain scope",
-                    "default": ".telicent.localhost"
+                    "default": ".telicent.io"
                 },
                 "cookieSecure": {
                     "type": "boolean",
                     "description": "Enable secure cookies",
                     "default": true
+                },
+                "superUserIdentifier": {
+                    "type": "string",
+                    "description": "Super user identification if blank all users will be super users",
+                    "default": ""
+                }
+            }
+        },
+        "postgresSql": {
+            "type": "object",
+            "properties": {
+                "uri": {
+                    "type": "string",
+                    "description": "PostgreSQL connection URI",
+                    "default": ""
+                },
+                "existingSecret": {
+                    "type": "string",
+                    "description": "Name of an existing secret. The secret must contain 2 keys: 'username', 'password'",
+                    "default": ""
+                },
+                "username": {
+                    "type": "string",
+                    "description": "PostgreSQL username",
+                    "default": ""
+                },
+                "password": {
+                    "type": "string",
+                    "description": "PostgreSQL password",
+                    "default": ""
+                }
+            }
+        },
+        "idp": {
+            "type": "object",
+            "properties": {
+                "issuerUrl": {
+                    "type": "string",
+                    "description": "The OpenID Connect issuer URL",
+                    "default": ""
+                },
+                "authorizationPath": {
+                    "type": "string",
+                    "description": "The path to use in combination with the issuer URL for authorization",
+                    "default": "/auth"
+                },
+                "jwksPath": {
+                    "type": "string",
+                    "description": "The path to use in combination with the issuer URL for JWKS",
+                    "default": "/keys"
+                },
+                "tokenPath": {
+                    "type": "string",
+                    "description": "The path to use in combination with the issuer URL for generating tokens",
+                    "default": "/token"
+                },
+                "clientName": {
+                    "type": "string",
+                    "description": "The OAuth Client Name (used for display)",
+                    "default": ""
+                },
+                "emailClaim": {
+                    "type": "string",
+                    "description": "The OIDC claim containing the user's email",
+                    "default": "email"
+                },
+                "existingSecret": {
+                    "type": "string",
+                    "description": "Name of an existing secret. The secret must contain 2 keys: 'clientid', 'clientsecret'",
+                    "default": ""
+                },
+                "clientId": {
+                    "type": "string",
+                    "description": "The OAuth Client ID",
+                    "default": ""
+                },
+                "clientSecret": {
+                    "type": "string",
+                    "description": "The OAuth Client Secret",
+                    "default": ""
+                }
+            }
+        },
+        "forwardAuth": {
+            "type": "object",
+            "properties": {
+                "existingSecret": {
+                    "type": "string",
+                    "description": "Name of an existing secret. The secret must contain 1 key: 'header'",
+                    "default": ""
+                },
+                "header": {
+                    "type": "string",
+                    "description": "The header value to be associated with the `X-ForwardAuth-Secret`.",
+                    "default": ""
                 }
             }
         },
@@ -105,98 +205,93 @@
                 }
             }
         },
-        "externalIdp": {
-            "type": "object",
-            "properties": {
-                "url": {
-                    "type": "string",
-                    "description": "External identity provider URL",
-                    "default": ""
-                },
-                "clientName": {
-                    "type": "string",
-                    "description": "Identity provider display name",
-                    "default": "Enterprise"
-                },
-                "clientId": {
-                    "type": "string",
-                    "description": "OAuth2 client ID",
-                    "default": ""
-                },
-                "clientSecret": {
-                    "type": "string",
-                    "description": "OAuth2 client secret",
-                    "default": ""
-                },
-                "existingSecret": {
-                    "type": "string",
-                    "description": "Name of an existing secret resource containing the OAuth2 client ID and secret. If specified, existing secret must contain data for EXTERNAL_IDP_CLIENT_ID and EXTERNAL_IDP_CLIENT_SECRET, and values for externalIdp.clientId and externalIdp.clientSecret will be ignored",
-                    "default": ""
-                }
-            }
-        },
-        "forwardAuth": {
-            "type": "object",
-            "properties": {
-                "secretValue": {
-                    "type": "string",
-                    "description": "ForwardAuth security secret",
-                    "default": ""
-                },
-                "existingSecret": {
-                    "type": "string",
-                    "description": "Name of an existing secret resource containing the ForwardAuth secret value. If specified, existing secret must contain data for POSTGRES_PASSWORD, and the value for postgres.password will be ignored",
-                    "default": ""
-                }
-            }
-        },
-        "postgres": {
-            "type": "object",
-            "properties": {
-                "uri": {
-                    "type": "string",
-                    "description": "PostgreSQL connection URL",
-                    "default": ""
-                },
-                "username": {
-                    "type": "string",
-                    "description": "PostgreSQL username",
-                    "default": ""
-                },
-                "password": {
-                    "type": "string",
-                    "description": "PostgreSQL password",
-                    "default": ""
-                },
-                "existingSecret": {
-                    "type": "string",
-                    "description": "Name of an existing secret resource containing the PostgreSQL password. If specified, existing secret must contain data for POSTGRES_PASSWORD, and the value for postgres.password will be ignored",
-                    "default": ""
-                }
-            }
+        "nameOverride": {
+            "type": "string",
+            "description": "String to partially override fullname (will maintain the release name)",
+            "default": ""
         },
         "fullnameOverride": {
             "type": "string",
             "description": "String to fully override the generated release name",
             "default": ""
         },
-        "nameOverride": {
+        "namespaceOverride": {
             "type": "string",
-            "description": "String to partially override fullname (will maintain the release name)",
+            "description": "String to fully override all deployed resources namespace",
             "default": ""
+        },
+        "commonLabels": {
+            "type": "object",
+            "description": "Add labels to all the deployed resources",
+            "default": {}
+        },
+        "replicas": {
+            "type": "number",
+            "description": "Number of *Auth* replicas to deploy",
+            "default": 1
+        },
+        "revisionHistoryLimit": {
+            "type": "number",
+            "description": "Number of controller revisions to keep",
+            "default": 5
+        },
+        "annotations": {
+            "type": "object",
+            "description": "Add extra annotations to the Deployment Object",
+            "default": {}
+        },
+        "podLabels": {
+            "type": "object",
+            "description": "Add extra labels to the *Auth* pod",
+            "default": {}
+        },
+        "podAnnotations": {
+            "type": "object",
+            "description": "Add extra annotations to the *Auth* pod",
+            "default": {}
+        },
+        "extraEnvVars": {
+            "type": "array",
+            "description": "Array with extra environment variables to add to *Auth* pod",
+            "default": [],
+            "items": {}
+        },
+        "extraVolumes": {
+            "type": "array",
+            "description": "Additional containers to be added to the *Auth* pod",
+            "default": [],
+            "items": {}
+        },
+        "extraVolumeMounts": {
+            "type": "array",
+            "description": "Optionally specify extra list of additional volumeMounts",
+            "default": [],
+            "items": {}
+        },
+        "initContainers": {
+            "type": "array",
+            "description": "Add init containers to the pod",
+            "default": [],
+            "items": {}
+        },
+        "sidecars": {
+            "type": "array",
+            "description": "Add sidecars to the pod.",
+            "default": [],
+            "items": {}
         },
         "image": {
             "type": "object",
             "properties": {
                 "registry": {
                     "type": "string",
-                    "description": "Auth server image registry",
-                    "default": "quay.io"
+                    "description": "*Auth* image registry",
+                    "default": "REGISTRY_NAME"
                 },
                 "repository": {
                     "type": "string",
                     "description": "Auth server image name",
-                    "default": "telicent-auth-server"
+                    "default": "telicent/telicent-auth-server"
                 },
                 "pullPolicy": {
                     "type": "string",
@@ -216,62 +311,36 @@
                 }
             }
         },
-        "serviceAccount": {
+        "resources": {
             "type": "object",
             "properties": {
-                "name": {
-                    "type": "string",
-                    "description": "Name of the created ServiceAccount. If not set, a name is generated using the fullname template",
-                    "default": ""
-                },
-                "annotations": {
-                    "type": "object",
-                    "description": "Additional custom annotations for the ServiceAccount",
-                    "default": {}
-                }
-            }
-        },
-        "podAnnotations": {
-            "type": "object",
-            "description": "Add extra annotations to the Deployment object",
-            "default": {}
-        },
-        "extraEnvs": {
-            "type": "array",
-            "description": "List of additional environment variables to set in the pod",
-            "default": [],
-            "items": {}
-        },
-        "podSecurityContext": {
-            "type": "object",
-            "properties": {
-                "runAsUser": {
-                    "type": "number",
-                    "description": "Set the provisioning pod's Security Context runAsUser User ID",
-                    "default": 185
-                },
-                "runAsGroup": {
-                    "type": "number",
-                    "description": "Set the provisioning pod's Security Context runAsGroup Group ID",
-                    "default": 185
-                },
-                "runAsNonRoot": {
-                    "type": "boolean",
-                    "description": "Set the provisioning pod's Security Context runAsNonRoot",
-                    "default": true
-                },
-                "fsGroup": {
-                    "type": "number",
-                    "description": "Set the provisioning pod's Group ID for the mounted volumes' filesystem",
-                    "default": 185
-                },
-                "seccompProfile": {
+                "requests": {
                     "type": "object",
                     "properties": {
-                        "type": {
+                        "cpu": {
                             "type": "string",
-                            "description": "Set the provisioning pod's Security Context seccomp profile",
-                            "default": "RuntimeDefault"
+                            "description": "Set containers' CPU request",
+                            "default": "700m"
+                        },
+                        "memory": {
+                            "type": "string",
+                            "description": "Set containers' memory request",
+                            "default": "1024Mi"
+                        }
+                    }
+                },
+                "limits": {
+                    "type": "object",
+                    "properties": {
+                        "cpu": {
+                            "type": "string",
+                            "description": "Set containers' CPU limit",
+                            "default": "1500m"
+                        },
+                        "memory": {
+                            "type": "string",
+                            "description": "Set containers' memory limit",
+                            "default": "2048Mi"
                         }
                     }
                 }
@@ -327,111 +396,96 @@
                 }
             }
         },
+        "podSecurityContext": {
+            "type": "object",
+            "properties": {
+                "runAsUser": {
+                    "type": "number",
+                    "description": "Set the provisioning pod's Security Context runAsUser User ID",
+                    "default": 185
+                },
+                "runAsGroup": {
+                    "type": "number",
+                    "description": "Set the provisioning pod's Security Context runAsGroup Group ID",
+                    "default": 185
+                },
+                "runAsNonRoot": {
+                    "type": "boolean",
+                    "description": "Set the provisioning pod's Security Context runAsNonRoot",
+                    "default": true
+                },
+                "fsGroup": {
+                    "type": "number",
+                    "description": "Set the provisioning pod's Group ID for the mounted volumes' filesystem",
+                    "default": 185
+                },
+                "seccompProfile": {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "description": "Set the provisioning pod's Security Context seccomp profile",
+                            "default": "RuntimeDefault"
+                        }
+                    }
+                }
+            }
+        },
+        "affinity": {
+            "type": "object",
+            "description": "Affinity for pod assignment",
+            "default": {}
+        },
+        "nodeSelector": {
+            "type": "object",
+            "description": "Node labels for pod assignment",
+            "default": {}
+        },
+        "tolerations": {
+            "type": "array",
+            "description": "Tolerations for pod assignment",
+            "default": [],
+            "items": {}
+        },
+        "serviceAccount": {
+            "type": "object",
+            "properties": {
+                "create": {
+                    "type": "boolean",
+                    "description": "Specifies whether a service account should be created",
+                    "default": true
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the ServiceAccount to use. If not set, a name is generated using the fullname",
+                    "default": ""
+                },
+                "annotations": {
+                    "type": "object",
+                    "description": "Additional custom annotations for the ServiceAccount",
+                    "default": {}
+                },
+                "automount": {
+                    "type": "boolean",
+                    "description": "Automatically mount a ServiceAccount's API credentials",
+                    "default": true
+                }
+            }
+        },
         "service": {
             "type": "object",
             "properties": {
                 "port": {
                     "type": "number",
-                    "description": "Auth server service port",
+                    "description": "*Auth* service port",
                     "default": 9000
                 },
                 "type": {
                     "type": "string",
-                    "description": "Auth server service port",
+                    "description": "*Auth* service port",
                     "default": "ClusterIP"
                 }
             }
-        },
-        "resources": {
-            "type": "object",
-            "properties": {
-                "requests": {
-                    "type": "object",
-                    "properties": {
-                        "cpu": {
-                            "type": "string",
-                            "description": "Set containers' CPU request",
-                            "default": "500m"
-                        },
-                        "memory": {
-                            "type": "string",
-                            "description": "Set containers' memory request",
-                            "default": "2000Mi"
-                        }
-                    }
-                },
-                "limits": {
-                    "type": "object",
-                    "properties": {
-                        "cpu": {
-                            "type": "string",
-                            "description": "Set containers' CPU limit",
-                            "default": "2000m"
-                        },
-                        "memory": {
-                            "type": "string",
-                            "description": "Set containers' memory limit",
-                            "default": "4000Mi"
-                        }
-                    }
-                }
-            }
-        },
-        "livenessProbe": {
-            "type": "object",
-            "properties": {
-                "httpGet": {
-                    "type": "object",
-                    "properties": {
-                        "path": {
-                            "type": "string",
-                            "description": "The path to use for the Auth server liveness probe",
-                            "default": "/actuator/health"
-                        },
-                        "port": {
-                            "type": "string",
-                            "description": "The port to use for the Auth server liveness probe",
-                            "default": "http"
-                        }
-                    }
-                }
-            }
-        },
-        "readinessProbe": {
-            "type": "object",
-            "properties": {
-                "httpGet": {
-                    "type": "object",
-                    "properties": {
-                        "path": {
-                            "type": "string",
-                            "description": "The path to use for the Auth server liveness probe",
-                            "default": "/actuator/health"
-                        },
-                        "port": {
-                            "type": "string",
-                            "description": "The port to use for the Auth server liveness probe",
-                            "default": "http"
-                        }
-                    }
-                }
-            }
-        },
-        "nodeSelector": {
-            "type": "object",
-            "description": "Allows you to schedule pods on a node with a label matching the given key-value pair.",
-            "default": {}
-        },
-        "affinity": {
-            "type": "object",
-            "description": "Allows you to define affinity rules for scheduling pods, see: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/",
-            "default": {}
-        },
-        "tolerations": {
-            "type": "array",
-            "description": "ALlows you to schedule pods on nodes with specified taints, see: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/",
-            "default": [],
-            "items": {}
         },
         "istio": {
             "type": "object",
@@ -441,8 +495,13 @@
                     "properties": {
                         "principal": {
                             "type": "string",
-                            "description": "Principal used for ingress traffic to this application by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName'",
+                            "description": "Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName",
                             "default": ""
+                        },
+                        "serviceAccountName": {
+                            "type": "string",
+                            "description": "Name of the Ingress service account (traefik and istio supported)",
+                            "default": "traefik-proxy"
                         }
                     }
                 }

@@ -6,9 +6,9 @@ http:
       rule: {{ printf "Host(`%s`) && PathPrefix(`/whoami`)" .Values.global.appHostDomain }}
       service: whoami
       entryPoints:
-        - web
+        - web-app
       middleWares:
-        - oauth2
+        - oauth2-proxy-verify
         - path-whoami
         - host-whoami
 
@@ -28,4 +28,3 @@ http:
       headers:
         customRequestHeaders:
           host: {{ .Values.hosts.whoami | default (printf "%s.%s:8080" (include "traefik-proxy.routesService" (list . "whoami")) .Release.Namespace) }}
-

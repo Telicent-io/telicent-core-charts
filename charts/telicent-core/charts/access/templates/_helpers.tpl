@@ -66,25 +66,3 @@ Create the name of the service to use
 {{- define "access.serviceName" -}}
 {{- include "access.fullname" . }}
 {{- end }}
-
-{{/*
-Create the name of the config map
-*/}}
-{{- define "access.envConfigmapName" -}}
-{{- if .Values.existingConfigmap }}
-{{- .Values.existingConfigmap }}
-{{- else }}
-{{- printf "%s-%s" (include "access.fullname" .) "env" }}
-{{- end }}
-{{- end }}
-
-{{/*
-Create the name of the CA config map
-*/}}
-{{- define "access.cacertConfigmapName" -}}
-{{- if .Values.existingCacertConfigmap -}}
-{{- .Values.existingCacertConfigmap }}
-{{- else }}
-{{- printf "%s-%s" (include "access.fullname" .) "cacert" }}
-{{- end }}
-{{- end }}
