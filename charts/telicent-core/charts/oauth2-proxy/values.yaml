@@ -223,7 +223,7 @@ serviceAccount:
   # @key serviceAccount.create Specifies whether a service account should be created
   create: true
   # @key serviceAccount.name Name of the ServiceAccount to use. If not set, a name is generated using the fullname
-  name: ""
+  name: "oauth2-proxy"
   # @key serviceAccount.annotations Additional custom annotations for the ServiceAccount
   annotations: {}
   # @key serviceAccount.automount Automatically mount a ServiceAccount's API credentials
@@ -233,6 +233,8 @@ serviceAccount:
 # @section Traffic Exposure Parameters
 #
 service:
+  # @key service.name *Oauth2 Proxy* service name.  If not set, a name is generated using the fullname
+  name: "oauth2-proxy"
   # @key service.port *Oauth2 Proxy* service port
   port: 4080
   # @key service.type *Oauth2 Proxy* service type
