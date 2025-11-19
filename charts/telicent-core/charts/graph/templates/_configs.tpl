@@ -17,8 +17,12 @@ Create the name of the config map
 {{/*
 Create a fuseki config name to use
 */}}
-{{- define "graph.fusekiConfig" -}}
+{{- define "graph.fusekiConfigMapName" -}}
+{{- if .Values.configuration.existingFusekiConfigMap }}
+{{- .Values.configuration.existingFusekiConfigMap }}
+{{- else }}
 {{- printf "tc-%s-%s" .Chart.Name "fuseki" }}
+{{- end }}
 {{- end }}
 
 {{/*

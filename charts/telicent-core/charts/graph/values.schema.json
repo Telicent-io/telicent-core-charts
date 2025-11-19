@@ -124,12 +124,12 @@
                 "existingEnvConfigMap": {
                     "type": "string",
                     "description": "Name of existing configmap containing Graph Environment Configuration",
-                    "default": ""
+                    "default": "env"
                 },
                 "existingFusekiConfigMap": {
                     "type": "string",
                     "description": "Name of existing configmap containing Fuseki Configuration",
-                    "default": ""
+                    "default": "env-f"
                 },
                 "userAttributesUrl": {
                     "type": "string",
@@ -163,15 +163,25 @@
                 }
             }
         },
+        "nameOverride": {
+            "type": "string",
+            "description": "String to partially override fullname (will maintain the release name)",
+            "default": ""
+        },
         "fullnameOverride": {
             "type": "string",
             "description": "String to fully override the generated release name",
             "default": ""
         },
-        "nameOverride": {
+        "namespaceOverride": {
             "type": "string",
-            "description": "String to partially override fullname (will maintain the release name)",
+            "description": "String to fully override all deployed resources namespace",
             "default": ""
+        },
+        "commonLabels": {
+            "type": "object",
+            "description": "Add labels to all the deployed resources",
+            "default": {}
         },
         "replicas": {
             "type": "number",

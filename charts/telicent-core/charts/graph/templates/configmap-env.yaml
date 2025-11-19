@@ -8,6 +8,8 @@ kind: ConfigMap
 
 metadata:
   name: {{ include "graph.envConfigMapName" . }}
+  namespace: {{ include "graph.namespace" . | quote }}
+
   labels:
     {{- include "graph.labels" . | nindent 4 }}
        

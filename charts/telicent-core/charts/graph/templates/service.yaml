@@ -7,6 +7,7 @@ kind: Service
 
 metadata:
   name: {{ include "graph.serviceName" .}}
+  namespace: {{ include "graph.namespace" . | quote }}
   labels:
     {{- include "graph.labels" . | nindent 4 }}
 

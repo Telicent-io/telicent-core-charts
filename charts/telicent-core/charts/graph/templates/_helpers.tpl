@@ -9,6 +9,18 @@ Expand the name of the chart.
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
+
+{{/*
+Allow the release namespace to be overridden.
+*/}}
+{{- define "graph.namespace" -}}
+{{- if .Values.namespaceOverride -}}
+{{- .Values.namespaceOverride -}}
+{{- else -}}
+{{- .Release.Namespace -}}
+{{- end -}}
+{{- end -}}
+
 {{/*
 Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
@@ -35,17 +47,6 @@ Create chart name and version as used by the chart label.
 {{- end }}
 
 {{/*
-Common labels
-*/}}
-{{- define "graph.labels" -}}
-helm.sh/chart: {{ include "graph.chart" . }}
-{{ include "graph.selectorLabels" . }}
-app.kubernetes.io/version: {{ include "graph.version" . | quote }}
-app.kubernetes.io/managed-by: {{ .Release.Service }}
-telicent.io/resource: "true"
-{{- end }}
-
-{{/*
 Selector labels
 */}}
 {{- define "graph.selectorLabels" -}}
@@ -53,6 +54,20 @@ app.kubernetes.io/name: {{ include "graph.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
+{{/*
+Common labels
+*/}}
+{{- define "graph.labels" -}}
+helm.sh/chart: {{ include "graph.chart" . }}
+{{ include "graph.selectorLabels" . }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+app.kubernetes.io/version: {{ include "graph.version" . | quote }}
+app: {{ include "graph.name" . }}
+telicent.io/resource: "true"
+{{- range $key, $value := .Values.commonLabels }}
+{{ $key }}: {{ $value | quote }}
+{{- end }}
+{{- end }}
 
 {{/*
 Create the name of the service account to use
