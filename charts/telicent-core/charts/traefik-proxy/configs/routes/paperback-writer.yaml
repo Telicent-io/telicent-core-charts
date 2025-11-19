@@ -7,7 +7,6 @@ http:
       entryPoints:
         - web-api
       middleWares:
-        - oauth2
         - path-paperback-writer
         - host-paperback-writer
 
