@@ -26,6 +26,11 @@
                     "description": "Domain associated with Telicent application services",
                     "default": "apps.telicent.io"
                 },
+                "apiHostDomain": {
+                    "type": "string",
+                    "description": "Domain associated with Telicent Api services",
+                    "default": "api.telicent.io"
+                },
                 "authHostDomain": {
                     "type": "string",
                     "description": "Domain associated with Telicent authentication services, including OIDC providers",
@@ -59,7 +64,7 @@
                 "istioVirtualServiceEnabled": {
                     "type": "boolean",
                     "description": "Enable Istio traffic routing to a named destination service",
-                    "default": true
+                    "default": false
                 },
                 "kafka": {
                     "type": "object",
