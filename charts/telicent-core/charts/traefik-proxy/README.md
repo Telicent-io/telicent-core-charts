@@ -206,7 +206,7 @@ For Quick Start purposes, a secret named `tc-auth-gen-forward-traefik-proxy` wil
 
 *Traefik Proxy* routes traffic to the various Telicent Apps using their default service names and ports.
 If either of those details changes, you can use this section to correctly referer to those apps.
-Example: overriding Search UI chart value `fullnameOverride: "search-ui"` the correct host value would be `searchUi:"search-ui:8080"`
+Example: overriding Search UI chart value `fullnameOverride: "search-ui"` the correct host value would be `searchUi: "search-ui:8080"`
 
 | Name                    | Description                                                                                                                                                | Value |
 | ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
@@ -222,6 +222,7 @@ Example: overriding Search UI chart value `fullnameOverride: "search-ui"` the co
 | `hosts.userPreferences` | User Preferences host value, If not set a host is generated using service:'user-preferences',port:'11111' and Release namespace & name.                    | `""`  |
 | `hosts.oauth2Proxy`     | Oauth2 Proxy host value, If not set a host is generated using service:'oauth2-proxy',port:'4080' and Release namespace & name.                             | `""`  |
 | `hosts.whoami`          | Whoami host value, If not set a host is generated using service:'whoami',port:'8080' and Release namespace & name. AB:test purposes, be removed afterwards | `""`  |
+| `hosts.paperbackWriter` | If not set a host is generated using service:'paperback-writer', port:'8000' and Release namespace & name.                                                 | `""`  |
 
 ## License
 

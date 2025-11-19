@@ -70,6 +70,9 @@ configuration:
   # @key configuration.existingEnvConfigMap Name of existing configmap containing Graph Environment Configuration
   # Note: When it's set it will disable configmap creation.
   existingEnvConfigMap: ""
+  # @key configuration.existingFusekiConfigMap Name of existing configmap containing Fuseki Configuration
+  # Note: When it's set it will disable the fuseki configmap creation.
+  existingFusekiConfigMap: ""
 
   # @key configuration.userAttributesUrl URL for the user details endpoint
   userAttributesUrl: ""

@@ -73,15 +73,16 @@ Contains global parameters, these parameters are mirrored within the Telicent co
 
 Contains configuration parameters specific to the Graph application
 
-| Name                                  | Description                                                           | Value                                                                                  |
-| ------------------------------------- | --------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
-| `configuration.existingEnvConfigMap`  | Name of existing configmap containing Graph Environment Configuration | `""`                                                                                   |
-| `configuration.userAttributesUrl`     | URL for the user details endpoint                                     | `""`                                                                                   |
-| `configuration.attributeHierarchyUrl` | URL for the user hierarchy endpoint                                   | `""`                                                                                   |
-| `configuration.javaOptions`           | JVM options for the application                                       | `-Xmx5120m -Xms2048m -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks` |
-| `configuration.otelMetricsExporter`   | OpenTelemetry metrics exporter                                        | `prometheus`                                                                           |
-| `configuration.otelTracesExporter`    | OpenTelemetry traces exporter                                         | `none`                                                                                 |
-| `configuration.enableLabelsQuery`     | Enable labels query endpoint                                          | `true`                                                                                 |
+| Name                                    | Description                                                           | Value                                                                                  |
+| --------------------------------------- | --------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| `configuration.existingEnvConfigMap`    | Name of existing configmap containing Graph Environment Configuration | `""`                                                                                   |
+| `configuration.existingFusekiConfigMap` | Name of existing configmap containing Fuseki Configuration            | `""`                                                                                   |
+| `configuration.userAttributesUrl`       | URL for the user details endpoint                                     | `""`                                                                                   |
+| `configuration.attributeHierarchyUrl`   | URL for the user hierarchy endpoint                                   | `""`                                                                                   |
+| `configuration.javaOptions`             | JVM options for the application                                       | `-Xmx5120m -Xms2048m -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks` |
+| `configuration.otelMetricsExporter`     | OpenTelemetry metrics exporter                                        | `prometheus`                                                                           |
+| `configuration.otelTracesExporter`      | OpenTelemetry traces exporter                                         | `none`                                                                                 |
+| `configuration.enableLabelsQuery`       | Enable labels query endpoint                                          | `true`                                                                                 |
 
 ### Common Parameters
 

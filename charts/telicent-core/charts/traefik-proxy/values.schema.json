@@ -523,6 +523,11 @@
                     "type": "string",
                     "description": "Whoami host value, If not set a host is generated using service:'whoami',port:'8080' and Release namespace & name. AB:test purposes, be removed afterwards",
                     "default": ""
+                },
+                "paperbackWriter": {
+                    "type": "string",
+                    "description": "If not set a host is generated using service:'paperback-writer', port:'8000' and Release namespace & name.",
+                    "default": ""
                 }
             }
         }

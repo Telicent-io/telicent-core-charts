@@ -126,6 +126,11 @@
                     "description": "Name of existing configmap containing Graph Environment Configuration",
                     "default": ""
                 },
+                "existingFusekiConfigMap": {
+                    "type": "string",
+                    "description": "Name of existing configmap containing Fuseki Configuration",
+                    "default": ""
+                },
                 "userAttributesUrl": {
                     "type": "string",
                     "description": "URL for the user details endpoint",
