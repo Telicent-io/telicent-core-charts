@@ -2,11 +2,14 @@
 Copyright (C) 2025 Telicent Limited
 */}}
 
+{{- if not .Values.configuration.existingEnvConfigMap -}}
 apiVersion: v1
 kind: ConfigMap
 
 metadata:
   name: {{ include "graph.envConfigMapName" . }}
+  namespace: {{ include "graph.namespace" . | quote }}
+
   labels:
     {{- include "graph.labels" . | nindent 4 }}
        
@@ -23,3 +26,5 @@ data:
   {{- end}}
   JWKS_URL: {{ printf "%s%s%s" "https://" .Values.global.authHostDomain "/oauth2/jwks" | quote }}
   USERINFO_URL: {{ printf "http://%s.%s:%s%s" "auth" .Release.Namespace "9000" "/userinfo" | quote }}
+
+{{- end }}

@@ -19,4 +19,3 @@ Create the name of the clients config map
 {{- printf "tc-%s-%s" .Chart.Name "clients" }}
 {{- end }}
 {{- end }}
-

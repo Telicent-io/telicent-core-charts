@@ -70,6 +70,9 @@ configuration:
   # @key configuration.existingEnvConfigMap Name of existing configmap containing Graph Environment Configuration
   # Note: When it's set it will disable configmap creation.
   existingEnvConfigMap: ""
+  # @key configuration.existingFusekiConfigMap Name of existing configmap containing Fuseki Configuration
+  # Note: When it's set it will disable the fuseki configmap creation.
+  existingFusekiConfigMap: ""
 
   # @key configuration.userAttributesUrl URL for the user details endpoint
   userAttributesUrl: ""
@@ -88,11 +91,17 @@ configuration:
   # @key configuration.enableLabelsQuery Enable labels query endpoint
   enableLabelsQuery: true
 
+#
 # @section Common Parameters
-# @key fullnameOverride String to fully override the generated release name
-fullnameOverride: ""
+#
 # @key nameOverride String to partially override fullname (will maintain the release name)
 nameOverride: ""
+# @key fullnameOverride String to fully override the generated release name
+fullnameOverride: ""
+# @key namespaceOverride String to fully override all deployed resources namespace
+namespaceOverride: ""
+# @key commonLabels Add labels to all the deployed resources
+commonLabels: {}
 
 # @section Statefulset Parameters
 # @key replicas Number of Graph replicas to deploy

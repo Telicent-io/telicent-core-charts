@@ -7,6 +7,7 @@ kind: StatefulSet
 
 metadata:
   name: {{ include "graph.fullname" . }}
+  namespace: {{ include "graph.namespace" . | quote }}
   labels:
     {{- include "graph.labels" . | nindent 4 }}
 
@@ -90,14 +91,15 @@ spec:
           timeoutSeconds: 2
 
         volumeMounts:
-        - mountPath: /fuseki/config
-          name: fuseki-config-volume
-        - mountPath: /fuseki/databases
-          name: datasets-volume
-        - mountPath: /fuseki/backups
-          name: backups-volume
-        - mountPath: /app/config/kafka-auth/
-          name: kafka-auth-config
+        - name: fuseki-config-volume
+          mountPath: /fuseki/config
+        - name: datasets-volume
+          mountPath: /fuseki/databases
+        - name: backups-volume
+          mountPath: /fuseki/backups  
+        - name: kafka-auth-config
+        mountPath: /app/config/kafka-auth/
+          
         {{- if .Values.global.truststore.existingSecretName }}
         - mountPath: {{ .Values.global.truststore.mountPath | default "/app/config/truststore" }}
           name: truststore-volume
@@ -109,7 +111,7 @@ spec:
       volumes:
       - name: fuseki-config-volume
         configMap:
-            name: {{ include "graph.fusekiConfig" . }}
+            name: {{ include "graph.fusekiConfigMapName" . }}
       - name: kafka-auth-config
         secret:
         {{- if .Values.global.kafka.existingConfigSecretName }}
