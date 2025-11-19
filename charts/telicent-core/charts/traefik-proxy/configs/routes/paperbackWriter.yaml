@@ -1,0 +1,30 @@
+# Declare routers / services / middlewares
+http:
+  routers:
+    paperbackWriter:
+      rule: {{ printf "Host(`%s`) && PathPrefix(`/api/paperback`)" .Values.global.appHostDomain }}
+      service: paperback-writer
+      entryPoints:
+        - web
+      middleWares:
+        - oauth2
+        - path-paperbackWriter
+        - host-paperbackWriter
+
+  services:
+    paperbackWriter:
+      loadBalancer:
+        servers:
+          - url: http://{{ .Values.hosts.search | default (printf "%s.%s:8181" (include "traefik-proxy.routesService" (list . "search")) .Release.Namespace) }}
+
+  middlewares:
+    path-paperbackWriter:
+      replacePathRegex:
+        regex: "^/api/paperback/(.*)"
+        replacement: "/$1"
+
+    host-paperbackWriter:
+      headers:
+        customRequestHeaders:
+          host: {{ .Values.hosts.paperbackWriter | default (printf "%s.%s:8000" (include "traefik-proxy.routesService" (list . "paperbackWriter")) .Release.Namespace) }}
+

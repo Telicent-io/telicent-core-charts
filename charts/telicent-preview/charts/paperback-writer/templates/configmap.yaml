@@ -15,4 +15,5 @@ data:
   JWT_USER_ID_ATTR: "email"
   ACCESS_API_URL: {{ include "paperback-writer.accessApiEndpoint" . | quote }}
   JWKS_CA_CERT_PATH: {{ .Values.configuration.cacertPath | quote }}
+  AUTH_SERVER_BASE_URL: {{ .Values.configuration.authServerBaseUrl | default (printf "%s-auth.%s.svc.cluster.local:9000" .Release.Name .Release.Namespace) | quote }}
 {{- end }}

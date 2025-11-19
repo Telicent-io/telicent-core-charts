@@ -238,7 +238,7 @@ istio:
 # @descStart
 # *Traefik Proxy* routes traffic to the various Telicent Apps using their default service names and ports.
 # If either of those details changes, you can use this section to correctly referer to those apps.
-# Example: overriding Search UI chart value `fullnameOverride: "search-ui"` the correct host value would be `searchUi:"search-ui:8080"`
+# Example: overriding Search UI chart value `fullnameOverride: "search-ui"` the correct host value would be `searchUi: "search-ui:8080"`
 # @descEnd
 hosts:
   # @key hosts.auth Auth host value, If not set a host is generated using service:'auth',port:'9000' and Release namespace & name.
@@ -265,3 +265,5 @@ hosts:
   oauth2Proxy: ""
   # @key hosts.whoami Whoami host value, If not set a host is generated using service:'whoami',port:'8080' and Release namespace & name. AB:test purposes, be removed afterwards
   whoami: ""
+  # @key hosts.paperbackWriter If not set a host is generated using service:'paperback-writer', port:'8000' and Release namespace & name.
+  paperbackWriter: ""

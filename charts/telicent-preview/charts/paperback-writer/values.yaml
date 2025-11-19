@@ -169,6 +169,8 @@ configuration:
   accessApiUrl: ""
   # @key configuration.cacertPath Path to CA certs in the container
   cacertPath: ""
+  # @key configuration.authServerBaseUrl Base url of the Auth server. Defaults to <release-name>-auth.<release-namespace>.svc.cluster.local:9000
+  authServerBaseUrl: ""
 
 # @key existingConfigMapName Name of an existing ConfigMap to use for configuration
 existingConfigMapName: ""
