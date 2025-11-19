@@ -2,7 +2,7 @@
 http:
   routers:
     paperbackWriter:
-      rule: {{ printf "Host(`%s`) && PathPrefix(`/api/paperback`)" .Values.global.appHostDomain }}
+      rule: {{ printf "Host(`%s`) && PathPrefix(`/paperback`)" .Values.global.apiHostDomain }}
       service: paperback-writer
       entryPoints:
         - web
