@@ -7,7 +7,6 @@ http:
       entryPoints:
         - web-api
       middleWares:
-        - cors
         - oauth2-proxy-verify
         - path-access
         - host-access

@@ -368,6 +368,11 @@
         "metrics": {
             "type": "object",
             "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable Prometheus metrics",
+                    "default": true
+                },
                 "service": {
                     "type": "object",
                     "properties": {
@@ -388,10 +393,15 @@
         "service": {
             "type": "object",
             "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "*Search* service name. If not set, a name is generated using the chart name",
+                    "default": "search"
+                },
                 "port": {
                     "type": "number",
                     "description": "Search service port",
-                    "default": 8181
+                    "default": 8080
                 },
                 "type": {
                     "type": "string",

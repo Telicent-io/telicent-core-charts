@@ -80,36 +80,22 @@ Create the name of the service account to use
 Create the name of the service to use
 */}}
 {{- define "graph.serviceName" -}}
-{{ include "graph.fullname" . }}
+{{- if .Values.service.name }}
+{{- .Values.service.name -}}
+{{- else }}
+{{- include "graph.fullname" . }}
 {{- end }}
-
-
+{{- end }}
 
 {{- define "graph.envSecretName" -}}
 {{ include "graph.fullname" . }}
 {{- end }}
 
-
 {{/*
 Search API URL
-TODO: fix this
 */}}
 {{- define "graph.searchUrl" -}}
-{{- printf "http://search:8181" }}
+{{- printf "http://search:8080" }}
 {{- end }}
 {{/*
 */}}
-
-{{/*
-Default User Preferences URL
-*/}}
-{{- define "graph.userPreferencesUrl" -}}
-{{- printf "http://%s-access:8080/users/lookup/{user}" (.Release.Name) }}
-{{- end }}
-
-{{/*
-Default Atrribute Hierarchy URL
-*/}}
-{{- define "graph.attributeHierachyUrl" -}}
-{{- printf "http://%s-access:8080/hierarchies/lookup/{name}" (.Release.Name) }}
-{{- end }}

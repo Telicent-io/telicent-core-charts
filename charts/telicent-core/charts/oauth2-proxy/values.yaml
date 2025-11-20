@@ -233,7 +233,7 @@ serviceAccount:
 # @section Traffic Exposure Parameters
 #
 service:
-  # @key service.name *Oauth2 Proxy* service name.  If not set, a name is generated using the fullname
+  # @key service.name *Oauth2 Proxy* service name. If not set, a name is generated using the fullname
   name: "oauth2-proxy"
   # @key service.port *Oauth2 Proxy* service port
   port: 4080

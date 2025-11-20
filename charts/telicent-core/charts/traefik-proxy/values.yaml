@@ -62,7 +62,7 @@ forwardAuth:
 logs:
   general:
     # @key logs.general.level Set logging levels, values are: TRACE, DEBUG, INFO, WARN, ERROR, FATAL, and PANIC.
-    level: "DEBUG"
+    level: "INFO"
   access:
     # @key logs.access.enabled Enable access logging. Note: should only be enabled in development environments.
     enabled: false
@@ -97,7 +97,7 @@ commonLabels: {}
 replicas: 1
 # @key revisionHistoryLimit Number of controller revisions to keep
 revisionHistoryLimit: 5
-# @key annotations Add extra annotations to the Deployment Object
+# @key annotations Add extra annotations to the deployment object
 annotations: {}
 # @key podLabels Add extra labels to the *Traefik Proxy* pod
 podLabels: {}
@@ -241,7 +241,7 @@ istio:
 # Example: overriding Search UI chart value `fullnameOverride: "search-ui"` the correct host value would be `searchUi: "search-ui:8080"`
 # @descEnd
 hosts:
-  # @key hosts.auth Auth host value, If not set a host is generated using service:'auth',port:'9000' and Release namespace & name.
+  # @key hosts.auth Auth host value, If not set a host is generated using service:'auth',port:'8080' and Release namespace & name.
   auth: ""
   # @key hosts.access Access host value, If not set a host is generated using service:'access',port:'8080' and Release namespace & name.
   access: ""
@@ -255,11 +255,11 @@ hosts:
   graphUi: ""
   # @key hosts.queryUi Query UI host value, If not set a host is generated using service:'query-ui',port:'8080' and Release namespace & name.
   queryUi: ""
-  # @key hosts.search Search host value, If not set a host is generated using service:'search',port:'8181' and Release namespace & name.
+  # @key hosts.search Search host value, If not set a host is generated using service:'search',port:'8080' and Release namespace & name.
   search: ""
-  # @key hosts.graph Graph host value, If not set a host is generated using service:'graph',port:'3030' and Release namespace & name.
+  # @key hosts.graph Graph host value, If not set a host is generated using service:'graph',port:'8080' and Release namespace & name.
   graph: ""
-  # @key hosts.userPreferences User Preferences host value, If not set a host is generated using service:'user-preferences',port:'11111' and Release namespace & name.
+  # @key hosts.userPreferences User Preferences host value, If not set a host is generated using service:'user-preferences',port:'8080' and Release namespace & name.
   userPreferences: ""
   # @key hosts.oauth2Proxy Oauth2 Proxy host value, If not set a host is generated using service:'oauth2-proxy',port:'4080' and Release namespace & name.
   oauth2Proxy: ""
