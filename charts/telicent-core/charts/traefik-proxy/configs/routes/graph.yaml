@@ -17,6 +17,7 @@ http:
       middleWares:
         - path-graph-graphql
         - host-graph
+        - oauth2
   services:
     graph:
       loadBalancer:
