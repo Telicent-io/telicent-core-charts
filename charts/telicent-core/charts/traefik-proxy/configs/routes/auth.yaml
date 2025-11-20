@@ -17,6 +17,7 @@ http:
       entryPoints:
         - web-app
       middleWares:
+        - oauth2
         - host-auth
         - oauth2
 
