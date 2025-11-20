@@ -20,3 +20,4 @@ For more information, see:
 Credentials are sourced from an existing Kubernetes Secret: {{ .Values.existingSecretName }}
 No sensitive values are stored in values.yaml.
 {{- end }}
+
