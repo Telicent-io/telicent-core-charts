@@ -17,7 +17,6 @@ http:
       entryPoints:
         - web-api
       middleWares:
-        - oauth2
         - host-auth
 
     auth-admin:
@@ -27,7 +26,6 @@ http:
       entryPoints:
         - web-api
       middleWares:
-        - oauth2
         - host-auth
 
     auth-oidc:
