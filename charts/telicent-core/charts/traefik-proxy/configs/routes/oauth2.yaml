@@ -52,7 +52,6 @@ http:
         authResponseHeaders:
           - Authorization
 
-
     oauth2-verify:
       forwardAuth:
         address: http://{{ .Values.hosts.auth | default (printf "%s.%s:8080" (include "traefik-proxy.routesService" (list . "auth")) .Release.Namespace) }}/auth/forward
