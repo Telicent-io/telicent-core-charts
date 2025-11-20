@@ -1,4 +1,8 @@
 {{/*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
+{{/*
 Expand the name of the chart.
 */}}
 {{- define "auth.name" -}}
@@ -68,7 +72,7 @@ telicent.io/resource: "true"
 Create the name of the service account to use
 */}}
 {{- define "auth.serviceAccountName" -}}
-{{- default (printf "%s" (include "auth.fullname" .)) .Values.serviceAccount.name }}
+{{- default (include "auth.name" .) .Values.serviceAccount.name }}
 {{- end }}
 
 {{/*

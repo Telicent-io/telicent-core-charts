@@ -12,3 +12,10 @@ Create the name of mongo secret
 {{- printf "tc-auth-usr-%s-%s" "mongo" .Chart.Name }}
 {{- end }}
 {{- end -}}
+
+{{/* 
+Create MongoPassword name to use
+*/}}
+{{- define "user-preferences.secret" -}}
+{{ include "user-preferences.fullname" . }}-secret
+{{- end }}

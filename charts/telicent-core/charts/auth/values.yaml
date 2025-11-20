@@ -64,6 +64,7 @@ configuration:
 
 #
 # @section PostgreSQL Parameters and Secret
+#
 # @descStart
 # The following contains connection details to a PostgreSQL instance, on which the application relies.
 # It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
@@ -76,7 +77,7 @@ postgresSql:
   # Note: Left unset, it will create a secret named: tc-auth-usr-psql-auth
   existingSecret: ""
   # @key postgresSql.username PostgreSQL username
-  # Note: For additional security, the username is read from the secret, as defined by 'existingSecret'
+  # Note: For additional security, the username is read from the secret, as defined by 'existingSecret' and not from this value!
   username: ""
   # @key postgresSql.password PostgreSQL password
   password: ""
@@ -171,7 +172,7 @@ commonLabels: {}
 replicas: 1
 # @key revisionHistoryLimit Number of controller revisions to keep
 revisionHistoryLimit: 5
-# @key annotations Add extra annotations to the Deployment Object
+# @key annotations Add extra annotations to the deployment object
 annotations: {}
 # @key podLabels Add extra labels to the *Auth* pod
 podLabels: {}
@@ -269,7 +270,7 @@ tolerations: []
 serviceAccount:
   # @key serviceAccount.create Specifies whether a service account should be created
   create: true
-  # @key serviceAccount.name Name of the ServiceAccount to use. If not set, a name is generated using the fullname
+  # @key serviceAccount.name Name of the ServiceAccount to use. If not set, a name is generated using the name
   name: ""
   # @key serviceAccount.annotations Additional custom annotations for the ServiceAccount
   annotations: {}

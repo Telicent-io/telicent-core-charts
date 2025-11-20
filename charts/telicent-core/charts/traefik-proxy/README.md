@@ -143,7 +143,7 @@ For Quick Start purposes, a secret named `tc-auth-gen-forward-traefik-proxy` wil
 | --------------------------------------------------- | ------------------------------------------------------------------------------ | ------------------------- |
 | `replicas`                                          | Number of *Traefik Proxy* replicas to deploy                                   | `1`                       |
 | `revisionHistoryLimit`                              | Number of controller revisions to keep                                         | `5`                       |
-| `annotations`                                       | Add extra annotations to the Deployment Object                                 | `{}`                      |
+| `annotations`                                       | Add extra annotations to the deployment object                                 | `{}`                      |
 | `podLabels`                                         | Add extra labels to the *Traefik Proxy* pod                                    | `{}`                      |
 | `podAnnotations`                                    | Add extra annotations to the *Traefik Proxy* pod                               | `{}`                      |
 | `extraEnvVars`                                      | Array with extra environment variables to add to *Traefik Proxy* pod           | `[]`                      |

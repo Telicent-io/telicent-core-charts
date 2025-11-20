@@ -41,11 +41,6 @@
                     "description": "Key used to retrieve groups from the OIDC provider",
                     "default": "groups"
                 },
-                "jwksUrl": {
-                    "type": "string",
-                    "description": "Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)",
-                    "default": "https://{yourAuthdomain}/.well-known/jwks.json"
-                },
                 "istioNamespace": {
                     "type": "string",
                     "description": "Namespace in which Istio is deployed",
@@ -64,7 +59,7 @@
                 "istioVirtualServiceEnabled": {
                     "type": "boolean",
                     "description": "Enable Istio traffic routing to a named destination service",
-                    "default": true
+                    "default": false
                 },
                 "truststore": {
                     "type": "object",
@@ -88,13 +83,13 @@
             "properties": {
                 "existingEnvConfigMap": {
                     "type": "string",
-                    "description": "Name of existing configmap containing User Preferences Environment Configuration",
+                    "description": "Name of existing configmap containing *User Preferences* Environment Configuration",
                     "default": ""
                 },
                 "javaOptions": {
                     "type": "string",
                     "description": "JVM options for the application",
-                    "default": "-Xms512m -Xmx512m"
+                    "default": "-XX:MaxRAMPercentage=80.0"
                 }
             }
         },
@@ -111,9 +106,14 @@
                     "description": "MongoDB database",
                     "default": "user-preferences"
                 },
+                "authDatabase": {
+                    "type": "string",
+                    "description": "The authentication database to use for the given user",
+                    "default": "admin"
+                },
                 "existingSecret": {
                     "type": "string",
-                    "description": "Name of an existing secret resource containing the MongoDB username & password",
+                    "description": "Name of an existing secret. The secret must contain 2 keys: 'username', 'password'",
                     "default": ""
                 },
                 "username": {
@@ -125,11 +125,6 @@
                     "type": "string",
                     "description": "MongoDB password",
                     "default": ""
-                },
-                "authDatabase": {
-                    "type": "string",
-                    "description": "The authentication database to use for the given user",
-                    "default": "admin"
                 },
                 "existingCaSecret": {
                     "type": "string",
@@ -153,9 +148,19 @@
             "description": "String to fully override the generated release name",
             "default": ""
         },
+        "namespaceOverride": {
+            "type": "string",
+            "description": "String to fully override all deployed resources namespace",
+            "default": ""
+        },
+        "commonLabels": {
+            "type": "object",
+            "description": "Add labels to all the deployed resources",
+            "default": {}
+        },
         "replicas": {
             "type": "number",
-            "description": "Number of User Preferences API replicas to deploy",
+            "description": "Number of *User Preferences* replicas to deploy",
             "default": 1
         },
         "revisionHistoryLimit": {
@@ -165,12 +170,46 @@
         },
         "annotations": {
             "type": "object",
-            "description": "Add extra annotations to the Deployment object",
+            "description": "Add extra annotations to the deployment object",
             "default": {}
         },
-        "extraEnvs": {
+        "podLabels": {
+            "type": "object",
+            "description": "Add extra labels to the *User Preferences* pod",
+            "default": {}
+        },
+        "podAnnotations": {
+            "type": "object",
+            "description": "Add extra annotations to the *User Preferences* pod",
+            "default": {}
+        },
+        "extraEnvVars": {
             "type": "array",
-            "description": "List of Additional environment variables to set in the pod",
+            "description": "Array with extra environment variables to add to *User Preferences* pod",
+            "default": [],
+            "items": {}
+        },
+        "extraVolumes": {
+            "type": "array",
+            "description": "Additional containers to be added to the *User Preferences* pod",
+            "default": [],
+            "items": {}
+        },
+        "extraVolumeMounts": {
+            "type": "array",
+            "description": "Optionally specify extra list of additional volumeMounts",
+            "default": [],
+            "items": {}
+        },
+        "initContainers": {
+            "type": "array",
+            "description": "Add init containers to the pod",
+            "default": [],
+            "items": {}
+        },
+        "sidecars": {
+            "type": "array",
+            "description": "Add sidecars to the pod.",
             "default": [],
             "items": {}
         },
@@ -179,22 +218,22 @@
             "properties": {
                 "registry": {
                     "type": "string",
-                    "description": "User Preferences API image registry",
+                    "description": "*User Preferences* image registry",
                     "default": "REGISTRY_NAME"
                 },
                 "repository": {
                     "type": "string",
-                    "description": "User Preferences API image name",
+                    "description": "*User Preferences* image name",
                     "default": "REPOSITORY_NAME/telicent-user-preferences-service"
                 },
                 "tag": {
                     "type": "string",
-                    "description": "User Preferences API image tag. If not set, a tag is generated using the appVersion",
+                    "description": "*User Preferences* image tag. If not set, a tag is generated using the appVersion",
                     "default": ""
                 },
                 "pullPolicy": {
                     "type": "string",
-                    "description": "User Preferences API image pull policy",
+                    "description": "*User Preferences* image pull policy",
                     "default": "IfNotPresent"
                 },
                 "pullSecrets": {
@@ -214,7 +253,7 @@
                         "cpu": {
                             "type": "string",
                             "description": "Set containers' CPU request",
-                            "default": "100m"
+                            "default": "300m"
                         },
                         "memory": {
                             "type": "string",
@@ -229,7 +268,7 @@
                         "cpu": {
                             "type": "string",
                             "description": "Set containers' CPU limit",
-                            "default": "250m"
+                            "default": "550m"
                         },
                         "memory": {
                             "type": "string",
@@ -325,6 +364,22 @@
                 }
             }
         },
+        "affinity": {
+            "type": "object",
+            "description": "Affinity for pod assignment",
+            "default": {}
+        },
+        "nodeSelector": {
+            "type": "object",
+            "description": "Node labels for pod assignment",
+            "default": {}
+        },
+        "tolerations": {
+            "type": "array",
+            "description": "Tolerations for pod assignment",
+            "default": [],
+            "items": {}
+        },
         "metrics": {
             "type": "object",
             "properties": {
@@ -345,17 +400,47 @@
                 }
             }
         },
+        "serviceAccount": {
+            "type": "object",
+            "properties": {
+                "create": {
+                    "type": "boolean",
+                    "description": "Specifies whether a service account should be created",
+                    "default": true
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the ServiceAccount to use. If not set, a name is generated using the name",
+                    "default": ""
+                },
+                "annotations": {
+                    "type": "object",
+                    "description": "Additional custom annotations for the ServiceAccount",
+                    "default": {}
+                },
+                "automount": {
+                    "type": "boolean",
+                    "description": "Automatically mount a ServiceAccount's API credentials",
+                    "default": true
+                }
+            }
+        },
         "service": {
             "type": "object",
             "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "*User Preferences* service name. If not set, a name is generated using the name",
+                    "default": ""
+                },
                 "port": {
                     "type": "number",
-                    "description": "User Preferences API service port",
-                    "default": 11111
+                    "description": "*User Preferences* service port",
+                    "default": 8080
                 },
                 "type": {
                     "type": "string",
-                    "description": "User Preferences API service type",
+                    "description": "*User Preferences* service type",
                     "default": "ClusterIP"
                 }
             }
@@ -377,27 +462,6 @@
                             "default": "traefik-proxy"
                         }
                     }
-                }
-            }
-        },
-        "extraContainers": {
-            "type": "array",
-            "description": "Additional containers to be added to the pod",
-            "default": [],
-            "items": {}
-        },
-        "serviceAccount": {
-            "type": "object",
-            "properties": {
-                "name": {
-                    "type": "string",
-                    "description": "Name of the ServiceAccount to use. If not set, a name is generated using the fullname",
-                    "default": ""
-                },
-                "annotations": {
-                    "type": "object",
-                    "description": "Additional custom annotations for the ServiceAccount",
-                    "default": {}
                 }
             }
         }

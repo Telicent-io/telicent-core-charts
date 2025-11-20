@@ -440,7 +440,7 @@
             "properties": {
                 "name": {
                     "type": "string",
-                    "description": "*Oauth2 Proxy* service name.  If not set, a name is generated using the fullname",
+                    "description": "*Oauth2 Proxy* service name. If not set, a name is generated using the fullname",
                     "default": "oauth2-proxy"
                 },
                 "port": {

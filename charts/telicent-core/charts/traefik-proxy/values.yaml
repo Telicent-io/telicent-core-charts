@@ -97,7 +97,7 @@ commonLabels: {}
 replicas: 1
 # @key revisionHistoryLimit Number of controller revisions to keep
 revisionHistoryLimit: 5
-# @key annotations Add extra annotations to the Deployment Object
+# @key annotations Add extra annotations to the deployment object
 annotations: {}
 # @key podLabels Add extra labels to the *Traefik Proxy* pod
 podLabels: {}

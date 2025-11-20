@@ -10,6 +10,17 @@ Expand the name of the chart.
 {{- end }}
 
 {{/*
+Allow the release namespace to be overridden.
+*/}}
+{{- define "user-preferences.namespace" -}}
+{{- if .Values.namespaceOverride -}}
+{{- .Values.namespaceOverride -}}
+{{- else -}}
+{{- .Release.Namespace -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
 Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
@@ -35,22 +46,26 @@ Create chart name and version as used by the chart label.
 {{- end }}
 
 {{/*
-Common labels
-*/}}
-{{- define "user-preferences.labels" -}}
-helm.sh/chart: {{ include "user-preferences.chart" . }}
-{{ include "user-preferences.selectorLabels" . }}
-app.kubernetes.io/version: {{ include "user-preferences.version" . | quote }}
-app.kubernetes.io/managed-by: {{ .Release.Service }}
-telicent.io/resource: "true"
-{{- end }}
-
-{{/*
 Selector labels
 */}}
 {{- define "user-preferences.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "user-preferences.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
+
+{{/*
+Common labels
+*/}}
+{{- define "user-preferences.labels" -}}
+helm.sh/chart: {{ include "user-preferences.chart" . }}
+{{ include "user-preferences.selectorLabels" . }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+app.kubernetes.io/version: {{ include "user-preferences.version" . | quote }}
+app: {{ include "user-preferences.name" . }}
+telicent.io/resource: "true"
+{{- range $key, $value := .Values.commonLabels }}
+{{ $key }}: {{ $value | quote }}
+{{- end }}
 {{- end }}
 
 {{/*
@@ -60,28 +75,14 @@ Create the name of the service account to use
 {{- default (include "user-preferences.name" .) .Values.serviceAccount.name }}
 {{ end }}
 
+
 {{/*
 Create the name of the service to use
 */}}
 {{- define "user-preferences.serviceName" -}}
-{{ include "user-preferences.fullname" . }}
+{{- if .Values.service.name }}
+{{- .Values.service.name -}}
+{{- else }}
+{{- include "user-preferences.fullname" . }}
 {{- end }}
-
-{{- define "user-preferences.envSecretName" -}}
-{{ include "user-preferences.fullname" . }}-server
 {{- end }}
-
-{{/* 
-Create Kafka Auth Config name to use
-*/}}
-{{- define "user-preferences.kafkaAuthConfig" -}}
-{{ include "user-preferences.fullname" . }}-kafka-config
-{{- end }}
-
-{{/* 
-Create MongoPassword name to use
-*/}}
-{{- define "user-preferences.secret" -}}
-{{ include "user-preferences.fullname" . }}-secret
-{{- end }}
-
