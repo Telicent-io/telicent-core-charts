@@ -1,9 +1,9 @@
 entryPoints:
   web-app:
     address: ":8080/tcp"
-    http:
-      middlewares:
-      - "headers-security@file"
+    #http:
+      #middlewares:
+      #- "headers-security@file"
   web-api:
     address: ":8081/tcp"
     http:

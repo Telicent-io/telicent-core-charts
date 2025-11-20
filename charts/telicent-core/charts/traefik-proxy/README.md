@@ -117,7 +117,7 @@ For Quick Start purposes, a secret named `tc-auth-gen-forward-traefik-proxy` wil
 
 | Name                  | Description                                                                        | Value   |
 | --------------------- | ---------------------------------------------------------------------------------- | ------- |
-| `logs.general.level`  | Set logging levels, values are: TRACE, DEBUG, INFO, WARN, ERROR, FATAL, and PANIC. | `DEBUG` |
+| `logs.general.level`  | Set logging levels, values are: TRACE, DEBUG, INFO, WARN, ERROR, FATAL, and PANIC. | `INFO`  |
 | `logs.access.enabled` | Enable access logging. Note: should only be enabled in development environments.   | `false` |
 
 ### *Traefik Proxy* Dashboard Parameters

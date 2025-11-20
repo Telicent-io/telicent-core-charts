@@ -87,7 +87,7 @@
                         "level": {
                             "type": "string",
                             "description": "Set logging levels, values are: TRACE, DEBUG, INFO, WARN, ERROR, FATAL, and PANIC.",
-                            "default": "DEBUG"
+                            "default": "INFO"
                         }
                     }
                 },
