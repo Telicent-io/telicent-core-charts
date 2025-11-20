@@ -15,10 +15,9 @@ http:
       priority: 8
       service: auth
       entryPoints:
-        - web-app
+        - web-api
       middleWares:
         - host-auth
-        - oauth2
 
     auth-oidc:
       rule: {{ printf "Host(`%s`) && PathPrefix(`/.well-known`)" .Values.global.authHostDomain }}

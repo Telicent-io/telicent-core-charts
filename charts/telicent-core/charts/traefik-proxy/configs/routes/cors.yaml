@@ -15,3 +15,5 @@ http:
         accessControlAllowOriginList:
           - {{ printf "%s%s" "https://" .Values.global.authHostDomain | quote }}
           - {{ printf "%s%s" "https://" .Values.global.appHostDomain | quote }}
+          #todo: remove dave - auth helper
+          - http://localhost:3002

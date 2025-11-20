@@ -10,6 +10,8 @@ entryPoints:
       middlewares:
          - cors@file
          - headers-security@file
+         - oauth2@file
+
   ping:
     address: ":9000/tcp"
 

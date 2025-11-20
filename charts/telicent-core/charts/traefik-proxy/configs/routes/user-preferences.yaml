@@ -9,7 +9,6 @@ http:
       middleWares:
         - path-user-preferences
         - host-user-preferences
-        - oauth2
 
   services:
     user-preferences:
