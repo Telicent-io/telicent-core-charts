@@ -25,6 +25,6 @@ data:
   SEARCH_API_URL: {{ include "graph.searchUrl" . | quote }}
   {{- end}}
   JWKS_URL: {{ printf "%s%s%s" "https://" .Values.global.authHostDomain "/oauth2/jwks" | quote }}
-  USERINFO_URL: {{ printf "http://%s.%s:%s%s" "auth" .Release.Namespace "9000" "/userinfo" | quote }}
+  USERINFO_URL: {{ printf "http://%s.%s:%s%s" "auth" .Release.Namespace "8080" "/userinfo" | quote }}
 
 {{- end }}

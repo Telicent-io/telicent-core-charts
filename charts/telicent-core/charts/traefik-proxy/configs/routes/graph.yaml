@@ -21,7 +21,7 @@ http:
     graph:
       loadBalancer:
         servers:
-          - url: http://{{ .Values.hosts.graph | default (printf "%s.%s:3030" (include "traefik-proxy.routesService" (list . "graph")) .Release.Namespace) }}
+          - url: http://{{ .Values.hosts.graph | default (printf "%s.%s:8080" (include "traefik-proxy.routesService" (list . "graph")) .Release.Namespace) }}
 
   middlewares:
     path-graph-sparql:
@@ -35,4 +35,4 @@ http:
     host-graph:
       headers:
         customRequestHeaders:
-           host: {{ .Values.hosts.graph | default (printf "%s.%s:3030" (include "traefik-proxy.routesService" (list . "graph")) .Release.Namespace) }}
+           host: {{ .Values.hosts.graph | default (printf "%s.%s:8080" (include "traefik-proxy.routesService" (list . "graph")) .Release.Namespace) }}

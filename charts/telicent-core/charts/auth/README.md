@@ -225,7 +225,7 @@ List of registered clients
 
 | Name           | Description         | Value       |
 | -------------- | ------------------- | ----------- |
-| `service.port` | *Auth* service port | `9000`      |
+| `service.port` | *Auth* service port | `8080`      |
 | `service.type` | *Auth* service port | `ClusterIP` |
 
 ### Istio Parameters

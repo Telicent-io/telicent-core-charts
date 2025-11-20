@@ -182,18 +182,24 @@ podSecurityContext:
     # @key podSecurityContext.seccompProfile.type Set the provisioning pod's Security Context seccomp profile
     type: RuntimeDefault
 
-# @section Metrics Parameters - Search
+#
+# @section Metrics (Prometheus) Parameters
+#
 metrics:
+  # @key metrics.enabled Enable Prometheus metrics
+  enabled: false
   service:
     # @key metrics.service.name Name for the Prometheus service
     name: metrics
     # @key metrics.service.port Port for the Prometheus service
     port: 9464
 
+#
 # @section Traffic Exposure Parameters - Search
+#
 service:
   # @key service.port Search service port
-  port: 8181
+  port: 8080
   # @key service.type Search service port
   type: ClusterIP
 

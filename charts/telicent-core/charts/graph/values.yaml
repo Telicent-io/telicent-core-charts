@@ -186,8 +186,12 @@ persistentVolumeClaims:
     # @key persistentVolumeClaims.datasetsVolume.storageClass iPVC Storage Class for the Graph data volume
     storageClass: gp3
 
-# @section Metrics Parameters
+#
+# @section Metrics (Prometheus) Parameters
+#
 metrics:
+  # @key metrics.enabled Enable Prometheus metrics
+  enabled: false
   service:
     # @key metrics.service.name Name for the Prometheus service
     name: metrics
@@ -197,7 +201,7 @@ metrics:
 # @section Traffic Exposure Parameters
 service:
   # @key service.port Graph service port
-  port: 3030
+  port: 8080
   # @key service.type Graph service type
   type: ClusterIP
 

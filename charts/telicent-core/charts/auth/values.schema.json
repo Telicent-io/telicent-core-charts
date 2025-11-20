@@ -478,7 +478,7 @@
                 "port": {
                     "type": "number",
                     "description": "*Auth* service port",
-                    "default": 9000
+                    "default": 8080
                 },
                 "type": {
                     "type": "string",

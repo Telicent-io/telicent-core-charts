@@ -19,9 +19,11 @@ spec:
   template:
     metadata:
       annotations:
+        {{- if .Values.metrics.enabled }}
         prometheus.io/path: /
-        prometheus.io/port: "9464"
+        prometheus.io/port: {{ .Values.metrics.service.port | quote }}
         prometheus.io/scrape: "true"
+        {{- end }}
         checksum/config: {{ include (print $.Template.BasePath "/configmap-env.yaml") . | sha256sum }}
         {{- with .Values.podAnnotations }}
           {{- toYaml . | nindent 8 }}
@@ -67,11 +69,14 @@ spec:
        
         ports:
         - name: http
-          containerPort: 8181
           protocol: TCP
+          containerPort: 8181 
+        
+        {{- if .Values.metrics.enabled }}
         - name: metrics
-          containerPort: 9464
           protocol: TCP
+          containerPort: {{ .Values.metrics.service.port }}
+        {{- end }}
 
         readinessProbe:
           httpGet:

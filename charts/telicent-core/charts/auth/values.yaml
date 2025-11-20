@@ -282,7 +282,7 @@ serviceAccount:
 #
 service:
   # @key service.port *Auth* service port
-  port: 9000
+  port: 8080
   # @key service.type *Auth* service port
   type: ClusterIP
 

@@ -132,10 +132,11 @@ Contains configuration parameters specific to the Graph application
 | `persistentVolumeClaims.datasetsVolume.size`         | PVC Storage Request for the Graph volume     | `25Gi` |
 | `persistentVolumeClaims.datasetsVolume.storageClass` | iPVC Storage Class for the Graph data volume | `gp3`  |
 
-### Metrics Parameters
+### Metrics (Prometheus) Parameters
 
 | Name                   | Description                     | Value     |
 | ---------------------- | ------------------------------- | --------- |
+| `metrics.enabled`      | Enable Prometheus metrics       | `true`    |
 | `metrics.service.name` | Name for the Prometheus service | `metrics` |
 | `metrics.service.port` | Port for the Prometheus service | `9464`    |
 
@@ -143,7 +144,7 @@ Contains configuration parameters specific to the Graph application
 
 | Name                               | Description                                                                                                                                               | Value           |
 | ---------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- |
-| `service.port`                     | Graph service port                                                                                                                                        | `3030`          |
+| `service.port`                     | Graph service port                                                                                                                                        | `8080`          |
 | `service.type`                     | Graph service type                                                                                                                                        | `ClusterIP`     |
 | `istio.ingress.principal`          | Principal used for ingress traffic by the Istio AuthorizationPolicy.  If not set, a principal is generated using Release namespace and serviceAccountName | `""`            |
 | `istio.ingress.serviceAccountName` | Name of the Ingress service account (traefik and istio supported)                                                                                         | `traefik-proxy` |
