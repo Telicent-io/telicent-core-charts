@@ -132,10 +132,11 @@ Contains configuration parameters specific to the Smart Cach Search application
 | `podSecurityContext.fsGroup`                        | Set the provisioning pod's Group ID for the mounted volumes' filesystem | `185`                               |
 | `podSecurityContext.seccompProfile.type`            | Set the provisioning pod's Security Context seccomp profile             | `RuntimeDefault`                    |
 
-### Metrics Parameters - Search
+### Metrics (Prometheus) Parameters
 
 | Name                   | Description                     | Value     |
 | ---------------------- | ------------------------------- | --------- |
+| `metrics.enabled`      | Enable Prometheus metrics       | `false`   |
 | `metrics.service.name` | Name for the Prometheus service | `metrics` |
 | `metrics.service.port` | Port for the Prometheus service | `9464`    |
 
@@ -143,7 +144,7 @@ Contains configuration parameters specific to the Smart Cach Search application
 
 | Name                               | Description                                                                                                                                                  | Value           |
 | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------- |
-| `service.port`                     | Search service port                                                                                                                                          | `8181`          |
+| `service.port`                     | Search service port                                                                                                                                          | `8080`          |
 | `service.type`                     | Search service port                                                                                                                                          | `ClusterIP`     |
 | `istio.ingress.principal`          | Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName     | `""`            |
 | `istio.ingress.serviceAccountName` | Name of the Ingress service account (traefik and istio supported)                                                                                            | `traefik-proxy` |

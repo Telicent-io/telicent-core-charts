@@ -136,7 +136,7 @@ Contains configuration parameters specific to the Graph application
 
 | Name                   | Description                     | Value     |
 | ---------------------- | ------------------------------- | --------- |
-| `metrics.enabled`      | Enable Prometheus metrics       | `true`    |
+| `metrics.enabled`      | Enable Prometheus metrics       | `false`   |
 | `metrics.service.name` | Name for the Prometheus service | `metrics` |
 | `metrics.service.port` | Port for the Prometheus service | `9464`    |
 
