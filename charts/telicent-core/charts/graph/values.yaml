@@ -70,6 +70,9 @@ configuration:
   # @key configuration.existingEnvConfigMap Name of existing configmap containing Graph Environment Configuration
   # Note: When it's set it will disable configmap creation.
   existingEnvConfigMap: ""
+  # @key configuration.existingFusekiConfigMap Name of existing configmap containing Fuseki Configuration
+  # Note: When it's set it will disable the fuseki configmap creation.
+  existingFusekiConfigMap: ""
 
   # @key configuration.userAttributesUrl URL for the user details endpoint
   userAttributesUrl: ""
@@ -88,11 +91,17 @@ configuration:
   # @key configuration.enableLabelsQuery Enable labels query endpoint
   enableLabelsQuery: true
 
+#
 # @section Common Parameters
-# @key fullnameOverride String to fully override the generated release name
-fullnameOverride: ""
+#
 # @key nameOverride String to partially override fullname (will maintain the release name)
 nameOverride: ""
+# @key fullnameOverride String to fully override the generated release name
+fullnameOverride: ""
+# @key namespaceOverride String to fully override all deployed resources namespace
+namespaceOverride: ""
+# @key commonLabels Add labels to all the deployed resources
+commonLabels: {}
 
 # @section Statefulset Parameters
 # @key replicas Number of Graph replicas to deploy
@@ -109,6 +118,21 @@ podAnnotations: {}
 # - name: FOO
 # - value: instance
 extraEnvVars: []
+# @key extraVolumes Additional containers to be added to the *Auth* pod
+extraVolumes: []
+# @key extraVolumeMounts Optionally specify extra list of additional volumeMounts
+extraVolumeMounts: []
+# @key initContainers Add init containers to the pod
+initContainers: []
+# Example:
+# sidecars:
+# - name: your-image-name
+#   image: your-image
+#   ports:
+#   - name: portname
+#     containerPort: 1234
+# @key sidecars Add sidecars to the pod.
+sidecars: []
 
 image:
   # @key image.registry [default: REGISTRY_NAME] Graph image registry
@@ -177,8 +201,12 @@ persistentVolumeClaims:
     # @key persistentVolumeClaims.datasetsVolume.storageClass iPVC Storage Class for the Graph data volume
     storageClass: gp3
 
-# @section Metrics Parameters
+#
+# @section Metrics (Prometheus) Parameters
+#
 metrics:
+  # @key metrics.enabled Enable Prometheus metrics
+  enabled: true
   service:
     # @key metrics.service.name Name for the Prometheus service
     name: metrics
@@ -187,9 +215,11 @@ metrics:
 
 # @section Traffic Exposure Parameters
 service:
-  # @key service.port Graph service port
-  port: 3030
-  # @key service.type Graph service type
+  # @key service.name *Graph* service name. If not set, a name is generated using the chart name
+  name: "graph"
+  # @key service.port *Graph* service port
+  port: 8080
+  # @key service.type *Graph* service type
   type: ClusterIP
 
 istio:

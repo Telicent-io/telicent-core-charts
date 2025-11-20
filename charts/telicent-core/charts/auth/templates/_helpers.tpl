@@ -1,4 +1,8 @@
 {{/*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
+{{/*
 Expand the name of the chart.
 */}}
 {{- define "auth.name" -}}
@@ -42,18 +46,6 @@ Create chart name and version as used by the chart label.
 {{- end }}
 
 {{/*
-Common labels
-*/}}
-{{- define "auth.labels" -}}
-helm.sh/chart: {{ include "auth.chart" . }}
-{{ include "auth.selectorLabels" . }}
-{{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
-{{- end }}
-app.kubernetes.io/managed-by: {{ .Release.Service }}
-{{- end }}
-
-{{/*
 Selector labels
 */}}
 {{- define "auth.selectorLabels" -}}
@@ -62,15 +54,34 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
+Common labels
+*/}}
+{{- define "auth.labels" -}}
+helm.sh/chart: {{ include "auth.chart" . }}
+{{ include "auth.selectorLabels" . }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+app.kubernetes.io/version: {{ include "auth.version" . | quote }}
+app: {{ include "auth.name" . }}
+telicent.io/resource: "true"
+{{- range $key, $value := .Values.commonLabels }}
+{{ $key }}: {{ $value | quote }}
+{{- end }}
+{{- end }}
+
+{{/*
 Create the name of the service account to use
 */}}
 {{- define "auth.serviceAccountName" -}}
-{{- default (printf "%s" (include "auth.fullname" .)) .Values.serviceAccount.name }}
+{{- default (include "auth.name" .) .Values.serviceAccount.name }}
 {{- end }}
 
 {{/*
 Create the name of the service to use
 */}}
 {{- define "auth.serviceName" -}}
+{{- if .Values.service.name }}
+{{- .Values.service.name -}}
+{{- else }}
 {{- include "auth.fullname" . }}
+{{- end }}
 {{- end }}

@@ -223,7 +223,7 @@
                         "path": {
                             "type": "string",
                             "description": "Path for liveness probe",
-                            "default": "/availability"
+                            "default": "/readiness"
                         },
                         "port": {
                             "type": "string",
@@ -243,7 +243,7 @@
                         "path": {
                             "type": "string",
                             "description": "Path for readiness probe",
-                            "default": "/availability"
+                            "default": "/readiness"
                         },
                         "port": {
                             "type": "string",
@@ -324,6 +324,11 @@
                     "type": "string",
                     "description": "Path to CA certs in the container",
                     "default": ""
+                },
+                "authServerBaseUrl": {
+                    "type": "string",
+                    "description": "Base url of the Auth server. Defaults to <release-name>-auth.<release-namespace>.svc.cluster.local:9000",
+                    "default": ""
                 }
             }
         },
@@ -356,7 +361,7 @@
                         "principal": {
                             "type": "string",
                             "description": "Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName'",
-                            "default": ""
+                            "default": "cluster.local/ns/tc-core/sa/traefik-proxy"
                         }
                     }
                 }

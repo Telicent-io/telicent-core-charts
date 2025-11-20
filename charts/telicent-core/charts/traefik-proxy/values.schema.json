@@ -87,7 +87,7 @@
                         "level": {
                             "type": "string",
                             "description": "Set logging levels, values are: TRACE, DEBUG, INFO, WARN, ERROR, FATAL, and PANIC.",
-                            "default": "DEBUG"
+                            "default": "INFO"
                         }
                     }
                 },
@@ -155,7 +155,7 @@
         },
         "annotations": {
             "type": "object",
-            "description": "Add extra annotations to the Deployment Object",
+            "description": "Add extra annotations to the deployment object",
             "default": {}
         },
         "podLabels": {
@@ -466,7 +466,7 @@
             "properties": {
                 "auth": {
                     "type": "string",
-                    "description": "Auth host value, If not set a host is generated using service:'auth',port:'9000' and Release namespace & name.",
+                    "description": "Auth host value, If not set a host is generated using service:'auth',port:'8080' and Release namespace & name.",
                     "default": ""
                 },
                 "access": {
@@ -501,17 +501,17 @@
                 },
                 "search": {
                     "type": "string",
-                    "description": "Search host value, If not set a host is generated using service:'search',port:'8181' and Release namespace & name.",
+                    "description": "Search host value, If not set a host is generated using service:'search',port:'8080' and Release namespace & name.",
                     "default": ""
                 },
                 "graph": {
                     "type": "string",
-                    "description": "Graph host value, If not set a host is generated using service:'graph',port:'3030' and Release namespace & name.",
+                    "description": "Graph host value, If not set a host is generated using service:'graph',port:'8080' and Release namespace & name.",
                     "default": ""
                 },
                 "userPreferences": {
                     "type": "string",
-                    "description": "User Preferences host value, If not set a host is generated using service:'user-preferences',port:'11111' and Release namespace & name.",
+                    "description": "User Preferences host value, If not set a host is generated using service:'user-preferences',port:'8080' and Release namespace & name.",
                     "default": ""
                 },
                 "oauth2Proxy": {
@@ -522,6 +522,11 @@
                 "whoami": {
                     "type": "string",
                     "description": "Whoami host value, If not set a host is generated using service:'whoami',port:'8080' and Release namespace & name. AB:test purposes, be removed afterwards",
+                    "default": ""
+                },
+                "paperbackWriter": {
+                    "type": "string",
+                    "description": "If not set a host is generated using service:'paperback-writer', port:'8000' and Release namespace & name.",
                     "default": ""
                 }
             }

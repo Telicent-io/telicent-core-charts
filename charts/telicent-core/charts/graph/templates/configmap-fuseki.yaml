@@ -2,12 +2,14 @@
 Copyright (C) 2025 Telicent Limited
 */}}
 
-{{- if not .Values.existingFusekiConfigMapName }}
+{{- if not .Values.configuration.existingFusekiConfigMap}}
+
 apiVersion: v1
 kind: ConfigMap
 
 metadata:
-  name: {{ include "graph.fusekiConfig" . }}
+  name: {{ include "graph.fusekiConfigMapName" . }}
+  namespace: {{ include "graph.namespace" . | quote }}
   labels:
     {{- include "graph.labels" . | nindent 4 }}
 

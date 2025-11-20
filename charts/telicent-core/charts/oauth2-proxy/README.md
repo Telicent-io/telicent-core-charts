@@ -192,19 +192,20 @@ For Quick Start purposes, a secret named `tc-auth-gen-idp-oauth2-proxy` will be 
 
 ### Service Account Parameters
 
-| Name                         | Description                                                                           | Value  |
-| ---------------------------- | ------------------------------------------------------------------------------------- | ------ |
-| `serviceAccount.create`      | Specifies whether a service account should be created                                 | `true` |
-| `serviceAccount.name`        | Name of the ServiceAccount to use. If not set, a name is generated using the fullname | `""`   |
-| `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                  | `{}`   |
-| `serviceAccount.automount`   | Automatically mount a ServiceAccount's API credentials                                | `true` |
+| Name                         | Description                                                                           | Value          |
+| ---------------------------- | ------------------------------------------------------------------------------------- | -------------- |
+| `serviceAccount.create`      | Specifies whether a service account should be created                                 | `true`         |
+| `serviceAccount.name`        | Name of the ServiceAccount to use. If not set, a name is generated using the fullname | `oauth2-proxy` |
+| `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                  | `{}`           |
+| `serviceAccount.automount`   | Automatically mount a ServiceAccount's API credentials                                | `true`         |
 
 ### Traffic Exposure Parameters
 
-| Name           | Description                 | Value       |
-| -------------- | --------------------------- | ----------- |
-| `service.port` | *Oauth2 Proxy* service port | `4080`      |
-| `service.type` | *Oauth2 Proxy* service type | `ClusterIP` |
+| Name           | Description                                                                     | Value          |
+| -------------- | ------------------------------------------------------------------------------- | -------------- |
+| `service.name` | *Oauth2 Proxy* service name. If not set, a name is generated using the fullname | `oauth2-proxy` |
+| `service.port` | *Oauth2 Proxy* service port                                                     | `4080`         |
+| `service.type` | *Oauth2 Proxy* service type                                                     | `ClusterIP`    |
 
 ### Istio Parameters
 

@@ -73,22 +73,25 @@ Contains global parameters, these parameters are mirrored within the Telicent co
 
 Contains configuration parameters specific to the Graph application
 
-| Name                                  | Description                                                           | Value                                                                                  |
-| ------------------------------------- | --------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
-| `configuration.existingEnvConfigMap`  | Name of existing configmap containing Graph Environment Configuration | `""`                                                                                   |
-| `configuration.userAttributesUrl`     | URL for the user details endpoint                                     | `""`                                                                                   |
-| `configuration.attributeHierarchyUrl` | URL for the user hierarchy endpoint                                   | `""`                                                                                   |
-| `configuration.javaOptions`           | JVM options for the application                                       | `-Xmx5120m -Xms2048m -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks` |
-| `configuration.otelMetricsExporter`   | OpenTelemetry metrics exporter                                        | `prometheus`                                                                           |
-| `configuration.otelTracesExporter`    | OpenTelemetry traces exporter                                         | `none`                                                                                 |
-| `configuration.enableLabelsQuery`     | Enable labels query endpoint                                          | `true`                                                                                 |
+| Name                                    | Description                                                           | Value                                                                                  |
+| --------------------------------------- | --------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| `configuration.existingEnvConfigMap`    | Name of existing configmap containing Graph Environment Configuration | `""`                                                                                   |
+| `configuration.existingFusekiConfigMap` | Name of existing configmap containing Fuseki Configuration            | `""`                                                                                   |
+| `configuration.userAttributesUrl`       | URL for the user details endpoint                                     | `""`                                                                                   |
+| `configuration.attributeHierarchyUrl`   | URL for the user hierarchy endpoint                                   | `""`                                                                                   |
+| `configuration.javaOptions`             | JVM options for the application                                       | `-Xmx5120m -Xms2048m -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks` |
+| `configuration.otelMetricsExporter`     | OpenTelemetry metrics exporter                                        | `prometheus`                                                                           |
+| `configuration.otelTracesExporter`      | OpenTelemetry traces exporter                                         | `none`                                                                                 |
+| `configuration.enableLabelsQuery`       | Enable labels query endpoint                                          | `true`                                                                                 |
 
 ### Common Parameters
 
-| Name               | Description                                                            | Value |
-| ------------------ | ---------------------------------------------------------------------- | ----- |
-| `fullnameOverride` | String to fully override the generated release name                    | `""`  |
-| `nameOverride`     | String to partially override fullname (will maintain the release name) | `""`  |
+| Name                | Description                                                            | Value |
+| ------------------- | ---------------------------------------------------------------------- | ----- |
+| `nameOverride`      | String to partially override fullname (will maintain the release name) | `""`  |
+| `fullnameOverride`  | String to fully override the generated release name                    | `""`  |
+| `namespaceOverride` | String to fully override all deployed resources namespace              | `""`  |
+| `commonLabels`      | Add labels to all the deployed resources                               | `{}`  |
 
 ### Statefulset Parameters
 
@@ -99,6 +102,10 @@ Contains configuration parameters specific to the Graph application
 | `annotations`                                       | Add extra annotations to the Statefulset object                         | `{}`                                |
 | `podAnnotations`                                    | Add extra annotations to the *Auth* pod                                 | `{}`                                |
 | `extraEnvVars`                                      | Array with extra environment variables to add to *Auth* pod             | `[]`                                |
+| `extraVolumes`                                      | Additional containers to be added to the *Auth* pod                     | `[]`                                |
+| `extraVolumeMounts`                                 | Optionally specify extra list of additional volumeMounts                | `[]`                                |
+| `initContainers`                                    | Add init containers to the pod                                          | `[]`                                |
+| `sidecars`                                          | Add sidecars to the pod.                                                | `[]`                                |
 | `image.registry`                                    | Graph image registry                                                    | `REGISTRY_NAME`                     |
 | `image.repository`                                  | Graph image name                                                        | `REPOSITORY_NAME/smart-cache-graph` |
 | `image.tag`                                         | Graph image tag. If not set, a tag is generated using the appVersion    | `""`                                |
@@ -129,10 +136,11 @@ Contains configuration parameters specific to the Graph application
 | `persistentVolumeClaims.datasetsVolume.size`         | PVC Storage Request for the Graph volume     | `25Gi` |
 | `persistentVolumeClaims.datasetsVolume.storageClass` | iPVC Storage Class for the Graph data volume | `gp3`  |
 
-### Metrics Parameters
+### Metrics (Prometheus) Parameters
 
 | Name                   | Description                     | Value     |
 | ---------------------- | ------------------------------- | --------- |
+| `metrics.enabled`      | Enable Prometheus metrics       | `true`    |
 | `metrics.service.name` | Name for the Prometheus service | `metrics` |
 | `metrics.service.port` | Port for the Prometheus service | `9464`    |
 
@@ -140,8 +148,9 @@ Contains configuration parameters specific to the Graph application
 
 | Name                               | Description                                                                                                                                               | Value           |
 | ---------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- |
-| `service.port`                     | Graph service port                                                                                                                                        | `3030`          |
-| `service.type`                     | Graph service type                                                                                                                                        | `ClusterIP`     |
+| `service.name`                     | *Graph* service name. If not set, a name is generated using the chart name                                                                                | `graph`         |
+| `service.port`                     | *Graph* service port                                                                                                                                      | `8080`          |
+| `service.type`                     | *Graph* service type                                                                                                                                      | `ClusterIP`     |
 | `istio.ingress.principal`          | Principal used for ingress traffic by the Istio AuthorizationPolicy.  If not set, a principal is generated using Release namespace and serviceAccountName | `""`            |
 | `istio.ingress.serviceAccountName` | Name of the Ingress service account (traefik and istio supported)                                                                                         | `traefik-proxy` |
 

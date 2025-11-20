@@ -7,17 +7,14 @@ http:
       entryPoints:
         - web-api
       middleWares:
-        # todo: revert back to main config once testing is complete.
-        - cors
         - path-search
         - host-search
-        - oauth2
 
   services:
     search:
       loadBalancer:
         servers:
-          - url: http://{{ .Values.hosts.search | default (printf "%s.%s:8181" (include "traefik-proxy.routesService" (list . "search")) .Release.Namespace) }}
+          - url: http://{{ .Values.hosts.search | default (printf "%s.%s:8080" (include "traefik-proxy.routesService" (list . "search")) .Release.Namespace) }}
 
   middlewares:
     path-search:
@@ -28,4 +25,4 @@ http:
     host-search:
       headers:
         customRequestHeaders:
-          host: {{ .Values.hosts.search | default (printf "%s.%s:8181" (include "traefik-proxy.routesService" (list . "search")) .Release.Namespace) }}
+          host: {{ .Values.hosts.search | default (printf "%s.%s:8080" (include "traefik-proxy.routesService" (list . "search")) .Release.Namespace) }}

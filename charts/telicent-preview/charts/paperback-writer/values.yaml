@@ -118,13 +118,13 @@ resources: {}
 livenessProbe:
   # @key livenessProbe.httpGet.path Path for liveness probe
   httpGet:
-    path: /availability
+    path: /readiness
     # @key livenessProbe.httpGet.port Port for liveness probe
     port: http
 readinessProbe:
   httpGet:
     # @key readinessProbe.httpGet.path Path for readiness probe
-    path: /availability
+    path: /readiness
     # @key readinessProbe.httpGet.port Port for readiness probe
     port: http
 
@@ -184,4 +184,4 @@ cacert: ""
 istio:
   ingress:
     # @key istio.ingress.principal Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName'
-    principal: ""
+    principal: "cluster.local/ns/tc-core/sa/traefik-proxy"

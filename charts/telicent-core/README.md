@@ -53,13 +53,14 @@ Contains global parameters, these parameters are mirrored across all Telicent Co
 | `global.imagePullSecrets`           | Global registry secret names as an array                                          | `[]`                                             |
 | `global.enterprise`                 | Enable enterprise mode, adding additional features and configurations             | `false`                                          |
 | `global.appHostDomain`              | Domain associated with Telicent application services                              | `apps.telicent.io`                               |
+| `global.apiHostDomain`              | Domain associated with Telicent Api services                                      | `api.telicent.io`                                |
 | `global.authHostDomain`             | Domain associated with Telicent authentication services, including OIDC providers | `auth.telicent.io`                               |
 | `global.groupsClaim`                | Key used to retrieve groups from the OIDC provider                                | `groups`                                         |
 | `global.jwksUrl`                    | Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)     | `https://{yourAuthdomain}/.well-known/jwks.json` |
 | `global.istioNamespace`             | Namespace in which Istio is deployed                                              | `istio-system`                                   |
 | `global.istioServiceAccountName`    | Name of the Istio service account                                                 | `istio-ingress`                                  |
 | `global.istioGatewayName`           | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)         | `ingress-gateway`                                |
-| `global.istioVirtualServiceEnabled` | Enable Istio traffic routing to a named destination service                       | `true`                                           |
+| `global.istioVirtualServiceEnabled` | Enable Istio traffic routing to a named destination service                       | `false`                                          |
 
 ### Global Parameters - Kafka
 

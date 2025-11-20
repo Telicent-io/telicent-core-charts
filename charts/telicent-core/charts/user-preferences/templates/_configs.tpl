@@ -19,3 +19,10 @@ Create Server config name to use
 {{- define "user-preferences.serverConfig" -}}
 {{ include "user-preferences.fullname" . }}-server-config
 {{- end }}
+
+{{/* 
+Create Kafka Auth Config name to use
+*/}}
+{{- define "user-preferences.kafkaAuthConfig" -}}
+{{ include "user-preferences.fullname" . }}-kafka-config
+{{- end }}

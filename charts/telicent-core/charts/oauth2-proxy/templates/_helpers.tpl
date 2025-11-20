@@ -83,6 +83,9 @@ Create the name of the service account to use
 Create the name of the service to use
 */}}
 {{- define "oauth2-proxy.serviceName" -}}
+{{- if .Values.service.name }}
+{{- .Values.service.name -}}
+{{- else }}
 {{- include "oauth2-proxy.fullname" . }}
 {{- end }}
-
+{{- end }}

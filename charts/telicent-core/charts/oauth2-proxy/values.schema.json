@@ -421,7 +421,7 @@
                 "name": {
                     "type": "string",
                     "description": "Name of the ServiceAccount to use. If not set, a name is generated using the fullname",
-                    "default": ""
+                    "default": "oauth2-proxy"
                 },
                 "annotations": {
                     "type": "object",
@@ -438,6 +438,11 @@
         "service": {
             "type": "object",
             "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "*Oauth2 Proxy* service name. If not set, a name is generated using the fullname",
+                    "default": "oauth2-proxy"
+                },
                 "port": {
                     "type": "number",
                     "description": "*Oauth2 Proxy* service port",

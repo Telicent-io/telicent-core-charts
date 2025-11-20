@@ -126,6 +126,11 @@
                     "description": "Name of existing configmap containing Graph Environment Configuration",
                     "default": ""
                 },
+                "existingFusekiConfigMap": {
+                    "type": "string",
+                    "description": "Name of existing configmap containing Fuseki Configuration",
+                    "default": ""
+                },
                 "userAttributesUrl": {
                     "type": "string",
                     "description": "URL for the user details endpoint",
@@ -158,15 +163,25 @@
                 }
             }
         },
+        "nameOverride": {
+            "type": "string",
+            "description": "String to partially override fullname (will maintain the release name)",
+            "default": ""
+        },
         "fullnameOverride": {
             "type": "string",
             "description": "String to fully override the generated release name",
             "default": ""
         },
-        "nameOverride": {
+        "namespaceOverride": {
             "type": "string",
-            "description": "String to partially override fullname (will maintain the release name)",
+            "description": "String to fully override all deployed resources namespace",
             "default": ""
+        },
+        "commonLabels": {
+            "type": "object",
+            "description": "Add labels to all the deployed resources",
+            "default": {}
         },
         "replicas": {
             "type": "number",
@@ -191,6 +206,30 @@
         "extraEnvVars": {
             "type": "array",
             "description": "Array with extra environment variables to add to *Auth* pod",
+            "default": [],
+            "items": {}
+        },
+        "extraVolumes": {
+            "type": "array",
+            "description": "Additional containers to be added to the *Auth* pod",
+            "default": [],
+            "items": {}
+        },
+        "extraVolumeMounts": {
+            "type": "array",
+            "description": "Optionally specify extra list of additional volumeMounts",
+            "default": [],
+            "items": {}
+        },
+        "initContainers": {
+            "type": "array",
+            "description": "Add init containers to the pod",
+            "default": [],
+            "items": {}
+        },
+        "sidecars": {
+            "type": "array",
+            "description": "Add sidecars to the pod.",
             "default": [],
             "items": {}
         },
@@ -383,6 +422,11 @@
         "metrics": {
             "type": "object",
             "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable Prometheus metrics",
+                    "default": true
+                },
                 "service": {
                     "type": "object",
                     "properties": {
@@ -403,14 +447,19 @@
         "service": {
             "type": "object",
             "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "*Graph* service name. If not set, a name is generated using the chart name",
+                    "default": "graph"
+                },
                 "port": {
                     "type": "number",
-                    "description": "Graph service port",
-                    "default": 3030
+                    "description": "*Graph* service port",
+                    "default": 8080
                 },
                 "type": {
                     "type": "string",
-                    "description": "Graph service type",
+                    "description": "*Graph* service type",
                     "default": "ClusterIP"
                 }
             }

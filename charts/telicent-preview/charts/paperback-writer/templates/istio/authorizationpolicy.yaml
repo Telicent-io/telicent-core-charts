@@ -2,8 +2,11 @@
 apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
 metadata:
-  name: {{ include "paperback-writer.fullname" .}}
+  name: {{ include "paperback-writer.fullname" .}}-ingress
 spec:
+  selector:
+    matchLabels:
+    {{ include "paperback-writer.selectorLabels" . | nindent 6 }}
   action: ALLOW
   rules:
   - from:
@@ -31,11 +34,7 @@ spec:
         - /prov/*
         - /telicent/*
         - /ontology/*
-    when:
-    - key: request.auth.claims[{{ .Values.global.groupsClaim }}]
-      values:
-      - tc_write
-  selector:
-    matchLabels:
-    {{ include "paperback-writer.selectorLabels" . | nindent 6 }}
+        - /readiness/*
+        - /readiness
+
 {{- end -}}

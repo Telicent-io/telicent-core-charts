@@ -1,8 +1,37 @@
 # Declare routers / services / middlewares
 http:
   routers:
-    auth:
-      rule: {{ printf "Host(`%s`)" .Values.global.authHostDomain }}
+    auth-forward:
+      rule: {{ printf "Host(`%s`) && PathPrefix(`/auth/forward`)" .Values.global.authHostDomain }}
+      priority: 9
+      service: auth
+      entryPoints:
+        - web-app
+      middleWares:
+        - host-auth
+
+    auth-user-info:
+      rule: {{ printf "Host(`%s`) && PathPrefix(`/userinfo`)" .Values.global.authHostDomain }}
+      priority: 8
+      service: auth
+      entryPoints:
+        - web-app
+      middleWares:
+        - oauth2
+        - host-auth
+
+    auth-oidc:
+      rule: {{ printf "Host(`%s`) && PathPrefix(`/.well-known`)" .Values.global.authHostDomain }}
+      priority: 7
+      service: auth
+      entryPoints:
+        - web-app
+      middleWares:
+        - host-auth
+
+    auth-oauth2:
+      rule: {{ printf "Host(`%s`) && PathRegexp(`^/(oauth2|session|login|logout)`)" .Values.global.authHostDomain }}
+      priority: 6
       service: auth
       entryPoints:
         - web-app
@@ -13,10 +42,10 @@ http:
     auth:
       loadBalancer:
         servers:
-          - url: http://{{ .Values.hosts.auth | default (printf "%s.%s:9000" (include "traefik-proxy.routesService" (list . "auth")) .Release.Namespace) }}
+          - url: http://{{ .Values.hosts.auth | default (printf "%s.%s:8080" (include "traefik-proxy.routesService" (list . "auth")) .Release.Namespace) }}
 
   middlewares:
     host-auth:
       headers:
         customRequestHeaders:
-          host: {{ .Values.hosts.auth | default (printf "%s.%s:9000" (include "traefik-proxy.routesService" (list . "auth")) .Release.Namespace) }}
+          host: {{ .Values.hosts.auth | default (printf "%s.%s:8080" (include "traefik-proxy.routesService" (list . "auth")) .Release.Namespace) }}

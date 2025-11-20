@@ -237,7 +237,7 @@
         },
         "annotations": {
             "type": "object",
-            "description": "Add extra annotations to the Deployment Object",
+            "description": "Add extra annotations to the deployment object",
             "default": {}
         },
         "podLabels": {
@@ -457,7 +457,7 @@
                 },
                 "name": {
                     "type": "string",
-                    "description": "Name of the ServiceAccount to use. If not set, a name is generated using the fullname",
+                    "description": "Name of the ServiceAccount to use. If not set, a name is generated using the name",
                     "default": ""
                 },
                 "annotations": {
@@ -475,10 +475,15 @@
         "service": {
             "type": "object",
             "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "*Auth* service name. If not set, a name is generated using the chart name",
+                    "default": "auth"
+                },
                 "port": {
                     "type": "number",
                     "description": "*Auth* service port",
-                    "default": 9000
+                    "default": 8080
                 },
                 "type": {
                     "type": "string",
