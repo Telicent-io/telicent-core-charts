@@ -17,7 +17,7 @@ spec:
     {{- include "oauth2-proxy.selectorLabels" . | nindent 4 }}
   ports:
   - name: http
-    port: {{ .Values.service.port }}
     appProtocol: http
+    targetPort: http
     protocol: TCP
-    targetPort: 4080
+    port: {{ .Values.service.port }}

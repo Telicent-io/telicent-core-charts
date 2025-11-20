@@ -64,26 +64,9 @@ Create the name of the service account to use
 Create the name of the service to use
 */}}
 {{- define "search.serviceName" -}}
+{{- if .Values.service.name }}
+{{- .Values.service.name -}}
+{{- else }}
 {{- include "search.fullname" . }}
 {{- end }}
-
-{{/*
-Create the name of environment variable secrets
-*/}}
-{{- define "search.envSecretName" -}}
-{{ include "search.fullname" . }}
-{{- end }}
-
-{{/* Create the user attributes service URL
-*/}}
-
-{{- define "search.userAttributesUrl" -}}
-{{- .Values.configuration.userAttributesUrl | default (printf "http://%s-access.%s.svc.cluster.local:8080/users/lookup/{user}" .Release.Name .Release.Namespace ) | quote }}
-{{- end }}
-
-{{/* Create the attribute hierarchy service URL
-*/}}
-
-{{- define "search.attributeHierarchyUrl" -}}
-{{- .Values.configuration.attributeHierarchyUrl | default (printf "http://%s-access.%s.svc.cluster.local:8080/hierarchies/lookup/{name}" .Release.Name .Release.Namespace ) | quote }}
 {{- end }}

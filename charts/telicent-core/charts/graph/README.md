@@ -102,6 +102,10 @@ Contains configuration parameters specific to the Graph application
 | `annotations`                                       | Add extra annotations to the Statefulset object                         | `{}`                                |
 | `podAnnotations`                                    | Add extra annotations to the *Auth* pod                                 | `{}`                                |
 | `extraEnvVars`                                      | Array with extra environment variables to add to *Auth* pod             | `[]`                                |
+| `extraVolumes`                                      | Additional containers to be added to the *Auth* pod                     | `[]`                                |
+| `extraVolumeMounts`                                 | Optionally specify extra list of additional volumeMounts                | `[]`                                |
+| `initContainers`                                    | Add init containers to the pod                                          | `[]`                                |
+| `sidecars`                                          | Add sidecars to the pod.                                                | `[]`                                |
 | `image.registry`                                    | Graph image registry                                                    | `REGISTRY_NAME`                     |
 | `image.repository`                                  | Graph image name                                                        | `REPOSITORY_NAME/smart-cache-graph` |
 | `image.tag`                                         | Graph image tag. If not set, a tag is generated using the appVersion    | `""`                                |
@@ -132,10 +136,11 @@ Contains configuration parameters specific to the Graph application
 | `persistentVolumeClaims.datasetsVolume.size`         | PVC Storage Request for the Graph volume     | `25Gi` |
 | `persistentVolumeClaims.datasetsVolume.storageClass` | iPVC Storage Class for the Graph data volume | `gp3`  |
 
-### Metrics Parameters
+### Metrics (Prometheus) Parameters
 
 | Name                   | Description                     | Value     |
 | ---------------------- | ------------------------------- | --------- |
+| `metrics.enabled`      | Enable Prometheus metrics       | `true`    |
 | `metrics.service.name` | Name for the Prometheus service | `metrics` |
 | `metrics.service.port` | Port for the Prometheus service | `9464`    |
 
@@ -143,8 +148,9 @@ Contains configuration parameters specific to the Graph application
 
 | Name                               | Description                                                                                                                                               | Value           |
 | ---------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- |
-| `service.port`                     | Graph service port                                                                                                                                        | `3030`          |
-| `service.type`                     | Graph service type                                                                                                                                        | `ClusterIP`     |
+| `service.name`                     | *Graph* service name. If not set, a name is generated using the chart name                                                                                | `graph`         |
+| `service.port`                     | *Graph* service port                                                                                                                                      | `8080`          |
+| `service.type`                     | *Graph* service type                                                                                                                                      | `ClusterIP`     |
 | `istio.ingress.principal`          | Principal used for ingress traffic by the Istio AuthorizationPolicy.  If not set, a principal is generated using Release namespace and serviceAccountName | `""`            |
 | `istio.ingress.serviceAccountName` | Name of the Ingress service account (traefik and istio supported)                                                                                         | `traefik-proxy` |
 

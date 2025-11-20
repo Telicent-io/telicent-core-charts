@@ -1,6 +1,12 @@
 # Copyright (C) 2025 Telicent Limited
-# Telicent User Preferences API stand-alone chart
+# Telicent *User Preferences* stand-alone chart
 
+#
+# @section Global Parameters
+#
+# @descStart
+# Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
+# @descEnd
 global:
   ## Current available global image parameters: imageRegistry and imagePullSecrets
   ## Please, note that this will override the image parameters
@@ -23,9 +29,6 @@ global:
   authHostDomain: "auth.telicent.io"
   # @key global.groupsClaim Key used to retrieve groups from the OIDC provider
   groupsClaim: "groups"
-  # @key global.jwksUrl Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)
-  # Note: For Dex the endpoint would be https://{yourDexDomain}/keys
-  jwksUrl: "https://{yourAuthdomain}/.well-known/jwks.json"
 
   # @key global.istioNamespace Namespace in which Istio is deployed
   # Note: By default, Istio namespace is set to 'istio-system'
@@ -35,7 +38,7 @@ global:
   # @key global.istioGatewayName Name of the Istio Gateway Resource (LB operating at the edge of the mesh)
   istioGatewayName: ingress-gateway
   # @key global.istioVirtualServiceEnabled Enable Istio traffic routing to a named destination service
-  istioVirtualServiceEnabled: true
+  istioVirtualServiceEnabled: false
 
   truststore:
     # @key global.truststore.existingSecretName Name of an existing secret containing the truststore
@@ -43,62 +46,103 @@ global:
     # @key global.truststore.mountPath The mount path for the truststore in the container
     mountPath: /app/config/truststore
 
+#
 # @section Configuration Parameters
+#
 # @descStart
-# Contains configuration parameters specific to the User Preferences API application
+# Contains configuration parameters specific to the *User Preferences* application
 # @descEnd
 configuration:
-  # @key configuration.existingEnvConfigMap Name of existing configmap containing User Preferences Environment Configuration
+  # @key configuration.existingEnvConfigMap Name of existing configmap containing *User Preferences* Environment Configuration
   # Note: When it's set it will disable configmap creation.
   existingEnvConfigMap: ""
 
   # @key configuration.javaOptions JVM options for the application
-  javaOptions: "-Xms512m -Xmx512m"
+  javaOptions: "-XX:MaxRAMPercentage=80.0"
 
-# @section MongoDB Parameters
+#
+# @section MongoDB Parameters and Secret
+#
+# @descStart
+# The following contains connection details to a MongoDB instance, on which the application relies.
+# It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
+# For Quick Start purposes, a secret named `tc-auth-usr-mongo-user-preferences` will be created if one is not set.
+# @descEnd
 mongo:
   # @key mongo.url MongoDB connection URL (database value can be omitted in favour of populating 'database' property)
   url: "mongodb://<host1>:<port1>,<host2>:<port2>,<host3>:<port3>/?retryWrites=false"
   # @key mongo.database MongoDB database
   database: "user-preferences"
-  # @key mongo.existingSecret Name of an existing secret resource containing the MongoDB username & password
+  # @key mongo.authDatabase The authentication database to use for the given user
+  authDatabase: "admin"
+  # @key mongo.existingSecret Name of an existing secret. The secret must contain 2 keys: 'username', 'password'
+  # Note: Left unset, it will create a secret named: tc-auth-usr-mongo-user-preferences
   existingSecret: ""
   # @key mongo.username MongoDB username
+  # Note: For additional security, the username is read from the secret, as defined by 'existingSecret' and not from this value!
   username: ""
   # @key mongo.password MongoDB password
   password: ""
-  # @key mongo.authDatabase The authentication database to use for the given user
-  authDatabase: "admin"
   # @key mongo.existingCaSecret If you have an existing secret for the CA certificate, you can specify it here. If you've specified to use TLS in the url, you must provide a CA certificate.
   existingCaSecret: ""
   # @key mongo.cacertPath Path to the CA certificate file, must be set if TLS is enabled in the url and mirror the path in the connectionStringOptions
   cacertPath: ""
 
-
+#
 # @section Common Parameters
+#
 # @key nameOverride String to partially override fullname (will maintain the release name)
 nameOverride: ""
 # @key fullnameOverride String to fully override the generated release name
 fullnameOverride: ""
+# @key namespaceOverride String to fully override all deployed resources namespace
+namespaceOverride: ""
+# @key commonLabels Add labels to all the deployed resources
+commonLabels: {}
 
-# @section User Preferences API Deployment Parameters
-# @key replicas Number of User Preferences API replicas to deploy
+#
+# @section Deployment Parameters
+#
+# @key replicas Number of *User Preferences* replicas to deploy
 replicas: 1
 # @key revisionHistoryLimit Number of controller revisions to keep
 revisionHistoryLimit: 5
-# @key annotations Add extra annotations to the Deployment object
+# @key annotations Add extra annotations to the deployment object
 annotations: {}
-# @key extraEnvs List of Additional environment variables to set in the pod
-extraEnvs: []
+# @key podLabels Add extra labels to the *User Preferences* pod
+podLabels: {}
+# @key podAnnotations Add extra annotations to the *User Preferences* pod
+podAnnotations: {}
+# @key extraEnvVars Array with extra environment variables to add to *User Preferences* pod
+# Example:
+# extraEnvVars:
+# - name: FOO
+# - value: instance
+extraEnvVars: []
+# @key extraVolumes Additional containers to be added to the *User Preferences* pod
+extraVolumes: []
+# @key extraVolumeMounts Optionally specify extra list of additional volumeMounts
+extraVolumeMounts: []
+# @key initContainers Add init containers to the pod
+initContainers: []
+# Example:
+# sidecars:
+# - name: your-image-name
+#   image: your-image
+#   ports:
+#   - name: portname
+#     containerPort: 1234
+# @key sidecars Add sidecars to the pod.
+sidecars: []
 
 image:
-  # @key image.registry [default: REGISTRY_NAME] User Preferences API image registry
+  # @key image.registry [default: REGISTRY_NAME] *User Preferences* image registry
   registry: quay.io
-  # @key image.repository [default: REPOSITORY_NAME/telicent-user-preferences-service] User Preferences API image name
+  # @key image.repository [default: REPOSITORY_NAME/telicent-user-preferences-service] *User Preferences* image name
   repository: telicent/telicent-user-preferences-service
-  # @key image.tag User Preferences API image tag. If not set, a tag is generated using the appVersion
+  # @key image.tag *User Preferences* image tag. If not set, a tag is generated using the appVersion
   tag: ""
-  # @key image.pullPolicy User Preferences API image pull policy
+  # @key image.pullPolicy *User Preferences* image pull policy
   pullPolicy: IfNotPresent
   # @key image.pullSecrets Specify registry secret names as an array
   pullSecrets: []
@@ -106,12 +150,12 @@ image:
 resources:
   requests:
     # @key resources.requests.cpu Set containers' CPU request
-    cpu: "100m"
+    cpu: "300m"
     # @key resources.requests.memory Set containers' memory request
     memory: "768Mi"
   limits:
     # @key resources.limits.cpu Set containers' CPU limit
-    cpu: "250m"
+    cpu: "550m"
     # @key resources.limits.memory Set containers' memory limit
     memory: "1024Mi"
 
@@ -145,7 +189,19 @@ podSecurityContext:
     # @key podSecurityContext.seccompProfile.type Set the provisioning pod's Security Context seccomp profile
     type: RuntimeDefault
 
+# @key affinity Affinity for pod assignment
+# Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+affinity: {}
+# @key nodeSelector Node labels for pod assignment
+# Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
+nodeSelector: {}
+# @key tolerations Tolerations for pod assignment
+# Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+tolerations: []
+
+#
 # @section Metrics Parameters
+#
 metrics:
   service:
     # @key metrics.service.port Port for the Prometheus service
@@ -153,27 +209,36 @@ metrics:
     # @key metrics.service.name Name for the Prometheus service
     name: metrics
 
+#
+# @section Service Account Parameters
+#
+serviceAccount:
+  # @key serviceAccount.create Specifies whether a service account should be created
+  create: true
+  # @key serviceAccount.name Name of the ServiceAccount to use. If not set, a name is generated using the name
+  name: ""
+  # @key serviceAccount.annotations Additional custom annotations for the ServiceAccount
+  annotations: {}
+  # @key serviceAccount.automount Automatically mount a ServiceAccount's API credentials
+  automount: true
+
+#
 # @section Traffic Exposure Parameters
+#
 service:
-  # @key service.port User Preferences API service port
-  port: 11111
-  # @key service.type User Preferences API service type
+  # @key service.name *User Preferences* service name. If not set, a name is generated using the chart name
+  name: "user-preferences"
+  # @key service.port *User Preferences* service port
+  port: 8080
+  # @key service.type *User Preferences* service type
   type: ClusterIP
 
+#
+# @section Istio Parameters
+#
 istio:
   ingress:
     # @key istio.ingress.principal Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName
     principal: ""
     # @key istio.ingress.serviceAccountName Name of the Ingress service account (traefik and istio supported)
     serviceAccountName: "traefik-proxy"
-
-# @section Extra Containers Parameters
-# @key extraContainers Additional containers to be added to the pod
-extraContainers: []
-
-# @section Service Account Parameters
-serviceAccount:
-  # @key serviceAccount.name Name of the ServiceAccount to use. If not set, a name is generated using the fullname
-  name: ""
-  # @key serviceAccount.annotations Additional custom annotations for the ServiceAccount
-  annotations: {}

@@ -93,8 +93,8 @@ spec:
               name: {{ include "auth.forwardAuthSecretName" . }}
 
         {{- range .Values.extraEnvVars }}
-        - name: {{ .name }}
-          value: {{ .value }}
+        - name: {{ .name | quote  }}
+          value: {{ .value | quote }}
         {{- end }}
         envFrom:
         - configMapRef:
@@ -104,9 +104,9 @@ spec:
 
         ports:
         - name: http
-          containerPort: {{ .Values.service.port }}
           protocol: TCP
-
+          containerPort: 9000
+         
         readinessProbe:
           httpGet:
             path: /actuator/health
@@ -121,6 +121,7 @@ spec:
             port: http
             scheme: HTTP
           initialDelaySeconds: 30
+          #todo: ab revert once auth complete
           periodSeconds: 3000
           timeoutSeconds: 3
 

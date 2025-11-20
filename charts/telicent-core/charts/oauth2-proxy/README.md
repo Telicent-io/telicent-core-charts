@@ -201,11 +201,11 @@ For Quick Start purposes, a secret named `tc-auth-gen-idp-oauth2-proxy` will be 
 
 ### Traffic Exposure Parameters
 
-| Name           | Description                                                                      | Value          |
-| -------------- | -------------------------------------------------------------------------------- | -------------- |
-| `service.name` | *Oauth2 Proxy* service name.  If not set, a name is generated using the fullname | `oauth2-proxy` |
-| `service.port` | *Oauth2 Proxy* service port                                                      | `4080`         |
-| `service.type` | *Oauth2 Proxy* service type                                                      | `ClusterIP`    |
+| Name           | Description                                                                     | Value          |
+| -------------- | ------------------------------------------------------------------------------- | -------------- |
+| `service.name` | *Oauth2 Proxy* service name. If not set, a name is generated using the fullname | `oauth2-proxy` |
+| `service.port` | *Oauth2 Proxy* service port                                                     | `4080`         |
+| `service.type` | *Oauth2 Proxy* service type                                                     | `ClusterIP`    |
 
 ### Istio Parameters
 

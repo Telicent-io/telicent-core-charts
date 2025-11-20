@@ -16,12 +16,15 @@ spec:
     {{- include "search.selectorLabels" . | nindent 4 }}
   ports:
     - name: http
+      appProtocol: http
+      targetPort: http
+      protocol: TCP
       port: {{ .Values.service.port }}
+
+    {{- if .Values.metrics.enabled }}
+    - name: {{ .Values.metrics.service.name | default "metrics" }}
       appProtocol: http
+      targetPort: metrics
       protocol: TCP
-      targetPort: 8181
-    - name: metrics
       port: {{ .Values.metrics.service.port }}
-      appProtocol: http
-      protocol: TCP
-      targetPort: 9464
+    {{- end }}
