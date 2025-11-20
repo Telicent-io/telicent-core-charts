@@ -15,8 +15,9 @@ http:
       priority: 8
       service: auth
       entryPoints:
-        - web-api
+        - web-app
       middleWares:
+        - oauth2
         - host-auth
 
     auth-oidc:
