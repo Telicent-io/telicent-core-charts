@@ -5,9 +5,8 @@ http:
       rule: {{ printf "Host(`%s`) && PathPrefix(`/access`)" .Values.global.apiHostDomain }}
       service: access
       entryPoints:
-        - web-app
+        - web-api
       middleWares:
-        - cors
         - oauth2-proxy-verify
         - path-access
         - host-access
