@@ -22,8 +22,11 @@ spec:
       - source:
           principals:
           - {{ include "auth.ingressPrincipal" . }}
+          # todo: ab source this properly
           - cluster.local/ns/tc-core/sa/graph
           - cluster.local/ns/tc-core/sa/search
+          - cluster.local/ns/tc-core/sa/paperback-writer
+
     to:
       - operation:
           methods:
