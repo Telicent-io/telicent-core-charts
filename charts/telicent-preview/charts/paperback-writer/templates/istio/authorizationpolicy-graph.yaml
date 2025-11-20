@@ -24,10 +24,7 @@ spec:
               - /catalog/update/*
               - /$/labels/catalog
               - /$/labels/catalog/*
-      when:
-        - key: request.auth.claims[groups]
-          values:
-            - tc_write
+
     - from:
         - source:
             principals:
@@ -40,10 +37,7 @@ spec:
             paths:
               - /catalog/query
               - /catalog/query/*
-      when:
-        - key: request.auth.claims[groups]
-          values:
-            - tc_read
+
   selector:
     matchLabels:
       app.kubernetes.io/name: "graph"

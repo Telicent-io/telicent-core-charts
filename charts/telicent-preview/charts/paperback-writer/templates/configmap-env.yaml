@@ -1,0 +1,18 @@
+{{- if and (not .Values.existingConfigMapName) (.Values.enabled)  -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "paperback-writer.fullname" . }}-config
+  labels:
+    {{- include "paperback-writer.labels" . | nindent 4 }}
+data:
+  #todo: ab fix this up
+  SPARQL_URL:  {{ printf "http://%s.%s:%s" "graph" .Release.Namespace "8080" | quote }}
+  SPARQL_DEFAULT_LABEL: {{ .Values.configuration.sparqlDefaultLabel | default "!" |  quote }}
+  JWT_HEADER: {{ .Values.configuration.jwtHeader | default "Authorization" }}
+  JWT_USER_ID_ATTR: "preferred_name"
+  JWKS_CA_CERT_PATH: {{ .Values.configuration.cacertPath | quote }}
+  JWKS_URL: {{ printf "%s%s%s" "https://" .Values.global.authHostDomain "/oauth2/jwks" | quote }}
+  AUTH_SERVER_BASE_URL: {{ printf "http://%s.%s:%s" "auth" .Release.Namespace "8080" | quote }}
+
+{{- end }}

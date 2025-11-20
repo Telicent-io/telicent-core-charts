@@ -68,7 +68,7 @@ Create the Sparql endpoint URL
 {{- if .Values.configuration.sparqlUrl }}
 {{- .Values.configuration.sparqlUrl }}
 {{- else }}
-{{- printf "http://%s-graph.%s.svc.cluster.local:3030" (.Release.Name) (.Release.Namespace) }}
+{{- printf "http://graph.%s:3030" (.Release.Name) (.Release.Namespace) }}
 {{- end }}
 {{- end }}
 
