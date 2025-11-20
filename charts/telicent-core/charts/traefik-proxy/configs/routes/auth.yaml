@@ -15,18 +15,20 @@ http:
       priority: 8
       service: auth
       entryPoints:
-        - web-api
+        - web-app
       middleWares:
         - host-auth
+        - oauth2
 
     auth-admin:
       rule: {{ printf "Host(`%s`) && PathRegexp(`^/(session|groups|roles|permissions|users)`)" .Values.global.authHostDomain }}
       priority: 7
       service: auth
       entryPoints:
-        - web-api
+        - web-app
       middleWares:
         - host-auth
+        - oauth2
 
     auth-oidc:
       rule: {{ printf "Host(`%s`) && PathPrefix(`/.well-known`)" .Values.global.authHostDomain }}
