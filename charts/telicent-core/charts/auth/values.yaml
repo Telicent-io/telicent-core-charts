@@ -281,6 +281,8 @@ serviceAccount:
 # @section Traffic Exposure Parameters
 #
 service:
+  # @key service.name *Auth* service name. If not set, a name is generated using the chart name
+  name: "auth"
   # @key service.port *Auth* service port
   port: 8080
   # @key service.type *Auth* service port

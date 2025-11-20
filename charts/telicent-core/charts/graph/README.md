@@ -148,8 +148,9 @@ Contains configuration parameters specific to the Graph application
 
 | Name                               | Description                                                                                                                                               | Value           |
 | ---------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- |
-| `service.port`                     | Graph service port                                                                                                                                        | `8080`          |
-| `service.type`                     | Graph service type                                                                                                                                        | `ClusterIP`     |
+| `service.name`                     | *Graph* service name. If not set, a name is generated using the chart name                                                                                | `graph`         |
+| `service.port`                     | *Graph* service port                                                                                                                                      | `8080`          |
+| `service.type`                     | *Graph* service type                                                                                                                                      | `ClusterIP`     |
 | `istio.ingress.principal`          | Principal used for ingress traffic by the Istio AuthorizationPolicy.  If not set, a principal is generated using Release namespace and serviceAccountName | `""`            |
 | `istio.ingress.serviceAccountName` | Name of the Ingress service account (traefik and istio supported)                                                                                         | `traefik-proxy` |
 

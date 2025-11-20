@@ -447,14 +447,19 @@
         "service": {
             "type": "object",
             "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "*Graph* service name. If not set, a name is generated using the chart name",
+                    "default": "graph"
+                },
                 "port": {
                     "type": "number",
-                    "description": "Graph service port",
+                    "description": "*Graph* service port",
                     "default": 8080
                 },
                 "type": {
                     "type": "string",
-                    "description": "Graph service type",
+                    "description": "*Graph* service type",
                     "default": "ClusterIP"
                 }
             }

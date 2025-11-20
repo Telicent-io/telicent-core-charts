@@ -223,10 +223,11 @@ List of registered clients
 
 ### Traffic Exposure Parameters
 
-| Name           | Description         | Value       |
-| -------------- | ------------------- | ----------- |
-| `service.port` | *Auth* service port | `8080`      |
-| `service.type` | *Auth* service port | `ClusterIP` |
+| Name           | Description                                                               | Value       |
+| -------------- | ------------------------------------------------------------------------- | ----------- |
+| `service.name` | *Auth* service name. If not set, a name is generated using the chart name | `auth`      |
+| `service.port` | *Auth* service port                                                       | `8080`      |
+| `service.type` | *Auth* service port                                                       | `ClusterIP` |
 
 ### Istio Parameters
 

@@ -194,11 +194,11 @@ For Quick Start purposes, a secret named `tc-auth-usr-mongo-user-preferences` wi
 
 ### Traffic Exposure Parameters
 
-| Name           | Description                                                                     | Value       |
-| -------------- | ------------------------------------------------------------------------------- | ----------- |
-| `service.name` | *User Preferences* service name. If not set, a name is generated using the name | `""`        |
-| `service.port` | *User Preferences* service port                                                 | `8080`      |
-| `service.type` | *User Preferences* service type                                                 | `ClusterIP` |
+| Name           | Description                                                                           | Value              |
+| -------------- | ------------------------------------------------------------------------------------- | ------------------ |
+| `service.name` | *User Preferences* service name. If not set, a name is generated using the chart name | `user-preferences` |
+| `service.port` | *User Preferences* service port                                                       | `8080`             |
+| `service.type` | *User Preferences* service type                                                       | `ClusterIP`        |
 
 ### Istio Parameters
 

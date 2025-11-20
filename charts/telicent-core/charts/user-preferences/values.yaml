@@ -226,8 +226,8 @@ serviceAccount:
 # @section Traffic Exposure Parameters
 #
 service:
-  # @key service.name *User Preferences* service name. If not set, a name is generated using the name
-  name: ""
+  # @key service.name *User Preferences* service name. If not set, a name is generated using the chart name
+  name: "user-preferences"
   # @key service.port *User Preferences* service port
   port: 8080
   # @key service.type *User Preferences* service type

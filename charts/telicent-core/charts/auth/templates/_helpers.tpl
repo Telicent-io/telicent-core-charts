@@ -79,5 +79,9 @@ Create the name of the service account to use
 Create the name of the service to use
 */}}
 {{- define "auth.serviceName" -}}
+{{- if .Values.service.name }}
+{{- .Values.service.name -}}
+{{- else }}
 {{- include "auth.fullname" . }}
+{{- end }}
 {{- end }}

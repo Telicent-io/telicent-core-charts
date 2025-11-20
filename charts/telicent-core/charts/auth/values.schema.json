@@ -475,6 +475,11 @@
         "service": {
             "type": "object",
             "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "*Auth* service name. If not set, a name is generated using the chart name",
+                    "default": "auth"
+                },
                 "port": {
                     "type": "number",
                     "description": "*Auth* service port",

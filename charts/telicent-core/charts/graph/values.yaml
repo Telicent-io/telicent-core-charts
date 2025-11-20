@@ -215,9 +215,11 @@ metrics:
 
 # @section Traffic Exposure Parameters
 service:
-  # @key service.port Graph service port
+  # @key service.name *Graph* service name. If not set, a name is generated using the chart name
+  name: "graph"
+  # @key service.port *Graph* service port
   port: 8080
-  # @key service.type Graph service type
+  # @key service.type *Graph* service type
   type: ClusterIP
 
 istio:

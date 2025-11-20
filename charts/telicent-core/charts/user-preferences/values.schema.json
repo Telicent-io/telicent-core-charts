@@ -430,8 +430,8 @@
             "properties": {
                 "name": {
                     "type": "string",
-                    "description": "*User Preferences* service name. If not set, a name is generated using the name",
-                    "default": ""
+                    "description": "*User Preferences* service name. If not set, a name is generated using the chart name",
+                    "default": "user-preferences"
                 },
                 "port": {
                     "type": "number",

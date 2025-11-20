@@ -393,6 +393,11 @@
         "service": {
             "type": "object",
             "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "*Search* service name. If not set, a name is generated using the chart name",
+                    "default": "search"
+                },
                 "port": {
                     "type": "number",
                     "description": "Search service port",

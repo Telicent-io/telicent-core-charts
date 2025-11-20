@@ -144,6 +144,7 @@ Contains configuration parameters specific to the Smart Cach Search application
 
 | Name                               | Description                                                                                                                                                  | Value           |
 | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------- |
+| `service.name`                     | *Search* service name. If not set, a name is generated using the chart name                                                                                  | `search`        |
 | `service.port`                     | Search service port                                                                                                                                          | `8080`          |
 | `service.type`                     | Search service port                                                                                                                                          | `ClusterIP`     |
 | `istio.ingress.principal`          | Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName     | `""`            |

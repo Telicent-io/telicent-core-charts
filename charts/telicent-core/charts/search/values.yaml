@@ -198,6 +198,8 @@ metrics:
 # @section Traffic Exposure Parameters - Search
 #
 service:
+  # @key service.name *Search* service name. If not set, a name is generated using the chart name
+  name: "search"
   # @key service.port Search service port
   port: 8080
   # @key service.type Search service port
