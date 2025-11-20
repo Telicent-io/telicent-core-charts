@@ -118,6 +118,21 @@ podAnnotations: {}
 # - name: FOO
 # - value: instance
 extraEnvVars: []
+# @key extraVolumes Additional containers to be added to the *Auth* pod
+extraVolumes: []
+# @key extraVolumeMounts Optionally specify extra list of additional volumeMounts
+extraVolumeMounts: []
+# @key initContainers Add init containers to the pod
+initContainers: []
+# Example:
+# sidecars:
+# - name: your-image-name
+#   image: your-image
+#   ports:
+#   - name: portname
+#     containerPort: 1234
+# @key sidecars Add sidecars to the pod.
+sidecars: []
 
 image:
   # @key image.registry [default: REGISTRY_NAME] Graph image registry
@@ -191,7 +206,7 @@ persistentVolumeClaims:
 #
 metrics:
   # @key metrics.enabled Enable Prometheus metrics
-  enabled: false
+  enabled: true
   service:
     # @key metrics.service.name Name for the Prometheus service
     name: metrics

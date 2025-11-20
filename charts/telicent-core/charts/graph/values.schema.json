@@ -209,6 +209,30 @@
             "default": [],
             "items": {}
         },
+        "extraVolumes": {
+            "type": "array",
+            "description": "Additional containers to be added to the *Auth* pod",
+            "default": [],
+            "items": {}
+        },
+        "extraVolumeMounts": {
+            "type": "array",
+            "description": "Optionally specify extra list of additional volumeMounts",
+            "default": [],
+            "items": {}
+        },
+        "initContainers": {
+            "type": "array",
+            "description": "Add init containers to the pod",
+            "default": [],
+            "items": {}
+        },
+        "sidecars": {
+            "type": "array",
+            "description": "Add sidecars to the pod.",
+            "default": [],
+            "items": {}
+        },
         "image": {
             "type": "object",
             "properties": {
@@ -401,7 +425,7 @@
                 "enabled": {
                     "type": "boolean",
                     "description": "Enable Prometheus metrics",
-                    "default": false
+                    "default": true
                 },
                 "service": {
                     "type": "object",

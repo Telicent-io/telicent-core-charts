@@ -187,7 +187,7 @@ podSecurityContext:
 #
 metrics:
   # @key metrics.enabled Enable Prometheus metrics
-  enabled: false
+  enabled: true
   service:
     # @key metrics.service.name Name for the Prometheus service
     name: metrics

@@ -371,7 +371,7 @@
                 "enabled": {
                     "type": "boolean",
                     "description": "Enable Prometheus metrics",
-                    "default": false
+                    "default": true
                 },
                 "service": {
                     "type": "object",
