@@ -5,8 +5,8 @@ dependencies:
 - name: paperback-writer
   repository: file://./charts/paperback-writer
   version: 0.1.0
-- name: data-catalog
-  repository: file://./charts/data-catalog
+- name: data-catalog-ui
+  repository: file://./charts/data-catalog-ui
   version: 0.1.0
 digest: sha256:a31dce84fbbcdc8421fcfa1eee0a66d9c9629fcd1e2b78e85ba611999bb15dc6
 generated: "2025-10-21T10:04:09.780111+01:00"

@@ -481,12 +481,22 @@
                 },
                 "accessUi": {
                     "type": "string",
-                    "description": "Access host value, If not set a host is generated using service:'access-ui',port:'8080' and Release namespace & name.",
+                    "description": "Access UI host value, If not set a host is generated using service:'access-ui',port:'8080' and Release namespace & name.",
+                    "default": ""
+                },
+                "dataCatalogUi": {
+                    "type": "string",
+                    "description": "Data Catalog UI host value, If not set a host is generated using service:'data-catalog-ui',port:'8080' and Release namespace & name.",
+                    "default": ""
+                },
+                "userPortalUi": {
+                    "type": "string",
+                    "description": "User Portal UI host value, If not set a host is generated using service:'user-portal-ui',port:'8080' and Release namespace & name.",
                     "default": ""
                 },
                 "searchUi": {
                     "type": "string",
-                    "description": "Access host value, If not set a host is generated using service:'search-ui',port:'8080' and Release namespace & name.",
+                    "description": "Search UI host value, If not set a host is generated using service:'search-ui',port:'8080' and Release namespace & name.",
                     "default": ""
                 },
                 "graphUi": {

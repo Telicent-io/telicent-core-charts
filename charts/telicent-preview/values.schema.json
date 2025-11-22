@@ -118,12 +118,12 @@
                 }
             }
         },
-        "data-catalog": {
+        "data-catalog-ui": {
             "type": "object",
             "properties": {
                 "enabled": {
                     "type": "boolean",
-                    "description": "Enable or disable the data-catalog component",
+                    "description": "Enable or disable the data-catalog-ui component",
                     "default": true
                 }
             }

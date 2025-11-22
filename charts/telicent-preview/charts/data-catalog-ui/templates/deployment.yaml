@@ -1,14 +1,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "data-catalog.fullname" . }}
+  name: {{ include "data-catalog-ui.fullname" . }}
   labels:
-    {{- include "data-catalog.labels" . | nindent 4 }}
+    {{- include "data-catalog-ui.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      {{- include "data-catalog.selectorLabels" . | nindent 6 }}
+      {{- include "data-catalog-ui.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -16,7 +16,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "data-catalog.labels" . | nindent 8 }}
+        {{- include "data-catalog-ui.labels" . | nindent 8 }}
         {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -25,7 +25,7 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "data-catalog.serviceAccountName" . }}
+      serviceAccountName: {{ include "data-catalog-ui.serviceAccountName" . }}
       {{- with .Values.podSecurityContext }}
       securityContext:
         {{- toYaml . | nindent 8 }}
@@ -36,7 +36,7 @@ spec:
           securityContext:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          image: {{ include "data-catalog.image" . }}
+          image: {{ include "data-catalog-ui.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
@@ -72,7 +72,7 @@ spec:
       volumes:
         - name: config
           configMap:
-            name: {{ include "data-catalog.fullname" . }}-config
+            name: {{ include "data-catalog-ui.fullname" . }}-config
       {{- with .Values.volumes }}
         {{- toYaml . | nindent 8 }}
       {{- end }}

@@ -1,10 +1,10 @@
 # Telicent Package for Data Catalog
 
-Telicent Data Catalog provides metadata management and data discovery capabilities within Telicent CORE, allowing users to catalog, search, and manage data assets across the platform.
+Telicent Data Catalog UI provides metadata management and data discovery capabilities within Telicent CORE, allowing users to catalog, search, and manage data assets across the platform.
 
 ## Introduction
 
-This chart bootstraps Telicent Data Catalog deployment on a [Kubernetes](https://kubernetes.io) cluster using
+This chart bootstraps Telicent Data Catalog UI deployment on a [Kubernetes](https://kubernetes.io) cluster using
 the [Helm](https://helm.sh) package manager.
 
 ## Prerequisites
@@ -17,7 +17,7 @@ the [Helm](https://helm.sh) package manager.
 To install the chart with the release name `my-release`:
 
 ```console
-helm install my-release ./charts/telicent-core/charts/data-catalog
+helm install my-release ./charts/telicent-core/charts/data-catalog-ui
 ```
 
 ## Uninstalling the Chart
@@ -33,9 +33,9 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ```bash
 .dev/readme-generator-for-helm --config=charts/telicent-core/readme.config \
- --values=charts/telicent-core/charts/data-catalog/values.yaml \
- --readme=charts/telicent-core/charts/data-catalog/README.md \
- --schema=charts/telicent-core/charts/data-catalog/values.schema.json
+ --values=charts/telicent-core/charts/data-catalog-ui/values.yaml \
+ --readme=charts/telicent-core/charts/data-catalog-ui/README.md \
+ --schema=charts/telicent-core/charts/data-catalog-ui/values.schema.json
 ```
 
 ## Configuration and installation details
