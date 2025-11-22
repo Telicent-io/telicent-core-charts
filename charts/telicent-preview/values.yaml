@@ -62,7 +62,7 @@ paperback-writer:
   # @key paperback-writer.enabled Enable or disable the paperback-writer component
   enabled: true
 
-# @section data-catalog Parameters
-data-catalog:
-  # @key data-catalog.enabled Enable or disable the data-catalog component
+# @section data-catalog-ui Parameters
+data-catalog-ui:
+  # @key data-catalog-ui.enabled Enable or disable the data-catalog-ui component
   enabled: true

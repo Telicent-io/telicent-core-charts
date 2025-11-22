@@ -121,7 +121,7 @@ kubectl get svc -n {{ .Release.Namespace }}
 kubectl port-forward svc/{{ .Release.Name }}-user-portal-ui 8080:80 -n {{ .Release.Namespace }}
 {{- end }}
 {{- if $dataCatalog }}
-kubectl port-forward svc/{{ .Release.Name }}-data-catalog 8081:80 -n {{ .Release.Namespace }}
+kubectl port-forward svc/{{ .Release.Name }}-data-catalog-ui 8081:80 -n {{ .Release.Namespace }}
 {{- end }}
 
 # View logs for specific components (examples):
@@ -132,7 +132,7 @@ kubectl logs -l app.kubernetes.io/name=user-portal-ui -n {{ .Release.Namespace }
 kubectl logs -l app.kubernetes.io/name=paperback-writer -n {{ .Release.Namespace }}
 {{- end }}
 {{- if $dataCatalog }}
-kubectl logs -l app.kubernetes.io/name=data-catalog -n {{ .Release.Namespace }}
+kubectl logs -l app.kubernetes.io/name=data-catalog-ui -n {{ .Release.Namespace }}
 {{- end }}
 
 🔧 CONFIGURATION UPDATES:
@@ -157,7 +157,7 @@ Paperback Writer (Data Processing Pipeline):
   helm upgrade {{ .Release.Name }} ./charts/telicent-preview -n {{ .Release.Namespace }} --set paperback-writer.enabled=true
 
 Data Catalog (Dataset Management & Discovery):
-  helm upgrade {{ .Release.Name }} ./charts/telicent-preview -n {{ .Release.Namespace }} --set data-catalog.enabled=true
+  helm upgrade {{ .Release.Name }} ./charts/telicent-preview -n {{ .Release.Namespace }} --set data-catalog-ui.enabled=true
 
 Available preview features include:
 - Data Catalog (Dataset Management & Discovery)

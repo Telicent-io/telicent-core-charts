@@ -73,11 +73,11 @@ Contains global parameters, these parameters are mirrored across all Telicent Pr
 | -------------------------- | ------------------------------------------------ | ------ |
 | `paperback-writer.enabled` | Enable or disable the paperback-writer component | `true` |
 
-### data-catalog Parameters
+### data-catalog-ui Parameters
 
-| Name                   | Description                                  | Value  |
-| ---------------------- | -------------------------------------------- | ------ |
-| `data-catalog.enabled` | Enable or disable the data-catalog component | `true` |
+| Name                      | Description                                     | Value  |
+| ------------------------- | ----------------------------------------------- | ------ |
+| `data-catalog-ui.enabled` | Enable or disable the data-catalog-ui component | `true` |
 
 ## Subchart configurations
 

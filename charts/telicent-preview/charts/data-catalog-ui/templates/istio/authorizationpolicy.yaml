@@ -1,20 +1,20 @@
 apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
 metadata:
-  name: {{ include "data-catalog.fullname" . }}
+  name: {{ include "data-catalog-ui.fullname" . }}
   labels:
-  {{ include "data-catalog.labels" . | nindent 4 }}
+  {{ include "data-catalog-ui.labels" . | nindent 4 }}
 spec:
   action: ALLOW
   rules:
   - from:
     - source:
         principals:
-        - {{ include "data-catalog.ingressPrincipal" . }}
+        - {{ include "data-catalog-ui.ingressPrincipal" . }}
     to:
     - operation:
         methods:
         - GET
   selector:
     matchLabels:
-    {{ include "data-catalog.selectorLabels" . | nindent 6 }}
+    {{ include "data-catalog-ui.selectorLabels" . | nindent 6 }}
