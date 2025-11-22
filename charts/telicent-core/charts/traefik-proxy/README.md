@@ -215,7 +215,7 @@ Example: overriding Search UI chart value `fullnameOverride: "search-ui"` the co
 | `hosts.adminUi`         | Admin UI host value, If not set a host is generated using service:'admin-ui',port:'8080' and Release namespace & name.                                     | `""`  |
 | `hosts.accessUi`        | Access UI host value, If not set a host is generated using service:'access-ui',port:'8080' and Release namespace & name.                                   | `""`  |
 | `hosts.dataCatalogUi`   | Data Catalog UI host value, If not set a host is generated using service:'data-catalog-ui',port:'8080' and Release namespace & name.                       | `""`  |
-| `hosts.userPortalUi`    | Access host value, If not set a host is generated using service:'user-portal-ui',port:'8080' and Release namespace & name.                                 | `""`  |
+| `hosts.userPortalUi`    | User Portal UI host value, If not set a host is generated using service:'user-portal-ui',port:'8080' and Release namespace & name.                         | `""`  |
 | `hosts.searchUi`        | Search UI host value, If not set a host is generated using service:'search-ui',port:'8080' and Release namespace & name.                                   | `""`  |
 | `hosts.graphUi`         | Graph UI host value, If not set a host is generated using service:'graph-ui',port:'8080' and Release namespace & name.                                     | `""`  |
 | `hosts.queryUi`         | Query UI host value, If not set a host is generated using service:'query-ui',port:'8080' and Release namespace & name.                                     | `""`  |

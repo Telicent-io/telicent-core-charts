@@ -491,7 +491,7 @@
                 },
                 "userPortalUi": {
                     "type": "string",
-                    "description": "Access host value, If not set a host is generated using service:'user-portal-ui',port:'8080' and Release namespace & name.",
+                    "description": "User Portal UI host value, If not set a host is generated using service:'user-portal-ui',port:'8080' and Release namespace & name.",
                     "default": ""
                 },
                 "searchUi": {
