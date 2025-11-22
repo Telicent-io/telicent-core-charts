@@ -84,7 +84,7 @@ Contains configuration parameters specific to the Access UI application
 | `image.tag`                                         | Access UI image tag. If not set, a tag is generated using the appVersion | `""`                              |
 | `image.pullPolicy`                                  | Access UI image pull policy                                              | `IfNotPresent`                    |
 | `image.pullSecrets`                                 | Specify registry secret names as an array                                | `[]`                              |
-| `resources.requests.cpu`                            | Set containers' CPU request                                              | `255m`                            |
+| `resources.requests.cpu`                            | Set containers' CPU request                                              | `250m`                            |
 | `resources.requests.memory`                         | Set containers' memory request                                           | `200Mi`                           |
 | `resources.limits.cpu`                              | Set containers' CPU limit                                                | `350m`                            |
 | `resources.limits.memory`                           | Set containers' memory limit                                             | `768Mi`                           |
