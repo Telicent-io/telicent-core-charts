@@ -27,8 +27,6 @@ global:
   apiHostDomain: "api.telicent.io"
   # @key global.authHostDomain Domain associated with Telicent authentication services, including OIDC providers
   authHostDomain: "auth.telicent.io"
-  # @key global.groupsClaim Key used to retrieve groups from the OIDC provider
-  groupsClaim: "groups"
 
   # @key global.istioNamespace Namespace in which Istio is deployed
   # Note: By default, Istio namespace is set to 'istio-system'
@@ -107,6 +105,7 @@ commonLabels: {}
 replicas: 1
 # @key revisionHistoryLimit Number of controller revisions to keep
 revisionHistoryLimit: 5
+
 # @key annotations Add extra annotations to the deployment object
 annotations: {}
 # @key podLabels Add extra labels to the *User Preferences* pod
@@ -200,22 +199,12 @@ nodeSelector: {}
 tolerations: []
 
 #
-# @section Metrics Parameters
-#
-metrics:
-  service:
-    # @key metrics.service.port Port for the Prometheus service
-    port: 9464
-    # @key metrics.service.name Name for the Prometheus service
-    name: metrics
-
-#
 # @section Service Account Parameters
 #
 serviceAccount:
   # @key serviceAccount.create Specifies whether a service account should be created
   create: true
-  # @key serviceAccount.name Name of the ServiceAccount to use. If not set, a name is generated using the name
+  # @key serviceAccount.name Name of the ServiceAccount to use. If not set, a name is generated using the fullname
   name: ""
   # @key serviceAccount.annotations Additional custom annotations for the ServiceAccount
   annotations: {}
@@ -226,12 +215,24 @@ serviceAccount:
 # @section Traffic Exposure Parameters
 #
 service:
-  # @key service.name *User Preferences* service name. If not set, a name is generated using the chart name
+  # @key service.name *User Preferences* service name. If not set, a name is generated using the fullname
   name: "user-preferences"
   # @key service.port *User Preferences* service port
   port: 8080
   # @key service.type *User Preferences* service type
   type: ClusterIP
+
+#
+# @section Metrics (Prometheus) Exposure Parameters
+#
+metrics:
+  # @key metrics.enabled Enable Prometheus metrics
+  enabled: true
+  service:
+    # @key metrics.service.name Name for the Prometheus service
+    name: metrics
+    # @key metrics.service.port Port for the Prometheus service
+    port: 9464
 
 #
 # @section Istio Parameters

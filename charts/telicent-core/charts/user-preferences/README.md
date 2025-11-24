@@ -95,7 +95,6 @@ Contains global parameters, these parameters are mirrored within the Telicent co
 | `global.appHostDomain`                 | Domain associated with Telicent application/ui services                           | `apps.telicent.io`       |
 | `global.apiHostDomain`                 | Domain associated with Telicent Api services                                      | `api.telicent.io`        |
 | `global.authHostDomain`                | Domain associated with Telicent authentication services, including OIDC providers | `auth.telicent.io`       |
-| `global.groupsClaim`                   | Key used to retrieve groups from the OIDC provider                                | `groups`                 |
 | `global.istioNamespace`                | Namespace in which Istio is deployed                                              | `istio-system`           |
 | `global.istioServiceAccountName`       | Name of the Istio service account                                                 | `istio-ingress`          |
 | `global.istioGatewayName`              | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)         | `ingress-gateway`        |
@@ -176,29 +175,30 @@ For Quick Start purposes, a secret named `tc-auth-usr-mongo-user-preferences` wi
 | `nodeSelector`                                      | Node labels for pod assignment                                                    | `{}`                                                |
 | `tolerations`                                       | Tolerations for pod assignment                                                    | `[]`                                                |
 
-### Metrics Parameters
-
-| Name                   | Description                     | Value     |
-| ---------------------- | ------------------------------- | --------- |
-| `metrics.service.port` | Port for the Prometheus service | `9464`    |
-| `metrics.service.name` | Name for the Prometheus service | `metrics` |
-
 ### Service Account Parameters
 
-| Name                         | Description                                                                       | Value  |
-| ---------------------------- | --------------------------------------------------------------------------------- | ------ |
-| `serviceAccount.create`      | Specifies whether a service account should be created                             | `true` |
-| `serviceAccount.name`        | Name of the ServiceAccount to use. If not set, a name is generated using the name | `""`   |
-| `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                              | `{}`   |
-| `serviceAccount.automount`   | Automatically mount a ServiceAccount's API credentials                            | `true` |
+| Name                         | Description                                                                           | Value  |
+| ---------------------------- | ------------------------------------------------------------------------------------- | ------ |
+| `serviceAccount.create`      | Specifies whether a service account should be created                                 | `true` |
+| `serviceAccount.name`        | Name of the ServiceAccount to use. If not set, a name is generated using the fullname | `""`   |
+| `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                  | `{}`   |
+| `serviceAccount.automount`   | Automatically mount a ServiceAccount's API credentials                                | `true` |
 
 ### Traffic Exposure Parameters
 
-| Name           | Description                                                                           | Value              |
-| -------------- | ------------------------------------------------------------------------------------- | ------------------ |
-| `service.name` | *User Preferences* service name. If not set, a name is generated using the chart name | `user-preferences` |
-| `service.port` | *User Preferences* service port                                                       | `8080`             |
-| `service.type` | *User Preferences* service type                                                       | `ClusterIP`        |
+| Name           | Description                                                                         | Value              |
+| -------------- | ----------------------------------------------------------------------------------- | ------------------ |
+| `service.name` | *User Preferences* service name. If not set, a name is generated using the fullname | `user-preferences` |
+| `service.port` | *User Preferences* service port                                                     | `8080`             |
+| `service.type` | *User Preferences* service type                                                     | `ClusterIP`        |
+
+### Metrics (Prometheus) Exposure Parameters
+
+| Name                   | Description                     | Value     |
+| ---------------------- | ------------------------------- | --------- |
+| `metrics.enabled`      | Enable Prometheus metrics       | `true`    |
+| `metrics.service.name` | Name for the Prometheus service | `metrics` |
+| `metrics.service.port` | Port for the Prometheus service | `9464`    |
 
 ### Istio Parameters
 

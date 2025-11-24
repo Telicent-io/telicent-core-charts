@@ -5,6 +5,11 @@
         "global": {
             "type": "object",
             "properties": {
+                "enterprise": {
+                    "type": "boolean",
+                    "description": "Enable enterprise mode, adding additional features and configurations",
+                    "default": false
+                },
                 "imageRegistry": {
                     "type": "string",
                     "description": "Global image registry",
@@ -15,11 +20,6 @@
                     "description": "Global registry secret names as an array",
                     "default": [],
                     "items": {}
-                },
-                "enterprise": {
-                    "type": "boolean",
-                    "description": "Enable enterprise mode, adding additional features and configurations",
-                    "default": false
                 },
                 "appHostDomain": {
                     "type": "string",
@@ -361,7 +361,12 @@
                         "principal": {
                             "type": "string",
                             "description": "Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName'",
-                            "default": "cluster.local/ns/tc-core/sa/traefik-proxy"
+                            "default": ""
+                        },
+                        "serviceAccountName": {
+                            "type": "string",
+                            "description": "Name of the Ingress service account (traefik and istio supported)",
+                            "default": "traefik-proxy"
                         }
                     }
                 }

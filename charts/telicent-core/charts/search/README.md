@@ -54,7 +54,6 @@ Contains global parameters, these parameters are mirrored within the Telicent co
 | `global.appHostDomain`                 | Domain associated with Telicent application/ui services                           | `apps.telicent.io`                             |
 | `global.apiHostDomain`                 | Domain associated with Telicent Api services                                      | `api.telicent.io`                              |
 | `global.authHostDomain`                | Domain associated with Telicent authentication services, including OIDC providers | `auth.telicent.io`                             |
-| `global.groupsClaim`                   | Key used to retrieve groups from the OIDC provider                                | `groups`                                       |
 | `global.istioNamespace`                | Namespace in which Istio is deployed                                              | `istio-system`                                 |
 | `global.istioServiceAccountName`       | Name of the Istio service account                                                 | `istio-ingress`                                |
 | `global.istioGatewayName`              | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)         | `ingress-gateway`                              |
@@ -64,28 +63,25 @@ Contains global parameters, these parameters are mirrored within the Telicent co
 | `global.truststore.existingSecretName` | Name of an existing secret containing the truststore                              | `""`                                           |
 | `global.truststore.mountPath`          | The mount path for the truststore in the container                                | `/app/config/truststore`                       |
 
-### Search Parameters
+### Configuration Parameters
 
+Contains configuration parameters specific to the *Search* application
 
-### Configuration Parameters - Search
-
-Contains configuration parameters specific to the Smart Cach Search application
-
-| Name                                    | Description                                                            | Value                                                                                        |
-| --------------------------------------- | ---------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| `configuration.existingEnvConfigMap`    | Name of existing configmap containing Search Environment Configuration | `""`                                                                                         |
-| `configuration.userAttributesUrl`       | URL for the user details endpoint                                      | `""`                                                                                         |
-| `configuration.attributeHierarchyUrl`   | URL for the user hierarchy endpoint                                    | `""`                                                                                         |
-| `configuration.javaOptions`             | JVM options for the application                                        | `-XX:MaxRAMPercentage=70.0 -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks` |
-| `configuration.otelMetricsExporter`     | OpenTelemetry metrics exporter                                         | `prometheus`                                                                                 |
-| `configuration.otelTracesExporter`      | OpenTelemetry traces exporter                                          | `none`                                                                                       |
-| `configuration.elasticHost`             | OpenSearch host                                                        | `https://your.opensearch.host.here:443`                                                      |
-| `configuration.elasticPort`             | OpenSearch port number                                                 | `443`                                                                                        |
-| `configuration.elasticClusterPort`      | OpenSearch cluster port                                                | `9200`                                                                                       |
-| `configuration.opensearchCompatibility` | Enable OpenSearch compatibility                                        | `true`                                                                                       |
-| `configuration.elasticIndexNames`       | OpenSearch index name(s)                                               | `search,doc-content`                                                                         |
-| `configuration.searchFieldOptions`      | Field options for search                                               | `primaryName^2,*`                                                                            |
-| `configuration.indexBatchSize`          | Number of documents to index in a single batch operation               | `100`                                                                                        |
+| Name                                    | Description                                                              | Value                                                                                        |
+| --------------------------------------- | ------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------- |
+| `configuration.existingEnvConfigMap`    | Name of existing configmap containing *Search* Environment Configuration | `""`                                                                                         |
+| `configuration.userAttributesUrl`       | URL for the user details endpoint                                        | `""`                                                                                         |
+| `configuration.attributeHierarchyUrl`   | URL for the user hierarchy endpoint                                      | `""`                                                                                         |
+| `configuration.javaOptions`             | JVM options for the application                                          | `-XX:MaxRAMPercentage=70.0 -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks` |
+| `configuration.otelMetricsExporter`     | OpenTelemetry metrics exporter                                           | `prometheus`                                                                                 |
+| `configuration.otelTracesExporter`      | OpenTelemetry traces exporter                                            | `none`                                                                                       |
+| `configuration.elasticHost`             | OpenSearch host                                                          | `https://your.opensearch.host.here:443`                                                      |
+| `configuration.elasticPort`             | OpenSearch port number                                                   | `443`                                                                                        |
+| `configuration.elasticClusterPort`      | OpenSearch cluster port                                                  | `9200`                                                                                       |
+| `configuration.opensearchCompatibility` | Enable OpenSearch compatibility                                          | `true`                                                                                       |
+| `configuration.elasticIndexNames`       | OpenSearch index name(s)                                                 | `search,doc-content`                                                                         |
+| `configuration.searchFieldOptions`      | Field options for search                                                 | `primaryName^2,*`                                                                            |
+| `configuration.indexBatchSize`          | Number of documents to index in a single batch operation                 | `100`                                                                                        |
 
 ### OpenSearch/Elastic secret - Search
 
@@ -95,26 +91,33 @@ Contains configuration parameters specific to the Smart Cach Search application
 | `elasticSecret.username`       | OpenSearch/Elastic username                                            | `""`  |
 | `elasticSecret.password`       | OpenSearch/Elastic user password                                       | `""`  |
 
-### Common Parameters - Search
+### Common Parameters
 
-| Name               | Description                                                            | Value |
-| ------------------ | ---------------------------------------------------------------------- | ----- |
-| `fullnameOverride` | String to fully override the generated release name                    | `""`  |
-| `nameOverride`     | String to partially override fullname (will maintain the release name) | `""`  |
+| Name                | Description                                                            | Value |
+| ------------------- | ---------------------------------------------------------------------- | ----- |
+| `nameOverride`      | String to partially override fullname (will maintain the release name) | `""`  |
+| `fullnameOverride`  | String to fully override the generated release name                    | `""`  |
+| `namespaceOverride` | String to fully override all deployed resources namespace              | `""`  |
+| `commonLabels`      | Add labels to all the deployed resources                               | `{}`  |
 
-### Deployment Parameters - Search
+### Deployment Parameters
 
 | Name                                                | Description                                                             | Value                               |
 | --------------------------------------------------- | ----------------------------------------------------------------------- | ----------------------------------- |
-| `replicas`                                          | Number of Search replicas to deploy                                     | `1`                                 |
+| `replicas`                                          | Number of *Search* replicas to deploy                                   | `1`                                 |
 | `revisionHistoryLimit`                              | Number of controller revisions to keep                                  | `5`                                 |
-| `annotations`                                       | Add extra annotations to the Deployment object                          | `{}`                                |
-| `podAnnotations`                                    | Add extra annotations to the *Auth* pod                                 | `{}`                                |
-| `extraEnvVars`                                      | Array with extra environment variables to add to *Auth* pod             | `[]`                                |
-| `image.registry`                                    | Search image registry                                                   | `REGISTRY_NAME`                     |
-| `image.repository`                                  | Search image name                                                       | `REPOSITORY_NAME/search-api-server` |
-| `image.tag`                                         | Search image tag. If not set, a tag is generated using the appVersion   | `""`                                |
-| `image.pullPolicy`                                  | Search image pull policy                                                | `IfNotPresent`                      |
+| `annotations`                                       | Add extra annotations to the deployment object                          | `{}`                                |
+| `podLabels`                                         | Add extra labels to the *Search* pod                                    | `{}`                                |
+| `podAnnotations`                                    | Add extra annotations to the *Search* pod                               | `{}`                                |
+| `extraEnvVars`                                      | Array with extra environment variables to add to *Search* pod           | `[]`                                |
+| `extraVolumes`                                      | Additional containers to be added to the *Search* pod                   | `[]`                                |
+| `extraVolumeMounts`                                 | Optionally specify extra list of additional volumeMounts                | `[]`                                |
+| `initContainers`                                    | Add init containers to the pod                                          | `[]`                                |
+| `sidecars`                                          | Add sidecars to the pod.                                                | `[]`                                |
+| `image.registry`                                    | *Search* image registry                                                 | `REGISTRY_NAME`                     |
+| `image.repository`                                  | *Search* image name                                                     | `REPOSITORY_NAME/search-api-server` |
+| `image.tag`                                         | *Search* image tag. If not set, a tag is generated using the appVersion | `""`                                |
+| `image.pullPolicy`                                  | *Search* image pull policy                                              | `IfNotPresent`                      |
 | `image.pullSecrets`                                 | Specify registry secret names as an array                               | `[]`                                |
 | `resources.requests.cpu`                            | Set containers' CPU request                                             | `500m`                              |
 | `resources.requests.memory`                         | Set containers' memory request                                          | `4000Mi`                            |
@@ -131,8 +134,28 @@ Contains configuration parameters specific to the Smart Cach Search application
 | `podSecurityContext.runAsNonRoot`                   | Set the provisioning pod's Security Context runAsNonRoot                | `true`                              |
 | `podSecurityContext.fsGroup`                        | Set the provisioning pod's Group ID for the mounted volumes' filesystem | `185`                               |
 | `podSecurityContext.seccompProfile.type`            | Set the provisioning pod's Security Context seccomp profile             | `RuntimeDefault`                    |
+| `affinity`                                          | Affinity for pod assignment                                             | `{}`                                |
+| `nodeSelector`                                      | Node labels for pod assignment                                          | `{}`                                |
+| `tolerations`                                       | Tolerations for pod assignment                                          | `[]`                                |
 
-### Metrics (Prometheus) Parameters
+### Service Account Parameters
+
+| Name                         | Description                                                                           | Value  |
+| ---------------------------- | ------------------------------------------------------------------------------------- | ------ |
+| `serviceAccount.create`      | Specifies whether a service account should be created                                 | `true` |
+| `serviceAccount.name`        | Name of the ServiceAccount to use. If not set, a name is generated using the fullname | `""`   |
+| `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                  | `{}`   |
+| `serviceAccount.automount`   | Automatically mount a ServiceAccount's API credentials                                | `true` |
+
+### Traffic Exposure Parameters
+
+| Name           | Description                                                               | Value       |
+| -------------- | ------------------------------------------------------------------------- | ----------- |
+| `service.name` | *Search* service name. If not set, a name is generated using the fullname | `search`    |
+| `service.port` | *Search* service port                                                     | `8080`      |
+| `service.type` | *Search* service port                                                     | `ClusterIP` |
+
+### Metrics (Prometheus) Exposure Parameters
 
 | Name                   | Description                     | Value     |
 | ---------------------- | ------------------------------- | --------- |
@@ -140,30 +163,14 @@ Contains configuration parameters specific to the Smart Cach Search application
 | `metrics.service.name` | Name for the Prometheus service | `metrics` |
 | `metrics.service.port` | Port for the Prometheus service | `9464`    |
 
-### Traffic Exposure Parameters - Search
+### Istio Parameters
 
 | Name                               | Description                                                                                                                                                  | Value           |
 | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------- |
-| `service.name`                     | *Search* service name. If not set, a name is generated using the chart name                                                                                  | `search`        |
-| `service.port`                     | Search service port                                                                                                                                          | `8080`          |
-| `service.type`                     | Search service port                                                                                                                                          | `ClusterIP`     |
 | `istio.ingress.principal`          | Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName     | `""`            |
 | `istio.ingress.serviceAccountName` | Name of the Ingress service account (traefik and istio supported)                                                                                            | `traefik-proxy` |
 | `istio.graph.principal`            | Principal used for Graph traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'serviceAccountName' and the current namespace | `""`            |
 | `istio.graph.serviceAccountName`   | Name of the Graph service account                                                                                                                            | `graph`         |
-
-### Extra Containers Parameters
-
-| Name              | Description                                  | Value |
-| ----------------- | -------------------------------------------- | ----- |
-| `extraContainers` | Additional containers to be added to the pod | `[]`  |
-
-### Service Account Parameters - Search
-
-| Name                         | Description                                                                                     | Value |
-| ---------------------------- | ----------------------------------------------------------------------------------------------- | ----- |
-| `serviceAccount.name`        | Name of the created ServiceAccount. If not set, a name is generated using the fullname template | `""`  |
-| `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                            | `{}`  |
 
 ## License
 

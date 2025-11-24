@@ -7,6 +7,7 @@ kind: Service
 
 metadata:
   name: {{ include "search.serviceName" .}}
+  namespace: {{ include "search.namespace" . | quote }}
   labels:
     {{- include "search.labels" . | nindent 4 }}
 
@@ -17,14 +18,14 @@ spec:
   ports:
     - name: http
       appProtocol: http
-      targetPort: http
       protocol: TCP
+      targetPort: http
       port: {{ .Values.service.port }}
 
     {{- if .Values.metrics.enabled }}
     - name: {{ .Values.metrics.service.name | default "metrics" }}
       appProtocol: http
-      targetPort: metrics
       protocol: TCP
+      targetPort: metrics
       port: {{ .Values.metrics.service.port }}
     {{- end }}

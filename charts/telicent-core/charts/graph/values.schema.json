@@ -36,16 +36,6 @@
                     "description": "Domain associated with Telicent authentication services, including OIDC providers",
                     "default": "auth.telicent.io"
                 },
-                "groupsClaim": {
-                    "type": "string",
-                    "description": "Key used to retrieve groups from the OIDC provider",
-                    "default": "groups"
-                },
-                "jwksUrl": {
-                    "type": "string",
-                    "description": "Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)",
-                    "default": "https://{yourAuthdomain}/.well-known/jwks.json"
-                },
                 "istioNamespace": {
                     "type": "string",
                     "description": "Namespace in which Istio is deployed",
@@ -64,7 +54,7 @@
                 "istioVirtualServiceEnabled": {
                     "type": "boolean",
                     "description": "Enable Istio traffic routing to a named destination service",
-                    "default": true
+                    "default": false
                 },
                 "kafka": {
                     "type": "object",
@@ -123,7 +113,7 @@
             "properties": {
                 "existingEnvConfigMap": {
                     "type": "string",
-                    "description": "Name of existing configmap containing Graph Environment Configuration",
+                    "description": "Name of existing configmap containing *Graph* Environment Configuration",
                     "default": ""
                 },
                 "existingFusekiConfigMap": {
@@ -144,7 +134,7 @@
                 "javaOptions": {
                     "type": "string",
                     "description": "JVM options for the application",
-                    "default": "-Xmx5120m -Xms2048m -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks"
+                    "default": "-XX:MaxRAMPercentage=80.0"
                 },
                 "otelMetricsExporter": {
                     "type": "string",
@@ -185,7 +175,7 @@
         },
         "replicas": {
             "type": "number",
-            "description": "Number of Graph replicas to deploy",
+            "description": "Number of *Graph* replicas to deploy",
             "default": 1
         },
         "revisionHistoryLimit": {
@@ -198,20 +188,25 @@
             "description": "Add extra annotations to the Statefulset object",
             "default": {}
         },
+        "podLabels": {
+            "type": "object",
+            "description": "Add extra labels to the *Graph* pod",
+            "default": {}
+        },
         "podAnnotations": {
             "type": "object",
-            "description": "Add extra annotations to the *Auth* pod",
+            "description": "Add extra annotations to the *Graph* pod",
             "default": {}
         },
         "extraEnvVars": {
             "type": "array",
-            "description": "Array with extra environment variables to add to *Auth* pod",
+            "description": "Array with extra environment variables to add to *Graph* pod",
             "default": [],
             "items": {}
         },
         "extraVolumes": {
             "type": "array",
-            "description": "Additional containers to be added to the *Auth* pod",
+            "description": "Additional containers to be added to the *Graph* pod",
             "default": [],
             "items": {}
         },
@@ -238,22 +233,22 @@
             "properties": {
                 "registry": {
                     "type": "string",
-                    "description": "Graph image registry",
+                    "description": "*Graph* image registry",
                     "default": "REGISTRY_NAME"
                 },
                 "repository": {
                     "type": "string",
-                    "description": "Graph image name",
+                    "description": "*Graph* image name",
                     "default": "REPOSITORY_NAME/smart-cache-graph"
                 },
                 "tag": {
                     "type": "string",
-                    "description": "Graph image tag. If not set, a tag is generated using the appVersion",
+                    "description": "*Graph* image tag. If not set, a tag is generated using the appVersion",
                     "default": ""
                 },
                 "pullPolicy": {
                     "type": "string",
-                    "description": "Graph image pull policy",
+                    "description": "*Graph* image pull policy",
                     "default": "IfNotPresent"
                 },
                 "pullSecrets": {
@@ -273,7 +268,7 @@
                         "cpu": {
                             "type": "string",
                             "description": "Set containers' CPU request",
-                            "default": "500m"
+                            "default": "1000m"
                         },
                         "memory": {
                             "type": "string",
@@ -384,6 +379,22 @@
                 }
             }
         },
+        "affinity": {
+            "type": "object",
+            "description": "Affinity for pod assignment",
+            "default": {}
+        },
+        "nodeSelector": {
+            "type": "object",
+            "description": "Node labels for pod assignment",
+            "default": {}
+        },
+        "tolerations": {
+            "type": "array",
+            "description": "Tolerations for pod assignment",
+            "default": [],
+            "items": {}
+        },
         "persistentVolumeClaims": {
             "type": "object",
             "properties": {
@@ -407,15 +418,60 @@
                     "properties": {
                         "size": {
                             "type": "string",
-                            "description": "PVC Storage Request for the Graph volume",
+                            "description": "PVC Storage Request for the *Graph* volume",
                             "default": "25Gi"
                         },
                         "storageClass": {
                             "type": "string",
-                            "description": "iPVC Storage Class for the Graph data volume",
+                            "description": "iPVC Storage Class for the *Graph* data volume",
                             "default": "gp3"
                         }
                     }
+                }
+            }
+        },
+        "serviceAccount": {
+            "type": "object",
+            "properties": {
+                "create": {
+                    "type": "boolean",
+                    "description": "Specifies whether a service account should be created",
+                    "default": true
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the ServiceAccount to use. If not set, a name is generated using the fullname",
+                    "default": ""
+                },
+                "annotations": {
+                    "type": "object",
+                    "description": "Additional custom annotations for the ServiceAccount",
+                    "default": {}
+                },
+                "automount": {
+                    "type": "boolean",
+                    "description": "Automatically mount a ServiceAccount's API credentials",
+                    "default": true
+                }
+            }
+        },
+        "service": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "*Graph* service name. If not set, a name is generated using the fullname",
+                    "default": "graph"
+                },
+                "port": {
+                    "type": "number",
+                    "description": "*Graph* service port",
+                    "default": 8080
+                },
+                "type": {
+                    "type": "string",
+                    "description": "*Graph* service type",
+                    "default": "ClusterIP"
                 }
             }
         },
@@ -444,26 +500,6 @@
                 }
             }
         },
-        "service": {
-            "type": "object",
-            "properties": {
-                "name": {
-                    "type": "string",
-                    "description": "*Graph* service name. If not set, a name is generated using the chart name",
-                    "default": "graph"
-                },
-                "port": {
-                    "type": "number",
-                    "description": "*Graph* service port",
-                    "default": 8080
-                },
-                "type": {
-                    "type": "string",
-                    "description": "*Graph* service type",
-                    "default": "ClusterIP"
-                }
-            }
-        },
         "istio": {
             "type": "object",
             "properties": {
@@ -481,27 +517,21 @@
                             "default": "traefik-proxy"
                         }
                     }
-                }
-            }
-        },
-        "extraContainers": {
-            "type": "array",
-            "description": "Additional containers to be added to the pod",
-            "default": [],
-            "items": {}
-        },
-        "serviceAccount": {
-            "type": "object",
-            "properties": {
-                "name": {
-                    "type": "string",
-                    "description": "Name of the ServiceAccount to use. If not set, a name is generated using the fullname",
-                    "default": ""
                 },
-                "annotations": {
+                "paperbackWriter": {
                     "type": "object",
-                    "description": "Additional custom annotations for the ServiceAccount",
-                    "default": {}
+                    "properties": {
+                        "principal": {
+                            "type": "string",
+                            "description": "Principal used for Paperback Writer traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName",
+                            "default": ""
+                        },
+                        "serviceAccountName": {
+                            "type": "string",
+                            "description": "Name of the Paperback Writer service account",
+                            "default": "paperback-writer"
+                        }
+                    }
                 }
             }
         }

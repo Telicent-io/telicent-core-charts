@@ -7,28 +7,20 @@ kind: AuthorizationPolicy
 
 metadata:
   name: {{ include "access.fullname" . }}-ingress
+  namespace: {{ include "access.namespace" . | quote }}
   labels:
-  {{- include "access.labels" . | nindent 4 }}
+    {{- include "access.labels" . | nindent 4 }}
 
 spec:
   selector:
     matchLabels:
-    {{- include "access.selectorLabels" . | nindent 6 }}
-
+      {{- include "access.selectorLabels" . | nindent 6 }}
   action: ALLOW
-
   rules:
   - from:
     - source:
         principals:
-        - {{ include "access.ingressPrincipal" . }}
+          {{- include "access.ingressPrincipal" .  | nindent 8 }}
     to:
     - operation:
-        methods:
-        - GET
-        - POST
-        - DELETE
-        - PUT
-        - PATCH
-        - OPTIONS
-        - HEAD
+        methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"]

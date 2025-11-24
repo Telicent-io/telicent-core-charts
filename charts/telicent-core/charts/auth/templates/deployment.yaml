@@ -59,7 +59,7 @@ spec:
       {{- end }}
       {{- end }}
       containers:
-      - name: auth
+      - name: {{ .Chart.Name }}
         image: {{ include "auth.image" . }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         resources: {{- toYaml .Values.resources | nindent 10 }}
@@ -106,7 +106,7 @@ spec:
         - name: http
           protocol: TCP
           containerPort: 9000
-         
+
         readinessProbe:
           httpGet:
             path: /actuator/health

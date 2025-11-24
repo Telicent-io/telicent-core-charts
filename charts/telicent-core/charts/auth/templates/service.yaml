@@ -16,8 +16,8 @@ spec:
   selector:
     {{- include "auth.selectorLabels" . | nindent 4 }}
   ports:
-    - name: http
-      appProtocol: http
-      targetPort: http
-      protocol: TCP
-      port: {{ .Values.service.port }}
+  - name: http
+    appProtocol: http
+    protocol: TCP
+    targetPort: http
+    port: {{ .Values.service.port }}

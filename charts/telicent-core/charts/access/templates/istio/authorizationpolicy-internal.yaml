@@ -7,26 +7,23 @@ kind: AuthorizationPolicy
 
 metadata:
   name: {{ include "access.fullname" . }}-internal-ingress
+  namespace: {{ include "access.namespace" . | quote }}
   labels:
-  {{- include "access.labels" . | nindent 4 }}
+    {{- include "access.labels" . | nindent 4 }}
 
 spec:
   selector:
     matchLabels:
-    {{- include "access.selectorLabels" . | nindent 6 }}
-
+      {{- include "access.selectorLabels" . | nindent 6 }}
   action: ALLOW
-
   rules:
   - from:
     - source:
         principals:
-        - {{ include "access.graphPrincipal" . }}
-        {{- if .Values.global.enterprise }}
-        - {{ include "access.searchPrincipal" . }}
-        - {{ include "access.paperbackWriterPrincipal" . }}
-        {{- end }}
+          {{- include "access.graphPrincipal" . | nindent 8 }}
+          {{- include "access.userPreferencesPrincipal" . | nindent 8 }}
+          {{- include "access.searchPrincipal" . | nindent 8 }}
+          {{- include "access.paperbackWriterPrincipal" . | nindent 8 }}
     to:
     - operation:
-        methods:
-        - GET
+        methods: ["GET"]

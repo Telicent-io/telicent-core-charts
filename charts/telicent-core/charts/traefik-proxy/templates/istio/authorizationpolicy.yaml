@@ -9,26 +9,18 @@ metadata:
   name: {{ include "traefik-proxy.fullname" . }}-ingress
   namespace: {{ include "traefik-proxy.namespace" . | quote }}
   labels:
-  {{- include "traefik-proxy.labels" . | nindent 4 }}
+    {{- include "traefik-proxy.labels" . | nindent 4 }}
 
 spec:
   selector:
     matchLabels:
-    {{- include "traefik-proxy.selectorLabels" . | nindent 6 }}
-
+      {{- include "traefik-proxy.selectorLabels" . | nindent 6 }}
   action: ALLOW
   rules:
   - from:
     - source:
         principals:
-        - {{ include "traefik-proxy.ingressPrincipal" . }}
+          {{- include "traefik-proxy.ingressPrincipal" . | nindent 8 }}
     to:
     - operation:
-        methods:
-        - GET
-        - POST
-        - PUT
-        - DELETE
-        - PATCH
-        - OPTIONS
-        - HEAD
+        methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"]

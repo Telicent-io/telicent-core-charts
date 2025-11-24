@@ -7,6 +7,7 @@ kind: ConfigMap
 
 metadata:
   name: {{ include "search-projector.envConfigMapName" . }}
+  namespace: {{ include "search-projector.namespace" . | quote }}
   labels:
     {{- include "search-projector.labels" . | nindent 4 }}
 
@@ -24,6 +25,3 @@ data:
   TOPIC: {{ .Values.configuration.topic | quote }}
   DLQ_TOPIC: {{ .Values.configuration.dlqTopic | quote }}
   INDEX_BATCH_SIZE: {{ .Values.configuration.indexBatchSize | quote }}
-  {{- with .Values.extraEnvs }}
-  {{- toYaml . | nindent 2 }}
-  {{- end }}

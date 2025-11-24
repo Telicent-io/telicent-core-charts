@@ -17,10 +17,10 @@ Create the name of the routes config map
 {{- end }}
 
 {{/*
-Returns a service name used by routes configuration files.
-When installed through the parent chart the service name will include the release name.
-Installed through a sub chart and release name equals traefik proxy chart name. It will not
-contain a release name.
+Returns the service name, used by routes configuration files.
+a.) installed through the parent chart, the service name will include the release name.
+b.) installed through a sub chart, where the srelease name equals 'traefik proxy' (chart name) the
+    release name will not be included.
 */}}
 {{- define "traefik-proxy.routesService" -}}
 {{- $envVal := index . 0 -}}

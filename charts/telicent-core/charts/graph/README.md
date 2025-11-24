@@ -46,43 +46,41 @@ The command removes all the Kubernetes components associated with the chart and 
 
 Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
 
-| Name                                    | Description                                                                                                       | Value                                            |
-| --------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
-| `global.imageRegistry`                  | Global image registry                                                                                             | `""`                                             |
-| `global.imagePullSecrets`               | Global registry secret names as an array                                                                          | `[]`                                             |
-| `global.enterprise`                     | Enable enterprise mode, adding additional features and configurations                                             | `false`                                          |
-| `global.appHostDomain`                  | Domain associated with Telicent application/ui services                                                           | `apps.telicent.io`                               |
-| `global.apiHostDomain`                  | Domain associated with Telicent Api services                                                                      | `api.telicent.io`                                |
-| `global.authHostDomain`                 | Domain associated with Telicent authentication services, including OIDC providers                                 | `auth.telicent.io`                               |
-| `global.groupsClaim`                    | Key used to retrieve groups from the OIDC provider                                                                | `groups`                                         |
-| `global.jwksUrl`                        | Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)                                     | `https://{yourAuthdomain}/.well-known/jwks.json` |
-| `global.istioNamespace`                 | Namespace in which Istio is deployed                                                                              | `istio-system`                                   |
-| `global.istioServiceAccountName`        | Name of the Istio service account                                                                                 | `istio-ingress`                                  |
-| `global.istioGatewayName`               | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)                                         | `ingress-gateway`                                |
-| `global.istioVirtualServiceEnabled`     | Enable Istio traffic routing to a named destination service                                                       | `true`                                           |
-| `global.kafka.bootstrapServers`         | Comma separated list containing Kafka bootstrap servers                                                           | `kafka-bootstrap.kafka.svc.cluster.local:9092`   |
-| `global.kafka.existingConfigSecretName` | Name of an existing secret containing Kafka configuration (preferred over individual settings below for security) | `""`                                             |
-| `global.kafka.username`                 | Username for Kafka authentication                                                                                 | `your.kafka.username.here`                       |
-| `global.kafka.password`                 | Password for Kafka authentication                                                                                 | `your.kafka.password.here`                       |
-| `global.kafka.protocol`                 | Protocol used for Kafka communication                                                                             | `SASL_SSL`                                       |
-| `global.kafka.mechanism`                | SASL mechanism used for Kafka authentication                                                                      | `SCRAM-SHA-512`                                  |
-| `global.truststore.existingSecretName`  | Name of an existing secret containing the truststore                                                              | `""`                                             |
-| `global.truststore.mountPath`           | The mount path for the truststore in the container                                                                | `/app/config/truststore`                         |
+| Name                                    | Description                                                                                                       | Value                                          |
+| --------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| `global.imageRegistry`                  | Global image registry                                                                                             | `""`                                           |
+| `global.imagePullSecrets`               | Global registry secret names as an array                                                                          | `[]`                                           |
+| `global.enterprise`                     | Enable enterprise mode, adding additional features and configurations                                             | `false`                                        |
+| `global.appHostDomain`                  | Domain associated with Telicent application/ui services                                                           | `apps.telicent.io`                             |
+| `global.apiHostDomain`                  | Domain associated with Telicent Api services                                                                      | `api.telicent.io`                              |
+| `global.authHostDomain`                 | Domain associated with Telicent authentication services, including OIDC providers                                 | `auth.telicent.io`                             |
+| `global.istioNamespace`                 | Namespace in which Istio is deployed                                                                              | `istio-system`                                 |
+| `global.istioServiceAccountName`        | Name of the Istio service account                                                                                 | `istio-ingress`                                |
+| `global.istioGatewayName`               | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)                                         | `ingress-gateway`                              |
+| `global.istioVirtualServiceEnabled`     | Enable Istio traffic routing to a named destination service                                                       | `false`                                        |
+| `global.kafka.bootstrapServers`         | Comma separated list containing Kafka bootstrap servers                                                           | `kafka-bootstrap.kafka.svc.cluster.local:9092` |
+| `global.kafka.existingConfigSecretName` | Name of an existing secret containing Kafka configuration (preferred over individual settings below for security) | `""`                                           |
+| `global.kafka.username`                 | Username for Kafka authentication                                                                                 | `your.kafka.username.here`                     |
+| `global.kafka.password`                 | Password for Kafka authentication                                                                                 | `your.kafka.password.here`                     |
+| `global.kafka.protocol`                 | Protocol used for Kafka communication                                                                             | `SASL_SSL`                                     |
+| `global.kafka.mechanism`                | SASL mechanism used for Kafka authentication                                                                      | `SCRAM-SHA-512`                                |
+| `global.truststore.existingSecretName`  | Name of an existing secret containing the truststore                                                              | `""`                                           |
+| `global.truststore.mountPath`           | The mount path for the truststore in the container                                                                | `/app/config/truststore`                       |
 
 ### Configuration Parameters
 
-Contains configuration parameters specific to the Graph application
+Contains configuration parameters specific to the *Graph* application
 
-| Name                                    | Description                                                           | Value                                                                                  |
-| --------------------------------------- | --------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
-| `configuration.existingEnvConfigMap`    | Name of existing configmap containing Graph Environment Configuration | `""`                                                                                   |
-| `configuration.existingFusekiConfigMap` | Name of existing configmap containing Fuseki Configuration            | `""`                                                                                   |
-| `configuration.userAttributesUrl`       | URL for the user details endpoint                                     | `""`                                                                                   |
-| `configuration.attributeHierarchyUrl`   | URL for the user hierarchy endpoint                                   | `""`                                                                                   |
-| `configuration.javaOptions`             | JVM options for the application                                       | `-Xmx5120m -Xms2048m -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks` |
-| `configuration.otelMetricsExporter`     | OpenTelemetry metrics exporter                                        | `prometheus`                                                                           |
-| `configuration.otelTracesExporter`      | OpenTelemetry traces exporter                                         | `none`                                                                                 |
-| `configuration.enableLabelsQuery`       | Enable labels query endpoint                                          | `true`                                                                                 |
+| Name                                    | Description                                                             | Value                       |
+| --------------------------------------- | ----------------------------------------------------------------------- | --------------------------- |
+| `configuration.existingEnvConfigMap`    | Name of existing configmap containing *Graph* Environment Configuration | `""`                        |
+| `configuration.existingFusekiConfigMap` | Name of existing configmap containing Fuseki Configuration              | `""`                        |
+| `configuration.userAttributesUrl`       | URL for the user details endpoint                                       | `""`                        |
+| `configuration.attributeHierarchyUrl`   | URL for the user hierarchy endpoint                                     | `""`                        |
+| `configuration.javaOptions`             | JVM options for the application                                         | `-XX:MaxRAMPercentage=80.0` |
+| `configuration.otelMetricsExporter`     | OpenTelemetry metrics exporter                                          | `prometheus`                |
+| `configuration.otelTracesExporter`      | OpenTelemetry traces exporter                                           | `none`                      |
+| `configuration.enableLabelsQuery`       | Enable labels query endpoint                                            | `true`                      |
 
 ### Common Parameters
 
@@ -97,21 +95,22 @@ Contains configuration parameters specific to the Graph application
 
 | Name                                                | Description                                                             | Value                               |
 | --------------------------------------------------- | ----------------------------------------------------------------------- | ----------------------------------- |
-| `replicas`                                          | Number of Graph replicas to deploy                                      | `1`                                 |
+| `replicas`                                          | Number of *Graph* replicas to deploy                                    | `1`                                 |
 | `revisionHistoryLimit`                              | Number of controller revisions to keep                                  | `5`                                 |
 | `annotations`                                       | Add extra annotations to the Statefulset object                         | `{}`                                |
-| `podAnnotations`                                    | Add extra annotations to the *Auth* pod                                 | `{}`                                |
-| `extraEnvVars`                                      | Array with extra environment variables to add to *Auth* pod             | `[]`                                |
-| `extraVolumes`                                      | Additional containers to be added to the *Auth* pod                     | `[]`                                |
+| `podLabels`                                         | Add extra labels to the *Graph* pod                                     | `{}`                                |
+| `podAnnotations`                                    | Add extra annotations to the *Graph* pod                                | `{}`                                |
+| `extraEnvVars`                                      | Array with extra environment variables to add to *Graph* pod            | `[]`                                |
+| `extraVolumes`                                      | Additional containers to be added to the *Graph* pod                    | `[]`                                |
 | `extraVolumeMounts`                                 | Optionally specify extra list of additional volumeMounts                | `[]`                                |
 | `initContainers`                                    | Add init containers to the pod                                          | `[]`                                |
 | `sidecars`                                          | Add sidecars to the pod.                                                | `[]`                                |
-| `image.registry`                                    | Graph image registry                                                    | `REGISTRY_NAME`                     |
-| `image.repository`                                  | Graph image name                                                        | `REPOSITORY_NAME/smart-cache-graph` |
-| `image.tag`                                         | Graph image tag. If not set, a tag is generated using the appVersion    | `""`                                |
-| `image.pullPolicy`                                  | Graph image pull policy                                                 | `IfNotPresent`                      |
+| `image.registry`                                    | *Graph* image registry                                                  | `REGISTRY_NAME`                     |
+| `image.repository`                                  | *Graph* image name                                                      | `REPOSITORY_NAME/smart-cache-graph` |
+| `image.tag`                                         | *Graph* image tag. If not set, a tag is generated using the appVersion  | `""`                                |
+| `image.pullPolicy`                                  | *Graph* image pull policy                                               | `IfNotPresent`                      |
 | `image.pullSecrets`                                 | Specify registry secret names as an array                               | `[]`                                |
-| `resources.requests.cpu`                            | Set containers' CPU request                                             | `500m`                              |
+| `resources.requests.cpu`                            | Set containers' CPU request                                             | `1000m`                             |
 | `resources.requests.memory`                         | Set containers' memory request                                          | `8000Mi`                            |
 | `resources.limits.cpu`                              | Set containers' CPU limit                                               | `1500m`                             |
 | `resources.limits.memory`                           | Set containers' memory limit                                            | `12000Mi`                           |
@@ -126,17 +125,37 @@ Contains configuration parameters specific to the Graph application
 | `podSecurityContext.runAsNonRoot`                   | Set the provisioning pod's Security Context runAsNonRoot                | `true`                              |
 | `podSecurityContext.fsGroup`                        | Set the provisioning pod's Group ID for the mounted volumes' filesystem | `185`                               |
 | `podSecurityContext.seccompProfile.type`            | Set the provisioning pod's Security Context seccomp profile             | `RuntimeDefault`                    |
+| `affinity`                                          | Affinity for pod assignment                                             | `{}`                                |
+| `nodeSelector`                                      | Node labels for pod assignment                                          | `{}`                                |
+| `tolerations`                                       | Tolerations for pod assignment                                          | `[]`                                |
 
 ### Persistent Volume Claim Parameters
 
-| Name                                                 | Description                                  | Value  |
-| ---------------------------------------------------- | -------------------------------------------- | ------ |
-| `persistentVolumeClaims.backupsVolume.size`          | PVC Storage Request for the Backup volume    | `25Gi` |
-| `persistentVolumeClaims.backupsVolume.storageClass`  | PVC Storage Class for the Backup data volume | `gp3`  |
-| `persistentVolumeClaims.datasetsVolume.size`         | PVC Storage Request for the Graph volume     | `25Gi` |
-| `persistentVolumeClaims.datasetsVolume.storageClass` | iPVC Storage Class for the Graph data volume | `gp3`  |
+| Name                                                 | Description                                    | Value  |
+| ---------------------------------------------------- | ---------------------------------------------- | ------ |
+| `persistentVolumeClaims.backupsVolume.size`          | PVC Storage Request for the Backup volume      | `25Gi` |
+| `persistentVolumeClaims.backupsVolume.storageClass`  | PVC Storage Class for the Backup data volume   | `gp3`  |
+| `persistentVolumeClaims.datasetsVolume.size`         | PVC Storage Request for the *Graph* volume     | `25Gi` |
+| `persistentVolumeClaims.datasetsVolume.storageClass` | iPVC Storage Class for the *Graph* data volume | `gp3`  |
 
-### Metrics (Prometheus) Parameters
+### Service Account Parameters
+
+| Name                         | Description                                                                           | Value  |
+| ---------------------------- | ------------------------------------------------------------------------------------- | ------ |
+| `serviceAccount.create`      | Specifies whether a service account should be created                                 | `true` |
+| `serviceAccount.name`        | Name of the ServiceAccount to use. If not set, a name is generated using the fullname | `""`   |
+| `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                  | `{}`   |
+| `serviceAccount.automount`   | Automatically mount a ServiceAccount's API credentials                                | `true` |
+
+### Traffic Exposure Parameters
+
+| Name           | Description                                                              | Value       |
+| -------------- | ------------------------------------------------------------------------ | ----------- |
+| `service.name` | *Graph* service name. If not set, a name is generated using the fullname | `graph`     |
+| `service.port` | *Graph* service port                                                     | `8080`      |
+| `service.type` | *Graph* service type                                                     | `ClusterIP` |
+
+### Metrics (Prometheus) Exposure Parameters
 
 | Name                   | Description                     | Value     |
 | ---------------------- | ------------------------------- | --------- |
@@ -144,28 +163,14 @@ Contains configuration parameters specific to the Graph application
 | `metrics.service.name` | Name for the Prometheus service | `metrics` |
 | `metrics.service.port` | Port for the Prometheus service | `9464`    |
 
-### Traffic Exposure Parameters
+### Istio Parameters
 
-| Name                               | Description                                                                                                                                               | Value           |
-| ---------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- |
-| `service.name`                     | *Graph* service name. If not set, a name is generated using the chart name                                                                                | `graph`         |
-| `service.port`                     | *Graph* service port                                                                                                                                      | `8080`          |
-| `service.type`                     | *Graph* service type                                                                                                                                      | `ClusterIP`     |
-| `istio.ingress.principal`          | Principal used for ingress traffic by the Istio AuthorizationPolicy.  If not set, a principal is generated using Release namespace and serviceAccountName | `""`            |
-| `istio.ingress.serviceAccountName` | Name of the Ingress service account (traefik and istio supported)                                                                                         | `traefik-proxy` |
-
-### Extra Containers Parameters
-
-| Name              | Description                                  | Value |
-| ----------------- | -------------------------------------------- | ----- |
-| `extraContainers` | Additional containers to be added to the pod | `[]`  |
-
-### Service Account Parameters
-
-| Name                         | Description                                                                           | Value |
-| ---------------------------- | ------------------------------------------------------------------------------------- | ----- |
-| `serviceAccount.name`        | Name of the ServiceAccount to use. If not set, a name is generated using the fullname | `""`  |
-| `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                  | `{}`  |
+| Name                                       | Description                                                                                                                                                       | Value              |
+| ------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
+| `istio.ingress.principal`                  | Principal used for ingress traffic by the Istio AuthorizationPolicy.  If not set, a principal is generated using Release namespace and serviceAccountName         | `""`               |
+| `istio.ingress.serviceAccountName`         | Name of the Ingress service account (traefik and istio supported)                                                                                                 | `traefik-proxy`    |
+| `istio.paperbackWriter.principal`          | Principal used for Paperback Writer traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName | `""`               |
+| `istio.paperbackWriter.serviceAccountName` | Name of the Paperback Writer service account                                                                                                                      | `paperback-writer` |
 
 ## License
 

@@ -16,6 +16,11 @@
                     "default": [],
                     "items": {}
                 },
+                "enterprise": {
+                    "type": "boolean",
+                    "description": "Enable enterprise mode, adding additional features and configurations",
+                    "default": false
+                },
                 "appHostDomain": {
                     "type": "string",
                     "description": "Domain associated with Telicent application/ui services",
@@ -49,23 +54,33 @@
                 "istioVirtualServiceEnabled": {
                     "type": "boolean",
                     "description": "Enable Istio traffic routing to a named destination service",
-                    "default": true
+                    "default": false
                 }
             }
+        },
+        "nameOverride": {
+            "type": "string",
+            "description": "String to partially override fullname (will maintain the release name)",
+            "default": ""
         },
         "fullnameOverride": {
             "type": "string",
             "description": "String to fully override the generated release name",
             "default": ""
         },
-        "nameOverride": {
+        "namespaceOverride": {
             "type": "string",
-            "description": "String to replace the name of the chart in the Chart.yaml file",
+            "description": "String to fully override all deployed resources namespace",
             "default": ""
+        },
+        "commonLabels": {
+            "type": "object",
+            "description": "Add labels to all the deployed resources",
+            "default": {}
         },
         "replicas": {
             "type": "number",
-            "description": "Number of Query UI replicas to deploy",
+            "description": "Number of *Query UI* replicas to deploy",
             "default": 1
         },
         "revisionHistoryLimit": {
@@ -75,20 +90,60 @@
         },
         "annotations": {
             "type": "object",
-            "description": "Add extra annotations to the Deployment Object",
+            "description": "Add extra annotations to the deployment object",
             "default": {}
+        },
+        "podLabels": {
+            "type": "object",
+            "description": "Add extra labels to the *Search UI* pod",
+            "default": {}
+        },
+        "podAnnotations": {
+            "type": "object",
+            "description": "Add extra annotations to the *Search UI* pod",
+            "default": {}
+        },
+        "extraEnvVars": {
+            "type": "array",
+            "description": "Array with extra environment variables to add to *Search UI* pod",
+            "default": [],
+            "items": {}
+        },
+        "extraVolumes": {
+            "type": "array",
+            "description": "Additional containers to be added to the *Search UI* pod",
+            "default": [],
+            "items": {}
+        },
+        "extraVolumeMounts": {
+            "type": "array",
+            "description": "Optionally specify extra list of additional volumeMounts",
+            "default": [],
+            "items": {}
+        },
+        "initContainers": {
+            "type": "array",
+            "description": "Add init containers to the pod",
+            "default": [],
+            "items": {}
+        },
+        "sidecars": {
+            "type": "array",
+            "description": "Add sidecars to the pod.",
+            "default": [],
+            "items": {}
         },
         "image": {
             "type": "object",
             "properties": {
                 "registry": {
                     "type": "string",
-                    "description": "Query UI image registry",
+                    "description": "*Query UI* image registry",
                     "default": "REGISTRY_NAME"
                 },
                 "repository": {
                     "type": "string",
-                    "description": "Query UI image name",
+                    "description": "*Query UI* image name",
                     "default": "REPOSITORY_NAME/telicent-query"
                 },
                 "tag": {
@@ -98,7 +153,7 @@
                 },
                 "pullPolicy": {
                     "type": "string",
-                    "description": "Query UI image pull policy",
+                    "description": "*Query UI* image pull policy",
                     "default": "IfNotPresent"
                 },
                 "pullSecrets": {
@@ -245,17 +300,47 @@
             "default": [],
             "items": {}
         },
+        "serviceAccount": {
+            "type": "object",
+            "properties": {
+                "create": {
+                    "type": "boolean",
+                    "description": "Specifies whether a service account should be created",
+                    "default": true
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the ServiceAccount to use. If not set, a name is generated using the fullname",
+                    "default": ""
+                },
+                "annotations": {
+                    "type": "object",
+                    "description": "Additional custom annotations for the ServiceAccount",
+                    "default": {}
+                },
+                "automount": {
+                    "type": "boolean",
+                    "description": "Automatically mount a ServiceAccount's API credentials",
+                    "default": true
+                }
+            }
+        },
         "service": {
             "type": "object",
             "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "*Query UI* service name. If not set, a name is generated using the fullname",
+                    "default": ""
+                },
                 "port": {
                     "type": "number",
-                    "description": "Query UI service port",
+                    "description": "*Query UI* service port",
                     "default": 8080
                 },
                 "type": {
                     "type": "string",
-                    "description": "Query UI service type",
+                    "description": "*Query UI* service type",
                     "default": "ClusterIP"
                 }
             }
@@ -277,27 +362,6 @@
                             "default": "traefik-proxy"
                         }
                     }
-                }
-            }
-        },
-        "extraContainers": {
-            "type": "array",
-            "description": "Additional containers to be added to the pod",
-            "default": [],
-            "items": {}
-        },
-        "serviceAccount": {
-            "type": "object",
-            "properties": {
-                "name": {
-                    "type": "string",
-                    "description": "Name of the ServiceAccount to use. If not set, a name is generated using the fullname",
-                    "default": ""
-                },
-                "annotations": {
-                    "type": "object",
-                    "description": "Additional custom annotations for the ServiceAccount",
-                    "default": {}
                 }
             }
         }

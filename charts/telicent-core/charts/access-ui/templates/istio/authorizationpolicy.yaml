@@ -8,19 +8,18 @@ kind: AuthorizationPolicy
 metadata:
   name: {{ include "access-ui.fullname" . }}-ingress
   labels:
-  {{- include "access-ui.labels" . | nindent 4 }}
+    {{- include "access-ui.labels" . | nindent 4 }}
 
 spec:
+  selector:
+    matchLabels:
+      {{- include "access-ui.selectorLabels" . | nindent 6 }}
   action: ALLOW
   rules:
   - from:
     - source:
         principals:
-        - {{ include "access-ui.ingressPrincipal" . }}
+          {{- include "access-ui.ingressPrincipal" . | nindent 8  }}
     to:
     - operation:
-        methods:
-        - GET
-  selector:
-    matchLabels:
-    {{- include "access-ui.selectorLabels" . | nindent 6 }}
+        methods: ["GET"]

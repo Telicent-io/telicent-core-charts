@@ -11,6 +11,11 @@ entryPoints:
          - cors@file
          - headers-security@file
          - oauth2@file
+  web-auth:
+    address: ":8082/tcp"
+    http:
+      middlewares:
+        - headers-security@file
 
   ping:
     address: ":9000/tcp"

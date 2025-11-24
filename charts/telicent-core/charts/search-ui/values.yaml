@@ -1,11 +1,12 @@
 # Copyright (C) 2025 Telicent Limited
-# Telicent Search UI stand-alone chart
+# Telicent *Search UI* stand-alone chart
 
+#
 # @section Global Parameters
+#
 # @descStart
 # Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
 # @descEnd
-
 global:
   ## Current available global image parameters: imageRegistry and imagePullSecrets
   ## Please, note that this will override the image parameters
@@ -35,30 +36,32 @@ global:
   # @key global.istioGatewayName Name of the Istio Gateway Resource (LB operating at the edge of the mesh)
   istioGatewayName: ingress-gateway
   # @key global.istioVirtualServiceEnabled Enable Istio traffic routing to a named destination service
-  istioVirtualServiceEnabled: true
+  istioVirtualServiceEnabled: false
 
+#
 # @section Configuration Parameters
+#
 # @descStart
-# Contains configuration parameters specific to the Search UI application
+# Contains configuration parameters specific to the *Search UI* application
 # @descEnd
 configuration:
-  # @key configuration.userPortalUiDeployed If set to true, User Portal links will be available within Search UI
+  # @key configuration.userPortalUiDeployed If set to true, User Portal links will be available within *Search UI*
   userPortalUiDeployed: true
-  # @key configuration.graphUiDeployed If set to true, Graph UI links will be available within Search UI
+  # @key configuration.graphUiDeployed If set to true, Graph UI links will be available within *Search UI*
   graphUiDeployed: true
-  # @key configuration.dataCatalogUiDeployed If set to true, Data Catalog UI links will be available within Search UI
+  # @key configuration.dataCatalogUiDeployed If set to true, Data Catalog UI links will be available within *Search UI*
   dataCatalogUiDeployed: true
 
-  # @key configuration.searchUiMaptilerToken MapTiler token for Search UI
+  # @key configuration.searchUiMaptilerToken MapTiler token for *Search UI*
   searchUiMaptilerToken: "your.maptiler.token.here"
 
   # For examples of the map configuration, see: _secret_config_js.tpl
-  # @key configuration.searchUiMapboxStyleSpecUrl Mapbox style spec URL for Search UI
+  # @key configuration.searchUiMapboxStyleSpecUrl Mapbox style spec URL for *Search UI*
   # @descStart
   # If set, it will default to a single vector style from any map service that adheres to the Mapbox style spec.
   # @descEnd
   searchUiMapboxStyleSpecUrl: ""
-  # @key configuration.searchUiArcgisToken ArcGIS token for Search UI
+  # @key configuration.searchUiArcgisToken ArcGIS token for *Search UI*
   # @descStart
   # If set, it can generate multiple layers from any map service that adheres to the Mapbox style spec.
   # @descEnd
@@ -66,38 +69,70 @@ configuration:
   # @key configuration.existingMapConfigSecretName The name of an existing secret containing map configuration
   existingMapConfigSecretName: ""
 
-  # @key configuration.oauthClientId The OAuth client id to be used by Search UI
+  # @key configuration.oauthClientId The OAuth client id to be used by *Search UI*
   oauthClientId: "search-ui"
-  # @key configuration.oauthScope List of OAuth scopes to be used by Search UI
+  # @key configuration.oauthScope List of OAuth scopes to be used by *Search UI*
   oauthScope: "openid profile offline_access"
 
+#
 # @section Common Parameters
-
+#
+# @key nameOverride String to partially override fullname (will maintain the release name)
+nameOverride: ""
 # @key fullnameOverride String to fully override the generated release name
 fullnameOverride: ""
-# @key nameOverride String to replace the name of the chart in the Chart.yaml file
-nameOverride: ""
+# @key namespaceOverride String to fully override all deployed resources namespace
+namespaceOverride: ""
+# @key commonLabels Add labels to all the deployed resources
+commonLabels: {}
 
-# @section Search UI Deployment Parameters
-
-# @key replicas Number of Search UI replicas to deploy
+#
+# @section Deployment Parameters
+#
+# @key replicas Number of *Search UI* replicas to deploy
 replicas: 1
 # @key revisionHistoryLimit Number of controller revisions to keep
 revisionHistoryLimit: 5
-# @key annotations Add extra annotations to the Deployment Object
+
+# @key annotations Add extra annotations to the deployment object
 annotations: {}
+# @key podLabels Add extra labels to the *Search UI* pod
+podLabels: {}
+# @key podAnnotations Add extra annotations to the *Search UI* pod
+podAnnotations: {}
+# @key extraEnvVars Array with extra environment variables to add to *Search UI* pod
+# Example:
+# extraEnvVars:
+# - name: FOO
+# - value: instance
+extraEnvVars: []
+# @key extraVolumes Additional containers to be added to the *Search UI* pod
+extraVolumes: []
+# @key extraVolumeMounts Optionally specify extra list of additional volumeMounts
+extraVolumeMounts: []
+# @key initContainers Add init containers to the pod
+initContainers: []
+# Example:
+# sidecars:
+# - name: your-image-name
+#   image: your-image
+#   ports:
+#   - name: portname
+#     containerPort: 1234
+# @key sidecars Add sidecars to the pod.
+sidecars: []
 
 image:
-  # @key image.registry [default: REGISTRY_NAME] Search UI image registry
+  # @key image.registry [default: REGISTRY_NAME] *Search UI* image registry
   registry: quay.io
-  # @key image.repository [default: REPOSITORY_NAME/telicent-search] Search UI image name
+  # @key image.repository [default: REPOSITORY_NAME/telicent-search] *Search UI* image name
   repository: telicent/telicent-search
-  # @key image.tag Seearch UI image tag. If not set, a tag is generated using the appVersion
+  # @key image.tag *Search UI* image tag. If not set, a tag is generated using the appVersion
   tag: ""
-  # @key image.pullPolicy Search UI image pull policy
+  # @key image.pullPolicy *Search UI* image pull policy
   pullPolicy: IfNotPresent
-# @key imagePullSecrets Specify registry secret names as an array
-imagePullSecrets: []
+  # @key image.pullSecrets Specify registry secret names as an array
+  pullSecrets: []
 
 resources:
   requests:
@@ -151,27 +186,36 @@ nodeSelector: {}
 # Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
 tolerations: []
 
+#
+# @section Service Account Parameters
+#
+serviceAccount:
+  # @key serviceAccount.create Specifies whether a service account should be created
+  create: true
+  # @key serviceAccount.name Name of the ServiceAccount to use. If not set, a name is generated using the fullname
+  name: ""
+  # @key serviceAccount.annotations Additional custom annotations for the ServiceAccount
+  annotations: {}
+  # @key serviceAccount.automount Automatically mount a ServiceAccount's API credentials
+  automount: true
+
+#
 # @section Traffic Exposure Parameters
+#
 service:
-  # @key service.port Search UI service port
+  # @key service.name *Search UI* service name. If not set, a name is generated using the fullname
+  name: ""
+  # @key service.port *Search UI* service port
   port: 8080
-  # @key service.type Search UI service type
+  # @key service.type *Search UI* service type
   type: ClusterIP
 
+#
+# @section Istio Parameters
+#
 istio:
   ingress:
     # @key istio.ingress.principal Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName
     principal: ""
     # @key istio.ingress.serviceAccountName Name of the Ingress service account (traefik and istio supported)
     serviceAccountName: "traefik-proxy"
-
-# @section Extra Containers Parameters
-# @key extraContainers Additional containers to be added to the pod
-extraContainers: []
-
-# @section Service Account Parameters
-serviceAccount:
-  # @key serviceAccount.name Name of the ServiceAccount to use. If not set, a name is generated using the fullname
-  name: ""
-  # @key serviceAccount.annotations Additional custom annotations for the ServiceAccount
-  annotations: {}

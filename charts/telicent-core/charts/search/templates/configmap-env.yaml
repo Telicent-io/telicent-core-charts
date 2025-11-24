@@ -7,6 +7,7 @@ kind: ConfigMap
 
 metadata:
   name: {{ include "search.envConfigMapName" . }}
+  namespace: {{ include "search.namespace" . | quote }}
   labels:
     {{- include "search.labels" . | nindent 4 }}
 
@@ -24,6 +25,3 @@ data:
   JWKS_URL: {{ printf "%s%s%s" "https://" .Values.global.authHostDomain "/oauth2/jwks" | quote }}
   USERINFO_URL: {{ printf "http://%s.%s:%s%s" "auth" .Release.Namespace "8080" "/userinfo" | quote }}
   FEATURE_FLAG_AUTHZ: "true"
-{{- with .Values.extraEnvs }}
-{{- toYaml . | nindent 2 }}
-{{- end }}

@@ -69,24 +69,24 @@ Contains global parameters, these parameters are mirrored within the Telicent co
 
 ### Configuration Parameters
 
-Contains configuration parameters specific to the Search Projector application
+Contains configuration parameters specific to the *Search Projector* application
 
-| Name                                    | Description                                                                      | Value                                                                                        |
-| --------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| `configuration.existingEnvConfigMap`    | Name of existing configmap containing Search Projector Environment Configuration | `""`                                                                                         |
-| `configuration.javaOptions`             | JVM options for the application                                                  | `-XX:MaxRAMPercentage=70.0 -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks` |
-| `configuration.otelMetricsExporter`     | OpenTelemetry metrics exporter                                                   | `prometheus`                                                                                 |
-| `configuration.otelTracesExporter`      | OpenTelemetry traces exporter                                                    | `none`                                                                                       |
-| `configuration.elasticHost`             | OpenSearch host                                                                  | `https://your.opensearch.host.here:443`                                                      |
-| `configuration.elasticPort`             | OpenSearch port number                                                           | `443`                                                                                        |
-| `configuration.elasticClusterPort`      | OpenSearch cluster port                                                          | `9200`                                                                                       |
-| `configuration.opensearchCompatibility` | Enable OpenSearch compatibility                                                  | `true`                                                                                       |
-| `configuration.elasticIndex`            | Name of the index in OpenSearch                                                  | `search`                                                                                     |
-| `configuration.topic`                   | Topic to consume messages from                                                   | `knowledge`                                                                                  |
-| `configuration.dlqTopic`                | Dead-letter topic for failed messages                                            | `knowledge.dlq`                                                                              |
-| `configuration.indexBatchSize`          | Batch size for indexing documents                                                | `500`                                                                                        |
+| Name                                    | Description                                                                        | Value                                                                                        |
+| --------------------------------------- | ---------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| `configuration.existingEnvConfigMap`    | Name of existing configmap containing *Search Projector* Environment Configuration | `""`                                                                                         |
+| `configuration.javaOptions`             | JVM options for the application                                                    | `-XX:MaxRAMPercentage=70.0 -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks` |
+| `configuration.otelMetricsExporter`     | OpenTelemetry metrics exporter                                                     | `prometheus`                                                                                 |
+| `configuration.otelTracesExporter`      | OpenTelemetry traces exporter                                                      | `none`                                                                                       |
+| `configuration.elasticHost`             | OpenSearch host                                                                    | `https://your.opensearch.host.here:443`                                                      |
+| `configuration.elasticPort`             | OpenSearch port number                                                             | `443`                                                                                        |
+| `configuration.elasticClusterPort`      | OpenSearch cluster port                                                            | `9200`                                                                                       |
+| `configuration.opensearchCompatibility` | Enable OpenSearch compatibility                                                    | `true`                                                                                       |
+| `configuration.elasticIndex`            | Name of the index in OpenSearch                                                    | `search`                                                                                     |
+| `configuration.topic`                   | Topic to consume messages from                                                     | `knowledge`                                                                                  |
+| `configuration.dlqTopic`                | Dead-letter topic for failed messages                                              | `knowledge.dlq`                                                                              |
+| `configuration.indexBatchSize`          | Batch size for indexing documents                                                  | `500`                                                                                        |
 
-### OpenSearch/Elastic secret - Search Projector
+### OpenSearch/Elastic secret
 
 | Name                           | Description                                                            | Value |
 | ------------------------------ | ---------------------------------------------------------------------- | ----- |
@@ -105,14 +105,20 @@ Contains configuration parameters specific to the Search Projector application
 
 | Name                                                | Description                                                                     | Value                                       |
 | --------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------- |
-| `replicas`                                          | Number of Search Projector replicas to deploy                                   | `1`                                         |
+| `replicas`                                          | Number of *Search Projector* replicas to deploy                                 | `1`                                         |
 | `revisionHistoryLimit`                              | Number of controller revisions to keep                                          | `5`                                         |
-| `annotations`                                       | Add extra annotations to the Deployment object                                  | `{}`                                        |
-| `extraEnvs`                                         | List of additional environment variables to set in the pod                      | `[]`                                        |
-| `image.registry`                                    | Search Projector image registry                                                 | `REGISTRY_NAME`                             |
-| `image.repository`                                  | Search Projector image name                                                     | `REPOSITORY_NAME/search-values.yaml-server` |
+| `annotations`                                       | Add extra annotations to the deployment object                                  | `{}`                                        |
+| `podLabels`                                         | Add extra labels to the *Search Projector* pod                                  | `{}`                                        |
+| `podAnnotations`                                    | Add extra annotations to the *Search Projector* pod                             | `{}`                                        |
+| `extraEnvVars`                                      | Array with extra environment variables to add to *Search Projector* pod         | `[]`                                        |
+| `extraVolumes`                                      | Additional containers to be added to the *Search Projector* pod                 | `[]`                                        |
+| `extraVolumeMounts`                                 | Optionally specify extra list of additional volumeMounts                        | `[]`                                        |
+| `initContainers`                                    | Add init containers to the pod                                                  | `[]`                                        |
+| `sidecars`                                          | Add sidecars to the pod.                                                        | `[]`                                        |
+| `image.registry`                                    | *Search Projector* image registry                                               | `REGISTRY_NAME`                             |
+| `image.repository`                                  | *Search Projector* image name                                                   | `REPOSITORY_NAME/search-values.yaml-server` |
 | `image.tag`                                         | Search Projector image tag. If not set, a tag is generated using the appVersion | `""`                                        |
-| `image.pullPolicy`                                  | Search Projector image pull policy                                              | `IfNotPresent`                              |
+| `image.pullPolicy`                                  | *Search Projector* image pull policy                                            | `IfNotPresent`                              |
 | `image.pullSecrets`                                 | Specify registry secret names as an array                                       | `[]`                                        |
 | `resources.requests.cpu`                            | Set containers' CPU request                                                     | `250m`                                      |
 | `resources.requests.memory`                         | Set containers' memory request                                                  | `1000Mi`                                    |
@@ -129,33 +135,34 @@ Contains configuration parameters specific to the Search Projector application
 | `podSecurityContext.runAsNonRoot`                   | Set the provisioning pod's Security Context runAsNonRoot                        | `true`                                      |
 | `podSecurityContext.fsGroup`                        | Set the provisioning pod's Group ID for the mounted volumes' filesystem         | `185`                                       |
 | `podSecurityContext.seccompProfile.type`            | Set the provisioning pod's Security Context seccomp profile                     | `RuntimeDefault`                            |
-
-### Metrics Parameters
-
-| Name                   | Description                     | Value     |
-| ---------------------- | ------------------------------- | --------- |
-| `metrics.service.name` | Name for the Prometheus service | `metrics` |
-| `metrics.service.port` | Port for the Prometheus service | `9464`    |
-
-### Traffic Exposure Parameters
-
-| Name           | Description                   | Value       |
-| -------------- | ----------------------------- | ----------- |
-| `service.port` | Search Projector service port | `8181`      |
-| `service.type` | Search Projector service port | `ClusterIP` |
-
-### Extra Containers Parameters
-
-| Name              | Description                                  | Value |
-| ----------------- | -------------------------------------------- | ----- |
-| `extraContainers` | Additional containers to be added to the pod | `[]`  |
+| `affinity`                                          | Affinity for pod assignment                                                     | `{}`                                        |
+| `nodeSelector`                                      | Node labels for pod assignment                                                  | `{}`                                        |
+| `tolerations`                                       | Tolerations for pod assignment                                                  | `[]`                                        |
 
 ### Service Account Parameters
 
-| Name                         | Description                                                                           | Value |
-| ---------------------------- | ------------------------------------------------------------------------------------- | ----- |
-| `serviceAccount.name`        | Name of the ServiceAccount to use. If not set, a name is generated using the fullname | `""`  |
-| `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                  | `{}`  |
+| Name                         | Description                                                                           | Value  |
+| ---------------------------- | ------------------------------------------------------------------------------------- | ------ |
+| `serviceAccount.create`      | Specifies whether a service account should be created                                 | `true` |
+| `serviceAccount.name`        | Name of the ServiceAccount to use. If not set, a name is generated using the fullname | `""`   |
+| `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                  | `{}`   |
+| `serviceAccount.automount`   | Automatically mount a ServiceAccount's API credentials                                | `true` |
+
+### Traffic Exposure Parameters
+
+| Name           | Description                                                                         | Value       |
+| -------------- | ----------------------------------------------------------------------------------- | ----------- |
+| `service.name` | *Search Projector* service name. If not set, a name is generated using the fullname | `""`        |
+| `service.port` | *Search Projector* service port                                                     | `8181`      |
+| `service.type` | *Search Projector* service type                                                     | `ClusterIP` |
+
+### Metrics (Prometheus) Exposure Parameters
+
+| Name                   | Description                     | Value     |
+| ---------------------- | ------------------------------- | --------- |
+| `metrics.enabled`      | Enable Prometheus metrics       | `true`    |
+| `metrics.service.name` | Name for the Prometheus service | `metrics` |
+| `metrics.service.port` | Port for the Prometheus service | `9464`    |
 
 ## License
 

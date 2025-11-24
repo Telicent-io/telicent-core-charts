@@ -158,7 +158,7 @@ For Quick Start purposes, a secret named `tc-auth-gen-idp-oauth2-proxy` will be 
 | --------------------------------------------------- | ----------------------------------------------------------------------------- | ------------------------------ |
 | `replicas`                                          | Number of *Ouath2 Proxy* replicas to deploy                                   | `1`                            |
 | `revisionHistoryLimit`                              | Number of controller revisions to keep                                        | `5`                            |
-| `annotations`                                       | Add extra annotations to the Deployment Object                                | `{}`                           |
+| `annotations`                                       | Add extra annotations to the deployment object                                | `{}`                           |
 | `podLabels`                                         | Add extra labels to the *Oauth2 Proxy* pod                                    | `{}`                           |
 | `podAnnotations`                                    | Add extra annotations to the *Oauth2 Proxy* pod                               | `{}`                           |
 | `extraEnvVars`                                      | Array with extra environment variables to add to *Oauth2 Proxy* pod           | `[]`                           |
@@ -192,12 +192,12 @@ For Quick Start purposes, a secret named `tc-auth-gen-idp-oauth2-proxy` will be 
 
 ### Service Account Parameters
 
-| Name                         | Description                                                                           | Value          |
-| ---------------------------- | ------------------------------------------------------------------------------------- | -------------- |
-| `serviceAccount.create`      | Specifies whether a service account should be created                                 | `true`         |
-| `serviceAccount.name`        | Name of the ServiceAccount to use. If not set, a name is generated using the fullname | `oauth2-proxy` |
-| `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                  | `{}`           |
-| `serviceAccount.automount`   | Automatically mount a ServiceAccount's API credentials                                | `true`         |
+| Name                         | Description                                                                           | Value  |
+| ---------------------------- | ------------------------------------------------------------------------------------- | ------ |
+| `serviceAccount.create`      | Specifies whether a service account should be created                                 | `true` |
+| `serviceAccount.name`        | Name of the ServiceAccount to use. If not set, a name is generated using the fullname | `""`   |
+| `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                  | `{}`   |
+| `serviceAccount.automount`   | Automatically mount a ServiceAccount's API credentials                                | `true` |
 
 ### Traffic Exposure Parameters
 

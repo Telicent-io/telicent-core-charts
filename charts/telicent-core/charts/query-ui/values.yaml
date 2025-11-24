@@ -1,11 +1,12 @@
 # Copyright (C) 2025 Telicent Limited
-# Telicent Query UI stand-alone chart
+# Telicent *Query UI* stand-alone chart
 
+#
 # @section Global Parameters
+#
 # @descStart
 # Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
 # @descEnd
-
 global:
   ## Current available global image parameters: imageRegistry and imagePullSecrets
   ## Please, note that this will override the image parameters
@@ -16,6 +17,9 @@ global:
   #   - myRegistryKeySecretName
   # @key global.imagePullSecrets Global registry secret names as an array
   imagePullSecrets: []
+
+  # @key global.enterprise Enable enterprise mode, adding additional features and configurations
+  enterprise: false
 
   # @key global.appHostDomain Domain associated with Telicent application/ui services
   appHostDomain: "apps.telicent.io"
@@ -32,31 +36,64 @@ global:
   # @key global.istioGatewayName Name of the Istio Gateway Resource (LB operating at the edge of the mesh)
   istioGatewayName: ingress-gateway
   # @key global.istioVirtualServiceEnabled Enable Istio traffic routing to a named destination service
-  istioVirtualServiceEnabled: true
+  istioVirtualServiceEnabled: false
 
+#
 # @section Common Parameters
+#
+# @key nameOverride String to partially override fullname (will maintain the release name)
+nameOverride: ""
 # @key fullnameOverride String to fully override the generated release name
 fullnameOverride: ""
-# @key nameOverride String to replace the name of the chart in the Chart.yaml file
-nameOverride: ""
+# @key namespaceOverride String to fully override all deployed resources namespace
+namespaceOverride: ""
+# @key commonLabels Add labels to all the deployed resources
+commonLabels: {}
 
-# @section Query UI Deployment Parameters
-
-# @key replicas Number of Query UI replicas to deploy
+#
+# @section Deployment Parameters
+#
+# @key replicas Number of *Query UI* replicas to deploy
 replicas: 1
 # @key revisionHistoryLimit Number of controller revisions to keep
 revisionHistoryLimit: 5
-# @key annotations Add extra annotations to the Deployment Object
+
+# @key annotations Add extra annotations to the deployment object
 annotations: {}
+# @key podLabels Add extra labels to the *Search UI* pod
+podLabels: {}
+# @key podAnnotations Add extra annotations to the *Search UI* pod
+podAnnotations: {}
+# @key extraEnvVars Array with extra environment variables to add to *Search UI* pod
+# Example:
+# extraEnvVars:
+# - name: FOO
+# - value: instance
+extraEnvVars: []
+# @key extraVolumes Additional containers to be added to the *Search UI* pod
+extraVolumes: []
+# @key extraVolumeMounts Optionally specify extra list of additional volumeMounts
+extraVolumeMounts: []
+# @key initContainers Add init containers to the pod
+initContainers: []
+# Example:
+# sidecars:
+# - name: your-image-name
+#   image: your-image
+#   ports:
+#   - name: portname
+#     containerPort: 1234
+# @key sidecars Add sidecars to the pod.
+sidecars: []
 
 image:
-  # @key image.registry [default: REGISTRY_NAME] Query UI image registry
+  # @key image.registry [default: REGISTRY_NAME] *Query UI* image registry
   registry: quay.io
-  # @key image.repository [default: REPOSITORY_NAME/telicent-query] Query UI image name
+  # @key image.repository [default: REPOSITORY_NAME/telicent-query] *Query UI* image name
   repository: telicent/telicent-query
   # @key image.tag Query UI image tag. If not set, a tag is generated using the appVersion
   tag: ""
-  # @key image.pullPolicy Query UI image pull policy
+  # @key image.pullPolicy *Query UI* image pull policy
   pullPolicy: IfNotPresent
   # @key image.pullSecrets Specify registry secret names as an array
   pullSecrets: []
@@ -113,27 +150,36 @@ nodeSelector: {}
 # Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
 tolerations: []
 
+#
+# @section Service Account Parameters
+#
+serviceAccount:
+  # @key serviceAccount.create Specifies whether a service account should be created
+  create: true
+  # @key serviceAccount.name Name of the ServiceAccount to use. If not set, a name is generated using the fullname
+  name: ""
+  # @key serviceAccount.annotations Additional custom annotations for the ServiceAccount
+  annotations: {}
+  # @key serviceAccount.automount Automatically mount a ServiceAccount's API credentials
+  automount: true
+
+#
 # @section Traffic Exposure Parameters
+#
 service:
-  # @key service.port Query UI service port
+  # @key service.name *Query UI* service name. If not set, a name is generated using the fullname
+  name: ""
+  # @key service.port *Query UI* service port
   port: 8080
-  # @key service.type Query UI service type
+  # @key service.type *Query UI* service type
   type: ClusterIP
 
+#
+# @section Istio Parameters
+#
 istio:
   ingress:
     # @key istio.ingress.principal Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName
     principal: ""
     # @key istio.ingress.serviceAccountName Name of the Ingress service account (traefik and istio supported)
     serviceAccountName: "traefik-proxy"
-
-# @section Extra Containers Parameters
-# @key extraContainers Additional containers to be added to the pod
-extraContainers: []
-
-# @section Service Account Parameters
-serviceAccount:
-  # @key serviceAccount.name Name of the ServiceAccount to use. If not set, a name is generated using the fullname
-  name: ""
-  # @key serviceAccount.annotations Additional custom annotations for the ServiceAccount
-  annotations: {}

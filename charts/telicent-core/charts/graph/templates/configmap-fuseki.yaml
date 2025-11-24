@@ -1,9 +1,7 @@
 {{- /*
 Copyright (C) 2025 Telicent Limited
 */}}
-
 {{- if not .Values.configuration.existingFusekiConfigMap}}
-
 apiVersion: v1
 kind: ConfigMap
 

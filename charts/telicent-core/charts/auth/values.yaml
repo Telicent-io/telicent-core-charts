@@ -27,8 +27,6 @@ global:
   apiHostDomain: "api.telicent.io"
   # @key global.authHostDomain Domain associated with Telicent authentication services, including OIDC providers
   authHostDomain: "auth.telicent.io"
-  # @key global.groupsClaim Key used to retrieve groups from the OIDC provider
-  groupsClaim: "groups"
 
   # @key global.istioNamespace Namespace in which Istio is deployed
   # Note: By default, Istio namespace is set to 'istio-system'
@@ -172,6 +170,7 @@ commonLabels: {}
 replicas: 1
 # @key revisionHistoryLimit Number of controller revisions to keep
 revisionHistoryLimit: 5
+
 # @key annotations Add extra annotations to the deployment object
 annotations: {}
 # @key podLabels Add extra labels to the *Auth* pod
@@ -203,12 +202,12 @@ sidecars: []
 image:
   # @key image.registry [default: REGISTRY_NAME] *Auth* image registry
   registry: quay.io
-  # @key image.repository Auth server image name
+  # @key image.repository *Auth* image name
   repository: telicent/telicent-auth-server
-  # @key image.pullPolicy Auth server image pull policy
-  pullPolicy: IfNotPresent
-  # @key image.tag Auth server image tag. If not set, a tag is generated using the appVersion
+  # @key image.tag *Auth* image tag. If not set, a tag is generated using the appVersion
   tag: ""
+  # @key image.pullPolicy *Auth* image pull policy
+  pullPolicy: IfNotPresent
   # @key image.pullSecrets Specify registry secret names as an array
   pullSecrets: []
 
@@ -270,7 +269,7 @@ tolerations: []
 serviceAccount:
   # @key serviceAccount.create Specifies whether a service account should be created
   create: true
-  # @key serviceAccount.name Name of the ServiceAccount to use. If not set, a name is generated using the name
+  # @key serviceAccount.name Name of the ServiceAccount to use. If not set, a name is generated using the fullname
   name: ""
   # @key serviceAccount.annotations Additional custom annotations for the ServiceAccount
   annotations: {}
@@ -281,7 +280,7 @@ serviceAccount:
 # @section Traffic Exposure Parameters
 #
 service:
-  # @key service.name *Auth* service name. If not set, a name is generated using the chart name
+  # @key service.name *Auth* service name. If not set, a name is generated using the fullname
   name: "auth"
   # @key service.port *Auth* service port
   port: 8080
@@ -297,3 +296,23 @@ istio:
     principal: ""
     # @key istio.ingress.serviceAccountName Name of the Ingress service account (traefik and istio supported)
     serviceAccountName: "traefik-proxy"
+  userPreferences:
+    # @key istio.userPreferences.principal Principal used for User Preferences traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName
+    principal: ""
+    # @key istio.userPreferences.serviceAccountName Name of the User Preferences service account
+    serviceAccountName: "user-preferences"
+  graph:
+    # @key istio.graph.principal Principal used for Graph traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName
+    principal: ""
+    # @key istio.graph.serviceAccountName Name of the Graph service account
+    serviceAccountName: "graph"
+  search:
+    # @key istio.search.principal Principal used for Search traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName
+    principal: ""
+    # @key istio.search.serviceAccountName Name of the Search service account
+    serviceAccountName: "search"
+  paperbackWriter:
+    # @key istio.paperbackWriter.principal Principal used for Paperback Writer traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName
+    principal: ""
+    # @key istio.paperbackWriter.serviceAccountName Name of the Paperback Writer service account
+    serviceAccountName: "paperback-writer"

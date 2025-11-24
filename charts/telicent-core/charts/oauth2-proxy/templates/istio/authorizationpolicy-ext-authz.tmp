@@ -1,7 +1,7 @@
 {{- /*
 Copyright (C) 2025 Telicent Limited
 
-For ref only, as it needs to be deployed into istio namespace to function.
+For ref only, as it needs to be deployed into istio namespace to function. (old auth)
 */}}
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
@@ -12,6 +12,9 @@ metadata:
   {{- include "oauth2-proxy.labels" . | nindent 4 }}
 
 spec:
+  selector:
+    matchLabels:
+     istio: ingress
   action: CUSTOM
   provider:
     name: "ext-authz-oauth2-proxy"
@@ -27,6 +30,3 @@ spec:
         paths:
         - /*
         - /
-  selector:
-    matchLabels:
-     istio: ingress

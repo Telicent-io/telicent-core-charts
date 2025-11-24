@@ -9,7 +9,6 @@ Expand the name of the chart.
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
-
 {{/*
 Allow the release namespace to be overridden.
 */}}
@@ -70,14 +69,18 @@ telicent.io/resource: "true"
 {{- end }}
 
 {{/*
-Create the name of the service account to use
+Create the name of the service account to use (based on the fullname).
 */}}
 {{- define "graph.serviceAccountName" -}}
+{{- if .Values.serviceAccount.create }}
 {{- default (include "graph.name" .) .Values.serviceAccount.name }}
-{{ end }}
+{{- else }}
+{{- .Values.serviceAccount.name | default "default" }}
+{{- end }}
+{{- end }}
 
 {{/*
-Create the name of the service to use
+Create the name of the service to use (based on the fullname).
 */}}
 {{- define "graph.serviceName" -}}
 {{- if .Values.service.name }}
@@ -86,16 +89,3 @@ Create the name of the service to use
 {{- include "graph.fullname" . }}
 {{- end }}
 {{- end }}
-
-{{- define "graph.envSecretName" -}}
-{{ include "graph.fullname" . }}
-{{- end }}
-
-{{/*
-Search API URL
-*/}}
-{{- define "graph.searchUrl" -}}
-{{- printf "http://search:8080" }}
-{{- end }}
-{{/*
-*/}}

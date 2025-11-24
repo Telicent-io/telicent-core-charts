@@ -1,11 +1,12 @@
 # Copyright (C) 2025 Telicent Limited
-# Telicent Access stand-alone chart
+# Telicent *Access* stand-alone chart
 
+#
 # @section Global Parameters
+#
 # @descStart
 # Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
 # @descEnd
-
 global:
   ## Current available global image parameters: imageRegistry and imagePullSecrets
   ## Please, note that this will override the image parameters
@@ -26,6 +27,7 @@ global:
   apiHostDomain: "api.telicent.io"
   # @key global.authHostDomain Domain associated with Telicent authentication services, including OIDC providers
   authHostDomain: "auth.telicent.io"
+
   # @key global.groupsClaim Key used to retrieve groups from the OIDC provider
   groupsClaim: "groups"
 
@@ -39,9 +41,11 @@ global:
   # @key global.istioVirtualServiceEnabled Enable Istio traffic routing to a named destination service
   istioVirtualServiceEnabled: true
 
+#
 # @section Configuration Parameters
+#
 # @descStart
-# Contains configuration parameters specific to the Access application
+# Contains configuration parameters specific to the *Access* application
 # @descEnd
 configuration:
   # @key configuration.debug Enable debug logging
@@ -53,11 +57,18 @@ configuration:
   # @key configuration.telicentPreviewReleaseName Release name of the Telicent Preview chart
   telicentPreviewReleaseName: "telicent-preview"
 
+#
 # @section Common Parameters
+#
 # @key nameOverride String to partially override fullname (will maintain the release name)
 nameOverride: ""
 # @key fullnameOverride String to fully override the generated release name
 fullnameOverride: ""
+# @key namespaceOverride String to fully override all deployed resources namespace
+namespaceOverride: ""
+# @key commonLabels Add labels to all the deployed resources
+commonLabels: {}
+
 # @key existingConfigmap Name of the existing configmap for configuration
 existingConfigmap: ""
 # @key existingCacertConfigmap Name of the existing configmap for extra certificates
@@ -67,7 +78,9 @@ existingCacertSecretName: ""
 # @key cacert Path to the CA certificate file
 cacert: ""
 
+#
 # @section MongoDB Parameters
+#
 mongo:
   # @key mongo.host MongoDB One or more host addresses, 'host1[:port1][,...hostN[:portN]]'
   host: "<host1>:<port1>,<host2>:<port2>,<host3>:<port3>"
@@ -88,22 +101,50 @@ mongo:
   # @key mongo.cacertPath Path to the CA certificate file, must be set if TLS is enabled in the url and mirror the path in the connectionStringOptions
   cacertPath: ""
 
-# @section Access Deployment Parameters
-# @key replicas Number of Access replicas to deploy
+#
+# @section Deployment Parameters
+#
+# @key replicas Number of *Access* replicas to deploy
 replicas: 1
 # @key revisionHistoryLimit Number of controller revisions to keep
 revisionHistoryLimit: 5
-# @key extraEnvs List of Additional environment variables to set in the pod
-extraEnvs: []
+
+# @key annotations Add extra annotations to the deployment object
+annotations: {}
+# @key podLabels Add extra labels to the *Access* pod
+podLabels: {}
+# @key podAnnotations Add extra annotations to the *Access* pod
+podAnnotations: {}
+# @key extraEnvVars Array with extra environment variables to add to *Access* pod
+# Example:
+# extraEnvVars:
+# - name: FOO
+# - value: instance
+extraEnvVars: []
+# @key extraVolumes Additional containers to be added to the *Access* pod
+extraVolumes: []
+# @key extraVolumeMounts Optionally specify extra list of additional volumeMounts
+extraVolumeMounts: []
+# @key initContainers Add init containers to the pod
+initContainers: []
+# Example:
+# sidecars:
+# - name: your-image-name
+#   image: your-image
+#   ports:
+#   - name: portname
+#     containerPort: 1234
+# @key sidecars Add sidecars to the pod.
+sidecars: []
 
 image:
-  # @key image.registry [default: REGISTRY_NAME] Access image registry
+  # @key image.registry [default: REGISTRY_NAME] *Access* image registry
   registry: quay.io
-  # @key image.repository [default: REPOSITORY_NAME/telicent-access-api] Access image name
+  # @key image.repository [default: REPOSITORY_NAME/telicent-access-api] *Access* image name
   repository: telicent/telicent-access-api
-  # @key image.tag Access image tag. If not set, a tag is generated using the appVersion
+  # @key image.tag *Access* image tag. If not set, a tag is generated using the appVersion
   tag: ""
-  # @key image.pullPolicy Access image pull policy
+  # @key image.pullPolicy *Access* image pull policy
   pullPolicy: IfNotPresent
   # @key image.pullSecrets Specify registry secret names as an array
   pullSecrets: []
@@ -150,51 +191,68 @@ podSecurityContext:
     # @key podSecurityContext.seccompProfile.type Set the provisioning pod's Security Context seccomp profile
     type: RuntimeDefault
 
+# @key affinity Affinity for pod assignment
+# Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+affinity: {}
+# @key nodeSelector Node labels for pod assignment
+# Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
+nodeSelector: {}
+# @key tolerations Tolerations for pod assignment
+# Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+tolerations: []
+
+#
+# @section Service Account Parameters
+#
+serviceAccount:
+  # @key serviceAccount.create Specifies whether a service account should be created
+  create: true
+  # @key serviceAccount.name Name of the ServiceAccount to use. If not set, a name is generated using the fullname
+  name: ""
+  # @key serviceAccount.annotations Additional custom annotations for the ServiceAccount
+  annotations: {}
+  # @key serviceAccount.automount Automatically mount a ServiceAccount's API credentials
+  automount: true
+
+#
 # @section Traffic Exposure Parameters
+#
 service:
-  # @key service.port Access service port
+  # @key service.name *Access* service name. If not set, a name is generated using the fullname
+  name: "access"
+  # @key service.port *Access* service port
   port: 8080
-  # @key service.type Access service type
+  # @key service.type *Access* service type
   type: ClusterIP
 
+#
+# @section Istio Parameters
+#
 istio:
   ingress:
     # @key istio.ingress.principal Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName
     principal: ""
     # @key istio.ingress.serviceAccountName Name of the Ingress service account (traefik and istio supported)
     serviceAccountName: "traefik-proxy"
-
-  search:
-    # @key istio.search.principal Principal used for Search traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName
+  userPreferences:
+    # @key istio.userPreferences.principal Principal used for User Preferences traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName
     principal: ""
-    # @key istio.search.serviceAccountName Name of the Search service account
-    serviceAccountName: "search"
-
+    # @key istio.userPreferences.serviceAccountName Name of the User Preferences service account
+    serviceAccountName: "user-preferences"
   graph:
     # @key istio.graph.principal Principal used for Graph traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName
     principal: ""
     # @key istio.graph.serviceAccountName Name of the Graph service account
     serviceAccountName: "graph"
-
-  paperback-writer:
-    # @key istio.paperback-writer.principal Principal used for Paperback Writer traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName
+  search:
+    # @key istio.search.principal Principal used for Search traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName
     principal: ""
-    # @key istio.paperback-writer.serviceAccountName Name of the Paperback Writer service account
+    # @key istio.search.serviceAccountName Name of the Search service account
+    serviceAccountName: "search"
+  paperbackWriter:
+    # @key istio.paperbackWriter.principal Principal used for Paperback Writer traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName
+    principal: ""
+    # @key istio.paperbackWriter.serviceAccountName Name of the Paperback Writer service account
     serviceAccountName: "paperback-writer"
 
-# @section Extra Containers Parameters
-# @key extraContainers Additional containers to be added to the pod
-extraContainers: []
-# Example:
-# extraContainers:
-#   - name: sidecar
-#     image: nginx:alpine
-#     ports:
-#       - containerPort: 80
 
-# @section Service Account Parameters
-serviceAccount:
-  # @key serviceAccount.name Name of the ServiceAccount to use. If not set, a name is generated using the fullname
-  name: ""
-  # @key serviceAccount.annotations Additional custom annotations for the ServiceAccount
-  annotations: {}

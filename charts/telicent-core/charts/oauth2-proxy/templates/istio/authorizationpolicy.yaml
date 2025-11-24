@@ -14,16 +14,13 @@ metadata:
 spec:
   selector:
     matchLabels:
-    {{- include "oauth2-proxy.selectorLabels" . | nindent 6  }}
-
+      {{- include "oauth2-proxy.selectorLabels" . | nindent 6  }}
   action: ALLOW
-
   rules:
-    - from:
-      - source:
-          principals:
-          - {{ include "oauth2-proxy.ingressPrincipal" . }}
-      to:
-      - operation:
-          methods:
-          - '*'
+  - from:
+    - source:
+        principals:
+          {{- include "oauth2-proxy.ingressPrincipal" . | nindent 8 }}
+    to:
+    - operation:
+        methods: ["*"]
