@@ -17,3 +17,5 @@ http:
           - {{ printf "%s%s" "https://" .Values.global.appHostDomain | quote }}
           #todo: remove dave - auth helper
           - http://localhost:3002
+          - http://localhost:3001
+          - http://localhost:5143
