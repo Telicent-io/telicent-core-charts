@@ -200,7 +200,7 @@
         },
         "annotations": {
             "type": "object",
-            "description": "Add extra annotations to the Deployment Object",
+            "description": "Add extra annotations to the deployment object",
             "default": {}
         },
         "podLabels": {
@@ -421,7 +421,7 @@
                 "name": {
                     "type": "string",
                     "description": "Name of the ServiceAccount to use. If not set, a name is generated using the fullname",
-                    "default": "oauth2-proxy"
+                    "default": ""
                 },
                 "annotations": {
                     "type": "object",

@@ -4,10 +4,16 @@ Copyright (C) 2025 Telicent Limited
 
 apiVersion: apps/v1
 kind: Deployment
+
 metadata:
   name: {{ include "access-ui.fullname" . }}
+  namespace: {{ include "access-ui.namespace" . | quote }}
   labels:
-  {{- include "access-ui.labels" . | nindent 4 }}
+    {{- include "access-ui.labels" . | nindent 4 }}
+  {{- with .Values.annotations }}
+  annotations: 
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 
 spec:
   replicas: {{ .Values.replicas }}
@@ -19,11 +25,19 @@ spec:
     type: RollingUpdate
   selector:
     matchLabels:
-    {{- include "access-ui.selectorLabels" . | nindent 6 }}
+      {{- include "access-ui.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-      {{- include "access-ui.selectorLabels" . | nindent 8 }}
+      {{- include "access-ui.labels" . | nindent 8 }}
+      {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+
     spec:
       serviceAccountName: {{ include "access-ui.serviceAccountName" . }}
       securityContext: {{- toYaml .Values.podSecurityContext | nindent 8 }}
@@ -33,20 +47,36 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 6 }}
       {{- end }}
+      {{- if .Values.initContainers }}
+      initContainers:
+      {{- with .Values.initContainers }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- end }}
       containers:
-      - name: access-ui
+      - name: {{ .Chart.Name }}
         image: {{ include "access-ui.image" . }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         resources: {{- toYaml .Values.resources | nindent 10 }}
         securityContext: {{- toYaml .Values.containerSecurityContext | nindent 10 }}
+
+        {{- if .Values.extraEnvVars }}
+        env:
+        {{- range .Values.extraEnvVars }}
+        - name: {{ .name | quote  }}
+          value: {{ .value | quote }}
+        {{- end }}
+        {{- end }}
+
         ports:
         - name: http
-          containerPort: {{ .Values.service.port }}
           protocol: TCP
+          containerPort: 8080
+
         readinessProbe:
           httpGet:
             path: /access/health
-            port: {{ .Values.service.port }}
+            port: 8080
             scheme: HTTP
           initialDelaySeconds: 60
           periodSeconds: 30
@@ -54,19 +84,40 @@ spec:
         livenessProbe:
           httpGet:
             path: /access/health
-            port: {{ .Values.service.port }}
+            port: 8080
             scheme: HTTP
           initialDelaySeconds: 60
           periodSeconds: 30
           timeoutSeconds: 2
+
         volumeMounts:
-        - mountPath: /usr/local/nginx/html/env-config.js
-          name: app-config-volume
+        - name: app-config-volume
+          mountPath: /usr/local/nginx/html/env-config.js
           subPath: env-config.js
-      {{- with .Values.extraContainers }}
-        {{- toYaml . | nindent 6 }}
+        {{- with .Values.extraVolumeMounts }}
+          {{- toYaml . | nindent 12 }}
+        {{- end }}
+
+      {{- with .Values.sidecars }}
+        {{- toYaml . | nindent 8 }}
       {{- end }}
       volumes:
-      - configMap:
+      - name: app-config-volume
+        configMap:
           name: {{ include "access-ui.configMapName" . }}
-        name: app-config-volume
+      {{- with .Values.extraVolumes }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

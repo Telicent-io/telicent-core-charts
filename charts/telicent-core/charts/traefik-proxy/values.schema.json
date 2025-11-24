@@ -36,11 +36,6 @@
                     "description": "Domain associated with Telicent authentication services, including OIDC providers",
                     "default": "auth.telicent.io"
                 },
-                "groupsClaim": {
-                    "type": "string",
-                    "description": "Key used to retrieve groups from the OIDC provider",
-                    "default": "groups"
-                },
                 "istioNamespace": {
                     "type": "string",
                     "description": "Namespace in which Istio is deployed",
@@ -393,6 +388,11 @@
         "service": {
             "type": "object",
             "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "*Traefik Proxy* service name. If not set, a name is generated using the fullname",
+                    "default": "traefik-proxy"
+                },
                 "app": {
                     "type": "object",
                     "properties": {
@@ -413,12 +413,27 @@
                     "properties": {
                         "port": {
                             "type": "number",
-                            "description": "*Traefik Proxy* service port",
+                            "description": "*Traefik Proxy* API service port",
                             "default": 8081
                         },
                         "type": {
                             "type": "string",
-                            "description": "*Traefik Proxy* service type",
+                            "description": "*Traefik Proxy* API service type",
+                            "default": "ClusterIP"
+                        }
+                    }
+                },
+                "auth": {
+                    "type": "object",
+                    "properties": {
+                        "port": {
+                            "type": "number",
+                            "description": "*Traefik Proxy* AUTH service port",
+                            "default": 8082
+                        },
+                        "type": {
+                            "type": "string",
+                            "description": "*Traefik Proxy* AUTH service type",
                             "default": "ClusterIP"
                         }
                     }

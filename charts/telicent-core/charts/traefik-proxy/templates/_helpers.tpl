@@ -10,6 +10,17 @@ Expand the name of the chart.
 {{- end }}
 
 {{/*
+Allow the release namespace to be overridden.
+*/}}
+{{- define "traefik-proxy.namespace" -}}
+{{- if .Values.namespaceOverride -}}
+{{- .Values.namespaceOverride -}}
+{{- else -}}
+{{- .Release.Namespace -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
 Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
@@ -35,32 +46,6 @@ Create chart name and version as used by the chart label.
 {{- end }}
 
 {{/*
-Common labels
-*/}}
-{{- define "traefik-proxy.labels" -}}
-helm.sh/chart: {{ include "traefik-proxy.chart" . }}
-{{ include "traefik-proxy.selectorLabels" . }}
-app.kubernetes.io/version: {{ include "traefik-proxy.version" . | quote }}
-app.kubernetes.io/managed-by: {{ .Release.Service }}
-telicent.io/resource: "true"
-app: {{ include "traefik-proxy.name" . }}
-{{- range $key, $value := .Values.commonLabels }}
-{{ $key }}: {{ $value | quote }}
-{{- end }}
-{{- end }}
-
-{{/*
-Allow the release namespace to be overridden
-*/}}
-{{- define "traefik-proxy.namespace" -}}
-{{- if .Values.namespaceOverride -}}
-{{- .Values.namespaceOverride -}}
-{{- else -}}
-{{- .Release.Namespace -}}
-{{- end -}}
-{{- end -}}
-
-{{/*
 Selector labels
 */}}
 {{- define "traefik-proxy.selectorLabels" -}}
@@ -69,21 +54,38 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
-Create the name of the service account to use
+Common labels
+*/}}
+{{- define "traefik-proxy.labels" -}}
+helm.sh/chart: {{ include "traefik-proxy.chart" . }}
+{{ include "traefik-proxy.selectorLabels" . }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+app.kubernetes.io/version: {{ include "traefik-proxy.version" . | quote }}
+app: {{ include "traefik-proxy.name" . }}
+telicent.io/resource: "true"
+{{- range $key, $value := .Values.commonLabels }}
+{{ $key }}: {{ $value | quote }}
+{{- end }}
+{{- end }}
+
+{{/*
+Create the name of the service account to use (based on the fullname).
 */}}
 {{- define "traefik-proxy.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "traefik-proxy.name" .) .Values.serviceAccount.name }}
+{{- default (include "traefik-proxy.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- .Values.serviceAccount.name | default "default" }}
 {{- end }}
 {{- end }}
 
 {{/*
-Create the name of the service to use
+Create the name of the service to use (based on the fullname).
 */}}
 {{- define "traefik-proxy.serviceName" -}}
+{{- if .Values.service.name }}
+{{- .Values.service.name -}}
+{{- else }}
 {{- include "traefik-proxy.fullname" . }}
 {{- end }}
-
-
+{{- end }}

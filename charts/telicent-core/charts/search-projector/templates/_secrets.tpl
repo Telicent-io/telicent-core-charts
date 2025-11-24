@@ -12,3 +12,10 @@ Create the name of the elastic / opensearch secret
 {{- printf "tc-auth-usr-%s-%s"  "elastic" .Chart.Name }}
 {{- end }}
 {{- end -}}
+
+{{/*
+Create the name of environment variable secrets
+*/}}
+{{- define "search-projector.EnvSecretName" -}}
+{{ include "search-projector.fullname" . }}
+{{- end }}

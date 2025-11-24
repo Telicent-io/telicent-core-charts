@@ -10,6 +10,17 @@ Expand the name of the chart.
 {{- end }}
 
 {{/*
+Allow the release namespace to be overridden.
+*/}}
+{{- define "search.namespace" -}}
+{{- if .Values.namespaceOverride -}}
+{{- .Values.namespaceOverride -}}
+{{- else -}}
+{{- .Release.Namespace -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
 Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
@@ -35,17 +46,6 @@ Create chart name and version as used by the chart label.
 {{- end }}
 
 {{/*
-Common labels
-*/}}
-{{- define "search.labels" -}}
-helm.sh/chart: {{ include "search.chart" . }}
-{{ include "search.selectorLabels" . }}
-app.kubernetes.io/version: {{ include "search.version" . | quote }}
-app.kubernetes.io/managed-by: {{ .Release.Service }}
-telicent.io/resource: "true"
-{{- end }}
-
-{{/*
 Selector labels
 */}}
 {{- define "search.selectorLabels" -}}
@@ -54,14 +54,33 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
-Create the name of the service account to use
+Common labels
 */}}
-{{- define "search.serviceAccountName" -}}
-{{- default (include "search.name" .) .Values.serviceAccount.name }}
+{{- define "search.labels" -}}
+helm.sh/chart: {{ include "search.chart" . }}
+{{ include "search.selectorLabels" . }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+app.kubernetes.io/version: {{ include "search.version" . | quote }}
+app: {{ include "search.name" . }}
+telicent.io/resource: "true"
+{{- range $key, $value := .Values.commonLabels }}
+{{ $key }}: {{ $value | quote }}
+{{- end }}
 {{- end }}
 
 {{/*
-Create the name of the service to use
+Create the name of the service account to use (based on the fullname).
+*/}}
+{{- define "search.serviceAccountName" -}}
+{{- if .Values.serviceAccount.create }}
+{{- default (include "search.fullname" .) .Values.serviceAccount.name }}
+{{- else }}
+{{- .Values.serviceAccount.name | default "default" }}
+{{- end }}
+{{- end }}
+
+{{/*
+Create the name of the service to use (based on the fullname).
 */}}
 {{- define "search.serviceName" -}}
 {{- if .Values.service.name }}

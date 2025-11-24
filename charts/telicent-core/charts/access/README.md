@@ -63,7 +63,7 @@ Contains global parameters, these parameters are mirrored within the Telicent co
 
 ### Configuration Parameters
 
-Contains configuration parameters specific to the Access application
+Contains configuration parameters specific to the *Access* application
 
 | Name                                       | Description                                | Value                      |
 | ------------------------------------------ | ------------------------------------------ | -------------------------- |
@@ -78,6 +78,8 @@ Contains configuration parameters specific to the Access application
 | -------------------------- | ---------------------------------------------------------------------- | ----- |
 | `nameOverride`             | String to partially override fullname (will maintain the release name) | `""`  |
 | `fullnameOverride`         | String to fully override the generated release name                    | `""`  |
+| `namespaceOverride`        | String to fully override all deployed resources namespace              | `""`  |
+| `commonLabels`             | Add labels to all the deployed resources                               | `{}`  |
 | `existingConfigmap`        | Name of the existing configmap for configuration                       | `""`  |
 | `existingCacertConfigmap`  | Name of the existing configmap for extra certificates                  | `""`  |
 | `existingCacertSecretName` | Name of the secret containing extra CA certificates                    | `""`  |
@@ -97,17 +99,24 @@ Contains configuration parameters specific to the Access application
 | `mongo.existingCaSecret`        | existingCaSecret If you have an existing secret for the CA certificate, you can specify it here. If you've specified to use TLS in the url, you must provide a CA certificate. | `""`                                              |
 | `mongo.cacertPath`              | Path to the CA certificate file, must be set if TLS is enabled in the url and mirror the path in the connectionStringOptions                                                   | `""`                                              |
 
-### Access Deployment Parameters
+### Deployment Parameters
 
 | Name                                                | Description                                                             | Value                                 |
 | --------------------------------------------------- | ----------------------------------------------------------------------- | ------------------------------------- |
-| `replicas`                                          | Number of Access replicas to deploy                                     | `1`                                   |
+| `replicas`                                          | Number of *Access* replicas to deploy                                   | `1`                                   |
 | `revisionHistoryLimit`                              | Number of controller revisions to keep                                  | `5`                                   |
-| `extraEnvs`                                         | List of Additional environment variables to set in the pod              | `[]`                                  |
-| `image.registry`                                    | Access image registry                                                   | `REGISTRY_NAME`                       |
-| `image.repository`                                  | Access image name                                                       | `REPOSITORY_NAME/telicent-access-api` |
-| `image.tag`                                         | Access image tag. If not set, a tag is generated using the appVersion   | `""`                                  |
-| `image.pullPolicy`                                  | Access image pull policy                                                | `IfNotPresent`                        |
+| `annotations`                                       | Add extra annotations to the deployment object                          | `{}`                                  |
+| `podLabels`                                         | Add extra labels to the *Access* pod                                    | `{}`                                  |
+| `podAnnotations`                                    | Add extra annotations to the *Access* pod                               | `{}`                                  |
+| `extraEnvVars`                                      | Array with extra environment variables to add to *Access* pod           | `[]`                                  |
+| `extraVolumes`                                      | Additional containers to be added to the *Access* pod                   | `[]`                                  |
+| `extraVolumeMounts`                                 | Optionally specify extra list of additional volumeMounts                | `[]`                                  |
+| `initContainers`                                    | Add init containers to the pod                                          | `[]`                                  |
+| `sidecars`                                          | Add sidecars to the pod.                                                | `[]`                                  |
+| `image.registry`                                    | *Access* image registry                                                 | `REGISTRY_NAME`                       |
+| `image.repository`                                  | *Access* image name                                                     | `REPOSITORY_NAME/telicent-access-api` |
+| `image.tag`                                         | *Access* image tag. If not set, a tag is generated using the appVersion | `""`                                  |
+| `image.pullPolicy`                                  | *Access* image pull policy                                              | `IfNotPresent`                        |
 | `image.pullSecrets`                                 | Specify registry secret names as an array                               | `[]`                                  |
 | `resources.requests.cpu`                            | Set containers' CPU request                                             | `250m`                                |
 | `resources.requests.memory`                         | Set containers' memory request                                          | `512Mi`                               |
@@ -124,34 +133,41 @@ Contains configuration parameters specific to the Access application
 | `podSecurityContext.runAsNonRoot`                   | Set the provisioning pod's Security Context runAsNonRoot                | `true`                                |
 | `podSecurityContext.fsGroup`                        | Set the provisioning pod's Group ID for the mounted volumes' filesystem | `185`                                 |
 | `podSecurityContext.seccompProfile.type`            | Set the provisioning pod's Security Context seccomp profile             | `RuntimeDefault`                      |
-
-### Traffic Exposure Parameters
-
-| Name                                        | Description                                                                                                                                                       | Value              |
-| ------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
-| `service.port`                              | Access service port                                                                                                                                               | `8080`             |
-| `service.type`                              | Access service type                                                                                                                                               | `ClusterIP`        |
-| `istio.ingress.principal`                   | Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName          | `""`               |
-| `istio.ingress.serviceAccountName`          | Name of the Ingress service account (traefik and istio supported)                                                                                                 | `traefik-proxy`    |
-| `istio.search.principal`                    | Principal used for Search traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName           | `""`               |
-| `istio.search.serviceAccountName`           | Name of the Search service account                                                                                                                                | `search`           |
-| `istio.graph.principal`                     | Principal used for Graph traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName            | `""`               |
-| `istio.graph.serviceAccountName`            | Name of the Graph service account                                                                                                                                 | `graph`            |
-| `istio.paperback-writer.principal`          | Principal used for Paperback Writer traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName | `""`               |
-| `istio.paperback-writer.serviceAccountName` | Name of the Paperback Writer service account                                                                                                                      | `paperback-writer` |
-
-### Extra Containers Parameters
-
-| Name              | Description                                  | Value |
-| ----------------- | -------------------------------------------- | ----- |
-| `extraContainers` | Additional containers to be added to the pod | `[]`  |
+| `affinity`                                          | Affinity for pod assignment                                             | `{}`                                  |
+| `nodeSelector`                                      | Node labels for pod assignment                                          | `{}`                                  |
+| `tolerations`                                       | Tolerations for pod assignment                                          | `[]`                                  |
 
 ### Service Account Parameters
 
-| Name                         | Description                                                                           | Value |
-| ---------------------------- | ------------------------------------------------------------------------------------- | ----- |
-| `serviceAccount.name`        | Name of the ServiceAccount to use. If not set, a name is generated using the fullname | `""`  |
-| `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                  | `{}`  |
+| Name                         | Description                                                                           | Value  |
+| ---------------------------- | ------------------------------------------------------------------------------------- | ------ |
+| `serviceAccount.create`      | Specifies whether a service account should be created                                 | `true` |
+| `serviceAccount.name`        | Name of the ServiceAccount to use. If not set, a name is generated using the fullname | `""`   |
+| `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                  | `{}`   |
+| `serviceAccount.automount`   | Automatically mount a ServiceAccount's API credentials                                | `true` |
+
+### Traffic Exposure Parameters
+
+| Name           | Description                                                               | Value       |
+| -------------- | ------------------------------------------------------------------------- | ----------- |
+| `service.name` | *Access* service name. If not set, a name is generated using the fullname | `access`    |
+| `service.port` | *Access* service port                                                     | `8080`      |
+| `service.type` | *Access* service type                                                     | `ClusterIP` |
+
+### Istio Parameters
+
+| Name                                       | Description                                                                                                                                                       | Value              |
+| ------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
+| `istio.ingress.principal`                  | Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName          | `""`               |
+| `istio.ingress.serviceAccountName`         | Name of the Ingress service account (traefik and istio supported)                                                                                                 | `traefik-proxy`    |
+| `istio.userPreferences.principal`          | Principal used for User Preferences traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName | `""`               |
+| `istio.userPreferences.serviceAccountName` | Name of the User Preferences service account                                                                                                                      | `user-preferences` |
+| `istio.graph.principal`                    | Principal used for Graph traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName            | `""`               |
+| `istio.graph.serviceAccountName`           | Name of the Graph service account                                                                                                                                 | `graph`            |
+| `istio.search.principal`                   | Principal used for Search traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName           | `""`               |
+| `istio.search.serviceAccountName`          | Name of the Search service account                                                                                                                                | `search`           |
+| `istio.paperbackWriter.principal`          | Principal used for Paperback Writer traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName | `""`               |
+| `istio.paperbackWriter.serviceAccountName` | Name of the Paperback Writer service account                                                                                                                      | `paperback-writer` |
 
 
 ## License

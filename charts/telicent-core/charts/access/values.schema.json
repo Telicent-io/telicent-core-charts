@@ -98,6 +98,16 @@
             "description": "String to fully override the generated release name",
             "default": ""
         },
+        "namespaceOverride": {
+            "type": "string",
+            "description": "String to fully override all deployed resources namespace",
+            "default": ""
+        },
+        "commonLabels": {
+            "type": "object",
+            "description": "Add labels to all the deployed resources",
+            "default": {}
+        },
         "existingConfigmap": {
             "type": "string",
             "description": "Name of the existing configmap for configuration",
@@ -170,7 +180,7 @@
         },
         "replicas": {
             "type": "number",
-            "description": "Number of Access replicas to deploy",
+            "description": "Number of *Access* replicas to deploy",
             "default": 1
         },
         "revisionHistoryLimit": {
@@ -178,9 +188,48 @@
             "description": "Number of controller revisions to keep",
             "default": 5
         },
-        "extraEnvs": {
+        "annotations": {
+            "type": "object",
+            "description": "Add extra annotations to the deployment object",
+            "default": {}
+        },
+        "podLabels": {
+            "type": "object",
+            "description": "Add extra labels to the *Access* pod",
+            "default": {}
+        },
+        "podAnnotations": {
+            "type": "object",
+            "description": "Add extra annotations to the *Access* pod",
+            "default": {}
+        },
+        "extraEnvVars": {
             "type": "array",
-            "description": "List of Additional environment variables to set in the pod",
+            "description": "Array with extra environment variables to add to *Access* pod",
+            "default": [],
+            "items": {}
+        },
+        "extraVolumes": {
+            "type": "array",
+            "description": "Additional containers to be added to the *Access* pod",
+            "default": [],
+            "items": {}
+        },
+        "extraVolumeMounts": {
+            "type": "array",
+            "description": "Optionally specify extra list of additional volumeMounts",
+            "default": [],
+            "items": {}
+        },
+        "initContainers": {
+            "type": "array",
+            "description": "Add init containers to the pod",
+            "default": [],
+            "items": {}
+        },
+        "sidecars": {
+            "type": "array",
+            "description": "Add sidecars to the pod.",
             "default": [],
             "items": {}
         },
@@ -189,22 +238,22 @@
             "properties": {
                 "registry": {
                     "type": "string",
-                    "description": "Access image registry",
+                    "description": "*Access* image registry",
                     "default": "REGISTRY_NAME"
                 },
                 "repository": {
                     "type": "string",
-                    "description": "Access image name",
+                    "description": "*Access* image name",
                     "default": "REPOSITORY_NAME/telicent-access-api"
                 },
                 "tag": {
                     "type": "string",
-                    "description": "Access image tag. If not set, a tag is generated using the appVersion",
+                    "description": "*Access* image tag. If not set, a tag is generated using the appVersion",
                     "default": ""
                 },
                 "pullPolicy": {
                     "type": "string",
-                    "description": "Access image pull policy",
+                    "description": "*Access* image pull policy",
                     "default": "IfNotPresent"
                 },
                 "pullSecrets": {
@@ -335,17 +384,63 @@
                 }
             }
         },
+        "affinity": {
+            "type": "object",
+            "description": "Affinity for pod assignment",
+            "default": {}
+        },
+        "nodeSelector": {
+            "type": "object",
+            "description": "Node labels for pod assignment",
+            "default": {}
+        },
+        "tolerations": {
+            "type": "array",
+            "description": "Tolerations for pod assignment",
+            "default": [],
+            "items": {}
+        },
+        "serviceAccount": {
+            "type": "object",
+            "properties": {
+                "create": {
+                    "type": "boolean",
+                    "description": "Specifies whether a service account should be created",
+                    "default": true
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the ServiceAccount to use. If not set, a name is generated using the fullname",
+                    "default": ""
+                },
+                "annotations": {
+                    "type": "object",
+                    "description": "Additional custom annotations for the ServiceAccount",
+                    "default": {}
+                },
+                "automount": {
+                    "type": "boolean",
+                    "description": "Automatically mount a ServiceAccount's API credentials",
+                    "default": true
+                }
+            }
+        },
         "service": {
             "type": "object",
             "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "*Access* service name. If not set, a name is generated using the fullname",
+                    "default": "access"
+                },
                 "port": {
                     "type": "number",
-                    "description": "Access service port",
+                    "description": "*Access* service port",
                     "default": 8080
                 },
                 "type": {
                     "type": "string",
-                    "description": "Access service type",
+                    "description": "*Access* service type",
                     "default": "ClusterIP"
                 }
             }
@@ -368,18 +463,18 @@
                         }
                     }
                 },
-                "search": {
+                "userPreferences": {
                     "type": "object",
                     "properties": {
                         "principal": {
                             "type": "string",
-                            "description": "Principal used for Search traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName",
+                            "description": "Principal used for User Preferences traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName",
                             "default": ""
                         },
                         "serviceAccountName": {
                             "type": "string",
-                            "description": "Name of the Search service account",
-                            "default": "search"
+                            "description": "Name of the User Preferences service account",
+                            "default": "user-preferences"
                         }
                     }
                 },
@@ -398,7 +493,22 @@
                         }
                     }
                 },
-                "paperback-writer": {
+                "search": {
+                    "type": "object",
+                    "properties": {
+                        "principal": {
+                            "type": "string",
+                            "description": "Principal used for Search traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName",
+                            "default": ""
+                        },
+                        "serviceAccountName": {
+                            "type": "string",
+                            "description": "Name of the Search service account",
+                            "default": "search"
+                        }
+                    }
+                },
+                "paperbackWriter": {
                     "type": "object",
                     "properties": {
                         "principal": {
@@ -412,27 +522,6 @@
                             "default": "paperback-writer"
                         }
                     }
-                }
-            }
-        },
-        "extraContainers": {
-            "type": "array",
-            "description": "Additional containers to be added to the pod",
-            "default": [],
-            "items": {}
-        },
-        "serviceAccount": {
-            "type": "object",
-            "properties": {
-                "name": {
-                    "type": "string",
-                    "description": "Name of the ServiceAccount to use. If not set, a name is generated using the fullname",
-                    "default": ""
-                },
-                "annotations": {
-                    "type": "object",
-                    "description": "Additional custom annotations for the ServiceAccount",
-                    "default": {}
                 }
             }
         }

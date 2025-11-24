@@ -6,12 +6,12 @@
 # Contains global parameters, these parameters are mirrored across all Telicent Core sub charts, these values will be authoritative.
 # @descEnd
 global:
+  # @key global.enterprise Enable enterprise mode, adding additional features and configurations
+  enterprise: false
   # @key global.imageRegistry Global image registry
   imageRegistry: ""
   # @key global.imagePullSecrets Global registry secret names as an array
   imagePullSecrets: []
-  # @key global.enterprise Enable enterprise mode, adding additional features and configurations
-  enterprise: false
   # @key global.appHostDomain Domain associated with Telicent application services
   appHostDomain: "apps.telicent.io"
   # @key global.authHostDomain Domain associated with Telicent authentication services, including OIDC providers
@@ -184,4 +184,8 @@ cacert: ""
 istio:
   ingress:
     # @key istio.ingress.principal Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName'
-    principal: "cluster.local/ns/tc-core/sa/traefik-proxy"
+    principal: ""
+    # @key istio.ingress.serviceAccountName Name of the Ingress service account (traefik and istio supported)
+    serviceAccountName: "traefik-proxy"
+
+

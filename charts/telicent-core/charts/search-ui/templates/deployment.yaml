@@ -7,8 +7,13 @@ kind: Deployment
 
 metadata:
   name: {{ include "search-ui.fullname" . }}
+  namespace: {{ include "search-ui.namespace" . | quote }}
   labels:
     {{- include "search-ui.labels" . | nindent 4 }}
+  {{- with .Values.annotations }}
+  annotations: 
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 
 spec:
   replicas: {{ .Values.replicas }}
@@ -20,35 +25,53 @@ spec:
     type: RollingUpdate
   selector:
     matchLabels:
-    {{- include "search-ui.selectorLabels" . | nindent 6 }}
+      {{- include "search-ui.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      annotations:
-        {{- range $key, $value := .Values.annotations }}
-          {{ $key }}: {{ $value | quote }}
-        {{- end }}
       labels:
-        {{- include "search-ui.labels" . | nindent 8 }}
+      {{- include "search-ui.labels" . | nindent 8 }}
+      {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+
     spec:
       serviceAccountName: {{ include "search-ui.serviceAccountName" . }}
       securityContext: {{- toYaml .Values.podSecurityContext | nindent 8 }}
-      
+
       {{- $pullSecret := .Values.global.imagePullSecrets | default .Values.image.pullSecrets }}
       {{- with $pullSecret }}
       imagePullSecrets:
         {{- toYaml . | nindent 6 }}
       {{- end }}
+      {{- if .Values.initContainers }}
+      initContainers:
+      {{- with .Values.initContainers }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- end }}
       containers:
-      - name: search-ui
+      - name: {{ .Chart.Name }}
         image: {{ include "search-ui.image" . }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         resources: {{- toYaml .Values.resources | nindent 10 }}
         securityContext: {{- toYaml .Values.containerSecurityContext | nindent 10 }}
 
+        {{- if .Values.extraEnvVars }}
+        env:
+        {{- range .Values.extraEnvVars }}
+        - name: {{ .name | quote  }}
+          value: {{ .value | quote }}
+        {{- end }}
+        {{- end }}
+
         ports:
         - name: http
-          containerPort: 8080
           protocol: TCP
+          containerPort: 8080
 
         readinessProbe:
           httpGet:
@@ -68,36 +91,42 @@ spec:
           timeoutSeconds: 2
 
         volumeMounts:
-        - mountPath: /usr/local/nginx/html/env-config.js
-          name: app-config-volume
+        - name: app-config-volume
+          mountPath: /usr/local/nginx/html/env-config.js
           subPath: env-config.js
         - name: secret-config-js-volume
           mountPath: /usr/local/nginx/html/secret-config.js
           subPath: secret-config.js
-      {{- with .Values.extraContainers }}
-        {{- toYaml . | nindent 6 }}
-      {{- end }}
+        {{- with .Values.extraVolumeMounts }}
+          {{- toYaml . | nindent 12 }}
+        {{- end }}
 
+      {{- with .Values.sidecars }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       volumes:
-      - configMap:
+      - name: app-config-volume
+        configMap:
           name: {{ include "search-ui.configMapName" . }}
-        name: app-config-volume
-      - secret:
+      - name: secret-config-js-volume
+        secret:
       {{- if .Values.configuration.existingMapConfigSecretName }}
           secretName: {{ .Values.configuration.existingMapConfigSecretName }}
       {{- else }}
           secretName: {{ include "search-ui.fullname" . }}-secret-config-js
-      {{- end }}
-        name: secret-config-js-volume
-      
-      {{- with .Values.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
       {{- end }}  
+      {{- with .Values.extraVolumes }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
-      {{- end }}     
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       {{- with .Values.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}

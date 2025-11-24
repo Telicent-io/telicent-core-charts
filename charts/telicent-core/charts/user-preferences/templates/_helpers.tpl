@@ -69,15 +69,18 @@ telicent.io/resource: "true"
 {{- end }}
 
 {{/*
-Create the name of the service account to use
+Create the name of the service account to use (based on the fullname).
 */}}
 {{- define "user-preferences.serviceAccountName" -}}
-{{- default (include "user-preferences.name" .) .Values.serviceAccount.name }}
-{{ end }}
-
+{{- if .Values.serviceAccount.create }}
+{{- default (include "user-preferences.fullname" .) .Values.serviceAccount.name }}
+{{- else }}
+{{- .Values.serviceAccount.name | default "default" }}
+{{- end }}
+{{- end }}
 
 {{/*
-Create the name of the service to use
+Create the name of the service to use (based on the fullname).
 */}}
 {{- define "user-preferences.serviceName" -}}
 {{- if .Values.service.name }}

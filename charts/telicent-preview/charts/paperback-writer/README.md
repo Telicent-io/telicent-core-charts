@@ -48,9 +48,9 @@ Contains global parameters, these parameters are mirrored across all Telicent Co
 
 | Name                                  | Description                                                                       | Value                                            |
 | ------------------------------------- | --------------------------------------------------------------------------------- | ------------------------------------------------ |
+| `global.enterprise`                   | Enable enterprise mode, adding additional features and configurations             | `false`                                          |
 | `global.imageRegistry`                | Global image registry                                                             | `""`                                             |
 | `global.imagePullSecrets`             | Global registry secret names as an array                                          | `[]`                                             |
-| `global.enterprise`                   | Enable enterprise mode, adding additional features and configurations             | `false`                                          |
 | `global.appHostDomain`                | Domain associated with Telicent application services                              | `apps.telicent.io`                               |
 | `global.authHostDomain`               | Domain associated with Telicent authentication services, including OIDC providers | `auth.telicent.io`                               |
 | `global.groupsClaim`                  | Key used to retrieve groups from the OIDC provider                                | `groups`                                         |
@@ -132,22 +132,23 @@ Contains global parameters, these parameters are mirrored across all Telicent Co
 
 ### Application Configuration
 
-| Name                               | Description                                                                                                                                                                  | Value                                       |
-| ---------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
-| `configuration.sparqlUrl`          | SPARQL endpoint URL. Defaults to http://release-name-graph.release-namespace.svc.cluster.local:3030                                                                          | `""`                                        |
-| `configuration.sparqlUser`         | SPARQL endpoint username. Use existing secret to set these values if possible (.Values.existingSecretName)                                                                   | `""`                                        |
-| `configuration.sparqlPwd`          | SPARQL endpoint password. Use existing secret to set these values if possible (.Values.existingSecretName)                                                                   | `""`                                        |
-| `configuration.sparqlDefaultLabel` | Default label for SPARQL queries                                                                                                                                             | `!`                                         |
-| `configuration.jwksDisabled`       | Disable JWKS validation                                                                                                                                                      | `false`                                     |
-| `configuration.jwtHeader`          | JWT header name                                                                                                                                                              | `Authorization`                             |
-| `configuration.accessApiUrl`       | URL for the Access API. Defaults to http://release-name-access-api.release-namespace.svc.cluster.local:8080                                                                  | `""`                                        |
-| `configuration.cacertPath`         | Path to CA certs in the container                                                                                                                                            | `""`                                        |
-| `configuration.authServerBaseUrl`  | Base url of the Auth server. Defaults to <release-name>-auth.<release-namespace>.svc.cluster.local:9000                                                                      | `""`                                        |
-| `existingConfigMapName`            | Name of an existing ConfigMap to use for configuration                                                                                                                       | `""`                                        |
-| `existingSecretName`               | Name of an existing Secret to use for credentials                                                                                                                            | `""`                                        |
-| `existingCacertConfigmapName`      | Name of an existing ConfigMap to use for CA certs. If not set, and cacert is provided, a ConfigMap will be created                                                           | `""`                                        |
-| `cacert`                           | CA certificate data in PEM format                                                                                                                                            | `""`                                        |
-| `istio.ingress.principal`          | Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName' | `cluster.local/ns/tc-core/sa/traefik-proxy` |
+| Name                               | Description                                                                                                                                                                  | Value           |
+| ---------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- |
+| `configuration.sparqlUrl`          | SPARQL endpoint URL. Defaults to http://release-name-graph.release-namespace.svc.cluster.local:3030                                                                          | `""`            |
+| `configuration.sparqlUser`         | SPARQL endpoint username. Use existing secret to set these values if possible (.Values.existingSecretName)                                                                   | `""`            |
+| `configuration.sparqlPwd`          | SPARQL endpoint password. Use existing secret to set these values if possible (.Values.existingSecretName)                                                                   | `""`            |
+| `configuration.sparqlDefaultLabel` | Default label for SPARQL queries                                                                                                                                             | `!`             |
+| `configuration.jwksDisabled`       | Disable JWKS validation                                                                                                                                                      | `false`         |
+| `configuration.jwtHeader`          | JWT header name                                                                                                                                                              | `Authorization` |
+| `configuration.accessApiUrl`       | URL for the Access API. Defaults to http://release-name-access-api.release-namespace.svc.cluster.local:8080                                                                  | `""`            |
+| `configuration.cacertPath`         | Path to CA certs in the container                                                                                                                                            | `""`            |
+| `configuration.authServerBaseUrl`  | Base url of the Auth server. Defaults to <release-name>-auth.<release-namespace>.svc.cluster.local:9000                                                                      | `""`            |
+| `existingConfigMapName`            | Name of an existing ConfigMap to use for configuration                                                                                                                       | `""`            |
+| `existingSecretName`               | Name of an existing Secret to use for credentials                                                                                                                            | `""`            |
+| `existingCacertConfigmapName`      | Name of an existing ConfigMap to use for CA certs. If not set, and cacert is provided, a ConfigMap will be created                                                           | `""`            |
+| `cacert`                           | CA certificate data in PEM format                                                                                                                                            | `""`            |
+| `istio.ingress.principal`          | Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName' | `""`            |
+| `istio.ingress.serviceAccountName` | Name of the Ingress service account (traefik and istio supported)                                                                                                            | `traefik-proxy` |
 
 
 ## License

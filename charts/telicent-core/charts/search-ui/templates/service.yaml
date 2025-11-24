@@ -7,6 +7,7 @@ kind: Service
 
 metadata:
   name: {{ include "search-ui.serviceName" . }}
+  namespace: {{ include "search-ui.namespace" . | quote }}
   labels:
     {{- include "search-ui.labels" . | nindent 4 }}
 
@@ -15,8 +16,8 @@ spec:
   selector:
     {{- include "search-ui.selectorLabels" . | nindent 4 }}
   ports:
-    - name: http
-      port: {{ .Values.service.port }}
-      appProtocol: http
-      protocol: TCP
-      targetPort: 8080
+  - name: http
+    appProtocol: http
+    protocol: TCP
+    targetPort: http
+    port: {{ .Values.service.port }}

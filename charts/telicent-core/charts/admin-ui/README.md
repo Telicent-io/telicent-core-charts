@@ -44,88 +44,99 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ### Global Parameters
 
+Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
+
 | Name                                | Description                                                                       | Value              |
 | ----------------------------------- | --------------------------------------------------------------------------------- | ------------------ |
+| `global.imageRegistry`              | Global image registry                                                             | `""`               |
+| `global.imagePullSecrets`           | Global registry secret names as an array                                          | `[]`               |
 | `global.enterprise`                 | Enable enterprise mode, adding additional features and configurations             | `false`            |
-| `global.appHostDomain`              | Domain associated with Telicent application services                              | `apps.telicent.io` |
+| `global.appHostDomain`              | Domain associated with Telicent application/ui services                           | `apps.telicent.io` |
+| `global.apiHostDomain`              | Domain associated with Telicent Api services                                      | `api.telicent.io`  |
 | `global.authHostDomain`             | Domain associated with Telicent authentication services, including OIDC providers | `auth.telicent.io` |
 | `global.istioNamespace`             | Namespace in which Istio is deployed                                              | `istio-system`     |
 | `global.istioServiceAccountName`    | Name of the Istio service account                                                 | `istio-ingress`    |
 | `global.istioGatewayName`           | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)         | `ingress-gateway`  |
 | `global.istioVirtualServiceEnabled` | Enable Istio traffic routing to a named destination service                       | `false`            |
 
-### Admin UI Parameters
+### Configuration Parameters
 
+Contains configuration parameters specific to the *Search UI* application
+
+| Name                          | Description                                                                                                                                    | Value |
+| ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| `configMap.existingConfigMap` | The name of an existing config map containing env-config.js. If omitted, a new config map using settings from this values file will be created | `""`  |
 
 ### Common Parameters
 
-| Name               | Description                                                            | Value |
-| ------------------ | ---------------------------------------------------------------------- | ----- |
-| `fullnameOverride` | String to fully override the generated release name                    | `""`  |
-| `nameOverride`     | String to partially override fullname (will maintain the release name) | `""`  |
+| Name                | Description                                                            | Value |
+| ------------------- | ---------------------------------------------------------------------- | ----- |
+| `nameOverride`      | String to partially override fullname (will maintain the release name) | `""`  |
+| `fullnameOverride`  | String to fully override the generated release name                    | `""`  |
+| `namespaceOverride` | String to fully override all deployed resources namespace              | `""`  |
+| `commonLabels`      | Add labels to all the deployed resources                               | `{}`  |
 
-### image This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
+### Deployment Parameters
 
-| Name                | Description                                                                | Value               |
-| ------------------- | -------------------------------------------------------------------------- | ------------------- |
-| `image.registry`    | Auth server image registry                                                 | `quay.io`           |
-| `image.repository`  | Auth server image name                                                     | `telicent-admin-ui` |
-| `image.pullPolicy`  | Auth server image pull policy                                              | `IfNotPresent`      |
-| `image.pullSecrets` | Specify registry secret names as an array                                  | `[]`                |
-| `image.tag`         | Auth server image tag. If not set, a tag is generated using the appVersion | `""`                |
+| Name                                                | Description                                                               | Value               |
+| --------------------------------------------------- | ------------------------------------------------------------------------- | ------------------- |
+| `replicas`                                          | Number of *Admin UI* replicas to deploy                                   | `1`                 |
+| `revisionHistoryLimit`                              | Number of controller revisions to keep                                    | `5`                 |
+| `annotations`                                       | Add extra annotations to the deployment object                            | `{}`                |
+| `podLabels`                                         | Add extra labels to the *Admin UI* pod                                    | `{}`                |
+| `podAnnotations`                                    | Add extra annotations to the *Admin UI* pod                               | `{}`                |
+| `extraEnvVars`                                      | Array with extra environment variables to add to *Admin UI* pod           | `[]`                |
+| `extraVolumes`                                      | Additional containers to be added to the *Admin UI* pod                   | `[]`                |
+| `extraVolumeMounts`                                 | Optionally specify extra list of additional volumeMounts                  | `[]`                |
+| `initContainers`                                    | Add init containers to the pod                                            | `[]`                |
+| `sidecars`                                          | Add sidecars to the pod.                                                  | `[]`                |
+| `image.registry`                                    | *Admin UI* image registry                                                 | `quay.io`           |
+| `image.repository`                                  | *Admin UI* image name                                                     | `telicent-admin-ui` |
+| `image.tag`                                         | *Admin UI* image tag. If not set, a tag is generated using the appVersion | `""`                |
+| `image.pullPolicy`                                  | *Admin UI* image pull policy                                              | `IfNotPresent`      |
+| `image.pullSecrets`                                 | Specify registry secret names as an array                                 | `[]`                |
+| `resources.requests.cpu`                            | Set containers' CPU request                                               | `250m`              |
+| `resources.requests.memory`                         | Set containers' memory request                                            | `500Mi`             |
+| `resources.limits.cpu`                              | Set containers' CPU limit                                                 | `5000m`             |
+| `resources.limits.memory`                           | Set containers' memory limit                                              | `1000Mi`            |
+| `containerSecurityContext.runAsUser`                | Set containers' Security Context runAsUser User ID                        | `185`               |
+| `containerSecurityContext.runAsGroup`               | Set containers' Security Context runAsGroup Group ID                      | `185`               |
+| `containerSecurityContext.runAsNonRoot`             | Set container's Security Context runAsNonRoot                             | `true`              |
+| `containerSecurityContext.allowPrivilegeEscalation` | Set container's Security Context allowPrivilegeEscalation                 | `false`             |
+| `containerSecurityContext.capabilities.drop`        | List of capabilities to be dropped                                        | `["ALL"]`           |
+| `containerSecurityContext.seccompProfile.type`      | Set container's Security Context seccomp profile                          | `RuntimeDefault`    |
+| `podSecurityContext.runAsUser`                      | Set the provisioning pod's Security Context runAsUser User ID             | `185`               |
+| `podSecurityContext.runAsGroup`                     | Set the provisioning pod's Security Context runAsGroup Group ID           | `185`               |
+| `podSecurityContext.runAsNonRoot`                   | Set the provisioning pod's Security Context runAsNonRoot                  | `true`              |
+| `podSecurityContext.fsGroup`                        | Set the provisioning pod's Group ID for the mounted volumes' filesystem   | `185`               |
+| `podSecurityContext.seccompProfile.type`            | Set the provisioning pod's Security Context seccomp profile               | `RuntimeDefault`    |
+| `affinity`                                          | Affinity for pod assignment                                               | `{}`                |
+| `nodeSelector`                                      | Node labels for pod assignment                                            | `{}`                |
+| `tolerations`                                       | Tolerations for pod assignment                                            | `[]`                |
 
-### image This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/configuration/configmap/
+### Service Account Parameters
 
-| Name                              | Description                                                                                                                                    | Value |
-| --------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
-| `configMap.existingConfigMapName` | The name of an existing config map containing env-config.js. If omitted, a new config map using settings from this values file will be created | `""`  |
-
-### Service Account Parameters This section builds out the service account more information can be found here: https://kubernetes.io/docs/concepts/security/service-accounts/
-
-| Name                         | Description                                                                                     | Value  |
-| ---------------------------- | ----------------------------------------------------------------------------------------------- | ------ |
-| `serviceAccount.create`      | Whether a service account should be created                                                     | `true` |
-| `serviceAccount.automount`   | Whether to automatically mount a ServiceAccount's API credentials?                              | `true` |
-| `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                            | `{}`   |
-| `serviceAccount.name`        | Name of the created ServiceAccount. If not set, a name is generated using the fullname template | `""`   |
-
-### Deployment Parameters For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
-
-| Name                                                | Description                                                             | Value            |
-| --------------------------------------------------- | ----------------------------------------------------------------------- | ---------------- |
-| `podAnnotations`                                    | Add extra annotations to the Deployment object                          | `{}`             |
-| `extraEnvs`                                         | List of additional environment variables to set in the pod              | `[]`             |
-| `podSecurityContext.runAsUser`                      | Set the provisioning pod's Security Context runAsUser User ID           | `185`            |
-| `podSecurityContext.runAsGroup`                     | Set the provisioning pod's Security Context runAsGroup Group ID         | `185`            |
-| `podSecurityContext.runAsNonRoot`                   | Set the provisioning pod's Security Context runAsNonRoot                | `true`           |
-| `podSecurityContext.fsGroup`                        | Set the provisioning pod's Group ID for the mounted volumes' filesystem | `185`            |
-| `podSecurityContext.seccompProfile.type`            | Set the provisioning pod's Security Context seccomp profile             | `RuntimeDefault` |
-| `containerSecurityContext.runAsUser`                | Set containers' Security Context runAsUser User ID                      | `185`            |
-| `containerSecurityContext.runAsGroup`               | Set containers' Security Context runAsGroup Group ID                    | `185`            |
-| `containerSecurityContext.runAsNonRoot`             | Set container's Security Context runAsNonRoot                           | `true`           |
-| `containerSecurityContext.allowPrivilegeEscalation` | Set container's Security Context allowPrivilegeEscalation               | `false`          |
-| `containerSecurityContext.capabilities.drop`        | List of capabilities to be dropped                                      | `["ALL"]`        |
-| `containerSecurityContext.seccompProfile.type`      | Set container's Security Context seccomp profile                        | `RuntimeDefault` |
+| Name                         | Description                                                                           | Value  |
+| ---------------------------- | ------------------------------------------------------------------------------------- | ------ |
+| `serviceAccount.create`      | Specifies whether a service account should be created                                 | `true` |
+| `serviceAccount.name`        | Name of the ServiceAccount to use. If not set, a name is generated using the fullname | `""`   |
+| `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                  | `{}`   |
+| `serviceAccount.automount`   | Automatically mount a ServiceAccount's API credentials                                | `true` |
 
 ### Traffic Exposure Parameters
 
-| Name                        | Description                    | Value       |
-| --------------------------- | ------------------------------ | ----------- |
-| `service.port`              | Auth server service port       | `8080`      |
-| `service.type`              | Auth server service port       | `ClusterIP` |
-| `resources.requests.cpu`    | Set containers' CPU request    | `250m`      |
-| `resources.requests.memory` | Set containers' memory request | `500Mi`     |
-| `resources.limits.cpu`      | Set containers' CPU limit      | `5000m`     |
-| `resources.limits.memory`   | Set containers' memory limit   | `1000Mi`    |
+| Name           | Description                                                                  | Value       |
+| -------------- | ---------------------------------------------------------------------------- | ----------- |
+| `service.name` | *Search UI* service name. If not set, a name is generated using the fullname | `""`        |
+| `service.port` | *Search UI* service port                                                     | `8080`      |
+| `service.type` | *Search UI* service type                                                     | `ClusterIP` |
 
-### Node Selection
+### Istio Parameters
 
-| Name                      | Description                                                                                                                                                                                      | Value                                       |
-| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------- |
-| `nodeSelector`            | Allows you to schedule pods on a node with a label matching the given key-value pair.                                                                                                            | `{}`                                        |
-| `affinity`                | Allows you to define affinity rules for scheduling pods, see: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/                                                           | `{}`                                        |
-| `tolerations`             | ALlows you to schedule pods on nodes with specified taints, see: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/                                                   | `[]`                                        |
-| `istio.ingress.principal` | Principal used for ingress traffic to this application by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName' | `cluster.local/ns/tc-core/sa/traefik-proxy` |
+| Name                               | Description                                                                                                                                              | Value           |
+| ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- |
+| `istio.ingress.principal`          | Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName | `""`            |
+| `istio.ingress.serviceAccountName` | Name of the Ingress service account (traefik and istio supported)                                                                                        | `traefik-proxy` |
 
 ## License
 

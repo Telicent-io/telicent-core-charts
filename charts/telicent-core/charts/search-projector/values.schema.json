@@ -113,7 +113,7 @@
             "properties": {
                 "existingEnvConfigMap": {
                     "type": "string",
-                    "description": "Name of existing configmap containing Search Projector Environment Configuration",
+                    "description": "Name of existing configmap containing *Search Projector* Environment Configuration",
                     "default": ""
                 },
                 "javaOptions": {
@@ -205,7 +205,7 @@
         },
         "replicas": {
             "type": "number",
-            "description": "Number of Search Projector replicas to deploy",
+            "description": "Number of *Search Projector* replicas to deploy",
             "default": 1
         },
         "revisionHistoryLimit": {
@@ -215,12 +215,46 @@
         },
         "annotations": {
             "type": "object",
-            "description": "Add extra annotations to the Deployment object",
+            "description": "Add extra annotations to the deployment object",
             "default": {}
         },
-        "extraEnvs": {
+        "podLabels": {
+            "type": "object",
+            "description": "Add extra labels to the *Search Projector* pod",
+            "default": {}
+        },
+        "podAnnotations": {
+            "type": "object",
+            "description": "Add extra annotations to the *Search Projector* pod",
+            "default": {}
+        },
+        "extraEnvVars": {
             "type": "array",
-            "description": "List of additional environment variables to set in the pod",
+            "description": "Array with extra environment variables to add to *Search Projector* pod",
+            "default": [],
+            "items": {}
+        },
+        "extraVolumes": {
+            "type": "array",
+            "description": "Additional containers to be added to the *Search Projector* pod",
+            "default": [],
+            "items": {}
+        },
+        "extraVolumeMounts": {
+            "type": "array",
+            "description": "Optionally specify extra list of additional volumeMounts",
+            "default": [],
+            "items": {}
+        },
+        "initContainers": {
+            "type": "array",
+            "description": "Add init containers to the pod",
+            "default": [],
+            "items": {}
+        },
+        "sidecars": {
+            "type": "array",
+            "description": "Add sidecars to the pod.",
             "default": [],
             "items": {}
         },
@@ -229,12 +263,12 @@
             "properties": {
                 "registry": {
                     "type": "string",
-                    "description": "Search Projector image registry",
+                    "description": "*Search Projector* image registry",
                     "default": "REGISTRY_NAME"
                 },
                 "repository": {
                     "type": "string",
-                    "description": "Search Projector image name",
+                    "description": "*Search Projector* image name",
                     "default": "REPOSITORY_NAME/search-values.yaml-server"
                 },
                 "tag": {
@@ -244,7 +278,7 @@
                 },
                 "pullPolicy": {
                     "type": "string",
-                    "description": "Search Projector image pull policy",
+                    "description": "*Search Projector* image pull policy",
                     "default": "IfNotPresent"
                 },
                 "pullSecrets": {
@@ -375,9 +409,75 @@
                 }
             }
         },
+        "affinity": {
+            "type": "object",
+            "description": "Affinity for pod assignment",
+            "default": {}
+        },
+        "nodeSelector": {
+            "type": "object",
+            "description": "Node labels for pod assignment",
+            "default": {}
+        },
+        "tolerations": {
+            "type": "array",
+            "description": "Tolerations for pod assignment",
+            "default": [],
+            "items": {}
+        },
+        "serviceAccount": {
+            "type": "object",
+            "properties": {
+                "create": {
+                    "type": "boolean",
+                    "description": "Specifies whether a service account should be created",
+                    "default": true
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the ServiceAccount to use. If not set, a name is generated using the fullname",
+                    "default": ""
+                },
+                "annotations": {
+                    "type": "object",
+                    "description": "Additional custom annotations for the ServiceAccount",
+                    "default": {}
+                },
+                "automount": {
+                    "type": "boolean",
+                    "description": "Automatically mount a ServiceAccount's API credentials",
+                    "default": true
+                }
+            }
+        },
+        "service": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "*Search Projector* service name. If not set, a name is generated using the fullname",
+                    "default": ""
+                },
+                "port": {
+                    "type": "number",
+                    "description": "*Search Projector* service port",
+                    "default": 8181
+                },
+                "type": {
+                    "type": "string",
+                    "description": "*Search Projector* service type",
+                    "default": "ClusterIP"
+                }
+            }
+        },
         "metrics": {
             "type": "object",
             "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable Prometheus metrics",
+                    "default": true
+                },
                 "service": {
                     "type": "object",
                     "properties": {
@@ -392,42 +492,6 @@
                             "default": 9464
                         }
                     }
-                }
-            }
-        },
-        "service": {
-            "type": "object",
-            "properties": {
-                "port": {
-                    "type": "number",
-                    "description": "Search Projector service port",
-                    "default": 8181
-                },
-                "type": {
-                    "type": "string",
-                    "description": "Search Projector service port",
-                    "default": "ClusterIP"
-                }
-            }
-        },
-        "extraContainers": {
-            "type": "array",
-            "description": "Additional containers to be added to the pod",
-            "default": [],
-            "items": {}
-        },
-        "serviceAccount": {
-            "type": "object",
-            "properties": {
-                "name": {
-                    "type": "string",
-                    "description": "Name of the ServiceAccount to use. If not set, a name is generated using the fullname",
-                    "default": ""
-                },
-                "annotations": {
-                    "type": "object",
-                    "description": "Additional custom annotations for the ServiceAccount",
-                    "default": {}
                 }
             }
         }

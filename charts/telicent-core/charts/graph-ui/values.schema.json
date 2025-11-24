@@ -54,7 +54,7 @@
                 "istioVirtualServiceEnabled": {
                     "type": "boolean",
                     "description": "Enable Istio traffic routing to a named destination service",
-                    "default": true
+                    "default": false
                 }
             }
         },
@@ -63,27 +63,27 @@
             "properties": {
                 "userPortalUiDeployed": {
                     "type": "boolean",
-                    "description": "If set to true, User Portal links will be available within Graph UI",
+                    "description": "If set to true, User Portal links will be available within *Graph UI*",
                     "default": true
                 },
                 "graphUiDeployed": {
                     "type": "boolean",
-                    "description": "If set to true, Graph UI links will be available within Graph UI",
+                    "description": "If set to true, *Graph UI* links will be available within *Graph UI*",
                     "default": true
                 },
                 "searchUiDeployed": {
                     "type": "boolean",
-                    "description": "If set to true, Search UI links will be available within Graph UI",
+                    "description": "If set to true, *Search UI* links will be available within *Graph UI*",
                     "default": true
                 },
                 "dataCatalogUiDeployed": {
                     "type": "boolean",
-                    "description": "If set to true, Data Catalog UI links will be available within Graph UI",
+                    "description": "If set to true, *Data Catalog UI* links will be available within *Graph UI*",
                     "default": true
                 },
                 "graphUiMaptilerToken": {
                     "type": "string",
-                    "description": "is the MapTiler token for the graph UI",
+                    "description": "is the MapTiler token for the *Graph UI*",
                     "default": "your.maptiler.token.here"
                 },
                 "graphUiMapboxStyleSpecUrl": {
@@ -103,19 +103,29 @@
                 }
             }
         },
+        "nameOverride": {
+            "type": "string",
+            "description": "String to partially override fullname (will maintain the release name)",
+            "default": ""
+        },
         "fullnameOverride": {
             "type": "string",
             "description": "String to fully override the generated release name",
             "default": ""
         },
-        "nameOverride": {
+        "namespaceOverride": {
             "type": "string",
-            "description": "String to replace the name of the chart in the Chart.yaml file",
+            "description": "String to fully override all deployed resources namespace",
             "default": ""
+        },
+        "commonLabels": {
+            "type": "object",
+            "description": "Add labels to all the deployed resources",
+            "default": {}
         },
         "replicas": {
             "type": "number",
-            "description": "Number of Graph UI replicas to deploy",
+            "description": "Number of *Graph UI* replicas to deploy",
             "default": 1
         },
         "revisionHistoryLimit": {
@@ -123,17 +133,62 @@
             "description": "Number of controller revisions to keep",
             "default": 5
         },
+        "annotations": {
+            "type": "object",
+            "description": "Add extra annotations to the deployment object",
+            "default": {}
+        },
+        "podLabels": {
+            "type": "object",
+            "description": "Add extra labels to the *Graph UI* pod",
+            "default": {}
+        },
+        "podAnnotations": {
+            "type": "object",
+            "description": "Add extra annotations to the *Graph UI* pod",
+            "default": {}
+        },
+        "extraEnvVars": {
+            "type": "array",
+            "description": "Array with extra environment variables to add to *Graph UI* pod",
+            "default": [],
+            "items": {}
+        },
+        "extraVolumes": {
+            "type": "array",
+            "description": "Additional containers to be added to the *Graph UI* pod",
+            "default": [],
+            "items": {}
+        },
+        "extraVolumeMounts": {
+            "type": "array",
+            "description": "Optionally specify extra list of additional volumeMounts",
+            "default": [],
+            "items": {}
+        },
+        "initContainers": {
+            "type": "array",
+            "description": "Add init containers to the pod",
+            "default": [],
+            "items": {}
+        },
+        "sidecars": {
+            "type": "array",
+            "description": "Add sidecars to the pod.",
+            "default": [],
+            "items": {}
+        },
         "image": {
             "type": "object",
             "properties": {
                 "registry": {
                     "type": "string",
-                    "description": "Graph UI image registry",
+                    "description": "*Graph UI* image registry",
                     "default": "REGISTRY_NAME"
                 },
                 "repository": {
                     "type": "string",
-                    "description": "Graph UI image name",
+                    "description": "*Graph UI* image name",
                     "default": "REPOSITORY_NAME/telicent-graph"
                 },
                 "tag": {
@@ -143,16 +198,16 @@
                 },
                 "pullPolicy": {
                     "type": "string",
-                    "description": "Graph UI image pull policy",
+                    "description": "*Graph UI* image pull policy",
                     "default": "IfNotPresent"
+                },
+                "pullSecrets": {
+                    "type": "array",
+                    "description": "Specify registry secret names as an array",
+                    "default": [],
+                    "items": {}
                 }
             }
-        },
-        "imagePullSecrets": {
-            "type": "array",
-            "description": "Specify registry secret names as an array",
-            "default": [],
-            "items": {}
         },
         "resources": {
             "type": "object",
@@ -290,17 +345,47 @@
             "default": [],
             "items": {}
         },
+        "serviceAccount": {
+            "type": "object",
+            "properties": {
+                "create": {
+                    "type": "boolean",
+                    "description": "Specifies whether a service account should be created",
+                    "default": true
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the ServiceAccount to use. If not set, a name is generated using the fullname",
+                    "default": ""
+                },
+                "annotations": {
+                    "type": "object",
+                    "description": "Additional custom annotations for the ServiceAccount",
+                    "default": {}
+                },
+                "automount": {
+                    "type": "boolean",
+                    "description": "Automatically mount a ServiceAccount's API credentials",
+                    "default": true
+                }
+            }
+        },
         "service": {
             "type": "object",
             "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "*Graph UI* service name. If not set, a name is generated using the fullname",
+                    "default": ""
+                },
                 "port": {
                     "type": "number",
-                    "description": "Graph UI service port",
+                    "description": "*Graph UI* service port",
                     "default": 8080
                 },
                 "type": {
                     "type": "string",
-                    "description": "Graph UI service type",
+                    "description": "*Graph UI* service type",
                     "default": "ClusterIP"
                 }
             }
@@ -322,27 +407,6 @@
                             "default": "traefik-proxy"
                         }
                     }
-                }
-            }
-        },
-        "extraContainers": {
-            "type": "array",
-            "description": "Additional containers to be added to the pod",
-            "default": [],
-            "items": {}
-        },
-        "serviceAccount": {
-            "type": "object",
-            "properties": {
-                "name": {
-                    "type": "string",
-                    "description": "Name of the ServiceAccount to use. If not set, a name is generated using the fullname",
-                    "default": ""
-                },
-                "annotations": {
-                    "type": "object",
-                    "description": "Additional custom annotations for the ServiceAccount",
-                    "default": {}
                 }
             }
         }

@@ -36,11 +36,6 @@
                     "description": "Domain associated with Telicent authentication services, including OIDC providers",
                     "default": "auth.telicent.io"
                 },
-                "groupsClaim": {
-                    "type": "string",
-                    "description": "Key used to retrieve groups from the OIDC provider",
-                    "default": "groups"
-                },
                 "istioNamespace": {
                     "type": "string",
                     "description": "Namespace in which Istio is deployed",
@@ -290,18 +285,18 @@
                 },
                 "repository": {
                     "type": "string",
-                    "description": "Auth server image name",
+                    "description": "*Auth* image name",
                     "default": "telicent/telicent-auth-server"
-                },
-                "pullPolicy": {
-                    "type": "string",
-                    "description": "Auth server image pull policy",
-                    "default": "IfNotPresent"
                 },
                 "tag": {
                     "type": "string",
-                    "description": "Auth server image tag. If not set, a tag is generated using the appVersion",
+                    "description": "*Auth* image tag. If not set, a tag is generated using the appVersion",
                     "default": ""
+                },
+                "pullPolicy": {
+                    "type": "string",
+                    "description": "*Auth* image pull policy",
+                    "default": "IfNotPresent"
                 },
                 "pullSecrets": {
                     "type": "array",
@@ -457,7 +452,7 @@
                 },
                 "name": {
                     "type": "string",
-                    "description": "Name of the ServiceAccount to use. If not set, a name is generated using the name",
+                    "description": "Name of the ServiceAccount to use. If not set, a name is generated using the fullname",
                     "default": ""
                 },
                 "annotations": {
@@ -477,7 +472,7 @@
             "properties": {
                 "name": {
                     "type": "string",
-                    "description": "*Auth* service name. If not set, a name is generated using the chart name",
+                    "description": "*Auth* service name. If not set, a name is generated using the fullname",
                     "default": "auth"
                 },
                 "port": {
@@ -507,6 +502,66 @@
                             "type": "string",
                             "description": "Name of the Ingress service account (traefik and istio supported)",
                             "default": "traefik-proxy"
+                        }
+                    }
+                },
+                "userPreferences": {
+                    "type": "object",
+                    "properties": {
+                        "principal": {
+                            "type": "string",
+                            "description": "Principal used for User Preferences traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName",
+                            "default": ""
+                        },
+                        "serviceAccountName": {
+                            "type": "string",
+                            "description": "Name of the User Preferences service account",
+                            "default": "user-preferences"
+                        }
+                    }
+                },
+                "graph": {
+                    "type": "object",
+                    "properties": {
+                        "principal": {
+                            "type": "string",
+                            "description": "Principal used for Graph traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName",
+                            "default": ""
+                        },
+                        "serviceAccountName": {
+                            "type": "string",
+                            "description": "Name of the Graph service account",
+                            "default": "graph"
+                        }
+                    }
+                },
+                "search": {
+                    "type": "object",
+                    "properties": {
+                        "principal": {
+                            "type": "string",
+                            "description": "Principal used for Search traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName",
+                            "default": ""
+                        },
+                        "serviceAccountName": {
+                            "type": "string",
+                            "description": "Name of the Search service account",
+                            "default": "search"
+                        }
+                    }
+                },
+                "paperbackWriter": {
+                    "type": "object",
+                    "properties": {
+                        "principal": {
+                            "type": "string",
+                            "description": "Principal used for Paperback Writer traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName",
+                            "default": ""
+                        },
+                        "serviceAccountName": {
+                            "type": "string",
+                            "description": "Name of the Paperback Writer service account",
+                            "default": "paperback-writer"
                         }
                     }
                 }

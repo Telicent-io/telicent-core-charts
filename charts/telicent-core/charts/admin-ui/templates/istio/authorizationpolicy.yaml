@@ -1,28 +1,27 @@
 {{- /*
 Copyright (C) 2025 Telicent Limited
 */}}
-
 {{- if .Values.global.enterprise }}
 apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
 
 metadata:
   name: {{ include "admin-ui.fullname" . }}-ingress
+  namespace: {{ include "admin-ui.namespace" . | quote }}
   labels: 
-  {{- include "admin-ui.labels" . | nindent 4 }}
+    {{- include "admin-ui.labels" . | nindent 4 }}
 
 spec:
-  action: ALLOW
-  rules:
-    - from:
-        - source:
-            principals:
-              - {{ include "admin-ui.ingressPrincipal" . }}
-      to:
-        - operation:
-            methods:
-              - GET
   selector:
     matchLabels:
-    {{- include "admin-ui.selectorLabels" . | nindent 6 }}
+      {{- include "admin-ui.selectorLabels" . | nindent 6 }}
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        principals:
+          {{- include "admin-ui.ingressPrincipal" .| nindent 8 }}
+    to:
+    - operation:
+        methods: ["GET"]
 {{- end }}

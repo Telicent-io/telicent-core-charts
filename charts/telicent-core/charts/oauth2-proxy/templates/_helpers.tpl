@@ -46,21 +46,6 @@ Create chart name and version as used by the chart label.
 {{- end }}
 
 {{/*
-Common labels
-*/}}
-{{- define "oauth2-proxy.labels" -}}
-helm.sh/chart: {{ include "oauth2-proxy.chart" . }}
-{{ include "oauth2-proxy.selectorLabels" . }}
-app.kubernetes.io/version: {{ include "oauth2-proxy.version" . | quote }}
-app.kubernetes.io/managed-by: {{ .Release.Service }}
-telicent.io/resource: "true"
-app: {{ include "oauth2-proxy.name" . }}
-{{- range $key, $value := .Values.commonLabels }}
-{{ $key }}: {{ $value | quote }}
-{{- end }}
-{{- end }}
-
-{{/*
 Selector labels
 */}}
 {{- define "oauth2-proxy.selectorLabels" -}}
@@ -69,7 +54,22 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
-Create the name of the service account to use
+Common labels
+*/}}
+{{- define "oauth2-proxy.labels" -}}
+helm.sh/chart: {{ include "oauth2-proxy.chart" . }}
+{{ include "oauth2-proxy.selectorLabels" . }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+app.kubernetes.io/version: {{ include "oauth2-proxy.version" . | quote }}
+app: {{ include "oauth2-proxy.name" . }}
+telicent.io/resource: "true"
+{{- range $key, $value := .Values.commonLabels }}
+{{ $key }}: {{ $value | quote }}
+{{- end }}
+{{- end }}
+
+{{/*
+Create the name of the service account to use (based on the fullname).
 */}}
 {{- define "oauth2-proxy.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
@@ -80,7 +80,7 @@ Create the name of the service account to use
 {{- end }}
 
 {{/*
-Create the name of the service to use
+Create the name of the service to use (based on the fullname).
 */}}
 {{- define "oauth2-proxy.serviceName" -}}
 {{- if .Values.service.name }}

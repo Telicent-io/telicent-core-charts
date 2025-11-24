@@ -7,6 +7,7 @@ kind: Service
 
 metadata:
   name: {{ include "search-projector.serviceName" .}}
+  namespace: {{ include "search-projector.namespace" . | quote }}
   labels:
     {{- include "search-projector.labels" . | nindent 4 }}
 
@@ -15,8 +16,8 @@ spec:
   selector:
     {{- include "search-projector.selectorLabels" . | nindent 4 }}
   ports:
-    - name: metrics
-      port: {{ .Values.metrics.service.port }}
-      appProtocol: http
-      protocol: TCP
-      targetPort: 9464
+  - name: metrics
+    appProtocol: http
+    protocol: TCP
+    targetPort: metrics
+    port: {{ .Values.metrics.service.port }}

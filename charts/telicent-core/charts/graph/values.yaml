@@ -1,11 +1,12 @@
 # Copyright (C) 2025 Telicent Limited
-# Telicent Graph stand-alone chart
+# Telicent *Graph* stand-alone chart
 
+#
 # @section Global Parameters
+#
 # @descStart
 # Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
 # @descEnd
-
 global:
   ## Current available global image parameters: imageRegistry and imagePullSecrets
   ## Please, note that this will override the image parameters
@@ -26,11 +27,6 @@ global:
   apiHostDomain: "api.telicent.io"
   # @key global.authHostDomain Domain associated with Telicent authentication services, including OIDC providers
   authHostDomain: "auth.telicent.io"
-  # @key global.groupsClaim Key used to retrieve groups from the OIDC provider
-  groupsClaim: "groups"
-  # @key global.jwksUrl Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)
-  # Note: For Dex the endpoint would be https://{yourDexDomain}/keys
-  jwksUrl: "https://{yourAuthdomain}/.well-known/jwks.json"
 
   # @key global.istioNamespace Namespace in which Istio is deployed
   # Note: By default, Istio namespace is set to 'istio-system'
@@ -40,7 +36,7 @@ global:
   # @key global.istioGatewayName Name of the Istio Gateway Resource (LB operating at the edge of the mesh)
   istioGatewayName: ingress-gateway
   # @key global.istioVirtualServiceEnabled Enable Istio traffic routing to a named destination service
-  istioVirtualServiceEnabled: true
+  istioVirtualServiceEnabled: false
 
   kafka:
     # @key global.kafka.bootstrapServers Comma separated list containing Kafka bootstrap servers
@@ -62,12 +58,14 @@ global:
     # @key global.truststore.mountPath The mount path for the truststore in the container
     mountPath: /app/config/truststore
 
+#
 # @section Configuration Parameters
+#
 # @descStart
-# Contains configuration parameters specific to the Graph application
+# Contains configuration parameters specific to the *Graph* application
 # @descEnd
 configuration:
-  # @key configuration.existingEnvConfigMap Name of existing configmap containing Graph Environment Configuration
+  # @key configuration.existingEnvConfigMap Name of existing configmap containing *Graph* Environment Configuration
   # Note: When it's set it will disable configmap creation.
   existingEnvConfigMap: ""
   # @key configuration.existingFusekiConfigMap Name of existing configmap containing Fuseki Configuration
@@ -80,7 +78,7 @@ configuration:
   attributeHierarchyUrl: ""
 
   # @key configuration.javaOptions JVM options for the application
-  javaOptions: -Xmx5120m -Xms2048m -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks
+  javaOptions: "-XX:MaxRAMPercentage=80.0"
 
   # @key configuration.otelMetricsExporter OpenTelemetry metrics exporter
   # Options: prometheus, otlp, none
@@ -103,22 +101,27 @@ namespaceOverride: ""
 # @key commonLabels Add labels to all the deployed resources
 commonLabels: {}
 
+#
 # @section Statefulset Parameters
-# @key replicas Number of Graph replicas to deploy
+#
+# @key replicas Number of *Graph* replicas to deploy
 replicas: 1
 # @key revisionHistoryLimit Number of controller revisions to keep
 revisionHistoryLimit: 5
+
 # @key annotations Add extra annotations to the Statefulset object
 annotations: {}
-# @key podAnnotations Add extra annotations to the *Auth* pod
+# @key podLabels Add extra labels to the *Graph* pod
+podLabels: {}
+# @key podAnnotations Add extra annotations to the *Graph* pod
 podAnnotations: {}
-# @key extraEnvVars Array with extra environment variables to add to *Auth* pod
+# @key extraEnvVars Array with extra environment variables to add to *Graph* pod
 # Example:
 # extraEnvVars:
 # - name: FOO
 # - value: instance
 extraEnvVars: []
-# @key extraVolumes Additional containers to be added to the *Auth* pod
+# @key extraVolumes Additional containers to be added to the *Graph* pod
 extraVolumes: []
 # @key extraVolumeMounts Optionally specify extra list of additional volumeMounts
 extraVolumeMounts: []
@@ -135,13 +138,13 @@ initContainers: []
 sidecars: []
 
 image:
-  # @key image.registry [default: REGISTRY_NAME] Graph image registry
+  # @key image.registry [default: REGISTRY_NAME] *Graph* image registry
   registry: quay.io
-  # @key image.repository [default: REPOSITORY_NAME/smart-cache-graph] Graph image name
+  # @key image.repository [default: REPOSITORY_NAME/smart-cache-graph] *Graph* image name
   repository: telicent/smart-cache-graph
-  # @key image.tag Graph image tag. If not set, a tag is generated using the appVersion
+  # @key image.tag *Graph* image tag. If not set, a tag is generated using the appVersion
   tag: ""
-  # @key image.pullPolicy Graph image pull policy
+  # @key image.pullPolicy *Graph* image pull policy
   pullPolicy: IfNotPresent
   # @key image.pullSecrets Specify registry secret names as an array
   pullSecrets: []
@@ -149,7 +152,7 @@ image:
 resources:
   requests:
     # @key resources.requests.cpu Set containers' CPU request
-    cpu: "500m"
+    cpu: "1000m"
     # @key resources.requests.memory Set containers' memory request
     memory: "8000Mi"
   limits:
@@ -188,7 +191,19 @@ podSecurityContext:
     # @key podSecurityContext.seccompProfile.type Set the provisioning pod's Security Context seccomp profile
     type: RuntimeDefault
 
+# @key affinity Affinity for pod assignment
+# Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+affinity: {}
+# @key nodeSelector Node labels for pod assignment
+# Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
+nodeSelector: {}
+# @key tolerations Tolerations for pod assignment
+# Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+tolerations: []
+
+#
 # @section Persistent Volume Claim Parameters
+#
 persistentVolumeClaims:
   backupsVolume:
     # @key persistentVolumeClaims.backupsVolume.size PVC Storage Request for the Backup volume
@@ -196,13 +211,37 @@ persistentVolumeClaims:
     # @key persistentVolumeClaims.backupsVolume.storageClass PVC Storage Class for the Backup data volume
     storageClass: gp3
   datasetsVolume:
-    # @key persistentVolumeClaims.datasetsVolume.size PVC Storage Request for the Graph volume
+    # @key persistentVolumeClaims.datasetsVolume.size PVC Storage Request for the *Graph* volume
     size: 25Gi
-    # @key persistentVolumeClaims.datasetsVolume.storageClass iPVC Storage Class for the Graph data volume
+    # @key persistentVolumeClaims.datasetsVolume.storageClass iPVC Storage Class for the *Graph* data volume
     storageClass: gp3
 
 #
-# @section Metrics (Prometheus) Parameters
+# @section Service Account Parameters
+#
+serviceAccount:
+  # @key serviceAccount.create Specifies whether a service account should be created
+  create: true
+  # @key serviceAccount.name Name of the ServiceAccount to use. If not set, a name is generated using the fullname
+  name: ""
+  # @key serviceAccount.annotations Additional custom annotations for the ServiceAccount
+  annotations: {}
+  # @key serviceAccount.automount Automatically mount a ServiceAccount's API credentials
+  automount: true
+
+#
+# @section Traffic Exposure Parameters
+#
+service:
+  # @key service.name *Graph* service name. If not set, a name is generated using the fullname
+  name: "graph"
+  # @key service.port *Graph* service port
+  port: 8080
+  # @key service.type *Graph* service type
+  type: ClusterIP
+
+#
+# @section Metrics (Prometheus) Exposure Parameters
 #
 metrics:
   # @key metrics.enabled Enable Prometheus metrics
@@ -213,29 +252,17 @@ metrics:
     # @key metrics.service.port Port for the Prometheus service
     port: 9464
 
-# @section Traffic Exposure Parameters
-service:
-  # @key service.name *Graph* service name. If not set, a name is generated using the chart name
-  name: "graph"
-  # @key service.port *Graph* service port
-  port: 8080
-  # @key service.type *Graph* service type
-  type: ClusterIP
-
+#
+# @section Istio Parameters
+#
 istio:
   ingress:
     # @key istio.ingress.principal Principal used for ingress traffic by the Istio AuthorizationPolicy.  If not set, a principal is generated using Release namespace and serviceAccountName
     principal: ""
     # @key istio.ingress.serviceAccountName Name of the Ingress service account (traefik and istio supported)
     serviceAccountName: "traefik-proxy"
-
-# @section Extra Containers Parameters
-# @key extraContainers Additional containers to be added to the pod
-extraContainers: []
-
-# @section Service Account Parameters
-serviceAccount:
-  # @key serviceAccount.name Name of the ServiceAccount to use. If not set, a name is generated using the fullname
-  name: ""
-  # @key serviceAccount.annotations Additional custom annotations for the ServiceAccount
-  annotations: {}
+  paperbackWriter:
+    # @key istio.paperbackWriter.principal Principal used for Paperback Writer traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName
+    principal: ""
+    # @key istio.paperbackWriter.serviceAccountName Name of the Paperback Writer service account
+    serviceAccountName: "paperback-writer"

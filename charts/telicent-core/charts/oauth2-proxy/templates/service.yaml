@@ -18,6 +18,6 @@ spec:
   ports:
   - name: http
     appProtocol: http
-    targetPort: http
     protocol: TCP
+    targetPort: http
     port: {{ .Values.service.port }}

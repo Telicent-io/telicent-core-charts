@@ -7,8 +7,8 @@ kind: Service
 
 metadata:
   name: {{ include "access.serviceName" . }}
+  namespace: {{ include "access.namespace" . | quote }}
   labels:
-    app: access
     {{- include "access.labels" . | nindent 4 }}
 
 spec:
@@ -17,7 +17,7 @@ spec:
     {{- include "access.selectorLabels" . | nindent 4 }}
   ports:
   - name: http
-    port: {{ .Values.service.port }}
     appProtocol: http
     protocol: TCP
-    targetPort: {{ .Values.service.port }}
+    targetPort: http
+    port: {{ .Values.service.port }}

@@ -1,11 +1,12 @@
 # Copyright (C) 2025 Telicent Limited
-# Telicent Search stand-alone chart
+# Telicent *Search* stand-alone chart
 
+#
 # @section Global Parameters
+#
 # @descStart
 # Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
 # @descEnd
-
 global:
   ## Current available global image parameters: imageRegistry and imagePullSecrets
   ## Please, note that this will override the image parameters
@@ -26,8 +27,6 @@ global:
   apiHostDomain: "api.telicent.io"
   # @key global.authHostDomain Domain associated with Telicent authentication services, including OIDC providers
   authHostDomain: "auth.telicent.io"
-  # @key global.groupsClaim Key used to retrieve groups from the OIDC provider
-  groupsClaim: "groups"
 
   # @key global.istioNamespace Namespace in which Istio is deployed
   # Note: By default, Istio namespace is set to 'istio-system'
@@ -50,16 +49,14 @@ global:
     # @key global.truststore.mountPath The mount path for the truststore in the container
     mountPath: /app/config/truststore
 
-# -----------------------------------------------------------------------------
-# @section Search Parameters
-# -----------------------------------------------------------------------------
-
-# @section Configuration Parameters - Search
+#
+# @section Configuration Parameters
+#
 # @descStart
-# Contains configuration parameters specific to the Smart Cach Search application
+# Contains configuration parameters specific to the *Search* application
 # @descEnd
 configuration:
-  # @key configuration.existingEnvConfigMap Name of existing configmap containing Search Environment Configuration
+  # @key configuration.existingEnvConfigMap Name of existing configmap containing *Search* Environment Configuration
   # Note: When it's set it will disable configmap creation.
   existingEnvConfigMap: ""
   
@@ -96,7 +93,9 @@ configuration:
   # @key configuration.indexBatchSize Number of documents to index in a single batch operation
   indexBatchSize: 100
 
+#
 # @section OpenSearch/Elastic secret - Search
+#
 # Note: It is recommended to use a Kubernetes secret for sensitive information like passwords
 elasticSecret:
   # @key elasticSecret.existingSecret Name of an existing secret resource containing the username & password
@@ -106,36 +105,62 @@ elasticSecret:
   # @key elasticSecret.password OpenSearch/Elastic user password
   password: ""
 
-# @section Common Parameters - Search
-# @key fullnameOverride String to fully override the generated release name
-fullnameOverride: ""
+#
+# @section Common Parameters
+#
 # @key nameOverride String to partially override fullname (will maintain the release name)
 nameOverride: ""
+# @key fullnameOverride String to fully override the generated release name
+fullnameOverride: ""
+# @key namespaceOverride String to fully override all deployed resources namespace
+namespaceOverride: ""
+# @key commonLabels Add labels to all the deployed resources
+commonLabels: {}
 
-# @section Deployment Parameters - Search
-# @key replicas Number of Search replicas to deploy
+#
+# @section Deployment Parameters
+#
+# @key replicas Number of *Search* replicas to deploy
 replicas: 1
 # @key revisionHistoryLimit Number of controller revisions to keep
 revisionHistoryLimit: 5
-# @key annotations Add extra annotations to the Deployment object
+
+# @key annotations Add extra annotations to the deployment object
 annotations: {}
-# @key podAnnotations Add extra annotations to the *Auth* pod
+# @key podLabels Add extra labels to the *Search* pod
+podLabels: {}
+# @key podAnnotations Add extra annotations to the *Search* pod
 podAnnotations: {}
-# @key extraEnvVars Array with extra environment variables to add to *Auth* pod
+# @key extraEnvVars Array with extra environment variables to add to *Search* pod
 # Example:
 # extraEnvVars:
 # - name: FOO
 # - value: instance
 extraEnvVars: []
+# @key extraVolumes Additional containers to be added to the *Search* pod
+extraVolumes: []
+# @key extraVolumeMounts Optionally specify extra list of additional volumeMounts
+extraVolumeMounts: []
+# @key initContainers Add init containers to the pod
+initContainers: []
+# Example:
+# sidecars:
+# - name: your-image-name
+#   image: your-image
+#   ports:
+#   - name: portname
+#     containerPort: 1234
+# @key sidecars Add sidecars to the pod.
+sidecars: []
 
 image:
-  # @key image.registry [default: REGISTRY_NAME] Search image registry
+  # @key image.registry [default: REGISTRY_NAME] *Search* image registry
   registry: quay.io
-  # @key image.repository [default: REPOSITORY_NAME/search-api-server] Search image name
+  # @key image.repository [default: REPOSITORY_NAME/search-api-server] *Search* image name
   repository: telicent/search-api-server
-  # @key image.tag Search image tag. If not set, a tag is generated using the appVersion
+  # @key image.tag *Search* image tag. If not set, a tag is generated using the appVersion
   tag: ""
-  # @key image.pullPolicy Search image pull policy
+  # @key image.pullPolicy *Search* image pull policy
   pullPolicy: IfNotPresent
   # @key image.pullSecrets Specify registry secret names as an array
   pullSecrets: []
@@ -182,8 +207,42 @@ podSecurityContext:
     # @key podSecurityContext.seccompProfile.type Set the provisioning pod's Security Context seccomp profile
     type: RuntimeDefault
 
+# @key affinity Affinity for pod assignment
+# Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+affinity: {}
+# @key nodeSelector Node labels for pod assignment
+# Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
+nodeSelector: {}
+# @key tolerations Tolerations for pod assignment
+# Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+tolerations: []
+
 #
-# @section Metrics (Prometheus) Parameters
+# @section Service Account Parameters
+#
+serviceAccount:
+  # @key serviceAccount.create Specifies whether a service account should be created
+  create: true
+  # @key serviceAccount.name Name of the ServiceAccount to use. If not set, a name is generated using the fullname
+  name: ""
+  # @key serviceAccount.annotations Additional custom annotations for the ServiceAccount
+  annotations: {}
+  # @key serviceAccount.automount Automatically mount a ServiceAccount's API credentials
+  automount: true
+
+#
+# @section Traffic Exposure Parameters
+#
+service:
+  # @key service.name *Search* service name. If not set, a name is generated using the fullname
+  name: "search"
+  # @key service.port *Search* service port
+  port: 8080
+  # @key service.type *Search* service port
+  type: ClusterIP
+
+#
+# @section Metrics (Prometheus) Exposure Parameters
 #
 metrics:
   # @key metrics.enabled Enable Prometheus metrics
@@ -195,36 +254,16 @@ metrics:
     port: 9464
 
 #
-# @section Traffic Exposure Parameters - Search
+# @section Istio Parameters
 #
-service:
-  # @key service.name *Search* service name. If not set, a name is generated using the chart name
-  name: "search"
-  # @key service.port Search service port
-  port: 8080
-  # @key service.type Search service port
-  type: ClusterIP
-
 istio:
   ingress:
     # @key istio.ingress.principal Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName
     principal: ""
     # @key istio.ingress.serviceAccountName Name of the Ingress service account (traefik and istio supported)
     serviceAccountName: "traefik-proxy"
-
   graph:
     # @key istio.graph.principal Principal used for Graph traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'serviceAccountName' and the current namespace
     principal: ""
     # @key istio.graph.serviceAccountName Name of the Graph service account
     serviceAccountName: "graph"
-
-# @section Extra Containers Parameters
-# @key extraContainers Additional containers to be added to the pod
-extraContainers: []
-
-# @section Service Account Parameters - Search
-serviceAccount:
-  # @key serviceAccount.name Name of the created ServiceAccount. If not set, a name is generated using the fullname template
-  name: ""
-  # @key serviceAccount.annotations Additional custom annotations for the ServiceAccount
-  annotations: {}

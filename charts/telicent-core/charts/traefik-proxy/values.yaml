@@ -27,8 +27,6 @@ global:
   apiHostDomain: "api.telicent.io"
   # @key global.authHostDomain Domain associated with Telicent authentication services, including OIDC providers
   authHostDomain: "auth.telicent.io"
-  # @key global.groupsClaim Key used to retrieve groups from the OIDC provider
-  groupsClaim: "groups"
 
   # @key global.istioNamespace Namespace in which Istio is deployed
   # Note: By default, Istio namespace is set to 'istio-system'
@@ -206,15 +204,22 @@ serviceAccount:
 # @section Traffic Exposure Parameters
 #
 service:
+  # @key service.name *Traefik Proxy* service name. If not set, a name is generated using the fullname
+  name: "traefik-proxy"
   app:
     # @key service.app.port *Traefik Proxy* APP/UI service port
     port: 8080
     # @key service.app.type *Traefik Proxy* APP/UI service type
     type: ClusterIP
   api:
-    # @key service.api.port *Traefik Proxy* service port
+    # @key service.api.port *Traefik Proxy* API service port
     port: 8081
-    # @key service.api.type *Traefik Proxy* service type
+    # @key service.api.type *Traefik Proxy* API service type
+    type: ClusterIP
+  auth:
+    # @key service.auth.port *Traefik Proxy* AUTH service port
+    port: 8082
+    # @key service.auth.type *Traefik Proxy* AUTH service type
     type: ClusterIP
 
 #

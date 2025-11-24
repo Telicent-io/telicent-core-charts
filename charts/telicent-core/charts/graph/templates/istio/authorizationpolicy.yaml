@@ -8,25 +8,20 @@ kind: AuthorizationPolicy
 metadata:
   name: {{ include "graph.fullname" . }}-ingress
   labels:
-  {{- include "graph.labels" . | nindent 4 }}
+    {{- include "graph.labels" . | nindent 4 }}
 
 spec:
   selector:
     matchLabels:
-    {{- include "graph.selectorLabels" . | nindent 6 }}
-
+      {{- include "graph.selectorLabels" . | nindent 6 }}
   action: ALLOW
-
   rules:
   - from:
     - source:
         principals:
-        - {{ include "graph.ingressPrincipal" . }}
+          {{- include "graph.ingressPrincipal" . | nindent 8 }}
     to:
     - operation:
-        methods:
-          - GET
-          - POST
         paths:
         - /knowledge/sparql
         - /knowledge/sparql/*
@@ -40,11 +35,11 @@ spec:
         - /catalog/sparql/*
         - /catalog/query
         - /catalog/query/*
+        methods: ["GET", "POST"]
     - operation:
-        methods:
-        - POST
         paths:
         - /knowledge/graphql
         - /knowledge/graphql/*
         - /knowledge/shacl
         - /knowledge/shacl/*
+        methods: ["POST"]

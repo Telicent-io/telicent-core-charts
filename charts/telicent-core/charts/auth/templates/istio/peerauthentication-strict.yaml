@@ -9,7 +9,7 @@ metadata:
   name: {{ include "auth.name" . }}-strict
   namespace: {{ include "auth.namespace" . | quote }}
   labels:
-  {{- include "auth.labels" . | nindent 4 }}
+    {{- include "auth.labels" . | nindent 4 }}
 
 spec:
   mtls:

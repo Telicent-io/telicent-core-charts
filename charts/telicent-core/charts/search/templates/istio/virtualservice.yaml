@@ -1,13 +1,13 @@
 {{- /*
 Copyright (C) 2025 Telicent Limited
 */}}
-
 {{- if and .Values.global.enterprise .Values.global.istioVirtualServiceEnabled }}
 apiVersion: networking.istio.io/v1
 kind: VirtualService
 
 metadata:
   name: {{ include "search.fullname" . }}
+  namespace: {{ include "search.namespace" . | quote }}
   labels:
     {{- include "search.labels" . | nindent 4 }}
 

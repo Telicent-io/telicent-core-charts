@@ -57,7 +57,7 @@ spec:
       {{- end }}
       {{- end }}
       containers:
-      - name: oauth2-proxy
+      - name: {{ .Chart.Name }}
         image: {{ include "oauth2-proxy.image" . }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         resources: {{- toYaml .Values.resources | nindent 10 }}
@@ -95,8 +95,8 @@ spec:
 
         ports:
         - name: http
-          containerPort: 4080
           protocol: TCP
+          containerPort: 4080
 
         readinessProbe:
           httpGet:

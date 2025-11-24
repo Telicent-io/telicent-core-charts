@@ -19,11 +19,17 @@ spec:
   - name: http-app
     appProtocol: http
     protocol: TCP
-    port: {{ .Values.service.app.port }}
     targetPort: http-app
+    port: {{ .Values.service.app.port }}
 
   - name: http-api
     appProtocol: http
     protocol: TCP
-    port: {{ .Values.service.api.port }}
     targetPort: http-api
+    port: {{ .Values.service.api.port }}
+
+  - name: http-auth
+    appProtocol: http
+    protocol: TCP
+    targetPort: http-auth
+    port: {{ .Values.service.auth.port }}

@@ -7,16 +7,17 @@ kind: Service
 
 metadata:
   name: {{ include "access-ui.serviceName" . }}
+  namespace: {{ include "access-ui.namespace" . | quote }}
   labels:
-  {{- include "access-ui.labels" . | nindent 4 }}
+    {{- include "access-ui.labels" . | nindent 4 }}
 
 spec:
   type: {{ .Values.service.type }}
   selector:
     {{- include "access-ui.selectorLabels" . | nindent 4 }}
   ports:
-    - name: http
-      port: {{ .Values.service.port }}
-      appProtocol: http
-      protocol: TCP
-      targetPort: {{ .Values.service.port }}
+  - name: http
+    appProtocol: http
+    protocol: TCP
+    targetPort: http
+    port: {{ .Values.service.port }}

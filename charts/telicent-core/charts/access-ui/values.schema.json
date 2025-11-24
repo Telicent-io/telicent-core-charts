@@ -16,6 +16,11 @@
                     "default": [],
                     "items": {}
                 },
+                "enterprise": {
+                    "type": "boolean",
+                    "description": "Enable enterprise mode, adding additional features and configurations",
+                    "default": false
+                },
                 "appHostDomain": {
                     "type": "string",
                     "description": "Domain associated with Telicent application/ui services",
@@ -49,7 +54,7 @@
                 "istioVirtualServiceEnabled": {
                     "type": "boolean",
                     "description": "Enable Istio traffic routing to a named destination service",
-                    "default": true
+                    "default": false
                 }
             }
         },
@@ -63,19 +68,29 @@
                 }
             }
         },
+        "nameOverride": {
+            "type": "string",
+            "description": "String to partially override fullname (will maintain the release name)",
+            "default": ""
+        },
         "fullnameOverride": {
             "type": "string",
             "description": "String to fully override the generated release name",
             "default": ""
         },
-        "nameOverride": {
+        "namespaceOverride": {
             "type": "string",
-            "description": "String to replace the name of the chart in the Chart.yaml file",
+            "description": "String to fully override all deployed resources namespace",
             "default": ""
+        },
+        "commonLabels": {
+            "type": "object",
+            "description": "Add labels to all the deployed resources",
+            "default": {}
         },
         "replicas": {
             "type": "number",
-            "description": "Number of Access UI replicas to deploy",
+            "description": "Number of *Access UI* replicas to deploy",
             "default": 1
         },
         "revisionHistoryLimit": {
@@ -83,17 +98,62 @@
             "description": "Number of controller revisions to keep",
             "default": 5
         },
+        "annotations": {
+            "type": "object",
+            "description": "Add extra annotations to the deployment object",
+            "default": {}
+        },
+        "podLabels": {
+            "type": "object",
+            "description": "Add extra labels to the *Access UI* pod",
+            "default": {}
+        },
+        "podAnnotations": {
+            "type": "object",
+            "description": "Add extra annotations to the *Access UI* pod",
+            "default": {}
+        },
+        "extraEnvVars": {
+            "type": "array",
+            "description": "Array with extra environment variables to add to *Access UI* pod",
+            "default": [],
+            "items": {}
+        },
+        "extraVolumes": {
+            "type": "array",
+            "description": "Additional containers to be added to the *Access UI* pod",
+            "default": [],
+            "items": {}
+        },
+        "extraVolumeMounts": {
+            "type": "array",
+            "description": "Optionally specify extra list of additional volumeMounts",
+            "default": [],
+            "items": {}
+        },
+        "initContainers": {
+            "type": "array",
+            "description": "Add init containers to the pod",
+            "default": [],
+            "items": {}
+        },
+        "sidecars": {
+            "type": "array",
+            "description": "Add sidecars to the pod.",
+            "default": [],
+            "items": {}
+        },
         "image": {
             "type": "object",
             "properties": {
                 "registry": {
                     "type": "string",
-                    "description": "Access UI image registry",
+                    "description": "*Access UI* image registry",
                     "default": "REGISTRY_NAME"
                 },
                 "repository": {
                     "type": "string",
-                    "description": "Access UI image name",
+                    "description": "*Access UI* image name",
                     "default": "REPOSITORY_NAME/telicent-access"
                 },
                 "tag": {
@@ -103,7 +163,7 @@
                 },
                 "pullPolicy": {
                     "type": "string",
-                    "description": "Access UI image pull policy",
+                    "description": "*Access UI* image pull policy",
                     "default": "IfNotPresent"
                 },
                 "pullSecrets": {
@@ -234,17 +294,63 @@
                 }
             }
         },
+        "affinity": {
+            "type": "object",
+            "description": "Affinity for pod assignment",
+            "default": {}
+        },
+        "nodeSelector": {
+            "type": "object",
+            "description": "Node labels for pod assignment",
+            "default": {}
+        },
+        "tolerations": {
+            "type": "array",
+            "description": "Tolerations for pod assignment",
+            "default": [],
+            "items": {}
+        },
+        "serviceAccount": {
+            "type": "object",
+            "properties": {
+                "create": {
+                    "type": "boolean",
+                    "description": "Specifies whether a service account should be created",
+                    "default": true
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the ServiceAccount to use. If not set, a name is generated using the fullname",
+                    "default": ""
+                },
+                "annotations": {
+                    "type": "object",
+                    "description": "Additional custom annotations for the ServiceAccount",
+                    "default": {}
+                },
+                "automount": {
+                    "type": "boolean",
+                    "description": "Automatically mount a ServiceAccount's API credentials",
+                    "default": true
+                }
+            }
+        },
         "service": {
             "type": "object",
             "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "*Access UI* service name. If not set, a name is generated using the fullname",
+                    "default": ""
+                },
                 "port": {
                     "type": "number",
-                    "description": "Access UI service port",
+                    "description": "*Access UI* service port",
                     "default": 8080
                 },
                 "type": {
                     "type": "string",
-                    "description": "Access UI service type",
+                    "description": "*Access UI* service type",
                     "default": "ClusterIP"
                 }
             }
@@ -266,27 +372,6 @@
                             "default": "traefik-proxy"
                         }
                     }
-                }
-            }
-        },
-        "extraContainers": {
-            "type": "array",
-            "description": "Additional containers to be added to the pod",
-            "default": [],
-            "items": {}
-        },
-        "serviceAccount": {
-            "type": "object",
-            "properties": {
-                "name": {
-                    "type": "string",
-                    "description": "Name of the ServiceAccount to use. If not set, a name is generated using the fullname",
-                    "default": ""
-                },
-                "annotations": {
-                    "type": "object",
-                    "description": "Additional custom annotations for the ServiceAccount",
-                    "default": {}
                 }
             }
         }

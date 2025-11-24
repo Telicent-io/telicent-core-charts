@@ -6,7 +6,7 @@ http:
       priority: 9
       service: auth
       entryPoints:
-        - web-app
+        - web-auth
       middleWares:
         - host-auth
 
@@ -15,7 +15,7 @@ http:
       priority: 8
       service: auth
       entryPoints:
-        - web-app
+        - web-auth
       middleWares:
         - host-auth
         - oauth2
@@ -25,7 +25,7 @@ http:
       priority: 7
       service: auth
       entryPoints:
-        - web-app
+        - web-auth
       middleWares:
         - host-auth
         - oauth2
@@ -35,7 +35,7 @@ http:
       priority: 6
       service: auth
       entryPoints:
-        - web-app
+        - web-auth
       middleWares:
         - host-auth
 
@@ -44,7 +44,7 @@ http:
       priority: 5
       service: auth
       entryPoints:
-        - web-app
+        - web-auth
       middleWares:
         - host-auth
 

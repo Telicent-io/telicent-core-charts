@@ -94,7 +94,6 @@ Contains global parameters, these parameters are mirrored within the Telicent co
 | `global.appHostDomain`              | Domain associated with Telicent application/ui services                           | `apps.telicent.io` |
 | `global.apiHostDomain`              | Domain associated with Telicent Api services                                      | `api.telicent.io`  |
 | `global.authHostDomain`             | Domain associated with Telicent authentication services, including OIDC providers | `auth.telicent.io` |
-| `global.groupsClaim`                | Key used to retrieve groups from the OIDC provider                                | `groups`           |
 | `global.istioNamespace`             | Namespace in which Istio is deployed                                              | `istio-system`     |
 | `global.istioServiceAccountName`    | Name of the Istio service account                                                 | `istio-ingress`    |
 | `global.istioGatewayName`           | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)         | `ingress-gateway`  |
@@ -176,65 +175,73 @@ List of registered clients
 
 ### Deployment Parameters
 
-| Name                                                | Description                                                                | Value                           |
-| --------------------------------------------------- | -------------------------------------------------------------------------- | ------------------------------- |
-| `replicas`                                          | Number of *Auth* replicas to deploy                                        | `1`                             |
-| `revisionHistoryLimit`                              | Number of controller revisions to keep                                     | `5`                             |
-| `annotations`                                       | Add extra annotations to the deployment object                             | `{}`                            |
-| `podLabels`                                         | Add extra labels to the *Auth* pod                                         | `{}`                            |
-| `podAnnotations`                                    | Add extra annotations to the *Auth* pod                                    | `{}`                            |
-| `extraEnvVars`                                      | Array with extra environment variables to add to *Auth* pod                | `[]`                            |
-| `extraVolumes`                                      | Additional containers to be added to the *Auth* pod                        | `[]`                            |
-| `extraVolumeMounts`                                 | Optionally specify extra list of additional volumeMounts                   | `[]`                            |
-| `initContainers`                                    | Add init containers to the pod                                             | `[]`                            |
-| `sidecars`                                          | Add sidecars to the pod.                                                   | `[]`                            |
-| `image.registry`                                    | *Auth* image registry                                                      | `REGISTRY_NAME`                 |
-| `image.repository`                                  | Auth server image name                                                     | `telicent/telicent-auth-server` |
-| `image.pullPolicy`                                  | Auth server image pull policy                                              | `IfNotPresent`                  |
-| `image.tag`                                         | Auth server image tag. If not set, a tag is generated using the appVersion | `""`                            |
-| `image.pullSecrets`                                 | Specify registry secret names as an array                                  | `[]`                            |
-| `resources.requests.cpu`                            | Set containers' CPU request                                                | `700m`                          |
-| `resources.requests.memory`                         | Set containers' memory request                                             | `1024Mi`                        |
-| `resources.limits.cpu`                              | Set containers' CPU limit                                                  | `1500m`                         |
-| `resources.limits.memory`                           | Set containers' memory limit                                               | `2048Mi`                        |
-| `containerSecurityContext.runAsUser`                | Set containers' Security Context runAsUser User ID                         | `185`                           |
-| `containerSecurityContext.runAsGroup`               | Set containers' Security Context runAsGroup Group ID                       | `185`                           |
-| `containerSecurityContext.runAsNonRoot`             | Set container's Security Context runAsNonRoot                              | `true`                          |
-| `containerSecurityContext.allowPrivilegeEscalation` | Set container's Security Context allowPrivilegeEscalation                  | `false`                         |
-| `containerSecurityContext.capabilities.drop`        | List of capabilities to be dropped                                         | `["ALL"]`                       |
-| `containerSecurityContext.seccompProfile.type`      | Set container's Security Context seccomp profile                           | `RuntimeDefault`                |
-| `podSecurityContext.runAsUser`                      | Set the provisioning pod's Security Context runAsUser User ID              | `185`                           |
-| `podSecurityContext.runAsGroup`                     | Set the provisioning pod's Security Context runAsGroup Group ID            | `185`                           |
-| `podSecurityContext.runAsNonRoot`                   | Set the provisioning pod's Security Context runAsNonRoot                   | `true`                          |
-| `podSecurityContext.fsGroup`                        | Set the provisioning pod's Group ID for the mounted volumes' filesystem    | `185`                           |
-| `podSecurityContext.seccompProfile.type`            | Set the provisioning pod's Security Context seccomp profile                | `RuntimeDefault`                |
-| `affinity`                                          | Affinity for pod assignment                                                | `{}`                            |
-| `nodeSelector`                                      | Node labels for pod assignment                                             | `{}`                            |
-| `tolerations`                                       | Tolerations for pod assignment                                             | `[]`                            |
+| Name                                                | Description                                                             | Value                           |
+| --------------------------------------------------- | ----------------------------------------------------------------------- | ------------------------------- |
+| `replicas`                                          | Number of *Auth* replicas to deploy                                     | `1`                             |
+| `revisionHistoryLimit`                              | Number of controller revisions to keep                                  | `5`                             |
+| `annotations`                                       | Add extra annotations to the deployment object                          | `{}`                            |
+| `podLabels`                                         | Add extra labels to the *Auth* pod                                      | `{}`                            |
+| `podAnnotations`                                    | Add extra annotations to the *Auth* pod                                 | `{}`                            |
+| `extraEnvVars`                                      | Array with extra environment variables to add to *Auth* pod             | `[]`                            |
+| `extraVolumes`                                      | Additional containers to be added to the *Auth* pod                     | `[]`                            |
+| `extraVolumeMounts`                                 | Optionally specify extra list of additional volumeMounts                | `[]`                            |
+| `initContainers`                                    | Add init containers to the pod                                          | `[]`                            |
+| `sidecars`                                          | Add sidecars to the pod.                                                | `[]`                            |
+| `image.registry`                                    | *Auth* image registry                                                   | `REGISTRY_NAME`                 |
+| `image.repository`                                  | *Auth* image name                                                       | `telicent/telicent-auth-server` |
+| `image.tag`                                         | *Auth* image tag. If not set, a tag is generated using the appVersion   | `""`                            |
+| `image.pullPolicy`                                  | *Auth* image pull policy                                                | `IfNotPresent`                  |
+| `image.pullSecrets`                                 | Specify registry secret names as an array                               | `[]`                            |
+| `resources.requests.cpu`                            | Set containers' CPU request                                             | `700m`                          |
+| `resources.requests.memory`                         | Set containers' memory request                                          | `1024Mi`                        |
+| `resources.limits.cpu`                              | Set containers' CPU limit                                               | `1500m`                         |
+| `resources.limits.memory`                           | Set containers' memory limit                                            | `2048Mi`                        |
+| `containerSecurityContext.runAsUser`                | Set containers' Security Context runAsUser User ID                      | `185`                           |
+| `containerSecurityContext.runAsGroup`               | Set containers' Security Context runAsGroup Group ID                    | `185`                           |
+| `containerSecurityContext.runAsNonRoot`             | Set container's Security Context runAsNonRoot                           | `true`                          |
+| `containerSecurityContext.allowPrivilegeEscalation` | Set container's Security Context allowPrivilegeEscalation               | `false`                         |
+| `containerSecurityContext.capabilities.drop`        | List of capabilities to be dropped                                      | `["ALL"]`                       |
+| `containerSecurityContext.seccompProfile.type`      | Set container's Security Context seccomp profile                        | `RuntimeDefault`                |
+| `podSecurityContext.runAsUser`                      | Set the provisioning pod's Security Context runAsUser User ID           | `185`                           |
+| `podSecurityContext.runAsGroup`                     | Set the provisioning pod's Security Context runAsGroup Group ID         | `185`                           |
+| `podSecurityContext.runAsNonRoot`                   | Set the provisioning pod's Security Context runAsNonRoot                | `true`                          |
+| `podSecurityContext.fsGroup`                        | Set the provisioning pod's Group ID for the mounted volumes' filesystem | `185`                           |
+| `podSecurityContext.seccompProfile.type`            | Set the provisioning pod's Security Context seccomp profile             | `RuntimeDefault`                |
+| `affinity`                                          | Affinity for pod assignment                                             | `{}`                            |
+| `nodeSelector`                                      | Node labels for pod assignment                                          | `{}`                            |
+| `tolerations`                                       | Tolerations for pod assignment                                          | `[]`                            |
 
 ### Service Account Parameters
 
-| Name                         | Description                                                                       | Value  |
-| ---------------------------- | --------------------------------------------------------------------------------- | ------ |
-| `serviceAccount.create`      | Specifies whether a service account should be created                             | `true` |
-| `serviceAccount.name`        | Name of the ServiceAccount to use. If not set, a name is generated using the name | `""`   |
-| `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                              | `{}`   |
-| `serviceAccount.automount`   | Automatically mount a ServiceAccount's API credentials                            | `true` |
+| Name                         | Description                                                                           | Value  |
+| ---------------------------- | ------------------------------------------------------------------------------------- | ------ |
+| `serviceAccount.create`      | Specifies whether a service account should be created                                 | `true` |
+| `serviceAccount.name`        | Name of the ServiceAccount to use. If not set, a name is generated using the fullname | `""`   |
+| `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                  | `{}`   |
+| `serviceAccount.automount`   | Automatically mount a ServiceAccount's API credentials                                | `true` |
 
 ### Traffic Exposure Parameters
 
-| Name           | Description                                                               | Value       |
-| -------------- | ------------------------------------------------------------------------- | ----------- |
-| `service.name` | *Auth* service name. If not set, a name is generated using the chart name | `auth`      |
-| `service.port` | *Auth* service port                                                       | `8080`      |
-| `service.type` | *Auth* service port                                                       | `ClusterIP` |
+| Name           | Description                                                             | Value       |
+| -------------- | ----------------------------------------------------------------------- | ----------- |
+| `service.name` | *Auth* service name. If not set, a name is generated using the fullname | `auth`      |
+| `service.port` | *Auth* service port                                                     | `8080`      |
+| `service.type` | *Auth* service port                                                     | `ClusterIP` |
 
 ### Istio Parameters
 
-| Name                               | Description                                                                                                                                              | Value           |
-| ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- |
-| `istio.ingress.principal`          | Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName | `""`            |
-| `istio.ingress.serviceAccountName` | Name of the Ingress service account (traefik and istio supported)                                                                                        | `traefik-proxy` |
+| Name                                       | Description                                                                                                                                                       | Value              |
+| ------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
+| `istio.ingress.principal`                  | Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName          | `""`               |
+| `istio.ingress.serviceAccountName`         | Name of the Ingress service account (traefik and istio supported)                                                                                                 | `traefik-proxy`    |
+| `istio.userPreferences.principal`          | Principal used for User Preferences traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName | `""`               |
+| `istio.userPreferences.serviceAccountName` | Name of the User Preferences service account                                                                                                                      | `user-preferences` |
+| `istio.graph.principal`                    | Principal used for Graph traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName            | `""`               |
+| `istio.graph.serviceAccountName`           | Name of the Graph service account                                                                                                                                 | `graph`            |
+| `istio.search.principal`                   | Principal used for Search traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName           | `""`               |
+| `istio.search.serviceAccountName`          | Name of the Search service account                                                                                                                                | `search`           |
+| `istio.paperbackWriter.principal`          | Principal used for Paperback Writer traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName | `""`               |
+| `istio.paperbackWriter.serviceAccountName` | Name of the Paperback Writer service account                                                                                                                      | `paperback-writer` |
 
 Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
 
