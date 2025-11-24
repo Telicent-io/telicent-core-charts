@@ -73,7 +73,7 @@ Create the name of the service account to use (based on the fullname).
 */}}
 {{- define "oauth2-proxy.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "oauth2-proxy.name" .) .Values.serviceAccount.name }}
+{{- default (include "oauth2-proxy.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- .Values.serviceAccount.name | default "default" }}
 {{- end }}

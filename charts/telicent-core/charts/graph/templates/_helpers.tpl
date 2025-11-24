@@ -73,7 +73,7 @@ Create the name of the service account to use (based on the fullname).
 */}}
 {{- define "graph.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "graph.name" .) .Values.serviceAccount.name }}
+{{- default (include "graph.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- .Values.serviceAccount.name | default "default" }}
 {{- end }}
