@@ -235,7 +235,7 @@ serviceAccount:
 #
 service:
   # @key service.name *Search* service name. If not set, a name is generated using the fullname
-  name: "search"
+  name: ""
   # @key service.port *Search* service port
   port: 8080
   # @key service.type *Search* service port

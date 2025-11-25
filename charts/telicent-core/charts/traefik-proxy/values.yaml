@@ -205,7 +205,7 @@ serviceAccount:
 #
 service:
   # @key service.name *Traefik Proxy* service name. If not set, a name is generated using the fullname
-  name: "traefik-proxy"
+  name: ""
   app:
     # @key service.app.port *Traefik Proxy* APP/UI service port
     port: 8080
