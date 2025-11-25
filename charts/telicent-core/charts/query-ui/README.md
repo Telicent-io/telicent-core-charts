@@ -59,6 +59,15 @@ Contains global parameters, these parameters are mirrored within the Telicent co
 | `global.istioGatewayName`           | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)         | `ingress-gateway`  |
 | `global.istioVirtualServiceEnabled` | Enable Istio traffic routing to a named destination service                       | `false`            |
 
+### Configuration Parameters
+
+Contains configuration parameters specific to the *Query UI* application
+
+| Name                          | Description                                    | Value                           |
+| ----------------------------- | ---------------------------------------------- | ------------------------------- |
+| `configuration.oauthClientId` | The OAuth client id to be used by *Search UI*  | `telicent-query-ui`             |
+| `configuration.oauthScope`    | List of OAuth scopes to be used by *Search UI* | `openid profile offline_access` |
+
 ### Common Parameters
 
 | Name                | Description                                                            | Value |

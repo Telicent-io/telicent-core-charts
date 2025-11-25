@@ -79,6 +79,21 @@
                 }
             }
         },
+        "configuration": {
+            "type": "object",
+            "properties": {
+                "oauthClientId": {
+                    "type": "string",
+                    "description": "The OAuth client id to be used by *Search UI*",
+                    "default": "telicent-user-portal-ui"
+                },
+                "oauthScope": {
+                    "type": "string",
+                    "description": "List of OAuth scopes to be used by *Search UI*",
+                    "default": "openid profile offline_access"
+                }
+            }
+        },
         "nameOverride": {
             "type": "string",
             "description": "Override the chart name",

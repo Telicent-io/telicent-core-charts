@@ -66,8 +66,17 @@ Contains global parameters, these parameters are mirrored within the Telicent co
 | `image.tag`         | Query UI image tag. If not set, a tag is generated using the appVersion | `""`                             |
 | `image.pullPolicy`  | Query UI image pull policy                                              | `IfNotPresent`                   |
 | `image.pullSecrets` | Specify registry secret names as an array                               | `[]`                             |
-| `nameOverride`      | Override the chart name                                                 | `""`                             |
-| `fullnameOverride`  | Override the full chart name                                            | `""`                             |
+
+### Configuration Parameters
+
+Contains configuration parameters specific to the *Data Catalog UI* application
+
+| Name                          | Description                                    | Value                           |
+| ----------------------------- | ---------------------------------------------- | ------------------------------- |
+| `configuration.oauthClientId` | The OAuth client id to be used by *Search UI*  | `telicent-user-portal-ui`       |
+| `configuration.oauthScope`    | List of OAuth scopes to be used by *Search UI* | `openid profile offline_access` |
+| `nameOverride`                | Override the chart name                        | `""`                            |
+| `fullnameOverride`            | Override the full chart name                   | `""`                            |
 
 ### Service Account Configuration
 

@@ -41,6 +41,18 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
+#
+# @section Configuration Parameters
+#
+# @descStart
+# Contains configuration parameters specific to the *Data Catalog UI* application
+# @descEnd
+configuration:
+  # @key configuration.oauthClientId The OAuth client id to be used by *Search UI*
+  oauthClientId: "telicent-data-catalog-ui"
+  # @key configuration.oauthScope List of OAuth scopes to be used by *Search UI*
+  oauthScope: "openid profile offline_access"
+
 # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 # @key imagePullSecrets Specify registry secret names as an array
 imagePullSecrets: []

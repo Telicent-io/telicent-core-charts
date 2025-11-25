@@ -100,6 +100,16 @@
                     "type": "string",
                     "description": "The name of an existing secret containing map configuration",
                     "default": ""
+                },
+                "oauthClientId": {
+                    "type": "string",
+                    "description": "The OAuth client id to be used by *Search UI*",
+                    "default": "telicent-graph-ui"
+                },
+                "oauthScope": {
+                    "type": "string",
+                    "description": "List of OAuth scopes to be used by *Search UI*",
+                    "default": "openid profile offline_access"
                 }
             }
         },

@@ -461,7 +461,7 @@
                 "name": {
                     "type": "string",
                     "description": "*Graph* service name. If not set, a name is generated using the fullname",
-                    "default": "graph"
+                    "default": ""
                 },
                 "port": {
                     "type": "number",

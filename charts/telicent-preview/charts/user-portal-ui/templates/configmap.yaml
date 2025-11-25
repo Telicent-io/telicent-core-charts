@@ -137,5 +137,18 @@ data:
     // ENCODE_SEARCH_PARAMS_MODE: "as uri component", // default if unset
     ENCODE_SEARCH_PARAMS_MODE: 'as base64',
     };
+    
+    window.featureFlags = {
+      FF_AI_TRANSLATE: false,
+      FF_AUTH_V2: true,
+    };
+    
+    window.AUTH_V2_CONFIG = {
+      authServerUrl: "https://{{ .Values.global.authHostDomain }}",
+      clientId: "{{ .Values.configuration.oauthClientId }}",
+      scope: "{{ .Values.configuration.oauthScope }}",
+      redirectUri: "https://{{ .Values.global.appHostDomain }}/user-portal/callback",
+      popupRedirectUri: "https://{{ .Values.global.appHostDomain }}/user-portal/auth-redirect-uri",
+    };
 
 {{- end }}

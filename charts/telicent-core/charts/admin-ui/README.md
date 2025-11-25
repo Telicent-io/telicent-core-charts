@@ -97,7 +97,7 @@ Contains configuration parameters specific to the *Search UI* application
 | `image.pullSecrets`                                 | Specify registry secret names as an array                                 | `[]`                |
 | `resources.requests.cpu`                            | Set containers' CPU request                                               | `250m`              |
 | `resources.requests.memory`                         | Set containers' memory request                                            | `500Mi`             |
-| `resources.limits.cpu`                              | Set containers' CPU limit                                                 | `5000m`             |
+| `resources.limits.cpu`                              | Set containers' CPU limit                                                 | `500m`              |
 | `resources.limits.memory`                           | Set containers' memory limit                                              | `1000Mi`            |
 | `containerSecurityContext.runAsUser`                | Set containers' Security Context runAsUser User ID                        | `185`               |
 | `containerSecurityContext.runAsGroup`               | Set containers' Security Context runAsGroup Group ID                      | `185`               |

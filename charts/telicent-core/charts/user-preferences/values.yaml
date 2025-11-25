@@ -216,7 +216,7 @@ serviceAccount:
 #
 service:
   # @key service.name *User Preferences* service name. If not set, a name is generated using the fullname
-  name: "user-preferences"
+  name: ""
   # @key service.port *User Preferences* service port
   port: 8080
   # @key service.type *User Preferences* service type

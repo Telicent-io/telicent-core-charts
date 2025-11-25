@@ -1,4 +1,11 @@
 apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: {{ include "data-catalog-ui.fullname" . }}-config
+  labels:
+  {{- include "data-catalog-ui.labels" . | nindent 4 }}
+
 data:
   env-config.js: |
     const SHARED_DOMAIN = "https://{{ .Values.global.appHostDomain }}";
@@ -49,8 +56,16 @@ data:
     window._env_.GRAPH_APP_URL = `${SHARED_DOMAIN}/graph`;
     window._env_.ACCESS_APP_URL = `${SHARED_DOMAIN}/access`;
     // window._env_.PARALOG_APP_URL;
-kind: ConfigMap
-metadata:
-  name: {{ include "data-catalog-ui.fullname" . }}-config
-  labels:
-  {{- include "data-catalog-ui.labels" . | nindent 4 }}
+  
+    window.featureFlags = {
+      FF_AI_TRANSLATE: false,
+      FF_AUTH_V2: true,
+    };
+    
+    window.AUTH_V2_CONFIG = {
+      authServerUrl: "https://{{ .Values.global.authHostDomain }}",
+      clientId: "{{ .Values.configuration.oauthClientId }}",
+      scope: "{{ .Values.configuration.oauthScope }}",
+      redirectUri: "https://{{ .Values.global.appHostDomain }}/data-catalog/callback",
+      popupRedirectUri: "https://{{ .Values.global.appHostDomain }}/data-catalog/auth-redirect-uri",
+    };

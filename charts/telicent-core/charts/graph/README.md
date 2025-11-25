@@ -151,7 +151,7 @@ Contains configuration parameters specific to the *Graph* application
 
 | Name           | Description                                                              | Value       |
 | -------------- | ------------------------------------------------------------------------ | ----------- |
-| `service.name` | *Graph* service name. If not set, a name is generated using the fullname | `graph`     |
+| `service.name` | *Graph* service name. If not set, a name is generated using the fullname | `""`        |
 | `service.port` | *Graph* service port                                                     | `8080`      |
 | `service.type` | *Graph* service type                                                     | `ClusterIP` |
 
