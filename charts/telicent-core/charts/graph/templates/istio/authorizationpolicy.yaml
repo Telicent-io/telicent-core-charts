@@ -23,6 +23,7 @@ spec:
     to:
     - operation:
         paths:
+        - /knowledge/backups/*
         - /knowledge/sparql
         - /knowledge/sparql/*
         - /knowledge/query
