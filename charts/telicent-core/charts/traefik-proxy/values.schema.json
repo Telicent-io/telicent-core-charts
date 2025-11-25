@@ -391,7 +391,7 @@
                 "name": {
                     "type": "string",
                     "description": "*Traefik Proxy* service name. If not set, a name is generated using the fullname",
-                    "default": "traefik-proxy"
+                    "default": ""
                 },
                 "app": {
                     "type": "object",

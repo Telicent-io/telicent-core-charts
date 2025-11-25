@@ -63,16 +63,18 @@ Contains global parameters, these parameters are mirrored within the Telicent co
 
 Contains configuration parameters specific to the *Graph UI* application
 
-| Name                                        | Description                                                                 | Value                      |
-| ------------------------------------------- | --------------------------------------------------------------------------- | -------------------------- |
-| `configuration.userPortalUiDeployed`        | If set to true, User Portal links will be available within *Graph UI*       | `true`                     |
-| `configuration.graphUiDeployed`             | If set to true, *Graph UI* links will be available within *Graph UI*        | `true`                     |
-| `configuration.searchUiDeployed`            | If set to true, *Search UI* links will be available within *Graph UI*       | `true`                     |
-| `configuration.dataCatalogUiDeployed`       | If set to true, *Data Catalog UI* links will be available within *Graph UI* | `true`                     |
-| `configuration.graphUiMaptilerToken`        | is the MapTiler token for the *Graph UI*                                    | `your.maptiler.token.here` |
-| `configuration.graphUiMapboxStyleSpecUrl`   |                                                                             | `""`                       |
-| `configuration.graphUiArcgisToken`          |                                                                             | `""`                       |
-| `configuration.existingMapConfigSecretName` | The name of an existing secret containing map configuration                 | `""`                       |
+| Name                                        | Description                                                                 | Value                           |
+| ------------------------------------------- | --------------------------------------------------------------------------- | ------------------------------- |
+| `configuration.userPortalUiDeployed`        | If set to true, User Portal links will be available within *Graph UI*       | `true`                          |
+| `configuration.graphUiDeployed`             | If set to true, *Graph UI* links will be available within *Graph UI*        | `true`                          |
+| `configuration.searchUiDeployed`            | If set to true, *Search UI* links will be available within *Graph UI*       | `true`                          |
+| `configuration.dataCatalogUiDeployed`       | If set to true, *Data Catalog UI* links will be available within *Graph UI* | `true`                          |
+| `configuration.graphUiMaptilerToken`        | is the MapTiler token for the *Graph UI*                                    | `your.maptiler.token.here`      |
+| `configuration.graphUiMapboxStyleSpecUrl`   |                                                                             | `""`                            |
+| `configuration.graphUiArcgisToken`          |                                                                             | `""`                            |
+| `configuration.existingMapConfigSecretName` | The name of an existing secret containing map configuration                 | `""`                            |
+| `configuration.oauthClientId`               | The OAuth client id to be used by *Search UI*                               | `telicent-graph-ui`             |
+| `configuration.oauthScope`                  | List of OAuth scopes to be used by *Search UI*                              | `openid profile offline_access` |
 
 ### Common Parameters
 

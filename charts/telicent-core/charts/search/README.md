@@ -151,7 +151,7 @@ Contains configuration parameters specific to the *Search* application
 
 | Name           | Description                                                               | Value       |
 | -------------- | ------------------------------------------------------------------------- | ----------- |
-| `service.name` | *Search* service name. If not set, a name is generated using the fullname | `search`    |
+| `service.name` | *Search* service name. If not set, a name is generated using the fullname | `""`        |
 | `service.port` | *Search* service port                                                     | `8080`      |
 | `service.type` | *Search* service port                                                     | `ClusterIP` |
 

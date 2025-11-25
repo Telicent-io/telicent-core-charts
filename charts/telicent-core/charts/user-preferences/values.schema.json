@@ -406,7 +406,7 @@
                 "name": {
                     "type": "string",
                     "description": "*User Preferences* service name. If not set, a name is generated using the fullname",
-                    "default": "user-preferences"
+                    "default": ""
                 },
                 "port": {
                     "type": "number",

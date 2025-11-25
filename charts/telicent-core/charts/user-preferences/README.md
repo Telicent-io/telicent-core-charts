@@ -186,11 +186,11 @@ For Quick Start purposes, a secret named `tc-auth-usr-mongo-user-preferences` wi
 
 ### Traffic Exposure Parameters
 
-| Name           | Description                                                                         | Value              |
-| -------------- | ----------------------------------------------------------------------------------- | ------------------ |
-| `service.name` | *User Preferences* service name. If not set, a name is generated using the fullname | `user-preferences` |
-| `service.port` | *User Preferences* service port                                                     | `8080`             |
-| `service.type` | *User Preferences* service type                                                     | `ClusterIP`        |
+| Name           | Description                                                                         | Value       |
+| -------------- | ----------------------------------------------------------------------------------- | ----------- |
+| `service.name` | *User Preferences* service name. If not set, a name is generated using the fullname | `""`        |
+| `service.port` | *User Preferences* service port                                                     | `8080`      |
+| `service.type` | *User Preferences* service type                                                     | `ClusterIP` |
 
 ### Metrics (Prometheus) Exposure Parameters
 

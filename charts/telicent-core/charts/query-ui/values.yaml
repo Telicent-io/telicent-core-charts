@@ -39,6 +39,18 @@ global:
   istioVirtualServiceEnabled: false
 
 #
+# @section Configuration Parameters
+#
+# @descStart
+# Contains configuration parameters specific to the *Query UI* application
+# @descEnd
+configuration:
+  # @key configuration.oauthClientId The OAuth client id to be used by *Search UI*
+  oauthClientId: "telicent-query-ui"
+  # @key configuration.oauthScope List of OAuth scopes to be used by *Search UI*
+  oauthScope: "openid profile offline_access"
+
+#
 # @section Common Parameters
 #
 # @key nameOverride String to partially override fullname (will maintain the release name)

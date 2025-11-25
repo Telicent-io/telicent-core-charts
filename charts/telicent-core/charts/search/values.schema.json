@@ -446,7 +446,7 @@
                 "name": {
                     "type": "string",
                     "description": "*Search* service name. If not set, a name is generated using the fullname",
-                    "default": "search"
+                    "default": ""
                 },
                 "port": {
                     "type": "number",

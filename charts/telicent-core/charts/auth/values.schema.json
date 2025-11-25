@@ -473,7 +473,7 @@
                 "name": {
                     "type": "string",
                     "description": "*Auth* service name. If not set, a name is generated using the fullname",
-                    "default": "auth"
+                    "default": ""
                 },
                 "port": {
                     "type": "number",

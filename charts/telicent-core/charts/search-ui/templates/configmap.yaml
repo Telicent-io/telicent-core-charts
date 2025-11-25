@@ -77,17 +77,17 @@ data:
     {{ end }}
     ];
 
-    window.featureFlags = {
-      FF_AI_TRANSLATE: false,
-      FF_AUTH_V2: true,
-    };
-
     window.feAppOptions = {
       // 🚨 WARNING: ENCODE_SEARCH_PARAMS_MODE must be the same in search, graph, and user-portal 🚨
       //ENCODE_SEARCH_PARAMS_MODE: "as uri component", // default if unset
       ENCODE_SEARCH_PARAMS_MODE: 'as base64',
     };
 
+    window.featureFlags = {
+      FF_AI_TRANSLATE: false,
+      FF_AUTH_V2: true,
+    };
+    
     window.AUTH_V2_CONFIG = {
       authServerUrl: "https://{{ .Values.global.authHostDomain }}",
       clientId: "{{ .Values.configuration.oauthClientId }}",

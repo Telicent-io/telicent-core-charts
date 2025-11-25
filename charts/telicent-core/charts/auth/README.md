@@ -224,7 +224,7 @@ List of registered clients
 
 | Name           | Description                                                             | Value       |
 | -------------- | ----------------------------------------------------------------------- | ----------- |
-| `service.name` | *Auth* service name. If not set, a name is generated using the fullname | `auth`      |
+| `service.name` | *Auth* service name. If not set, a name is generated using the fullname | `""`        |
 | `service.port` | *Auth* service port                                                     | `8080`      |
 | `service.type` | *Auth* service port                                                     | `ClusterIP` |
 

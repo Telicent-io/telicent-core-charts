@@ -185,15 +185,15 @@ For Quick Start purposes, a secret named `tc-auth-gen-forward-traefik-proxy` wil
 
 ### Traffic Exposure Parameters
 
-| Name                | Description                                                                      | Value           |
-| ------------------- | -------------------------------------------------------------------------------- | --------------- |
-| `service.name`      | *Traefik Proxy* service name. If not set, a name is generated using the fullname | `traefik-proxy` |
-| `service.app.port`  | *Traefik Proxy* APP/UI service port                                              | `8080`          |
-| `service.app.type`  | *Traefik Proxy* APP/UI service type                                              | `ClusterIP`     |
-| `service.api.port`  | *Traefik Proxy* API service port                                                 | `8081`          |
-| `service.api.type`  | *Traefik Proxy* API service type                                                 | `ClusterIP`     |
-| `service.auth.port` | *Traefik Proxy* AUTH service port                                                | `8082`          |
-| `service.auth.type` | *Traefik Proxy* AUTH service type                                                | `ClusterIP`     |
+| Name                | Description                                                                      | Value       |
+| ------------------- | -------------------------------------------------------------------------------- | ----------- |
+| `service.name`      | *Traefik Proxy* service name. If not set, a name is generated using the fullname | `""`        |
+| `service.app.port`  | *Traefik Proxy* APP/UI service port                                              | `8080`      |
+| `service.app.type`  | *Traefik Proxy* APP/UI service type                                              | `ClusterIP` |
+| `service.api.port`  | *Traefik Proxy* API service port                                                 | `8081`      |
+| `service.api.type`  | *Traefik Proxy* API service type                                                 | `ClusterIP` |
+| `service.auth.port` | *Traefik Proxy* AUTH service port                                                | `8082`      |
+| `service.auth.type` | *Traefik Proxy* AUTH service type                                                | `ClusterIP` |
 
 ### Istio Parameters
 
