@@ -40,7 +40,7 @@ http:
         - host-auth
 
     auth-oauth2:
-      rule: {{ printf "Host(`%s`) && PathRegexp(`^/(session|oauth2|login|logout|favicon.svg)`)" .Values.global.authHostDomain }}
+      rule: {{ printf "Host(`%s`) && PathRegexp(`^/(session|oauth2|login|logout|favicon\.svg)`)" .Values.global.authHostDomain }}
       priority: 5
       service: auth
       entryPoints:
