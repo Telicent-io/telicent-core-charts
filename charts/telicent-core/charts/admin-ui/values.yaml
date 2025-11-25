@@ -116,7 +116,7 @@ resources:
     memory: "500Mi"
   limits:
     # @key resources.limits.cpu Set containers' CPU limit
-    cpu: "5000m"
+    cpu: "500m"
     # @key resources.limits.memory Set containers' memory limit
     memory: "1000Mi"
 

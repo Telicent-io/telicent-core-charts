@@ -234,7 +234,7 @@ serviceAccount:
 #
 service:
   # @key service.name *Graph* service name. If not set, a name is generated using the fullname
-  name: "graph"
+  name: ""
   # @key service.port *Graph* service port
   port: 8080
   # @key service.type *Graph* service type
