@@ -15,6 +15,7 @@ entryPoints:
     address: ":8082/tcp"
     http:
       middlewares:
+        - cors@file
         - headers-security@file
 
   ping:
