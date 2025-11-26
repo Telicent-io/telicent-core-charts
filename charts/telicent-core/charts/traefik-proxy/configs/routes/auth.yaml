@@ -21,7 +21,7 @@ http:
         - oauth2
 
     auth-admin:
-      rule: {{ printf "Host(`%s`) && PathRegexp(`^/(sessions|groups|roles|permissions|users)`)" .Values.global.authHostDomain }}
+      rule: {{ printf "Host(`%s`) && PathRegexp(`^/(sessions|groups|roles|permissions|users|clients)`)" .Values.global.authHostDomain }}
       priority: 7
       service: auth
       entryPoints:
