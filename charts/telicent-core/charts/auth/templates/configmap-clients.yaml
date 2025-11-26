@@ -16,7 +16,7 @@ data:
     clients: 
       public:
         {{- toYaml .Values.clients.public | nindent 6 }}
-        {{- if .global.enterprise }}
+        {{- if .Values.global.enterprise }}
         - client_id: telicent-admin-ui
           redirect_uris: 
             - {{.Values.global.appHostDomain}}/admin/callback
