@@ -92,7 +92,7 @@ httpIngester:
     # @key httpIngester.image.pullPolicy The image pull policy for the HTTP Ingester
     pullPolicy: IfNotPresent
     # @key httpIngester.image.tag The image tag for the HTTP Ingester
-    tag: "3.1.4"
+    tag: "3.2.0"
 
   # @key httpIngester.imagePullSecrets Secrets for pulling an image from a private repository
   imagePullSecrets: []
@@ -214,7 +214,7 @@ contentExtractor:
     # @key contentExtractor.image.pullPolicy The image pull policy for the Content Extractor
     pullPolicy: IfNotPresent
     # @key contentExtractor.image.tag The image tag for the Content Extractor
-    tag: "3.1.4"
+    tag: "3.2.0"
 
   # @key contentExtractor.imagePullSecrets Secrets for pulling an image from a private repository
   imagePullSecrets: []
@@ -321,7 +321,7 @@ contentIndexer:
     # @key contentIndexer.image.pullPolicy The image pull policy for the Content Indexer
     pullPolicy: IfNotPresent
     # @key contentIndexer.image.tag The image tag for the Content Indexer
-    tag: "3.1.4"
+    tag: "3.2.0"
 
   # @key contentIndexer.imagePullSecrets Secrets for pulling an image from a private repository
   imagePullSecrets: []
@@ -446,7 +446,7 @@ catalogueUpdater:
     # @key catalogueUpdater.image.pullPolicy The image pull policy for the Catalogue Updater
     pullPolicy: IfNotPresent
     # @key catalogueUpdater.image.tag The image tag for the Catalogue Updater
-    tag: "3.1.4"
+    tag: "3.2.0"
 
   # @key catalogueUpdater.imagePullSecrets Secrets for pulling an image from a private repository
   imagePullSecrets: []
