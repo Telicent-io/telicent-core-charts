@@ -12,9 +12,36 @@ metadata:
     {{- include "auth.labels" . | nindent 4 }}
 
 data:
-  clients: |
-    public:
-      {{- toYaml .Values.clients.public | nindent 6 }}
-    confidential:
-      {{- toYaml .Values.clients.confidential | nindent 6 }}
+  data.yml: |
+    clients: 
+      public:
+        {{- toYaml .Values.clients.public | nindent 6 }}
+        {{- if .Values.global.enterprise }}
+        - client_id: telicent-admin-ui
+          redirect_uris: 
+            - {{.Values.global.appHostDomain}}/admin/callback
+            - {{.Values.global.appHostDomain}}/admin/auth-redirect-uri
+          post_logout_redirect_uris:
+            - {{.Values.global.appHostDomain}}/admin
+        - client_id: telicent-search-ui
+          redirect_uris: 
+            - {{.Values.global.appHostDomain}}/search/callback
+            - {{.Values.global.appHostDomain}}/search/auth-redirect-uri
+          post_logout_redirect_uris:
+            - {{.Values.global.appHostDomain}}/search
+        - client_id: telicent-graph-ui
+          redirect_uris: 
+            - {{.Values.global.appHostDomain}}/graph/callback
+            - {{.Values.global.appHostDomain}}/graph/auth-redirect-uri
+          post_logout_redirect_uris:
+            - {{.Values.global.appHostDomain}}/graph
+        {{- end}}
+        - client_id: telicent-query-ui
+          redirect_uris: 
+            - {{.Values.global.appHostDomain}}/query/callback
+            - {{.Values.global.appHostDomain}}/query/auth-redirect-uri
+          post_logout_redirect_uris:
+            - {{.Values.global.appHostDomain}}/query
+      confidential:
+        {{- toYaml .Values.clients.confidential | nindent 6 }}
 {{- end }}

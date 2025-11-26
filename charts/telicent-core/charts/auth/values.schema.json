@@ -85,6 +85,11 @@
                     "type": "string",
                     "description": "Super user identification if blank all users will be super users",
                     "default": ""
+                },
+                "loggingLevel": {
+                    "type": "string",
+                    "description": "The logging level for the Auth Server, e.g. TRACE, DEBUG, INFO, WARN, ERROR",
+                    "default": "INFO"
                 }
             }
         },

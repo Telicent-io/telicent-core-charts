@@ -12,7 +12,8 @@ metadata:
     {{- include "auth.labels" . | nindent 4 }}
 
 data:
-
+  # Location of file created by config map for clients
+  APP_SEED_REGISTERED_CLIENT_DATA: "/data/registered-clients/data.yml"
   JAVA_OPTS:  {{ .Values.configuration.javaOptions | quote }}
   SUPER_USER_IDENTIFIER: {{ .Values.configuration.superUserIdentifier | quote }}
   COOKIE_PARENT_DOMAIN: {{ .Values.configuration.cookieParentDomain | quote }}
@@ -25,6 +26,15 @@ data:
   EXTERNAL_IDP_ID_CLAIM: {{ .Values.idp.emailClaim | quote }}
   EXTERNAL_IDP_AUTHORIZE_ENDPOINT:  {{ .Values.idp.authorizationPath | quote }}
   EXTERNAL_IDP_JWK_SET_ENDPOINT:  {{ .Values.idp.jwksPath | quote }}
+
+  # Log levels
+  LOGGING_LEVEL_API: {{ .Values.configuration.loggingLevel  }}
+  LOGGING_LEVEL_SERVICE: {{ .Values.configuration.loggingLevel  }}
+  LOGGING_LEVEL_REPO: {{ .Values.configuration.loggingLevel  }}
+  LOGGING_LEVEL_SECURITY: {{ .Values.configuration.loggingLevel  }}
+  LOGGING_LEVEL_OAUTH2: {{ .Values.configuration.loggingLevel }}
+  LOGGING_LEVEL_GENERAL: {{ .Values.configuration.loggingLevel  }}
+  LOGGING_LEVEL_TRACE: {{ .Values.configuration.loggingLevel }}
 
   # PostgreSQL
   POSTGRES_URI: {{ .Values.postgresSql.uri | quote }}
