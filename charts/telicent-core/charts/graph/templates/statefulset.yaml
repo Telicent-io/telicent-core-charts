@@ -74,9 +74,6 @@ spec:
         {{- end }}
         {{- end }}
         envFrom:
-        - secretRef:
-            name: {{ include "graph.envSecretName" . }}
-            optional: true
         - configMapRef:
             name: {{ include "graph.envConfigMapName" . }}
             optional: true
@@ -166,10 +163,9 @@ spec:
 
   volumeClaimTemplates:
   - metadata:
-      labels:
-        app.kubernetes.io/name: {{ include "graph.name" . }}
-        telicent.io/resource: "true"
       name: datasets-volume
+      labels:
+        {{- include "graph.labels" . | nindent 4 }}
     spec:
       accessModes:
       - ReadWriteOnce
@@ -178,10 +174,9 @@ spec:
             storage: {{ .Values.persistentVolumeClaims.datasetsVolume.size }}
       storageClassName: {{ .Values.persistentVolumeClaims.datasetsVolume.storageClass }}
   - metadata:
-      labels:
-        app.kubernetes.io/name: {{ include "graph.name" . }}
-        telicent.io/resource: "true"
       name: backups-volume
+      labels:
+        {{- include "graph.labels" . | nindent 4 }}
     spec:
       accessModes:
       - ReadWriteOnce

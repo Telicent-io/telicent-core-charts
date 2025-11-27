@@ -6,8 +6,8 @@ Copyright (C) 2025 Telicent Limited
 Create the name of the config map
 */}}
 {{- define "graph.envConfigMapName" -}}
-{{- if .Values.configuration.existingEnvConfigMap }}
-{{- .Values.configuration.existingEnvConfigMap }}
+{{- if .Values.configMap.existingEnvConfigMap }}
+{{- .Values.configMap.existingEnvConfigMap }}
 {{- else }}
 {{- printf "tc-%s-%s" .Chart.Name "env" }}
 {{- end }}
@@ -18,8 +18,8 @@ Create the name of the config map
 Create a fuseki config name to use
 */}}
 {{- define "graph.fusekiConfigMapName" -}}
-{{- if .Values.configuration.existingFusekiConfigMap }}
-{{- .Values.configuration.existingFusekiConfigMap }}
+{{- if .Values.configMap.existingFusekiConfigMap }}
+{{- .Values.configMap.existingFusekiConfigMap }}
 {{- else }}
 {{- printf "tc-%s-%s" .Chart.Name "fuseki" }}
 {{- end }}
