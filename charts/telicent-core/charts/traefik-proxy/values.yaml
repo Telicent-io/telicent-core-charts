@@ -43,7 +43,7 @@ global:
 # @section Rate Limit Parameters
 #
 # @descStart
-# The following section allows for setting Traefik Rate Limiting on the Authentication Service and API endpoints.
+# The following section allows for setting Traefik Rate Limiting on the Web Applications, API Services and the Authentication Service.
 # Ref: https://doc.traefik.io/traefik/reference/routing-configuration/http/middlewares/ratelimit/#rate-and-burst
 # @descEnd
 rateLimit:

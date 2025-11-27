@@ -102,7 +102,7 @@ Contains global parameters, these parameters are mirrored within the Telicent co
 
 ### Rate Limit Parameters
 
-The following section allows for setting Traefik Rate Limiting on the Authentication Service and API endpoints.
+The following section allows for setting Traefik Rate Limiting on the Web Applications, API Services and the Authentication Service.
 Ref: https://doc.traefik.io/traefik/reference/routing-configuration/http/middlewares/ratelimit/#rate-and-burst
 
 | Name                     | Description                                                                                             | Value |
