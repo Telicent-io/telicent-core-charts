@@ -465,7 +465,7 @@
                 },
                 "traefikProxy": {
                     "type": "string",
-                    "description": "Search application default host value, as defined by 'service/serviceAccount:port'",
+                    "description": "Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'",
                     "default": "traefik-proxy:8080"
                 },
                 "graph": {

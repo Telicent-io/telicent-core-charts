@@ -208,14 +208,14 @@ For Quick Start purposes, a secret named `tc-auth-usr-elastic-search` will be cr
 
 ### Host(s) Parameters - Contains host information for applications deployed via *telicent-core* chart.
 
-*Graph* interacts directly to other Telicent Apps using their default service/serviceAccount and port.
+*Search* interacts directly with other Telicent Applications using their default service/serviceAccount and port.
 If either of those details changes, you can use this section to correctly referer to those apps.
 
 | Name                      | Description                                                                                                                                                                                                                        | Value                |
 | ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
 | `hosts.enableAutoCorrect` | Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as is, without any modification. | `true`               |
 | `hosts.auth`              | Auth application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                                   | `auth:8080`          |
-| `hosts.traefikProxy`      | Search application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                                 | `traefik-proxy:8080` |
+| `hosts.traefikProxy`      | Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                          | `traefik-proxy:8080` |
 | `hosts.graph`             | Graph application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                                  | `graph:8080`         |
 
 ## License

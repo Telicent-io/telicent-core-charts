@@ -249,7 +249,7 @@ metrics:
 # @section Host(s) Parameters - Contains host information for applications deployed via *telicent-core* chart.
 #
 # @descStart
-# *Graph* interacts directly to other Telicent Apps using their default service/serviceAccount and port.
+# *Search* interacts directly with other Telicent Applications using their default service/serviceAccount and port.
 # If either of those details changes, you can use this section to correctly referer to those apps.
 # @descEnd
 hosts:
@@ -257,7 +257,7 @@ hosts:
   enableAutoCorrect: true
   # @key hosts.auth Auth application default host value, as defined by 'service/serviceAccount:port'
   auth: "auth:8080"
-  # @key hosts.traefikProxy Search application default host value, as defined by 'service/serviceAccount:port'
+  # @key hosts.traefikProxy Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'
   traefikProxy: "traefik-proxy:8080"
   # @key hosts.graph Graph application default host value, as defined by 'service/serviceAccount:port'
   graph: "graph:8080"
