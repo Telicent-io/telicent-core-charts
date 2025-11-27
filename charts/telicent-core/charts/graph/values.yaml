@@ -74,6 +74,16 @@ java:
   jvmOptions: "-XX:MaxRAMPercentage=80.0"
 
 #
+# @section Backup Parameters
+#
+# @descStart
+# Contains configuration options for Backing up the Graph application
+# @descEnd
+backups:
+  # @key backups.enabled Enable
+  enabled: true
+
+#
 # @section Common Parameters
 #
 # @key nameOverride String to partially override fullname (will maintain the release name)
