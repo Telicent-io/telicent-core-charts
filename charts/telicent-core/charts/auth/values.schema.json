@@ -200,6 +200,26 @@
                 }
             }
         },
+        "groups":{
+            "type": "array",
+            "properties": {
+                "urn":{
+                    "type": "string",
+                    "description": "Unique identifier for representing the groups",
+                    "default": ""
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Human readable name of the group for admins to identify it by",
+                    "default": ""
+                },
+                "description":{
+                    "type": "string",
+                    "description": "String explaining the groups useage and applicability.",
+                    "default":""
+                }
+            }
+        },
         "nameOverride": {
             "type": "string",
             "description": "String to partially override fullname (will maintain the release name)",
