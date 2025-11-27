@@ -45,7 +45,7 @@ spec:
       serviceAccountName: {{ include "traefik-proxy.serviceAccountName" . }}
       securityContext: {{- toYaml .Values.podSecurityContext | nindent 8 }}
 
-      {{- $pullSecret := .Values.global.imagePullSecrets | default .Values.image.pullSecrets }}
+      {{- $pullSecret := .Values.image.pullSecrets }}
       {{- with $pullSecret }}
       imagePullSecrets:
         {{- toYaml . | nindent 6 }}
