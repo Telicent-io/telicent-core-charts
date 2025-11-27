@@ -21,7 +21,7 @@ Detailed description of 'discoverService' function
 1.a) Installed through the parent chart, the service name will include the release name.
 1.b) Installed through the parent chart, where 'hosts.enableAutoCorrect: false' has been set on the sub-chart.
      Will result in the release name *not* being included.
-2.)  Installed through a sub chart, where the release name is set to 'graph' (identical to the chart name).
+2.)  Installed through a sub chart, where the release name is set to 'auth' (identical to the chart name).
      The release name will *not* be included.
 */}}
 
