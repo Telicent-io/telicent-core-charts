@@ -36,26 +36,6 @@
                     "description": "Domain associated with Telicent authentication services, including OIDC providers",
                     "default": "auth.telicent.io"
                 },
-                "istioNamespace": {
-                    "type": "string",
-                    "description": "Namespace in which Istio is deployed",
-                    "default": "istio-system"
-                },
-                "istioServiceAccountName": {
-                    "type": "string",
-                    "description": "Name of the Istio service account",
-                    "default": "istio-ingress"
-                },
-                "istioGatewayName": {
-                    "type": "string",
-                    "description": "Name of the Istio Gateway Resource (LB operating at the edge of the mesh)",
-                    "default": "ingress-gateway"
-                },
-                "istioVirtualServiceEnabled": {
-                    "type": "boolean",
-                    "description": "Enable Istio traffic routing to a named destination service",
-                    "default": true
-                },
                 "kafkaBootstrapUrls": {
                     "type": "string",
                     "description": "Comma separated list containing Kafka bootstrap URLs",
@@ -83,52 +63,42 @@
                 }
             }
         },
-        "configuration": {
+        "configMap": {
             "type": "object",
             "properties": {
                 "existingEnvConfigMap": {
                     "type": "string",
                     "description": "Name of existing configmap containing *Search* Environment Configuration",
                     "default": ""
-                },
-                "userAttributesUrl": {
-                    "type": "string",
-                    "description": "URL for the user details endpoint",
-                    "default": ""
-                },
-                "attributeHierarchyUrl": {
-                    "type": "string",
-                    "description": "URL for the user hierarchy endpoint",
-                    "default": ""
-                },
-                "javaOptions": {
+                }
+            }
+        },
+        "java": {
+            "type": "object",
+            "properties": {
+                "jvmOptions": {
                     "type": "string",
                     "description": "JVM options for the application",
-                    "default": "-XX:MaxRAMPercentage=70.0 -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks"
-                },
-                "otelMetricsExporter": {
+                    "default": "-XX:MaxRAMPercentage=80.0"
+                }
+            }
+        },
+        "elastic": {
+            "type": "object",
+            "properties": {
+                "host": {
                     "type": "string",
-                    "description": "OpenTelemetry metrics exporter",
-                    "default": "prometheus"
+                    "description": "Elastic/OpenSearch host",
+                    "default": "https://your.opensearch.host"
                 },
-                "otelTracesExporter": {
+                "port": {
                     "type": "string",
-                    "description": "OpenTelemetry traces exporter",
-                    "default": "none"
-                },
-                "elasticHost": {
-                    "type": "string",
-                    "description": "OpenSearch host",
-                    "default": "https://your.opensearch.host.here:443"
-                },
-                "elasticPort": {
-                    "type": "string",
-                    "description": "OpenSearch port number",
+                    "description": "Elastic/OpenSearch port number",
                     "default": "443"
                 },
-                "elasticClusterPort": {
+                "clusterPort": {
                     "type": "string",
-                    "description": "OpenSearch cluster port",
+                    "description": "Elastic/OpenSearch cluster port",
                     "default": "9200"
                 },
                 "opensearchCompatibility": {
@@ -136,9 +106,9 @@
                     "description": "Enable OpenSearch compatibility",
                     "default": "true"
                 },
-                "elasticIndexNames": {
+                "indexNames": {
                     "type": "string",
-                    "description": "OpenSearch index name(s)",
+                    "description": "Elastic/OpenSearch index name(s)",
                     "default": "search,doc-content"
                 },
                 "searchFieldOptions": {
@@ -150,15 +120,10 @@
                     "type": "number",
                     "description": "Number of documents to index in a single batch operation",
                     "default": 100
-                }
-            }
-        },
-        "elasticSecret": {
-            "type": "object",
-            "properties": {
+                },
                 "existingSecret": {
                     "type": "string",
-                    "description": "Name of an existing secret resource containing the username & password",
+                    "description": "Name of an existing secret. The secret must contain 2 keys: 'username', 'password'",
                     "default": ""
                 },
                 "username": {
@@ -485,38 +450,28 @@
                 }
             }
         },
-        "istio": {
+        "hosts": {
             "type": "object",
             "properties": {
-                "ingress": {
-                    "type": "object",
-                    "properties": {
-                        "principal": {
-                            "type": "string",
-                            "description": "Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName",
-                            "default": ""
-                        },
-                        "serviceAccountName": {
-                            "type": "string",
-                            "description": "Name of the Ingress service account (traefik and istio supported)",
-                            "default": "traefik-proxy"
-                        }
-                    }
+                "enableAutoCorrect": {
+                    "type": "boolean",
+                    "description": "Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as is, without any modification.",
+                    "default": true
+                },
+                "auth": {
+                    "type": "string",
+                    "description": "Auth application default host value, as defined by 'service/serviceAccount:port'",
+                    "default": "auth:8080"
+                },
+                "traefikProxy": {
+                    "type": "string",
+                    "description": "Search application default host value, as defined by 'service/serviceAccount:port'",
+                    "default": "traefik-proxy:8080"
                 },
                 "graph": {
-                    "type": "object",
-                    "properties": {
-                        "principal": {
-                            "type": "string",
-                            "description": "Principal used for Graph traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'serviceAccountName' and the current namespace",
-                            "default": ""
-                        },
-                        "serviceAccountName": {
-                            "type": "string",
-                            "description": "Name of the Graph service account",
-                            "default": "graph"
-                        }
-                    }
+                    "type": "string",
+                    "description": "Graph application default host value, as defined by 'service/serviceAccount:port'",
+                    "default": "graph:8080"
                 }
             }
         }

@@ -20,7 +20,7 @@ spec:
   - from:
     - source:
         principals:
-         {{- include "search.graphPrincipal" . | nindent 8 }}
+          {{- include "search.graphPrincipal" . | nindent 8 }}
     to:
     - operation:
         paths:

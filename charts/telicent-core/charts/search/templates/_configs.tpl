@@ -7,8 +7,8 @@ Create the name of the config map
 todo: fix deployment extra volume/ volume mount
 */}}
 {{- define "search.envConfigMapName" -}}
-{{- if .Values.configuration.existingEnvConfigMap }}
-{{- .Values.configuration.existingEnvConfigMap }}
+{{- if .Values.configMap.existingEnvConfigMap }}
+{{- .Values.configMap.existingEnvConfigMap }}
 {{- else }}
 {{- printf "tc-%s-%s" .Chart.Name "env" }}
 {{- end }}
