@@ -86,30 +86,34 @@ the [kubernetes documentation](https://kubernetes.io/docs/concepts/configuration
 ### Global Parameters
 
 Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
+Note: only global parameters used within this chart, will be listed below
 
-| Name                                   | Description                                                                       | Value                    |
-| -------------------------------------- | --------------------------------------------------------------------------------- | ------------------------ |
-| `global.imageRegistry`                 | Global image registry                                                             | `""`                     |
-| `global.imagePullSecrets`              | Global registry secret names as an array                                          | `[]`                     |
-| `global.enterprise`                    | Enable enterprise mode, adding additional features and configurations             | `false`                  |
-| `global.appHostDomain`                 | Domain associated with Telicent application/ui services                           | `apps.telicent.io`       |
-| `global.apiHostDomain`                 | Domain associated with Telicent Api services                                      | `api.telicent.io`        |
-| `global.authHostDomain`                | Domain associated with Telicent authentication services, including OIDC providers | `auth.telicent.io`       |
-| `global.istioNamespace`                | Namespace in which Istio is deployed                                              | `istio-system`           |
-| `global.istioServiceAccountName`       | Name of the Istio service account                                                 | `istio-ingress`          |
-| `global.istioGatewayName`              | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)         | `ingress-gateway`        |
-| `global.istioVirtualServiceEnabled`    | Enable Istio traffic routing to a named destination service                       | `false`                  |
-| `global.truststore.existingSecretName` | Name of an existing secret containing the truststore                              | `""`                     |
-| `global.truststore.mountPath`          | The mount path for the truststore in the container                                | `/app/config/truststore` |
+| Name                               | Description                                                                       | Value                    |
+| ---------------------------------- | --------------------------------------------------------------------------------- | ------------------------ |
+| `global.imageRegistry`             | Global image registry                                                             | `""`                     |
+| `global.imagePullSecrets`          | Global registry secret names as an array                                          | `[]`                     |
+| `global.enterprise`                | Enable enterprise mode, adding additional features and configurations             | `false`                  |
+| `global.appHostDomain`             | Domain associated with Telicent application/ui services                           | `apps.telicent.io`       |
+| `global.apiHostDomain`             | Domain associated with Telicent Api services                                      | `api.telicent.io`        |
+| `global.authHostDomain`            | Domain associated with Telicent authentication services, including OIDC providers | `auth.telicent.io`       |
+| `global.truststore.existingSecret` | Name of an existing secret containing the truststore                              | `""`                     |
+| `global.truststore.mountPath`      | The mount path for the truststore in the container                                | `/app/config/truststore` |
 
-### Configuration Parameters
+### ConfigMap Parameters
 
 Contains configuration parameters specific to the *User Preferences* application
 
-| Name                                 | Description                                                                        | Value                       |
-| ------------------------------------ | ---------------------------------------------------------------------------------- | --------------------------- |
-| `configuration.existingEnvConfigMap` | Name of existing configmap containing *User Preferences* Environment Configuration | `""`                        |
-| `configuration.javaOptions`          | JVM options for the application                                                    | `-XX:MaxRAMPercentage=80.0` |
+| Name                             | Description                                                                        | Value |
+| -------------------------------- | ---------------------------------------------------------------------------------- | ----- |
+| `configMap.existingEnvConfigMap` | Name of existing configmap containing *User Preferences* Environment Configuration | `""`  |
+
+### Java Parameters
+
+Contains Java configuration parameters to be used by the *Search* application
+
+| Name              | Description                     | Value                       |
+| ----------------- | ------------------------------- | --------------------------- |
+| `java.jvmOptions` | JVM options for the application | `-XX:MaxRAMPercentage=80.0` |
 
 ### MongoDB Parameters and Secret
 
@@ -200,12 +204,16 @@ For Quick Start purposes, a secret named `tc-auth-usr-mongo-user-preferences` wi
 | `metrics.service.name` | Name for the Prometheus service | `metrics` |
 | `metrics.service.port` | Port for the Prometheus service | `9464`    |
 
-### Istio Parameters
+### Host(s) Parameters - Contains host information for applications deployed via *telicent-core* chart.
 
-| Name                               | Description                                                                                                                                              | Value           |
-| ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- |
-| `istio.ingress.principal`          | Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName | `""`            |
-| `istio.ingress.serviceAccountName` | Name of the Ingress service account (traefik and istio supported)                                                                                        | `traefik-proxy` |
+*User Preferences* interacts directly with other Telicent Applications using their default service/serviceAccount and port.
+If either of those details changes, you can use this section to correctly referer to those apps.
+
+| Name                      | Description                                                                                                                                                                                                                        | Value                |
+| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
+| `hosts.enableAutoCorrect` | Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as is, without any modification. | `true`               |
+| `hosts.auth`              | Auth application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                                   | `auth:8080`          |
+| `hosts.traefikProxy`      | Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                          | `traefik-proxy:8080` |
 
 
 ## License

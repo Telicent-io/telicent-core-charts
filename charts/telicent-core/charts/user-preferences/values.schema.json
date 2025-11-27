@@ -36,30 +36,10 @@
                     "description": "Domain associated with Telicent authentication services, including OIDC providers",
                     "default": "auth.telicent.io"
                 },
-                "istioNamespace": {
-                    "type": "string",
-                    "description": "Namespace in which Istio is deployed",
-                    "default": "istio-system"
-                },
-                "istioServiceAccountName": {
-                    "type": "string",
-                    "description": "Name of the Istio service account",
-                    "default": "istio-ingress"
-                },
-                "istioGatewayName": {
-                    "type": "string",
-                    "description": "Name of the Istio Gateway Resource (LB operating at the edge of the mesh)",
-                    "default": "ingress-gateway"
-                },
-                "istioVirtualServiceEnabled": {
-                    "type": "boolean",
-                    "description": "Enable Istio traffic routing to a named destination service",
-                    "default": false
-                },
                 "truststore": {
                     "type": "object",
                     "properties": {
-                        "existingSecretName": {
+                        "existingSecret": {
                             "type": "string",
                             "description": "Name of an existing secret containing the truststore",
                             "default": ""
@@ -73,15 +53,20 @@
                 }
             }
         },
-        "configuration": {
+        "configMap": {
             "type": "object",
             "properties": {
                 "existingEnvConfigMap": {
                     "type": "string",
                     "description": "Name of existing configmap containing *User Preferences* Environment Configuration",
                     "default": ""
-                },
-                "javaOptions": {
+                }
+            }
+        },
+        "java": {
+            "type": "object",
+            "properties": {
+                "jvmOptions": {
                     "type": "string",
                     "description": "JVM options for the application",
                     "default": "-XX:MaxRAMPercentage=80.0"
@@ -445,23 +430,23 @@
                 }
             }
         },
-        "istio": {
+        "hosts": {
             "type": "object",
             "properties": {
-                "ingress": {
-                    "type": "object",
-                    "properties": {
-                        "principal": {
-                            "type": "string",
-                            "description": "Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName",
-                            "default": ""
-                        },
-                        "serviceAccountName": {
-                            "type": "string",
-                            "description": "Name of the Ingress service account (traefik and istio supported)",
-                            "default": "traefik-proxy"
-                        }
-                    }
+                "enableAutoCorrect": {
+                    "type": "boolean",
+                    "description": "Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as is, without any modification.",
+                    "default": true
+                },
+                "auth": {
+                    "type": "string",
+                    "description": "Auth application default host value, as defined by 'service/serviceAccount:port'",
+                    "default": "auth:8080"
+                },
+                "traefikProxy": {
+                    "type": "string",
+                    "description": "Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'",
+                    "default": "traefik-proxy:8080"
                 }
             }
         }

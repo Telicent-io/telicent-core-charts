@@ -1,7 +1,7 @@
 {{- /*
 Copyright (C) 2025 Telicent Limited
 */}}
-
+{{- if not .Values.configMap.existingEnvConfigMap -}}
 apiVersion: v1
 kind: ConfigMap
 
@@ -12,11 +12,13 @@ metadata:
     {{- include "user-preferences.labels" . | nindent 6 }}
 
 data:
-  # Environment variables for the user preferences container
+  FEATURE_FLAG_AUTHZ: "true"
+
   MONGO_URL: {{ .Values.mongo.url | quote }}
   MONGO_DATABASE: {{ .Values.mongo.database | quote }}
   MONGO_AUTH_DATABASE : {{ .Values.mongo.authDatabase | quote }}
-  JAVA_OPTIONS: {{ .Values.configuration.javaOptions | quote }}
+  
+  JAVA_OPTIONS: {{ .Values.java.jvmOptions | quote }}
   JWKS_URL: {{ printf "%s%s%s" "https://" .Values.global.authHostDomain "/oauth2/jwks" | quote }}
-  USERINFO_URL: {{ printf "http://%s.%s:%s%s" "auth" .Release.Namespace "8080" "/userinfo" | quote }}
-  FEATURE_FLAG_AUTHZ: "true"
+  USERINFO_URL: {{ printf "http://%s%s" (include "user-preferences.hostAuth" . ) "/userinfo" | quote }}
+{{- end}}
