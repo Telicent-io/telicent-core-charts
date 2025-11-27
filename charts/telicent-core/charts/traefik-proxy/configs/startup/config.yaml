@@ -3,11 +3,13 @@ entryPoints:
     address: ":8080/tcp"
     http:
       middlewares:
-      - "headers-security@file"
+      - rate-limit-app@file
+      - headers-security@file
   web-api:
     address: ":8081/tcp"
     http:
       middlewares:
+        - rate-limit-api@file
          - cors@file
          - headers-security@file
          - oauth2@file
@@ -15,6 +17,7 @@ entryPoints:
     address: ":8082/tcp"
     http:
       middlewares:
+        - rate-limit-auth@file
         - cors@file
         - headers-security@file
 

@@ -100,6 +100,26 @@ Contains global parameters, these parameters are mirrored within the Telicent co
 | `global.istioGatewayName`           | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)         | `ingress-gateway`  |
 | `global.istioVirtualServiceEnabled` | Enable Istio traffic routing to a named destination service                       | `true`             |
 
+### Rate Limit Parameters
+
+The following section allows for setting Traefik Rate Limiting on the Authentication Service and API endpoints.
+Ref: https://doc.traefik.io/traefik/reference/routing-configuration/http/middlewares/ratelimit/#rate-and-burst
+
+| Name                     | Description                                                                                             | Value |
+| ------------------------ | ------------------------------------------------------------------------------------------------------- | ----- |
+| `rateLimit.app.average`  | Maximum number of requests per second allowed to the Web Applications (0 means no rate limiting).       | `0`   |
+| `rateLimit.app.burst`    | Maximum number of requests allowed to go through at the very same moment to the Web Applications.       | `100` |
+| `rateLimit.api.average`  | Maximum number of requests per second allowed to the API Services (0 means no rate limiting).           | `100` |
+| `rateLimit.api.burst`    | Maximum number of requests allowed to go through at the very same moment to the API Services.           | `25`  |
+| `rateLimit.auth.average` | Maximum number of requests per second allowed to the Authentication Service (0 means no rate limiting). | `20`  |
+| `rateLimit.auth.burst`   | Maximum number of requests allowed to go through at the very same moment to the Authentication Service. | `10`  |
+
+### CORS Parameters
+
+| Name              | Description                                           | Value |
+| ----------------- | ----------------------------------------------------- | ----- |
+| `cors.extraHosts` | Additional hosts to be added to the 'AllowOriginList' | `[]`  |
+
 ### ForwardAuth Parameters and Secret
 
 When making requests to the *Auth* Application endpoint `/auth/forward`, `X-ForwardAuth-Secret` header is required.
@@ -204,7 +224,7 @@ For Quick Start purposes, a secret named `tc-auth-gen-forward-traefik-proxy` wil
 | `istio.ingress.principal`          | Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName | `cluster.local/ns/istio-system/sa/istio-ingress` |
 | `istio.ingress.serviceAccountName` | Name of the Ingress service account (istio currently supported)                                                                                          | `istio-ingress`                                  |
 
-### Hosts Parameters
+### *Traefik Proxy* Hosts Parameters
 
 *Traefik Proxy* routes traffic to the various Telicent Apps using their default service names and ports.
 If either of those details changes, you can use this section to correctly referer to those apps.

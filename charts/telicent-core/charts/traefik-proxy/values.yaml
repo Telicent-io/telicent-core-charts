@@ -38,6 +38,38 @@ global:
   # @key global.istioVirtualServiceEnabled Enable Istio traffic routing to a named destination service
   istioVirtualServiceEnabled: true
 
+
+#
+# @section Rate Limit Parameters
+#
+# @descStart
+# The following section allows for setting Traefik Rate Limiting on the Authentication Service and API endpoints.
+# Ref: https://doc.traefik.io/traefik/reference/routing-configuration/http/middlewares/ratelimit/#rate-and-burst
+# @descEnd
+rateLimit:
+  app:
+    # @key rateLimit.app.average Maximum number of requests per second allowed to the Web Applications (0 means no rate limiting).
+    average: 0
+    # @key rateLimit.app.burst Maximum number of requests allowed to go through at the very same moment to the Web Applications.
+    burst: 100
+  api:
+    # @key rateLimit.api.average Maximum number of requests per second allowed to the API Services (0 means no rate limiting).
+    average: 100
+    # @key rateLimit.api.burst Maximum number of requests allowed to go through at the very same moment to the API Services.
+    burst: 25
+  auth:
+    # @key rateLimit.auth.average Maximum number of requests per second allowed to the Authentication Service (0 means no rate limiting).
+    average: 20
+    # @key rateLimit.auth.burst Maximum number of requests allowed to go through at the very same moment to the Authentication Service.
+    burst: 10
+
+#
+# @section CORS Parameters
+#
+cors:
+  # @key cors.extraHosts Additional hosts to be added to the 'AllowOriginList'
+  extraHosts: []
+
 #
 # @section ForwardAuth Parameters and Secret
 #
