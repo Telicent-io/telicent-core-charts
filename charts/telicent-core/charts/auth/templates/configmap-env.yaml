@@ -15,9 +15,7 @@ data:
   # Location of file created by config map for clients
   APP_SEED_REGISTERED_CLIENT_DATA: "/data/registered-clients/data.yml"
   JAVA_OPTS:  {{ .Values.configuration.javaOptions | quote }}
-  {{- if .Values.configuration.superUserIdentifier }}
   SUPER_USER_IDENTIFIER: {{ .Values.configuration.superUserIdentifier | quote }}
-  {{- end}}
   COOKIE_PARENT_DOMAIN: {{ .Values.configuration.cookieParentDomain | quote }}
   COOKIE_SECURE: {{ .Values.configuration.cookieSecure | quote  }}
   TOKEN_ISSUER_URL: {{ printf "%s%s" "https://" .Values.global.authHostDomain | quote }}
