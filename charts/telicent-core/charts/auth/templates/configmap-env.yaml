@@ -12,8 +12,9 @@ metadata:
     {{- include "auth.labels" . | nindent 4 }}
 
 data:
-  # Location of file created by config map for clients
-  APP_SEED_REGISTERED_CLIENT_DATA: "/data/registered-clients/data.yml"
+  APP_SEED_REGISTERED_CLIENT_DATA: "/app/config/startup/clients.yaml"
+  APP_SEED_GROUPS_DATA: "/app/config/startup/groups.yaml"
+
   JAVA_OPTS:  {{ .Values.configuration.javaOptions | quote }}
   SUPER_USER_IDENTIFIER: {{ .Values.configuration.superUserIdentifier | quote }}
   COOKIE_PARENT_DOMAIN: {{ .Values.configuration.cookieParentDomain | quote }}

@@ -1,7 +1,7 @@
 {{- /*
 Copyright (C) 2025 Telicent Limited
 */}}
-{{- if not .Values.clients.existingConfigMap }}
+{{- if not .Values.startup.clients.existingConfigMap }}
 apiVersion: v1
 kind: ConfigMap
 
@@ -12,10 +12,10 @@ metadata:
     {{- include "auth.labels" . | nindent 4 }}
 
 data:
-  data.yml: |
+  clients.yaml: |
     clients: 
       public:
-        {{- toYaml .Values.clients.public | nindent 8 }}
+        {{- toYaml .Values.startup.clients.public | nindent 8 }}
         {{- if .Values.global.enterprise }}
         - client_id: telicent-admin-ui
           client_name: Telicent Admin UI Client
@@ -47,5 +47,5 @@ data:
           post_logout_redirect_uris:
             - {{.Values.global.appHostDomain}}/query
       confidential:
-        {{- toYaml .Values.clients.confidential | nindent 6 }}
+        {{- toYaml .Values.startup.clients.confidential | nindent 6 }}
 {{- end }}

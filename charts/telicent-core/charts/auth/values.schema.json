@@ -178,25 +178,46 @@
                 }
             }
         },
-        "clients": {
+        "startup": {
             "type": "object",
             "properties": {
-                "public": {
-                    "type": "array",
-                    "description": "A list of public client objects",
-                    "default": [],
-                    "items": {}
+                "clients": {
+                    "type": "object",
+                    "properties": {
+                        "existingConfigMap": {
+                            "type": "string",
+                            "description": "Name of an existing config map resource containing all required public and confidential clients. If specified, the values for clients.public and clients.confidential will be ignored",
+                            "default": ""
+                        },
+                        "public": {
+                            "type": "array",
+                            "description": "A list of public client objects",
+                            "default": [],
+                            "items": {}
+                        },
+                        "confidential": {
+                            "type": "array",
+                            "description": "A list of confidential client objects",
+                            "default": [],
+                            "items": {}
+                        }
+                    }
                 },
-                "confidential": {
-                    "type": "array",
-                    "description": "A list of confidential client objects",
-                    "default": [],
-                    "items": {}
-                },
-                "existingConfigMap": {
-                    "type": "string",
-                    "description": "Name of an existing config map resource containing all required public and confidential clients. If specified, the values for clients.public and clients.confidential will be ignored",
-                    "default": ""
+                "groups": {
+                    "type": "object",
+                    "properties": {
+                        "existingConfigMap": {
+                            "type": "string",
+                            "description": "Name of an existing config map containing a list of group objects.",
+                            "default": ""
+                        },
+                        "list": {
+                            "type": "array",
+                            "description": "A list containing group objects",
+                            "default": [],
+                            "items": {}
+                        }
+                    }
                 }
             }
         },

@@ -10,12 +10,23 @@ Create the name of the environment variables config map
 {{- end }}
 
 {{/*
-Create the name of the clients config map
+Create the name of the startup/seed clients config map
 */}}
 {{- define "auth.clientsConfigMapName" -}}
-{{- if .Values.clients.existingConfigMap }}
-{{- .Values.clients.existingConfigMap }}
+{{- if .Values.startup.clients.existingConfigMap }}
+{{- .Values.startup.clients.existingConfigMap }}
 {{- else }}
 {{- printf "tc-%s-%s" .Chart.Name "clients" }}
+{{- end }}
+{{- end }}
+
+{{/*
+Create the name of the startup/seed groups config map
+*/}}
+{{- define "auth.groupsConfigMapName" -}}
+{{- if .Values.startup.groups.existingConfigMap }}
+{{- .Values.startup.groups.existingConfigMap }}
+{{- else }}
+{{- printf "tc-%s-%s" .Chart.Name "groups" }}
 {{- end }}
 {{- end }}

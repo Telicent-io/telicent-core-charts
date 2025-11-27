@@ -154,15 +154,17 @@ For Quick Start purposes, a secret named `tc-auth-gen-forward-auth` will be crea
 | `forwardAuth.existingSecret` | Name of an existing secret. The secret must contain 1 key: 'header' | `""`  |
 | `forwardAuth.header`         | The header value to be associated with the `X-ForwardAuth-Secret`.  | `""`  |
 
-### Client(s) Parameters
+### Start Up Parameters
 
-List of registered clients
+Contains parameters that should be loaded when the application starts up
 
-| Name                        | Description                                                                                                                                                                           | Value |
-| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
-| `clients.public`            | A list of public client objects                                                                                                                                                       | `[]`  |
-| `clients.confidential`      | A list of confidential client objects                                                                                                                                                 | `[]`  |
-| `clients.existingConfigMap` | Name of an existing config map resource containing all required public and confidential clients. If specified, the values for clients.public and clients.confidential will be ignored | `""`  |
+| Name                                | Description                                                                                                                                                                           | Value |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| `startup.clients.existingConfigMap` | Name of an existing config map resource containing all required public and confidential clients. If specified, the values for clients.public and clients.confidential will be ignored | `""`  |
+| `startup.clients.public`            | A list of public client objects                                                                                                                                                       | `[]`  |
+| `startup.clients.confidential`      | A list of confidential client objects                                                                                                                                                 | `[]`  |
+| `startup.groups.existingConfigMap`  | Name of an existing config map containing a list of group objects.                                                                                                                    | `""`  |
+| `startup.groups.list`               | A list containing group objects                                                                                                                                                       | `[]`  |
 
 ### Common Parameters
 
