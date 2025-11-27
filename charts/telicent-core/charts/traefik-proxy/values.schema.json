@@ -294,7 +294,7 @@
                         "cpu": {
                             "type": "string",
                             "description": "Set containers' CPU request",
-                            "default": "125m"
+                            "default": "500m"
                         },
                         "memory": {
                             "type": "string",
@@ -309,7 +309,7 @@
                         "cpu": {
                             "type": "string",
                             "description": "Set containers' CPU limit",
-                            "default": "250m"
+                            "default": "750m"
                         },
                         "memory": {
                             "type": "string",
@@ -545,19 +545,9 @@
                     "description": "Auth host value, If not set a host is generated using service:'auth',port:'8080' and Release namespace & name.",
                     "default": ""
                 },
-                "access": {
-                    "type": "string",
-                    "description": "Access host value, If not set a host is generated using service:'access',port:'8080' and Release namespace & name.",
-                    "default": ""
-                },
                 "adminUi": {
                     "type": "string",
                     "description": "Admin UI host value, If not set a host is generated using service:'admin-ui',port:'8080' and Release namespace & name.",
-                    "default": ""
-                },
-                "accessUi": {
-                    "type": "string",
-                    "description": "Access UI host value, If not set a host is generated using service:'access-ui',port:'8080' and Release namespace & name.",
                     "default": ""
                 },
                 "dataCatalogUi": {
@@ -598,16 +588,6 @@
                 "userPreferences": {
                     "type": "string",
                     "description": "User Preferences host value, If not set a host is generated using service:'user-preferences',port:'8080' and Release namespace & name.",
-                    "default": ""
-                },
-                "oauth2Proxy": {
-                    "type": "string",
-                    "description": "Oauth2 Proxy host value, If not set a host is generated using service:'oauth2-proxy',port:'4080' and Release namespace & name.",
-                    "default": ""
-                },
-                "whoami": {
-                    "type": "string",
-                    "description": "Whoami host value, If not set a host is generated using service:'whoami',port:'8080' and Release namespace & name. AB:test purposes, be removed afterwards",
                     "default": ""
                 },
                 "paperbackWriter": {
