@@ -12,16 +12,20 @@ metadata:
     {{- include "search.labels" . | nindent 4 }}
 
 data:
-  JAVA_OPTIONS: {{ .Values.configuration.javaOptions | quote }}
-  OTEL_METRICS_EXPORTER: {{ .Values.configuration.otelMetricsExporter | quote }}
-  OTEL_TRACES_EXPORTER: {{ .Values.configuration.otelTracesExporter | quote }}
-  ELASTIC_HOST: {{ .Values.configuration.elasticHost | quote }}
-  ELASTIC_PORT: {{ .Values.configuration.elasticPort | quote }}
-  ES_CLUSTER_PORT: {{ .Values.configuration.elasticClusterPort | quote }}
-  OPENSEARCH_COMPATIBILITY: {{ .Values.configuration.opensearchCompatibility | quote }}
-  ELASTIC_INDEX: {{ .Values.configuration.elasticIndexNames | quote }}
-  FIELD_OPTIONS: {{ .Values.configuration.searchFieldOptions | quote }}
-  INDEX_BATCH_SIZE: {{ .Values.configuration.indexBatchSize | quote }}
-  JWKS_URL: {{ printf "%s%s%s" "https://" .Values.global.authHostDomain "/oauth2/jwks" | quote }}
-  USERINFO_URL: {{ printf "http://%s.%s:%s%s" "auth" .Release.Namespace "8080" "/userinfo" | quote }}
   FEATURE_FLAG_AUTHZ: "true"
+  ELASTIC_HOST: {{ .Values.elastic.host | quote }}
+  ELASTIC_PORT: {{ .Values.elastic.port | quote }}
+  ES_CLUSTER_PORT: {{ .Values.elastic.clusterPort | quote }}
+  OPENSEARCH_COMPATIBILITY: {{ .Values.elastic.opensearchCompatibility | quote }}
+  ELASTIC_INDEX: {{ .Values.elastic.indexNames | quote }}
+  FIELD_OPTIONS: {{ .Values.elastic.searchFieldOptions | quote }}
+  INDEX_BATCH_SIZE: {{ .Values.elastic.indexBatchSize | quote }}
+  
+  JAVA_OPTIONS: {{ .Values.java.jvmOptions | quote }}
+  JWKS_URL: {{ printf "%s%s%s" "https://" .Values.global.authHostDomain "/oauth2/jwks" | quote }}
+  USERINFO_URL: {{ printf "http://%s%s" (include "graph.hostAuth" . ) "/userinfo" | quote }}
+  
+  {{- if .Values.metrics.enabled }}
+  OTEL_METRICS_EXPORTER: "prometheus"
+  OTEL_TRACES_EXPORTER: "none"
+  {{- end}}
