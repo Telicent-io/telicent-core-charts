@@ -13,9 +13,8 @@ http:
         # Disables credential support (incompatible with wildcard origin)
         accessControlAllowCredentials: true
         accessControlAllowOriginList:
-          - {{ printf "%s%s" "https://" .Values.global.authHostDomain | quote }}
-          - {{ printf "%s%s" "https://" .Values.global.appHostDomain | quote }}
-          #todo: remove dave - auth helper
-          - http://localhost:3002
-          - http://localhost:3001
-          - http://localhost:5143
+        - {{ printf "%s%s" "https://" .Values.global.authHostDomain }}
+        - {{ printf "%s%s" "https://" .Values.global.appHostDomain }}
+        {{- if .Values.cors.extraHosts -}}
+        {{- toYaml .Values.cors.extraHosts | nindent 8 }}
+        {{- end -}}

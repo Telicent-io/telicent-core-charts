@@ -58,6 +58,67 @@
                 }
             }
         },
+        "rateLimit": {
+            "type": "object",
+            "properties": {
+                "app": {
+                    "type": "object",
+                    "properties": {
+                        "average": {
+                            "type": "number",
+                            "description": "Maximum number of requests per second allowed to the Web Applications (0 means no rate limiting).",
+                            "default": 0
+                        },
+                        "burst": {
+                            "type": "number",
+                            "description": "Maximum number of requests allowed to go through at the very same moment to the Web Applications.",
+                            "default": 100
+                        }
+                    }
+                },
+                "api": {
+                    "type": "object",
+                    "properties": {
+                        "average": {
+                            "type": "number",
+                            "description": "Maximum number of requests per second allowed to the API Services (0 means no rate limiting).",
+                            "default": 100
+                        },
+                        "burst": {
+                            "type": "number",
+                            "description": "Maximum number of requests allowed to go through at the very same moment to the API Services.",
+                            "default": 25
+                        }
+                    }
+                },
+                "auth": {
+                    "type": "object",
+                    "properties": {
+                        "average": {
+                            "type": "number",
+                            "description": "Maximum number of requests per second allowed to the Authentication Service (0 means no rate limiting).",
+                            "default": 20
+                        },
+                        "burst": {
+                            "type": "number",
+                            "description": "Maximum number of requests allowed to go through at the very same moment to the Authentication Service.",
+                            "default": 10
+                        }
+                    }
+                }
+            }
+        },
+        "cors": {
+            "type": "object",
+            "properties": {
+                "extraHosts": {
+                    "type": "array",
+                    "description": "Additional hosts to be added to the 'AllowOriginList'",
+                    "default": [],
+                    "items": {}
+                }
+            }
+        },
         "forwardAuth": {
             "type": "object",
             "properties": {
