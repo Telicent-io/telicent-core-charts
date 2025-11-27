@@ -10,7 +10,7 @@ the [Helm](https://helm.sh) package manager.
 ## Prerequisites
 
 - Kubernetes 1.23+
-- Helm 3.8.0+
+- Helm 3.9+
 
 ## Installing the Chart
 
@@ -40,11 +40,51 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ## Configuration and installation details
 
+### Resource requests and limits
+
+These are inside the `resources` value (check parameter table). Setting requests is essential for production workloads
+and these should be adapted to your specific use case.
+
+### Sidecars and Init Containers
+
+If you have a need for additional containers to run within the same pod (e.g. an additional metrics or logging
+exporter), you can do so via the `sidecars` config parameter.
+Define your container according to the Kubernetes container spec.
+
+```yaml
+sidecars:
+- name: your-image-name
+  image: your-image
+  imagePullPolicy: Always
+  ports:
+  - name: portname
+    containerPort: 1234
+```
+
+Similarly, you can add extra init containers using the `initContainers` parameter.
+
+```yaml
+initContainers:
+- name: your-image-name
+  image: your-image
+  imagePullPolicy: Always
+  ports:
+  - name: portname
+    containerPort: 1234
+```
+
+### Setting Pod's affinity
+
+This chart allows you to set your custom affinity using the `affinity` parameter.
+Find more information about Pod's affinity in
+the [kubernetes documentation](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity).
+
 ## Parameters
 
 ### Global Parameters
 
 Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
+Note: only global parameters used within this chart, will be listed below.
 
 | Name                                    | Description                                                                                                       | Value                                          |
 | --------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
@@ -54,10 +94,6 @@ Contains global parameters, these parameters are mirrored within the Telicent co
 | `global.appHostDomain`                  | Domain associated with Telicent application/ui services                                                           | `apps.telicent.io`                             |
 | `global.apiHostDomain`                  | Domain associated with Telicent Api services                                                                      | `api.telicent.io`                              |
 | `global.authHostDomain`                 | Domain associated with Telicent authentication services, including OIDC providers                                 | `auth.telicent.io`                             |
-| `global.istioNamespace`                 | Namespace in which Istio is deployed                                                                              | `istio-system`                                 |
-| `global.istioServiceAccountName`        | Name of the Istio service account                                                                                 | `istio-ingress`                                |
-| `global.istioGatewayName`               | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)                                         | `ingress-gateway`                              |
-| `global.istioVirtualServiceEnabled`     | Enable Istio traffic routing to a named destination service                                                       | `false`                                        |
 | `global.kafka.bootstrapServers`         | Comma separated list containing Kafka bootstrap servers                                                           | `kafka-bootstrap.kafka.svc.cluster.local:9092` |
 | `global.kafka.existingConfigSecretName` | Name of an existing secret containing Kafka configuration (preferred over individual settings below for security) | `""`                                           |
 | `global.kafka.username`                 | Username for Kafka authentication                                                                                 | `your.kafka.username.here`                     |
@@ -67,20 +103,22 @@ Contains global parameters, these parameters are mirrored within the Telicent co
 | `global.truststore.existingSecretName`  | Name of an existing secret containing the truststore                                                              | `""`                                           |
 | `global.truststore.mountPath`           | The mount path for the truststore in the container                                                                | `/app/config/truststore`                       |
 
-### Configuration Parameters
+### ConfigMap Parameters
 
 Contains configuration parameters specific to the *Graph* application
 
-| Name                                    | Description                                                             | Value                       |
-| --------------------------------------- | ----------------------------------------------------------------------- | --------------------------- |
-| `configuration.existingEnvConfigMap`    | Name of existing configmap containing *Graph* Environment Configuration | `""`                        |
-| `configuration.existingFusekiConfigMap` | Name of existing configmap containing Fuseki Configuration              | `""`                        |
-| `configuration.userAttributesUrl`       | URL for the user details endpoint                                       | `""`                        |
-| `configuration.attributeHierarchyUrl`   | URL for the user hierarchy endpoint                                     | `""`                        |
-| `configuration.javaOptions`             | JVM options for the application                                         | `-XX:MaxRAMPercentage=80.0` |
-| `configuration.otelMetricsExporter`     | OpenTelemetry metrics exporter                                          | `prometheus`                |
-| `configuration.otelTracesExporter`      | OpenTelemetry traces exporter                                           | `none`                      |
-| `configuration.enableLabelsQuery`       | Enable labels query endpoint                                            | `true`                      |
+| Name                                | Description                                                             | Value |
+| ----------------------------------- | ----------------------------------------------------------------------- | ----- |
+| `configMap.existingEnvConfigMap`    | Name of existing configmap containing *Graph* Environment Configuration | `""`  |
+| `configMap.existingFusekiConfigMap` | Name of existing configmap containing Fuseki Configuration              | `""`  |
+
+### Java Parameters
+
+Contains Java configuration parameters to be used by the *Graph* application
+
+| Name              | Description                     | Value                       |
+| ----------------- | ------------------------------- | --------------------------- |
+| `java.jvmOptions` | JVM options for the application | `-XX:MaxRAMPercentage=80.0` |
 
 ### Common Parameters
 
@@ -163,14 +201,25 @@ Contains configuration parameters specific to the *Graph* application
 | `metrics.service.name` | Name for the Prometheus service | `metrics` |
 | `metrics.service.port` | Port for the Prometheus service | `9464`    |
 
-### Istio Parameters
+### Host(s) Parameters - Contains host information for applications deployed via *telicent-core* chart.
 
-| Name                                       | Description                                                                                                                                                       | Value              |
-| ------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
-| `istio.ingress.principal`                  | Principal used for ingress traffic by the Istio AuthorizationPolicy.  If not set, a principal is generated using Release namespace and serviceAccountName         | `""`               |
-| `istio.ingress.serviceAccountName`         | Name of the Ingress service account (traefik and istio supported)                                                                                                 | `traefik-proxy`    |
-| `istio.paperbackWriter.principal`          | Principal used for Paperback Writer traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName | `""`               |
-| `istio.paperbackWriter.serviceAccountName` | Name of the Paperback Writer service account                                                                                                                      | `paperback-writer` |
+*Graph* interacts directly to other Telicent Apps using their default service/serviceAccount and port.
+If either of those details changes, you can use this section to correctly referer to those apps.
+
+| Name                      | Description                                                                                                                                                                                                                        | Value                |
+| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
+| `hosts.enableAutoCorrect` | Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as is, without any modification. | `true`               |
+| `hosts.auth`              | Auth application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                                   | `auth:8080`          |
+| `hosts.traefikProxy`      | Search application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                                 | `traefik-proxy:8080` |
+| `hosts.search`            | Search application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                                 | `search:8080`        |
+
+### Host(s) External Parameters - Contains host information for applications *not* deployed via *telicent-core* chart.
+
+Host values will be used as defined in this section, release name cannot be autocorrected, as the release name is unknown.
+
+| Name                            | Description                                                                          | Value                   |
+| ------------------------------- | ------------------------------------------------------------------------------------ | ----------------------- |
+| `hostsExternal.paperbackWriter` | Paperback Writer application host value, as defined by 'service/serviceAccount:port' | `paperback-writer:8080` |
 
 ## License
 

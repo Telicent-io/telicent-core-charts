@@ -204,7 +204,7 @@ For Quick Start purposes, a secret named `tc-auth-gen-forward-traefik-proxy` wil
 | `istio.ingress.principal`          | Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName | `cluster.local/ns/istio-system/sa/istio-ingress` |
 | `istio.ingress.serviceAccountName` | Name of the Ingress service account (istio currently supported)                                                                                          | `istio-ingress`                                  |
 
-### *Traefik Proxy* Hosts Parameters
+### Hosts Parameters
 
 *Traefik Proxy* routes traffic to the various Telicent Apps using their default service names and ports.
 If either of those details changes, you can use this section to correctly referer to those apps.

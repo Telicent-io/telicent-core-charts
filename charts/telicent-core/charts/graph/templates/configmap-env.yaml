@@ -1,7 +1,7 @@
 {{- /*
 Copyright (C) 2025 Telicent Limited
 */}}
-{{- if not .Values.configuration.existingEnvConfigMap -}}
+{{- if not .Values.configMap.existingEnvConfigMap -}}
 apiVersion: v1
 kind: ConfigMap
 
@@ -14,14 +14,18 @@ metadata:
 data:
   FEATURE_FLAG_AUTHZ: "true"
   ENABLE_BACKUPS: "false"
-  ENABLE_LABELS_QUERY: {{ .Values.configuration.enableLabelsQuery | default "false" | quote }}
-  JAVA_OPTIONS: {{ .Values.configuration.javaOptions | quote }}
+  ENABLE_LABELS_QUERY: "true"
   KAFKA_CONFIG_FILE_PATH: /app/config/kafka-auth/kafka-config.properties
-  OTEL_METRICS_EXPORTER: {{ .Values.configuration.otelMetricsExporter | quote }}
-  OTEL_TRACES_EXPORTER: {{ .Values.configuration.otelTracesExporter | quote }}
-  {{- if .Values.global.enterprise}}
-  SEARCH_API_URL: {{ include "graph.searchUrl" . | quote }}
-  {{- end}}
+  JAVA_OPTIONS: {{ .Values.java.jvmOptions | quote }}
   JWKS_URL: {{ printf "%s%s%s" "https://" .Values.global.authHostDomain "/oauth2/jwks" | quote }}
-  USERINFO_URL: {{ printf "http://%s.%s:%s%s" "auth" .Release.Namespace "8080" "/userinfo" | quote }}
+  USERINFO_URL: {{ printf "http://%s%s" (include "graph.hostAuth" . ) "/userinfo" | quote }}
+
+  {{- if .Values.global.enterprise }}
+  SEARCH_API_URL: {{  printf "http://%s" (include "graph.hostSearch" .) | quote }}
+  {{- end}}
+
+  {{- if .Values.metrics.enabled }}
+  OTEL_METRICS_EXPORTER: "prometheus"
+  OTEL_TRACES_EXPORTER: "none"
+  {{- end}}
 {{- end }}
