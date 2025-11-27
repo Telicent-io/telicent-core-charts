@@ -23,7 +23,7 @@ data:
   
   JAVA_OPTIONS: {{ .Values.java.jvmOptions | quote }}
   JWKS_URL: {{ printf "%s%s%s" "https://" .Values.global.authHostDomain "/oauth2/jwks" | quote }}
-  USERINFO_URL: {{ printf "http://%s%s" (include "graph.hostAuth" . ) "/userinfo" | quote }}
+  USERINFO_URL: {{ printf "http://%s%s" (include "search.hostAuth" . ) "/userinfo" | quote }}
   
   {{- if .Values.metrics.enabled }}
   OTEL_METRICS_EXPORTER: "prometheus"
