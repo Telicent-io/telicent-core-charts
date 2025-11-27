@@ -175,9 +175,9 @@ For Quick Start purposes, a secret named `tc-auth-gen-forward-traefik-proxy` wil
 | `image.tag`                                         | *Traefik Proxy* image tag. If not set, a tag is generated using the appVersion | `""`                      |
 | `image.pullPolicy`                                  | *Traefik Proxy* image pull policy                                              | `IfNotPresent`            |
 | `image.pullSecrets`                                 | Specify registry secret names as an array                                      | `[]`                      |
-| `resources.requests.cpu`                            | Set containers' CPU request                                                    | `125m`                    |
+| `resources.requests.cpu`                            | Set containers' CPU request                                                    | `500m`                    |
 | `resources.requests.memory`                         | Set containers' memory request                                                 | `512Mi`                   |
-| `resources.limits.cpu`                              | Set containers' CPU limit                                                      | `250m`                    |
+| `resources.limits.cpu`                              | Set containers' CPU limit                                                      | `750m`                    |
 | `resources.limits.memory`                           | Set containers' memory limit                                                   | `768Mi`                   |
 | `containerSecurityContext.runAsUser`                | Set containers' Security Context runAsUser User ID                             | `185`                     |
 | `containerSecurityContext.runAsGroup`               | Set containers' Security Context runAsGroup Group ID                           | `185`                     |
@@ -230,23 +230,19 @@ For Quick Start purposes, a secret named `tc-auth-gen-forward-traefik-proxy` wil
 If either of those details changes, you can use this section to correctly referer to those apps.
 Example: overriding Search UI chart value `fullnameOverride: "search-ui"` the correct host value would be `searchUi: "search-ui:8080"`
 
-| Name                    | Description                                                                                                                                                | Value |
-| ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
-| `hosts.auth`            | Auth host value, If not set a host is generated using service:'auth',port:'8080' and Release namespace & name.                                             | `""`  |
-| `hosts.access`          | Access host value, If not set a host is generated using service:'access',port:'8080' and Release namespace & name.                                         | `""`  |
-| `hosts.adminUi`         | Admin UI host value, If not set a host is generated using service:'admin-ui',port:'8080' and Release namespace & name.                                     | `""`  |
-| `hosts.accessUi`        | Access UI host value, If not set a host is generated using service:'access-ui',port:'8080' and Release namespace & name.                                   | `""`  |
-| `hosts.dataCatalogUi`   | Data Catalog UI host value, If not set a host is generated using service:'data-catalog-ui',port:'8080' and Release namespace & name.                       | `""`  |
-| `hosts.userPortalUi`    | User Portal UI host value, If not set a host is generated using service:'user-portal-ui',port:'8080' and Release namespace & name.                         | `""`  |
-| `hosts.searchUi`        | Search UI host value, If not set a host is generated using service:'search-ui',port:'8080' and Release namespace & name.                                   | `""`  |
-| `hosts.graphUi`         | Graph UI host value, If not set a host is generated using service:'graph-ui',port:'8080' and Release namespace & name.                                     | `""`  |
-| `hosts.queryUi`         | Query UI host value, If not set a host is generated using service:'query-ui',port:'8080' and Release namespace & name.                                     | `""`  |
-| `hosts.search`          | Search host value, If not set a host is generated using service:'search',port:'8080' and Release namespace & name.                                         | `""`  |
-| `hosts.graph`           | Graph host value, If not set a host is generated using service:'graph',port:'8080' and Release namespace & name.                                           | `""`  |
-| `hosts.userPreferences` | User Preferences host value, If not set a host is generated using service:'user-preferences',port:'8080' and Release namespace & name.                     | `""`  |
-| `hosts.oauth2Proxy`     | Oauth2 Proxy host value, If not set a host is generated using service:'oauth2-proxy',port:'4080' and Release namespace & name.                             | `""`  |
-| `hosts.whoami`          | Whoami host value, If not set a host is generated using service:'whoami',port:'8080' and Release namespace & name. AB:test purposes, be removed afterwards | `""`  |
-| `hosts.paperbackWriter` | If not set a host is generated using service:'paperback-writer', port:'8000' and Release namespace & name.                                                 | `""`  |
+| Name                    | Description                                                                                                                            | Value |
+| ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| `hosts.auth`            | Auth host value, If not set a host is generated using service:'auth',port:'8080' and Release namespace & name.                         | `""`  |
+| `hosts.adminUi`         | Admin UI host value, If not set a host is generated using service:'admin-ui',port:'8080' and Release namespace & name.                 | `""`  |
+| `hosts.dataCatalogUi`   | Data Catalog UI host value, If not set a host is generated using service:'data-catalog-ui',port:'8080' and Release namespace & name.   | `""`  |
+| `hosts.userPortalUi`    | User Portal UI host value, If not set a host is generated using service:'user-portal-ui',port:'8080' and Release namespace & name.     | `""`  |
+| `hosts.searchUi`        | Search UI host value, If not set a host is generated using service:'search-ui',port:'8080' and Release namespace & name.               | `""`  |
+| `hosts.graphUi`         | Graph UI host value, If not set a host is generated using service:'graph-ui',port:'8080' and Release namespace & name.                 | `""`  |
+| `hosts.queryUi`         | Query UI host value, If not set a host is generated using service:'query-ui',port:'8080' and Release namespace & name.                 | `""`  |
+| `hosts.search`          | Search host value, If not set a host is generated using service:'search',port:'8080' and Release namespace & name.                     | `""`  |
+| `hosts.graph`           | Graph host value, If not set a host is generated using service:'graph',port:'8080' and Release namespace & name.                       | `""`  |
+| `hosts.userPreferences` | User Preferences host value, If not set a host is generated using service:'user-preferences',port:'8080' and Release namespace & name. | `""`  |
+| `hosts.paperbackWriter` | If not set a host is generated using service:'paperback-writer', port:'8000' and Release namespace & name.                             | `""`  |
 
 ## License
 

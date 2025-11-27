@@ -38,7 +38,6 @@ global:
   # @key global.istioVirtualServiceEnabled Enable Istio traffic routing to a named destination service
   istioVirtualServiceEnabled: true
 
-
 #
 # @section Rate Limit Parameters
 #
@@ -170,12 +169,12 @@ image:
 resources:
   requests:
     # @key resources.requests.cpu Set containers' CPU request
-    cpu: "125m"
+    cpu: "500m"
     # @key resources.requests.memory Set containers' memory request
     memory: "512Mi"
   limits:
     # @key resources.limits.cpu Set containers' CPU limit
-    cpu: "250m"
+    cpu: "750m"
     # @key resources.limits.memory Set containers' memory limit
     memory: "768Mi"
 
@@ -280,12 +279,8 @@ istio:
 hosts:
   # @key hosts.auth Auth host value, If not set a host is generated using service:'auth',port:'8080' and Release namespace & name.
   auth: ""
-  # @key hosts.access Access host value, If not set a host is generated using service:'access',port:'8080' and Release namespace & name.
-  access: ""
   # @key hosts.adminUi Admin UI host value, If not set a host is generated using service:'admin-ui',port:'8080' and Release namespace & name.
   adminUi: ""
-  # @key hosts.accessUi Access UI host value, If not set a host is generated using service:'access-ui',port:'8080' and Release namespace & name.
-  accessUi: ""
   # @key hosts.dataCatalogUi Data Catalog UI host value, If not set a host is generated using service:'data-catalog-ui',port:'8080' and Release namespace & name.
   dataCatalogUi: ""
   # @key hosts.userPortalUi User Portal UI host value, If not set a host is generated using service:'user-portal-ui',port:'8080' and Release namespace & name.
@@ -302,9 +297,5 @@ hosts:
   graph: ""
   # @key hosts.userPreferences User Preferences host value, If not set a host is generated using service:'user-preferences',port:'8080' and Release namespace & name.
   userPreferences: ""
-  # @key hosts.oauth2Proxy Oauth2 Proxy host value, If not set a host is generated using service:'oauth2-proxy',port:'4080' and Release namespace & name.
-  oauth2Proxy: ""
-  # @key hosts.whoami Whoami host value, If not set a host is generated using service:'whoami',port:'8080' and Release namespace & name. AB:test purposes, be removed afterwards
-  whoami: ""
   # @key hosts.paperbackWriter If not set a host is generated using service:'paperback-writer', port:'8000' and Release namespace & name.
   paperbackWriter: ""

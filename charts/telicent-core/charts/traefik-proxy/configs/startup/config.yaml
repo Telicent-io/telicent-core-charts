@@ -5,21 +5,23 @@ entryPoints:
       middlewares:
       - rate-limit-app@file
       - headers-security@file
+
   web-api:
     address: ":8081/tcp"
     http:
       middlewares:
-        - rate-limit-api@file
-         - cors@file
-         - headers-security@file
-         - oauth2@file
+      - rate-limit-api@file
+      - cors@file
+      - headers-security@file
+      - oauth2@file
+
   web-auth:
     address: ":8082/tcp"
     http:
       middlewares:
-        - rate-limit-auth@file
-        - cors@file
-        - headers-security@file
+      - rate-limit-auth@file
+      - cors@file
+      - headers-security@file
 
   ping:
     address: ":9000/tcp"
