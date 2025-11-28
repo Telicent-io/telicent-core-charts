@@ -240,7 +240,7 @@ metrics:
 # @section Host(s) Parameters - Contains host information for applications deployed via *telicent-core* chart.
 #
 # @descStart
-# *Graph* interacts directly to other Telicent Apps using their default service/serviceAccount and port.
+# *Graph* interacts directly with other Telicent Applications using their default service/serviceAccount and port.
 # If either of those details changes, you can use this section to correctly referer to those apps.
 # @descEnd
 hosts:

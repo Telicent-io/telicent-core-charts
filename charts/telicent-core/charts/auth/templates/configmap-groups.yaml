@@ -1,0 +1,22 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+{{- if and (not .Values.bootstrap.groups.existingConfigMap) (.Values.bootstrap.enabled) -}}
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: {{ include "auth.groupsConfigMapName" . }}
+  namespace: {{ include "auth.namespace" . | quote }}
+  labels:
+    {{- include "auth.labels" . | nindent 4 }}
+
+data:
+  groups.yaml: |
+    {{- if .Values.bootstrap.groups.list }}
+    groups:
+      {{- toYaml .Values.bootstrap.groups.list | nindent 4 }}
+    {{- else }}
+    groups: []
+    {{- end }}
+{{- end -}}

@@ -6,6 +6,7 @@
 #
 # @descStart
 # Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
+# Note: only global parameters used within this chart, will be listed below
 # @descEnd
 global:
   ## Current available global image parameters: imageRegistry and imagePullSecrets
@@ -28,35 +29,32 @@ global:
   # @key global.authHostDomain Domain associated with Telicent authentication services, including OIDC providers
   authHostDomain: "auth.telicent.io"
 
-  # @key global.istioNamespace Namespace in which Istio is deployed
-  # Note: By default, Istio namespace is set to 'istio-system'
-  istioNamespace: istio-system
-  # @key global.istioServiceAccountName Name of the Istio service account
-  istioServiceAccountName: istio-ingress
-  # @key global.istioGatewayName Name of the Istio Gateway Resource (LB operating at the edge of the mesh)
-  istioGatewayName: ingress-gateway
-  # @key global.istioVirtualServiceEnabled Enable Istio traffic routing to a named destination service
-  istioVirtualServiceEnabled: false
-
   truststore:
-    # @key global.truststore.existingSecretName Name of an existing secret containing the truststore
-    existingSecretName: ""
+    # @key global.truststore.existingSecret Name of an existing secret containing the truststore
+    existingSecret: ""
     # @key global.truststore.mountPath The mount path for the truststore in the container
     mountPath: /app/config/truststore
 
 #
-# @section Configuration Parameters
+# @section ConfigMap Parameters
 #
 # @descStart
 # Contains configuration parameters specific to the *User Preferences* application
 # @descEnd
-configuration:
-  # @key configuration.existingEnvConfigMap Name of existing configmap containing *User Preferences* Environment Configuration
+configMap:
+  # @key configMap.existingEnvConfigMap Name of existing configmap containing *User Preferences* Environment Configuration
   # Note: When it's set it will disable configmap creation.
   existingEnvConfigMap: ""
 
-  # @key configuration.javaOptions JVM options for the application
-  javaOptions: "-XX:MaxRAMPercentage=80.0"
+#
+# @section Java Parameters
+#
+# @descStart
+# Contains Java configuration parameters to be used by the *Search* application
+# @descEnd
+java:
+  # @key java.jvmOptions JVM options for the application
+  jvmOptions: "-XX:MaxRAMPercentage=80.0"
 
 #
 # @section MongoDB Parameters and Secret
@@ -73,6 +71,7 @@ mongo:
   database: "user-preferences"
   # @key mongo.authDatabase The authentication database to use for the given user
   authDatabase: "admin"
+  
   # @key mongo.existingSecret Name of an existing secret. The secret must contain 2 keys: 'username', 'password'
   # Note: Left unset, it will create a secret named: tc-auth-usr-mongo-user-preferences
   existingSecret: ""
@@ -235,11 +234,16 @@ metrics:
     port: 9464
 
 #
-# @section Istio Parameters
+# @section Host(s) Parameters - Contains host information for applications deployed via *telicent-core* chart.
 #
-istio:
-  ingress:
-    # @key istio.ingress.principal Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName
-    principal: ""
-    # @key istio.ingress.serviceAccountName Name of the Ingress service account (traefik and istio supported)
-    serviceAccountName: "traefik-proxy"
+# @descStart
+# *User Preferences* interacts directly with other Telicent Applications using their default service/serviceAccount and port.
+# If either of those details changes, you can use this section to correctly referer to those apps.
+# @descEnd
+hosts:
+  # @key hosts.enableAutoCorrect Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as is, without any modification.
+  enableAutoCorrect: true
+  # @key hosts.auth Auth application default host value, as defined by 'service/serviceAccount:port'
+  auth: "auth:8080"
+  # @key hosts.traefikProxy Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'
+  traefikProxy: "traefik-proxy:8080"

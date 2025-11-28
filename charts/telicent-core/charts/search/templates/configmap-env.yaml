@@ -1,7 +1,7 @@
 {{- /*
 Copyright (C) 2025 Telicent Limited
 */}}
-
+{{- if not .Values.configMap.existingEnvConfigMap -}}
 apiVersion: v1
 kind: ConfigMap
 
@@ -13,6 +13,7 @@ metadata:
 
 data:
   FEATURE_FLAG_AUTHZ: "true"
+  
   ELASTIC_HOST: {{ .Values.elastic.host | quote }}
   ELASTIC_PORT: {{ .Values.elastic.port | quote }}
   ES_CLUSTER_PORT: {{ .Values.elastic.clusterPort | quote }}
@@ -29,3 +30,4 @@ data:
   OTEL_METRICS_EXPORTER: "prometheus"
   OTEL_TRACES_EXPORTER: "none"
   {{- end}}
+{{- end}}

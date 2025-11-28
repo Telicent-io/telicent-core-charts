@@ -12,13 +12,21 @@ metadata:
     {{- include "auth.labels" . | nindent 4 }}
 
 data:
-  # Location of file created by config map for clients
-  APP_SEED_REGISTERED_CLIENT_DATA: "/data/registered-clients/data.yml"
-  JAVA_OPTS:  {{ .Values.configuration.javaOptions | quote }}
-  SUPER_USER_IDENTIFIER: {{ .Values.configuration.superUserIdentifier | quote }}
-  COOKIE_PARENT_DOMAIN: {{ .Values.configuration.cookieParentDomain | quote }}
-  COOKIE_SECURE: {{ .Values.configuration.cookieSecure | quote  }}
+  # Startup configuration to be loaded
+  {{- if .Values.bootstrap.enabled }}
+  APP_SEED_REGISTERED_CLIENT_DATA: "/app/config/startup/clients.yaml"
+  APP_SEED_GROUPS_DATA: "/app/config/startup/groups.yaml"
+  {{- end }}
+
+  # PostgreSQL
+  POSTGRES_URI: {{ .Values.postgresSql.uri | quote }}
+  
+  SUPER_USER_IDENTIFIER: {{ .Values.configMap.superUserIdentifier | quote }}
+  COOKIE_PARENT_DOMAIN: {{ .Values.configMap.cookieParentDomain | quote }}
+  COOKIE_SECURE: {{ .Values.configMap.cookieSecure | quote  }}
   TOKEN_ISSUER_URL: {{ printf "%s%s" "https://" .Values.global.authHostDomain | quote }}
+
+  JAVA_OPTS:  {{ .Values.java.jvmOptions | quote }}
 
   # IDP
   EXTERNAL_IDP_URL: {{ .Values.idp.issuerUrl | quote }}
@@ -28,13 +36,10 @@ data:
   EXTERNAL_IDP_JWK_SET_ENDPOINT:  {{ .Values.idp.jwksPath | quote }}
 
   # Log levels
-  LOGGING_LEVEL_API: {{ .Values.configuration.loggingLevel  }}
-  LOGGING_LEVEL_SERVICE: {{ .Values.configuration.loggingLevel  }}
-  LOGGING_LEVEL_REPO: {{ .Values.configuration.loggingLevel  }}
-  LOGGING_LEVEL_SECURITY: {{ .Values.configuration.loggingLevel  }}
-  LOGGING_LEVEL_OAUTH2: {{ .Values.configuration.loggingLevel }}
-  LOGGING_LEVEL_GENERAL: {{ .Values.configuration.loggingLevel  }}
-  LOGGING_LEVEL_TRACE: {{ .Values.configuration.loggingLevel }}
-
-  # PostgreSQL
-  POSTGRES_URI: {{ .Values.postgresSql.uri | quote }}
+  LOGGING_LEVEL_API: {{ .Values.logs.api.level  }}
+  LOGGING_LEVEL_SERVICE: {{ .Values.logs.service.level  }}
+  LOGGING_LEVEL_REPO: {{ .Values.logs.repo.level  }}
+  LOGGING_LEVEL_SECURITY: {{ .Values.logs.repo.level  }}
+  LOGGING_LEVEL_OAUTH2: {{ .Values.logs.oauth2.level }}
+  LOGGING_LEVEL_GENERAL: {{ .Values.logs.general.level  }}
+  LOGGING_LEVEL_TRACE: {{ .Values.logs.trace.level }}

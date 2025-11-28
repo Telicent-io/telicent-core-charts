@@ -203,7 +203,7 @@ Contains Java configuration parameters to be used by the *Graph* application
 
 ### Host(s) Parameters - Contains host information for applications deployed via *telicent-core* chart.
 
-*Graph* interacts directly to other Telicent Apps using their default service/serviceAccount and port.
+*Graph* interacts directly with other Telicent Applications using their default service/serviceAccount and port.
 If either of those details changes, you can use this section to correctly referer to those apps.
 
 | Name                      | Description                                                                                                                                                                                                                        | Value                |

@@ -58,18 +58,13 @@
                 }
             }
         },
-        "configuration": {
+        "configMap": {
             "type": "object",
             "properties": {
                 "existingEnvConfigMap": {
                     "type": "string",
                     "description": "Name of existing configmap containing *Auth* Environment Configuration",
                     "default": ""
-                },
-                "javaOptions": {
-                    "type": "string",
-                    "description": "JVM options for the application",
-                    "default": "-XX:MaxRAMPercentage=80.0"
                 },
                 "cookieParentDomain": {
                     "type": "string",
@@ -85,6 +80,91 @@
                     "type": "string",
                     "description": "Super user identification if blank all users will be super users",
                     "default": ""
+                }
+            }
+        },
+        "java": {
+            "type": "object",
+            "properties": {
+                "jvmOptions": {
+                    "type": "string",
+                    "description": "JVM options for the application",
+                    "default": "-XX:MaxRAMPercentage=80.0"
+                }
+            }
+        },
+        "logs": {
+            "type": "object",
+            "properties": {
+                "api": {
+                    "type": "object",
+                    "properties": {
+                        "level": {
+                            "type": "string",
+                            "description": "Api package Logging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE.",
+                            "default": "WARN"
+                        }
+                    }
+                },
+                "service": {
+                    "type": "object",
+                    "properties": {
+                        "level": {
+                            "type": "string",
+                            "description": "Service package Logging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE.",
+                            "default": "WARN"
+                        }
+                    }
+                },
+                "repo": {
+                    "type": "object",
+                    "properties": {
+                        "level": {
+                            "type": "string",
+                            "description": "Repo package Logging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE.",
+                            "default": "WARN"
+                        }
+                    }
+                },
+                "security": {
+                    "type": "object",
+                    "properties": {
+                        "level": {
+                            "type": "string",
+                            "description": "Security packageLogging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE.",
+                            "default": "WARN"
+                        }
+                    }
+                },
+                "oauth2": {
+                    "type": "object",
+                    "properties": {
+                        "level": {
+                            "type": "string",
+                            "description": "Oauth2 package Logging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE.",
+                            "default": "WARN"
+                        }
+                    }
+                },
+                "general": {
+                    "type": "object",
+                    "properties": {
+                        "level": {
+                            "type": "string",
+                            "description": "Logging Level for 'io.telicent.auth'. Values include: ERROR, WARN, INFO, DEBUG, TRACE.",
+                            "default": "WARN"
+                        }
+                    }
+                },
+                "trace": {
+                    "type": "object",
+                    "properties": {
+                        "level": {
+                            "type": "string",
+                            "description": "Logging Level for 'Spring RestTemplate'. Values include: ERROR, WARN, INFO, DEBUG, TRACE.",
+                            "default": "ERROR"
+                        }
+                    }
                 }
             }
         },
@@ -178,25 +258,51 @@
                 }
             }
         },
-        "clients": {
+        "bootstrap": {
             "type": "object",
             "properties": {
-                "public": {
-                    "type": "array",
-                    "description": "A list of public client objects",
-                    "default": [],
-                    "items": {}
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable",
+                    "default": true
                 },
-                "confidential": {
-                    "type": "array",
-                    "description": "A list of confidential client objects",
-                    "default": [],
-                    "items": {}
+                "clients": {
+                    "type": "object",
+                    "properties": {
+                        "existingConfigMap": {
+                            "type": "string",
+                            "description": "Name of an existing config map resource containing all required public and confidential clients. If specified, the values for clients.public and clients.confidential will be ignored",
+                            "default": ""
+                        },
+                        "public": {
+                            "type": "array",
+                            "description": "A list of public client objects",
+                            "default": [],
+                            "items": {}
+                        },
+                        "confidential": {
+                            "type": "array",
+                            "description": "A list of confidential client objects",
+                            "default": [],
+                            "items": {}
+                        }
+                    }
                 },
-                "existingConfigMap": {
-                    "type": "string",
-                    "description": "Name of an existing config map resource containing all required public and confidential clients. If specified, the values for clients.public and clients.confidential will be ignored",
-                    "default": ""
+                "groups": {
+                    "type": "object",
+                    "properties": {
+                        "existingConfigMap": {
+                            "type": "string",
+                            "description": "Name of an existing config map containing a list of group objects.",
+                            "default": ""
+                        },
+                        "list": {
+                            "type": "array",
+                            "description": "A list containing group objects",
+                            "default": [],
+                            "items": {}
+                        }
+                    }
                 }
             }
         },

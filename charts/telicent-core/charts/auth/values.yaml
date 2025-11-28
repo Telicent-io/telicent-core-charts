@@ -39,26 +39,59 @@ global:
   istioVirtualServiceEnabled: false
 
 #
-# @section Configuration Parameters
+# @section ConfigMap/Configuration Parameters
 #
 # @descStart
 # Contains configuration parameters specific to the *Auth* application
 # @descEnd
-configuration:
-  # @key configuration.existingEnvConfigMap Name of existing configmap containing *Auth* Environment Configuration
+configMap:
+  # @key configMap.existingEnvConfigMap Name of existing configmap containing *Auth* Environment Configuration
   # Note: When it's set, it will disable configmap creation.
   existingEnvConfigMap: ""
 
-  # @key configuration.javaOptions JVM options for the application
-  javaOptions: -XX:MaxRAMPercentage=80.0
-
-  # @key configuration.cookieParentDomain Cookie domain scope
+  # @key configMap.cookieParentDomain Cookie domain scope
   cookieParentDomain: ".telicent.io"
-  # @key configuration.cookieSecure Enable secure cookies
+  # @key configMap.cookieSecure Enable secure cookies
   cookieSecure: true
 
-  # @key configuration.superUserIdentifier Super user identification if blank all users will be super users
+  # @key configMap.superUserIdentifier Super user identification if blank all users will be super users
   superUserIdentifier: ""
+
+#
+# @section Java Parameters
+#
+# @descStart
+# Contains Java configuration parameters to be used by the *Auth* application
+# @descEnd
+java:
+  # @key java.jvmOptions JVM options for the application
+  jvmOptions: "-XX:MaxRAMPercentage=80.0"
+
+#
+# @section Logs Parameters
+#
+logs:
+  api:
+    # @key logs.api.level Api package Logging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE.
+    level: "WARN"
+  service:
+    # @key logs.service.level Service package Logging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE.
+    level: "WARN"
+  repo:
+    # @key logs.repo.level Repo package Logging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE.
+    level: "WARN"
+  security:
+    # @key logs.security.level Security packageLogging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE.
+    level: "WARN"
+  oauth2:
+    # @key logs.oauth2.level Oauth2 package Logging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE.
+    level: "WARN"
+  general:
+    # @key logs.general.level Logging Level for 'io.telicent.auth'. Values include: ERROR, WARN, INFO, DEBUG, TRACE.
+    level: "WARN"
+  trace:
+    # @key logs.trace.level Logging Level for 'Spring RestTemplate'. Values include: ERROR, WARN, INFO, DEBUG, TRACE.
+    level: "ERROR"
 
 #
 # @section PostgreSQL Parameters and Secret
@@ -128,28 +161,48 @@ forwardAuth:
   header: ""
 
 #
-# @section Client(s) Parameters
+# @section Bootstrap Parameters
 #
 # @descStart
-# List of registered clients
+# Contains configuration to be used to bootstrap a clean instance of the Auth application to a working state.
 # @descEnd
-clients:
-  # @key clients.public A list of public client objects
-  public: []
+
+bootstrap:
+  # @key bootstrap.enabled Enable
+  enabled: true
+
+  clients:
+    # @key bootstrap.clients.existingConfigMap Name of an existing config map resource containing all required public and confidential clients. If specified, the values for clients.public and clients.confidential will be ignored
+    existingConfigMap: ""
+    # @key bootstrap.clients.public A list of public client objects
+    public: []
     # - client_id: spa-client
     #   redirect_uris:
     #     - http://spa.telicent.localhost/callback.html
     #   post_logout_redirect_uris:
     #     - http://spa.telicent.localhost/
-  # @key clients.confidential A list of confidential client objects
-  confidential: []
+    # @key bootstrap.clients.confidential A list of confidential client objects
+    confidential: []
     # - client_id: client-1
     #   client_name: 'Secret Client'
     #   client_secret: password-1
     #   client_authentication_method: client_secret_post
     #   scope: write
-  # @key clients.existingConfigMap Name of an existing config map resource containing all required public and confidential clients. If specified, the values for clients.public and clients.confidential will be ignored
-  existingConfigMap: ""
+
+  groups:
+    # @key bootstrap.groups.existingConfigMap Name of an existing config map containing a list of group objects.
+    existingConfigMap: ""
+    # @key bootstrap.groups.list  A list containing group objects
+    list: []
+    # Description of each field:
+    # name       : Human readable name of the group for admins to identify it by
+    # urn        : Unique identifier for representing the groups
+    # description: String explaining the groups useage and applicability.
+    # Example:
+    # list:
+    # - name: admin
+    #   urn: urn:telicent:groups:admin
+    #   description: 'Administrator group'
 
 #
 # @section Common Parameters

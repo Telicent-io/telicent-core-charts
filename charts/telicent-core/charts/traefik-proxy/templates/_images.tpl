@@ -13,7 +13,7 @@ Returns the version
 Returns the image registry
 */}}
 {{- define "traefik-proxy.imageRegistry" -}}
-{{- .Values.global.imageRegistry | default .Values.image.registry }}
+{{- .Values.image.registry }}
 {{- end -}}
 
 {{/*

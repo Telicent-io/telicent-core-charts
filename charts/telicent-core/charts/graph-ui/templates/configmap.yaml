@@ -29,7 +29,7 @@ data:
 
     // APIs
     window.ACCESS_URL = "https://{{ .Values.global.apiHostDomain }}/access";
-    window.GRAPHQL_URL = "https://{{ .Values.global.apiHostDomain }}/graphql/knowledge";
+    window.GRAPHQL_URL = "https://{{ .Values.global.apiHostDomain }}/sparql/knowledge";
     window.SPARQL_URL = 'https://{{ .Values.global.apiHostDomain }}/sparql/knowledge/sparql';
     window.ONTOLOGY_SERVICE_URL = "https://{{ .Values.global.apiHostDomain }}/sparql";
     window.SEARCH_API_URL = "https://{{ .Values.global.apiHostDomain }}/search";

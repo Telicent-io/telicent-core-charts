@@ -5,17 +5,6 @@
         "global": {
             "type": "object",
             "properties": {
-                "imageRegistry": {
-                    "type": "string",
-                    "description": "Global image registry",
-                    "default": ""
-                },
-                "imagePullSecrets": {
-                    "type": "array",
-                    "description": "Global registry secret names as an array",
-                    "default": [],
-                    "items": {}
-                },
                 "enterprise": {
                     "type": "boolean",
                     "description": "Enable enterprise mode, adding additional features and configurations",

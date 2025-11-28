@@ -13,7 +13,7 @@ Returns the version of oauth2-proxy
 Returns the image registry of the oauth2-proxy
 */}}
 {{- define "oauth2-proxy.imageRegistry" -}}
-{{- .Values.global.imageRegistry | default .Values.image.registry }}
+{{- .Values.image.registry }}
 {{- end -}}
 
 {{/*
