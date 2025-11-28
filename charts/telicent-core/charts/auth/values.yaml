@@ -161,27 +161,27 @@ forwardAuth:
   header: ""
 
 #
-# @section Start Up Parameters
+# @section Bootstrap Parameters
 #
 # @descStart
-# Contains parameters that should be loaded when the application starts up
+# Contains configuration to be used to bootstrap a clean instance of the Auth application to a working state.
 # @descEnd
 
-startup:
-  # @key startup.enabled Enable the loading of startup configuration by the application
+bootstrap:
+  # @key bootstrap.enabled Enable
   enabled: true
 
   clients:
-    # @key startup.clients.existingConfigMap Name of an existing config map resource containing all required public and confidential clients. If specified, the values for clients.public and clients.confidential will be ignored
+    # @key bootstrap.clients.existingConfigMap Name of an existing config map resource containing all required public and confidential clients. If specified, the values for clients.public and clients.confidential will be ignored
     existingConfigMap: ""
-    # @key startup.clients.public A list of public client objects
+    # @key bootstrap.clients.public A list of public client objects
     public: []
     # - client_id: spa-client
     #   redirect_uris:
     #     - http://spa.telicent.localhost/callback.html
     #   post_logout_redirect_uris:
     #     - http://spa.telicent.localhost/
-    # @key startup.clients.confidential A list of confidential client objects
+    # @key bootstrap.clients.confidential A list of confidential client objects
     confidential: []
     # - client_id: client-1
     #   client_name: 'Secret Client'
@@ -190,10 +190,16 @@ startup:
     #   scope: write
 
   groups:
-    # @key startup.groups.existingConfigMap Name of an existing config map containing a list of group objects.
+    # @key bootstrap.groups.existingConfigMap Name of an existing config map containing a list of group objects.
     existingConfigMap: ""
-    # @key startup.groups.list  A list containing group objects
+    # @key bootstrap.groups.list  A list containing group objects
     list: []
+    # Description of each field:
+    # name       : Human readable name of the group for admins to identify it by
+    # urn        : Unique identifier for representing the groups
+    # description: String explaining the groups useage and applicability.
+    # Example:
+    # list:
     # - name: admin
     #   urn: urn:telicent:groups:admin
     #   description: 'Administrator group'

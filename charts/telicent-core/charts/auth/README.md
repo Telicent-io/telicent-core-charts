@@ -173,18 +173,18 @@ For Quick Start purposes, a secret named `tc-auth-gen-forward-auth` will be crea
 | `forwardAuth.existingSecret` | Name of an existing secret. The secret must contain 1 key: 'header' | `""`  |
 | `forwardAuth.header`         | The header value to be associated with the `X-ForwardAuth-Secret`.  | `""`  |
 
-### Start Up Parameters
+### Bootstrap Parameters
 
-Contains parameters that should be loaded when the application starts up
+Contains configuration to be used to bootstrap a clean instance of the Auth application to a working state.
 
-| Name                                | Description                                                                                                                                                                           | Value  |
-| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ |
-| `startup.enabled`                   | Enable the loading of startup configuration by the application                                                                                                                        | `true` |
-| `startup.clients.existingConfigMap` | Name of an existing config map resource containing all required public and confidential clients. If specified, the values for clients.public and clients.confidential will be ignored | `""`   |
-| `startup.clients.public`            | A list of public client objects                                                                                                                                                       | `[]`   |
-| `startup.clients.confidential`      | A list of confidential client objects                                                                                                                                                 | `[]`   |
-| `startup.groups.existingConfigMap`  | Name of an existing config map containing a list of group objects.                                                                                                                    | `""`   |
-| `startup.groups.list`               | A list containing group objects                                                                                                                                                       | `[]`   |
+| Name                                  | Description                                                                                                                                                                           | Value  |
+| ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ |
+| `bootstrap.enabled`                   | Enable                                                                                                                                                                                | `true` |
+| `bootstrap.clients.existingConfigMap` | Name of an existing config map resource containing all required public and confidential clients. If specified, the values for clients.public and clients.confidential will be ignored | `""`   |
+| `bootstrap.clients.public`            | A list of public client objects                                                                                                                                                       | `[]`   |
+| `bootstrap.clients.confidential`      | A list of confidential client objects                                                                                                                                                 | `[]`   |
+| `bootstrap.groups.existingConfigMap`  | Name of an existing config map containing a list of group objects.                                                                                                                    | `""`   |
+| `bootstrap.groups.list`               | A list containing group objects                                                                                                                                                       | `[]`   |
 
 ### Common Parameters
 

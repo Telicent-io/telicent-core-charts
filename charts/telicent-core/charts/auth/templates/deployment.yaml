@@ -38,7 +38,7 @@ spec:
         checksum/secretIdp: {{ include (print $.Template.BasePath "/secret-idp.yaml") . | sha256sum }}
         checksum/secretForward: {{ include (print $.Template.BasePath "/secret-forward-auth.yaml") . | sha256sum }}
         checksum/secretPsql: {{ include (print $.Template.BasePath "/secret-psql.yaml") . | sha256sum }}
-        {{- if .Values.startup.enabled }}
+        {{- if .Values.bootstrap.enabled }}
         checksum/configClients: {{ include (print $.Template.BasePath "/configmap-clients.yaml") . | sha256sum }}
         checksum/configGroups: {{ include (print $.Template.BasePath "/configmap-groups.yaml") . | sha256sum }}
         {{- end }}s
@@ -128,7 +128,7 @@ spec:
           timeoutSeconds: 3
 
         volumeMounts:
-        {{- if .Values.startup.enabled }}
+        {{- if .Values.bootstrap.enabled }}
         - name: clients-config-volume
           mountPath: /app/config/startup/clients.yaml
           subPath: clients.yaml
@@ -146,7 +146,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       volumes:
-      {{- if .Values.startup.enabled }}
+      {{- if .Values.bootstrap.enabled }}
       - name: clients-config-volume
         configMap:
           name: {{ include "auth.clientsConfigMapName" . }}

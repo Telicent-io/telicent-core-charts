@@ -1,7 +1,7 @@
 {{- /*
 Copyright (C) 2025 Telicent Limited
 */}}
-{{- if and (not .Values.startup.groups.existingConfigMap) (.Values.startup.enabled) -}}
+{{- if and (not .Values.bootstrap.groups.existingConfigMap) (.Values.bootstrap.enabled) -}}
 apiVersion: v1
 kind: ConfigMap
 
@@ -13,9 +13,9 @@ metadata:
 
 data:
   groups.yaml: |
-    {{- if .Values.startup.groups.list }}
+    {{- if .Values.bootstrap.groups.list }}
     groups:
-      {{- toYaml .Values.startup.groups.list | nindent 4 }}
+      {{- toYaml .Values.bootstrap.groups.list | nindent 4 }}
     {{- else }}
     groups: []
     {{- end }}

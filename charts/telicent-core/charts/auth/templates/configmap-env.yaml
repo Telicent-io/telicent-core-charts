@@ -13,10 +13,10 @@ metadata:
 
 data:
   # Startup configuration to be loaded
-  {{- if .Values.startup.enabled -}}
+  {{- if .Values.bootstrap.enabled }}
   APP_SEED_REGISTERED_CLIENT_DATA: "/app/config/startup/clients.yaml"
   APP_SEED_GROUPS_DATA: "/app/config/startup/groups.yaml"
-  {{- end -}}
+  {{- end }}
 
   # PostgreSQL
   POSTGRES_URI: {{ .Values.postgresSql.uri | quote }}

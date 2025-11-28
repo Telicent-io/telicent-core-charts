@@ -258,12 +258,12 @@
                 }
             }
         },
-        "startup": {
+        "bootstrap": {
             "type": "object",
             "properties": {
                 "enabled": {
                     "type": "boolean",
-                    "description": "Enable the loading of startup configuration by the application",
+                    "description": "Enable",
                     "default": true
                 },
                 "clients": {
