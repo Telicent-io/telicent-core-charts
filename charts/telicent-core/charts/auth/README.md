@@ -99,17 +99,36 @@ Contains global parameters, these parameters are mirrored within the Telicent co
 | `global.istioGatewayName`           | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)         | `ingress-gateway`  |
 | `global.istioVirtualServiceEnabled` | Enable Istio traffic routing to a named destination service                       | `false`            |
 
-### Configuration Parameters
+### ConfigMap/Configuration Parameters
 
 Contains configuration parameters specific to the *Auth* application
 
-| Name                                 | Description                                                            | Value                       |
-| ------------------------------------ | ---------------------------------------------------------------------- | --------------------------- |
-| `configuration.existingEnvConfigMap` | Name of existing configmap containing *Auth* Environment Configuration | `""`                        |
-| `configuration.javaOptions`          | JVM options for the application                                        | `-XX:MaxRAMPercentage=80.0` |
-| `configuration.cookieParentDomain`   | Cookie domain scope                                                    | `.telicent.io`              |
-| `configuration.cookieSecure`         | Enable secure cookies                                                  | `true`                      |
-| `configuration.superUserIdentifier`  | Super user identification if blank all users will be super users       | `""`                        |
+| Name                             | Description                                                            | Value          |
+| -------------------------------- | ---------------------------------------------------------------------- | -------------- |
+| `configMap.existingEnvConfigMap` | Name of existing configmap containing *Auth* Environment Configuration | `""`           |
+| `configMap.cookieParentDomain`   | Cookie domain scope                                                    | `.telicent.io` |
+| `configMap.cookieSecure`         | Enable secure cookies                                                  | `true`         |
+| `configMap.superUserIdentifier`  | Super user identification if blank all users will be super users       | `""`           |
+
+### Java Parameters
+
+Contains Java configuration parameters to be used by the *Auth* application
+
+| Name              | Description                     | Value                       |
+| ----------------- | ------------------------------- | --------------------------- |
+| `java.jvmOptions` | JVM options for the application | `-XX:MaxRAMPercentage=80.0` |
+
+### Logs Parameters
+
+| Name                  | Description                                                                               | Value   |
+| --------------------- | ----------------------------------------------------------------------------------------- | ------- |
+| `logs.api.level`      | Api package Logging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE.               | `WARN`  |
+| `logs.service.level`  | Service package Logging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE.           | `WARN`  |
+| `logs.repo.level`     | Repo package Logging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE.              | `WARN`  |
+| `logs.security.level` | Security packageLogging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE.           | `WARN`  |
+| `logs.oauth2.level`   | Oauth2 package Logging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE.            | `WARN`  |
+| `logs.general.level`  | Logging Level for 'io.telicent.auth'. Values include: ERROR, WARN, INFO, DEBUG, TRACE.    | `WARN`  |
+| `logs.trace.level`    | Logging Level for 'Spring RestTemplate'. Values include: ERROR, WARN, INFO, DEBUG, TRACE. | `ERROR` |
 
 ### PostgreSQL Parameters and Secret
 
@@ -158,13 +177,14 @@ For Quick Start purposes, a secret named `tc-auth-gen-forward-auth` will be crea
 
 Contains parameters that should be loaded when the application starts up
 
-| Name                                | Description                                                                                                                                                                           | Value |
-| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
-| `startup.clients.existingConfigMap` | Name of an existing config map resource containing all required public and confidential clients. If specified, the values for clients.public and clients.confidential will be ignored | `""`  |
-| `startup.clients.public`            | A list of public client objects                                                                                                                                                       | `[]`  |
-| `startup.clients.confidential`      | A list of confidential client objects                                                                                                                                                 | `[]`  |
-| `startup.groups.existingConfigMap`  | Name of an existing config map containing a list of group objects.                                                                                                                    | `""`  |
-| `startup.groups.list`               | A list containing group objects                                                                                                                                                       | `[]`  |
+| Name                                | Description                                                                                                                                                                           | Value  |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ |
+| `startup.enabled`                   | Enable the loading of startup configuration by the application                                                                                                                        | `true` |
+| `startup.clients.existingConfigMap` | Name of an existing config map resource containing all required public and confidential clients. If specified, the values for clients.public and clients.confidential will be ignored | `""`   |
+| `startup.clients.public`            | A list of public client objects                                                                                                                                                       | `[]`   |
+| `startup.clients.confidential`      | A list of confidential client objects                                                                                                                                                 | `[]`   |
+| `startup.groups.existingConfigMap`  | Name of an existing config map containing a list of group objects.                                                                                                                    | `""`   |
+| `startup.groups.list`               | A list containing group objects                                                                                                                                                       | `[]`   |
 
 ### Common Parameters
 
