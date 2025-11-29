@@ -132,12 +132,15 @@ Contains configuration parameters specific to the *Query UI* application
 | `service.port` | *Query UI* service port                                                     | `8080`      |
 | `service.type` | *Query UI* service type                                                     | `ClusterIP` |
 
-### Istio Parameters
+### Host(s) Parameters - Contains host information for applications deployed via *telicent-core* chart.
 
-| Name                               | Description                                                                                                                                              | Value           |
-| ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- |
-| `istio.ingress.principal`          | Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName | `""`            |
-| `istio.ingress.serviceAccountName` | Name of the Ingress service account (traefik and istio supported)                                                                                        | `traefik-proxy` |
+*Query UI* interacts directly with other Telicent Applications using their default service/serviceAccount and port.
+If either of those details changes, you can use this section to correctly referer to those applications.
+
+| Name                      | Description                                                                                                                                                                                                                        | Value                |
+| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
+| `hosts.enableAutoCorrect` | Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as is, without any modification. | `true`               |
+| `hosts.traefikProxy`      | Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                          | `traefik-proxy:8080` |
 
 
 ## License

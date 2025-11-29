@@ -36,6 +36,11 @@
                     "description": "Domain associated with Telicent authentication services, including OIDC providers",
                     "default": "auth.telicent.io"
                 },
+                "releaseNameTelicentPreview": {
+                    "type": "string",
+                    "description": "Release name used during the Telicent Preview chart installation. Note: ensure the value is correct, otherwise there will be no access to data-catalog, user-portal & paperback-writer",
+                    "default": ""
+                },
                 "istioNamespace": {
                     "type": "string",
                     "description": "Namespace in which Istio is deployed",
@@ -593,83 +598,48 @@
                 }
             }
         },
-        "istio": {
+        "hosts": {
             "type": "object",
             "properties": {
-                "ingress": {
-                    "type": "object",
-                    "properties": {
-                        "principal": {
-                            "type": "string",
-                            "description": "Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName",
-                            "default": ""
-                        },
-                        "serviceAccountName": {
-                            "type": "string",
-                            "description": "Name of the Ingress service account (traefik and istio supported)",
-                            "default": "traefik-proxy"
-                        }
-                    }
+                "enableAutoCorrect": {
+                    "type": "boolean",
+                    "description": "Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as is, without any modification.",
+                    "default": true
+                },
+                "traefikProxy": {
+                    "type": "string",
+                    "description": "Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'",
+                    "default": "traefik-proxy:8080"
                 },
                 "userPreferences": {
-                    "type": "object",
-                    "properties": {
-                        "principal": {
-                            "type": "string",
-                            "description": "Principal used for User Preferences traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName",
-                            "default": ""
-                        },
-                        "serviceAccountName": {
-                            "type": "string",
-                            "description": "Name of the User Preferences service account",
-                            "default": "user-preferences"
-                        }
-                    }
-                },
-                "graph": {
-                    "type": "object",
-                    "properties": {
-                        "principal": {
-                            "type": "string",
-                            "description": "Principal used for Graph traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName",
-                            "default": ""
-                        },
-                        "serviceAccountName": {
-                            "type": "string",
-                            "description": "Name of the Graph service account",
-                            "default": "graph"
-                        }
-                    }
+                    "type": "string",
+                    "description": "User Preferences host value, If not set a host is generated using service:'user-preferences',port:'8080' and Release namespace & name.",
+                    "default": "user-preferences:8080"
                 },
                 "search": {
-                    "type": "object",
-                    "properties": {
-                        "principal": {
-                            "type": "string",
-                            "description": "Principal used for Search traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName",
-                            "default": ""
-                        },
-                        "serviceAccountName": {
-                            "type": "string",
-                            "description": "Name of the Search service account",
-                            "default": "search"
-                        }
-                    }
+                    "type": "string",
+                    "description": "Search application default host value, as defined by 'service/serviceAccount:port'",
+                    "default": "search:8080"
+                },
+                "graph": {
+                    "type": "string",
+                    "description": "Graph application default host value, as defined by 'service/serviceAccount:port'",
+                    "default": "graph:8080"
+                }
+            }
+        },
+        "hostsPreview": {
+            "type": "object",
+            "properties": {
+                "enableAutoCorrect": {
+                    "type": "boolean",
+                    "description": "Prefix 'global.releaseNameTelicentPreview' to each host value. Alternatively, the host value will be used as is, without any modification.",
+                    "default": true
                 },
                 "paperbackWriter": {
-                    "type": "object",
-                    "properties": {
-                        "principal": {
-                            "type": "string",
-                            "description": "Principal used for Paperback Writer traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName",
-                            "default": ""
-                        },
-                        "serviceAccountName": {
-                            "type": "string",
-                            "description": "Name of the Paperback Writer service account",
-                            "default": "paperback-writer"
-                        }
-                    }
+                    "type": "string",
+                    "description": "Paperback Writer application host value, as defined by 'service/serviceAccount:port'",
+                    "default": "paperback-writer:8080"
                 }
             }
         }

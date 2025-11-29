@@ -28,6 +28,11 @@ global:
   # @key global.authHostDomain Domain associated with Telicent authentication services, including OIDC providers
   authHostDomain: "auth.telicent.io"
 
+  # @key global.releaseNameTelicentPreview Release name used during the Telicent Preview chart installation. Note: ensure the value is correct, otherwise there will be no access to data-catalog, user-portal & paperback-writer
+  # If installed through the parent-chart this value needs to reflect the name of the release name used when 'telicent-preview' chart was installed.
+  # If all applications were installed through sub-charts, leaving this value empty will provide the correct behaviour.
+  releaseNameTelicentPreview: ""
+
   # @key global.istioNamespace Namespace in which Istio is deployed
   # Note: By default, Istio namespace is set to 'istio-system'
   istioNamespace: istio-system
@@ -341,31 +346,32 @@ service:
   type: ClusterIP
 
 #
-# @section Istio Parameters
+# @section Host(s) Parameters - Contains host information for applications deployed via *telicent-core* chart.
 #
-istio:
-  ingress:
-    # @key istio.ingress.principal Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName
-    principal: ""
-    # @key istio.ingress.serviceAccountName Name of the Ingress service account (traefik and istio supported)
-    serviceAccountName: "traefik-proxy"
-  userPreferences:
-    # @key istio.userPreferences.principal Principal used for User Preferences traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName
-    principal: ""
-    # @key istio.userPreferences.serviceAccountName Name of the User Preferences service account
-    serviceAccountName: "user-preferences"
-  graph:
-    # @key istio.graph.principal Principal used for Graph traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName
-    principal: ""
-    # @key istio.graph.serviceAccountName Name of the Graph service account
-    serviceAccountName: "graph"
-  search:
-    # @key istio.search.principal Principal used for Search traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName
-    principal: ""
-    # @key istio.search.serviceAccountName Name of the Search service account
-    serviceAccountName: "search"
-  paperbackWriter:
-    # @key istio.paperbackWriter.principal Principal used for Paperback Writer traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName
-    principal: ""
-    # @key istio.paperbackWriter.serviceAccountName Name of the Paperback Writer service account
-    serviceAccountName: "paperback-writer"
+# @descStart
+# *Auth* interacts directly with other Telicent Applications using their default service/serviceAccount and port.
+# If either of those details changes, you can use this section to correctly referer to those applications.
+# @descEnd
+hosts:
+  # @key hosts.enableAutoCorrect Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as is, without any modification.
+  enableAutoCorrect: true
+  # @key hosts.traefikProxy Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'
+  traefikProxy: "traefik-proxy:8080"
+  # @key hosts.userPreferences User Preferences host value, If not set a host is generated using service:'user-preferences',port:'8080' and Release namespace & name.
+  userPreferences: "user-preferences:8080"
+  # @key hosts.search Search application default host value, as defined by 'service/serviceAccount:port'
+  search: "search:8080"
+  # @key hosts.graph Graph application default host value, as defined by 'service/serviceAccount:port'
+  graph: "graph:8080"
+
+#
+# @section Host(s) Preview Parameters - Contains host information for applications deployed via *telicent-preview* chart
+#
+# @descStart
+# Host values will be used as defined in this section, release name cannot be autocorrected, as the release name is unknown.
+# @descEnd
+hostsPreview:
+  # @key hostsPreview.enableAutoCorrect Prefix 'global.releaseNameTelicentPreview' to each host value. Alternatively, the host value will be used as is, without any modification.
+  enableAutoCorrect: true
+  # @key hostsPreview.paperbackWriter Paperback Writer application host value, as defined by 'service/serviceAccount:port'
+  paperbackWriter: "paperback-writer:8080"

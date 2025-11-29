@@ -1,0 +1,929 @@
+---
+# Source: traefik-proxy/templates/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+
+metadata:
+  name: traefik-proxy
+  namespace: "tc-core"
+  labels:
+    helm.sh/chart: traefik-proxy-0.1.0
+    app.kubernetes.io/name: traefik-proxy
+    app.kubernetes.io/instance: traefik-proxy
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/version: "v3.6.1"
+    app: traefik-proxy
+    telicent.io/resource: "true"
+
+automountServiceAccountToken: true
+---
+# Source: traefik-proxy/templates/configmap-routes.yaml
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: tc-traefik-proxy-routes
+  namespace: "tc-core"
+  labels:
+    helm.sh/chart: traefik-proxy-0.1.0
+    app.kubernetes.io/name: traefik-proxy
+    app.kubernetes.io/instance: traefik-proxy
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/version: "v3.6.1"
+    app: traefik-proxy
+    telicent.io/resource: "true"
+
+data:
+  admin-ui.yaml: |-
+    # Declare routers / services / middlewares
+    http:
+      routers:
+        admin-ui:
+          rule: Host(`apps.system-integration.telicent-sandbox.telicent.live`) && PathPrefix(`/admin`)
+          service: admin-ui
+          entryPoints:
+            - web-app
+          middleWares:
+            - path-admin-ui
+            - host-admin-ui
+    
+      services:
+        admin-ui:
+          loadBalancer:
+            servers:
+              - url: http://admin-ui.tc-core:8080
+    
+      middlewares:
+        path-admin-ui:
+          replacePathRegex:
+            regex: "^/admin(.*)"
+            replacement: "/admin/$1"
+        host-admin-ui:
+          headers:
+            customRequestHeaders:
+              host: admin-ui.tc-core:8080
+    
+  auth.yaml: |-
+    # Declare routers / services / middlewares
+    http:
+      routers:
+        auth-forward:
+          rule: Host(`auth.system-integration.telicent-sandbox.telicent.live`) && PathPrefix(`/auth/forward`)
+          priority: 9
+          service: auth
+          entryPoints:
+            - web-auth
+          middleWares:
+            - host-auth
+    
+        auth-user-info:
+          rule: Host(`auth.system-integration.telicent-sandbox.telicent.live`) && PathPrefix(`/userinfo`)
+          priority: 8
+          service: auth
+          entryPoints:
+            - web-auth
+          middleWares:
+            - host-auth
+            - oauth2
+    
+        auth-admin:
+          rule: Host(`auth.system-integration.telicent-sandbox.telicent.live`) && PathRegexp(`^/(sessions|groups|roles|permissions|users|clients)`)
+          priority: 7
+          service: auth
+          entryPoints:
+            - web-auth
+          middleWares:
+            - host-auth
+            - oauth2
+    
+        auth-oidc:
+          rule: Host(`auth.system-integration.telicent-sandbox.telicent.live`) && PathPrefix(`/.well-known`)
+          priority: 6
+          service: auth
+          entryPoints:
+            - web-auth
+          middleWares:
+            - host-auth
+    
+        auth-oauth2:
+          rule: Host(`auth.system-integration.telicent-sandbox.telicent.live`) && PathRegexp(`^/(session|oauth2|login|logout|favicon\.svg|account-inactive|access-denied|error)`)
+          priority: 5
+          service: auth
+          entryPoints:
+            - web-auth
+          middleWares:
+            - host-auth
+    
+      services:
+        auth:
+          loadBalancer:
+            servers:
+              - url: http://auth.tc-core:8080
+    
+      middlewares:
+        host-auth:
+          headers:
+            customRequestHeaders:
+              host: auth.tc-core:8080
+    
+  cors-api.yaml: |-
+    # Declare routers / services / middlewares
+    http:
+      routers:
+        cors-api-options:
+          rule: Host(`api.system-integration.telicent-sandbox.telicent.live`) && Method(`OPTIONS`)
+          service: noop@internal
+          priority: 999
+          entryPoints:
+            - web-api
+          middleWares:
+            - cors
+    
+  cors-auth.yaml: |-
+    # Declare routers / services / middlewares
+    http:
+      routers:
+        cors-auth-options:
+          rule: Host(`auth.system-integration.telicent-sandbox.telicent.live`) && Method(`OPTIONS`)
+          service: noop@internal
+          priority: 999
+          entryPoints:
+            - web-auth
+          middleWares:
+            - cors
+    
+  cors.yaml: |-
+    # Declare routers / services / middlewares
+    http:
+      middlewares:
+        cors:
+          headers:
+            # Set to true, determines whether the `Vary` header should be added or modified to
+            # demonstrate that server responses can differ based on the value of the origin header.
+            addVaryHeader: true
+            # Cache preflight response for 24 hours (86400)
+            accessControlMaxAge: "10"
+            accessControlAllowMethods: [ GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS ]
+            accessControlAllowHeaders: [ Authorization,Content-Type,Accept,X-Requested-With,Request-ID,Cache-Control,Cookie,pragma,expires ]
+            # Disables credential support (incompatible with wildcard origin)
+            accessControlAllowCredentials: true
+            accessControlAllowOriginList:
+            - https://auth.system-integration.telicent-sandbox.telicent.live
+            - https://apps.system-integration.telicent-sandbox.telicent.live
+            - http://localhost:3002
+            - http://localhost:3001
+            - http://localhost:5143
+            - http://localhost:5173
+  data-catalog-ui.yaml: |-
+    # Declare routers / services / middlewares
+    http:
+      routers:
+        data-catalog-ui:
+          rule: Host(`apps.system-integration.telicent-sandbox.telicent.live`) && PathPrefix(`/data-catalog`)
+          service: data-catalog-ui
+          entryPoints:
+            - web-app
+          middleWares:
+            - path-data-catalog-ui
+            - host-data-catalog-ui
+    
+      services:
+        data-catalog-ui:
+          loadBalancer:
+            servers:
+              - url: http://data-catalog-ui.tc-core:8080
+    
+      middlewares:
+        path-data-catalog-ui:
+          replacePathRegex:
+            regex: "^/data-catalog(.*)"
+            replacement: "/data-catalog/$1"
+    
+        host-data-catalog-ui:
+          headers:
+            customRequestHeaders:
+              host: data-catalog-ui.tc-core:8080
+    
+  graph-ui.yaml: |-
+    # Declare routers / services / middlewares
+    http:
+      routers:
+        graph-ui:
+          rule: Host(`apps.system-integration.telicent-sandbox.telicent.live`) && PathPrefix(`/graph`)
+          service: graph-ui
+          entryPoints:
+            - web-app
+          middleWares:
+            - path-graph-ui
+            - host-graph-ui
+    
+      services:
+        graph-ui:
+          loadBalancer:
+            servers:
+              - url: http://graph-ui.tc-core:8080
+    
+      middlewares:
+        path-graph-ui:
+          replacePathRegex:
+            regex: "^/graph(.*)"
+            replacement: "/graph/$1"
+        host-graph-ui:
+          headers:
+            customRequestHeaders:
+              host: graph-ui.tc-core:8080
+    
+  graph.yaml: |-
+    # Declare routers / services / middlewares
+    http:
+      routers:
+        graph-sparql:
+          rule: Host(`api.system-integration.telicent-sandbox.telicent.live`) && PathPrefix(`/sparql`)
+          service: graph
+          entryPoints:
+            - web-api
+          middleWares:
+            - path-graph-sparql
+            - host-graph
+        graph-graphql:
+          rule: Host(`api.system-integration.telicent-sandbox.telicent.live`) && PathPrefix(`/graphql`)
+          service: graph
+          entryPoints:
+            - web-api
+          middleWares:
+            - path-graph-graphql
+            - host-graph
+      services:
+        graph:
+          loadBalancer:
+            servers:
+              - url: http://graph.tc-core:8080
+    
+      middlewares:
+        path-graph-sparql:
+          replacePathRegex:
+            regex: "^/sparql/(.*)"
+            replacement: "/$1"
+        path-graph-graphql:
+          replacePathRegex:
+            regex: "^/graphql/(.*)"
+            replacement: "/$1"
+        host-graph:
+          headers:
+            customRequestHeaders:
+               host: graph.tc-core:8080
+    
+  oauth2.yaml: |-
+    # Declare routers / services / middlewares
+    http:
+      middlewares:
+        headers-security:
+          chain:
+            middlewares:
+              - headers-ssl
+              - headers-strip
+    
+        oauth2:
+          chain:
+            middlewares:
+              - forward-secret
+              - oauth2-verify
+    
+        headers-ssl:
+          headers:
+            browserXssFilter: true      # X-XSS-Protection=1; mode=block
+            contentTypeNosniff: true    # X-Content-Type-Options=nosniff
+            sslRedirect: true           # redirect http > https
+            forceSTSHeader: true        # Add the Strict-Transport-Security header even when the connection is HTTP
+            stsSeconds: 63072000        # Set the max-age of the Strict-Transport-Security header (63072000 = 2 years)
+            stsIncludeSubdomains: true  # Add includeSubdomains to the Strict-Transport-Security headers
+            stsPreload: true            # Add a preload flag appended to the Strict-Transport-Security header
+            #referrerPolicy: "strict-origin-when-cross-origin"
+            #frameDeny: true             # X-Frame-Options=deny
+            #customFrameOptionsValue: "SAMEORIGIN"
+    
+            customRequestHeaders:
+              # avoiding the need for 302 redirects (used in conjunction with trustForwardHeader: false)
+              X-Forwarded-Proto: "https"
+              X-Forwarded-Port: 443
+            customResponseHeaders:
+              X-Robots-Tag: "none,noarchive,nosnippet,notranslate,noimageindex"
+        
+        headers-strip:
+          headers:
+            customResponseHeaders:
+              # Empty string removes the specified header
+              #Authorization: ""
+              #Gap-Auth: ""
+              #Server: ""
+              X-Powered-By: ""
+    
+        oauth2-verify:
+          forwardAuth:
+            address: http://auth.tc-core:8080/auth/forward
+            trustForwardHeader: true
+            authRequestHeaders:
+             - Authorization
+             - Cookie
+             - Origin
+             - Accept
+             - User-Agent
+             - Accept-Language
+             - Accept-Encoding
+             - Sec-Fetch-Mode
+             - Sec-Fetch-Site
+             - Sec-Fetch-Dest
+             - X-Requested-With
+             - X-Forwarded-For
+             - X-Real-IP
+             - X-Forwarded
+             - Forwarded
+             - X-ForwardAuth-Secret
+            authResponseHeaders:
+              - Authorization
+              - X-Auth-User
+              - X-Auth-Session-Id
+    
+        forward-secret:
+          headers:
+            customRequestHeaders:
+              X-ForwardAuth-Secret: '{{env "X_FORWARD_AUTH"}}'
+    
+  paperback-writer.yaml: |-
+    # Declare routers / services / middlewares
+    http:
+      routers:
+        paperback-writer:
+          rule: Host(`api.system-integration.telicent-sandbox.telicent.live`) && PathPrefix(`/paperback`)
+          service: paperback-writer
+          entryPoints:
+            - web-api
+          middleWares:
+            - path-paperback-writer
+            - host-paperback-writer
+    
+      services:
+        paperback-writer:
+          loadBalancer:
+            servers:
+              - url: http://paperback-writer.tc-core:8080
+    
+      middlewares:
+        path-paperback-writer:
+          replacePathRegex:
+            regex: "^/paperback/(.*)"
+            replacement: "/$1"
+    
+        host-paperback-writer:
+          headers:
+            customRequestHeaders:
+              host: paperback-writer.tc-core:8080
+    
+  query-ui.yaml: |-
+    # Declare routers / services / middlewares
+    http:
+      routers:
+        query-ui:
+          rule: Host(`apps.system-integration.telicent-sandbox.telicent.live`) && PathPrefix(`/query`)
+          service: query-ui
+          entryPoints:
+            - web-app
+          middleWares:
+            - path-query-ui
+            - host-query-ui
+    
+      services:
+        query-ui:
+          loadBalancer:
+            servers:
+              - url: http://query-ui.tc-core:8080
+    
+      middlewares:
+        path-query-ui:
+          replacePathRegex:
+            regex: "^/query(.*)"
+            replacement: "/query/$1"
+    
+        host-query-ui:
+          headers:
+            customRequestHeaders:
+              host: query-ui.tc-core:8080
+    
+  rate-limit-api.yaml: |-
+    # Declare routers / services / middlewares
+    http:
+      middlewares:
+        rate-limit-api:
+          rateLimit:
+            period: 1s
+            average: 100
+            burst: 25
+    
+  rate-limit-app.yaml: |-
+    # Declare routers / services / middlewares
+    http:
+      middlewares:
+        rate-limit-app:
+          rateLimit:
+            period: 1s
+            average: 0
+            burst: 100
+    
+  rate-limit-auth.yaml: |-
+    # Declare routers / services / middlewares
+    http:
+      middlewares:
+        rate-limit-auth:
+          rateLimit:
+            period: 1s
+            average: 20
+            burst: 10
+    
+  redirect.yaml: |-
+    # Declare routers / services / middlewares
+    http:
+      routers:    
+        root-redirect:
+          rule: Host(`apps.system-integration.telicent-sandbox.telicent.live`)
+          service: noop@internal
+          entryPoints:
+            - web-app
+          middleWares:
+            - search-ui-redirect
+    
+      middlewares:
+        search-ui-redirect:
+          redirectregex:
+            regex: "^https?://([^/]+)/?$"
+            replacement: "https://$1/search"
+    
+  search-ui.yaml: |-
+    # Declare routers / services / middlewares
+    http:
+      routers:    
+        search-ui:
+          rule: Host(`apps.system-integration.telicent-sandbox.telicent.live`) && PathPrefix(`/search`)
+          service: search-ui
+          entryPoints:
+            - web-app
+          middleWares:
+            - path-search-ui
+            - host-search-ui
+    
+      services:
+        search-ui:
+          loadBalancer:
+            servers:
+              - url: http://search-ui.tc-core:8080
+    
+      middlewares:
+        path-search-ui:
+          replacePathRegex:
+            regex: "^/search(.*)"
+            replacement: "/search/$1"
+    
+        host-search-ui:
+          headers:
+            customRequestHeaders:
+              host: search-ui.tc-core:8080
+    
+  search.yaml: |-
+    # Declare routers / services / middlewares
+    http:
+      routers:
+        search:
+          rule: Host(`api.system-integration.telicent-sandbox.telicent.live`) && PathPrefix(`/search`)
+          service: search
+          entryPoints:
+            - web-api
+          middleWares:
+            - path-search
+            - host-search
+    
+      services:
+        search:
+          loadBalancer:
+            servers:
+              - url: http://search.tc-core:8080
+    
+      middlewares:
+        path-search:
+          replacePathRegex:
+            regex: "^/search/(.*)"
+            replacement: "/$1"
+    
+        host-search:
+          headers:
+            customRequestHeaders:
+              host: search.tc-core:8080
+    
+  traefik.yaml: |-
+    # Declare routers / services / middlewares
+    
+  user-portal-ui.yaml: |-
+    # Declare routers / services / middlewares
+    http:
+      routers:
+        user-portal-ui:
+          rule: Host(`apps.system-integration.telicent-sandbox.telicent.live`) && PathPrefix(`/user-portal`)
+          service: user-portal-ui
+          entryPoints:
+            - web-app
+          middleWares:
+            - path-user-portal-ui
+            - host-user-portal-ui
+    
+      services:
+        user-portal-ui:
+          loadBalancer:
+            servers:
+              - url: http://user-portal-ui.tc-core:8080
+      middlewares:
+        path-user-portal-ui:
+          replacePathRegex:
+            regex: "^/user-portal(.*)"
+            replacement: "/user-portal/$1"
+        host-user-portal-ui:
+          headers:
+            customRequestHeaders:
+              host: user-portal-ui.tc-core:8080
+    
+  user-preferences.yaml: |-
+    # Declare routers / services / middlewares
+    http:
+      routers:
+        user-preferences:
+          rule: Host(`api.system-integration.telicent-sandbox.telicent.live`) && PathPrefix(`/user-preferences`)
+          service: user-preferences
+          entryPoints:
+            - web-api
+          middleWares:
+            - path-user-preferences
+            - host-user-preferences
+    
+      services:
+        user-preferences:
+          loadBalancer:
+            servers:
+              - url: http://user-preferences.tc-core:8080
+    
+      middlewares:
+        path-user-preferences:
+          replacePathRegex:
+            regex: "^/user-preferences/(.*)"
+            replacement: "/$1"
+    
+        host-user-preferences:
+          headers:
+            customRequestHeaders:
+              host: user-preferences.tc-core:8080
+---
+# Source: traefik-proxy/templates/configmap-startup.yaml
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: tc-traefik-proxy-startup
+  namespace: "tc-core"
+  labels:
+    helm.sh/chart: traefik-proxy-0.1.0
+    app.kubernetes.io/name: traefik-proxy
+    app.kubernetes.io/instance: traefik-proxy
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/version: "v3.6.1"
+    app: traefik-proxy
+    telicent.io/resource: "true"
+
+data:
+  config.yaml: |-
+    entryPoints:
+      web-app:
+        address: ":8080/tcp"
+        http:
+          middlewares:
+          - rate-limit-app@file
+          - headers-security@file
+    
+      web-api:
+        address: ":8081/tcp"
+        http:
+          middlewares:
+          - rate-limit-api@file
+          - cors@file
+          - headers-security@file
+          - oauth2@file
+    
+      web-auth:
+        address: ":8082/tcp"
+        http:
+          middlewares:
+          - rate-limit-auth@file
+          - cors@file
+          - headers-security@file
+    
+      ping:
+        address: ":9000/tcp"
+    
+    global:
+      checkNewVersion: false
+      sendAnonymousUsage: false
+    
+    ping:
+      entryPoint: ping
+    
+    providers:
+      file:
+        directory: "/app/config/routes"
+        watch: false
+    accessLog:
+      format: common
+    
+    log:
+      level: DEBUG
+---
+# Source: traefik-proxy/templates/service.yaml
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: traefik-proxy
+  namespace: "tc-core"
+  labels:
+    helm.sh/chart: traefik-proxy-0.1.0
+    app.kubernetes.io/name: traefik-proxy
+    app.kubernetes.io/instance: traefik-proxy
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/version: "v3.6.1"
+    app: traefik-proxy
+    telicent.io/resource: "true"
+
+spec:
+  type: 
+  selector:
+    app.kubernetes.io/name: traefik-proxy
+    app.kubernetes.io/instance: traefik-proxy
+  ports:
+  - name: http-app
+    appProtocol: http
+    protocol: TCP
+    targetPort: http-app
+    port: 8080
+
+  - name: http-api
+    appProtocol: http
+    protocol: TCP
+    targetPort: http-api
+    port: 8081
+
+  - name: http-auth
+    appProtocol: http
+    protocol: TCP
+    targetPort: http-auth
+    port: 8082
+---
+# Source: traefik-proxy/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: traefik-proxy
+  namespace: "tc-core"
+  labels:
+    helm.sh/chart: traefik-proxy-0.1.0
+    app.kubernetes.io/name: traefik-proxy
+    app.kubernetes.io/instance: traefik-proxy
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/version: "v3.6.1"
+    app: traefik-proxy
+    telicent.io/resource: "true"
+
+spec:
+  replicas: 1
+  revisionHistoryLimit: 5
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: traefik-proxy
+      app.kubernetes.io/instance: traefik-proxy
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: traefik-proxy
+        app.kubernetes.io/instance: traefik-proxy
+      annotations:
+        checksum/configRoutes: efb223e95ff6e64a0b2aafe08247b9e59db78f2960ee078cdf0503fb5f542be6
+        checksum/configStartup: 528f6b1710b07023a75c47405c9fd7b4eb1604eaa0122b708028f44a9c5b63c8
+        checksum/secretForward: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
+        sidecar.istio.io/logLevel: rbac:debug
+
+    spec:
+      serviceAccountName: traefik-proxy
+      securityContext:
+        fsGroup: 185
+        runAsGroup: 185
+        runAsNonRoot: true
+        runAsUser: 185
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+      - name: traefik-proxy
+        image: docker.io/traefik:v3.6.1
+        imagePullPolicy: IfNotPresent
+        resources:
+          limits:
+            cpu: 750m
+            memory: 768Mi
+          requests:
+            cpu: 500m
+            memory: 512Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          runAsGroup: 185
+          runAsNonRoot: true
+          runAsUser: 185
+          seccompProfile:
+            type: RuntimeDefault
+
+        env:
+        - name: X_FORWARD_AUTH
+          valueFrom:
+            secretKeyRef:
+              key: header
+              name: tc-auth-gen-forward-auth
+        args:
+        - --configFile=/app/config/config.yaml
+
+        ports:
+        # "app" HTTP listener
+        - name: http-app
+          protocol: TCP
+          containerPort: 8080
+
+        # "api" HTTP listener
+        - name: http-api
+          protocol: TCP
+          containerPort: 8081
+
+          # "auth" HTTP listener
+        - name: http-auth
+          protocol: TCP
+          containerPort: 8082
+
+        # "ping" HTTP
+        - name: http-ping
+          protocol: TCP
+          containerPort: 9000
+
+        readinessProbe:
+          httpGet:
+            path: /ping
+            port: http-ping
+            scheme: HTTP
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 2
+        livenessProbe:
+          httpGet:
+            path: /ping
+            port: http-ping
+            scheme: HTTP
+          initialDelaySeconds: 10
+          periodSeconds: 30
+          timeoutSeconds: 2
+
+        volumeMounts:
+        - name: traefik-config-volume
+          mountPath: /app/config
+          readOnly: true
+        - name: traefik-routes-volume
+          mountPath: /app/config/routes
+          readOnly: true
+      volumes:
+      - name: traefik-config-volume
+        configMap:
+          name: tc-traefik-proxy-startup
+      - name: traefik-routes-volume
+        configMap:
+          name: tc-traefik-proxy-routes
+---
+# Source: traefik-proxy/templates/istio/authorizationpolicy.yaml
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+
+metadata:
+  name: traefik-proxy-ingress
+  namespace: "tc-core"
+  labels:
+    helm.sh/chart: traefik-proxy-0.1.0
+    app.kubernetes.io/name: traefik-proxy
+    app.kubernetes.io/instance: traefik-proxy
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/version: "v3.6.1"
+    app: traefik-proxy
+    telicent.io/resource: "true"
+
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: traefik-proxy
+      app.kubernetes.io/instance: traefik-proxy
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        principals:
+        - cluster.local/ns/istio-system/sa/istio-ingress
+    to:
+    - operation:
+        methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"]
+---
+# Source: traefik-proxy/templates/istio/virtualservice-api.yaml
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+
+metadata:
+  name: traefik-proxy-api
+  namespace: "tc-core"
+  labels:
+    helm.sh/chart: traefik-proxy-0.1.0
+    app.kubernetes.io/name: traefik-proxy
+    app.kubernetes.io/instance: traefik-proxy
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/version: "v3.6.1"
+    app: traefik-proxy
+    telicent.io/resource: "true"
+
+spec:
+  gateways:
+  - istio-system/ingress-gateway
+  hosts:
+  - api.system-integration.telicent-sandbox.telicent.live
+  http:
+   - route:
+      - destination:
+          host: traefik-proxy
+          port:
+            number: 8081
+---
+# Source: traefik-proxy/templates/istio/virtualservice-app.yaml
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+
+metadata:
+  name: traefik-proxy-app
+  namespace: "tc-core"
+  labels:
+    helm.sh/chart: traefik-proxy-0.1.0
+    app.kubernetes.io/name: traefik-proxy
+    app.kubernetes.io/instance: traefik-proxy
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/version: "v3.6.1"
+    app: traefik-proxy
+    telicent.io/resource: "true"
+
+spec:
+  gateways:
+  - istio-system/ingress-gateway
+  hosts:
+  - apps.system-integration.telicent-sandbox.telicent.live
+  http:
+   - route:
+      - destination:
+          host: traefik-proxy
+          port:
+            number: 8080
+---
+# Source: traefik-proxy/templates/istio/virtualservice-auth.yaml
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+
+metadata:
+  name: traefik-proxy-auth
+  namespace: "tc-core"
+  labels:
+    helm.sh/chart: traefik-proxy-0.1.0
+    app.kubernetes.io/name: traefik-proxy
+    app.kubernetes.io/instance: traefik-proxy
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/version: "v3.6.1"
+    app: traefik-proxy
+    telicent.io/resource: "true"
+
+spec:
+  gateways:
+  - istio-system/ingress-gateway
+  hosts:
+  - auth.system-integration.telicent-sandbox.telicent.live
+  http:
+   - route:
+      - destination:
+          host: traefik-proxy
+          port:
+            number: 8082

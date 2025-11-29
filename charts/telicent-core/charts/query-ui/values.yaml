@@ -187,11 +187,14 @@ service:
   type: ClusterIP
 
 #
-# @section Istio Parameters
+# @section Host(s) Parameters - Contains host information for applications deployed via *telicent-core* chart.
 #
-istio:
-  ingress:
-    # @key istio.ingress.principal Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName
-    principal: ""
-    # @key istio.ingress.serviceAccountName Name of the Ingress service account (traefik and istio supported)
-    serviceAccountName: "traefik-proxy"
+# @descStart
+# *Query UI* interacts directly with other Telicent Applications using their default service/serviceAccount and port.
+# If either of those details changes, you can use this section to correctly referer to those applications.
+# @descEnd
+hosts:
+  # @key hosts.enableAutoCorrect Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as is, without any modification.
+  enableAutoCorrect: true
+  # @key hosts.traefikProxy Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'
+  traefikProxy: "traefik-proxy:8080"

@@ -40,7 +40,6 @@ global:
     # @key global.truststore.mountPath The mount path for the truststore in the container
     mountPath: /app/config/truststore
 
-
 #
 # @section ConfigMap Parameters
 #

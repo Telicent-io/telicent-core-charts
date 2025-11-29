@@ -395,23 +395,18 @@
                 }
             }
         },
-        "istio": {
+        "hosts": {
             "type": "object",
             "properties": {
-                "ingress": {
-                    "type": "object",
-                    "properties": {
-                        "principal": {
-                            "type": "string",
-                            "description": "Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName",
-                            "default": ""
-                        },
-                        "serviceAccountName": {
-                            "type": "string",
-                            "description": "Name of the Ingress service account (traefik and istio supported)",
-                            "default": "traefik-proxy"
-                        }
-                    }
+                "enableAutoCorrect": {
+                    "type": "boolean",
+                    "description": "Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as is, without any modification.",
+                    "default": true
+                },
+                "traefikProxy": {
+                    "type": "string",
+                    "description": "Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'",
+                    "default": "traefik-proxy:8080"
                 }
             }
         }
