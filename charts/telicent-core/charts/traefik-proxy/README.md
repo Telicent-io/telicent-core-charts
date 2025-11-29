@@ -105,13 +105,13 @@ Contains global parameters, these parameters are mirrored within the Telicent co
 The following section allows for setting Traefik Rate Limiting on the Web Applications, API Services and the Authentication Service.
 Ref: https://doc.traefik.io/traefik/reference/routing-configuration/http/middlewares/ratelimit/#rate-and-burst
 
-| Name                     | Description                                                                                             | Value |
-| ------------------------ | ------------------------------------------------------------------------------------------------------- | ----- |
-| `rateLimit.app.average`  | Maximum number of requests per second allowed to the Web Applications (0 means no rate limiting).       | `0`   |
-| `rateLimit.app.burst`    | Maximum number of requests allowed to go through at the very same moment to the Web Applications.       | `100` |
-| `rateLimit.api.average`  | Maximum number of requests per second allowed to the API Services (0 means no rate limiting).           | `100` |
-| `rateLimit.api.burst`    | Maximum number of requests allowed to go through at the very same moment to the API Services.           | `25`  |
-| `rateLimit.auth.average` | Maximum number of requests per second allowed to the Authentication Service (0 means no rate limiting). | `20`  |
+| Name                     | Description                                                                                         | Value |
+| ------------------------ | --------------------------------------------------------------------------------------------------- | ----- |
+| `rateLimit.app.average`  | Maximum number of requests per second allowed to the Web Applications (0 means no rate limiting).   | `0`   |
+| `rateLimit.app.burst`    | Maximum number of requests allowed to go through at the very same moment to the Web Applications.   | `100` |
+| `rateLimit.api.average`  | Maximum number of requests per second allowed to the API Services (0 means no rate limiting).       | `100` |
+| `rateLimit.api.burst`    | Maximum number of requests allowed to go through at the very same moment to the API Services.       | `25`  |
+| `rateLimit.auth.average` | Max number of requests per second allowed to the Authentication Service (0 means no rate limiting). | `20`  |
 | `rateLimit.auth.burst`   | Maximum number of requests allowed to go through at the very same moment to the Authentication Service. | `10`  |
 
 ### CORS Parameters
