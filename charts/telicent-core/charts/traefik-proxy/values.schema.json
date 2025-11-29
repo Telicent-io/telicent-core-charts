@@ -27,7 +27,7 @@
                 },
                 "releaseNameTelicentPreview": {
                     "type": "string",
-                    "description": "Release name during the Telicent Preview chart installation. Note: ensure the value is correct, otherwise there will be no access to data-catalog, user-portal & paperback-writer",
+                    "description": "Release name used during the Telicent Preview chart installation. Note: ensure the value is correct, otherwise there will be no access to data-catalog, user-portal & paperback-writer",
                     "default": ""
                 },
                 "istioNamespace": {

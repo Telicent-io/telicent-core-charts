@@ -22,7 +22,7 @@ global:
   # @key global.authHostDomain Domain associated with Telicent authentication services, including OIDC providers
   authHostDomain: "auth.telicent.io"
 
-  # @key global.releaseNameTelicentPreview Release name during the Telicent Preview chart installation. Note: ensure the value is correct, otherwise there will be no access to data-catalog, user-portal & paperback-writer
+  # @key global.releaseNameTelicentPreview Release name used during the Telicent Preview chart installation. Note: ensure the value is correct, otherwise there will be no access to data-catalog, user-portal & paperback-writer
   # If installed through the parent-chart this value needs to reflect the name of the release name used when 'telicent-preview' chart was installed.
   # If all applications were installed through sub-charts, leaving this value empty will provide the correct behaviour.
   releaseNameTelicentPreview: ""

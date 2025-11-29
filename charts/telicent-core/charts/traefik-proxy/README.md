@@ -87,16 +87,16 @@ the [kubernetes documentation](https://kubernetes.io/docs/concepts/configuration
 
 Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
 
-| Name                                | Description                                                                                                                                                                       | Value              |
-| ----------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
-| `global.enterprise`                 | Enable enterprise mode, adding additional features and configurations                                                                                                             | `false`            |
-| `global.appHostDomain`              | Domain associated with Telicent application/ui services                                                                                                                           | `apps.telicent.io` |
-| `global.apiHostDomain`              | Domain associated with Telicent Api services                                                                                                                                      | `api.telicent.io`  |
-| `global.authHostDomain`             | Domain associated with Telicent authentication services, including OIDC providers                                                                                                 | `auth.telicent.io` |
-| `global.releaseNameTelicentPreview` | Release name during the Telicent Preview chart installation. Note: ensure the value is correct, otherwise there will be no access to data-catalog, user-portal & paperback-writer | `""`               |
-| `global.istioNamespace`             | Namespace in which Istio is deployed                                                                                                                                              | `istio-system`     |
-| `global.istioServiceAccountName`    | Name of the Istio service account                                                                                                                                                 | `istio-ingress`    |
-| `global.istioGatewayName`           | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)                                                                                                         | `ingress-gateway`  |
+| Name                                | Description                                                                                                                                                                            | Value              |
+| ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
+| `global.enterprise`                 | Enable enterprise mode, adding additional features and configurations                                                                                                                  | `false`            |
+| `global.appHostDomain`              | Domain associated with Telicent application/ui services                                                                                                                                | `apps.telicent.io` |
+| `global.apiHostDomain`              | Domain associated with Telicent Api services                                                                                                                                           | `api.telicent.io`  |
+| `global.authHostDomain`             | Domain associated with Telicent authentication services, including OIDC providers                                                                                                      | `auth.telicent.io` |
+| `global.releaseNameTelicentPreview` | Release name used during the Telicent Preview chart installation. Note: ensure the value is correct, otherwise there will be no access to data-catalog, user-portal & paperback-writer | `""`               |
+| `global.istioNamespace`             | Namespace in which Istio is deployed                                                                                                                                                   | `istio-system`     |
+| `global.istioServiceAccountName`    | Name of the Istio service account                                                                                                                                                      | `istio-ingress`    |
+| `global.istioGatewayName`           | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)                                                                                                              | `ingress-gateway`  |
 
 ### Rate Limit Parameters
 
