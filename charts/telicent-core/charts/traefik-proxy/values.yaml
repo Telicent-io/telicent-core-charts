@@ -8,15 +8,9 @@
 # Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
 # @descEnd
 global:
-  ## Current available global image parameters: imageRegistry and imagePullSecrets
-  ## Please, note that this will override the image parameters
-  # @key global.imageRegistry Global image registry
-  imageRegistry: ""
-  # E.g.
-  # imagePullSecrets:
-  #   - myRegistryKeySecretName
-  # @key global.imagePullSecrets Global registry secret names as an array
-  imagePullSecrets: []
+  # Note: not supported as this is a third party application
+  # imageRegistry: ""
+  # imagePullSecrets: []
 
   # @key global.enterprise Enable enterprise mode, adding additional features and configurations
   enterprise: false
@@ -28,6 +22,15 @@ global:
   # @key global.authHostDomain Domain associated with Telicent authentication services, including OIDC providers
   authHostDomain: "auth.telicent.io"
 
+  # @key global.releaseNameTelicentPreview Release name during the Telicent Preview chart installation. Note: ensure the value is correct, otherwise there will be no access to data-catalog, user-portal & paperback-writer
+  # If installed through the parent-chart this value needs to reflect the name of the release name used when 'telicent-preview' chart was installed.
+  # If all applications were installed through sub-charts, leaving this value empty will provide the correct behaviour.
+  releaseNameTelicentPreview: ""
+
+  #istio:
+  #  gatewayNamespace: istio-system
+  #  gatewayName: ingress-gateway
+
   # @key global.istioNamespace Namespace in which Istio is deployed
   # Note: By default, Istio namespace is set to 'istio-system'
   istioNamespace: istio-system
@@ -35,8 +38,6 @@ global:
   istioServiceAccountName: istio-ingress
   # @key global.istioGatewayName Name of the Istio Gateway Resource (LB operating at the edge of the mesh)
   istioGatewayName: ingress-gateway
-  # @key global.istioVirtualServiceEnabled Enable Istio traffic routing to a named destination service
-  istioVirtualServiceEnabled: true
 
 #
 # @section Rate Limit Parameters
@@ -269,33 +270,44 @@ istio:
     serviceAccountName: "istio-ingress"
 
 #
-# @section *Traefik Proxy* Hosts Parameters
+# @section Host(s) Parameters - Contains host information for applications deployed via *telicent-core* chart
 #
 # @descStart
-# *Traefik Proxy* routes traffic to the various Telicent Apps using their default service names and ports.
-# If either of those details changes, you can use this section to correctly referer to those apps.
-# Example: overriding Search UI chart value `fullnameOverride: "search-ui"` the correct host value would be `searchUi: "search-ui:8080"`
+# *Traefik Proxy* routes traffic to Telicent Applications using their default service/serviceAccount and port.
+# If either of those details changes, you can use this section to correctly referer to those applications.
 # @descEnd
 hosts:
-  # @key hosts.auth Auth host value, If not set a host is generated using service:'auth',port:'8080' and Release namespace & name.
-  auth: ""
-  # @key hosts.adminUi Admin UI host value, If not set a host is generated using service:'admin-ui',port:'8080' and Release namespace & name.
-  adminUi: ""
-  # @key hosts.dataCatalogUi Data Catalog UI host value, If not set a host is generated using service:'data-catalog-ui',port:'8080' and Release namespace & name.
-  dataCatalogUi: ""
-  # @key hosts.userPortalUi User Portal UI host value, If not set a host is generated using service:'user-portal-ui',port:'8080' and Release namespace & name.
-  userPortalUi: ""
-  # @key hosts.searchUi Search UI host value, If not set a host is generated using service:'search-ui',port:'8080' and Release namespace & name.
-  searchUi: ""
-  # @key hosts.graphUi Graph UI host value, If not set a host is generated using service:'graph-ui',port:'8080' and Release namespace & name.
-  graphUi: ""
-  # @key hosts.queryUi Query UI host value, If not set a host is generated using service:'query-ui',port:'8080' and Release namespace & name.
-  queryUi: ""
-  # @key hosts.search Search host value, If not set a host is generated using service:'search',port:'8080' and Release namespace & name.
-  search: ""
-  # @key hosts.graph Graph host value, If not set a host is generated using service:'graph',port:'8080' and Release namespace & name.
-  graph: ""
+  # @key hosts.enableAutoCorrect Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as is, without any modification.
+  enableAutoCorrect: true
+  # @key hosts.auth Auth application default host value, as defined by 'service/serviceAccount:port'
+  auth: "auth:8080"
   # @key hosts.userPreferences User Preferences host value, If not set a host is generated using service:'user-preferences',port:'8080' and Release namespace & name.
-  userPreferences: ""
-  # @key hosts.paperbackWriter If not set a host is generated using service:'paperback-writer', port:'8000' and Release namespace & name.
-  paperbackWriter: ""
+  userPreferences: "user-preferences:8080"
+  # @key hosts.adminUi Admin UI application default host value, as defined by 'service/serviceAccount:port'
+  adminUi: "admin-ui:8080"
+  # @key hosts.searchUi Search UI application default host value, as defined by 'service/serviceAccount:port'
+  searchUi: "search-ui:8080"
+  # @key hosts.graphUi Graph UI application default host value, as defined by 'service/serviceAccount:port'
+  graphUi: "graph-ui:8080"
+  # @key hosts.queryUi Query UI application default host value, as defined by 'service/serviceAccount:port'
+  queryUi: "query-ui:8080"
+  # @key hosts.search Search application default host value, as defined by 'service/serviceAccount:port'
+  search: "search:8080"
+  # @key hosts.graph Graph application default host value, as defined by 'service/serviceAccount:port'
+  graph: "graph:8080"
+
+#
+# @section Host(s) Preview Parameters - Contains host information for applications deployed via *telicent-preview* chart
+#
+# @descStart
+# Host values will be used as defined in this section, release name cannot be autocorrected, as the release name is unknown.
+# @descEnd
+hostsPreview:
+  # @key hostsPreview.enableAutoCorrect Prefix 'global.releaseNameTelicentPreview' to each host value. Alternatively, the host value will be used as is, without any modification.
+  enableAutoCorrect: true
+  # @key hostsPreview.dataCatalogUi Data Catalog UI application default host value, as defined by 'service/serviceAccount:port'
+  dataCatalogUi: "data-catalog-ui:8080"
+  # @key hostsPreview.userPortalUi User Portal UI application default host value, as defined by 'service/serviceAccount:port'
+  userPortalUi: "user-portal-ui:8080"
+  # @key hostsPreview.paperbackWriter Paperback Writer application host value, as defined by 'service/serviceAccount:port'
+  paperbackWriter: "paperback-writer:8080"

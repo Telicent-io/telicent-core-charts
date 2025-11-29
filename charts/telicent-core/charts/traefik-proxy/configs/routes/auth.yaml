@@ -52,10 +52,10 @@ http:
     auth:
       loadBalancer:
         servers:
-          - url: http://{{ .Values.hosts.auth | default (printf "%s.%s:8080" (include "traefik-proxy.routesService" (list . "auth")) .Release.Namespace) }}
+          - url: {{ printf "http://%s"  (include "traefik-proxy.hostAuth" .) }}
 
   middlewares:
     host-auth:
       headers:
         customRequestHeaders:
-          host: {{ .Values.hosts.auth | default (printf "%s.%s:8080" (include "traefik-proxy.routesService" (list . "auth")) .Release.Namespace) }}
+          host: {{ include "traefik-proxy.hostAuth" . }}

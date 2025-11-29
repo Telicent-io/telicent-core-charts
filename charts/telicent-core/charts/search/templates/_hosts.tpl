@@ -23,7 +23,8 @@ Note: Dev team - only the function prefix ("search.") and the references should 
 {{- end -}}
 {{- end -}}
 {{/*
-Returns the host value in the format service:port
+Returns the *host* ('service:port') and serviceAccount
+-------------------------------------------------------
 */}}
 {{- define "search.discoverHost" -}}
 {{- $envVal := index . 0 -}}
@@ -36,16 +37,6 @@ Returns the host value in the format service:port
 {{- printf "%s.%s:%s" (include "search.discoverService" (list $envVal $name)) $envVal.Release.Namespace $port -}}
 {{- end -}}
 {{- end -}}
-{{/*
-Returns the *external* host value in the format service:port
-*/}}
-{{- define "search.discoverHostExternal" -}}
-{{- $hostVal := index . 1 -}}
-{{- printf "%s" $hostVal -}}
-{{- end -}}
-{{/*
-Returns the serviceAccount value
-*/}}
 {{- define "search.discoverServiceAccount" -}}
 {{- $envVal := index . 0 -}}
 {{- $hostVal := index . 1 -}}
@@ -57,8 +48,13 @@ Returns the serviceAccount value
 {{- end -}}
 {{- end -}}
 {{/*
-Returns the *external* serviceAccount value
+Returns the *preview host* ('service:port') and serviceAccount
+--------------------------------------------------------------
 */}}
+{{- define "search.discoverHostExternal" -}}
+{{- $hostVal := index . 1 -}}
+{{- printf "%s" $hostVal -}}
+{{- end -}}
 {{- define "search.discoverServiceAccountExternal" -}}
 {{- $hostVal := index . 1 -}}
 {{- printf "%s" (index (splitList ":" $hostVal) 0 ) -}}

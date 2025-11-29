@@ -148,7 +148,7 @@ Contains Java configuration parameters to be used by the *Graph* application
 | `image.tag`                                         | *Graph* image tag. If not set, a tag is generated using the appVersion  | `""`                                |
 | `image.pullPolicy`                                  | *Graph* image pull policy                                               | `IfNotPresent`                      |
 | `image.pullSecrets`                                 | Specify registry secret names as an array                               | `[]`                                |
-| `resources.requests.cpu`                            | Set containers' CPU request                                             | `1000m`                             |
+| `resources.requests.cpu`                            | Set containers' CPU request                                             | `1`                                 |
 | `resources.requests.memory`                         | Set containers' memory request                                          | `8000Mi`                            |
 | `resources.limits.cpu`                              | Set containers' CPU limit                                               | `1500m`                             |
 | `resources.limits.memory`                           | Set containers' memory limit                                            | `12000Mi`                           |
