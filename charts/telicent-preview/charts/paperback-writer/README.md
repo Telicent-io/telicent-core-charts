@@ -91,8 +91,10 @@ Note: Only global parameters used within this chart will be listed below
 | -------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
 | `global.imageRegistry`           | Global image registry                                                                                                                               | `""`               |
 | `global.imagePullSecrets`        | Global registry secret names as an array                                                                                                            | `[]`               |
-| `global.releaseNameTelicentCore` | Release name used during the Telicent Core chart installation. Note: ensure the value is correct, otherwise there will be no access to auth & graph | `""`               |
 | `global.enabled`                 | enabled Enable *Paperback Writer* deployment                                                                                                        | `false`            |
+| `global.releaseNameTelicentCore` | Release name used during the Telicent Core chart installation. Note: ensure the value is correct, otherwise there will be no access to auth & graph | `""`               |
+| `global.appHostDomain`           | Domain associated with Telicent application/ui services                                                                                             | `apps.telicent.io` |
+| `global.apiHostDomain`           | Domain associated with Telicent Api services                                                                                                        | `api.telicent.io`  |
 | `global.authHostDomain`          | Domain associated with Telicent authentication services, including OIDC providers                                                                   | `auth.telicent.io` |
 
 ### Application Configuration

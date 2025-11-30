@@ -86,7 +86,7 @@ the [kubernetes documentation](https://kubernetes.io/docs/concepts/configuration
 ### Global Parameters
 
 Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart
-Note: Oly global parameters used within this chart will be listed below
+Note: Only global parameters used within this chart will be listed below
 
 | Name                                | Description                                                                                                                                                                            | Value              |
 | ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
@@ -95,9 +95,10 @@ Note: Oly global parameters used within this chart will be listed below
 | `global.appHostDomain`              | Domain associated with Telicent application/ui services                                                                                                                                | `apps.telicent.io` |
 | `global.apiHostDomain`              | Domain associated with Telicent Api services                                                                                                                                           | `api.telicent.io`  |
 | `global.authHostDomain`             | Domain associated with Telicent authentication services, including OIDC providers                                                                                                      | `auth.telicent.io` |
-| `global.istioNamespace`             | Namespace in which Istio is deployed                                                                                                                                                   | `istio-system`     |
-| `global.istioServiceAccountName`    | Name of the Istio service account                                                                                                                                                      | `istio-ingress`    |
-| `global.istioGatewayName`           | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)                                                                                                              | `ingress-gateway`  |
+| `global.istioIngressNamespace`      | Namespace in which the Istio Ingress resource is deployed; overrides 'istio.ingress.namespace'                                                                                         | `istio-system`     |
+| `global.istioIngressServiceAccount` | ServiceAccount associated with Istio ingress deployment; overrides 'istio.ingress.serviceAccount'                                                                                      | `istio-ingress`    |
+| `global.istioGatewayNamespace`      | Namespace in which the Istio Gateway resource is deployed; overrides 'istio.gateway.namespace'                                                                                         | `istio-system`     |
+| `global.istioGatewayName`           | Name of the Istio Gateway resource; overrides 'istio.gateway.namespace'                                                                                                                | `ingress-gateway`  |
 
 ### Rate Limit Parameters
 
@@ -216,12 +217,14 @@ For Quick Start purposes, a secret named `tc-auth-gen-forward-traefik-proxy` wil
 
 ### Istio Parameters
 
-| Name                               | Description                                                                                                                                              | Value                                            |
-| ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
-| `istio.virtualService.enabled`     | Enable Istio traffic into *Traefik Proxy*                                                                                                                | `true`                                           |
-| `istio.virtualService.extraHosts`  | Additional hosts (excluding appHostDomain) to be managed by *Traefik Proxy*                                                                              | `[]`                                             |
-| `istio.ingress.principal`          | Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName | `cluster.local/ns/istio-system/sa/istio-ingress` |
-| `istio.ingress.serviceAccountName` | Name of the Ingress service account (istio currently supported)                                                                                          | `istio-ingress`                                  |
+| Name                              | Description                                                                 | Value             |
+| --------------------------------- | --------------------------------------------------------------------------- | ----------------- |
+| `istio.ingress.namespace`         | Namespace in which the Istio Ingress resource is deployed                   | `istio-system`    |
+| `istio.ingress.serviceAccount`    | ServiceAccount associated with Istio ingress deployment                     | `istio-ingress`   |
+| `istio.gateway.namespace`         | Namespace in which the Istio Gateway resource is deployed                   | `istio-system`    |
+| `istio.gateway.name`              | Name of the Istio Gateway resource                                          | `ingress-gateway` |
+| `istio.virtualService.enabled`    | Enable Istio traffic into *Traefik Proxy*                                   | `true`            |
+| `istio.virtualService.extraHosts` | Additional hosts (excluding appHostDomain) to be managed by *Traefik Proxy* | `[]`              |
 
 ### Host(s) Parameters - Contains host information for applications deployed via *telicent-core* chart
 

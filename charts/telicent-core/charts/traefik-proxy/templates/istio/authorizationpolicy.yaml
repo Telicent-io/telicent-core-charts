@@ -20,7 +20,7 @@ spec:
   - from:
     - source:
         principals:
-          {{- include "traefik-proxy.ingressPrincipal" . | nindent 8 }}
+          {{- include "traefik-proxy.istioPrincipal" . | nindent 8 }}
     to:
     - operation:
         methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"]

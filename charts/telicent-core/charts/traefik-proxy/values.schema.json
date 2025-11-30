@@ -30,19 +30,24 @@
                     "description": "Domain associated with Telicent authentication services, including OIDC providers",
                     "default": "auth.telicent.io"
                 },
-                "istioNamespace": {
+                "istioIngressNamespace": {
                     "type": "string",
-                    "description": "Namespace in which Istio is deployed",
+                    "description": "Namespace in which the Istio Ingress resource is deployed; overrides 'istio.ingress.namespace'",
                     "default": "istio-system"
                 },
-                "istioServiceAccountName": {
+                "istioIngressServiceAccount": {
                     "type": "string",
-                    "description": "Name of the Istio service account",
+                    "description": "ServiceAccount associated with Istio ingress deployment; overrides 'istio.ingress.serviceAccount'",
                     "default": "istio-ingress"
+                },
+                "istioGatewayNamespace": {
+                    "type": "string",
+                    "description": "Namespace in which the Istio Gateway resource is deployed; overrides 'istio.gateway.namespace'",
+                    "default": "istio-system"
                 },
                 "istioGatewayName": {
                     "type": "string",
-                    "description": "Name of the Istio Gateway Resource (LB operating at the edge of the mesh)",
+                    "description": "Name of the Istio Gateway resource; overrides 'istio.gateway.namespace'",
                     "default": "ingress-gateway"
                 }
             }
@@ -493,6 +498,36 @@
         "istio": {
             "type": "object",
             "properties": {
+                "ingress": {
+                    "type": "object",
+                    "properties": {
+                        "namespace": {
+                            "type": "string",
+                            "description": "Namespace in which the Istio Ingress resource is deployed",
+                            "default": "istio-system"
+                        },
+                        "serviceAccount": {
+                            "type": "string",
+                            "description": "ServiceAccount associated with Istio ingress deployment",
+                            "default": "istio-ingress"
+                        }
+                    }
+                },
+                "gateway": {
+                    "type": "object",
+                    "properties": {
+                        "namespace": {
+                            "type": "string",
+                            "description": "Namespace in which the Istio Gateway resource is deployed",
+                            "default": "istio-system"
+                        },
+                        "name": {
+                            "type": "string",
+                            "description": "Name of the Istio Gateway resource",
+                            "default": "ingress-gateway"
+                        }
+                    }
+                },
                 "virtualService": {
                     "type": "object",
                     "properties": {
@@ -506,21 +541,6 @@
                             "description": "Additional hosts (excluding appHostDomain) to be managed by *Traefik Proxy*",
                             "default": [],
                             "items": {}
-                        }
-                    }
-                },
-                "ingress": {
-                    "type": "object",
-                    "properties": {
-                        "principal": {
-                            "type": "string",
-                            "description": "Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName",
-                            "default": "cluster.local/ns/istio-system/sa/istio-ingress"
-                        },
-                        "serviceAccountName": {
-                            "type": "string",
-                            "description": "Name of the Ingress service account (istio currently supported)",
-                            "default": "istio-ingress"
                         }
                     }
                 }

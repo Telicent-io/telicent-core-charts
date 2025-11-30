@@ -29,11 +29,6 @@ global:
   # @key global.authHostDomain Domain associated with Telicent authentication services, including OIDC providers
   authHostDomain: "auth.telicent.io"
 
-  # @key global.kafkaBootstrapUrls Comma separated list containing Kafka bootstrap URLs
-  kafkaBootstrapUrls: "kafka-bootstrap.kafka.svc.cluster.local:9092"
-  # @key global.existingConfigSecretName Name of an existing secret containing Kafka configuration
-  existingConfigSecretName: ""
-
   truststore:
     # @key global.truststore.existingSecretName Name of an existing secret containing the truststore
     existingSecretName: ""
