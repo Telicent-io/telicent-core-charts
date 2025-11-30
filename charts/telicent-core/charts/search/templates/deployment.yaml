@@ -89,7 +89,6 @@ spec:
         - name: http
           protocol: TCP
           containerPort: 8181
-
         {{- if .Values.metrics.enabled }}
         - name: metrics
           protocol: TCP

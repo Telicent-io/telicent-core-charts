@@ -110,8 +110,8 @@ spec:
           name: {{ include "search-ui.configMapName" . }}
       - name: secret-config-js-volume
         secret:
-      {{- if .Values.configuration.existingMapConfigSecretName }}
-          secretName: {{ .Values.configuration.existingMapConfigSecretName }}
+      {{- if .Values.ui.existingMapConfigSecretName }}
+          secretName: {{ .Values.ui.existingMapConfigSecretName }}
       {{- else }}
           secretName: {{ include "search-ui.fullname" . }}-secret-config-js
       {{- end }}  

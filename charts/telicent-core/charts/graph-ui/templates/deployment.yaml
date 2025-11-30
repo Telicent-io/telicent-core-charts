@@ -109,10 +109,10 @@ spec:
         configMap:
           name: {{ include "graph-ui.configMapName" . }}
 
-      {{- if .Values.configuration.existingMapConfigSecretName }}
+      {{- if .Values.ui.existingMapConfigSecretName }}
       - name: secret-config-js-volume
         secret:
-          secretName: {{ .Values.configuration.existingMapConfigSecretName }}
+          secretName: {{ .Values.ui.existingMapConfigSecretName }}
       {{- else }}
       - name: secret-config-js-volume
         secret:

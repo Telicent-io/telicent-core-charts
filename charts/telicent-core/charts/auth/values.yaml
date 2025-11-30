@@ -5,7 +5,8 @@
 # @section Global Parameters
 #
 # @descStart
-# Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
+# Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart
+# Note: only global parameters used within this chart, will be listed below
 # @descEnd
 global:
   ## Current available global image parameters: imageRegistry and imagePullSecrets
@@ -33,34 +34,68 @@ global:
   # If all applications were installed through sub-charts, leaving this value empty will provide the correct behaviour.
   releaseNameTelicentPreview: ""
 
-  # @key global.istioNamespace Namespace in which Istio is deployed
-  # Note: By default, Istio namespace is set to 'istio-system'
-  istioNamespace: istio-system
-  # @key global.istioServiceAccountName Name of the Istio service account
-  istioServiceAccountName: istio-ingress
-  # @key global.istioGatewayName Name of the Istio Gateway Resource (LB operating at the edge of the mesh)
-  istioGatewayName: ingress-gateway
-  # @key global.istioVirtualServiceEnabled Enable Istio traffic routing to a named destination service
-  istioVirtualServiceEnabled: false
-
 #
-# @section ConfigMap/Configuration Parameters
+# @section ConfigMap Parameters
 #
-# @descStart
-# Contains configuration parameters specific to the *Auth* application
-# @descEnd
 configMap:
   # @key configMap.existingEnvConfigMap Name of existing configmap containing *Auth* Environment Configuration
   # Note: When it's set, it will disable configmap creation.
   existingEnvConfigMap: ""
 
-  # @key configMap.cookieParentDomain Cookie domain scope
+#
+# @section Identity Provider (IDP) Parameters and Secret
+#
+# @descStart
+# Contains details pertinent to the OIDC Identity Provider to be used by the *Auth* OAuth application.
+# It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
+# For Quick Start purposes, a secret named `tc-auth-gen-idp-auth` will be created if one is not set.
+# @descEnd
+idp:
+  # @key idp.issuerUrl The OpenID Connect issuer URL
+  issuerUrl: ""
+  # @key idp.authorizationPath The path to use in combination with the issuer URL for authorization
+  authorizationPath: "/auth"
+  # @key idp.jwksPath The path to use in combination with the issuer URL for JWKS
+  jwksPath: "/keys"
+  # @key idp.tokenPath The path to use in combination with the issuer URL for generating tokens
+  tokenPath: "/token"
+
+  # @key idp.cookieParentDomain Cookie domain scope
   cookieParentDomain: ".telicent.io"
-  # @key configMap.cookieSecure Enable secure cookies
+  # @key idp.cookieSecure Enable secure cookies
   cookieSecure: true
 
-  # @key configMap.superUserIdentifier Super user identification if blank all users will be super users
-  superUserIdentifier: ""
+  # @key idp.superUserIdentifier Super user identification, set to 'ALL' to allow for everyone to be a superuser
+  superUserIdentifier: "ALL"
+
+  # @key idp.clientName The OAuth Client Name (used for display)
+  clientName: ""
+  # @key idp.emailClaim The OIDC claim containing the user's email
+  emailClaim: "email"
+
+  # @key idp.existingSecret Name of an existing secret. The secret must contain 2 keys: 'clientid', 'clientsecret'
+  # Note: Left unset, it will create a secret named: tc-auth-gen-idp-auth
+  existingSecret: ""
+  # @key idp.clientId The OAuth Client ID
+  clientId: ""
+  # @key idp.clientSecret The OAuth Client Secret
+  clientSecret: ""
+
+#
+# @section ForwardAuth Parameters and Secret
+#
+# @descStart
+# When making requests to the `/auth/forward` endpoint (used by reverse proxies), `X-ForwardAuth-Secret` header is required.
+# The secret associated with that header is defined within this section.
+# It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
+# For Quick Start purposes, a secret named `tc-auth-gen-forward-auth` will be created if one is not set.
+# @descEnd
+forwardAuth:
+  # @key forwardAuth.existingSecret Name of an existing secret. The secret must contain 1 key: 'header'
+  # Note: Left unset, it will create a secret named: tc-auth-gen-forward-auth
+  existingSecret: ""
+  # @key forwardAuth.header The header value to be associated with the `X-ForwardAuth-Secret`.
+  header: ""
 
 #
 # @section Java Parameters
@@ -119,53 +154,6 @@ postgresSql:
   password: ""
 
 #
-# @section Identity Provider (IDP) Parameters and Secret
-#
-# @descStart
-# Contains details pertinent to the OIDC Identity Provider to be used by the *Auth* OAuth application.
-# It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
-# For Quick Start purposes, a secret named `tc-auth-gen-idp-auth` will be created if one is not set.
-# @descEnd
-idp:
-  # @key idp.issuerUrl The OpenID Connect issuer URL
-  issuerUrl: ""
-  # @key idp.authorizationPath The path to use in combination with the issuer URL for authorization
-  authorizationPath: "/auth"
-  # @key idp.jwksPath The path to use in combination with the issuer URL for JWKS
-  jwksPath: "/keys"
-  # @key idp.tokenPath The path to use in combination with the issuer URL for generating tokens
-  tokenPath: "/token"
-
-  # @key idp.clientName The OAuth Client Name (used for display)
-  clientName: ""
-  # @key idp.emailClaim The OIDC claim containing the user's email
-  emailClaim: "email"
-
-  # @key idp.existingSecret Name of an existing secret. The secret must contain 2 keys: 'clientid', 'clientsecret'
-  # Note: Left unset, it will create a secret named: tc-auth-gen-idp-auth
-  existingSecret: ""
-  # @key idp.clientId The OAuth Client ID
-  clientId: ""
-  # @key idp.clientSecret The OAuth Client Secret
-  clientSecret: ""
-
-#
-# @section ForwardAuth Parameters and Secret
-#
-# @descStart
-# When making requests to the `/auth/forward` endpoint (used by reverse proxies), `X-ForwardAuth-Secret` header is required.
-# The secret associated with that header is defined within this section.
-# It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
-# For Quick Start purposes, a secret named `tc-auth-gen-forward-auth` will be created if one is not set.
-# @descEnd
-forwardAuth:
-  # @key forwardAuth.existingSecret Name of an existing secret. The secret must contain 1 key: 'header'
-  # Note: Left unset, it will create a secret named: tc-auth-gen-forward-auth
-  existingSecret: ""
-  # @key forwardAuth.header The header value to be associated with the `X-ForwardAuth-Secret`.
-  header: ""
-
-#
 # @section Bootstrap Parameters
 #
 # @descStart
@@ -174,7 +162,7 @@ forwardAuth:
 
 bootstrap:
   # @key bootstrap.enabled Enable
-  enabled: true
+  enabled: false
 
   clients:
     # @key bootstrap.clients.existingConfigMap Name of an existing config map resource containing all required public and confidential clients. If specified, the values for clients.public and clients.confidential will be ignored

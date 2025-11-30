@@ -5,7 +5,8 @@
 # @section Global Parameters
 #
 # @descStart
-# Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
+# Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart
+# Note: only global parameters used within this chart, will be listed below
 # @descEnd
 global:
   ## Current available global image parameters: imageRegistry and imagePullSecrets
@@ -39,40 +40,51 @@ global:
   istioVirtualServiceEnabled: false
 
 #
-# @section Configuration Parameters
+# @section ConfigMap Parameters
+#
+configMap:
+  # @key configMap.existingConfigMap The name of an existing config map containing env-config.js.
+  # Note: When it's set, it will disable configmap creation
+  existingConfigMap: ""
+
+#
+# @section UI Parameters
 #
 # @descStart
-# Contains configuration parameters specific to the *Search UI* application
+# Contains parameters specific to the Search User Interface
 # @descEnd
-configuration:
-  # @key configuration.userPortalUiDeployed If set to true, User Portal links will be available within *Search UI*
-  userPortalUiDeployed: true
-  # @key configuration.graphUiDeployed If set to true, Graph UI links will be available within *Search UI*
+ui:
+  # @key ui.graphUiDeployed If set to true, Graph UI links will be available within *Search UI*
   graphUiDeployed: true
-  # @key configuration.dataCatalogUiDeployed If set to true, Data Catalog UI links will be available within *Search UI*
+  # @key ui.userPortalUiDeployed If set to true, User Portal links will be available within *Search UI*
+  userPortalUiDeployed: true
+  # @key ui.dataCatalogUiDeployed If set to true, Data Catalog UI links will be available within *Search UI*
   dataCatalogUiDeployed: true
 
-  # @key configuration.searchUiMaptilerToken MapTiler token for *Search UI*
+  # @key ui.searchUiMaptilerToken MapTiler token for *Search UI*
   searchUiMaptilerToken: "your.maptiler.token.here"
-
   # For examples of the map configuration, see: _secret_config_js.tpl
-  # @key configuration.searchUiMapboxStyleSpecUrl Mapbox style spec URL for *Search UI*
+  # @key ui.searchUiMapboxStyleSpecUrl Mapbox style spec URL for *Search UI*
   # @descStart
   # If set, it will default to a single vector style from any map service that adheres to the Mapbox style spec.
   # @descEnd
   searchUiMapboxStyleSpecUrl: ""
-  # @key configuration.searchUiArcgisToken ArcGIS token for *Search UI*
+  # @key ui.searchUiArcgisToken ArcGIS token for *Search UI*
   # @descStart
   # If set, it can generate multiple layers from any map service that adheres to the Mapbox style spec.
   # @descEnd
   searchUiArcgisToken: ""
-  # @key configuration.existingMapConfigSecretName The name of an existing secret containing map configuration
+  # @key ui.existingMapConfigSecretName The name of an existing secret containing map configuration
   existingMapConfigSecretName: ""
 
-  # @key configuration.oauthClientId The OAuth client id to be used by *Search UI*
-  oauthClientId: "telicent-search-ui"
-  # @key configuration.oauthScope List of OAuth scopes to be used by *Search UI*
-  oauthScope: "openid profile offline_access"
+#
+# @section OAuth Parameters
+#
+oauth:
+  # @key oauth.clientId The OAuth client id to be used by *Search UI*
+  clientId: "telicent-search-ui"
+  # @key oauth.scopes List of OAuth scopes to be used by *Search UI*
+  scopes: "openid profile offline_access"
 
 #
 # @section Common Parameters

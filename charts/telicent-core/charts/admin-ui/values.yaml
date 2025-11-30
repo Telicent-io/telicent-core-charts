@@ -5,7 +5,8 @@
 # @section Global Parameters
 #
 # @descStart
-# Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
+# Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart
+# Note: only global parameters used within this chart, will be listed below
 # @descEnd
 global:
   ## Current available global image parameters: imageRegistry and imagePullSecrets
@@ -28,25 +29,22 @@ global:
   # @key global.authHostDomain Domain associated with Telicent authentication services, including OIDC providers
   authHostDomain: "auth.telicent.io"
 
-  # @key global.istioNamespace Namespace in which Istio is deployed
-  # Note: By default, Istio namespace is set to 'istio-system'
-  istioNamespace: istio-system
-  # @key global.istioServiceAccountName Name of the Istio service account
-  istioServiceAccountName: istio-ingress
-  # @key global.istioGatewayName Name of the Istio Gateway Resource (LB operating at the edge of the mesh)
-  istioGatewayName: ingress-gateway
-  # @key global.istioVirtualServiceEnabled Enable Istio traffic routing to a named destination service
-  istioVirtualServiceEnabled: false
+#
+# @section ConfigMap Parameters
+#
+configMap:
+  # @key configMap.existingConfigMap The name of an existing config map containing env-config.js.
+  # Note: When it's set, it will disable configmap creation
+  existingConfigMap: ""
 
 #
-# @section Configuration Parameters
+# @section OAuth Parameters
 #
-# @descStart
-# Contains configuration parameters specific to the *Search UI* application
-# @descEnd
-configMap:
-  # @key configMap.existingConfigMap The name of an existing config map containing env-config.js. If omitted, a new config map using settings from this values file will be created
-  existingConfigMap: ""
+oauth:
+  # @key oauth.clientId The OAuth client id to be used by *Search UI*
+  clientId: "telicent-admin-ui"
+  # @key oauth.scopes List of OAuth scopes to be used by *Search UI*
+  scopes: "openid profile offline_access"
 
 #
 # @section Common Parameters
@@ -196,4 +194,3 @@ hosts:
   enableAutoCorrect: true
   # @key hosts.traefikProxy Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'
   traefikProxy: "traefik-proxy:8080"
-

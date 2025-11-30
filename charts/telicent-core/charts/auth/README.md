@@ -84,7 +84,8 @@ the [kubernetes documentation](https://kubernetes.io/docs/concepts/configuration
 
 ### Global Parameters
 
-Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
+Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart
+Note: only global parameters used within this chart, will be listed below
 
 | Name                                | Description                                                                                                                                                                            | Value              |
 | ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
@@ -95,21 +96,45 @@ Contains global parameters, these parameters are mirrored within the Telicent co
 | `global.apiHostDomain`              | Domain associated with Telicent Api services                                                                                                                                           | `api.telicent.io`  |
 | `global.authHostDomain`             | Domain associated with Telicent authentication services, including OIDC providers                                                                                                      | `auth.telicent.io` |
 | `global.releaseNameTelicentPreview` | Release name used during the Telicent Preview chart installation. Note: ensure the value is correct, otherwise there will be no access to data-catalog, user-portal & paperback-writer | `""`               |
-| `global.istioNamespace`             | Namespace in which Istio is deployed                                                                                                                                                   | `istio-system`     |
-| `global.istioServiceAccountName`    | Name of the Istio service account                                                                                                                                                      | `istio-ingress`    |
-| `global.istioGatewayName`           | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)                                                                                                              | `ingress-gateway`  |
-| `global.istioVirtualServiceEnabled` | Enable Istio traffic routing to a named destination service                                                                                                                            | `false`            |
 
-### ConfigMap/Configuration Parameters
+### ConfigMap Parameters
 
-Contains configuration parameters specific to the *Auth* application
+| Name                             | Description                                                            | Value |
+| -------------------------------- | ---------------------------------------------------------------------- | ----- |
+| `configMap.existingEnvConfigMap` | Name of existing configmap containing *Auth* Environment Configuration | `""`  |
 
-| Name                             | Description                                                            | Value          |
-| -------------------------------- | ---------------------------------------------------------------------- | -------------- |
-| `configMap.existingEnvConfigMap` | Name of existing configmap containing *Auth* Environment Configuration | `""`           |
-| `configMap.cookieParentDomain`   | Cookie domain scope                                                    | `.telicent.io` |
-| `configMap.cookieSecure`         | Enable secure cookies                                                  | `true`         |
-| `configMap.superUserIdentifier`  | Super user identification if blank all users will be super users       | `""`           |
+### Identity Provider (IDP) Parameters and Secret
+
+Contains details pertinent to the OIDC Identity Provider to be used by the *Auth* OAuth application.
+It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
+For Quick Start purposes, a secret named `tc-auth-gen-idp-auth` will be created if one is not set.
+
+| Name                      | Description                                                                            | Value          |
+| ------------------------- | -------------------------------------------------------------------------------------- | -------------- |
+| `idp.issuerUrl`           | The OpenID Connect issuer URL                                                          | `""`           |
+| `idp.authorizationPath`   | The path to use in combination with the issuer URL for authorization                   | `/auth`        |
+| `idp.jwksPath`            | The path to use in combination with the issuer URL for JWKS                            | `/keys`        |
+| `idp.tokenPath`           | The path to use in combination with the issuer URL for generating tokens               | `/token`       |
+| `idp.cookieParentDomain`  | Cookie domain scope                                                                    | `.telicent.io` |
+| `idp.cookieSecure`        | Enable secure cookies                                                                  | `true`         |
+| `idp.superUserIdentifier` | Super user identification, set to 'ALL' to allow for everyone to be a superuser        | `ALL`          |
+| `idp.clientName`          | The OAuth Client Name (used for display)                                               | `""`           |
+| `idp.emailClaim`          | The OIDC claim containing the user's email                                             | `email`        |
+| `idp.existingSecret`      | Name of an existing secret. The secret must contain 2 keys: 'clientid', 'clientsecret' | `""`           |
+| `idp.clientId`            | The OAuth Client ID                                                                    | `""`           |
+| `idp.clientSecret`        | The OAuth Client Secret                                                                | `""`           |
+
+### ForwardAuth Parameters and Secret
+
+When making requests to the `/auth/forward` endpoint (used by reverse proxies), `X-ForwardAuth-Secret` header is required.
+The secret associated with that header is defined within this section.
+It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
+For Quick Start purposes, a secret named `tc-auth-gen-forward-auth` will be created if one is not set.
+
+| Name                         | Description                                                         | Value |
+| ---------------------------- | ------------------------------------------------------------------- | ----- |
+| `forwardAuth.existingSecret` | Name of an existing secret. The secret must contain 1 key: 'header' | `""`  |
+| `forwardAuth.header`         | The header value to be associated with the `X-ForwardAuth-Secret`.  | `""`  |
 
 ### Java Parameters
 
@@ -144,48 +169,18 @@ For Quick Start purposes, a secret named `tc-auth-usr-psql-auth` will be created
 | `postgresSql.username`       | PostgreSQL username                                                                | `""`  |
 | `postgresSql.password`       | PostgreSQL password                                                                | `""`  |
 
-### Identity Provider (IDP) Parameters and Secret
-
-Contains details pertinent to the OIDC Identity Provider to be used by the *Auth* OAuth application.
-It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
-For Quick Start purposes, a secret named `tc-auth-gen-idp-auth` will be created if one is not set.
-
-| Name                    | Description                                                                            | Value    |
-| ----------------------- | -------------------------------------------------------------------------------------- | -------- |
-| `idp.issuerUrl`         | The OpenID Connect issuer URL                                                          | `""`     |
-| `idp.authorizationPath` | The path to use in combination with the issuer URL for authorization                   | `/auth`  |
-| `idp.jwksPath`          | The path to use in combination with the issuer URL for JWKS                            | `/keys`  |
-| `idp.tokenPath`         | The path to use in combination with the issuer URL for generating tokens               | `/token` |
-| `idp.clientName`        | The OAuth Client Name (used for display)                                               | `""`     |
-| `idp.emailClaim`        | The OIDC claim containing the user's email                                             | `email`  |
-| `idp.existingSecret`    | Name of an existing secret. The secret must contain 2 keys: 'clientid', 'clientsecret' | `""`     |
-| `idp.clientId`          | The OAuth Client ID                                                                    | `""`     |
-| `idp.clientSecret`      | The OAuth Client Secret                                                                | `""`     |
-
-### ForwardAuth Parameters and Secret
-
-When making requests to the `/auth/forward` endpoint (used by reverse proxies), `X-ForwardAuth-Secret` header is required.
-The secret associated with that header is defined within this section.
-It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
-For Quick Start purposes, a secret named `tc-auth-gen-forward-auth` will be created if one is not set.
-
-| Name                         | Description                                                         | Value |
-| ---------------------------- | ------------------------------------------------------------------- | ----- |
-| `forwardAuth.existingSecret` | Name of an existing secret. The secret must contain 1 key: 'header' | `""`  |
-| `forwardAuth.header`         | The header value to be associated with the `X-ForwardAuth-Secret`.  | `""`  |
-
 ### Bootstrap Parameters
 
 Contains configuration to be used to bootstrap a clean instance of the Auth application to a working state.
 
-| Name                                  | Description                                                                                                                                                                           | Value  |
-| ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ |
-| `bootstrap.enabled`                   | Enable                                                                                                                                                                                | `true` |
-| `bootstrap.clients.existingConfigMap` | Name of an existing config map resource containing all required public and confidential clients. If specified, the values for clients.public and clients.confidential will be ignored | `""`   |
-| `bootstrap.clients.public`            | A list of public client objects                                                                                                                                                       | `[]`   |
-| `bootstrap.clients.confidential`      | A list of confidential client objects                                                                                                                                                 | `[]`   |
-| `bootstrap.groups.existingConfigMap`  | Name of an existing config map containing a list of group objects.                                                                                                                    | `""`   |
-| `bootstrap.groups.list`               | A list containing group objects                                                                                                                                                       | `[]`   |
+| Name                                  | Description                                                                                                                                                                           | Value   |
+| ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `bootstrap.enabled`                   | Enable                                                                                                                                                                                | `false` |
+| `bootstrap.clients.existingConfigMap` | Name of an existing config map resource containing all required public and confidential clients. If specified, the values for clients.public and clients.confidential will be ignored | `""`    |
+| `bootstrap.clients.public`            | A list of public client objects                                                                                                                                                       | `[]`    |
+| `bootstrap.clients.confidential`      | A list of confidential client objects                                                                                                                                                 | `[]`    |
+| `bootstrap.groups.existingConfigMap`  | Name of an existing config map containing a list of group objects.                                                                                                                    | `""`    |
+| `bootstrap.groups.list`               | A list containing group objects                                                                                                                                                       | `[]`    |
 
 ### Common Parameters
 

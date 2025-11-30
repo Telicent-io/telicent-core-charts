@@ -5,7 +5,7 @@
 # @section Global Parameters
 #
 # @descStart
-# Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
+# Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart
 # Note: only global parameters used within this chart, will be listed below
 # @descEnd
 global:
@@ -70,7 +70,7 @@ java:
 # @descEnd
 elastic:
   # @key elastic.host Elastic/OpenSearch host
-  # Note: This should be the URL of your Elastic/OpenSearch instance, including protocol (https or http)
+  # Note: This should be the URL of your Elastic/OpenSearch service, including protocol (https or http)
   host: https://your.opensearch.host
   # @key elastic.port Elastic/OpenSearch port number
   port: "443"

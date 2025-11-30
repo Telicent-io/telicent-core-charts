@@ -83,7 +83,7 @@ the [kubernetes documentation](https://kubernetes.io/docs/concepts/configuration
 
 ### Global Parameters
 
-Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
+Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart
 Note: only global parameters used within this chart, will be listed below.
 
 | Name                                    | Description                                                                                                                                                                            | Value                                          |
@@ -105,8 +105,6 @@ Note: only global parameters used within this chart, will be listed below.
 | `global.truststore.mountPath`           | The mount path for the truststore in the container                                                                                                                                     | `/app/config/truststore`                       |
 
 ### ConfigMap Parameters
-
-Contains configuration parameters specific to the *Graph* application
 
 | Name                                | Description                                                             | Value |
 | ----------------------------------- | ----------------------------------------------------------------------- | ----- |

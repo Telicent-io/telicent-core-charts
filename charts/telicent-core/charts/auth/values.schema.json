@@ -40,26 +40,6 @@
                     "type": "string",
                     "description": "Release name used during the Telicent Preview chart installation. Note: ensure the value is correct, otherwise there will be no access to data-catalog, user-portal & paperback-writer",
                     "default": ""
-                },
-                "istioNamespace": {
-                    "type": "string",
-                    "description": "Namespace in which Istio is deployed",
-                    "default": "istio-system"
-                },
-                "istioServiceAccountName": {
-                    "type": "string",
-                    "description": "Name of the Istio service account",
-                    "default": "istio-ingress"
-                },
-                "istioGatewayName": {
-                    "type": "string",
-                    "description": "Name of the Istio Gateway Resource (LB operating at the edge of the mesh)",
-                    "default": "ingress-gateway"
-                },
-                "istioVirtualServiceEnabled": {
-                    "type": "boolean",
-                    "description": "Enable Istio traffic routing to a named destination service",
-                    "default": false
                 }
             }
         },
@@ -70,6 +50,31 @@
                     "type": "string",
                     "description": "Name of existing configmap containing *Auth* Environment Configuration",
                     "default": ""
+                }
+            }
+        },
+        "idp": {
+            "type": "object",
+            "properties": {
+                "issuerUrl": {
+                    "type": "string",
+                    "description": "The OpenID Connect issuer URL",
+                    "default": ""
+                },
+                "authorizationPath": {
+                    "type": "string",
+                    "description": "The path to use in combination with the issuer URL for authorization",
+                    "default": "/auth"
+                },
+                "jwksPath": {
+                    "type": "string",
+                    "description": "The path to use in combination with the issuer URL for JWKS",
+                    "default": "/keys"
+                },
+                "tokenPath": {
+                    "type": "string",
+                    "description": "The path to use in combination with the issuer URL for generating tokens",
+                    "default": "/token"
                 },
                 "cookieParentDomain": {
                     "type": "string",
@@ -83,7 +88,47 @@
                 },
                 "superUserIdentifier": {
                     "type": "string",
-                    "description": "Super user identification if blank all users will be super users",
+                    "description": "Super user identification, set to 'ALL' to allow for everyone to be a superuser",
+                    "default": "ALL"
+                },
+                "clientName": {
+                    "type": "string",
+                    "description": "The OAuth Client Name (used for display)",
+                    "default": ""
+                },
+                "emailClaim": {
+                    "type": "string",
+                    "description": "The OIDC claim containing the user's email",
+                    "default": "email"
+                },
+                "existingSecret": {
+                    "type": "string",
+                    "description": "Name of an existing secret. The secret must contain 2 keys: 'clientid', 'clientsecret'",
+                    "default": ""
+                },
+                "clientId": {
+                    "type": "string",
+                    "description": "The OAuth Client ID",
+                    "default": ""
+                },
+                "clientSecret": {
+                    "type": "string",
+                    "description": "The OAuth Client Secret",
+                    "default": ""
+                }
+            }
+        },
+        "forwardAuth": {
+            "type": "object",
+            "properties": {
+                "existingSecret": {
+                    "type": "string",
+                    "description": "Name of an existing secret. The secret must contain 1 key: 'header'",
+                    "default": ""
+                },
+                "header": {
+                    "type": "string",
+                    "description": "The header value to be associated with the `X-ForwardAuth-Secret`.",
                     "default": ""
                 }
             }
@@ -198,78 +243,13 @@
                 }
             }
         },
-        "idp": {
-            "type": "object",
-            "properties": {
-                "issuerUrl": {
-                    "type": "string",
-                    "description": "The OpenID Connect issuer URL",
-                    "default": ""
-                },
-                "authorizationPath": {
-                    "type": "string",
-                    "description": "The path to use in combination with the issuer URL for authorization",
-                    "default": "/auth"
-                },
-                "jwksPath": {
-                    "type": "string",
-                    "description": "The path to use in combination with the issuer URL for JWKS",
-                    "default": "/keys"
-                },
-                "tokenPath": {
-                    "type": "string",
-                    "description": "The path to use in combination with the issuer URL for generating tokens",
-                    "default": "/token"
-                },
-                "clientName": {
-                    "type": "string",
-                    "description": "The OAuth Client Name (used for display)",
-                    "default": ""
-                },
-                "emailClaim": {
-                    "type": "string",
-                    "description": "The OIDC claim containing the user's email",
-                    "default": "email"
-                },
-                "existingSecret": {
-                    "type": "string",
-                    "description": "Name of an existing secret. The secret must contain 2 keys: 'clientid', 'clientsecret'",
-                    "default": ""
-                },
-                "clientId": {
-                    "type": "string",
-                    "description": "The OAuth Client ID",
-                    "default": ""
-                },
-                "clientSecret": {
-                    "type": "string",
-                    "description": "The OAuth Client Secret",
-                    "default": ""
-                }
-            }
-        },
-        "forwardAuth": {
-            "type": "object",
-            "properties": {
-                "existingSecret": {
-                    "type": "string",
-                    "description": "Name of an existing secret. The secret must contain 1 key: 'header'",
-                    "default": ""
-                },
-                "header": {
-                    "type": "string",
-                    "description": "The header value to be associated with the `X-ForwardAuth-Secret`.",
-                    "default": ""
-                }
-            }
-        },
         "bootstrap": {
             "type": "object",
             "properties": {
                 "enabled": {
                     "type": "boolean",
                     "description": "Enable",
-                    "default": true
+                    "default": false
                 },
                 "clients": {
                     "type": "object",
