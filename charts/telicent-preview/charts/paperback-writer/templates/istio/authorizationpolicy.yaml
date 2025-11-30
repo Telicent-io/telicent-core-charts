@@ -1,13 +1,12 @@
 {{- /*
 Copyright (C) 2025 Telicent Limited
 */}}
-
 {{- if .Values.enabled -}}
 apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
 
 metadata:
-  name: {{ include "paperback-writer.fullname" .}}-ingress
+  name: {{ include "paperback-writer.fullname" . }}-ingress
 spec:
   selector:
     matchLabels:

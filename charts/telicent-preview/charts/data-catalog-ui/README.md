@@ -10,7 +10,7 @@ the [Helm](https://helm.sh) package manager.
 ## Prerequisites
 
 - Kubernetes 1.23+
-- Helm 3.8.0+
+- Helm 3.9+
 
 ## Installing the Chart
 
@@ -40,40 +40,149 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ## Configuration and installation details
 
+### Resource requests and limits
+
+These are inside the `resources` value (check parameter table). Setting requests is essential for production workloads
+and these should be adapted to your specific use case.
+
+### Sidecars and Init Containers
+
+If you have a need for additional containers to run within the same pod (e.g. an additional metrics or logging
+exporter), you can do so via the `sidecars` config parameter.
+Define your container according to the Kubernetes container spec.
+
+```yaml
+sidecars:
+- name: your-image-name
+  image: your-image
+  imagePullPolicy: Always
+  ports:
+  - name: portname
+    containerPort: 1234
+```
+
+Similarly, you can add extra init containers using the `initContainers` parameter.
+
+```yaml
+initContainers:
+- name: your-image-name
+  image: your-image
+  imagePullPolicy: Always
+  ports:
+  - name: portname
+    containerPort: 1234
+```
+
+### Setting Pod's affinity
+
+This chart allows you to set your custom affinity using the `affinity` parameter.
+Find more information about Pod's affinity in
+the [kubernetes documentation](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity).
+
+
 ## Parameters
 
-### Configuration Parameters
+### Global Parameters
 
-Contains configuration parameters specific to the *Data Catalog UI* application
+Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart
+Note: Only global parameters used within this chart will be listed below
 
-| Name                          | Description                                                                                                                                                                  | Value                           |
-| ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------- |
-| `configuration.oauthClientId` | The OAuth client id to be used by *Search UI*                                                                                                                                | `telicent-data-catalog-ui`      |
-| `configuration.oauthScope`    | List of OAuth scopes to be used by *Search UI*                                                                                                                               | `openid profile offline_access` |
-| `imagePullSecrets`            | Specify registry secret names as an array                                                                                                                                    | `[]`                            |
-| `nameOverride`                | String to partially override the chart name                                                                                                                                  | `""`                            |
-| `fullnameOverride`            | String to fully override the generated release name                                                                                                                          | `""`                            |
-| `serviceAccount.create`       | Specifies whether a service account should be created                                                                                                                        | `true`                          |
-| `serviceAccount.automount`    | Automatically mount a ServiceAccount's API credentials?                                                                                                                      | `true`                          |
-| `serviceAccount.annotations`  | Annotations to add to the service account                                                                                                                                    | `{}`                            |
-| `serviceAccount.name`         | The name of the service account to use                                                                                                                                       | `""`                            |
-| `podAnnotations`              | Annotations to add to the Data Catalog pods                                                                                                                                  | `{}`                            |
-| `podLabels`                   | Labels to add to the Data Catalog pods                                                                                                                                       | `{}`                            |
-| `podSecurityContext`          | Security context for the Data Catalog pods                                                                                                                                   | `{}`                            |
-| `securityContext`             | Security context for the Data Catalog containers                                                                                                                             | `{}`                            |
-| `service.type`                | The service type for the Data Catalog                                                                                                                                        | `ClusterIP`                     |
-| `service.port`                | The service port for the Data Catalog                                                                                                                                        | `8080`                          |
-| `resources`                   | Resource requests and limits for the Data Catalog                                                                                                                            | `{}`                            |
-| `livenessProbe.httpGet.path`  | The HTTP path for the liveness probe                                                                                                                                         | `/`                             |
-| `livenessProbe.httpGet.port`  | The HTTP port for the liveness probe                                                                                                                                         | `http`                          |
-| `readinessProbe.httpGet.path` | The HTTP path for the readiness probe                                                                                                                                        | `/`                             |
-| `readinessProbe.httpGet.port` | The HTTP port for the readiness probe                                                                                                                                        | `http`                          |
-| `volumes`                     | Additional volumes for the Data Catalog                                                                                                                                      | `[]`                            |
-| `volumeMounts`                | Additional volume mounts for the Data Catalog                                                                                                                                | `[]`                            |
-| `nodeSelector`                | Node selector for the Data Catalog pods                                                                                                                                      | `{}`                            |
-| `tolerations`                 | Tolerations for the Data Catalog pods                                                                                                                                        | `[]`                            |
-| `affinity`                    | Affinity rules for the Data Catalog pods                                                                                                                                     | `{}`                            |
-| `istio.ingress.principal`     | Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName' | `""`                            |
+| Name                      | Description                                                                       | Value              |
+| ------------------------- | --------------------------------------------------------------------------------- | ------------------ |
+| `global.imageRegistry`    | Global image registry                                                             | `""`               |
+| `global.imagePullSecrets` | Global registry secret names as an array                                          | `[]`               |
+| `global.enterprise`       | Enable enterprise mode, adding additional features and configurations             | `false`            |
+| `global.appHostDomain`    | Domain associated with Telicent application/ui services                           | `apps.telicent.io` |
+| `global.apiHostDomain`    | Domain associated with Telicent Api services                                      | `api.telicent.io`  |
+| `global.authHostDomain`   | Domain associated with Telicent authentication services, including OIDC providers | `auth.telicent.io` |
+
+### ConfigMap Parameters
+
+| Name                          | Description                                                  | Value |
+| ----------------------------- | ------------------------------------------------------------ | ----- |
+| `configMap.existingConfigMap` | The name of an existing config map containing env-config.js. | `""`  |
+
+### OAuth Parameters
+
+| Name             | Description                                          | Value                           |
+| ---------------- | ---------------------------------------------------- | ------------------------------- |
+| `oauth.clientId` | The OAuth client id to be used by *Data Catalog UI*  | `telicent-data-catalog-ui`      |
+| `oauth.scopes`   | List of OAuth scopes to be used by *Data Catalog UI* | `openid profile offline_access` |
+
+### Common Parameters
+
+| Name                | Description                                                            | Value |
+| ------------------- | ---------------------------------------------------------------------- | ----- |
+| `nameOverride`      | String to partially override fullname (will maintain the release name) | `""`  |
+| `fullnameOverride`  | String to fully override the generated release name                    | `""`  |
+| `namespaceOverride` | String to fully override all deployed resources namespace              | `""`  |
+| `commonLabels`      | Add labels to all the deployed resources                               | `{}`  |
+
+### Deployment Parameters
+
+| Name                                                | Description                                                                      | Value                            |
+| --------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------- |
+| `replicas`                                          | Number of *Data Catalog UI* replicas to deploy                                   | `1`                              |
+| `revisionHistoryLimit`                              | Number of controller revisions to keep                                           | `5`                              |
+| `annotations`                                       | Add extra annotations to the deployment object                                   | `{}`                             |
+| `podLabels`                                         | Add extra labels to the *Data Catalog UI* pod                                    | `{}`                             |
+| `podAnnotations`                                    | Add extra annotations to the *Data Catalog UI* pod                               | `{}`                             |
+| `extraEnvVars`                                      | Array with extra environment variables to add to *Data Catalog UI* pod           | `[]`                             |
+| `extraVolumes`                                      | Additional containers to be added to the *Data Catalog UI* pod                   | `[]`                             |
+| `extraVolumeMounts`                                 | Optionally specify extra list of additional volumeMounts                         | `[]`                             |
+| `initContainers`                                    | Add init containers to the pod                                                   | `[]`                             |
+| `sidecars`                                          | Add sidecars to the pod.                                                         | `[]`                             |
+| `image.registry`                                    | *Data Catalog UI* image registry                                                 | `quay.io`                        |
+| `image.repository`                                  | *Data Catalog UI* image name                                                     | `telicent/telicent-data-catalog` |
+| `image.tag`                                         | *Data Catalog UI* image tag. If not set, a tag is generated using the appVersion | `""`                             |
+| `image.pullPolicy`                                  | *Data Catalog UI* image pull policy                                              | `IfNotPresent`                   |
+| `image.pullSecrets`                                 | Specify registry secret names as an array                                        | `[]`                             |
+| `resources.requests.cpu`                            | Set containers' CPU request                                                      | `250m`                           |
+| `resources.requests.memory`                         | Set containers' memory request                                                   | `500Mi`                          |
+| `resources.limits.cpu`                              | Set containers' CPU limit                                                        | `500m`                           |
+| `resources.limits.memory`                           | Set containers' memory limit                                                     | `1000Mi`                         |
+| `containerSecurityContext.runAsUser`                | Set containers' Security Context runAsUser User ID                               | `185`                            |
+| `containerSecurityContext.runAsGroup`               | Set containers' Security Context runAsGroup Group ID                             | `185`                            |
+| `containerSecurityContext.runAsNonRoot`             | Set container's Security Context runAsNonRoot                                    | `true`                           |
+| `containerSecurityContext.allowPrivilegeEscalation` | Set container's Security Context allowPrivilegeEscalation                        | `false`                          |
+| `containerSecurityContext.capabilities.drop`        | List of capabilities to be dropped                                               | `["ALL"]`                        |
+| `containerSecurityContext.seccompProfile.type`      | Set container's Security Context seccomp profile                                 | `RuntimeDefault`                 |
+| `podSecurityContext.runAsUser`                      | Set the provisioning pod's Security Context runAsUser User ID                    | `185`                            |
+| `podSecurityContext.runAsGroup`                     | Set the provisioning pod's Security Context runAsGroup Group ID                  | `185`                            |
+| `podSecurityContext.runAsNonRoot`                   | Set the provisioning pod's Security Context runAsNonRoot                         | `true`                           |
+| `podSecurityContext.fsGroup`                        | Set the provisioning pod's Group ID for the mounted volumes' filesystem          | `185`                            |
+| `podSecurityContext.seccompProfile.type`            | Set the provisioning pod's Security Context seccomp profile                      | `RuntimeDefault`                 |
+| `affinity`                                          | Affinity for pod assignment                                                      | `{}`                             |
+| `nodeSelector`                                      | Node labels for pod assignment                                                   | `{}`                             |
+| `tolerations`                                       | Tolerations for pod assignment                                                   | `[]`                             |
+
+### Service Account Parameters
+
+| Name                         | Description                                                                           | Value  |
+| ---------------------------- | ------------------------------------------------------------------------------------- | ------ |
+| `serviceAccount.create`      | Specifies whether a service account should be created                                 | `true` |
+| `serviceAccount.name`        | Name of the ServiceAccount to use. If not set, a name is generated using the fullname | `""`   |
+| `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                  | `{}`   |
+| `serviceAccount.automount`   | Automatically mount a ServiceAccount's API credentials                                | `true` |
+
+### Traffic Exposure Parameters
+
+| Name           | Description                                                                        | Value       |
+| -------------- | ---------------------------------------------------------------------------------- | ----------- |
+| `service.name` | *Data Catalog UI* service name. If not set, a name is generated using the fullname | `""`        |
+| `service.port` | *Data Catalog UI* service port                                                     | `8080`      |
+| `service.type` | *Data Catalog UI* service type                                                     | `ClusterIP` |
+
+### Host(s) Core Parameters - Contains host information for applications deployed via *telicent-core* chart
+
+*Data Catalog UI* interacts with applications deployed via *telicent-core* using their default service/serviceAccount and port.
+If either of those details changes, you can use this section to correctly referer to those applications.
+
+| Name                          | Description                                                                                                                             | Value                |
+| ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
+| `hostsCore.enableAutoCorrect` | Prefix 'global.releaseNameTelicentCore' to each host value. Alternatively, the host value will be used as is, without any modification. | `true`               |
+| `hostsCore.traefikProxy`      | Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'                                               | `traefik-proxy:8080` |
+| `hostsCore.auth`              | Auth application default host value, as defined by 'service/serviceAccount:port'                                                        | `auth:8080`          |
 
 
 ## License

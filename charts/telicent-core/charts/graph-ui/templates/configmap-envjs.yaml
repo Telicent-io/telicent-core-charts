@@ -14,16 +14,14 @@ metadata:
 data:
   env-config.js: |
     // UIs
-    {{ if .Values.configuration.dataCatalogUiDeployed }}
+    {{ if .Values.ui.dataCatalogUiDeployed }}
     window.CATALOG_APP_URL = "https://{{ .Values.global.appHostDomain }}/data-catalog";
     {{ end }}
-    {{ if .Values.configuration.graphUiDeployed }}
     window.GRAPH_APP_URL = "https://{{ .Values.global.appHostDomain }}/graph";
-    {{ end }}
-    {{ if .Values.configuration.searchUiDeployed }}
+    {{ if .Values.ui.searchUiDeployed }}
     window.SEARCH_APP_URL = "https://{{ .Values.global.appHostDomain }}/search";
     {{ end }}
-    {{ if .Values.configuration.userPortalUiDeployed }}
+    {{ if .Values.ui.userPortalUiDeployed }}
     window.USER_PORTAL_URL = "https://{{ .Values.global.appHostDomain }}/user-portal/";
     {{ end }}
 
@@ -48,7 +46,7 @@ data:
 
     // `appList` configures the menu that allows users to switch between different apps
     window.appList = [
-    {{ if .Values.configuration.userPortalUiDeployed }}
+    {{ if .Values.ui.userPortalUiDeployed }}
         {
             id: "telicent-user-portal",
             name: "user portal",
@@ -56,7 +54,7 @@ data:
             icon: "/search/assets/icons/UserPortalDark.svg",
         },
     {{ end }}
-    {{ if .Values.configuration.searchUiDeployed }}
+    {{ if .Values.ui.searchUiDeployed }}
         {
             id: "telicent-search",
             name: "search",
@@ -64,7 +62,7 @@ data:
             icon: "/search/assets/icons/SearchDark.svg",
         },
     {{ end }}
-    {{ if .Values.configuration.dataCatalogUiDeployed }}
+    {{ if .Values.ui.dataCatalogUiDeployed }}
         {
             id: "telicent-catalog",
             name: "catalog",
@@ -87,8 +85,8 @@ data:
     
     window.AUTH_V2_CONFIG = {
       authServerUrl: "https://{{ .Values.global.authHostDomain }}",
-      clientId: "{{ .Values.configuration.oauthClientId }}",
-      scope: "{{ .Values.configuration.oauthScope }}",
+      clientId: "{{ .Values.oauth.clientId }}",
+      scope: "{{ .Values.oauth.scopes }}",
       redirectUri: "https://{{ .Values.global.appHostDomain }}/graph/callback",
       popupRedirectUri: "https://{{ .Values.global.appHostDomain }}/graph/auth-redirect-uri",
     };

@@ -10,7 +10,7 @@ the [Helm](https://helm.sh) package manager.
 ## Prerequisites
 
 - Kubernetes 1.23+
-- Helm 3.8.0+
+- Helm 3.9+
 
 ## Installing the Chart
 
@@ -40,11 +40,52 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ## Configuration and installation details
 
+### Resource requests and limits
+
+These are inside the `resources` value (check parameter table). Setting requests is essential for production workloads
+and these should be adapted to your specific use case.
+
+### Sidecars and Init Containers
+
+If you have a need for additional containers to run within the same pod (e.g. an additional metrics or logging
+exporter), you can do so via the `sidecars` config parameter.
+Define your container according to the Kubernetes container spec.
+
+```yaml
+sidecars:
+- name: your-image-name
+  image: your-image
+  imagePullPolicy: Always
+  ports:
+  - name: portname
+    containerPort: 1234
+```
+
+Similarly, you can add extra init containers using the `initContainers` parameter.
+
+```yaml
+initContainers:
+- name: your-image-name
+  image: your-image
+  imagePullPolicy: Always
+  ports:
+  - name: portname
+    containerPort: 1234
+```
+
+### Setting Pod's affinity
+
+This chart allows you to set your custom affinity using the `affinity` parameter.
+Find more information about Pod's affinity in
+the [kubernetes documentation](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity).
+
+
 ## Parameters
 
 ### Global Parameters
 
-Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
+Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart
+Note: Only global parameters used within this chart will be listed below
 
 | Name                                | Description                                                                       | Value              |
 | ----------------------------------- | --------------------------------------------------------------------------------- | ------------------ |
@@ -59,23 +100,34 @@ Contains global parameters, these parameters are mirrored within the Telicent co
 | `global.istioGatewayName`           | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)         | `ingress-gateway`  |
 | `global.istioVirtualServiceEnabled` | Enable Istio traffic routing to a named destination service                       | `false`            |
 
-### Configuration Parameters
+### ConfigMap Parameters
 
-Contains configuration parameters specific to the *Search UI* application
+| Name                          | Description                                                  | Value |
+| ----------------------------- | ------------------------------------------------------------ | ----- |
+| `configMap.existingConfigMap` | The name of an existing config map containing env-config.js. | `""`  |
+
+### UI Parameters
+
+Contains parameters specific to the Search User Interface
 If set, it will default to a single vector style from any map service that adheres to the Mapbox style spec.
 If set, it can generate multiple layers from any map service that adheres to the Mapbox style spec.
 
-| Name                                        | Description                                                                | Value                           |
-| ------------------------------------------- | -------------------------------------------------------------------------- | ------------------------------- |
-| `configuration.userPortalUiDeployed`        | If set to true, User Portal links will be available within *Search UI*     | `true`                          |
-| `configuration.graphUiDeployed`             | If set to true, Graph UI links will be available within *Search UI*        | `true`                          |
-| `configuration.dataCatalogUiDeployed`       | If set to true, Data Catalog UI links will be available within *Search UI* | `true`                          |
-| `configuration.searchUiMaptilerToken`       | MapTiler token for *Search UI*                                             | `your.maptiler.token.here`      |
-| `configuration.searchUiMapboxStyleSpecUrl`  | Mapbox style spec URL for *Search UI*                                      | `""`                            |
-| `configuration.searchUiArcgisToken`         | ArcGIS token for *Search UI*                                               | `""`                            |
-| `configuration.existingMapConfigSecretName` | The name of an existing secret containing map configuration                | `""`                            |
-| `configuration.oauthClientId`               | The OAuth client id to be used by *Search UI*                              | `telicent-search-ui`            |
-| `configuration.oauthScope`                  | List of OAuth scopes to be used by *Search UI*                             | `openid profile offline_access` |
+| Name                             | Description                                                                | Value                      |
+| -------------------------------- | -------------------------------------------------------------------------- | -------------------------- |
+| `ui.graphUiDeployed`             | If set to true, Graph UI links will be available within *Search UI*        | `true`                     |
+| `ui.userPortalUiDeployed`        | If set to true, User Portal links will be available within *Search UI*     | `true`                     |
+| `ui.dataCatalogUiDeployed`       | If set to true, Data Catalog UI links will be available within *Search UI* | `true`                     |
+| `ui.searchUiMaptilerToken`       | MapTiler token for *Search UI*                                             | `your.maptiler.token.here` |
+| `ui.searchUiMapboxStyleSpecUrl`  | Mapbox style spec URL for *Search UI*                                      | `""`                       |
+| `ui.searchUiArcgisToken`         | ArcGIS token for *Search UI*                                               | `""`                       |
+| `ui.existingMapConfigSecretName` | The name of an existing secret containing map configuration                | `""`                       |
+
+### OAuth Parameters
+
+| Name             | Description                                    | Value                           |
+| ---------------- | ---------------------------------------------- | ------------------------------- |
+| `oauth.clientId` | The OAuth client id to be used by *Search UI*  | `telicent-search-ui`            |
+| `oauth.scopes`   | List of OAuth scopes to be used by *Search UI* | `openid profile offline_access` |
 
 ### Common Parameters
 
@@ -141,12 +193,15 @@ If set, it can generate multiple layers from any map service that adheres to the
 | `service.port` | *Search UI* service port                                                     | `8080`      |
 | `service.type` | *Search UI* service type                                                     | `ClusterIP` |
 
-### Istio Parameters
+### Host(s) Parameters - Contains host information for applications deployed via *telicent-core* chart.
 
-| Name                               | Description                                                                                                                                              | Value           |
-| ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- |
-| `istio.ingress.principal`          | Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName | `""`            |
-| `istio.ingress.serviceAccountName` | Name of the Ingress service account (traefik and istio supported)                                                                                        | `traefik-proxy` |
+*Search UI* interacts directly with other Telicent Applications using their default service/serviceAccount and port.
+If either of those details changes, you can use this section to correctly referer to those applications.
+
+| Name                      | Description                                                                                                                                                                                                                        | Value                |
+| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
+| `hosts.enableAutoCorrect` | Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as is, without any modification. | `true`               |
+| `hosts.traefikProxy`      | Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                          | `traefik-proxy:8080` |
 
 
 ## License

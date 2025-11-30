@@ -33,8 +33,9 @@ spec:
       {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.podAnnotations }}
       annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap-envjs.yaml") . | sha256sum }}
+      {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
 
@@ -110,8 +111,8 @@ spec:
           name: {{ include "search-ui.configMapName" . }}
       - name: secret-config-js-volume
         secret:
-      {{- if .Values.configuration.existingMapConfigSecretName }}
-          secretName: {{ .Values.configuration.existingMapConfigSecretName }}
+      {{- if .Values.ui.existingMapConfigSecretName }}
+          secretName: {{ .Values.ui.existingMapConfigSecretName }}
       {{- else }}
           secretName: {{ include "search-ui.fullname" . }}-secret-config-js
       {{- end }}  

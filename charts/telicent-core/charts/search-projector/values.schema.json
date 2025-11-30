@@ -16,46 +16,6 @@
                     "default": [],
                     "items": {}
                 },
-                "enterprise": {
-                    "type": "boolean",
-                    "description": "Enable enterprise mode, adding additional features and configurations",
-                    "default": false
-                },
-                "appHostDomain": {
-                    "type": "string",
-                    "description": "Domain associated with Telicent application/ui services",
-                    "default": "apps.telicent.io"
-                },
-                "apiHostDomain": {
-                    "type": "string",
-                    "description": "Domain associated with Telicent Api services",
-                    "default": "api.telicent.io"
-                },
-                "authHostDomain": {
-                    "type": "string",
-                    "description": "Domain associated with Telicent authentication services, including OIDC providers",
-                    "default": "auth.telicent.io"
-                },
-                "jwksUrl": {
-                    "type": "string",
-                    "description": "Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)",
-                    "default": "https://{yourAuthdomain}/.well-known/jwks.json"
-                },
-                "istioNamespace": {
-                    "type": "string",
-                    "description": "Namespace in which Istio is deployed",
-                    "default": "istio-system"
-                },
-                "istioServiceAccountName": {
-                    "type": "string",
-                    "description": "Name of the Istio service account",
-                    "default": "istio-ingress"
-                },
-                "istioGatewayName": {
-                    "type": "string",
-                    "description": "Name of the Istio Gateway Resource (LB operating at the edge of the mesh)",
-                    "default": "ingress-gateway"
-                },
                 "kafka": {
                     "type": "object",
                     "properties": {
@@ -108,42 +68,42 @@
                 }
             }
         },
-        "configuration": {
+        "configMap": {
             "type": "object",
             "properties": {
                 "existingEnvConfigMap": {
                     "type": "string",
                     "description": "Name of existing configmap containing *Search Projector* Environment Configuration",
                     "default": ""
-                },
-                "javaOptions": {
+                }
+            }
+        },
+        "java": {
+            "type": "object",
+            "properties": {
+                "jvmOptions": {
                     "type": "string",
                     "description": "JVM options for the application",
-                    "default": "-XX:MaxRAMPercentage=70.0 -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks"
-                },
-                "otelMetricsExporter": {
+                    "default": "-XX:MaxRAMPercentage=80.0"
+                }
+            }
+        },
+        "elastic": {
+            "type": "object",
+            "properties": {
+                "host": {
                     "type": "string",
-                    "description": "OpenTelemetry metrics exporter",
-                    "default": "prometheus"
+                    "description": "Elastic/OpenSearch host",
+                    "default": "https://your.opensearch.host"
                 },
-                "otelTracesExporter": {
+                "port": {
                     "type": "string",
-                    "description": "OpenTelemetry traces exporter",
-                    "default": "none"
-                },
-                "elasticHost": {
-                    "type": "string",
-                    "description": "OpenSearch host",
-                    "default": "https://your.opensearch.host.here:443"
-                },
-                "elasticPort": {
-                    "type": "string",
-                    "description": "OpenSearch port number",
+                    "description": "Elastic/OpenSearch port number",
                     "default": "443"
                 },
-                "elasticClusterPort": {
+                "clusterPort": {
                     "type": "string",
-                    "description": "OpenSearch cluster port",
+                    "description": "Elastic/OpenSearch cluster port",
                     "default": "9200"
                 },
                 "opensearchCompatibility": {
@@ -151,9 +111,9 @@
                     "description": "Enable OpenSearch compatibility",
                     "default": "true"
                 },
-                "elasticIndex": {
+                "indexName": {
                     "type": "string",
-                    "description": "Name of the index in OpenSearch",
+                    "description": "Elastic/OpenSearch index name",
                     "default": "search"
                 },
                 "topic": {
@@ -168,17 +128,12 @@
                 },
                 "indexBatchSize": {
                     "type": "string",
-                    "description": "Batch size for indexing documents",
+                    "description": "Number of documents to index in a single batch operation",
                     "default": "500"
-                }
-            }
-        },
-        "elasticSecret": {
-            "type": "object",
-            "properties": {
+                },
                 "existingSecret": {
                     "type": "string",
-                    "description": "Name of an existing secret resource containing the username & password",
+                    "description": "Name of an existing secret. The secret must contain 2 keys: 'username', 'password'",
                     "default": ""
                 },
                 "username": {
@@ -193,15 +148,25 @@
                 }
             }
         },
+        "nameOverride": {
+            "type": "string",
+            "description": "String to partially override fullname (will maintain the release name)",
+            "default": ""
+        },
         "fullnameOverride": {
             "type": "string",
             "description": "String to fully override the generated release name",
             "default": ""
         },
-        "nameOverride": {
+        "namespaceOverride": {
             "type": "string",
-            "description": "String to partially override fullname (will maintain the release name)",
+            "description": "String to fully override all deployed resources namespace",
             "default": ""
+        },
+        "commonLabels": {
+            "type": "object",
+            "description": "Add labels to all the deployed resources",
+            "default": {}
         },
         "replicas": {
             "type": "number",
@@ -269,11 +234,11 @@
                 "repository": {
                     "type": "string",
                     "description": "*Search Projector* image name",
-                    "default": "REPOSITORY_NAME/search-values.yaml-server"
+                    "default": "REPOSITORY_NAME/smart-cache-elastic-index"
                 },
                 "tag": {
                     "type": "string",
-                    "description": "Search Projector image tag. If not set, a tag is generated using the appVersion",
+                    "description": "*Search Projector* image tag. If not set, a tag is generated using the appVersion",
                     "default": ""
                 },
                 "pullPolicy": {
@@ -457,11 +422,6 @@
                     "type": "string",
                     "description": "*Search Projector* service name. If not set, a name is generated using the fullname",
                     "default": ""
-                },
-                "port": {
-                    "type": "number",
-                    "description": "*Search Projector* service port",
-                    "default": 8181
                 },
                 "type": {
                     "type": "string",
