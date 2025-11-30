@@ -1,18 +1,24 @@
-{{- if and (not .Values.existingConfigMapName) (.Values.enabled)  -}}
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+{{- if and (.Values.enabled) (not .Values.existingConfigMapName) -}}
 apiVersion: v1
 kind: ConfigMap
+
 metadata:
   name: {{ include "paperback-writer.configMapName" . }}
+  namespace: {{ include "paperback-writer.namespace" . | quote }}
   labels:
     {{- include "paperback-writer.labels" . | nindent 4 }}
+
 data:
-  #todo: ab fix this up
-  SPARQL_URL:  {{ printf "http://%s.%s:%s" "graph" .Release.Namespace "8080" | quote }}
   SPARQL_DEFAULT_LABEL: {{ .Values.configuration.sparqlDefaultLabel | default "!" |  quote }}
+  SPARQL_URL:  {{ printf "http://%s" (include "paperback-writer.hostGraph" . )  | quote }}
+
   JWT_HEADER: {{ .Values.configuration.jwtHeader | default "Authorization" }}
   JWT_USER_ID_ATTR: "preferred_name"
   JWKS_CA_CERT_PATH: {{ .Values.configuration.cacertPath | quote }}
-  JWKS_URL: {{ printf "%s%s%s" "https://" .Values.global.authHostDomain "/oauth2/jwks" | quote }}
-  AUTH_SERVER_BASE_URL: {{ printf "http://%s.%s:%s" "auth" .Release.Namespace "8080" | quote }}
+  JWKS_URL: {{ printf "https://%s%s" .Values.global.authHostDomain "/oauth2/jwks" | quote }}
+  AUTH_SERVER_BASE_URL: {{ printf "http://%s" (include "paperback-writer.hostAuth" . ) | quote }}
 
 {{- end }}

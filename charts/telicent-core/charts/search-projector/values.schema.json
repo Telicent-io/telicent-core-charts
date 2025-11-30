@@ -234,11 +234,11 @@
                 "repository": {
                     "type": "string",
                     "description": "*Search Projector* image name",
-                    "default": "REPOSITORY_NAME/search-values.yaml-server"
+                    "default": "REPOSITORY_NAME/smart-cache-elastic-index"
                 },
                 "tag": {
                     "type": "string",
-                    "description": "Search Projector image tag. If not set, a tag is generated using the appVersion",
+                    "description": "*Search Projector* image tag. If not set, a tag is generated using the appVersion",
                     "default": ""
                 },
                 "pullPolicy": {

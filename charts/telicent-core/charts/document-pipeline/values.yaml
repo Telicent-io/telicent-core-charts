@@ -11,7 +11,7 @@ extraContainers: []
 # @section Global Parameters
 # @descStart
 # Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart
-# Note: only global parameters used within this chart, will be listed below
+# Note: Only global parameters used within this chart will be listed below
 # @descEnd
 global:
   ## Current available global image parameters: imageRegistry and imagePullSecrets

@@ -85,7 +85,7 @@ the [kubernetes documentation](https://kubernetes.io/docs/concepts/configuration
 ### Global Parameters
 
 Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart
-Note: only global parameters used within this chart, will be listed below
+Note: Only global parameters used within this chart will be listed below
 
 | Name                                | Description                                                                       | Value              |
 | ----------------------------------- | --------------------------------------------------------------------------------- | ------------------ |

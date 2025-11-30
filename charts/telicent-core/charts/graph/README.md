@@ -84,17 +84,17 @@ the [kubernetes documentation](https://kubernetes.io/docs/concepts/configuration
 ### Global Parameters
 
 Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart
-Note: only global parameters used within this chart, will be listed below.
+Note: Only global parameters used within this chart will be listed below.
 
 | Name                                    | Description                                                                                                                                                                            | Value                                          |
 | --------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
 | `global.imageRegistry`                  | Global image registry                                                                                                                                                                  | `""`                                           |
 | `global.imagePullSecrets`               | Global registry secret names as an array                                                                                                                                               | `[]`                                           |
+| `global.releaseNameTelicentPreview`     | Release name used during the Telicent Preview chart installation. Note: ensure the value is correct, otherwise there will be no access to data-catalog, user-portal & paperback-writer | `""`                                           |
 | `global.enterprise`                     | Enable enterprise mode, adding additional features and configurations                                                                                                                  | `false`                                        |
 | `global.appHostDomain`                  | Domain associated with Telicent application/ui services                                                                                                                                | `apps.telicent.io`                             |
 | `global.apiHostDomain`                  | Domain associated with Telicent Api services                                                                                                                                           | `api.telicent.io`                              |
 | `global.authHostDomain`                 | Domain associated with Telicent authentication services, including OIDC providers                                                                                                      | `auth.telicent.io`                             |
-| `global.releaseNameTelicentPreview`     | Release name used during the Telicent Preview chart installation. Note: ensure the value is correct, otherwise there will be no access to data-catalog, user-portal & paperback-writer | `""`                                           |
 | `global.kafka.bootstrapServers`         | Comma separated list containing Kafka bootstrap servers                                                                                                                                | `kafka-bootstrap.kafka.svc.cluster.local:9092` |
 | `global.kafka.existingConfigSecretName` | Name of an existing secret containing Kafka configuration (preferred over individual settings below for security)                                                                      | `""`                                           |
 | `global.kafka.username`                 | Username for Kafka authentication                                                                                                                                                      | `your.kafka.username.here`                     |
@@ -214,7 +214,8 @@ If either of those details changes, you can use this section to correctly refere
 
 ### Host(s) Preview Parameters - Contains host information for applications deployed via *telicent-preview* chart
 
-Host values will be used as defined in this section, release name cannot be autocorrected, as the release name is unknown.
+*Graph* interacts with applications deployed via *telicent-preview* using their default service/serviceAccount and port.
+If either of those details changes, you can use this section to correctly referer to those applications.
 
 | Name                             | Description                                                                                                                                | Value                   |
 | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------- |

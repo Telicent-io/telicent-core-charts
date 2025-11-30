@@ -86,15 +86,15 @@ the [kubernetes documentation](https://kubernetes.io/docs/concepts/configuration
 ### Global Parameters
 
 Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart
-Note: only global parameters used within this chart, will be listed below
+Note: Oly global parameters used within this chart will be listed below
 
 | Name                                | Description                                                                                                                                                                            | Value              |
 | ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
+| `global.releaseNameTelicentPreview` | Release name used during the Telicent Preview chart installation. Note: ensure the value is correct, otherwise there will be no access to data-catalog, user-portal & paperback-writer | `""`               |
 | `global.enterprise`                 | Enable enterprise mode, adding additional features and configurations                                                                                                                  | `false`            |
 | `global.appHostDomain`              | Domain associated with Telicent application/ui services                                                                                                                                | `apps.telicent.io` |
 | `global.apiHostDomain`              | Domain associated with Telicent Api services                                                                                                                                           | `api.telicent.io`  |
 | `global.authHostDomain`             | Domain associated with Telicent authentication services, including OIDC providers                                                                                                      | `auth.telicent.io` |
-| `global.releaseNameTelicentPreview` | Release name used during the Telicent Preview chart installation. Note: ensure the value is correct, otherwise there will be no access to data-catalog, user-portal & paperback-writer | `""`               |
 | `global.istioNamespace`             | Namespace in which Istio is deployed                                                                                                                                                   | `istio-system`     |
 | `global.istioServiceAccountName`    | Name of the Istio service account                                                                                                                                                      | `istio-ingress`    |
 | `global.istioGatewayName`           | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)                                                                                                              | `ingress-gateway`  |
@@ -242,7 +242,8 @@ If either of those details changes, you can use this section to correctly refere
 
 ### Host(s) Preview Parameters - Contains host information for applications deployed via *telicent-preview* chart
 
-Host values will be used as defined in this section, release name cannot be autocorrected, as the release name is unknown.
+*Traefik Proxy* interacts with applications deployed via *telicent-preview* using their default service/serviceAccount and port.
+If either of those details changes, you can use this section to correctly referer to those applications.
 
 | Name                             | Description                                                                                                                                | Value                   |
 | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------- |

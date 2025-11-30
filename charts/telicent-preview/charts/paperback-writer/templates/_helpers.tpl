@@ -1,9 +1,24 @@
 {{/*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
+{{/*
 Expand the name of the chart.
 */}}
 {{- define "paperback-writer.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
+
+{{/*
+Allow the release namespace to be overridden.
+*/}}
+{{- define "paperback-writer.namespace" -}}
+{{- if .Values.namespaceOverride -}}
+{{- .Values.namespaceOverride -}}
+{{- else -}}
+{{- .Release.Namespace -}}
+{{- end -}}
+{{- end -}}
 
 {{/*
 Create a default fully qualified app name.
@@ -31,18 +46,6 @@ Create chart name and version as used by the chart label.
 {{- end }}
 
 {{/*
-Common labels
-*/}}
-{{- define "paperback-writer.labels" -}}
-helm.sh/chart: {{ include "paperback-writer.chart" . }}
-{{ include "paperback-writer.selectorLabels" . }}
-{{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
-{{- end }}
-app.kubernetes.io/managed-by: {{ .Release.Service }}
-{{- end }}
-
-{{/*
 Selector labels
 */}}
 {{- define "paperback-writer.selectorLabels" -}}
@@ -51,57 +54,38 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
-Create the name of the service account to use
+Common labels
+*/}}
+{{- define "paperback-writer.labels" -}}
+helm.sh/chart: {{ include "paperback-writer.chart" . }}
+{{ include "paperback-writer.selectorLabels" . }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+app.kubernetes.io/version: {{ include "paperback-writer.version" . | quote }}
+app: {{ include "paperback-writer.name" . }}
+telicent.io/resource: "true"
+{{- range $key, $value := .Values.commonLabels }}
+{{ $key }}: {{ $value | quote }}
+{{- end }}
+{{- end }}
+
+{{/*
+Create the name of the service account to use (based on the fullname).
 */}}
 {{- define "paperback-writer.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
 {{- default (include "paperback-writer.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
-{{- default "default" .Values.serviceAccount.name }}
+{{- .Values.serviceAccount.name | default "default" }}
 {{- end }}
 {{- end }}
 
 {{/*
-Create the Sparql endpoint URL
+Create the name of the service to use (based on the fullname).
 */}}
-{{- define "paperback-writer.sparqlEndpoint" -}}
-{{- if .Values.configuration.sparqlUrl }}
-{{- .Values.configuration.sparqlUrl }}
+{{- define "paperback-writer.serviceName" -}}
+{{- if .Values.service.name }}
+{{- .Values.service.name -}}
 {{- else }}
-{{- printf "http://graph.%s:3030" (.Release.Name) (.Release.Namespace) }}
+{{- include "paperback-writer.fullname" . }}
 {{- end }}
 {{- end }}
-
-{{/*
-Create the Access endpoint URL
-*/}}
-{{- define "paperback-writer.accessApiEndpoint" -}}
-{{- if .Values.configuration.accessApiUrl }}
-{{- .Values.configuration.accessApiUrl }}
-{{- else }}
-{{- printf "http://%s-access.%s.svc.cluster.local:8080" (.Release.Name) (.Release.Namespace) }}
-{{- end }}
-{{- end }}
-
-{{/*
-Create ConfigMapName
-*/}}
-{{- define "paperback-writer.configMapName" -}}
-{{- if .Values.existingConfigMapName }}
-{{- .Values.existingConfigMapName }}
-{{- else }}
-{{- printf "%s-config" (include "paperback-writer.fullname" .) }}
-{{- end }}
-{{- end }}
-
-{{/*
-Create ConfigMapName
-*/}}
-{{- define "paperback-writer.secretName" -}}
-{{- if .Values.existingSecretName }}
-{{- .Values.existingSecretName }}
-{{- else }}
-{{- printf "%s-secret" (include "paperback-writer.fullname" .) }}
-{{- end }}
-{{- end }}
-

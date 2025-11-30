@@ -6,7 +6,7 @@
 #
 # @descStart
 # Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart
-# Note: only global parameters used within this chart, will be listed below
+# Note: Only global parameters used within this chart will be listed below
 # @descEnd
 global:
   ## Current available global image parameters: imageRegistry and imagePullSecrets
@@ -147,9 +147,9 @@ sidecars: []
 image:
   # @key image.registry [default: REGISTRY_NAME] *Search Projector* image registry
   registry: quay.io
-  # @key image.repository [default: REPOSITORY_NAME/search-values.yaml-server] *Search Projector* image name
+  # @key image.repository [default: REPOSITORY_NAME/smart-cache-elastic-index] *Search Projector* image name
   repository: telicent/smart-cache-elastic-index
-  # @key image.tag Search Projector image tag. If not set, a tag is generated using the appVersion
+  # @key image.tag *Search Projector* image tag. If not set, a tag is generated using the appVersion
   tag: ""
   # @key image.pullPolicy *Search Projector* image pull policy
   pullPolicy: IfNotPresent

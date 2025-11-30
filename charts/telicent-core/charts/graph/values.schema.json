@@ -16,6 +16,11 @@
                     "default": [],
                     "items": {}
                 },
+                "releaseNameTelicentPreview": {
+                    "type": "string",
+                    "description": "Release name used during the Telicent Preview chart installation. Note: ensure the value is correct, otherwise there will be no access to data-catalog, user-portal & paperback-writer",
+                    "default": ""
+                },
                 "enterprise": {
                     "type": "boolean",
                     "description": "Enable enterprise mode, adding additional features and configurations",
@@ -35,11 +40,6 @@
                     "type": "string",
                     "description": "Domain associated with Telicent authentication services, including OIDC providers",
                     "default": "auth.telicent.io"
-                },
-                "releaseNameTelicentPreview": {
-                    "type": "string",
-                    "description": "Release name used during the Telicent Preview chart installation. Note: ensure the value is correct, otherwise there will be no access to data-catalog, user-portal & paperback-writer",
-                    "default": ""
                 },
                 "kafka": {
                     "type": "object",
