@@ -15,7 +15,7 @@ data:
   SPARQL_DEFAULT_LABEL: {{ .Values.configuration.sparqlDefaultLabel | default "!" |  quote }}
   SPARQL_URL:  {{ printf "http://%s" (include "paperback-writer.hostGraph" . )  | quote }}
 
-  JWT_HEADER: {{ .Values.configuration.jwtHeader | default "Authorization" }}
+  JWT_HEADER: "Authorization"
   JWT_USER_ID_ATTR: "preferred_name"
   JWKS_CA_CERT_PATH: {{ .Values.configuration.cacertPath | quote }}
   JWKS_URL: {{ printf "https://%s%s" .Values.global.authHostDomain "/oauth2/jwks" | quote }}

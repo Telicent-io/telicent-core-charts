@@ -36,49 +36,14 @@
         "configuration": {
             "type": "object",
             "properties": {
-                "sparqlUrl": {
-                    "type": "string",
-                    "description": "SPARQL endpoint URL. Defaults to http://release-name-graph.release-namespace.svc.cluster.local:3030",
-                    "default": ""
-                },
-                "sparqlUser": {
-                    "type": "string",
-                    "description": "SPARQL endpoint username. Use existing secret to set these values if possible (.Values.existingSecretName)",
-                    "default": ""
-                },
-                "sparqlPwd": {
-                    "type": "string",
-                    "description": "SPARQL endpoint password. Use existing secret to set these values if possible (.Values.existingSecretName)",
-                    "default": ""
-                },
                 "sparqlDefaultLabel": {
                     "type": "string",
                     "description": "Default label for SPARQL queries",
                     "default": "!"
                 },
-                "jwksDisabled": {
-                    "type": "string",
-                    "description": "Disable JWKS validation",
-                    "default": "false"
-                },
-                "jwtHeader": {
-                    "type": "string",
-                    "description": "JWT header name",
-                    "default": "Authorization"
-                },
-                "accessApiUrl": {
-                    "type": "string",
-                    "description": "URL for the Access API. Defaults to http://release-name-access-api.release-namespace.svc.cluster.local:8080",
-                    "default": ""
-                },
                 "cacertPath": {
                     "type": "string",
                     "description": "Path to CA certs in the container",
-                    "default": ""
-                },
-                "authServerBaseUrl": {
-                    "type": "string",
-                    "description": "Base url of the Auth server. Defaults to <release-name>-auth.<release-namespace>.svc.cluster.local:9000",
                     "default": ""
                 }
             }
@@ -86,11 +51,6 @@
         "existingConfigMapName": {
             "type": "string",
             "description": "Name of an existing ConfigMap to use for configuration",
-            "default": ""
-        },
-        "existingSecretName": {
-            "type": "string",
-            "description": "Name of an existing Secret to use for credentials",
             "default": ""
         },
         "existingCacertConfigmapName": {

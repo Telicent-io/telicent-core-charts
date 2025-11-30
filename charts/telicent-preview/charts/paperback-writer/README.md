@@ -97,21 +97,13 @@ Note: Only global parameters used within this chart will be listed below
 
 ### Application Configuration
 
-| Name                               | Description                                                                                                        | Value           |
-| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------ | --------------- |
-| `configuration.sparqlUrl`          | SPARQL endpoint URL. Defaults to http://release-name-graph.release-namespace.svc.cluster.local:3030                | `""`            |
-| `configuration.sparqlUser`         | SPARQL endpoint username. Use existing secret to set these values if possible (.Values.existingSecretName)         | `""`            |
-| `configuration.sparqlPwd`          | SPARQL endpoint password. Use existing secret to set these values if possible (.Values.existingSecretName)         | `""`            |
-| `configuration.sparqlDefaultLabel` | Default label for SPARQL queries                                                                                   | `!`             |
-| `configuration.jwksDisabled`       | Disable JWKS validation                                                                                            | `false`         |
-| `configuration.jwtHeader`          | JWT header name                                                                                                    | `Authorization` |
-| `configuration.accessApiUrl`       | URL for the Access API. Defaults to http://release-name-access-api.release-namespace.svc.cluster.local:8080        | `""`            |
-| `configuration.cacertPath`         | Path to CA certs in the container                                                                                  | `""`            |
-| `configuration.authServerBaseUrl`  | Base url of the Auth server. Defaults to <release-name>-auth.<release-namespace>.svc.cluster.local:9000            | `""`            |
-| `existingConfigMapName`            | Name of an existing ConfigMap to use for configuration                                                             | `""`            |
-| `existingSecretName`               | Name of an existing Secret to use for credentials                                                                  | `""`            |
-| `existingCacertConfigmapName`      | Name of an existing ConfigMap to use for CA certs. If not set, and cacert is provided, a ConfigMap will be created | `""`            |
-| `cacert`                           | CA certificate data in PEM format                                                                                  | `""`            |
+| Name                               | Description                                                                                                        | Value |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------ | ----- |
+| `configuration.sparqlDefaultLabel` | Default label for SPARQL queries                                                                                   | `!`   |
+| `configuration.cacertPath`         | Path to CA certs in the container                                                                                  | `""`  |
+| `existingConfigMapName`            | Name of an existing ConfigMap to use for configuration                                                             | `""`  |
+| `existingCacertConfigmapName`      | Name of an existing ConfigMap to use for CA certs. If not set, and cacert is provided, a ConfigMap will be created | `""`  |
+| `cacert`                           | CA certificate data in PEM format                                                                                  | `""`  |
 
 ### Common Parameters
 

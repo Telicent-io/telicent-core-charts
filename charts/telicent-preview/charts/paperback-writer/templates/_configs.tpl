@@ -4,6 +4,7 @@ Copyright (C) 2025 Telicent Limited
 
 {{/*
 Create the name of the config map
+todo: fixup ca cert
 */}}
 {{- define "paperback-writer.configMapName" -}}
 {{- if .Values.existingConfigMapName }}

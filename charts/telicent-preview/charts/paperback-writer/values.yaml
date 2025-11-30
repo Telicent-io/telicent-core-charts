@@ -32,29 +32,16 @@ global:
 
 # @section Application Configuration
 configuration:
-  # @key configuration.sparqlUrl SPARQL endpoint URL. Defaults to http://release-name-graph.release-namespace.svc.cluster.local:3030
-  sparqlUrl: ""
-  # @key configuration.sparqlUser SPARQL endpoint username. Use existing secret to set these values if possible (.Values.existingSecretName)
-  sparqlUser: ""
-  # @key configuration.sparqlPwd SPARQL endpoint password. Use existing secret to set these values if possible (.Values.existingSecretName)
-  sparqlPwd: ""
+
   # @key configuration.sparqlDefaultLabel Default label for SPARQL queries
   sparqlDefaultLabel: "!"
-  # @key configuration.jwksDisabled Disable JWKS validation
-  jwksDisabled: "false"
-  # @key configuration.jwtHeader JWT header name
-  jwtHeader: "Authorization"
-  # @key configuration.accessApiUrl URL for the Access API. Defaults to http://release-name-access-api.release-namespace.svc.cluster.local:8080
-  accessApiUrl: ""
+
   # @key configuration.cacertPath Path to CA certs in the container
   cacertPath: ""
-  # @key configuration.authServerBaseUrl Base url of the Auth server. Defaults to <release-name>-auth.<release-namespace>.svc.cluster.local:9000
-  authServerBaseUrl: ""
 
 # @key existingConfigMapName Name of an existing ConfigMap to use for configuration
 existingConfigMapName: ""
-# @key existingSecretName Name of an existing Secret to use for credentials
-existingSecretName: ""
+
 # @key existingCacertConfigmapName Name of an existing ConfigMap to use for CA certs. If not set, and cacert is provided, a ConfigMap will be created
 existingCacertConfigmapName: ""
 # @key cacert CA certificate data in PEM format
