@@ -22,9 +22,9 @@ http:
         stsSeconds: 63072000        # Set the max-age of the Strict-Transport-Security header (63072000 = 2 years)
         stsIncludeSubdomains: true  # Add includeSubdomains to the Strict-Transport-Security headers
         stsPreload: true            # Add a preload flag appended to the Strict-Transport-Security header
-        #referrerPolicy: "strict-origin-when-cross-origin"
-        #frameDeny: true             # X-Frame-Options=deny
-        #customFrameOptionsValue: "SAMEORIGIN"
+        referrerPolicy: "strict-origin-when-cross-origin"
+        frameDeny: true             # X-Frame-Options=deny
+        customFrameOptionsValue: "SAMEORIGIN"
 
         customRequestHeaders:
           # avoiding the need for 302 redirects (used in conjunction with trustForwardHeader: false)
