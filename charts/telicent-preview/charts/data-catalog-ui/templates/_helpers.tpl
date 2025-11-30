@@ -1,9 +1,24 @@
 {{/*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
+{{/*
 Expand the name of the chart.
 */}}
 {{- define "data-catalog-ui.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
+
+{{/*
+Allow the release namespace to be overridden.
+*/}}
+{{- define "data-catalog-ui.namespace" -}}
+{{- if .Values.namespaceOverride -}}
+{{- .Values.namespaceOverride -}}
+{{- else -}}
+{{- .Release.Namespace -}}
+{{- end -}}
+{{- end -}}
 
 {{/*
 Create a default fully qualified app name.
@@ -31,18 +46,6 @@ Create chart name and version as used by the chart label.
 {{- end }}
 
 {{/*
-Common labels
-*/}}
-{{- define "data-catalog-ui.labels" -}}
-helm.sh/chart: {{ include "data-catalog-ui.chart" . }}
-{{ include "data-catalog-ui.selectorLabels" . }}
-{{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
-{{- end }}
-app.kubernetes.io/managed-by: {{ .Release.Service }}
-{{- end }}
-
-{{/*
 Selector labels
 */}}
 {{- define "data-catalog-ui.selectorLabels" -}}
@@ -51,16 +54,38 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
-Create the name of the service account to use
+Common labels
+*/}}
+{{- define "data-catalog-ui.labels" -}}
+helm.sh/chart: {{ include "data-catalog-ui.chart" . }}
+{{ include "data-catalog-ui.selectorLabels" . }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+app.kubernetes.io/version: {{ include "data-catalog-ui.version" . | quote }}
+app: {{ include "data-catalog-ui.name" . }}
+telicent.io/resource: "true"
+{{- range $key, $value := .Values.commonLabels }}
+{{ $key }}: {{ $value | quote }}
+{{- end }}
+{{- end }}
+
+{{/*
+Create the name of the service account to use (based on the fullname).
 */}}
 {{- define "data-catalog-ui.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
 {{- default (include "data-catalog-ui.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
-{{- default "default" .Values.serviceAccount.name }}
+{{- .Values.serviceAccount.name | default "default" }}
 {{- end }}
 {{- end }}
 
-{{- define "data-catalog-ui.kafkaSecretName" -}}
-{{- .Values.global.kafka.existingConfigSecretName | default (printf "%s-kafka-config" (include "your-subchart.fullname" .)) }}
-{{- end -}}
+{{/*
+Create the name of the service to use (based on the fullname).
+*/}}
+{{- define "data-catalog-ui.serviceName" -}}
+{{- if .Values.service.name }}
+{{- .Values.service.name -}}
+{{- else }}
+{{- include "data-catalog-ui.fullname" . }}
+{{- end }}
+{{- end }}

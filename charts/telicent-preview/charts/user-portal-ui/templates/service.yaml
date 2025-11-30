@@ -1,15 +1,23 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
 apiVersion: v1
 kind: Service
+
 metadata:
   name: {{ include "user-portal-ui.fullname" . }}
+  namespace: {{ include "user-portal-ui.namespace" . | quote }}
   labels:
     {{- include "user-portal-ui.labels" . | nindent 4 }}
+
 spec:
   type: {{ .Values.service.type }}
-  ports:
-    - port: {{ .Values.service.port }}
-      targetPort: 8080
-      protocol: TCP
-      name: http
   selector:
     {{- include "user-portal-ui.selectorLabels" . | nindent 4 }}
+  ports:
+  - name: http
+    appProtocol: http
+    protocol: TCP
+    targetPort: http
+    port: {{ .Values.service.port }}

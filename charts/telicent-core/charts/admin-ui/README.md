@@ -104,10 +104,10 @@ Note: Only global parameters used within this chart will be listed below
 
 ### OAuth Parameters
 
-| Name             | Description                                    | Value                           |
-| ---------------- | ---------------------------------------------- | ------------------------------- |
-| `oauth.clientId` | The OAuth client id to be used by *Search UI*  | `telicent-admin-ui`             |
-| `oauth.scopes`   | List of OAuth scopes to be used by *Search UI* | `openid profile offline_access` |
+| Name             | Description                                   | Value                           |
+| ---------------- | --------------------------------------------- | ------------------------------- |
+| `oauth.clientId` | The OAuth client id to be used by *Admin UI*  | `telicent-admin-ui`             |
+| `oauth.scopes`   | List of OAuth scopes to be used by *Admin UI* | `openid profile offline_access` |
 
 ### Common Parameters
 
@@ -167,11 +167,11 @@ Note: Only global parameters used within this chart will be listed below
 
 ### Traffic Exposure Parameters
 
-| Name           | Description                                                                  | Value       |
-| -------------- | ---------------------------------------------------------------------------- | ----------- |
-| `service.name` | *Search UI* service name. If not set, a name is generated using the fullname | `""`        |
-| `service.port` | *Search UI* service port                                                     | `8080`      |
-| `service.type` | *Search UI* service type                                                     | `ClusterIP` |
+| Name           | Description                                                                 | Value       |
+| -------------- | --------------------------------------------------------------------------- | ----------- |
+| `service.name` | *Admin UI* service name. If not set, a name is generated using the fullname | `""`        |
+| `service.port` | *Admin UI* service port                                                     | `8080`      |
+| `service.type` | *Admin UI* service type                                                     | `ClusterIP` |
 
 ### Host(s) Parameters - Contains host information for applications deployed via *telicent-core* chart.
 
