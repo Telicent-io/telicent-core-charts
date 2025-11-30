@@ -66,10 +66,10 @@ spec:
           value: /etc/ssl/certs/ca.crt
         envFrom:
         - configMapRef:
-          name: {{ include "paperback-writer.configMapName" . }}
+            name: {{ include "paperback-writer.configMapName" . }}
         - secretRef:
-          name: {{ include "paperback-writer.secretName" . }}
-          optional: true
+            name: {{ include "paperback-writer.secretName" . }}
+            optional: true
 
         ports:
         - name: http
