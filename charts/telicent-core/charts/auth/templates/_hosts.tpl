@@ -17,7 +17,7 @@ Doing so will correctly configure the whole system.
 */}}
 
 {{/*
-Detailed description of 'discoverService' function
+Detailed description of 'discoverHost' & 'discoverServiceAccount' function
 1.a) Installed through the parent chart, the service name will include the release name.
 1.b) Installed through the parent chart, where 'hosts.enableAutoCorrect: false' has been set on the sub-chart.
      Will result in the release name *not* being included.
@@ -25,7 +25,42 @@ Detailed description of 'discoverService' function
      The release name will *not* be included.
 */}}
 
-{{/*
-Returns the service/serviceAccount with or without a release name.
-*/}}
+{{/* traefik-proxy - returns host ('service:port') and serviceAccount */}}
+{{- define "auth.hostTraefikProxy" -}}
+{{- printf "%s" (include "common.discoverHost" (list . .Values.hosts.traefikProxy )) -}}
+{{- end -}}
+{{- define "auth.serviceAccountTraefikProxy" -}}
+{{- printf "%s" (include "common.discoverServiceAccount" (list . .Values.hosts.traefikProxy )) -}}
+{{- end -}}
 
+{{/* user-preferences - returns host ('service:port') and serviceAccount */}}
+{{- define "auth.hostUserPreferences" -}}
+{{- printf "%s" (include "common.discoverHost" (list . .Values.hosts.userPreferences )) -}}
+{{- end -}}
+{{- define "auth.serviceAccountUserPreferences" -}}
+{{- printf "%s" (include "common.discoverServiceAccount" (list . .Values.hosts.userPreferences )) -}}
+{{- end -}}
+
+{{/* search - returns host ('service:port') and serviceAccount */}}
+{{- define "auth.hostSearch" -}}
+{{- printf "%s" (include "common.discoverHost" (list . .Values.hosts.search )) -}}
+{{- end -}}
+{{- define "auth.serviceAccountSearch" -}}
+{{- printf "%s" (include "common.discoverServiceAccount" (list . .Values.hosts.search )) -}}
+{{- end -}}
+
+{{/* graph - returns host ('service:port') and serviceAccount */}}
+{{- define "auth.hostGraph" -}}
+{{- printf "%s" (include "common.discoverHost" (list . .Values.hosts.graph )) -}}
+{{- end -}}
+{{- define "auth.serviceAccountGraph" -}}
+{{- printf "%s" (include "common.discoverServiceAccount" (list . .Values.hosts.graph )) -}}
+{{- end -}}
+
+{{/* paperback-writer | preview - returns host ('service:port') and serviceAccount */}}
+{{- define "auth.hostPaperbackWriter" -}}
+{{- printf "%s" (include "common.discoverHostPreview" (list . .Values.hostsPreview.paperbackWriter )) -}}
+{{- end -}}
+{{- define "auth.serviceAccountPaperbackWriter" -}}
+{{- printf "%s" (include "common.discoverServiceAccountPreview" (list . .Values.hostsPreview.paperbackWriter )) -}}
+{{- end -}}

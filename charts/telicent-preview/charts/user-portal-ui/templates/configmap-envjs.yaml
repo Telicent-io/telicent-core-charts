@@ -7,7 +7,8 @@ apiVersion: v1
 kind: ConfigMap
 
 metadata:
-  name: {{ include "user-portal-ui.fullname" . }}
+  name: {{ include "user-portal-ui.configMapName" . }}
+  namespace: {{ include "user-portal-ui.namespace" . }}
   labels:
     {{- include "user-portal-ui.labels" . | nindent 4 }}
 
@@ -145,8 +146,8 @@ data:
     
     window.AUTH_V2_CONFIG = {
       authServerUrl: "https://{{ .Values.global.authHostDomain }}",
-      clientId: "{{ .Values.configuration.oauthClientId }}",
-      scope: "{{ .Values.configuration.oauthScope }}",
+      clientId: "{{ .Values.oauth.clientId }}",
+      scope: "{{ .Values.oauth.scopes }}",
       redirectUri: "https://{{ .Values.global.appHostDomain }}/user-portal/callback",
       popupRedirectUri: "https://{{ .Values.global.appHostDomain }}/user-portal/auth-redirect-uri",
     };

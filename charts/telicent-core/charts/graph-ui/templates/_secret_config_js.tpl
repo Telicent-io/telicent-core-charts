@@ -5,17 +5,17 @@ Copyright (C) 2025 Telicent Limited
 {{- define "graph-ui.secretConfigJs"  -}}
 // Config values
 
-{{- if .Values.configuration.graphUiMaptilerToken }}
-const MAP_TILER_TOKEN = {{ .Values.configuration.graphUiMaptilerToken | quote }};
+{{- if .Values.ui.graphUiMaptilerToken }}
+const MAP_TILER_TOKEN = {{ .Values.ui.graphUiMaptilerToken | quote }};
 {{- end }}
 
-{{- if .Values.configuration.graphUiMapboxStyleSpecUrl }}
-const VECTOR_STYLE_URI = `{{ .Values.configuration.graphUiMapboxStyleSpecUrl }}`;
+{{- if .Values.ui.graphUiMapboxStyleSpecUrl }}
+const VECTOR_STYLE_URI = `{{ .Values.ui.graphUiMapboxStyleSpecUrl }}`;
 {{- end }}
 
-{{- if .Values.configuration.graphUiArcgisToken }}
+{{- if .Values.ui.graphUiArcgisToken }}
 // ArcGIS API token
-const ARC_GIS_API_TOKEN = `{{ .Values.configuration.graphUiArcgisToken }}`;
+const ARC_GIS_API_TOKEN = `{{ .Values.ui.graphUiArcgisToken }}`;
 
 // Utility values
 const VECTOR_STYLE_URI = `https://basemapstyles-api.arcgis.com/arcgis/rest/services/styles/v2/styles/arcgis/streets-night?token=${ARC_GIS_API_TOKEN}`;
@@ -86,7 +86,7 @@ mapConfigExamples.ONLY_VECTOR_STYLES = {
 // -------------------------
 
 
-{{- if .Values.configuration.graphUiArcgisToken }}
+{{- if .Values.ui.graphUiArcgisToken }}
 // [BEST] 
 // IF set, can generate multiple layers from ANY map service that adheres to the map-box SPEC
 window.MAP_CONFIG = mapConfigExamples['VECTOR_AND_TILE_SETS']
@@ -96,7 +96,7 @@ window.MAP_CONFIG = mapConfigExamples['VECTOR_AND_TILE_SETS']
 //window.MAP_CONFIG = mapConfigExamples['VECTOR_AND_TILE_SETS']
 {{ end }}
 
-{{- if .Values.configuration.graphUiMapboxStyleSpecUrl }}
+{{- if .Values.ui.graphUiMapboxStyleSpecUrl }}
 // [LIMITED] 
 // ELSE IF set will default to single vector style from ANY map service
 window.MAP_BOX_SPEC_STYLE_OVERRIDE = VECTOR_STYLE_URI;
@@ -106,7 +106,7 @@ window.MAP_BOX_SPEC_STYLE_OVERRIDE = VECTOR_STYLE_URI;
 // window.MAP_BOX_SPEC_STYLE_OVERRIDE = VECTOR_STYLE_URI;
 {{ end }}
 
-{{- if .Values.configuration.graphUiMaptilerToken }}
+{{- if .Values.ui.graphUiMaptilerToken }}
 // [LIMITED]
 // ELSE will default to mapbox service's streets-v2-dark styled source
 window.MAP_TILER_TOKEN = MAP_TILER_TOKEN;
@@ -115,4 +115,4 @@ window.MAP_TILER_TOKEN = MAP_TILER_TOKEN;
 // ELSE will default to mapbox service's streets-v2-dark styled source
 //window.MAP_TILER_TOKEN = MAP_TILER_TOKEN;
 {{ end }}
-{{- end  -}}
+{{- end -}}

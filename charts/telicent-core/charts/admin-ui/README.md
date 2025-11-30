@@ -10,7 +10,7 @@ the [Helm](https://helm.sh) package manager.
 ## Prerequisites
 
 - Kubernetes 1.23+
-- Helm 3.8.0+
+- Helm 3.9+
 
 ## Installing the Chart
 
@@ -40,32 +40,74 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ## Configuration and installation details
 
+### Resource requests and limits
+
+These are inside the `resources` value (check parameter table). Setting requests is essential for production workloads
+and these should be adapted to your specific use case.
+
+### Sidecars and Init Containers
+
+If you have a need for additional containers to run within the same pod (e.g. an additional metrics or logging
+exporter), you can do so via the `sidecars` config parameter.
+Define your container according to the Kubernetes container spec.
+
+```yaml
+sidecars:
+- name: your-image-name
+  image: your-image
+  imagePullPolicy: Always
+  ports:
+  - name: portname
+    containerPort: 1234
+```
+
+Similarly, you can add extra init containers using the `initContainers` parameter.
+
+```yaml
+initContainers:
+- name: your-image-name
+  image: your-image
+  imagePullPolicy: Always
+  ports:
+  - name: portname
+    containerPort: 1234
+```
+
+### Setting Pod's affinity
+
+This chart allows you to set your custom affinity using the `affinity` parameter.
+Find more information about Pod's affinity in
+the [kubernetes documentation](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity).
+
+
 ## Parameters
 
 ### Global Parameters
 
-Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
+Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart
+Note: Only global parameters used within this chart will be listed below
 
-| Name                                | Description                                                                       | Value              |
-| ----------------------------------- | --------------------------------------------------------------------------------- | ------------------ |
-| `global.imageRegistry`              | Global image registry                                                             | `""`               |
-| `global.imagePullSecrets`           | Global registry secret names as an array                                          | `[]`               |
-| `global.enterprise`                 | Enable enterprise mode, adding additional features and configurations             | `false`            |
-| `global.appHostDomain`              | Domain associated with Telicent application/ui services                           | `apps.telicent.io` |
-| `global.apiHostDomain`              | Domain associated with Telicent Api services                                      | `api.telicent.io`  |
-| `global.authHostDomain`             | Domain associated with Telicent authentication services, including OIDC providers | `auth.telicent.io` |
-| `global.istioNamespace`             | Namespace in which Istio is deployed                                              | `istio-system`     |
-| `global.istioServiceAccountName`    | Name of the Istio service account                                                 | `istio-ingress`    |
-| `global.istioGatewayName`           | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)         | `ingress-gateway`  |
-| `global.istioVirtualServiceEnabled` | Enable Istio traffic routing to a named destination service                       | `false`            |
+| Name                      | Description                                                                       | Value              |
+| ------------------------- | --------------------------------------------------------------------------------- | ------------------ |
+| `global.imageRegistry`    | Global image registry                                                             | `""`               |
+| `global.imagePullSecrets` | Global registry secret names as an array                                          | `[]`               |
+| `global.enterprise`       | Enable enterprise mode, adding additional features and configurations             | `false`            |
+| `global.appHostDomain`    | Domain associated with Telicent application/ui services                           | `apps.telicent.io` |
+| `global.apiHostDomain`    | Domain associated with Telicent Api services                                      | `api.telicent.io`  |
+| `global.authHostDomain`   | Domain associated with Telicent authentication services, including OIDC providers | `auth.telicent.io` |
 
-### Configuration Parameters
+### ConfigMap Parameters
 
-Contains configuration parameters specific to the *Search UI* application
+| Name                          | Description                                                  | Value |
+| ----------------------------- | ------------------------------------------------------------ | ----- |
+| `configMap.existingConfigMap` | The name of an existing config map containing env-config.js. | `""`  |
 
-| Name                          | Description                                                                                                                                    | Value |
-| ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
-| `configMap.existingConfigMap` | The name of an existing config map containing env-config.js. If omitted, a new config map using settings from this values file will be created | `""`  |
+### OAuth Parameters
+
+| Name             | Description                                   | Value                           |
+| ---------------- | --------------------------------------------- | ------------------------------- |
+| `oauth.clientId` | The OAuth client id to be used by *Admin UI*  | `telicent-admin-ui`             |
+| `oauth.scopes`   | List of OAuth scopes to be used by *Admin UI* | `openid profile offline_access` |
 
 ### Common Parameters
 
@@ -125,18 +167,21 @@ Contains configuration parameters specific to the *Search UI* application
 
 ### Traffic Exposure Parameters
 
-| Name           | Description                                                                  | Value       |
-| -------------- | ---------------------------------------------------------------------------- | ----------- |
-| `service.name` | *Search UI* service name. If not set, a name is generated using the fullname | `""`        |
-| `service.port` | *Search UI* service port                                                     | `8080`      |
-| `service.type` | *Search UI* service type                                                     | `ClusterIP` |
+| Name           | Description                                                                 | Value       |
+| -------------- | --------------------------------------------------------------------------- | ----------- |
+| `service.name` | *Admin UI* service name. If not set, a name is generated using the fullname | `""`        |
+| `service.port` | *Admin UI* service port                                                     | `8080`      |
+| `service.type` | *Admin UI* service type                                                     | `ClusterIP` |
 
-### Istio Parameters
+### Host(s) Parameters - Contains host information for applications deployed via *telicent-core* chart.
 
-| Name                               | Description                                                                                                                                              | Value           |
-| ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- |
-| `istio.ingress.principal`          | Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName | `""`            |
-| `istio.ingress.serviceAccountName` | Name of the Ingress service account (traefik and istio supported)                                                                                        | `traefik-proxy` |
+*Admin UI* interacts directly with other Telicent Applications using their default service/serviceAccount and port.
+If either of those details changes, you can use this section to correctly referer to those applications.
+
+| Name                      | Description                                                                                                                                                                                                                        | Value                |
+| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
+| `hosts.enableAutoCorrect` | Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as is, without any modification. | `true`               |
+| `hosts.traefikProxy`      | Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                          | `traefik-proxy:8080` |
 
 ## License
 

@@ -18,7 +18,7 @@ data:
   
   KAFKA_CONFIG_FILE_PATH: /app/config/kafka-auth/kafka-config.properties
   JAVA_OPTIONS: {{ .Values.java.jvmOptions | quote }}
-  JWKS_URL: {{ printf "%s%s%s" "https://" .Values.global.authHostDomain "/oauth2/jwks" | quote }}
+  JWKS_URL: {{ printf "https://%s%s" .Values.global.authHostDomain "/oauth2/jwks" | quote }}
   USERINFO_URL: {{ printf "http://%s%s" (include "graph.hostAuth" . ) "/userinfo" | quote }}
 
   {{- if .Values.global.enterprise }}

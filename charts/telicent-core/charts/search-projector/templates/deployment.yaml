@@ -36,10 +36,10 @@ spec:
       annotations:
         {{- if .Values.metrics.enabled }}
         prometheus.io/path: "/"
-        prometheus.io/port: "9464"
+        prometheus.io/port: {{ .Values.metrics.service.port | quote }}
         prometheus.io/scrape: "true"
         {{- end }}
-        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        checksum/config: {{ include (print $.Template.BasePath "/configmap-env.yaml") . | sha256sum }}
         {{- with .Values.podAnnotations }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -87,12 +87,14 @@ spec:
             name: {{ include "search-projector.envConfigMapName" . }}
 
         ports:
-        - name: metrics
-          protocol: TCP
-          containerPort: 9464
         - name: health-probes
           protocol: TCP
           containerPort: 10101
+        {{- if .Values.metrics.enabled }}
+        - name: metrics
+          protocol: TCP
+          containerPort: 9464
+        {{- end }}
 
         readinessProbe:
           httpGet:

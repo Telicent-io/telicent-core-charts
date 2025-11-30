@@ -14,7 +14,7 @@ http:
     admin-ui:
       loadBalancer:
         servers:
-          - url: http://{{ .Values.hosts.adminUi | default (printf "%s.%s:8080" (include "traefik-proxy.routesService" (list . "admin-ui")) .Release.Namespace) }}
+          - url: {{ printf "http://%s"  (include "traefik-proxy.hostAdminUi" .) }}
 
   middlewares:
     path-admin-ui:
@@ -24,4 +24,4 @@ http:
     host-admin-ui:
       headers:
         customRequestHeaders:
-          host: {{ .Values.hosts.adminUi | default (printf "%s.%s:8080" (include "traefik-proxy.routesService" (list . "admin-ui")) .Release.Namespace) }}
+          host: {{ include "traefik-proxy.hostAdminUi" . }}

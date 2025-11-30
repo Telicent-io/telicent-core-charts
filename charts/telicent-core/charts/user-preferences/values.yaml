@@ -5,8 +5,8 @@
 # @section Global Parameters
 #
 # @descStart
-# Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
-# Note: only global parameters used within this chart, will be listed below
+# Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart
+# Note: Only global parameters used within this chart will be listed below
 # @descEnd
 global:
   ## Current available global image parameters: imageRegistry and imagePullSecrets
@@ -38,9 +38,6 @@ global:
 #
 # @section ConfigMap Parameters
 #
-# @descStart
-# Contains configuration parameters specific to the *User Preferences* application
-# @descEnd
 configMap:
   # @key configMap.existingEnvConfigMap Name of existing configmap containing *User Preferences* Environment Configuration
   # Note: When it's set it will disable configmap creation.

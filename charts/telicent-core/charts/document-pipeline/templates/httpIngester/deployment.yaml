@@ -105,7 +105,7 @@ spec:
             {{- if .Values.httpIngester.existingConfigMapName }}
             name: {{ .Values.httpIngester.existingConfigMapName }}
             {{- else }}
-            name: {{ include "http-ingester.configMapName" .}}
+            name: {{ include "http-ingester.configMapName" . }}
             {{- end }}
         - name: kafka-auth-config
           secret:

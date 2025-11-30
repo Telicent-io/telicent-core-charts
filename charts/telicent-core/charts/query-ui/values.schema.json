@@ -58,17 +58,27 @@
                 }
             }
         },
-        "configuration": {
+        "configMap": {
             "type": "object",
             "properties": {
-                "oauthClientId": {
+                "existingConfigMap": {
                     "type": "string",
-                    "description": "The OAuth client id to be used by *Search UI*",
+                    "description": "The name of an existing config map containing env-config.js.",
+                    "default": ""
+                }
+            }
+        },
+        "oauth": {
+            "type": "object",
+            "properties": {
+                "clientId": {
+                    "type": "string",
+                    "description": "The OAuth client id to be used by *Query UI*",
                     "default": "telicent-query-ui"
                 },
-                "oauthScope": {
+                "scopes": {
                     "type": "string",
-                    "description": "List of OAuth scopes to be used by *Search UI*",
+                    "description": "List of OAuth scopes to be used by *Query UI*",
                     "default": "openid profile offline_access"
                 }
             }
@@ -360,23 +370,18 @@
                 }
             }
         },
-        "istio": {
+        "hosts": {
             "type": "object",
             "properties": {
-                "ingress": {
-                    "type": "object",
-                    "properties": {
-                        "principal": {
-                            "type": "string",
-                            "description": "Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName",
-                            "default": ""
-                        },
-                        "serviceAccountName": {
-                            "type": "string",
-                            "description": "Name of the Ingress service account (traefik and istio supported)",
-                            "default": "traefik-proxy"
-                        }
-                    }
+                "enableAutoCorrect": {
+                    "type": "boolean",
+                    "description": "Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as is, without any modification.",
+                    "default": true
+                },
+                "traefikProxy": {
+                    "type": "string",
+                    "description": "Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'",
+                    "default": "traefik-proxy:8080"
                 }
             }
         }

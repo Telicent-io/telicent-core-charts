@@ -5,7 +5,7 @@
 # @section Global Parameters
 #
 # @descStart
-# Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
+# Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart
 # @descEnd
 global:
   ## Current available global image parameters: imageRegistry and imagePullSecrets
