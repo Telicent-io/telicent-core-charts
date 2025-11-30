@@ -37,9 +37,9 @@ http:
       headers:
         customResponseHeaders:
           # Empty string removes the specified header
-          #Authorization: ""
-          #Gap-Auth: ""
-          #Server: ""
+          Authorization: ""
+          Gap-Auth: ""
+          Server: ""
           X-Powered-By: ""
 
     oauth2-verify:
