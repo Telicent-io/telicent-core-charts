@@ -71,13 +71,10 @@ elastic:
   # @key elastic.host Elastic/OpenSearch host
   # Note: This should be the URL of your Elastic/OpenSearch service, including protocol (https or http)
   host: https://your.opensearch.host
-  # @key elastic.port Elastic/OpenSearch port number
+  # @key elastic.port Elastic/OpenSearch cluster port
   port: "443"
-  # @key elastic.clusterPort Elastic/OpenSearch cluster port
-  # Note: This should be the port of your Elastic/OpenSearch cluster, typically 9200
-  clusterPort: "9200"
   # @key elastic.opensearchCompatibility Enable OpenSearch compatibility
-  opensearchCompatibility: "true"
+  opensearchCompatibility: true
   # @key elastic.indexName Elastic/OpenSearch index name
   indexName: search
   # @key elastic.topic Topic to consume messages from

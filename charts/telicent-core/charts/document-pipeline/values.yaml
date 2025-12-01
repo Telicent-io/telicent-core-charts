@@ -404,30 +404,46 @@ contentIndexer:
   # @key contentIndexer.affinity Affinity rules for the Content Indexer pods
   affinity: {}
 
-  configuration:
-    # @key contentIndexer.configuration.inputTopic The Kafka topic from which the content indexer will consume messages
-    inputTopic: document.textandmetadata,document.entities
-    # @key contentIndexer.configuration.elasticsearchHost The hostname for the Elasticsearch instance
-    elasticsearchHost: elasticsearch-master
-    # @key contentIndexer.configuration.elasticsearchPort The port for the Elasticsearch instance
-    elasticsearchPort: "9200"
-    # @key contentIndexer.configuration.elasticsearchIndex The Elasticsearch index to which documents will be indexed
-    elasticsearchIndex: doc-content
-    # @key contentIndexer.configuration.javaOptions Additional Java options for the Content Indexer
-    javaOptions: ""
-    # @key contentIndexer.configuration.opensearchCompatibility Whether to enable OpenSearch compatibility mode
+#
+  # @section Java Parameters
+  #
+  # @descStart
+  # Contains Java configuration parameters to be used by the *Content Indexer* application
+  # @descEnd
+  java:
+     # @key contentIndexer.java.jvmOptions JVM options for the application
+    jvmOptions: "-XX:MaxRAMPercentage=80.0"
+   
+  #
+  # @section Elastic/OpenSearch Parameters and Secret
+  #
+  # @descStart
+  # The following contains connection details to an Elastic/OpenSearch service, on which the application relies.
+  # It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
+  # For Quick Start purposes, a secret named `tc-auth-usr-elastic-document-pipeline-content-indexer` will be created if one is not set.
+  # @descEnd
+  elastic:
+    # @key contentIndexer.elastic.host Elastic/OpenSearch host
+    # Note: This should be the URL of your Elastic/OpenSearch service, including protocol (https or http)
+    host: https://your.opensearch.host
+    # @key contentIndexer.elastic.port Elastic/OpenSearch port number
+    port: "443"
+    # @key contentIndexer.elastic.opensearchCompatibility Enable OpenSearch compatibility
     opensearchCompatibility: true
-    # @key contentIndexer.configuration.dlqTopic The Kafka topic to which the content indexer will produce dead-lettered messages
+    # @key contentIndexer.elastic.indexName Elastic/OpenSearch index name
+    indexName: doc-content
+    # @key contentIndexer.elastic.topic The Kafka topic from which the content indexer will consume messages
+    topic: document.textandmetadata,document.entities
+     # @key contentIndexer.elastic.dlqTopic The Kafka topic to which the content indexer will produce dead-lettered messages
     dlqTopic: document.textandmetadata.dlq
 
-  # @section OpenSearch/Elastic secrets - Content Indexer
-  # Note: It is recommended to use a Kubernetes secret for sensitive information like passwords
-  elasticSecret:
-    # @key contentIndexer.elasticSecret.existingSecret Name of an existing secret resource containing the username & password
+    # @key contentIndexer.elastic.existingSecret Name of an existing secret. The secret must contain 2 keys: 'username', 'password'
+    # Note: Left unset, it will create a secret named: tc-auth-usr-elastic-document-pipeline-content-indexer
     existingSecret: ""
-    # @key contentIndexer.elasticSecret.username OpenSearch/Elastic username
+    # @key contentIndexer.elastic.username OpenSearch/Elastic username
+    # Note: For additional security, the username is read from the secret, as defined by 'existingSecret' and not from this value!
     username: ""
-    # @key contentIndexer.elasticSecret.password OpenSearch/Elastic user password
+    # @key contentIndexer.elastic.password OpenSearch/Elastic user password
     password: ""
 
 # @section Catalogue Updater

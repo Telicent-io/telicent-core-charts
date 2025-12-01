@@ -98,18 +98,13 @@
                 },
                 "port": {
                     "type": "string",
-                    "description": "Elastic/OpenSearch port number",
+                    "description": "Elastic/OpenSearch cluster port",
                     "default": "443"
                 },
-                "clusterPort": {
-                    "type": "string",
-                    "description": "Elastic/OpenSearch cluster port",
-                    "default": "9200"
-                },
                 "opensearchCompatibility": {
-                    "type": "string",
+                    "type": "boolean",
                     "description": "Enable OpenSearch compatibility",
-                    "default": "true"
+                    "default": true
                 },
                 "indexName": {
                     "type": "string",

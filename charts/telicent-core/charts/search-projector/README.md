@@ -124,8 +124,7 @@ For Quick Start purposes, a secret named `tc-auth-usr-elastic-search-projector` 
 | Name                              | Description                                                                        | Value                          |
 | --------------------------------- | ---------------------------------------------------------------------------------- | ------------------------------ |
 | `elastic.host`                    | Elastic/OpenSearch host                                                            | `https://your.opensearch.host` |
-| `elastic.port`                    | Elastic/OpenSearch port number                                                     | `443`                          |
-| `elastic.clusterPort`             | Elastic/OpenSearch cluster port                                                    | `9200`                         |
+| `elastic.port`                    | Elastic/OpenSearch cluster port                                                    | `443`                          |
 | `elastic.opensearchCompatibility` | Enable OpenSearch compatibility                                                    | `true`                         |
 | `elastic.indexName`               | Elastic/OpenSearch index name                                                      | `search`                       |
 | `elastic.topic`                   | Topic to consume messages from                                                     | `knowledge`                    |
