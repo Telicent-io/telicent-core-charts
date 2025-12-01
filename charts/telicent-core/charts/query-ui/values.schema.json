@@ -16,11 +16,6 @@
                     "default": [],
                     "items": {}
                 },
-                "enterprise": {
-                    "type": "boolean",
-                    "description": "Enable enterprise mode, adding additional features and configurations",
-                    "default": false
-                },
                 "appHostDomain": {
                     "type": "string",
                     "description": "Domain associated with Telicent application/ui services",
@@ -35,26 +30,6 @@
                     "type": "string",
                     "description": "Domain associated with Telicent authentication services, including OIDC providers",
                     "default": "auth.telicent.io"
-                },
-                "istioNamespace": {
-                    "type": "string",
-                    "description": "Namespace in which Istio is deployed",
-                    "default": "istio-system"
-                },
-                "istioServiceAccountName": {
-                    "type": "string",
-                    "description": "Name of the Istio service account",
-                    "default": "istio-ingress"
-                },
-                "istioGatewayName": {
-                    "type": "string",
-                    "description": "Name of the Istio Gateway Resource (LB operating at the edge of the mesh)",
-                    "default": "ingress-gateway"
-                },
-                "istioVirtualServiceEnabled": {
-                    "type": "boolean",
-                    "description": "Enable Istio traffic routing to a named destination service",
-                    "default": false
                 }
             }
         },

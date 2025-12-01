@@ -19,14 +19,18 @@ global:
   # @key global.imagePullSecrets Global registry secret names as an array
   imagePullSecrets: []
 
+  # @key global.enabled enabled Enable *Paperback Writer* deployment
+  enabled: false
+
   # @key global.releaseNameTelicentCore Release name used during the Telicent Core chart installation. Note: ensure the value is correct, otherwise there will be no access to auth & graph
   # If installed through the parent-chart this value needs to reflect the name of the release name used when 'telicent-core' chart was installed.
   # If all applications were installed through sub-charts, leaving this value empty will provide the correct behavior.
   releaseNameTelicentCore: ""
 
-  # @key global.enabled enabled Enable *Paperback Writer* deployment
-  enabled: false
-
+  # @key global.appHostDomain Domain associated with Telicent application/ui services
+  appHostDomain: "apps.telicent.io"
+  # @key global.apiHostDomain Domain associated with Telicent Api services
+  apiHostDomain: "api.telicent.io"
   # @key global.authHostDomain Domain associated with Telicent authentication services, including OIDC providers
   authHostDomain: "auth.telicent.io"
 
@@ -35,7 +39,6 @@ configuration:
 
   # @key configuration.sparqlDefaultLabel Default label for SPARQL queries
   sparqlDefaultLabel: "!"
-
   # @key configuration.cacertPath Path to CA certs in the container
   cacertPath: ""
 

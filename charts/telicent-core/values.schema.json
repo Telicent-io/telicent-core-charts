@@ -23,7 +23,7 @@
                 },
                 "appHostDomain": {
                     "type": "string",
-                    "description": "Domain associated with Telicent application services",
+                    "description": "Domain associated with Telicent application/ui services",
                     "default": "apps.telicent.io"
                 },
                 "apiHostDomain": {
@@ -36,35 +36,25 @@
                     "description": "Domain associated with Telicent authentication services, including OIDC providers",
                     "default": "auth.telicent.io"
                 },
-                "groupsClaim": {
+                "istioIngressNamespace": {
                     "type": "string",
-                    "description": "Key used to retrieve groups from the OIDC provider",
-                    "default": "groups"
-                },
-                "jwksUrl": {
-                    "type": "string",
-                    "description": "Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)",
-                    "default": "https://{yourAuthdomain}/.well-known/jwks.json"
-                },
-                "istioNamespace": {
-                    "type": "string",
-                    "description": "Namespace in which Istio is deployed",
+                    "description": "Namespace in which the Istio Ingress resource is deployed",
                     "default": "istio-system"
                 },
-                "istioServiceAccountName": {
+                "istioIngressServiceAccount": {
                     "type": "string",
-                    "description": "Name of the Istio service account",
+                    "description": "ServiceAccount associated with Istio ingress deployment",
                     "default": "istio-ingress"
+                },
+                "istioGatewayNamespace": {
+                    "type": "string",
+                    "description": "Namespace in which the Istio Gateway resource is deployed",
+                    "default": "istio-system"
                 },
                 "istioGatewayName": {
                     "type": "string",
-                    "description": "Name of the Istio Gateway Resource (LB operating at the edge of the mesh)",
+                    "description": "Name of the Istio Gateway resource",
                     "default": "ingress-gateway"
-                },
-                "istioVirtualServiceEnabled": {
-                    "type": "boolean",
-                    "description": "Enable Istio traffic routing to a named destination service",
-                    "default": false
                 },
                 "kafka": {
                     "type": "object",

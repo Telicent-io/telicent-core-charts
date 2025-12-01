@@ -6,7 +6,7 @@
 #
 # @descStart
 # Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart
-# Note: Oly global parameters used within this chart will be listed below
+# Note: Only global parameters used within this chart will be listed below
 # @descEnd
 global:
   # Note: not supported as this is a third party application
@@ -28,16 +28,13 @@ global:
   # @key global.authHostDomain Domain associated with Telicent authentication services, including OIDC providers
   authHostDomain: "auth.telicent.io"
 
-  #istio:
-  #  gatewayNamespace: istio-system
-  #  gatewayName: ingress-gateway
-
-  # @key global.istioNamespace Namespace in which Istio is deployed
-  # Note: By default, Istio namespace is set to 'istio-system'
-  istioNamespace: istio-system
-  # @key global.istioServiceAccountName Name of the Istio service account
-  istioServiceAccountName: istio-ingress
-  # @key global.istioGatewayName Name of the Istio Gateway Resource (LB operating at the edge of the mesh)
+  # @key global.istioIngressNamespace Namespace in which the Istio Ingress resource is deployed; overrides 'istio.ingress.namespace'
+  istioIngressNamespace: istio-system
+  # @key global.istioIngressServiceAccount ServiceAccount associated with Istio ingress deployment; overrides 'istio.ingress.serviceAccount'
+  istioIngressServiceAccount: istio-ingress
+  # @key global.istioGatewayNamespace Namespace in which the Istio Gateway resource is deployed; overrides 'istio.gateway.namespace'
+  istioGatewayNamespace: istio-system
+  # @key global.istioGatewayName Name of the Istio Gateway resource; overrides 'istio.gateway.namespace'
   istioGatewayName: ingress-gateway
 
 #
@@ -259,16 +256,23 @@ service:
 # @section Istio Parameters
 #
 istio:
+  # istio Ingress resource (lookup: 'kubectl get deployment -l istio=ingress -n <ns>').
+  ingress:
+    # @key istio.ingress.namespace Namespace in which the Istio Ingress resource is deployed
+    namespace: istio-system
+    # @key istio.ingress.serviceAccount ServiceAccount associated with Istio ingress deployment
+    serviceAccount: istio-ingress
+  # istio Gateway resource (lookup: 'kubectl get gateway/<name> -n <ns>')
+  gateway:
+    # @key istio.gateway.namespace Namespace in which the Istio Gateway resource is deployed
+    namespace: istio-system
+    # @key istio.gateway.name Name of the Istio Gateway resource
+    name: ingress-gateway
   virtualService:
     # @key istio.virtualService.enabled Enable Istio traffic into *Traefik Proxy*
     enabled: true
     # @key istio.virtualService.extraHosts Additional hosts (excluding appHostDomain) to be managed by *Traefik Proxy*
     extraHosts: []
-  ingress:
-    # @key istio.ingress.principal Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName
-    principal: "cluster.local/ns/istio-system/sa/istio-ingress"
-    # @key istio.ingress.serviceAccountName Name of the Ingress service account (istio currently supported)
-    serviceAccountName: "istio-ingress"
 
 #
 # @section Host(s) Parameters - Contains host information for applications deployed via *telicent-core* chart

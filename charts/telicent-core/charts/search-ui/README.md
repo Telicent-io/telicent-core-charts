@@ -87,18 +87,14 @@ the [kubernetes documentation](https://kubernetes.io/docs/concepts/configuration
 Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart
 Note: Only global parameters used within this chart will be listed below
 
-| Name                                | Description                                                                       | Value              |
-| ----------------------------------- | --------------------------------------------------------------------------------- | ------------------ |
-| `global.imageRegistry`              | Global image registry                                                             | `""`               |
-| `global.imagePullSecrets`           | Global registry secret names as an array                                          | `[]`               |
-| `global.enterprise`                 | Enable enterprise mode, adding additional features and configurations             | `false`            |
-| `global.appHostDomain`              | Domain associated with Telicent application/ui services                           | `apps.telicent.io` |
-| `global.apiHostDomain`              | Domain associated with Telicent Api services                                      | `api.telicent.io`  |
-| `global.authHostDomain`             | Domain associated with Telicent authentication services, including OIDC providers | `auth.telicent.io` |
-| `global.istioNamespace`             | Namespace in which Istio is deployed                                              | `istio-system`     |
-| `global.istioServiceAccountName`    | Name of the Istio service account                                                 | `istio-ingress`    |
-| `global.istioGatewayName`           | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)         | `ingress-gateway`  |
-| `global.istioVirtualServiceEnabled` | Enable Istio traffic routing to a named destination service                       | `false`            |
+| Name                      | Description                                                                       | Value              |
+| ------------------------- | --------------------------------------------------------------------------------- | ------------------ |
+| `global.imageRegistry`    | Global image registry                                                             | `""`               |
+| `global.imagePullSecrets` | Global registry secret names as an array                                          | `[]`               |
+| `global.enterprise`       | Enable enterprise mode, adding additional features and configurations             | `false`            |
+| `global.appHostDomain`    | Domain associated with Telicent application/ui services                           | `apps.telicent.io` |
+| `global.apiHostDomain`    | Domain associated with Telicent Api services                                      | `api.telicent.io`  |
+| `global.authHostDomain`   | Domain associated with Telicent authentication services, including OIDC providers | `auth.telicent.io` |
 
 ### ConfigMap Parameters
 

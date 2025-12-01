@@ -91,7 +91,6 @@ Note: Only global parameters used within this chart will be listed below
 | ------------------------- | --------------------------------------------------------------------------------- | ------------------ |
 | `global.imageRegistry`    | Global image registry                                                             | `""`               |
 | `global.imagePullSecrets` | Global registry secret names as an array                                          | `[]`               |
-| `global.enterprise`       | Enable enterprise mode, adding additional features and configurations             | `false`            |
 | `global.appHostDomain`    | Domain associated with Telicent application/ui services                           | `apps.telicent.io` |
 | `global.apiHostDomain`    | Domain associated with Telicent Api services                                      | `api.telicent.io`  |
 | `global.authHostDomain`   | Domain associated with Telicent authentication services, including OIDC providers | `auth.telicent.io` |
