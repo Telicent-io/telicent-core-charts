@@ -5,7 +5,8 @@
 # @section Global Parameters
 #
 # @descStart
-# Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
+# Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart
+# Note: Only global parameters used within this chart will be listed below
 # @descEnd
 global:
   ## Current available global image parameters: imageRegistry and imagePullSecrets
@@ -28,25 +29,22 @@ global:
   # @key global.authHostDomain Domain associated with Telicent authentication services, including OIDC providers
   authHostDomain: "auth.telicent.io"
 
-  # @key global.istioNamespace Namespace in which Istio is deployed
-  # Note: By default, Istio namespace is set to 'istio-system'
-  istioNamespace: istio-system
-  # @key global.istioServiceAccountName Name of the Istio service account
-  istioServiceAccountName: istio-ingress
-  # @key global.istioGatewayName Name of the Istio Gateway Resource (LB operating at the edge of the mesh)
-  istioGatewayName: ingress-gateway
-  # @key global.istioVirtualServiceEnabled Enable Istio traffic routing to a named destination service
-  istioVirtualServiceEnabled: false
+#
+# @section ConfigMap Parameters
+#
+configMap:
+  # @key configMap.existingConfigMap The name of an existing config map containing env-config.js.
+  # Note: When it's set, it will disable configmap creation
+  existingConfigMap: ""
 
 #
-# @section Configuration Parameters
+# @section OAuth Parameters
 #
-# @descStart
-# Contains configuration parameters specific to the *Search UI* application
-# @descEnd
-configMap:
-  # @key configMap.existingConfigMap The name of an existing config map containing env-config.js. If omitted, a new config map using settings from this values file will be created
-  existingConfigMap: ""
+oauth:
+  # @key oauth.clientId The OAuth client id to be used by *Admin UI*
+  clientId: "telicent-admin-ui"
+  # @key oauth.scopes List of OAuth scopes to be used by *Admin UI*
+  scopes: "openid profile offline_access"
 
 #
 # @section Common Parameters
@@ -177,19 +175,22 @@ serviceAccount:
 # @section Traffic Exposure Parameters
 #
 service:
-  # @key service.name *Search UI* service name. If not set, a name is generated using the fullname
+  # @key service.name *Admin UI* service name. If not set, a name is generated using the fullname
   name: ""
-  # @key service.port *Search UI* service port
+  # @key service.port *Admin UI* service port
   port: 8080
-  # @key service.type *Search UI* service type
+  # @key service.type *Admin UI* service type
   type: ClusterIP
 
 #
-# @section Istio Parameters
+# @section Host(s) Parameters - Contains host information for applications deployed via *telicent-core* chart.
 #
-istio:
-  ingress:
-    # @key istio.ingress.principal Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName
-    principal: ""
-    # @key istio.ingress.serviceAccountName Name of the Ingress service account (traefik and istio supported)
-    serviceAccountName: "traefik-proxy"
+# @descStart
+# *Admin UI* interacts directly with other Telicent Applications using their default service/serviceAccount and port.
+# If either of those details changes, you can use this section to correctly referer to those applications.
+# @descEnd
+hosts:
+  # @key hosts.enableAutoCorrect Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as is, without any modification.
+  enableAutoCorrect: true
+  # @key hosts.traefikProxy Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'
+  traefikProxy: "traefik-proxy:8080"

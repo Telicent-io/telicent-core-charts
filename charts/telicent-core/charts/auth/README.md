@@ -84,31 +84,57 @@ the [kubernetes documentation](https://kubernetes.io/docs/concepts/configuration
 
 ### Global Parameters
 
-Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
+Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart
+Note: Only global parameters used within this chart will be listed below
 
-| Name                                | Description                                                                       | Value              |
-| ----------------------------------- | --------------------------------------------------------------------------------- | ------------------ |
-| `global.imageRegistry`              | Global image registry                                                             | `""`               |
-| `global.imagePullSecrets`           | Global registry secret names as an array                                          | `[]`               |
-| `global.enterprise`                 | Enable enterprise mode, adding additional features and configurations             | `false`            |
-| `global.appHostDomain`              | Domain associated with Telicent application/ui services                           | `apps.telicent.io` |
-| `global.apiHostDomain`              | Domain associated with Telicent Api services                                      | `api.telicent.io`  |
-| `global.authHostDomain`             | Domain associated with Telicent authentication services, including OIDC providers | `auth.telicent.io` |
-| `global.istioNamespace`             | Namespace in which Istio is deployed                                              | `istio-system`     |
-| `global.istioServiceAccountName`    | Name of the Istio service account                                                 | `istio-ingress`    |
-| `global.istioGatewayName`           | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)         | `ingress-gateway`  |
-| `global.istioVirtualServiceEnabled` | Enable Istio traffic routing to a named destination service                       | `false`            |
+| Name                                | Description                                                                                                                                                                            | Value              |
+| ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
+| `global.imageRegistry`              | Global image registry                                                                                                                                                                  | `""`               |
+| `global.imagePullSecrets`           | Global registry secret names as an array                                                                                                                                               | `[]`               |
+| `global.enterprise`                 | Enable enterprise mode, adding additional features and configurations                                                                                                                  | `false`            |
+| `global.appHostDomain`              | Domain associated with Telicent application/ui services                                                                                                                                | `apps.telicent.io` |
+| `global.apiHostDomain`              | Domain associated with Telicent Api services                                                                                                                                           | `api.telicent.io`  |
+| `global.authHostDomain`             | Domain associated with Telicent authentication services, including OIDC providers                                                                                                      | `auth.telicent.io` |
+| `global.releaseNameTelicentPreview` | Release name used during the Telicent Preview chart installation. Note: ensure the value is correct, otherwise there will be no access to data-catalog, user-portal & paperback-writer | `""`               |
 
-### ConfigMap/Configuration Parameters
+### ConfigMap Parameters
 
-Contains configuration parameters specific to the *Auth* application
+| Name                             | Description                                                            | Value |
+| -------------------------------- | ---------------------------------------------------------------------- | ----- |
+| `configMap.existingEnvConfigMap` | Name of existing configmap containing *Auth* Environment Configuration | `""`  |
 
-| Name                             | Description                                                            | Value          |
-| -------------------------------- | ---------------------------------------------------------------------- | -------------- |
-| `configMap.existingEnvConfigMap` | Name of existing configmap containing *Auth* Environment Configuration | `""`           |
-| `configMap.cookieParentDomain`   | Cookie domain scope                                                    | `.telicent.io` |
-| `configMap.cookieSecure`         | Enable secure cookies                                                  | `true`         |
-| `configMap.superUserIdentifier`  | Super user identification if blank all users will be super users       | `""`           |
+### Identity Provider (IDP) Parameters and Secret
+
+Contains details pertinent to the OIDC Identity Provider to be used by the *Auth* OAuth application.
+It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
+For Quick Start purposes, a secret named `tc-auth-gen-idp-auth` will be created if one is not set.
+
+| Name                      | Description                                                                            | Value          |
+| ------------------------- | -------------------------------------------------------------------------------------- | -------------- |
+| `idp.issuerUrl`           | The OpenID Connect issuer URL                                                          | `""`           |
+| `idp.authorizationPath`   | The path to use in combination with the issuer URL for authorization                   | `/auth`        |
+| `idp.jwksPath`            | The path to use in combination with the issuer URL for JWKS                            | `/keys`        |
+| `idp.tokenPath`           | The path to use in combination with the issuer URL for generating tokens               | `/token`       |
+| `idp.cookieParentDomain`  | Cookie domain scope                                                                    | `.telicent.io` |
+| `idp.cookieSecure`        | Enable secure cookies                                                                  | `true`         |
+| `idp.superUserIdentifier` | Super user identification, set to 'ALL' to allow for everyone to be a superuser        | `ALL`          |
+| `idp.clientName`          | The OAuth Client Name (used for display)                                               | `""`           |
+| `idp.emailClaim`          | The OIDC claim containing the user's email                                             | `email`        |
+| `idp.existingSecret`      | Name of an existing secret. The secret must contain 2 keys: 'clientid', 'clientsecret' | `""`           |
+| `idp.clientId`            | The OAuth Client ID                                                                    | `""`           |
+| `idp.clientSecret`        | The OAuth Client Secret                                                                | `""`           |
+
+### ForwardAuth Parameters and Secret
+
+When making requests to the `/auth/forward` endpoint (used by reverse proxies), `X-ForwardAuth-Secret` header is required.
+The secret associated with that header is defined within this section.
+It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
+For Quick Start purposes, a secret named `tc-auth-gen-forward-auth` will be created if one is not set.
+
+| Name                         | Description                                                         | Value |
+| ---------------------------- | ------------------------------------------------------------------- | ----- |
+| `forwardAuth.existingSecret` | Name of an existing secret. The secret must contain 1 key: 'header' | `""`  |
+| `forwardAuth.header`         | The header value to be associated with the `X-ForwardAuth-Secret`.  | `""`  |
 
 ### Java Parameters
 
@@ -143,48 +169,18 @@ For Quick Start purposes, a secret named `tc-auth-usr-psql-auth` will be created
 | `postgresSql.username`       | PostgreSQL username                                                                | `""`  |
 | `postgresSql.password`       | PostgreSQL password                                                                | `""`  |
 
-### Identity Provider (IDP) Parameters and Secret
-
-Contains details pertinent to the OIDC Identity Provider to be used by the *Auth* OAuth application.
-It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
-For Quick Start purposes, a secret named `tc-auth-gen-idp-auth` will be created if one is not set.
-
-| Name                    | Description                                                                            | Value    |
-| ----------------------- | -------------------------------------------------------------------------------------- | -------- |
-| `idp.issuerUrl`         | The OpenID Connect issuer URL                                                          | `""`     |
-| `idp.authorizationPath` | The path to use in combination with the issuer URL for authorization                   | `/auth`  |
-| `idp.jwksPath`          | The path to use in combination with the issuer URL for JWKS                            | `/keys`  |
-| `idp.tokenPath`         | The path to use in combination with the issuer URL for generating tokens               | `/token` |
-| `idp.clientName`        | The OAuth Client Name (used for display)                                               | `""`     |
-| `idp.emailClaim`        | The OIDC claim containing the user's email                                             | `email`  |
-| `idp.existingSecret`    | Name of an existing secret. The secret must contain 2 keys: 'clientid', 'clientsecret' | `""`     |
-| `idp.clientId`          | The OAuth Client ID                                                                    | `""`     |
-| `idp.clientSecret`      | The OAuth Client Secret                                                                | `""`     |
-
-### ForwardAuth Parameters and Secret
-
-When making requests to the `/auth/forward` endpoint (used by reverse proxies), `X-ForwardAuth-Secret` header is required.
-The secret associated with that header is defined within this section.
-It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
-For Quick Start purposes, a secret named `tc-auth-gen-forward-auth` will be created if one is not set.
-
-| Name                         | Description                                                         | Value |
-| ---------------------------- | ------------------------------------------------------------------- | ----- |
-| `forwardAuth.existingSecret` | Name of an existing secret. The secret must contain 1 key: 'header' | `""`  |
-| `forwardAuth.header`         | The header value to be associated with the `X-ForwardAuth-Secret`.  | `""`  |
-
 ### Bootstrap Parameters
 
 Contains configuration to be used to bootstrap a clean instance of the Auth application to a working state.
 
-| Name                                  | Description                                                                                                                                                                           | Value  |
-| ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ |
-| `bootstrap.enabled`                   | Enable                                                                                                                                                                                | `true` |
-| `bootstrap.clients.existingConfigMap` | Name of an existing config map resource containing all required public and confidential clients. If specified, the values for clients.public and clients.confidential will be ignored | `""`   |
-| `bootstrap.clients.public`            | A list of public client objects                                                                                                                                                       | `[]`   |
-| `bootstrap.clients.confidential`      | A list of confidential client objects                                                                                                                                                 | `[]`   |
-| `bootstrap.groups.existingConfigMap`  | Name of an existing config map containing a list of group objects.                                                                                                                    | `""`   |
-| `bootstrap.groups.list`               | A list containing group objects                                                                                                                                                       | `[]`   |
+| Name                                  | Description                                                                                                                                                                           | Value   |
+| ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `bootstrap.enabled`                   | Enable                                                                                                                                                                                | `false` |
+| `bootstrap.clients.existingConfigMap` | Name of an existing config map resource containing all required public and confidential clients. If specified, the values for clients.public and clients.confidential will be ignored | `""`    |
+| `bootstrap.clients.public`            | A list of public client objects                                                                                                                                                       | `[]`    |
+| `bootstrap.clients.confidential`      | A list of confidential client objects                                                                                                                                                 | `[]`    |
+| `bootstrap.groups.existingConfigMap`  | Name of an existing config map containing a list of group objects.                                                                                                                    | `""`    |
+| `bootstrap.groups.list`               | A list containing group objects                                                                                                                                                       | `[]`    |
 
 ### Common Parameters
 
@@ -250,20 +246,27 @@ Contains configuration to be used to bootstrap a clean instance of the Auth appl
 | `service.port` | *Auth* service port                                                     | `8080`      |
 | `service.type` | *Auth* service port                                                     | `ClusterIP` |
 
-### Istio Parameters
+### Host(s) Parameters - Contains host information for applications deployed via *telicent-core* chart.
 
-| Name                                       | Description                                                                                                                                                       | Value              |
-| ------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
-| `istio.ingress.principal`                  | Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName          | `""`               |
-| `istio.ingress.serviceAccountName`         | Name of the Ingress service account (traefik and istio supported)                                                                                                 | `traefik-proxy`    |
-| `istio.userPreferences.principal`          | Principal used for User Preferences traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName | `""`               |
-| `istio.userPreferences.serviceAccountName` | Name of the User Preferences service account                                                                                                                      | `user-preferences` |
-| `istio.graph.principal`                    | Principal used for Graph traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName            | `""`               |
-| `istio.graph.serviceAccountName`           | Name of the Graph service account                                                                                                                                 | `graph`            |
-| `istio.search.principal`                   | Principal used for Search traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName           | `""`               |
-| `istio.search.serviceAccountName`          | Name of the Search service account                                                                                                                                | `search`           |
-| `istio.paperbackWriter.principal`          | Principal used for Paperback Writer traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName | `""`               |
-| `istio.paperbackWriter.serviceAccountName` | Name of the Paperback Writer service account                                                                                                                      | `paperback-writer` |
+*Auth* interacts directly with other Telicent Applications using their default service/serviceAccount and port.
+If either of those details changes, you can use this section to correctly referer to those applications.
+
+| Name                      | Description                                                                                                                                                                                                                        | Value                   |
+| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------- |
+| `hosts.enableAutoCorrect` | Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as is, without any modification. | `true`                  |
+| `hosts.traefikProxy`      | Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                          | `traefik-proxy:8080`    |
+| `hosts.userPreferences`   | User Preferences host value, If not set a host is generated using service:'user-preferences',port:'8080' and Release namespace & name.                                                                                             | `user-preferences:8080` |
+| `hosts.search`            | Search application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                                 | `search:8080`           |
+| `hosts.graph`             | Graph application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                                  | `graph:8080`            |
+
+### Host(s) Preview Parameters - Contains host information for applications deployed via *telicent-preview* chart
+
+Host values will be used as defined in this section, release name cannot be autocorrected, as the release name is unknown.
+
+| Name                             | Description                                                                                                                                | Value                   |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------- |
+| `hostsPreview.enableAutoCorrect` | Prefix 'global.releaseNameTelicentPreview' to each host value. Alternatively, the host value will be used as is, without any modification. | `true`                  |
+| `hostsPreview.paperbackWriter`   | Paperback Writer application host value, as defined by 'service/serviceAccount:port'                                                       | `paperback-writer:8080` |
 
 Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
 

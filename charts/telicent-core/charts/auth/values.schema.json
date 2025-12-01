@@ -36,25 +36,10 @@
                     "description": "Domain associated with Telicent authentication services, including OIDC providers",
                     "default": "auth.telicent.io"
                 },
-                "istioNamespace": {
+                "releaseNameTelicentPreview": {
                     "type": "string",
-                    "description": "Namespace in which Istio is deployed",
-                    "default": "istio-system"
-                },
-                "istioServiceAccountName": {
-                    "type": "string",
-                    "description": "Name of the Istio service account",
-                    "default": "istio-ingress"
-                },
-                "istioGatewayName": {
-                    "type": "string",
-                    "description": "Name of the Istio Gateway Resource (LB operating at the edge of the mesh)",
-                    "default": "ingress-gateway"
-                },
-                "istioVirtualServiceEnabled": {
-                    "type": "boolean",
-                    "description": "Enable Istio traffic routing to a named destination service",
-                    "default": false
+                    "description": "Release name used during the Telicent Preview chart installation. Note: ensure the value is correct, otherwise there will be no access to data-catalog, user-portal & paperback-writer",
+                    "default": ""
                 }
             }
         },
@@ -65,6 +50,31 @@
                     "type": "string",
                     "description": "Name of existing configmap containing *Auth* Environment Configuration",
                     "default": ""
+                }
+            }
+        },
+        "idp": {
+            "type": "object",
+            "properties": {
+                "issuerUrl": {
+                    "type": "string",
+                    "description": "The OpenID Connect issuer URL",
+                    "default": ""
+                },
+                "authorizationPath": {
+                    "type": "string",
+                    "description": "The path to use in combination with the issuer URL for authorization",
+                    "default": "/auth"
+                },
+                "jwksPath": {
+                    "type": "string",
+                    "description": "The path to use in combination with the issuer URL for JWKS",
+                    "default": "/keys"
+                },
+                "tokenPath": {
+                    "type": "string",
+                    "description": "The path to use in combination with the issuer URL for generating tokens",
+                    "default": "/token"
                 },
                 "cookieParentDomain": {
                     "type": "string",
@@ -78,7 +88,47 @@
                 },
                 "superUserIdentifier": {
                     "type": "string",
-                    "description": "Super user identification if blank all users will be super users",
+                    "description": "Super user identification, set to 'ALL' to allow for everyone to be a superuser",
+                    "default": "ALL"
+                },
+                "clientName": {
+                    "type": "string",
+                    "description": "The OAuth Client Name (used for display)",
+                    "default": ""
+                },
+                "emailClaim": {
+                    "type": "string",
+                    "description": "The OIDC claim containing the user's email",
+                    "default": "email"
+                },
+                "existingSecret": {
+                    "type": "string",
+                    "description": "Name of an existing secret. The secret must contain 2 keys: 'clientid', 'clientsecret'",
+                    "default": ""
+                },
+                "clientId": {
+                    "type": "string",
+                    "description": "The OAuth Client ID",
+                    "default": ""
+                },
+                "clientSecret": {
+                    "type": "string",
+                    "description": "The OAuth Client Secret",
+                    "default": ""
+                }
+            }
+        },
+        "forwardAuth": {
+            "type": "object",
+            "properties": {
+                "existingSecret": {
+                    "type": "string",
+                    "description": "Name of an existing secret. The secret must contain 1 key: 'header'",
+                    "default": ""
+                },
+                "header": {
+                    "type": "string",
+                    "description": "The header value to be associated with the `X-ForwardAuth-Secret`.",
                     "default": ""
                 }
             }
@@ -193,78 +243,13 @@
                 }
             }
         },
-        "idp": {
-            "type": "object",
-            "properties": {
-                "issuerUrl": {
-                    "type": "string",
-                    "description": "The OpenID Connect issuer URL",
-                    "default": ""
-                },
-                "authorizationPath": {
-                    "type": "string",
-                    "description": "The path to use in combination with the issuer URL for authorization",
-                    "default": "/auth"
-                },
-                "jwksPath": {
-                    "type": "string",
-                    "description": "The path to use in combination with the issuer URL for JWKS",
-                    "default": "/keys"
-                },
-                "tokenPath": {
-                    "type": "string",
-                    "description": "The path to use in combination with the issuer URL for generating tokens",
-                    "default": "/token"
-                },
-                "clientName": {
-                    "type": "string",
-                    "description": "The OAuth Client Name (used for display)",
-                    "default": ""
-                },
-                "emailClaim": {
-                    "type": "string",
-                    "description": "The OIDC claim containing the user's email",
-                    "default": "email"
-                },
-                "existingSecret": {
-                    "type": "string",
-                    "description": "Name of an existing secret. The secret must contain 2 keys: 'clientid', 'clientsecret'",
-                    "default": ""
-                },
-                "clientId": {
-                    "type": "string",
-                    "description": "The OAuth Client ID",
-                    "default": ""
-                },
-                "clientSecret": {
-                    "type": "string",
-                    "description": "The OAuth Client Secret",
-                    "default": ""
-                }
-            }
-        },
-        "forwardAuth": {
-            "type": "object",
-            "properties": {
-                "existingSecret": {
-                    "type": "string",
-                    "description": "Name of an existing secret. The secret must contain 1 key: 'header'",
-                    "default": ""
-                },
-                "header": {
-                    "type": "string",
-                    "description": "The header value to be associated with the `X-ForwardAuth-Secret`.",
-                    "default": ""
-                }
-            }
-        },
         "bootstrap": {
             "type": "object",
             "properties": {
                 "enabled": {
                     "type": "boolean",
                     "description": "Enable",
-                    "default": true
+                    "default": false
                 },
                 "clients": {
                     "type": "object",
@@ -593,83 +578,48 @@
                 }
             }
         },
-        "istio": {
+        "hosts": {
             "type": "object",
             "properties": {
-                "ingress": {
-                    "type": "object",
-                    "properties": {
-                        "principal": {
-                            "type": "string",
-                            "description": "Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName",
-                            "default": ""
-                        },
-                        "serviceAccountName": {
-                            "type": "string",
-                            "description": "Name of the Ingress service account (traefik and istio supported)",
-                            "default": "traefik-proxy"
-                        }
-                    }
+                "enableAutoCorrect": {
+                    "type": "boolean",
+                    "description": "Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as is, without any modification.",
+                    "default": true
+                },
+                "traefikProxy": {
+                    "type": "string",
+                    "description": "Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'",
+                    "default": "traefik-proxy:8080"
                 },
                 "userPreferences": {
-                    "type": "object",
-                    "properties": {
-                        "principal": {
-                            "type": "string",
-                            "description": "Principal used for User Preferences traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName",
-                            "default": ""
-                        },
-                        "serviceAccountName": {
-                            "type": "string",
-                            "description": "Name of the User Preferences service account",
-                            "default": "user-preferences"
-                        }
-                    }
-                },
-                "graph": {
-                    "type": "object",
-                    "properties": {
-                        "principal": {
-                            "type": "string",
-                            "description": "Principal used for Graph traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName",
-                            "default": ""
-                        },
-                        "serviceAccountName": {
-                            "type": "string",
-                            "description": "Name of the Graph service account",
-                            "default": "graph"
-                        }
-                    }
+                    "type": "string",
+                    "description": "User Preferences host value, If not set a host is generated using service:'user-preferences',port:'8080' and Release namespace & name.",
+                    "default": "user-preferences:8080"
                 },
                 "search": {
-                    "type": "object",
-                    "properties": {
-                        "principal": {
-                            "type": "string",
-                            "description": "Principal used for Search traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName",
-                            "default": ""
-                        },
-                        "serviceAccountName": {
-                            "type": "string",
-                            "description": "Name of the Search service account",
-                            "default": "search"
-                        }
-                    }
+                    "type": "string",
+                    "description": "Search application default host value, as defined by 'service/serviceAccount:port'",
+                    "default": "search:8080"
+                },
+                "graph": {
+                    "type": "string",
+                    "description": "Graph application default host value, as defined by 'service/serviceAccount:port'",
+                    "default": "graph:8080"
+                }
+            }
+        },
+        "hostsPreview": {
+            "type": "object",
+            "properties": {
+                "enableAutoCorrect": {
+                    "type": "boolean",
+                    "description": "Prefix 'global.releaseNameTelicentPreview' to each host value. Alternatively, the host value will be used as is, without any modification.",
+                    "default": true
                 },
                 "paperbackWriter": {
-                    "type": "object",
-                    "properties": {
-                        "principal": {
-                            "type": "string",
-                            "description": "Principal used for Paperback Writer traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName",
-                            "default": ""
-                        },
-                        "serviceAccountName": {
-                            "type": "string",
-                            "description": "Name of the Paperback Writer service account",
-                            "default": "paperback-writer"
-                        }
-                    }
+                    "type": "string",
+                    "description": "Paperback Writer application host value, as defined by 'service/serviceAccount:port'",
+                    "default": "paperback-writer:8080"
                 }
             }
         }

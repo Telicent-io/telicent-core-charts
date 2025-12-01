@@ -14,7 +14,7 @@ http:
     search:
       loadBalancer:
         servers:
-          - url: http://{{ .Values.hosts.search | default (printf "%s.%s:8080" (include "traefik-proxy.routesService" (list . "search")) .Release.Namespace) }}
+          - url: {{ printf "http://%s"  (include "traefik-proxy.hostSearch" .) }}
 
   middlewares:
     path-search:
@@ -25,4 +25,4 @@ http:
     host-search:
       headers:
         customRequestHeaders:
-          host: {{ .Values.hosts.search | default (printf "%s.%s:8080" (include "traefik-proxy.routesService" (list . "search")) .Release.Namespace) }}
+          host: {{ include "traefik-proxy.hostSearch" . }}

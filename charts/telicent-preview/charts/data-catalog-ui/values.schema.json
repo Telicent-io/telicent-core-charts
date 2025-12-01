@@ -18,91 +18,287 @@
                 },
                 "appHostDomain": {
                     "type": "string",
-                    "description": "Domain associated with Telicent application services",
+                    "description": "Domain associated with Telicent application/ui services",
                     "default": "apps.telicent.io"
+                },
+                "apiHostDomain": {
+                    "type": "string",
+                    "description": "Domain associated with Telicent Api services",
+                    "default": "api.telicent.io"
                 },
                 "authHostDomain": {
                     "type": "string",
                     "description": "Domain associated with Telicent authentication services, including OIDC providers",
                     "default": "auth.telicent.io"
-                },
-                "groupsClaim": {
-                    "type": "string",
-                    "description": "Key used to retrieve groups from the OIDC provider",
-                    "default": "groups"
-                },
-                "istioNamespace": {
-                    "type": "string",
-                    "description": "Namespace in which Istio is deployed",
-                    "default": "istio-system"
-                },
-                "istioServiceAccountName": {
-                    "type": "string",
-                    "description": "Name of the Istio service account",
-                    "default": "istio-ingress"
-                },
-                "istioGatewayName": {
-                    "type": "string",
-                    "description": "Name of the Istio Gateway Resource (LB operating at the edge of the mesh)",
-                    "default": "ingress-gateway"
                 }
             }
         },
-        "replicaCount": {
-            "type": "number",
-            "description": "Number of replicas for the Data Catalog deployment",
-            "default": 1
-        },
-        "image": {
+        "configMap": {
             "type": "object",
             "properties": {
-                "repository": {
+                "existingConfigMap": {
                     "type": "string",
-                    "description": "Data Catalog image repository",
-                    "default": "telicent/telicent-data-catalog"
-                },
-                "pullPolicy": {
-                    "type": "string",
-                    "description": "Data Catalog image pull policy",
-                    "default": "IfNotPresent"
-                },
-                "tag": {
-                    "type": "string",
-                    "description": "Data Catalog image tag (defaults to chart appVersion if not set)",
+                    "description": "The name of an existing config map containing env-config.js.",
                     "default": ""
                 }
             }
         },
-        "configuration": {
+        "oauth": {
             "type": "object",
             "properties": {
-                "oauthClientId": {
+                "clientId": {
                     "type": "string",
-                    "description": "The OAuth client id to be used by *Search UI*",
+                    "description": "The OAuth client id to be used by *Data Catalog UI*",
                     "default": "telicent-data-catalog-ui"
                 },
-                "oauthScope": {
+                "scopes": {
                     "type": "string",
-                    "description": "List of OAuth scopes to be used by *Search UI*",
+                    "description": "List of OAuth scopes to be used by *Data Catalog UI*",
                     "default": "openid profile offline_access"
                 }
             }
         },
-        "imagePullSecrets": {
-            "type": "array",
-            "description": "Specify registry secret names as an array",
-            "default": [],
-            "items": {}
-        },
         "nameOverride": {
             "type": "string",
-            "description": "String to partially override the chart name",
+            "description": "String to partially override fullname (will maintain the release name)",
             "default": ""
         },
         "fullnameOverride": {
             "type": "string",
             "description": "String to fully override the generated release name",
             "default": ""
+        },
+        "namespaceOverride": {
+            "type": "string",
+            "description": "String to fully override all deployed resources namespace",
+            "default": ""
+        },
+        "commonLabels": {
+            "type": "object",
+            "description": "Add labels to all the deployed resources",
+            "default": {}
+        },
+        "replicas": {
+            "type": "number",
+            "description": "Number of *Data Catalog UI* replicas to deploy",
+            "default": 1
+        },
+        "revisionHistoryLimit": {
+            "type": "number",
+            "description": "Number of controller revisions to keep",
+            "default": 5
+        },
+        "annotations": {
+            "type": "object",
+            "description": "Add extra annotations to the deployment object",
+            "default": {}
+        },
+        "podLabels": {
+            "type": "object",
+            "description": "Add extra labels to the *Data Catalog UI* pod",
+            "default": {}
+        },
+        "podAnnotations": {
+            "type": "object",
+            "description": "Add extra annotations to the *Data Catalog UI* pod",
+            "default": {}
+        },
+        "extraEnvVars": {
+            "type": "array",
+            "description": "Array with extra environment variables to add to *Data Catalog UI* pod",
+            "default": [],
+            "items": {}
+        },
+        "extraVolumes": {
+            "type": "array",
+            "description": "Additional containers to be added to the *Data Catalog UI* pod",
+            "default": [],
+            "items": {}
+        },
+        "extraVolumeMounts": {
+            "type": "array",
+            "description": "Optionally specify extra list of additional volumeMounts",
+            "default": [],
+            "items": {}
+        },
+        "initContainers": {
+            "type": "array",
+            "description": "Add init containers to the pod",
+            "default": [],
+            "items": {}
+        },
+        "sidecars": {
+            "type": "array",
+            "description": "Add sidecars to the pod.",
+            "default": [],
+            "items": {}
+        },
+        "image": {
+            "type": "object",
+            "properties": {
+                "registry": {
+                    "type": "string",
+                    "description": "*Data Catalog UI* image registry",
+                    "default": "quay.io"
+                },
+                "repository": {
+                    "type": "string",
+                    "description": "*Data Catalog UI* image name",
+                    "default": "telicent/telicent-data-catalog"
+                },
+                "tag": {
+                    "type": "string",
+                    "description": "*Data Catalog UI* image tag. If not set, a tag is generated using the appVersion",
+                    "default": ""
+                },
+                "pullPolicy": {
+                    "type": "string",
+                    "description": "*Data Catalog UI* image pull policy",
+                    "default": "IfNotPresent"
+                },
+                "pullSecrets": {
+                    "type": "array",
+                    "description": "Specify registry secret names as an array",
+                    "default": [],
+                    "items": {}
+                }
+            }
+        },
+        "resources": {
+            "type": "object",
+            "properties": {
+                "requests": {
+                    "type": "object",
+                    "properties": {
+                        "cpu": {
+                            "type": "string",
+                            "description": "Set containers' CPU request",
+                            "default": "250m"
+                        },
+                        "memory": {
+                            "type": "string",
+                            "description": "Set containers' memory request",
+                            "default": "500Mi"
+                        }
+                    }
+                },
+                "limits": {
+                    "type": "object",
+                    "properties": {
+                        "cpu": {
+                            "type": "string",
+                            "description": "Set containers' CPU limit",
+                            "default": "500m"
+                        },
+                        "memory": {
+                            "type": "string",
+                            "description": "Set containers' memory limit",
+                            "default": "1000Mi"
+                        }
+                    }
+                }
+            }
+        },
+        "containerSecurityContext": {
+            "type": "object",
+            "properties": {
+                "runAsUser": {
+                    "type": "number",
+                    "description": "Set containers' Security Context runAsUser User ID",
+                    "default": 185
+                },
+                "runAsGroup": {
+                    "type": "number",
+                    "description": "Set containers' Security Context runAsGroup Group ID",
+                    "default": 185
+                },
+                "runAsNonRoot": {
+                    "type": "boolean",
+                    "description": "Set container's Security Context runAsNonRoot",
+                    "default": true
+                },
+                "allowPrivilegeEscalation": {
+                    "type": "boolean",
+                    "description": "Set container's Security Context allowPrivilegeEscalation",
+                    "default": false
+                },
+                "capabilities": {
+                    "type": "object",
+                    "properties": {
+                        "drop": {
+                            "type": "array",
+                            "description": "List of capabilities to be dropped",
+                            "default": [
+                                "ALL"
+                            ],
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "seccompProfile": {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "description": "Set container's Security Context seccomp profile",
+                            "default": "RuntimeDefault"
+                        }
+                    }
+                }
+            }
+        },
+        "podSecurityContext": {
+            "type": "object",
+            "properties": {
+                "runAsUser": {
+                    "type": "number",
+                    "description": "Set the provisioning pod's Security Context runAsUser User ID",
+                    "default": 185
+                },
+                "runAsGroup": {
+                    "type": "number",
+                    "description": "Set the provisioning pod's Security Context runAsGroup Group ID",
+                    "default": 185
+                },
+                "runAsNonRoot": {
+                    "type": "boolean",
+                    "description": "Set the provisioning pod's Security Context runAsNonRoot",
+                    "default": true
+                },
+                "fsGroup": {
+                    "type": "number",
+                    "description": "Set the provisioning pod's Group ID for the mounted volumes' filesystem",
+                    "default": 185
+                },
+                "seccompProfile": {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "description": "Set the provisioning pod's Security Context seccomp profile",
+                            "default": "RuntimeDefault"
+                        }
+                    }
+                }
+            }
+        },
+        "affinity": {
+            "type": "object",
+            "description": "Affinity for pod assignment",
+            "default": {}
+        },
+        "nodeSelector": {
+            "type": "object",
+            "description": "Node labels for pod assignment",
+            "default": {}
+        },
+        "tolerations": {
+            "type": "array",
+            "description": "Tolerations for pod assignment",
+            "default": [],
+            "items": {}
         },
         "serviceAccount": {
             "type": "object",
@@ -112,143 +308,60 @@
                     "description": "Specifies whether a service account should be created",
                     "default": true
                 },
-                "automount": {
-                    "type": "boolean",
-                    "description": "Automatically mount a ServiceAccount's API credentials?",
-                    "default": true
+                "name": {
+                    "type": "string",
+                    "description": "Name of the ServiceAccount to use. If not set, a name is generated using the fullname",
+                    "default": ""
                 },
                 "annotations": {
                     "type": "object",
-                    "description": "Annotations to add to the service account",
+                    "description": "Additional custom annotations for the ServiceAccount",
                     "default": {}
                 },
-                "name": {
-                    "type": "string",
-                    "description": "The name of the service account to use",
-                    "default": ""
+                "automount": {
+                    "type": "boolean",
+                    "description": "Automatically mount a ServiceAccount's API credentials",
+                    "default": true
                 }
             }
-        },
-        "podAnnotations": {
-            "type": "object",
-            "description": "Annotations to add to the Data Catalog pods",
-            "default": {}
-        },
-        "podLabels": {
-            "type": "object",
-            "description": "Labels to add to the Data Catalog pods",
-            "default": {}
-        },
-        "podSecurityContext": {
-            "type": "object",
-            "description": "Security context for the Data Catalog pods",
-            "default": {}
-        },
-        "securityContext": {
-            "type": "object",
-            "description": "Security context for the Data Catalog containers",
-            "default": {}
         },
         "service": {
             "type": "object",
             "properties": {
-                "type": {
+                "name": {
                     "type": "string",
-                    "description": "The service type for the Data Catalog",
-                    "default": "ClusterIP"
+                    "description": "*Data Catalog UI* service name. If not set, a name is generated using the fullname",
+                    "default": ""
                 },
                 "port": {
                     "type": "number",
-                    "description": "The service port for the Data Catalog",
+                    "description": "*Data Catalog UI* service port",
                     "default": 8080
+                },
+                "type": {
+                    "type": "string",
+                    "description": "*Data Catalog UI* service type",
+                    "default": "ClusterIP"
                 }
             }
         },
-        "resources": {
-            "type": "object",
-            "description": "Resource requests and limits for the Data Catalog",
-            "default": {}
-        },
-        "livenessProbe": {
+        "hostsCore": {
             "type": "object",
             "properties": {
-                "httpGet": {
-                    "type": "object",
-                    "properties": {
-                        "path": {
-                            "type": "string",
-                            "description": "The HTTP path for the liveness probe",
-                            "default": "/"
-                        },
-                        "port": {
-                            "type": "string",
-                            "description": "The HTTP port for the liveness probe",
-                            "default": "http"
-                        }
-                    }
-                }
-            }
-        },
-        "readinessProbe": {
-            "type": "object",
-            "properties": {
-                "httpGet": {
-                    "type": "object",
-                    "properties": {
-                        "path": {
-                            "type": "string",
-                            "description": "The HTTP path for the readiness probe",
-                            "default": "/"
-                        },
-                        "port": {
-                            "type": "string",
-                            "description": "The HTTP port for the readiness probe",
-                            "default": "http"
-                        }
-                    }
-                }
-            }
-        },
-        "volumes": {
-            "type": "array",
-            "description": "Additional volumes for the Data Catalog",
-            "default": [],
-            "items": {}
-        },
-        "volumeMounts": {
-            "type": "array",
-            "description": "Additional volume mounts for the Data Catalog",
-            "default": [],
-            "items": {}
-        },
-        "nodeSelector": {
-            "type": "object",
-            "description": "Node selector for the Data Catalog pods",
-            "default": {}
-        },
-        "tolerations": {
-            "type": "array",
-            "description": "Tolerations for the Data Catalog pods",
-            "default": [],
-            "items": {}
-        },
-        "affinity": {
-            "type": "object",
-            "description": "Affinity rules for the Data Catalog pods",
-            "default": {}
-        },
-        "istio": {
-            "type": "object",
-            "properties": {
-                "ingress": {
-                    "type": "object",
-                    "properties": {
-                        "principal": {
-                            "type": "string",
-                            "description": "Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName'",
-                            "default": ""
-                        }
-                    }
+                "enableAutoCorrect": {
+                    "type": "boolean",
+                    "description": "Prefix 'global.releaseNameTelicentCore' to each host value. Alternatively, the host value will be used as is, without any modification.",
+                    "default": true
+                },
+                "traefikProxy": {
+                    "type": "string",
+                    "description": "Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'",
+                    "default": "traefik-proxy:8080"
+                },
+                "auth": {
+                    "type": "string",
+                    "description": "Auth application default host value, as defined by 'service/serviceAccount:port'",
+                    "default": "auth:8080"
                 }
             }
         }

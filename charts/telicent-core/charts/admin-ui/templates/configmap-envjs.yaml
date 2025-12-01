@@ -47,8 +47,8 @@ data:
     window._env_.ACCESS_API_URL = "https://{{ .Values.global.apiHostDomain }}/access";
     window._env_.AUTH_V2_CONFIG = {
       authServerUrl: "https://{{ .Values.global.authHostDomain }}",
-      clientId: "telicent-admin-ui",
-      scope: "openid profile offline_access",
+      clientId: "{{ .Values.oauth.clientId }}",
+      scope: "{{ .Values.oauth.scopes }}",
       redirectUri: "https://{{ .Values.global.appHostDomain }}/admin/callback",
       popupRedirectUri: "https://{{ .Values.global.appHostDomain }}/admin/auth-redirect-uri",
       onLogout: () => {

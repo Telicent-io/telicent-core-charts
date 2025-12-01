@@ -22,9 +22,9 @@ http:
         stsSeconds: 63072000        # Set the max-age of the Strict-Transport-Security header (63072000 = 2 years)
         stsIncludeSubdomains: true  # Add includeSubdomains to the Strict-Transport-Security headers
         stsPreload: true            # Add a preload flag appended to the Strict-Transport-Security header
-        #referrerPolicy: "strict-origin-when-cross-origin"
-        #frameDeny: true             # X-Frame-Options=deny
-        #customFrameOptionsValue: "SAMEORIGIN"
+        referrerPolicy: "strict-origin-when-cross-origin"
+        frameDeny: true             # X-Frame-Options=deny
+        customFrameOptionsValue: "SAMEORIGIN"
 
         customRequestHeaders:
           # avoiding the need for 302 redirects (used in conjunction with trustForwardHeader: false)
@@ -37,14 +37,14 @@ http:
       headers:
         customResponseHeaders:
           # Empty string removes the specified header
-          #Authorization: ""
-          #Gap-Auth: ""
-          #Server: ""
+          Authorization: ""
+          Gap-Auth: ""
+          Server: ""
           X-Powered-By: ""
 
     oauth2-verify:
       forwardAuth:
-        address: http://{{ .Values.hosts.auth | default (printf "%s.%s:8080" (include "traefik-proxy.routesService" (list . "auth")) .Release.Namespace) }}/auth/forward
+        address: {{ printf "http://%s/auth/forward"  (include "traefik-proxy.hostAuth" .) }}
         trustForwardHeader: true
         authRequestHeaders:
          - Authorization

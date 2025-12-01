@@ -13,7 +13,7 @@ metadata:
 
 spec:
   gateways:
-  - {{ required "A valid .Values.global.istioNamespace entry required!" .Values.global.istioNamespace }}/{{ required "A valid .Values.global.istioGatewayName entry required!"  .Values.global.istioGatewayName }}
+  - {{ include "istio.gatewayNamespace" . }}/{{ include "istio.gatewayName" . }}
   hosts:
   - {{ required "A valid .Values.global.authHostDomain entry required!" .Values.global.authHostDomain }}
   http:
@@ -22,5 +22,4 @@ spec:
           host: {{ include "traefik-proxy.serviceName" . }}
           port:
             number: {{ .Values.service.auth.port }}
-
 {{- end }}

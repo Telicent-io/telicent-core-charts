@@ -1,14 +1,20 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
 apiVersion: v1
 kind: ConfigMap
 
 metadata:
-  name: {{ include "data-catalog-ui.fullname" . }}-config
+  name: {{ include "data-catalog-ui.configMapName" . }}
+  namespace: {{ include "data-catalog-ui.namespace" . }}
   labels:
   {{- include "data-catalog-ui.labels" . | nindent 4 }}
 
 data:
   env-config.js: |
-    const SHARED_DOMAIN = "https://{{ .Values.global.appHostDomain }}";
+    const APP_DOMAIN = "https://{{ .Values.global.appHostDomain }}";
+    const API_DOMAIN = "https://{{ .Values.global.apiHostDomain }}";
     window._env_ = window._env_ || {};
     window.featureFlags = window.featureFlags || {};
     window.featureFlags.FF_CATALOG_UPDATE = true;
@@ -19,42 +25,42 @@ data:
         {
             id: "telicent-user-portal",
             name: "user portal",
-            url: `${SHARED_DOMAIN}/user-portal`,
+            url: `${APP_DOMAIN}/user-portal`,
             icon: "/data-catalog/assets/icons/UserPortalLight.svg",
         },
         {
             id: "telicent-graph",
             name: "graph",
-            url: `${SHARED_DOMAIN}/graph`,
+            url: `${APP_DOMAIN}/graph`,
             icon: "/data-catalog/assets/icons/GraphLight.svg",
         },
         {
             id: "telicent-search",
             name: "search",
-            url: `${SHARED_DOMAIN}/search`,
+            url: `${APP_DOMAIN}/search`,
             icon: "/data-catalog/assets/icons/SearchLight.svg",
         },
         // THIS is catalog
         // {
         //   id: "telicent-catalog",
         //   name: "catalog",
-        //   url: `${SHARED_DOMAIN}/data-catalog`,
+        //   url: `${APP_DOMAIN}/data-catalog`,
         //   icon: "./assets/icons/catalog.svg",
         // },
     ];
 
 
     // Apis
-    window._env_.SIGN_OUT_URL = `${SHARED_DOMAIN}/oauth2/sign_out?rd=/oauth2/authorize`;
-    window.USER_PORTAL_URL = `${SHARED_DOMAIN}/user-portal`;
-    window._env_.ACCESS_API_URL = `${SHARED_DOMAIN}/api/access`;
-    window._env_.TRIPLE_STORE_URL = `${SHARED_DOMAIN}/api/sparql`;
-    window._env_.RDF_WRITE_API_URI = `${SHARED_DOMAIN}/api/paperback`;
+    window._env_.SIGN_OUT_URL = `${APP_DOMAIN}/oauth2/sign_out?rd=/oauth2/authorize`;
+    window.USER_PORTAL_URL = `${APP_DOMAIN}/user-portal`;
+    window._env_.ACCESS_API_URL = `${API_DOMAIN}/access`;
+    window._env_.TRIPLE_STORE_URL = `${API_DOMAIN}/sparql`;
+    window._env_.RDF_WRITE_API_URI = `${API_DOMAIN}/paperback`;
 
     // Apps - include if deploying
     // window._env_.GEO_APP_URL;
-    window._env_.GRAPH_APP_URL = `${SHARED_DOMAIN}/graph`;
-    window._env_.ACCESS_APP_URL = `${SHARED_DOMAIN}/access`;
+    window._env_.GRAPH_APP_URL = `${APP_DOMAIN}/graph`;
+    window._env_.ACCESS_APP_URL = `${APP_DOMAIN}/access`;
     // window._env_.PARALOG_APP_URL;
   
     window.featureFlags = {
@@ -64,8 +70,8 @@ data:
     
     window.AUTH_V2_CONFIG = {
       authServerUrl: "https://{{ .Values.global.authHostDomain }}",
-      clientId: "{{ .Values.configuration.oauthClientId }}",
-      scope: "{{ .Values.configuration.oauthScope }}",
+      clientId: "{{ .Values.oauth.clientId }}",
+      scope: "{{ .Values.oauth.scopes }}",
       redirectUri: "https://{{ .Values.global.appHostDomain }}/data-catalog/callback",
       popupRedirectUri: "https://{{ .Values.global.appHostDomain }}/data-catalog/auth-redirect-uri",
     };

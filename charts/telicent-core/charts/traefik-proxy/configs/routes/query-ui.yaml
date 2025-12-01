@@ -14,7 +14,7 @@ http:
     query-ui:
       loadBalancer:
         servers:
-          - url: http://{{ .Values.hosts.queryUi | default (printf "%s.%s:8080" (include "traefik-proxy.routesService" (list . "query-ui")) .Release.Namespace) }}
+          - url: {{ printf "http://%s"  (include "traefik-proxy.hostQueryUi" .) }}
 
   middlewares:
     path-query-ui:
@@ -25,4 +25,4 @@ http:
     host-query-ui:
       headers:
         customRequestHeaders:
-          host: {{ .Values.hosts.queryUi | default (printf "%s.%s:8080" (include "traefik-proxy.routesService" (list . "query-ui")) .Release.Namespace) }}
+          host: {{ include "traefik-proxy.hostQueryUi" . }}

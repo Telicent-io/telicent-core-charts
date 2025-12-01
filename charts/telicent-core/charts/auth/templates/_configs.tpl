@@ -6,7 +6,11 @@ Copyright (C) 2025 Telicent Limited
 Create the name of the environment variables config map
 */}}
 {{- define "auth.envConfigMapName" -}}
+{{- if .Values.configMap.existingConfigMap }}
+{{- .Values.configMap.existingConfigMap }}
+{{- else }}
 {{- printf "tc-%s-%s" .Chart.Name "env" }}
+{{- end }}
 {{- end }}
 
 {{/*

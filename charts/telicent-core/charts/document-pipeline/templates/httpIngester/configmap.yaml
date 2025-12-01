@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "http-ingester.configMapName" .}}
+  name: {{ include "http-ingester.configMapName" . }}
   labels:
     {{- include "http-ingester.labels" . | nindent 4 }}
 

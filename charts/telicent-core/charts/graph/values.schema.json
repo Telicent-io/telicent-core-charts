@@ -16,6 +16,11 @@
                     "default": [],
                     "items": {}
                 },
+                "releaseNameTelicentPreview": {
+                    "type": "string",
+                    "description": "Release name used during the Telicent Preview chart installation. Note: ensure the value is correct, otherwise there will be no access to data-catalog, user-portal & paperback-writer",
+                    "default": ""
+                },
                 "enterprise": {
                     "type": "boolean",
                     "description": "Enable enterprise mode, adding additional features and configurations",
@@ -228,7 +233,7 @@
                         "cpu": {
                             "type": "string",
                             "description": "Set containers' CPU request",
-                            "default": "1000m"
+                            "default": "1200m"
                         },
                         "memory": {
                             "type": "string",
@@ -475,7 +480,7 @@
                 },
                 "traefikProxy": {
                     "type": "string",
-                    "description": "Search application default host value, as defined by 'service/serviceAccount:port'",
+                    "description": "Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'",
                     "default": "traefik-proxy:8080"
                 },
                 "search": {
@@ -485,9 +490,14 @@
                 }
             }
         },
-        "hostsExternal": {
+        "hostsPreview": {
             "type": "object",
             "properties": {
+                "enableAutoCorrect": {
+                    "type": "boolean",
+                    "description": "Prefix 'global.releaseNameTelicentPreview' to each host value. Alternatively, the host value will be used as is, without any modification.",
+                    "default": true
+                },
                 "paperbackWriter": {
                     "type": "string",
                     "description": "Paperback Writer application host value, as defined by 'service/serviceAccount:port'",

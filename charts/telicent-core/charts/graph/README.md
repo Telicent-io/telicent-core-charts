@@ -83,29 +83,28 @@ the [kubernetes documentation](https://kubernetes.io/docs/concepts/configuration
 
 ### Global Parameters
 
-Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
-Note: only global parameters used within this chart, will be listed below.
+Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart
+Note: Only global parameters used within this chart will be listed below.
 
-| Name                                    | Description                                                                                                       | Value                                          |
-| --------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
-| `global.imageRegistry`                  | Global image registry                                                                                             | `""`                                           |
-| `global.imagePullSecrets`               | Global registry secret names as an array                                                                          | `[]`                                           |
-| `global.enterprise`                     | Enable enterprise mode, adding additional features and configurations                                             | `false`                                        |
-| `global.appHostDomain`                  | Domain associated with Telicent application/ui services                                                           | `apps.telicent.io`                             |
-| `global.apiHostDomain`                  | Domain associated with Telicent Api services                                                                      | `api.telicent.io`                              |
-| `global.authHostDomain`                 | Domain associated with Telicent authentication services, including OIDC providers                                 | `auth.telicent.io`                             |
-| `global.kafka.bootstrapServers`         | Comma separated list containing Kafka bootstrap servers                                                           | `kafka-bootstrap.kafka.svc.cluster.local:9092` |
-| `global.kafka.existingConfigSecretName` | Name of an existing secret containing Kafka configuration (preferred over individual settings below for security) | `""`                                           |
-| `global.kafka.username`                 | Username for Kafka authentication                                                                                 | `your.kafka.username.here`                     |
-| `global.kafka.password`                 | Password for Kafka authentication                                                                                 | `your.kafka.password.here`                     |
-| `global.kafka.protocol`                 | Protocol used for Kafka communication                                                                             | `SASL_SSL`                                     |
-| `global.kafka.mechanism`                | SASL mechanism used for Kafka authentication                                                                      | `SCRAM-SHA-512`                                |
-| `global.truststore.existingSecretName`  | Name of an existing secret containing the truststore                                                              | `""`                                           |
-| `global.truststore.mountPath`           | The mount path for the truststore in the container                                                                | `/app/config/truststore`                       |
+| Name                                    | Description                                                                                                                                                                            | Value                                          |
+| --------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| `global.imageRegistry`                  | Global image registry                                                                                                                                                                  | `""`                                           |
+| `global.imagePullSecrets`               | Global registry secret names as an array                                                                                                                                               | `[]`                                           |
+| `global.releaseNameTelicentPreview`     | Release name used during the Telicent Preview chart installation. Note: ensure the value is correct, otherwise there will be no access to data-catalog, user-portal & paperback-writer | `""`                                           |
+| `global.enterprise`                     | Enable enterprise mode, adding additional features and configurations                                                                                                                  | `false`                                        |
+| `global.appHostDomain`                  | Domain associated with Telicent application/ui services                                                                                                                                | `apps.telicent.io`                             |
+| `global.apiHostDomain`                  | Domain associated with Telicent Api services                                                                                                                                           | `api.telicent.io`                              |
+| `global.authHostDomain`                 | Domain associated with Telicent authentication services, including OIDC providers                                                                                                      | `auth.telicent.io`                             |
+| `global.kafka.bootstrapServers`         | Comma separated list containing Kafka bootstrap servers                                                                                                                                | `kafka-bootstrap.kafka.svc.cluster.local:9092` |
+| `global.kafka.existingConfigSecretName` | Name of an existing secret containing Kafka configuration (preferred over individual settings below for security)                                                                      | `""`                                           |
+| `global.kafka.username`                 | Username for Kafka authentication                                                                                                                                                      | `your.kafka.username.here`                     |
+| `global.kafka.password`                 | Password for Kafka authentication                                                                                                                                                      | `your.kafka.password.here`                     |
+| `global.kafka.protocol`                 | Protocol used for Kafka communication                                                                                                                                                  | `SASL_SSL`                                     |
+| `global.kafka.mechanism`                | SASL mechanism used for Kafka authentication                                                                                                                                           | `SCRAM-SHA-512`                                |
+| `global.truststore.existingSecretName`  | Name of an existing secret containing the truststore                                                                                                                                   | `""`                                           |
+| `global.truststore.mountPath`           | The mount path for the truststore in the container                                                                                                                                     | `/app/config/truststore`                       |
 
 ### ConfigMap Parameters
-
-Contains configuration parameters specific to the *Graph* application
 
 | Name                                | Description                                                             | Value |
 | ----------------------------------- | ----------------------------------------------------------------------- | ----- |
@@ -148,7 +147,7 @@ Contains Java configuration parameters to be used by the *Graph* application
 | `image.tag`                                         | *Graph* image tag. If not set, a tag is generated using the appVersion  | `""`                                |
 | `image.pullPolicy`                                  | *Graph* image pull policy                                               | `IfNotPresent`                      |
 | `image.pullSecrets`                                 | Specify registry secret names as an array                               | `[]`                                |
-| `resources.requests.cpu`                            | Set containers' CPU request                                             | `1000m`                             |
+| `resources.requests.cpu`                            | Set containers' CPU request                                             | `1200m`                             |
 | `resources.requests.memory`                         | Set containers' memory request                                          | `8000Mi`                            |
 | `resources.limits.cpu`                              | Set containers' CPU limit                                               | `1500m`                             |
 | `resources.limits.memory`                           | Set containers' memory limit                                            | `12000Mi`                           |
@@ -204,22 +203,24 @@ Contains Java configuration parameters to be used by the *Graph* application
 ### Host(s) Parameters - Contains host information for applications deployed via *telicent-core* chart.
 
 *Graph* interacts directly with other Telicent Applications using their default service/serviceAccount and port.
-If either of those details changes, you can use this section to correctly referer to those apps.
+If either of those details changes, you can use this section to correctly referer to those applications.
 
 | Name                      | Description                                                                                                                                                                                                                        | Value                |
 | ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
 | `hosts.enableAutoCorrect` | Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as is, without any modification. | `true`               |
 | `hosts.auth`              | Auth application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                                   | `auth:8080`          |
-| `hosts.traefikProxy`      | Search application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                                 | `traefik-proxy:8080` |
+| `hosts.traefikProxy`      | Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                          | `traefik-proxy:8080` |
 | `hosts.search`            | Search application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                                 | `search:8080`        |
 
-### Host(s) External Parameters - Contains host information for applications *not* deployed via *telicent-core* chart.
+### Host(s) Preview Parameters - Contains host information for applications deployed via *telicent-preview* chart
 
-Host values will be used as defined in this section, release name cannot be autocorrected, as the release name is unknown.
+*Graph* interacts with applications deployed via *telicent-preview* using their default service/serviceAccount and port.
+If either of those details changes, you can use this section to correctly referer to those applications.
 
-| Name                            | Description                                                                          | Value                   |
-| ------------------------------- | ------------------------------------------------------------------------------------ | ----------------------- |
-| `hostsExternal.paperbackWriter` | Paperback Writer application host value, as defined by 'service/serviceAccount:port' | `paperback-writer:8080` |
+| Name                             | Description                                                                                                                                | Value                   |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------- |
+| `hostsPreview.enableAutoCorrect` | Prefix 'global.releaseNameTelicentPreview' to each host value. Alternatively, the host value will be used as is, without any modification. | `true`                  |
+| `hostsPreview.paperbackWriter`   | Paperback Writer application host value, as defined by 'service/serviceAccount:port'                                                       | `paperback-writer:8080` |
 
 ## License
 

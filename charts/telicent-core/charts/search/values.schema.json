@@ -36,16 +36,6 @@
                     "description": "Domain associated with Telicent authentication services, including OIDC providers",
                     "default": "auth.telicent.io"
                 },
-                "kafkaBootstrapUrls": {
-                    "type": "string",
-                    "description": "Comma separated list containing Kafka bootstrap URLs",
-                    "default": "kafka-bootstrap.kafka.svc.cluster.local:9092"
-                },
-                "existingConfigSecretName": {
-                    "type": "string",
-                    "description": "Name of an existing secret containing Kafka configuration",
-                    "default": ""
-                },
                 "truststore": {
                     "type": "object",
                     "properties": {
@@ -96,19 +86,14 @@
                     "description": "Elastic/OpenSearch port number",
                     "default": "443"
                 },
-                "clusterPort": {
-                    "type": "string",
-                    "description": "Elastic/OpenSearch cluster port",
-                    "default": "9200"
-                },
                 "opensearchCompatibility": {
-                    "type": "string",
+                    "type": "boolean",
                     "description": "Enable OpenSearch compatibility",
-                    "default": "true"
+                    "default": true
                 },
-                "indexNames": {
+                "index": {
                     "type": "string",
-                    "description": "Elastic/OpenSearch index name(s)",
+                    "description": "Elastic/OpenSearch index to be used",
                     "default": "search,doc-content"
                 },
                 "searchFieldOptions": {
@@ -117,9 +102,9 @@
                     "default": "primaryName^2,*"
                 },
                 "indexBatchSize": {
-                    "type": "number",
+                    "type": "string",
                     "description": "Number of documents to index in a single batch operation",
-                    "default": 100
+                    "default": "100"
                 },
                 "existingSecret": {
                     "type": "string",

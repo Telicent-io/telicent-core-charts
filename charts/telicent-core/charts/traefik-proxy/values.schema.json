@@ -5,16 +5,10 @@
         "global": {
             "type": "object",
             "properties": {
-                "imageRegistry": {
+                "releaseNameTelicentPreview": {
                     "type": "string",
-                    "description": "Global image registry",
+                    "description": "Release name used during the Telicent Preview chart installation. Note: ensure the value is correct, otherwise there will be no access to data-catalog, user-portal & paperback-writer",
                     "default": ""
-                },
-                "imagePullSecrets": {
-                    "type": "array",
-                    "description": "Global registry secret names as an array",
-                    "default": [],
-                    "items": {}
                 },
                 "enterprise": {
                     "type": "boolean",
@@ -36,25 +30,25 @@
                     "description": "Domain associated with Telicent authentication services, including OIDC providers",
                     "default": "auth.telicent.io"
                 },
-                "istioNamespace": {
+                "istioIngressNamespace": {
                     "type": "string",
-                    "description": "Namespace in which Istio is deployed",
+                    "description": "Namespace in which the Istio Ingress resource is deployed; overrides 'istio.ingress.namespace'",
                     "default": "istio-system"
                 },
-                "istioServiceAccountName": {
+                "istioIngressServiceAccount": {
                     "type": "string",
-                    "description": "Name of the Istio service account",
+                    "description": "ServiceAccount associated with Istio ingress deployment; overrides 'istio.ingress.serviceAccount'",
                     "default": "istio-ingress"
+                },
+                "istioGatewayNamespace": {
+                    "type": "string",
+                    "description": "Namespace in which the Istio Gateway resource is deployed; overrides 'istio.gateway.namespace'",
+                    "default": "istio-system"
                 },
                 "istioGatewayName": {
                     "type": "string",
-                    "description": "Name of the Istio Gateway Resource (LB operating at the edge of the mesh)",
+                    "description": "Name of the Istio Gateway resource; overrides 'istio.gateway.namespace'",
                     "default": "ingress-gateway"
-                },
-                "istioVirtualServiceEnabled": {
-                    "type": "boolean",
-                    "description": "Enable Istio traffic routing to a named destination service",
-                    "default": true
                 }
             }
         },
@@ -504,6 +498,36 @@
         "istio": {
             "type": "object",
             "properties": {
+                "ingress": {
+                    "type": "object",
+                    "properties": {
+                        "namespace": {
+                            "type": "string",
+                            "description": "Namespace in which the Istio Ingress resource is deployed",
+                            "default": "istio-system"
+                        },
+                        "serviceAccount": {
+                            "type": "string",
+                            "description": "ServiceAccount associated with Istio ingress deployment",
+                            "default": "istio-ingress"
+                        }
+                    }
+                },
+                "gateway": {
+                    "type": "object",
+                    "properties": {
+                        "namespace": {
+                            "type": "string",
+                            "description": "Namespace in which the Istio Gateway resource is deployed",
+                            "default": "istio-system"
+                        },
+                        "name": {
+                            "type": "string",
+                            "description": "Name of the Istio Gateway resource",
+                            "default": "ingress-gateway"
+                        }
+                    }
+                },
                 "virtualService": {
                     "type": "object",
                     "properties": {
@@ -519,81 +543,81 @@
                             "items": {}
                         }
                     }
-                },
-                "ingress": {
-                    "type": "object",
-                    "properties": {
-                        "principal": {
-                            "type": "string",
-                            "description": "Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName",
-                            "default": "cluster.local/ns/istio-system/sa/istio-ingress"
-                        },
-                        "serviceAccountName": {
-                            "type": "string",
-                            "description": "Name of the Ingress service account (istio currently supported)",
-                            "default": "istio-ingress"
-                        }
-                    }
                 }
             }
         },
         "hosts": {
             "type": "object",
             "properties": {
+                "enableAutoCorrect": {
+                    "type": "boolean",
+                    "description": "Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as is, without any modification.",
+                    "default": true
+                },
                 "auth": {
                     "type": "string",
-                    "description": "Auth host value, If not set a host is generated using service:'auth',port:'8080' and Release namespace & name.",
-                    "default": ""
-                },
-                "adminUi": {
-                    "type": "string",
-                    "description": "Admin UI host value, If not set a host is generated using service:'admin-ui',port:'8080' and Release namespace & name.",
-                    "default": ""
-                },
-                "dataCatalogUi": {
-                    "type": "string",
-                    "description": "Data Catalog UI host value, If not set a host is generated using service:'data-catalog-ui',port:'8080' and Release namespace & name.",
-                    "default": ""
-                },
-                "userPortalUi": {
-                    "type": "string",
-                    "description": "User Portal UI host value, If not set a host is generated using service:'user-portal-ui',port:'8080' and Release namespace & name.",
-                    "default": ""
-                },
-                "searchUi": {
-                    "type": "string",
-                    "description": "Search UI host value, If not set a host is generated using service:'search-ui',port:'8080' and Release namespace & name.",
-                    "default": ""
-                },
-                "graphUi": {
-                    "type": "string",
-                    "description": "Graph UI host value, If not set a host is generated using service:'graph-ui',port:'8080' and Release namespace & name.",
-                    "default": ""
-                },
-                "queryUi": {
-                    "type": "string",
-                    "description": "Query UI host value, If not set a host is generated using service:'query-ui',port:'8080' and Release namespace & name.",
-                    "default": ""
-                },
-                "search": {
-                    "type": "string",
-                    "description": "Search host value, If not set a host is generated using service:'search',port:'8080' and Release namespace & name.",
-                    "default": ""
-                },
-                "graph": {
-                    "type": "string",
-                    "description": "Graph host value, If not set a host is generated using service:'graph',port:'8080' and Release namespace & name.",
-                    "default": ""
+                    "description": "Auth application default host value, as defined by 'service/serviceAccount:port'",
+                    "default": "auth:8080"
                 },
                 "userPreferences": {
                     "type": "string",
                     "description": "User Preferences host value, If not set a host is generated using service:'user-preferences',port:'8080' and Release namespace & name.",
-                    "default": ""
+                    "default": "user-preferences:8080"
+                },
+                "adminUi": {
+                    "type": "string",
+                    "description": "Admin UI application default host value, as defined by 'service/serviceAccount:port'",
+                    "default": "admin-ui:8080"
+                },
+                "searchUi": {
+                    "type": "string",
+                    "description": "Search UI application default host value, as defined by 'service/serviceAccount:port'",
+                    "default": "search-ui:8080"
+                },
+                "graphUi": {
+                    "type": "string",
+                    "description": "Graph UI application default host value, as defined by 'service/serviceAccount:port'",
+                    "default": "graph-ui:8080"
+                },
+                "queryUi": {
+                    "type": "string",
+                    "description": "Query UI application default host value, as defined by 'service/serviceAccount:port'",
+                    "default": "query-ui:8080"
+                },
+                "search": {
+                    "type": "string",
+                    "description": "Search application default host value, as defined by 'service/serviceAccount:port'",
+                    "default": "search:8080"
+                },
+                "graph": {
+                    "type": "string",
+                    "description": "Graph application default host value, as defined by 'service/serviceAccount:port'",
+                    "default": "graph:8080"
+                }
+            }
+        },
+        "hostsPreview": {
+            "type": "object",
+            "properties": {
+                "enableAutoCorrect": {
+                    "type": "boolean",
+                    "description": "Prefix 'global.releaseNameTelicentPreview' to each host value. Alternatively, the host value will be used as is, without any modification.",
+                    "default": true
+                },
+                "dataCatalogUi": {
+                    "type": "string",
+                    "description": "Data Catalog UI application default host value, as defined by 'service/serviceAccount:port'",
+                    "default": "data-catalog-ui:8080"
+                },
+                "userPortalUi": {
+                    "type": "string",
+                    "description": "User Portal UI application default host value, as defined by 'service/serviceAccount:port'",
+                    "default": "user-portal-ui:8080"
                 },
                 "paperbackWriter": {
                     "type": "string",
-                    "description": "If not set a host is generated using service:'paperback-writer', port:'8000' and Release namespace & name.",
-                    "default": ""
+                    "description": "Paperback Writer application host value, as defined by 'service/serviceAccount:port'",
+                    "default": "paperback-writer:8080"
                 }
             }
         }

@@ -5,8 +5,8 @@
 # @section Global Parameters
 #
 # @descStart
-# Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
-# Note: only global parameters used within this chart, will be listed below
+# Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart
+# Note: Only global parameters used within this chart will be listed below
 # @descEnd
 global:
   ## Current available global image parameters: imageRegistry and imagePullSecrets
@@ -29,17 +29,11 @@ global:
   # @key global.authHostDomain Domain associated with Telicent authentication services, including OIDC providers
   authHostDomain: "auth.telicent.io"
 
-  # @key global.kafkaBootstrapUrls Comma separated list containing Kafka bootstrap URLs
-  kafkaBootstrapUrls: "kafka-bootstrap.kafka.svc.cluster.local:9092"
-  # @key global.existingConfigSecretName Name of an existing secret containing Kafka configuration
-  existingConfigSecretName: ""
-
   truststore:
     # @key global.truststore.existingSecretName Name of an existing secret containing the truststore
     existingSecretName: ""
     # @key global.truststore.mountPath The mount path for the truststore in the container
     mountPath: /app/config/truststore
-
 
 #
 # @section ConfigMap Parameters
@@ -71,22 +65,19 @@ java:
 # @descEnd
 elastic:
   # @key elastic.host Elastic/OpenSearch host
-  # Note: This should be the URL of your Elastic/OpenSearch instance, including protocol (https or http)
+  # Note: This should be the URL of your Elastic/OpenSearch service, including protocol (https or http)
   host: https://your.opensearch.host
   # @key elastic.port Elastic/OpenSearch port number
   port: "443"
-  # @key elastic.clusterPort Elastic/OpenSearch cluster port
-  # Note: This should be the port of your Elastic/OpenSearch cluster, typically 9200
-  clusterPort: "9200"
   # @key elastic.opensearchCompatibility Enable OpenSearch compatibility
-  opensearchCompatibility: "true"
-  # @key elastic.indexNames Elastic/OpenSearch index name(s)
-  indexNames: search,doc-content
+  opensearchCompatibility: true
+  # @key elastic.index Elastic/OpenSearch index to be used
+  index: search,doc-content
   # @key elastic.searchFieldOptions Field options for search
   # This is a comma-separated list of fields to be used for search, with optional weights
-  searchFieldOptions: primaryName^2,*
+  searchFieldOptions: "primaryName^2,*"
   # @key elastic.indexBatchSize Number of documents to index in a single batch operation
-  indexBatchSize: 100
+  indexBatchSize: "100"
 
   # @key elastic.existingSecret Name of an existing secret. The secret must contain 2 keys: 'username', 'password'
   # Note: Left unset, it will create a secret named: tc-auth-usr-elastic-search

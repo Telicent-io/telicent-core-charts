@@ -16,9 +16,8 @@ data:
   
   ELASTIC_HOST: {{ .Values.elastic.host | quote }}
   ELASTIC_PORT: {{ .Values.elastic.port | quote }}
-  ES_CLUSTER_PORT: {{ .Values.elastic.clusterPort | quote }}
   OPENSEARCH_COMPATIBILITY: {{ .Values.elastic.opensearchCompatibility | quote }}
-  ELASTIC_INDEX: {{ .Values.elastic.indexNames | quote }}
+  ELASTIC_INDEX: {{ .Values.elastic.index | quote }}
   FIELD_OPTIONS: {{ .Values.elastic.searchFieldOptions | quote }}
   INDEX_BATCH_SIZE: {{ .Values.elastic.indexBatchSize | quote }}
   

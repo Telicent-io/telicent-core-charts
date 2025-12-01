@@ -83,21 +83,19 @@ the [kubernetes documentation](https://kubernetes.io/docs/concepts/configuration
 
 ### Global Parameters
 
-Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
-Note: only global parameters used within this chart, will be listed below
+Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart
+Note: Only global parameters used within this chart will be listed below
 
-| Name                                   | Description                                                                       | Value                                          |
-| -------------------------------------- | --------------------------------------------------------------------------------- | ---------------------------------------------- |
-| `global.imageRegistry`                 | Global image registry                                                             | `""`                                           |
-| `global.imagePullSecrets`              | Global registry secret names as an array                                          | `[]`                                           |
-| `global.enterprise`                    | Enable enterprise mode, adding additional features and configurations             | `false`                                        |
-| `global.appHostDomain`                 | Domain associated with Telicent application/ui services                           | `apps.telicent.io`                             |
-| `global.apiHostDomain`                 | Domain associated with Telicent Api services                                      | `api.telicent.io`                              |
-| `global.authHostDomain`                | Domain associated with Telicent authentication services, including OIDC providers | `auth.telicent.io`                             |
-| `global.kafkaBootstrapUrls`            | Comma separated list containing Kafka bootstrap URLs                              | `kafka-bootstrap.kafka.svc.cluster.local:9092` |
-| `global.existingConfigSecretName`      | Name of an existing secret containing Kafka configuration                         | `""`                                           |
-| `global.truststore.existingSecretName` | Name of an existing secret containing the truststore                              | `""`                                           |
-| `global.truststore.mountPath`          | The mount path for the truststore in the container                                | `/app/config/truststore`                       |
+| Name                                   | Description                                                                       | Value                    |
+| -------------------------------------- | --------------------------------------------------------------------------------- | ------------------------ |
+| `global.imageRegistry`                 | Global image registry                                                             | `""`                     |
+| `global.imagePullSecrets`              | Global registry secret names as an array                                          | `[]`                     |
+| `global.enterprise`                    | Enable enterprise mode, adding additional features and configurations             | `false`                  |
+| `global.appHostDomain`                 | Domain associated with Telicent application/ui services                           | `apps.telicent.io`       |
+| `global.apiHostDomain`                 | Domain associated with Telicent Api services                                      | `api.telicent.io`        |
+| `global.authHostDomain`                | Domain associated with Telicent authentication services, including OIDC providers | `auth.telicent.io`       |
+| `global.truststore.existingSecretName` | Name of an existing secret containing the truststore                              | `""`                     |
+| `global.truststore.mountPath`          | The mount path for the truststore in the container                                | `/app/config/truststore` |
 
 ### ConfigMap Parameters
 
@@ -125,9 +123,8 @@ For Quick Start purposes, a secret named `tc-auth-usr-elastic-search` will be cr
 | --------------------------------- | ---------------------------------------------------------------------------------- | ------------------------------ |
 | `elastic.host`                    | Elastic/OpenSearch host                                                            | `https://your.opensearch.host` |
 | `elastic.port`                    | Elastic/OpenSearch port number                                                     | `443`                          |
-| `elastic.clusterPort`             | Elastic/OpenSearch cluster port                                                    | `9200`                         |
 | `elastic.opensearchCompatibility` | Enable OpenSearch compatibility                                                    | `true`                         |
-| `elastic.indexNames`              | Elastic/OpenSearch index name(s)                                                   | `search,doc-content`           |
+| `elastic.index`                   | Elastic/OpenSearch index to be used                                                | `search,doc-content`           |
 | `elastic.searchFieldOptions`      | Field options for search                                                           | `primaryName^2,*`              |
 | `elastic.indexBatchSize`          | Number of documents to index in a single batch operation                           | `100`                          |
 | `elastic.existingSecret`          | Name of an existing secret. The secret must contain 2 keys: 'username', 'password' | `""`                           |

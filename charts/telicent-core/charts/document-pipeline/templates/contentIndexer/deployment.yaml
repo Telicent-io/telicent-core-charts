@@ -52,21 +52,21 @@ spec:
             - name: BOOTSTRAP_SERVERS
               value: {{ .Values.global.kafka.bootstrapServers | quote }}
             - name: INPUT_TOPIC
-              value: {{ .Values.contentIndexer.configuration.inputTopic | quote }}
+              value: {{ .Values.contentIndexer.elastic.topic | quote }}
             - name: ELASTIC_HOST
-              value: {{ .Values.contentIndexer.configuration.elasticsearchHost | quote }}
+              value: {{ .Values.contentIndexer.elastic.host | quote }}
             - name: ELASTIC_PORT
-              value: {{ .Values.contentIndexer.configuration.elasticsearchPort | quote }}
+              value: {{ .Values.contentIndexer.elastic.port | quote }}
             - name: ELASTIC_INDEX
-              value: {{ .Values.contentIndexer.configuration.elasticsearchIndex | quote }}
+              value: {{ .Values.contentIndexer.elastic.index | quote }}
             - name: JAVA_OPTIONS
-              value: {{ .Values.contentIndexer.configuration.javaOptions | quote }}
+              value: {{ .Values.contentIndexer.java.jvmOptions | quote }}
             - name: OPENSEARCH_COMPATIBILITY
-              value: {{ .Values.contentIndexer.configuration.opensearchCompatibility | quote }}
+              value: {{ .Values.contentIndexer.elastic.opensearchCompatibility | quote }}
             - name: KAFKA_CONFIG_FILE_PATH
               value: /app/config/kafka-auth/kafka-config.properties
             - name: DLQ_TOPIC
-              value: {{ .Values.contentIndexer.configuration.dlqTopic | quote }}
+              value: {{ .Values.contentIndexer.elastic.dlqTopic | quote }}
             - name: ELASTIC_USER
               valueFrom:
                 secretKeyRef:

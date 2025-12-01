@@ -660,52 +660,52 @@
                     "description": "Affinity rules for the Content Indexer pods",
                     "default": {}
                 },
-                "configuration": {
+                "java": {
                     "type": "object",
                     "properties": {
-                        "inputTopic": {
+                        "jvmOptions": {
                             "type": "string",
-                            "description": "The Kafka topic from which the content indexer will consume messages",
-                            "default": "document.textandmetadata,document.entities"
+                            "description": "JVM options for the application",
+                            "default": "-XX:MaxRAMPercentage=80.0"
+                        }
+                    }
+                },
+                "elastic": {
+                    "type": "object",
+                    "properties": {
+                        "host": {
+                            "type": "string",
+                            "description": "Elastic/OpenSearch host",
+                            "default": "https://your.opensearch.host"
                         },
-                        "elasticsearchHost": {
+                        "port": {
                             "type": "string",
-                            "description": "The hostname for the Elasticsearch instance",
-                            "default": "elasticsearch-master"
-                        },
-                        "elasticsearchPort": {
-                            "type": "string",
-                            "description": "The port for the Elasticsearch instance",
-                            "default": "9200"
-                        },
-                        "elasticsearchIndex": {
-                            "type": "string",
-                            "description": "The Elasticsearch index to which documents will be indexed",
-                            "default": "doc-content"
-                        },
-                        "javaOptions": {
-                            "type": "string",
-                            "description": "Additional Java options for the Content Indexer",
-                            "default": ""
+                            "description": "Elastic/OpenSearch port number",
+                            "default": "443"
                         },
                         "opensearchCompatibility": {
                             "type": "boolean",
-                            "description": "Whether to enable OpenSearch compatibility mode",
+                            "description": "Enable OpenSearch compatibility",
                             "default": true
+                        },
+                        "index": {
+                            "type": "string",
+                            "description": "Elastic/OpenSearch index to be used",
+                            "default": "doc-content"
+                        },
+                        "topic": {
+                            "type": "string",
+                            "description": "The Kafka topic from which the content indexer will consume messages",
+                            "default": "document.textandmetadata,document.entities"
                         },
                         "dlqTopic": {
                             "type": "string",
                             "description": "The Kafka topic to which the content indexer will produce dead-lettered messages",
                             "default": "document.textandmetadata.dlq"
-                        }
-                    }
-                },
-                "elasticSecret": {
-                    "type": "object",
-                    "properties": {
+                        },
                         "existingSecret": {
                             "type": "string",
-                            "description": "Name of an existing secret resource containing the username & password",
+                            "description": "Name of an existing secret. The secret must contain 2 keys: 'username', 'password'",
                             "default": ""
                         },
                         "username": {

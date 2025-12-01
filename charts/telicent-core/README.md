@@ -10,7 +10,7 @@ the [Helm](https://helm.sh) package manager.
 ## Prerequisites
 
 - Kubernetes 1.23+
-- Helm 3.8.0+
+- Helm 3.9+
 
 ## Installing the Chart
 
@@ -47,20 +47,30 @@ The command removes all the Kubernetes components associated with the chart and 
 
 Contains global parameters, these parameters are mirrored across all Telicent Core sub charts, these values will be authoritative.
 
-| Name                                | Description                                                                       | Value                                            |
-| ----------------------------------- | --------------------------------------------------------------------------------- | ------------------------------------------------ |
-| `global.imageRegistry`              | Global image registry                                                             | `""`                                             |
-| `global.imagePullSecrets`           | Global registry secret names as an array                                          | `[]`                                             |
-| `global.enterprise`                 | Enable enterprise mode, adding additional features and configurations             | `false`                                          |
-| `global.appHostDomain`              | Domain associated with Telicent application services                              | `apps.telicent.io`                               |
-| `global.apiHostDomain`              | Domain associated with Telicent Api services                                      | `api.telicent.io`                                |
-| `global.authHostDomain`             | Domain associated with Telicent authentication services, including OIDC providers | `auth.telicent.io`                               |
-| `global.groupsClaim`                | Key used to retrieve groups from the OIDC provider                                | `groups`                                         |
-| `global.jwksUrl`                    | Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)     | `https://{yourAuthdomain}/.well-known/jwks.json` |
-| `global.istioNamespace`             | Namespace in which Istio is deployed                                              | `istio-system`                                   |
-| `global.istioServiceAccountName`    | Name of the Istio service account                                                 | `istio-ingress`                                  |
-| `global.istioGatewayName`           | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)         | `ingress-gateway`                                |
-| `global.istioVirtualServiceEnabled` | Enable Istio traffic routing to a named destination service                       | `false`                                          |
+| Name                      | Description                                                           | Value   |
+| ------------------------- | --------------------------------------------------------------------- | ------- |
+| `global.imageRegistry`    | Global image registry                                                 | `""`    |
+| `global.imagePullSecrets` | Global registry secret names as an array                              | `[]`    |
+| `global.enterprise`       | Enable enterprise mode, adding additional features and configurations | `false` |
+
+### Global Parameters - Domains
+
+| Name                    | Description                                                                       | Value              |
+| ----------------------- | --------------------------------------------------------------------------------- | ------------------ |
+| `global.appHostDomain`  | Domain associated with Telicent application/ui services                           | `apps.telicent.io` |
+| `global.apiHostDomain`  | Domain associated with Telicent Api services                                      | `api.telicent.io`  |
+| `global.authHostDomain` | Domain associated with Telicent authentication services, including OIDC providers | `auth.telicent.io` |
+
+### Global Parameters - Istio
+
+These settings will be used by all Telicent Core components using Istio resources.
+
+| Name                                | Description                                               | Value             |
+| ----------------------------------- | --------------------------------------------------------- | ----------------- |
+| `global.istioIngressNamespace`      | Namespace in which the Istio Ingress resource is deployed | `istio-system`    |
+| `global.istioIngressServiceAccount` | ServiceAccount associated with Istio ingress deployment   | `istio-ingress`   |
+| `global.istioGatewayNamespace`      | Namespace in which the Istio Gateway resource is deployed | `istio-system`    |
+| `global.istioGatewayName`           | Name of the Istio Gateway resource                        | `ingress-gateway` |
 
 ### Global Parameters - Kafka
 
@@ -87,11 +97,16 @@ Contains global truststore parameters, these parameters are mirrored across Teli
 
 ### Service Account Parameters
 
-| Name                         | Description                                                                           | Value       |
-| ---------------------------- | ------------------------------------------------------------------------------------- | ----------- |
-| `serviceAccount.name`        | Name of the ServiceAccount to use. If not set, a name is generated using the fullname | `""`        |
-| `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                  | `{}`        |
-| `jobServiceAccountName`      | Service account used for running jobs in Kubernetes.                                  | `producers` |
+| Name                         | Description                                                                           | Value |
+| ---------------------------- | ------------------------------------------------------------------------------------- | ----- |
+| `serviceAccount.name`        | Name of the ServiceAccount to use. If not set, a name is generated using the fullname | `""`  |
+| `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                  | `{}`  |
+
+### Jobs Parameters
+
+| Name                    | Description                                          | Value       |
+| ----------------------- | ---------------------------------------------------- | ----------- |
+| `jobServiceAccountName` | Service account used for running jobs in Kubernetes. | `producers` |
 
 ### Kafka Topics Parameters
 
@@ -106,21 +121,19 @@ This section contains configurations for the various subcharts included in the T
 Each subchart can be configured independently, allowing for flexibility in deployment.
 They are addressed by their names, and each subchart has its own set of configuration parameters.
 
-| Name | Description | Link |
-|------|-------------|------|
-| Admin UI | XX | [access-ui](./charts/admin-ui/README.md) |
-| Auth | XX | [access-ui](./charts/auth-ui/README.md) |
-| Data Catalogue | XX | [data-catalog](./charts/data-catalog/README.md) |
-| Document Pipeline | XX | [document-pipeline](./charts/document-pipeline/README.md) |
-| Graph | XX | [graph](./charts/graph/README.md) |
-| Graph UI | XX | [graph-ui](./charts/graph-ui/README.md) |
-| Traefik Proxy | XX | [traefik-proxy](charts/traefik-proxy/README.md) |
-| Paperback Writer | XX | [paperback-writer](./charts/paperback-writer/README.md) |
-| Query UI | XX | [query-ui](./charts/query-ui/README.md) |
-| Search | XX | [search](./charts/search/README.md) |
-| Search Projector | XX | [search-projector](./charts/search-projector/README.md) |
-| Search UI | XX | [search-ui](./charts/search-ui/README.md) |
-| User Preferences | XX | [user-preferences](./charts/user-preferences/README.md) |
+| Name              | Description | Link                                                      |
+|-------------------|-------------|-----------------------------------------------------------|
+| Admin UI          | XX          | [admin-ui](./charts/admin-ui/README.md)                   |
+| Auth              | XX          | [auth](./charts/auth/README.md)                           |
+| Document Pipeline | XX          | [document-pipeline](./charts/document-pipeline/README.md) |
+| Graph             | XX          | [graph](./charts/graph/README.md)                         |
+| Graph UI          | XX          | [graph-ui](./charts/graph-ui/README.md)                   |
+| Query UI          | XX          | [query-ui](./charts/query-ui/README.md)                   |
+| Search            | XX          | [search](./charts/search/README.md)                       |
+| Search Projector  | XX          | [search-projector](./charts/search-projector/README.md)   |
+| Search UI         | XX          | [search-ui](./charts/search-ui/README.md)                 |
+| Traefik Proxy     | XX          | [traefik-proxy](charts/traefik-proxy/README.md)           |
+| User Preferences  | XX          | [user-preferences](./charts/user-preferences/README.md)   |
 
 ## License
 

@@ -14,8 +14,7 @@ http:
     user-portal-ui:
       loadBalancer:
         servers:
-          - url: http://{{ .Values.hosts.userPortalUi | default (printf "%s.%s:8080" (include "traefik-proxy.routesService" (list . "user-portal-ui")) .Release.Namespace) }}
-
+          - url: {{ printf "http://%s"  (include "traefik-proxy.hostUserPortalUi" .) }}
   middlewares:
     path-user-portal-ui:
       replacePathRegex:
@@ -24,4 +23,4 @@ http:
     host-user-portal-ui:
       headers:
         customRequestHeaders:
-          host: {{ .Values.hosts.userPortalUi | default (printf "%s.%s:8080" (include "traefik-proxy.routesService" (list . "user-portal-ui")) .Release.Namespace) }}
+          host: {{ include "traefik-proxy.hostUserPortalUi" . }}
