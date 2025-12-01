@@ -20,9 +20,10 @@ data:
 
     const APP_DOMAIN = "https://{{ .Values.global.appHostDomain }}";
     const API_DOMAIN = "https://{{ .Values.global.apiHostDomain }}";
+    const AUTH_DOMAIN = "https://{{ .Values.global.authHostDomain }}";
+
     // Config
-    window.env.SIGN_OUT_URL =
-    `${DOMAIN}/oauth2/sign_out?rd=/oauth2/authorize`;
+    window.env.SIGN_OUT_URL = `${AUTH_DOMAIN}/logout`;
     window.featureFlags.FF_SKIP_AUTH = false;
     window.featureFlags.FF_DISABLE_SAVED_SEARCHES = false;
 
