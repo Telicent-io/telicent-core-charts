@@ -15,7 +15,7 @@ data:
   ELASTIC_HOST: {{ .Values.elastic.host | quote }}
   ELASTIC_PORT: {{ .Values.elastic.port | quote }}
   OPENSEARCH_COMPATIBILITY: {{ .Values.elastic.opensearchCompatibility | quote }}
-  ELASTIC_INDEX: {{ .Values.elastic.indexName | quote }}
+  ELASTIC_INDEX: {{ .Values.elastic.index | quote }}
   INDEX_BATCH_SIZE: {{ .Values.elastic.indexBatchSize | quote }}
 
   BOOTSTRAP_SERVERS: {{ .Values.global.kafka.bootstrapServers | quote }}

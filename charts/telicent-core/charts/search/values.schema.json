@@ -91,9 +91,9 @@
                     "description": "Enable OpenSearch compatibility",
                     "default": true
                 },
-                "indexNames": {
+                "index": {
                     "type": "string",
-                    "description": "Elastic/OpenSearch index name(s)",
+                    "description": "Elastic/OpenSearch index to be used",
                     "default": "search,doc-content"
                 },
                 "searchFieldOptions": {

@@ -58,7 +58,7 @@ spec:
             - name: ELASTIC_PORT
               value: {{ .Values.contentIndexer.elastic.port | quote }}
             - name: ELASTIC_INDEX
-              value: {{ .Values.contentIndexer.elastic.indexName | quote }}
+              value: {{ .Values.contentIndexer.elastic.index | quote }}
             - name: JAVA_OPTIONS
               value: {{ .Values.contentIndexer.java.jvmOptions | quote }}
             - name: OPENSEARCH_COMPATIBILITY

@@ -124,7 +124,7 @@ For Quick Start purposes, a secret named `tc-auth-usr-elastic-search` will be cr
 | `elastic.host`                    | Elastic/OpenSearch host                                                            | `https://your.opensearch.host` |
 | `elastic.port`                    | Elastic/OpenSearch port number                                                     | `443`                          |
 | `elastic.opensearchCompatibility` | Enable OpenSearch compatibility                                                    | `true`                         |
-| `elastic.indexNames`              | Elastic/OpenSearch index name(s)                                                   | `search,doc-content`           |
+| `elastic.index`                   | Elastic/OpenSearch index to be used                                                | `search,doc-content`           |
 | `elastic.searchFieldOptions`      | Field options for search                                                           | `primaryName^2,*`              |
 | `elastic.indexBatchSize`          | Number of documents to index in a single batch operation                           | `100`                          |
 | `elastic.existingSecret`          | Name of an existing secret. The secret must contain 2 keys: 'username', 'password' | `""`                           |

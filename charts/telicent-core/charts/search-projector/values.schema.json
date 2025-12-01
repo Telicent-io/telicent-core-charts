@@ -106,9 +106,9 @@
                     "description": "Enable OpenSearch compatibility",
                     "default": true
                 },
-                "indexName": {
+                "index": {
                     "type": "string",
-                    "description": "Elastic/OpenSearch index name",
+                    "description": "Elastic/OpenSearch index to be used",
                     "default": "search"
                 },
                 "topic": {
