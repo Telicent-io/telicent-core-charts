@@ -39,7 +39,7 @@ configMap:
 #
 oauth:
   # @key oauth.clientId The OAuth client id to be used by *Data Catalog UI*
-  clientId: "telicent-data-catalog-ui"
+  clientId: "telicent-catalog-ui"
   # @key oauth.scopes List of OAuth scopes to be used by *Data Catalog UI*
   scopes: "openid profile offline_access"
 
