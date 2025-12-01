@@ -408,7 +408,7 @@ contentIndexer:
   # @section Java Parameters
   #
   # @descStart
-  # Contains Java configuration parameters to be used by the *Search* application
+  # Contains Java configuration parameters to be used by the *Content Indexer* application
   # @descEnd
   java:
      # @key contentIndexer.java.jvmOptions JVM options for the application
