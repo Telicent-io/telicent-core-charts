@@ -210,7 +210,7 @@ The application configuration is contained within the 'configuration' key
 
 ### Java Parameters
 
-Contains Java configuration parameters to be used by the *Search* application
+Contains Java configuration parameters to be used by the *Content Indexer* application
 
 | Name                             | Description                     | Value                       |
 | -------------------------------- | ------------------------------- | --------------------------- |
