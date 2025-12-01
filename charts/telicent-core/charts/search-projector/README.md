@@ -126,7 +126,7 @@ For Quick Start purposes, a secret named `tc-auth-usr-elastic-search-projector` 
 | `elastic.host`                    | Elastic/OpenSearch host                                                            | `https://your.opensearch.host` |
 | `elastic.port`                    | Elastic/OpenSearch cluster port                                                    | `443`                          |
 | `elastic.opensearchCompatibility` | Enable OpenSearch compatibility                                                    | `true`                         |
-| `elastic.indexName`               | Elastic/OpenSearch index name                                                      | `search`                       |
+| `elastic.index`                   | Elastic/OpenSearch index to be used                                                | `search`                       |
 | `elastic.topic`                   | Topic to consume messages from                                                     | `knowledge`                    |
 | `elastic.dlqTopic`                | Dead-letter topic for failed messages                                              | `knowledge.dlq`                |
 | `elastic.indexBatchSize`          | Number of documents to index in a single batch operation                           | `500`                          |

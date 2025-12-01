@@ -227,7 +227,7 @@ For Quick Start purposes, a secret named `tc-auth-usr-elastic-document-pipeline-
 | `contentIndexer.elastic.host`                    | Elastic/OpenSearch host                                                            | `https://your.opensearch.host`               |
 | `contentIndexer.elastic.port`                    | Elastic/OpenSearch port number                                                     | `443`                                        |
 | `contentIndexer.elastic.opensearchCompatibility` | Enable OpenSearch compatibility                                                    | `true`                                       |
-| `contentIndexer.elastic.indexName`               | Elastic/OpenSearch index name                                                      | `doc-content`                                |
+| `contentIndexer.elastic.index`                   | Elastic/OpenSearch index to be used                                                | `doc-content`                                |
 | `contentIndexer.elastic.topic`                   | The Kafka topic from which the content indexer will consume messages               | `document.textandmetadata,document.entities` |
 | `contentIndexer.elastic.dlqTopic`                | The Kafka topic to which the content indexer will produce dead-lettered messages   | `document.textandmetadata.dlq`               |
 | `contentIndexer.elastic.existingSecret`          | Name of an existing secret. The secret must contain 2 keys: 'username', 'password' | `""`                                         |

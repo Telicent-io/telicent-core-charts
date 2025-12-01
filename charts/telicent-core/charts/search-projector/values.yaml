@@ -75,8 +75,8 @@ elastic:
   port: "443"
   # @key elastic.opensearchCompatibility Enable OpenSearch compatibility
   opensearchCompatibility: true
-  # @key elastic.indexName Elastic/OpenSearch index name
-  indexName: search
+  # @key elastic.index Elastic/OpenSearch index to be used
+  index: search
   # @key elastic.topic Topic to consume messages from
   topic: knowledge
   # @key elastic.dlqTopic Dead-letter topic for failed messages

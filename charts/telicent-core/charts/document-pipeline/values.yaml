@@ -430,8 +430,8 @@ contentIndexer:
     port: "443"
     # @key contentIndexer.elastic.opensearchCompatibility Enable OpenSearch compatibility
     opensearchCompatibility: true
-    # @key contentIndexer.elastic.indexName Elastic/OpenSearch index name
-    indexName: doc-content
+    # @key contentIndexer.elastic.index Elastic/OpenSearch index to be used
+    index: doc-content
     # @key contentIndexer.elastic.topic The Kafka topic from which the content indexer will consume messages
     topic: document.textandmetadata,document.entities
      # @key contentIndexer.elastic.dlqTopic The Kafka topic to which the content indexer will produce dead-lettered messages
