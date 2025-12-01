@@ -233,7 +233,7 @@
                         "cpu": {
                             "type": "string",
                             "description": "Set containers' CPU request",
-                            "default": "1000m"
+                            "default": "1200m"
                         },
                         "memory": {
                             "type": "string",
