@@ -69,18 +69,15 @@ elastic:
   host: https://your.opensearch.host
   # @key elastic.port Elastic/OpenSearch port number
   port: "443"
-  # @key elastic.clusterPort Elastic/OpenSearch cluster port
-  # Note: This should be the port of your Elastic/OpenSearch cluster, typically 9200
-  clusterPort: "9200"
   # @key elastic.opensearchCompatibility Enable OpenSearch compatibility
-  opensearchCompatibility: "true"
+  opensearchCompatibility: true
   # @key elastic.indexNames Elastic/OpenSearch index name(s)
   indexNames: search,doc-content
   # @key elastic.searchFieldOptions Field options for search
   # This is a comma-separated list of fields to be used for search, with optional weights
-  searchFieldOptions: primaryName^2,*
+  searchFieldOptions: "primaryName^2,*"
   # @key elastic.indexBatchSize Number of documents to index in a single batch operation
-  indexBatchSize: 100
+  indexBatchSize: "100"
 
   # @key elastic.existingSecret Name of an existing secret. The secret must contain 2 keys: 'username', 'password'
   # Note: Left unset, it will create a secret named: tc-auth-usr-elastic-search

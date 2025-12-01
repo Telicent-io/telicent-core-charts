@@ -181,47 +181,58 @@ The application configuration is contained within the 'configuration' key
 This section builds out the Content Indexer configuration
 The application configuration is contained within the 'configuration' key
 
-| Name                                                   | Description                                                                      | Value                                        |
-| ------------------------------------------------------ | -------------------------------------------------------------------------------- | -------------------------------------------- |
-| `contentIndexer.replicaCount`                          | The number of replicas for the Content Indexer                                   | `1`                                          |
-| `contentIndexer.image.registry`                        | image registry                                                                   | `REGISTRY_NAME`                              |
-| `contentIndexer.image.repository`                      | The container image repository for the Content Indexer                           | `telicent/telicent-document-content-indexer` |
-| `contentIndexer.image.pullPolicy`                      | The image pull policy for the Content Indexer                                    | `IfNotPresent`                               |
-| `contentIndexer.image.tag`                             | The image tag for the Content Indexer                                            | `3.2.0`                                      |
-| `contentIndexer.imagePullSecrets`                      | Secrets for pulling an image from a private repository                           | `[]`                                         |
-| `contentIndexer.nameOverride`                          | Override the chart name for the Content Indexer                                  | `""`                                         |
-| `contentIndexer.fullnameOverride`                      | Override the full name for the Content Indexer                                   | `""`                                         |
-| `contentIndexer.podAnnotations`                        | Annotations to add to the Content Indexer pods                                   | `{}`                                         |
-| `contentIndexer.podLabels`                             | Labels to add to the Content Indexer pods                                        | `{}`                                         |
-| `contentIndexer.podSecurityContext`                    | Security context for the Content Indexer pods                                    | `{}`                                         |
-| `contentIndexer.securityContext`                       | Security context for the Content Indexer containers                              | `{}`                                         |
-| `contentIndexer.service.type`                          | The service type for the Content Indexer                                         | `ClusterIP`                                  |
-| `contentIndexer.service.port`                          | The service port for the Content Indexer                                         | `80`                                         |
-| `contentIndexer.resources`                             | Resource requests and limits for the Content Indexer                             | `{}`                                         |
-| `contentIndexer.livenessProbe.httpGet.path`            | The HTTP path for the liveness probe                                             | `/`                                          |
-| `contentIndexer.livenessProbe.httpGet.port`            | The HTTP port for the liveness probe                                             | `http`                                       |
-| `contentIndexer.readinessProbe.httpGet.path`           | The HTTP path for the readiness probe                                            | `/`                                          |
-| `contentIndexer.readinessProbe.httpGet.port`           | The HTTP port for the readiness probe                                            | `http`                                       |
-| `contentIndexer.volumes`                               | Additional volumes for the Content Indexer                                       | `[]`                                         |
-| `contentIndexer.volumeMounts`                          | Additional volume mounts for the Content Indexer                                 | `[]`                                         |
-| `contentIndexer.nodeSelector`                          | Node selector for the Content Indexer pods                                       | `{}`                                         |
-| `contentIndexer.tolerations`                           | Tolerations for the Content Indexer pods                                         | `[]`                                         |
-| `contentIndexer.affinity`                              | Affinity rules for the Content Indexer pods                                      | `{}`                                         |
-| `contentIndexer.configuration.inputTopic`              | The Kafka topic from which the content indexer will consume messages             | `document.textandmetadata,document.entities` |
-| `contentIndexer.configuration.elasticsearchHost`       | The hostname for the Elasticsearch instance                                      | `elasticsearch-master`                       |
-| `contentIndexer.configuration.elasticsearchPort`       | The port for the Elasticsearch instance                                          | `9200`                                       |
-| `contentIndexer.configuration.elasticsearchIndex`      | The Elasticsearch index to which documents will be indexed                       | `doc-content`                                |
-| `contentIndexer.configuration.javaOptions`             | Additional Java options for the Content Indexer                                  | `""`                                         |
-| `contentIndexer.configuration.opensearchCompatibility` | Whether to enable OpenSearch compatibility mode                                  | `true`                                       |
-| `contentIndexer.configuration.dlqTopic`                | The Kafka topic to which the content indexer will produce dead-lettered messages | `document.textandmetadata.dlq`               |
+| Name                                         | Description                                            | Value                                        |
+| -------------------------------------------- | ------------------------------------------------------ | -------------------------------------------- |
+| `contentIndexer.replicaCount`                | The number of replicas for the Content Indexer         | `1`                                          |
+| `contentIndexer.image.registry`              | image registry                                         | `REGISTRY_NAME`                              |
+| `contentIndexer.image.repository`            | The container image repository for the Content Indexer | `telicent/telicent-document-content-indexer` |
+| `contentIndexer.image.pullPolicy`            | The image pull policy for the Content Indexer          | `IfNotPresent`                               |
+| `contentIndexer.image.tag`                   | The image tag for the Content Indexer                  | `3.2.0`                                      |
+| `contentIndexer.imagePullSecrets`            | Secrets for pulling an image from a private repository | `[]`                                         |
+| `contentIndexer.nameOverride`                | Override the chart name for the Content Indexer        | `""`                                         |
+| `contentIndexer.fullnameOverride`            | Override the full name for the Content Indexer         | `""`                                         |
+| `contentIndexer.podAnnotations`              | Annotations to add to the Content Indexer pods         | `{}`                                         |
+| `contentIndexer.podLabels`                   | Labels to add to the Content Indexer pods              | `{}`                                         |
+| `contentIndexer.podSecurityContext`          | Security context for the Content Indexer pods          | `{}`                                         |
+| `contentIndexer.securityContext`             | Security context for the Content Indexer containers    | `{}`                                         |
+| `contentIndexer.service.type`                | The service type for the Content Indexer               | `ClusterIP`                                  |
+| `contentIndexer.service.port`                | The service port for the Content Indexer               | `80`                                         |
+| `contentIndexer.resources`                   | Resource requests and limits for the Content Indexer   | `{}`                                         |
+| `contentIndexer.livenessProbe.httpGet.path`  | The HTTP path for the liveness probe                   | `/`                                          |
+| `contentIndexer.livenessProbe.httpGet.port`  | The HTTP port for the liveness probe                   | `http`                                       |
+| `contentIndexer.readinessProbe.httpGet.path` | The HTTP path for the readiness probe                  | `/`                                          |
+| `contentIndexer.readinessProbe.httpGet.port` | The HTTP port for the readiness probe                  | `http`                                       |
+| `contentIndexer.volumes`                     | Additional volumes for the Content Indexer             | `[]`                                         |
+| `contentIndexer.volumeMounts`                | Additional volume mounts for the Content Indexer       | `[]`                                         |
+| `contentIndexer.nodeSelector`                | Node selector for the Content Indexer pods             | `{}`                                         |
+| `contentIndexer.tolerations`                 | Tolerations for the Content Indexer pods               | `[]`                                         |
+| `contentIndexer.affinity`                    | Affinity rules for the Content Indexer pods            | `{}`                                         |
 
-### OpenSearch/Elastic secrets - Content Indexer
+### Java Parameters
 
-| Name                                          | Description                                                            | Value |
-| --------------------------------------------- | ---------------------------------------------------------------------- | ----- |
-| `contentIndexer.elasticSecret.existingSecret` | Name of an existing secret resource containing the username & password | `""`  |
-| `contentIndexer.elasticSecret.username`       | OpenSearch/Elastic username                                            | `""`  |
-| `contentIndexer.elasticSecret.password`       | OpenSearch/Elastic user password                                       | `""`  |
+Contains Java configuration parameters to be used by the *Search* application
+
+| Name                             | Description                     | Value                       |
+| -------------------------------- | ------------------------------- | --------------------------- |
+| `contentIndexer.java.jvmOptions` | JVM options for the application | `-XX:MaxRAMPercentage=80.0` |
+
+### Elastic/OpenSearch Parameters and Secret
+
+The following contains connection details to an Elastic/OpenSearch service, on which the application relies.
+It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
+For Quick Start purposes, a secret named `tc-auth-usr-elastic-document-pipeline-content-indexer` will be created if one is not set.
+
+| Name                                             | Description                                                                        | Value                                        |
+| ------------------------------------------------ | ---------------------------------------------------------------------------------- | -------------------------------------------- |
+| `contentIndexer.elastic.host`                    | Elastic/OpenSearch host                                                            | `https://your.opensearch.host`               |
+| `contentIndexer.elastic.port`                    | Elastic/OpenSearch port number                                                     | `443`                                        |
+| `contentIndexer.elastic.opensearchCompatibility` | Enable OpenSearch compatibility                                                    | `true`                                       |
+| `contentIndexer.elastic.indexName`               | Elastic/OpenSearch index name                                                      | `doc-content`                                |
+| `contentIndexer.elastic.topic`                   | The Kafka topic from which the content indexer will consume messages               | `document.textandmetadata,document.entities` |
+| `contentIndexer.elastic.dlqTopic`                | The Kafka topic to which the content indexer will produce dead-lettered messages   | `document.textandmetadata.dlq`               |
+| `contentIndexer.elastic.existingSecret`          | Name of an existing secret. The secret must contain 2 keys: 'username', 'password' | `""`                                         |
+| `contentIndexer.elastic.username`                | OpenSearch/Elastic username                                                        | `""`                                         |
+| `contentIndexer.elastic.password`                | OpenSearch/Elastic user password                                                   | `""`                                         |
 
 ### Catalogue Updater
 
