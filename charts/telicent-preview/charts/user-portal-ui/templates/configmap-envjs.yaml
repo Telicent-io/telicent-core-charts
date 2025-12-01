@@ -18,7 +18,8 @@ data:
     window.env = window.env || {};
     window.featureFlags = window.featureFlags || {};
 
-    const DOMAIN = "https://{{ .Values.global.appHostDomain}}";
+    const APP_DOMAIN = "https://{{ .Values.global.appHostDomain }}";
+    const API_DOMAIN = "https://{{ .Values.global.apiHostDomain }}";
     // Config
     window.env.SIGN_OUT_URL =
     `${DOMAIN}/oauth2/sign_out?rd=/oauth2/authorize`;
@@ -33,7 +34,7 @@ data:
             name: "GRAPH",
             telicentUITheme: "GraphOrange",
             shortDescription: "Easily navigate the web of information using our state-of-the-art knowledge graph app.",
-            url: `${DOMAIN}/graph`,
+            url: `${APP_DOMAIN}/graph`,
             buttonText: "Explore graph",
             buttonIconURL: "./assets/icons/graph.svg",
             imageURL: `./assets/images/graph.png`,
@@ -43,7 +44,7 @@ data:
             name: "SEARCH",
             telicentUITheme: "DocumentPink",
             shortDescription: "Discover insights with web-like search capability.",
-            url: `${DOMAIN}/search`,
+            url: `${APP_DOMAIN}/search`,
             buttonText: "Start searching",
             buttonIconURL: "./assets/icons/search.svg",
             imageURL: `./assets/images/search.png`,
@@ -53,7 +54,7 @@ data:
             name: "CATALOG",
             telicentUITheme: "DataNavy",
             shortDescription: "Provides an organized overview of the datasets available to you for analysis.",
-            url: `${DOMAIN}/data-catalog/`,
+            url: `${APP_DOMAIN}/data-catalog/`,
             buttonText: "Find your dataset",
             buttonIconURL: "./assets/icons/catalog.svg",
             imageURL: `./assets/images/catalog.png`,
@@ -63,7 +64,7 @@ data:
         //     name: "ONTOLOGY",
         //     telicentUITheme: "DataNavy",
         //     shortDescription: "A simple way to create, edit and manage ontologies.",
-        //     url: `${DOMAIN}/ontology`,
+        //     url: `${APP_DOMAIN}/ontology`,
         //     buttonText: "Start modelling",
         //     buttonIconURL: "./assets/icons/ontology.svg",
         //     imageURL: `./assets/images/ontology.png`,
@@ -73,7 +74,7 @@ data:
         //     name: "INSTANCE",
         //     telicentUITheme: "DocumentPink",
         //     shortDescription: "A tool to create and visualise diagrams for specific ontologies using the Resource Description Framework.",
-        //     url: `${DOMAIN}/instance`,
+        //     url: `${APP_DOMAIN}/instance`,
         //     buttonText: "Start building",
         //     buttonIconURL: "./assets/icons/instance.svg",
         //     imageURL: `./assets/images/instance.png`,
@@ -81,12 +82,12 @@ data:
     ];
 
     // APIs
-    window.env.ACCESS_API_URL = `${DOMAIN}/api/access`;
+    window.env.ACCESS_API_URL = `${API_DOMAIN}/access`;
 
     // Apps
 
-    window.env.ACCESS_APP_URL = `${DOMAIN}/access`;
-    window.env.SEARCH_APP_URL = `${DOMAIN}/search`;
+    window.env.ACCESS_APP_URL = `${APP_DOMAIN}/access`;
+    window.env.SEARCH_APP_URL = `${APP_DOMAIN}/search`;
 
     window.env.FOOTER_LINKS = [
         {
@@ -131,7 +132,7 @@ data:
         { src: "telicent" },
     ];
 
-    window.env.USER_PREF_API_URL = `${DOMAIN}/api/user-preferences`
+    window.env.USER_PREF_API_URL = `${API_DOMAIN}/user-preferences`
 
     window.feAppOptions = {
     // 🚨 WARNING: ENCODE_SEARCH_PARAMS_MODE must be the same in search, graph, and user-portal 🚨
