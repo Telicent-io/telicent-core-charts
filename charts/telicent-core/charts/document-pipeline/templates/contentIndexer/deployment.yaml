@@ -52,8 +52,8 @@ spec:
       - name: {{ .Chart.Name }}
         image: {{ include "content-indexer.image" . }}
         imagePullPolicy: {{ .Values.contentIndexer.image.pullPolicy }}
-        resources: {{ .Values.contentIndexer.resources | default .Values.resources | toYaml | nindent 8 }}
-        securityContext: {{ .Values.contentIndexer.containerSecurityContext | default .Values.containerSecurityContext | toYaml | nindent 8 }}
+        resources: {{ .Values.contentIndexer.resources | default .Values.resources | toYaml | nindent 10 }}
+        securityContext: {{ .Values.contentIndexer.containerSecurityContext | default .Values.containerSecurityContext | toYaml | nindent 10 }}
 
         env:
         - name: KAFKA_CONFIG_FILE_PATH
