@@ -11,7 +11,7 @@ metadata:
   labels:
     {{- include "catalogue-updater.labels" . | nindent 4 }}
   {{- with .Values.catalogueUpdater.annotations }}
-  annotations: 
+  annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 
@@ -28,10 +28,10 @@ spec:
   template:
     metadata:
       labels:
-        {{- include "catalogue-updater.labels" . | nindent 8 }}
-        {{- with .Values.catalogueUpdater.podLabels }}
+      {{- include "catalogue-updater.labels" . | nindent 8 }}
+      {{- with .Values.catalogueUpdater.podLabels }}
         {{- toYaml . | nindent 8 }}
-        {{- end }}
+      {{- end }}
       {{- with .Values.catalogueUpdater.podAnnotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
