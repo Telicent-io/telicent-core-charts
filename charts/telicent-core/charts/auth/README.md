@@ -169,6 +169,14 @@ For Quick Start purposes, a secret named `tc-auth-usr-psql-auth` will be created
 | `postgresSql.username`       | PostgreSQL username                                                                | `""`  |
 | `postgresSql.password`       | PostgreSQL password                                                                | `""`  |
 
+### Spring
+
+Contains settings for the underlying Spring framework
+
+| Name                    | Description                                                                             | Value        |
+| ----------------------- | --------------------------------------------------------------------------------------- | ------------ |
+| `spring.profilesActive` | sets the srping profile to be used. Options are: default, docker, test, and production. | `production` |
+
 ### Bootstrap Parameters
 
 Contains configuration to be used to bootstrap a clean instance of the Auth application to a working state.

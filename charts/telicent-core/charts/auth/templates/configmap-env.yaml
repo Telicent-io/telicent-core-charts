@@ -26,6 +26,9 @@ data:
   COOKIE_SECURE: {{ .Values.idp.cookieSecure | quote  }}
   TOKEN_ISSUER_URL: {{ printf "%s%s" "https://" .Values.global.authHostDomain | quote }}
 
+  #Spring
+  SPRING_PROFILES_ACTIVE: {{ .Values.spring.profilesActive | quote }}
+
   JAVA_OPTS:  {{ .Values.java.jvmOptions | quote }}
 
   # IDP
