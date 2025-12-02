@@ -15,7 +15,9 @@ data:
   clients.yaml: |
     clients: 
       public:
+        {{- if .Values.bootstrap.clients.public}}
         {{- toYaml .Values.bootstrap.clients.public | nindent 8 }}
+        {{- end }}
         {{- if .Values.global.enterprise }}
         - client_id: telicent-admin-ui
           client_name: Telicent Admin UI Client
