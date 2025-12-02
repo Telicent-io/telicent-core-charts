@@ -11,7 +11,7 @@ metadata:
   labels:
     {{- include "content-extractor.labels" . | nindent 4 }}
   {{- with .Values.contentExtractor.annotations }}
-  annotations: 
+  annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}  
 
@@ -27,16 +27,16 @@ spec:
       {{- include "content-extractor.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      labels:
+      {{- include "content-extractor.labels" . | nindent 8 }}
+      {{- with .Values.contentExtractor.podLabels }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       {{- with .Values.contentExtractor.podAnnotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      labels:
-        {{- include "content-extractor.labels" . | nindent 8 }}
-        {{- with .Values.contentExtractor.podLabels }}
-        {{- toYaml . | nindent 8 }}
-        {{- end }}
-    
+
     spec:
       serviceAccountName: {{ include "document-pipeline.serviceAccountName" . }}
       securityContext: {{ .Values.contentExtractor.podSecurityContext | default .Values.podSecurityContext | toYaml | nindent 8 }}
@@ -95,7 +95,7 @@ spec:
         {{- with .Values.contentExtractor.extraVolumeMounts }}
           {{- toYaml . | nindent 12 }}
         {{- end }}
-     
+
       {{- with .Values.contentExtractor.sidecars }}
         {{- toYaml . | nindent 8 }}
       {{- end }}

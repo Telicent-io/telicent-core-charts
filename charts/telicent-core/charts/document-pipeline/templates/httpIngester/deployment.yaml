@@ -11,7 +11,7 @@ metadata:
   labels:
     {{- include "http-ingester.labels" . | nindent 4 }}
   {{- with .Values.httpIngester.annotations }}
-  annotations: 
+  annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 
@@ -37,7 +37,7 @@ spec:
       {{- with .Values.httpIngester.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
-    
+
     spec:
       serviceAccountName: {{ include "document-pipeline.serviceAccountName" . }}
       securityContext: {{ .Values.httpIngester.podSecurityContext | default .Values.podSecurityContext | toYaml | nindent 8 }}
