@@ -48,6 +48,17 @@ http:
       middleWares:
         - host-auth
 
+    auth-fallthrough:
+      rule: {{ printf "Host(`%s`) && PathRegexp(`^/$`)" .Values.global.authHostDomain }}
+      priority: 1
+      service: auth
+      entryPoints:
+        - web-auth
+      middleWares:
+        - host-auth
+        - oauth2
+
+
   services:
     auth:
       loadBalancer:
