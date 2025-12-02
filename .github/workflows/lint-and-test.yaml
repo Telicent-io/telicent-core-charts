@@ -51,8 +51,12 @@ jobs:
       - name: Make metadataUpdater executable
         run: chmod +x .dev/metadataUpdater.sh
 
-      - name: Make readme-generator-for-helm executable
-        run: chmod +x .dev/readme-generator-for-helm
+      - name: Install readme-generator-for-helm
+        run: npm install -g @bitnami/readme-generator-for-helm
+
+      - name: Update metadataUpdater to use npm version
+        run: |
+          sed -i 's|\. dev/readme-generator-for-helm|readme-generator-for-helm|g' .dev/metadataUpdater.sh
 
       - name: Run metadata updater
         run: .dev/metadataUpdater.sh
