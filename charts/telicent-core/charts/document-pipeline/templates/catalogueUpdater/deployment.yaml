@@ -56,8 +56,8 @@ spec:
       - name: {{ .Chart.Name }}
         image: {{ include "catalogue-updater.image" . }}
         imagePullPolicy: {{ .Values.catalogueUpdater.image.pullPolicy }}
-        resources: {{ .Values.catalogueUpdater.resources | default .Values.resources | toYaml | nindent 8 }}
-        securityContext: {{ .Values.catalogueUpdater.containerSecurityContext | default .Values.containerSecurityContext | toYaml | nindent 8 }}
+        resources: {{ .Values.catalogueUpdater.resources | default .Values.resources | toYaml | nindent 10 }}
+        securityContext: {{ .Values.catalogueUpdater.containerSecurityContext | default .Values.containerSecurityContext | toYaml | nindent 10 }}
 
         env:
         - name: KAFKA_CONFIG_FILE_PATH
