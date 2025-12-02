@@ -61,6 +61,7 @@ jobs:
       - name: Update metadataUpdater to use npm version
         run: |
           sed -i 's|\.dev/readme-generator-for-helm|readme-generator-for-helm|g' .dev/metadataUpdater.sh
+          sed -i '42,46d' .dev/metadataUpdater.sh
 
       - name: Run metadata updater
         run: .dev/metadataUpdater.sh
