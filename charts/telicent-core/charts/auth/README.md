@@ -175,7 +175,7 @@ Contains settings for the underlying Spring framework
 
 | Name                    | Description                                                                             | Value        |
 | ----------------------- | --------------------------------------------------------------------------------------- | ------------ |
-| `spring.profilesActive` | sets the srping profile to be used. Options are: default, docker, test, and production. | `production` |
+| `spring.profilesActive` | sets the spring profile to be used. Options are: default, docker, test, and production. | `production` |
 
 ### Bootstrap Parameters
 
