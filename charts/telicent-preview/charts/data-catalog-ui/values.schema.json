@@ -49,7 +49,7 @@
                 "clientId": {
                     "type": "string",
                     "description": "The OAuth client id to be used by *Data Catalog UI*",
-                    "default": "telicent-data-catalog-ui"
+                    "default": "telicent-catalog-ui"
                 },
                 "scopes": {
                     "type": "string",

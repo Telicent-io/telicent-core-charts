@@ -154,6 +154,16 @@ postgresSql:
   password: ""
 
 #
+# @section Spring
+#
+# @descStart
+# Contains settings for the underlying Spring framework
+# @descEnd
+spring:
+  # @key spring.profilesActive sets the srping profile to be used. Options are: default, docker, test, and production.
+  profilesActive: production
+
+#
 # @section Bootstrap Parameters
 #
 # @descStart
