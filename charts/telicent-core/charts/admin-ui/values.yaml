@@ -98,7 +98,7 @@ image:
   # @key image.registry *Admin UI* image registry
   registry: quay.io
   # @key image.repository *Admin UI* image name
-  repository: telicent-admin-ui
+  repository: telicent-admin
   # @key image.tag *Admin UI* image tag. If not set, a tag is generated using the appVersion
   tag: ""
   # @key image.pullPolicy *Admin UI* image pull policy
