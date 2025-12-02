@@ -4,11 +4,9 @@
 # @key enabled Enable Document Pipeline chart
 enabled: false
 
-# @section Extra Containers Parameters
-# @key extraContainers Additional containers to be added to all pods in the document pipeline
-extraContainers: []
-
+#
 # @section Global Parameters
+#
 # @descStart
 # Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart
 # Note: Only global parameters used within this chart will be listed below
@@ -24,26 +22,13 @@ global:
   # @key global.imagePullSecrets Global registry secret names as an array
   imagePullSecrets: []
 
-  # @key global.enterprise Enable enterprise mode, adding additional features and configurations
-  enterprise: false
-
   # @key global.appHostDomain Domain associated with Telicent application/ui services
   appHostDomain: "apps.telicent.io"
   # @key global.apiHostDomain Domain associated with Telicent Api services
   apiHostDomain: "api.telicent.io"
   # @key global.authHostDomain Domain associated with Telicent authentication services, including OIDC providers
   authHostDomain: "auth.telicent.io"
-  # @key global.jwksUrl Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)
-  # Note: For Dex the endpoint would be https://{yourDexDomain}/keys
-  jwksUrl: "https://{yourAuthdomain}/.well-known/jwks.json"
 
-  # @key global.istioNamespace Namespace in which Istio is deployed
-  # Note: By default, Istio namespace is set to 'istio-system'
-  istioNamespace: istio-system
-  # @key global.istioServiceAccountName Name of the Istio service account
-  istioServiceAccountName: istio-ingress
-  # @key global.istioGatewayName Name of the Istio Gateway Resource (LB operating at the edge of the mesh)
-  istioGatewayName: ingress-gateway
   kafka:
     # @key global.kafka.bootstrapServers Comma separated list containing Kafka bootstrap servers
     bootstrapServers: "kafka-bootstrap.kafka.svc.cluster.local:9092"
@@ -59,11 +44,61 @@ global:
     mechanism: "SCRAM-SHA-512"
 
   truststore:
-    # @key global.truststore.existingSecretName Name of an existing secret containing the truststore
-    existingSecretName: ""
+    # @key global.truststore.existingSecret Name of an existing secret containing the truststore
+    existingSecret: ""
     # @key global.truststore.mountPath The mount path for the truststore in the container
     mountPath: /app/config/truststore
-# @section Service Account
+
+#
+# @section Resources - Default resource allocation applied to all sub-chart deployments
+#
+resources:
+  requests:
+    # @key resources.requests.cpu Set containers' CPU request
+    cpu: "500m"
+    # @key resources.requests.memory Set containers' memory request
+    memory: "750Mi"
+  limits:
+    # @key resources.limits.cpu Set containers' CPU limit
+    cpu: "1000m"
+    # @key resources.limits.memory Set containers' memory limit
+    memory: "1000Mi"
+
+#
+# @section Security Context - Default security context applied to all sub-chart deployments
+#
+podSecurityContext:
+  # @key podSecurityContext.runAsUser Set the provisioning pod's Security Context runAsUser User ID
+  runAsUser: 185
+  # @key podSecurityContext.runAsGroup Set the provisioning pod's Security Context runAsGroup Group ID
+  runAsGroup: 185
+  # @key podSecurityContext.runAsNonRoot Set the provisioning pod's Security Context runAsNonRoot
+  runAsNonRoot: true
+  # @key podSecurityContext.fsGroup Set the provisioning pod's Group ID for the mounted volumes' filesystem
+  fsGroup: 185
+  seccompProfile:
+    # @key podSecurityContext.seccompProfile.type Set the provisioning pod's Security Context seccomp profile
+    type: RuntimeDefault
+containerSecurityContext:
+  # @key containerSecurityContext.runAsUser Set containers' Security Context runAsUser User ID
+  runAsUser: 185
+  # @key containerSecurityContext.runAsGroup Set containers' Security Context runAsGroup Group ID
+  runAsGroup: 185
+  # @key containerSecurityContext.runAsNonRoot Set container's Security Context runAsNonRoot
+  runAsNonRoot: true
+  # @key containerSecurityContext.allowPrivilegeEscalation Set container's Security Context allowPrivilegeEscalation
+  allowPrivilegeEscalation: false
+  capabilities:
+    # @key containerSecurityContext.capabilities.drop List of capabilities to be dropped
+    drop:
+      - ALL
+  seccompProfile:
+    # @key containerSecurityContext.seccompProfile.type Set container's Security Context seccomp profile
+    type: RuntimeDefault
+
+#
+# @section Service Account - Shared by sub-chart resources
+#
 # @descStart
 # This section builds out the service account more information can be found here: https://kubernetes.io/docs/concepts/security/service-accounts/
 # @descEnd
@@ -76,344 +111,263 @@ serviceAccount:
   annotations: {}
   # @key serviceAccount.name The name of the service account to use. If not set and create is true, a name is generated using the fullname template
   name: ""
-# @section HTTP Ingester
+
+#
+# @section Host(s) Parameters - Contains host information for applications deployed via *telicent-core* chart.
+#
 # @descStart
-# This section builds out the HTTP Ingester configuration
-# The application configuration is contained within the 'configuration' key or can be overriden by providing an existing ConfigMap name
+# *Document Pipeline* interacts directly with other Telicent Applications using their default service/serviceAccount and port.
+# If either of those details changes, you can use this section to correctly referer to those applications.
+# @descEnd
+hosts:
+  # @key hosts.enableAutoCorrect Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as is, without any modification.
+  enableAutoCorrect: true
+  # @key hosts.auth Auth application default host value, as defined by 'service/serviceAccount:port'
+  auth: "auth:8080"
+  # @key hosts.traefikProxy Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'
+  traefikProxy: "traefik-proxy:8080"
+
+#
+# @section *HTTP Ingester*
+#
+# @descStart
+# The *HTTP Ingester* is responsible for ingesting documents via https.
+# The application settings are defined within the 'java' & 'routes' keys
 # @descEnd
 httpIngester:
-  # @key httpIngester.replicaCount The number of replicas for the HTTP Ingester
-  replicaCount: 1
+
+  #
+  # @section *HTTP Ingester* - Configmap Parameters
+  #
+  configMap:
+    # @key httpIngester.configMap.existingRoutesConfigMap Name of existing configmap containing Routes Configuration
+    # Note: When it's set it will disable the routes configmap creation.
+    existingRoutesConfigMap: ""
+
+  #
+  # @section *HTTP Ingester* - Java Parameters
+  #
+  java:
+    # @key httpIngester.java.jvmOptions Java options to pass to the JVM
+    jvmOptions: "-XX:MaxRAMPercentage=80.0"
+
+  #
+  # @section *HTTP Ingester* - Routes Parameters
+  #
+  routes:
+    # @key httpIngester.routes[0].name A unique name for the route
+    - name: local
+      # @key httpIngester.routes[0].topic The destination Kafka topic for the route
+      topic: document.extractrequest
+      # @key httpIngester.routes[0].securityLabel In this test configuration the label is simply test=true
+      securityLabel: dGVzdD10cnVl
+      # @key httpIngester.routes[0].namespace The Namespace URI that will be used to assign a unique URI to a document URIs are generated deterministically based on this and the ingested document content
+      namespace: https://example.org/ns#
+      headers:
+        # @key httpIngester.routes[0].headers[0].name The Owner header, configured such that even if the header is present in the request then the defaultValue here takes precedence
+        - name: Owner
+          # @key httpIngester.routes[0].headers[0].defaultValue The default value for the Owner header
+          defaultValue: Platform Team
+          # @key httpIngester.routes[0].headers[0].priority The priority for the Owner header
+          priority: CONFIGURATION
+        # @key httpIngester.routes[0].headers[1].name The (deprecated) Data-Source-Name, configured such that if the header is present in the request then the request value takes precedence
+        - name: Data-Source-Name
+          # @key httpIngester.routes[0].headers[1].defaultValue The default value for the (deprecated) Data-Source-Name header
+          defaultValue: Test Data
+          # @key httpIngester.routes[0].headers[1].priority The priority for the (deprecated) Data-Source-Name header
+          priority: REQUEST
+        # @key httpIngester.routes[0].headers[2].name The Distribution ID header. This is necessary to indicate what data catalogue details are associated to the incoming request. NOTE: marked as REQUEST for time being to make development/testing easier but should be REQUEST_ONLY when deployed.
+        - name: Data-Source-Reference
+          # @key httpIngester.routes[0].headers[2].defaultValue The default value for the Distribution ID header
+          defaultValue: Telicent Document Pipeline
+          # @key httpIngester.routes[0].headers[2].priority The priority for the Distribution ID header
+          priority: REQUEST
+        # @key httpIngester.routes[0].headers[3].name The Distribution ID header. This is necessary to indicate what data catalogue details are associated to the incoming request. NOTE: marked as REQUEST for time being to make development/testing easier but should be REQUEST_ONLY when deployed.
+        - name: Distribution-Id
+          # @key httpIngester.routes[0].headers[3].defaultValue The default value for the Distribution ID header
+          defaultValue: 13bce3bf-7edb-4efb-a54f-574327458dd7
+          # @key httpIngester.routes[0].headers[3].priority The priority for the Distribution ID header
+          priority: REQUEST
+        # @key httpIngester.routes[0].headers[4].name The EDH/IDH policy information header
+        - name: Policy-Information
+          # @key httpIngester.routes[0].headers[4].defaultValue The default value for the EDH/IDH policy information header
+          defaultValue: '{"EDH":{"classification":"O","permittedNats":["GBR"],"permittedOrgs":["Telicent"],"orGroups":[],"andGroups":[]}}'
+          # @key httpIngester.routes[0].headers[4].priority The priority for the EDH/IDH policy information header
+          priority: REQUEST
+
+  #
+  # @section *HTTP Ingester* - Common Parameters
+  #
+  # @key httpIngester.nameOverride Override the chart name for the *HTTP Ingester*
+  nameOverride: ""
+  # @key httpIngester.fullnameOverride Override the full name for the *HTTP Ingester*
+  fullnameOverride: ""
+
+  #
+  # @section *HTTP Ingester* - Deployment Parameters
+  #
+  # @key httpIngester.replicas Number of replicas to deploy
+  replicas: 1
+
+  # @key httpIngester.annotations Add extra annotations to the deployment object
+  annotations: {}
+  # @key httpIngester.podLabels Labels to add to the *HTTP Ingester* pods
+  podLabels: {}
+  # @key httpIngester.podAnnotations Annotations to add to the *HTTP Ingester* pods
+  podAnnotations: {}
+  # @key httpIngester.extraEnvVars Array with extra environment variables to add
+  extraEnvVars: []
+  # @key httpIngester.extraVolumes Additional volumes on the output Deployment definition
+  extraVolumes: []
+  # @key httpIngester.extraVolumeMounts Additional volumeMounts on the output Deployment definition
+  extraVolumeMounts: []
+  # @key httpIngester.initContainers Add init containers to the pod
+  initContainers: []
+  # @key httpIngester.sidecars Add sidecars to the pod.
+  sidecars: []
 
   image:
     # @key httpIngester.image.registry [default: REGISTRY_NAME] image registry
     registry: quay.io
-    # @key httpIngester.image.repository The container image repository for the HTTP Ingester
+    # @key httpIngester.image.repository The container image repository for the *HTTP Ingester*
     repository: telicent/telicent-document-http-ingester
-    # @key httpIngester.image.pullPolicy The image pull policy for the HTTP Ingester
-    pullPolicy: IfNotPresent
-    # @key httpIngester.image.tag The image tag for the HTTP Ingester
+    # @key httpIngester.image.tag The image tag for the *HTTP Ingester*
     tag: "3.2.0"
+    # @key httpIngester.image.pullPolicy The image pull policy for the *HTTP Ingester*
+    pullPolicy: IfNotPresent
+    # @key httpIngester.image.pullSecrets Specify registry secret names as an array
+    pullSecrets: []
 
-  # @key httpIngester.imagePullSecrets Secrets for pulling an image from a private repository
-  imagePullSecrets: []
-  # @key httpIngester.nameOverride Override the chart name for the HTTP Ingester
-  nameOverride: ""
-  # @key httpIngester.fullnameOverride Override the full name for the HTTP Ingester
-  fullnameOverride: ""
-
-  # @key httpIngester.podAnnotations Annotations to add to the HTTP Ingester pods
-  podAnnotations: {}
-  # @key httpIngester.podLabels Labels to add to the HTTP Ingester pods
-  podLabels: {}
-
-  podSecurityContext:
-    # @key httpIngester.podSecurityContext Security context for the HTTP Ingester pods
-    {}
-
-  securityContext:
-    # @key httpIngester.securityContext Security context for the HTTP Ingester containers
-    {}
-  # @key httpIngester.resources Resource requests and limits for the HTTP Ingester
-  resources: {}
-    # We usually recommend not to specify default resources and to leave this as a conscious
-    # choice for the user. This also increases chances charts run on environments with little
-    # resources, such as Minikube. If you do want to specify resources, uncomment the following
-    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-    # limits:
-    #   cpu: 100m
-    #   memory: 128Mi
-    # requests:
-    #   cpu: 100m
-    #   memory: 128Mi
-
-  # @key httpIngester.volumes Additional volumes on the output Deployment definition.
-  volumes: []
-  # - name: foo
-  #   secret:
-  #     secretName: mysecret
-  #     optional: false
-
-  # @key httpIngester.volumeMounts Additional volumeMounts on the output Deployment definition.
-  volumeMounts: []
-  # - name: foo
-  #   mountPath: "/etc/foo"
-  #   readOnly: true
-  # @key httpIngester.nodeSelector Node selector for the HTTP Ingester pods
-  nodeSelector: {}
-  # @key httpIngester.tolerations Tolerations for the HTTP Ingester pods
-  tolerations: []
-  # @key httpIngester.affinity Affinity for the HTTP Ingester pods
+  # @key httpIngester.affinity Affinity for pod assignment
   affinity: {}
+  # @key httpIngester.nodeSelector Node labels for pod assignment
+  nodeSelector: {}
+  # @key httpIngester.tolerations Tolerations for pod assignment
+  tolerations: []
 
-  # @key httpIngester.existingConfigMapName If you want to use an existing ConfigMap for configuration then set the name here. If not set then a new ConfigMap will be created using the configuration in this values
-  existingConfigMapName: ""
-  # @key httpIngester.existingCacertConfigmapName Name of a ConfigMap containing a CA certificate to be mounted within the container
-  existingCacertConfigmapName: trust-bundle
-  # @key httpIngester.cacert Name of a ConfigMap containing a CA certificate to be mounted within the container
-  cacert: ""
-  configuration:
-    # @key httpIngester.configuration.javaOpts Java options to pass to the JVM
-    javaOpts: "-Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks"
-    # @key httpIngester.configuration.jwksUrl Override the global JWKS URL for the HTTP Ingester
-    jwksUrl: ""
-    routes:
-      # @key httpIngester.configuration.routes[0].name A unique name for the route
-      - name: local
-        # @key httpIngester.configuration.routes[0].topic The destination Kafka topic for the route
-        topic: document.extractrequest
-        # @key httpIngester.configuration.routes[0].securityLabel In this test configuration the label is simply test=true
-        securityLabel: dGVzdD10cnVl
-        # @key httpIngester.configuration.routes[0].namespace The Namespace URI that will be used to assign a unique URI to a document URIs are generated deterministically based on this and the ingested document content
-        namespace: https://example.org/ns#
-        headers:
-          # @key httpIngester.configuration.routes[0].headers[0].name The Owner header, configured such that even if the header is present in the request then the defaultValue here takes precedence
-          - name: Owner
-            # @key httpIngester.configuration.routes[0].headers[0].defaultValue The default value for the Owner header
-            defaultValue: Platform Team
-            # @key httpIngester.configuration.routes[0].headers[0].priority The priority for the Owner header
-            priority: CONFIGURATION
-          # @key httpIngester.configuration.routes[0].headers[1].name The (deprecated) Data-Source-Name, configured such that if the header is present in the request then the request value takes precedence
-          - name: Data-Source-Name
-            # @key httpIngester.configuration.routes[0].headers[1].defaultValue The default value for the (deprecated) Data-Source-Name header
-            defaultValue: Test Data
-            # @key httpIngester.configuration.routes[0].headers[1].priority The priority for the (deprecated) Data-Source-Name header
-            priority: REQUEST
-          # @key httpIngester.configuration.routes[0].headers[2].name The Distribution ID header. This is necessary to indicate what data catalogue details are associated to the incoming request. NOTE: marked as REQUEST for time being to make development/testing easier but should be REQUEST_ONLY when deployed.
-          - name: Data-Source-Reference
-            # @key httpIngester.configuration.routes[0].headers[2].defaultValue The default value for the Distribution ID header
-            defaultValue: Telicent Document Pipeline
-            # @key httpIngester.configuration.routes[0].headers[2].priority The priority for the Distribution ID header
-            priority: REQUEST
-          # @key httpIngester.configuration.routes[0].headers[3].name The Distribution ID header. This is necessary to indicate what data catalogue details are associated to the incoming request. NOTE: marked as REQUEST for time being to make development/testing easier but should be REQUEST_ONLY when deployed.
-          - name: Distribution-Id
-            # @key httpIngester.configuration.routes[0].headers[3].defaultValue The default value for the Distribution ID header
-            defaultValue: 13bce3bf-7edb-4efb-a54f-574327458dd7
-            # @key httpIngester.configuration.routes[0].headers[3].priority The priority for the Distribution ID header
-            priority: REQUEST
-          # @key httpIngester.configuration.routes[0].headers[4].name The EDH/IDH policy information header
-          - name: Policy-Information
-            # @key httpIngester.configuration.routes[0].headers[4].defaultValue The default value for the EDH/IDH policy information header
-            defaultValue: '{"EDH":{"classification":"O","permittedNats":["GBR"],"permittedOrgs":["Telicent"],"orGroups":[],"andGroups":[]}}'
-            # @key httpIngester.configuration.routes[0].headers[4].priority The priority for the EDH/IDH policy information header
-            priority: REQUEST
+  resources:
+    requests:
+      # @key httpIngester.resources.requests.cpu Set containers' CPU request
+      cpu: "500m"
+      # @key httpIngester.resources.requests.memory Set containers' memory request
+      memory: "1000Mi"
+    limits:
+      # @key httpIngester.resources.limits.cpu Set containers' CPU limit
+      cpu: "1000m"
+      # @key httpIngester.resources.limits.memory Set containers' memory limit
+      memory: "1500Mi"
 
-# @section Content Extractor
+  # @key httpIngester.podSecurityContext Security context for the pod(s)
+  # Note: Optional override, otherwise inherited from the root security context definition
+  podSecurityContext: {}
+  # @key httpIngester.containerSecurityContext Security context for the container(s)
+  # Note: Optional override, otherwise inherited from the root security context definition
+  containerSecurityContext: {}
+
+  #
+  # @section *HTTP Ingester* - Traffic Exposure Parameters
+  #
+  service:
+    # @key httpIngester.service.name *HTTP Ingester* service name. If not set, a name is generated using the fullname
+    name: ""
+    # @key httpIngester.service.port *HTTP Ingester* service port
+    port: 8080
+    # @key httpIngester.service.type *HTTP Ingester* service port
+    type: ClusterIP
+
+#
+# @section *Content Extractor*
+#
 # @descStart
-# This section builds out the Content Extractor configuration
-# The application configuration is contained within the 'configuration' key
+# The *Content Extractor* is responsible for extracting information from the ingested documents.
+# The application settings are defined within the 'topic' key
 # @descEnd
 contentExtractor:
-  # @key contentExtractor.replicaCount The number of replicas for the Content Extractor
-  replicaCount: 1
+
+  topics:
+    # @key contentExtractor.topics.inputTopic The Kafka topic from which the *Content Extractor* will consume messages
+    inputTopic: document.extractrequest
+    # @key contentExtractor.topics.outputTopic The Kafka topic to which the *Content Extractor* will produce messages
+    outputTopic: document.textandmetadata
+    # @key contentExtractor.topics.dlqTopic The Kafka topic to which the *Content Extractor* will produce dead-lettered messages
+    dlqTopic: document.extractrequest.dlq
+
+  #
+  # @section *Content Extractor* - Common Parameters
+  #
+  # @key contentExtractor.nameOverride Override the chart name for the *Content Extractor*
+  nameOverride: ""
+  # @key contentExtractor.fullnameOverride Override the full name for the *Content Extractor*
+  fullnameOverride: ""
+
+  #
+  # @section *Content Extractor* - Deployment Parameters
+  #
+  # @key contentExtractor.replicas The number of replicas for the *Content Extractor*
+  replicas: 1
+
+  # @key contentExtractor.annotations Add extra annotations to the deployment object
+  annotations: {}
+  # @key contentExtractor.podLabels Labels to add to the *Content Extractor* pods
+  podLabels: {}
+  # @key contentExtractor.podAnnotations Annotations to add to the *Content Extractor* pods
+  podAnnotations: {}
+  # @key contentExtractor.extraEnvVars Array with extra environment variables to add
+  extraEnvVars: []
+  # @key contentExtractor.extraVolumes Additional volumes for the *Content Extractor*
+  extraVolumes: []
+  # @key contentExtractor.extraVolumeMounts Additional volume mounts for the *Content Extractor*
+  extraVolumeMounts: []
+  # @key contentExtractor.initContainers Add init containers to the pod
+  initContainers: []
+  # @key contentExtractor.sidecars Add sidecars to the pod.
+  sidecars: []
 
   image:
     # @key contentExtractor.image.registry [default: REGISTRY_NAME] image registry
     registry: quay.io
-    # @key contentExtractor.image.repository The container image repository for the Content Extractor
+    # @key contentExtractor.image.repository The container image repository for the *Content Extractor*
     repository: telicent/telicent-document-content-extractor
-    # @key contentExtractor.image.pullPolicy The image pull policy for the Content Extractor
-    pullPolicy: IfNotPresent
-    # @key contentExtractor.image.tag The image tag for the Content Extractor
+    # @key contentExtractor.image.tag The image tag for the *Content Extractor*
     tag: "3.2.0"
+    # @key contentExtractor.image.pullPolicy The image pull policy for the *Content Extractor*
+    pullPolicy: IfNotPresent
+    # @key contentExtractor.image.pullSecrets Secrets for pulling an image from a private repository
+    pullSecrets: []
 
-  # @key contentExtractor.imagePullSecrets Secrets for pulling an image from a private repository
-  imagePullSecrets: []
-  # @key contentExtractor.nameOverride Override the chart name for the Content Extractor
-  nameOverride: ""
-  # @key contentExtractor.fullnameOverride Override the full name for the Content Extractor
-  fullnameOverride: ""
-
-  # @key contentExtractor.podAnnotations Annotations to add to the Content Extractor pods
-  podAnnotations: {}
-  # @key contentExtractor.podLabels Labels to add to the Content Extractor pods
-  podLabels: {}
-
-  # @key contentExtractor.podSecurityContext Security context for the Content Extractor pods
-  podSecurityContext: {}
-    # fsGroup: 2000
-
-  # @key contentExtractor.securityContext Security context for the Content Extractor containers
-  securityContext: {}
-    # capabilities:
-    #   drop:
-    #   - ALL
-    # readOnlyRootFilesystem: true
-    # runAsNonRoot: true
-    # runAsUser: 1000
-
-  service:
-    # @key contentExtractor.service.type The service type for the Content Extractor
-    type: ClusterIP
-    # @key contentExtractor.service.port The service port for the Content Extractor
-    port: 80
-
-  # @key contentExtractor.resources Resource requests and limits for the Content Extractor
-  resources: {}
-    # We usually recommend not to specify default resources and to leave this as a conscious
-    # choice for the user. This also increases chances charts run on environments with little
-    # resources, such as Minikube. If you do want to specify resources, uncomment the following
-    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-    # limits:
-    #   cpu: 100m
-    #   memory: 128Mi
-    # requests:
-    #   cpu: 100m
-    #   memory: 128Mi
-
-  # This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
-  livenessProbe:
-    httpGet:
-      # @key contentExtractor.livenessProbe.httpGet.path The HTTP path for the liveness probe
-      path: /
-      # @key contentExtractor.livenessProbe.httpGet.port The HTTP port for the liveness probe
-      port: http
-  readinessProbe:
-    httpGet:
-      # @key contentExtractor.readinessProbe.httpGet.path The HTTP path for the readiness probe
-      path: /
-      # @key contentExtractor.readinessProbe.httpGet.port The HTTP port for the readiness probe
-      port: http
-
-  # @key contentExtractor.volumes Additional volumes for the Content Extractor
-  volumes: []
-  # - name: foo
-  #   secret:
-  #     secretName: mysecret
-  #     optional: false
-
-  # @key contentExtractor.volumeMounts Additional volume mounts for the Content Extractor
-  volumeMounts: []
-  # - name: foo
-  #   mountPath: "/etc/foo"
-  #   readOnly: true
-
-  # @key contentExtractor.nodeSelector Node selector for the Content Extractor pods
+  # @key contentExtractor.affinity Affinity rules for the *Content Extractor* pods
+  affinity: {}
+  # @key contentExtractor.nodeSelector Node selector for the *Content Extractor* pods
   nodeSelector: {}
-
-  # @key contentExtractor.tolerations Tolerations for the Content Extractor pods
+  # @key contentExtractor.tolerations Tolerations for the *Content Extractor* pods
   tolerations: []
 
-  # @key contentExtractor.affinity Affinity rules for the Content Extractor pods
-  affinity: {}
-
-  configuration:
-    # @key contentExtractor.configuration.inputTopic The Kafka topic from which the content extractor will consume messages
-    inputTopic: document.extractrequest
-    # @key contentExtractor.configuration.outputTopic The Kafka topic to which the content extractor will produce messages
-    outputTopic: document.textandmetadata
-    # @key contentExtractor.configuration.dlqTopic The Kafka topic to which the content extractor will produce dead-lettered messages
-    dlqTopic: document.extractrequest.dlq
-
-# @section Content Indexer
-# @descStart
-# This section builds out the Content Indexer configuration
-# The application configuration is contained within the 'configuration' key
-# @descEnd
-contentIndexer:
-  # @key contentIndexer.replicaCount The number of replicas for the Content Indexer
-  replicaCount: 1
-
-  image:
-    # @key contentIndexer.image.registry [default: REGISTRY_NAME] image registry
-    registry: quay.io
-    # @key contentIndexer.image.repository The container image repository for the Content Indexer
-    repository: telicent/telicent-document-content-indexer
-    # @key contentIndexer.image.pullPolicy The image pull policy for the Content Indexer
-    pullPolicy: IfNotPresent
-    # @key contentIndexer.image.tag The image tag for the Content Indexer
-    tag: "3.2.0"
-
-  # @key contentIndexer.imagePullSecrets Secrets for pulling an image from a private repository
-  imagePullSecrets: []
-  # @key contentIndexer.nameOverride Override the chart name for the Content Indexer
-  nameOverride: ""
-  # @key contentIndexer.fullnameOverride Override the full name for the Content Indexer
-  fullnameOverride: ""
-
-  # @key contentIndexer.podAnnotations Annotations to add to the Content Indexer pods
-  podAnnotations: {}
-  # @key contentIndexer.podLabels Labels to add to the Content Indexer pods
-  podLabels: {}
-
-  # @key contentIndexer.podSecurityContext Security context for the Content Indexer pods
-  podSecurityContext: {}
-    # fsGroup: 2000
-
-  # @key contentIndexer.securityContext Security context for the Content Indexer containers
-  securityContext: {}
-    # capabilities:
-    #   drop:
-    #   - ALL
-    # readOnlyRootFilesystem: true
-    # runAsNonRoot: true
-    # runAsUser: 1000
-
-  service:
-    # @key contentIndexer.service.type The service type for the Content Indexer
-    type: ClusterIP
-    # @key contentIndexer.service.port The service port for the Content Indexer
-    port: 80
-
-  # @key contentIndexer.resources Resource requests and limits for the Content Indexer
+   # @key contentExtractor.resources Resource requests and limits for the *Content Extractor*
+  # Note: Optional override, otherwise inherited from the root resource definition
   resources: {}
-    # We usually recommend not to specify default resources and to leave this as a conscious
-    # choice for the user. This also increases chances charts run on environments with little
-    # resources, such as Minikube. If you do want to specify resources, uncomment the following
-    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-    # limits:
-    #   cpu: 100m
-    #   memory: 128Mi
-    # requests:
-    #   cpu: 100m
-    #   memory: 128Mi
-
-  # This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
-  livenessProbe:
-    httpGet:
-      # @key contentIndexer.livenessProbe.httpGet.path The HTTP path for the liveness probe
-      path: /
-      # @key contentIndexer.livenessProbe.httpGet.port The HTTP port for the liveness probe
-      port: http
-  readinessProbe:
-    httpGet:
-      # @key contentIndexer.readinessProbe.httpGet.path The HTTP path for the readiness probe
-      path: /
-      # @key contentIndexer.readinessProbe.httpGet.port The HTTP port for the readiness probe
-      port: http
-
-  # @key contentIndexer.volumes Additional volumes for the Content Indexer
-  volumes: []
-  # - name: foo
-  #   secret:
-  #     secretName: mysecret
-  #     optional: false
-
-  # @key contentIndexer.volumeMounts Additional volume mounts for the Content Indexer
-  volumeMounts: []
-  # - name: foo
-  #   mountPath: "/etc/foo"
-  #   readOnly: true
-
-  # @key contentIndexer.nodeSelector Node selector for the Content Indexer pods
-  nodeSelector: {}
-
-  # @key contentIndexer.tolerations Tolerations for the Content Indexer pods
-  tolerations: []
-
-  # @key contentIndexer.affinity Affinity rules for the Content Indexer pods
-  affinity: {}
+  # @key contentExtractor.podSecurityContext Security context for the pod(s)
+  # Note: Optional override, otherwise inherited from the root  security context definition
+  podSecurityContext: {}
+  # @key contentExtractor.containerSecurityContext Security context for the container(s)
+  # Note: Optional override, otherwise inherited from main root security context definition
+  containerSecurityContext: {}
 
 #
+# @section *Content Indexer*
+#
+# @descStart
+# The *Content Indexer* is responsible for indexing documents.
+# The application settings are defined within the 'java' & 'elastic' keys
+# @descEnd
+contentIndexer:
+
+  #
   # @section Java Parameters
   #
-  # @descStart
-  # Contains Java configuration parameters to be used by the *Content Indexer* application
-  # @descEnd
   java:
      # @key contentIndexer.java.jvmOptions JVM options for the application
     jvmOptions: "-XX:MaxRAMPercentage=80.0"
-   
+
   #
   # @section Elastic/OpenSearch Parameters and Secret
   #
@@ -446,305 +400,312 @@ contentIndexer:
     # @key contentIndexer.elastic.password OpenSearch/Elastic user password
     password: ""
 
-# @section Catalogue Updater
+  #
+  # @section *Content Indexer* - Common Parameters
+  #
+  # @key contentIndexer.nameOverride Override the chart name for the *Content Indexer*
+  nameOverride: ""
+  # @key contentIndexer.fullnameOverride Override the full name for the *Content Indexer*
+  fullnameOverride: ""
+
+  #
+  # @section *Content Indexer* - Deployment Parameters
+  #
+  # @key contentIndexer.replicas Number of replicas to deploy
+  replicas: 1
+
+  # @key contentIndexer.annotations Add extra annotations to the deployment object
+  annotations: {}
+  # @key contentIndexer.podLabels Labels to add to the *Content Indexer* pods
+  podLabels: {}
+  # @key contentIndexer.podAnnotations Annotations to add to the *Content Indexer* pods
+  podAnnotations: {}
+  # @key contentIndexer.extraEnvVars Array with extra environment variables to add
+  extraEnvVars: []
+  # @key contentIndexer.extraVolumes Additional volumes for the *Content Indexer*
+  extraVolumes: []
+  # @key contentIndexer.extraVolumeMounts Additional volume mounts for the *Content Indexer*
+  extraVolumeMounts: []
+  # @key contentIndexer.initContainers Add init containers to the pod
+  initContainers: []
+  # @key contentIndexer.sidecars Add sidecars to the pod.
+  sidecars: []
+
+  image:
+    # @key contentIndexer.image.registry [default: REGISTRY_NAME] image registry
+    registry: quay.io
+    # @key contentIndexer.image.repository The container image repository for the *Content Indexer*
+    repository: telicent/telicent-document-content-indexer
+    # @key contentIndexer.image.pullPolicy The image pull policy for the *Content Indexer*
+    # @key contentIndexer.image.tag The image tag for the *Content Indexer*
+    tag: "3.2.0"
+    pullPolicy: IfNotPresent
+    # @key contentIndexer.image.pullSecrets Secrets for pulling an image from a private repository
+    pullSecrets: []
+
+  # @key contentIndexer.affinity Affinity rules for the *Content Indexer* pods
+  affinity: {}
+  # @key contentIndexer.nodeSelector Node selector for the *Content Indexer* pods
+  nodeSelector: {}
+  # @key contentIndexer.tolerations Tolerations for the *Content Indexer* pods
+  tolerations: []
+
+  # @key contentIndexer.resources Resource requests and limits for the *Content Indexer*
+  # Note: Optional override, otherwise inherited from the root resource definition
+  resources: {}
+  # @key contentIndexer.podSecurityContext Security context for the pod(s)
+  # Note: Optional override, otherwise inherited from the root  security context definition
+  podSecurityContext: {}
+  # @key contentIndexer.containerSecurityContext Security context for the container(s)
+  # Note: Optional override, otherwise inherited from main root security context definition
+  containerSecurityContext: {}
+
+#
+# @section *Catalogue Updater*
+#
 # @descStart
-# This section builds out the Catalogue Updater configuration
-# The application configuration is contained within the 'configuration' key
+# The *Catalogue Updater* is responsible for updating the catalogue store.
+# The application settings are defined within the 'topics' key
 # @descEnd
 catalogueUpdater:
-  # @key catalogueUpdater.replicaCount The number of replicas for the Catalogue Updater
-  replicaCount: 1
+
+  topics:
+    # @key catalogueUpdater.topics.inputTopic The Kafka topic from which the *Catalogue Updater* will consume messages
+    inputTopic: document.textandmetadata
+    # @key catalogueUpdater.topics.outputTopic The Kafka topic to which the *Catalogue Updater* will produce
+    outputTopic: catalog
+    # @key catalogueUpdater.topics.debounceWindowMs The debounce window in milliseconds
+    debounceWindowMs: 30000
+    # @key catalogueUpdater.topics.flushIntervalMs The flush interval in milliseconds
+    flushIntervalMs: 60000
+    # @key catalogueUpdater.topics.maxBufferSize The maximum buffer size
+    maxBufferSize: 100
+    # @key catalogueUpdater.topics.dlqTopic The Kafka topic to which the *Catalogue Updater* will produce dead-lettered messages
+    dlqTopic: document.extractrequest.dlq
+
+
+  #
+  # @section *Catalogue Updater* - Common Parameters
+  #
+  # @key catalogueUpdater.nameOverride Override the chart name for the *Catalogue Updater*
+  nameOverride: ""
+  # @key catalogueUpdater.fullnameOverride Override the full name for the *Catalogue Updater*
+  fullnameOverride: ""
+
+  #
+  # @section *Catalogue Updater* - Deployment Parameters
+  #
+  # @key catalogueUpdater.replicas The number of replicas for the *Catalogue Updater*
+  replicas: 1
+
+  # @key catalogueUpdater.annotations Add extra annotations to the deployment object
+  annotations: {}
+  # @key catalogueUpdater.podAnnotations Annotations to add to the *Catalogue Updater* pods
+  podAnnotations: {}
+  # @key catalogueUpdater.podLabels Labels to add to the *Catalogue Updater* pods
+  podLabels: {}
+   # @key catalogueUpdater.extraEnvVars Array with extra environment variables to add
+  extraEnvVars: []
+  # @key catalogueUpdater.extraVolumes Additional volumes for the *Catalogue Updater*
+  extraVolumes: []
+  # @key catalogueUpdater.extraVolumeMounts Additional volume mounts for the *Catalogue Updater*
+  extraVolumeMounts: []
+  # @key catalogueUpdater.initContainers Add init containers to the pod
+  initContainers: []
+  # @key catalogueUpdater.sidecars Add sidecars to the pod.
+  sidecars: []
 
   image:
     # @key catalogueUpdater.image.registry [default: REGISTRY_NAME] image registry
     registry: quay.io
-    # @key catalogueUpdater.image.repository The container image repository for the Catalogue Updater
+    # @key catalogueUpdater.image.repository The container image repository for the *Catalogue Updater*
     repository: telicent/telicent-document-catalogue-updater
-    # @key catalogueUpdater.image.pullPolicy The image pull policy for the Catalogue Updater
-    pullPolicy: IfNotPresent
-    # @key catalogueUpdater.image.tag The image tag for the Catalogue Updater
+    # @key catalogueUpdater.image.pullPolicy The image pull policy for the *Catalogue Updater*
+    # @key catalogueUpdater.image.tag The image tag for the *Catalogue Updater*
     tag: "3.2.0"
+    pullPolicy: IfNotPresent
+    # @key catalogueUpdater.image.pullSecrets Secrets for pulling an image from a private repository
+    pullSecrets: []
 
-  # @key catalogueUpdater.imagePullSecrets Secrets for pulling an image from a private repository
-  imagePullSecrets: []
-  # @key catalogueUpdater.nameOverride Override the chart name for the Catalogue Updater
-  nameOverride: ""
-  # @key catalogueUpdater.fullnameOverride Override the full name for the Catalogue Updater
-  fullnameOverride: ""
-
-  # @key catalogueUpdater.podAnnotations Annotations to add to the Catalogue Updater pods
-  podAnnotations: {}
-  # @key catalogueUpdater.podLabels Labels to add to the Catalogue Updater pods
-  podLabels: {}
-
-  # @key catalogueUpdater.podSecurityContext Security context for the Catalogue Updater pods
-  podSecurityContext: {}
-    # fsGroup: 2000
-
-  # @key catalogueUpdater.securityContext Security context for the Catalogue Updater containers
-  securityContext: {}
-    # capabilities:
-    #   drop:
-    #   - ALL
-    # readOnlyRootFilesystem: true
-    # runAsNonRoot: true
-    # runAsUser: 1000
-
-  service:
-    # @key catalogueUpdater.service.type The service type for the Catalogue Updater
-    type: ClusterIP
-    # @key catalogueUpdater.service.port The service port for the Catalogue Updater
-    port: 80
-
-  # @key catalogueUpdater.resources Resource requests and limits for the Catalogue Updater
-  resources: {}
-    # We usually recommend not to specify default resources and to leave this as a conscious
-    # choice for the user. This also increases chances charts run on environments with little
-    # resources, such as Minikube. If you do want to specify resources, uncomment the following
-    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-    # limits:
-    #   cpu: 100m
-    #   memory: 128Mi
-    # requests:
-    #   cpu: 100m
-    #   memory: 128Mi
-
-  # This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
-
-  # @key catalogueUpdater.volumes Additional volumes for the Catalogue Updater
-  volumes: []
-  # - name: foo
-  #   secret:
-  #     secretName: mysecret
-  #     optional: false
-
-  # @key catalogueUpdater.volumeMounts Additional volume mounts for the Catalogue Updater
-  volumeMounts: []
-  # - name: foo
-  #   mountPath: "/etc/foo"
-  #   readOnly: true
-
-  # @key catalogueUpdater.nodeSelector Node selector for the Catalogue Updater pods
+  # @key catalogueUpdater.affinity Affinity rules for the *Catalogue Updater* pods
+  affinity: {}
+  # @key catalogueUpdater.nodeSelector Node selector for the *Catalogue Updater* pods
   nodeSelector: {}
-
-  # @key catalogueUpdater.tolerations Tolerations for the Catalogue Updater pods
+  # @key catalogueUpdater.tolerations Tolerations for the *Catalogue Updater* pods
   tolerations: []
 
-  # @key catalogueUpdater.affinity Affinity rules for the Catalogue Updater pods
-  affinity: {}
+  # @key catalogueUpdater.resources Resource requests and limits for the *Catalogue Updater*
+  # Note: Optional override, otherwise inherited from the root resource definition
+  resources: {}
+  # @key catalogueUpdater.podSecurityContext Security context for the pod(s)
+  # Note: Optional override, otherwise inherited from the root  security context definition
+  podSecurityContext: {}
+  # @key catalogueUpdater.containerSecurityContext Security context for the container(s)
+  # Note: Optional override, otherwise inherited from main root security context definition
+  containerSecurityContext: {}
 
-  configuration:
-    # @key catalogueUpdater.configuration.inputTopic The Kafka topic from which the catalogue updater will consume messages
-    inputTopic: document.textandmetadata
-    # @key catalogueUpdater.configuration.outputTopic The Kafka topic to which the catalogue updater will produce
-    outputTopic: catalog
-    # @key catalogueUpdater.configuration.debounceWindowMs The debounce window in milliseconds
-    debounceWindowMs: 30000
-    # @key catalogueUpdater.configuration.flushIntervalMs The flush interval in milliseconds
-    flushIntervalMs: 60000
-    # @key catalogueUpdater.configuration.maxBufferSize The maximum buffer size
-    maxBufferSize: 100
-    # @key catalogueUpdater.configuration.dlqTopic The Kafka topic to which the catalogue updater will produce dead-lettered messages
-    dlqTopic: document.extractrequest.dlq
-
-# @section Content Tagger
+#
+# @section *Content Tagger*
+#
 # @descStart
-# This section builds out the Content Tagger configuration
-# The application configuration is contained within the 'configuration' key
+# The *Content Tagger* is responsible for tagging documents that have been ingested.
+# The application settings are defined within the 'topics' key
 # @descEnd
 contentTagger:
-  # @key contentTagger.replicaCount The number of replicas for the Content Tagger
-  replicaCount: 1
+
+  topics:
+    # @key contentTagger.topics.inputTopic The Kafka topic from which the *Content Tagger* will consume messages
+    inputTopic: document.textandmetadata
+    # @key contentTagger.topics.outputTopic The Kafka topic to which the *Content Tagger* will produce
+    outputTopic: knowledge
+    # @key contentTagger.topics.rdfTaggerDataUriStub The URI for the RDF Tagger service
+    rdfTaggerDataUriStub: http://telicent.io/data#
+    # @key contentTagger.topics.dctUri The URI for Dublin Core Terms
+    dctUri: http://purl.org/dc/terms/
+    # @key contentTagger.topics.iesUri The URI for the IES Ontology
+    iesUri: http://ies.data.gov.uk/ontology/ies4#
+    # @key contentTagger.topics.tontUri The URI for the Telicent Ontology
+    tontUri: "http://telicent.io/ontology/"
+    # @key contentTagger.topics.iso3166Uri The URI for the ISO 3166 standard
+    iso3166Uri: "http://iso.org/iso3166#"
+    # @key contentTagger.topics.loggingLevel The logging level for the *Content Tagger*, e.g., DEBUG, INFO, WARN, ERROR
+    loggingLevel: INFO
+    # @key contentTagger.topics.kafkaConfigMode The configuration mode for Kafka, either 'basic' or 'toml'
+    kafkaConfigMode: toml
+
+  #
+  # @section *Content Tagger* - Common Parameters
+  #
+  # @key contentTagger.nameOverride Override the chart name for the *Content Tagger*
+  nameOverride: ""
+  # @key contentTagger.fullnameOverride Override the full name for the *Content Tagger*
+  fullnameOverride: ""
+  
+  #
+  # @section *Content Tagger* - Deployment Parameters
+  #
+  # @key contentTagger.replicas The number of replicas for the *Content Tagger*
+  replicas: 1
+
+  # @key contentTagger.annotations Add extra annotations to the deployment object
+  annotations: {}
+  # @key contentTagger.podLabels Labels to add to the *Content Tagger* pods
+  podLabels: {}
+  # @key contentTagger.podAnnotations Annotations to add to the *Content Tagger* pods
+  podAnnotations: {}
+  # @key contentTagger.extraEnvVars Array with extra environment variables to add
+  extraEnvVars: []
+  # @key contentTagger.extraVolumes Additional volumes for the *Content Tagger*
+  extraVolumes: []
+  # @key contentTagger.extraVolumeMounts Additional volume mounts for the *Content Tagger*
+  extraVolumeMounts: []
+  # @key contentTagger.initContainers Add init containers to the pod
+  initContainers: []
+  # @key contentTagger.sidecars Add sidecars to the pod
+  sidecars: []
 
   image:
     # @key contentTagger.image.registry [default: REGISTRY_NAME] image registry
     registry: quay.io
-    # @key contentTagger.image.repository The container image repository for the Content Tagger
+    # @key contentTagger.image.repository The container image repository for the *Content Tagger*
     repository: telicent/telicent-rdf-document-tagger-dc
-    # @key contentTagger.image.pullPolicy The image pull policy for the Content Tagger
-    pullPolicy: IfNotPresent
-    # @key contentTagger.image.tag The image tag for the Content Tagger
+    # @key contentTagger.image.tag The image tag for the *Content Tagger*
     tag: "2.0.0"
+    # @key contentTagger.image.pullPolicy The image pull policy for the *Content Tagger*
+    pullPolicy: IfNotPresent
+    # @key contentTagger.image.pullSecrets Secrets for pulling an image from a private repository
+    pullSecrets: []
 
-  # @key contentTagger.imagePullSecrets Secrets for pulling an image from a private repository
-  imagePullSecrets: []
-  # @key contentTagger.nameOverride Override the chart name for the Content Tagger
-  nameOverride: ""
-  # @key contentTagger.fullnameOverride Override the full name for the Content Tagger
-  fullnameOverride: ""
-
-  # @key contentTagger.podAnnotations Annotations to add to the Content Tagger pods
-  podAnnotations: {}
-  # @key contentTagger.podLabels Labels to add to the Content Tagger pods
-  podLabels: {}
-
-  # @key contentTagger.podSecurityContext Security context for the Content Tagger pods
-  podSecurityContext: {}
-    # fsGroup: 2000
-
-  # @key contentTagger.securityContext Security context for the Content Tagger containers
-  securityContext: {}
-    # capabilities:
-    #   drop:
-    #   - ALL
-    # readOnlyRootFilesystem: true
-    # runAsNonRoot: true
-    # runAsUser: 1000
-
-  service:
-    # @key contentTagger.service.type The service type for the Content Tagger
-    type: ClusterIP
-    # @key contentTagger.service.port The service port for the Content Tagger
-    port: 80
-
-  # @key contentTagger.resources Resource requests and limits for the Content Tagger
-  resources: {}
-    # We usually recommend not to specify default resources and to leave this as a conscious
-    # choice for the user. This also increases chances charts run on environments with little
-    # resources, such as Minikube. If you do want to specify resources, uncomment the following
-    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-    # limits:
-    #   cpu: 100m
-    #   memory: 128Mi
-    # requests:
-    #   cpu: 100m
-    #   memory: 128Mi
-
-  # This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
-
-  # @key contentTagger.volumes Additional volumes for the Content Tagger
-  volumes: []
-  # - name: foo
-  #   secret:
-  #     secretName: mysecret
-  #     optional: false
-
-  # @key contentTagger.volumeMounts Additional volume mounts for the Content Tagger
-  volumeMounts: []
-  # - name: foo
-  #   mountPath: "/etc/foo"
-  #   readOnly: true
-
-  # @key contentTagger.nodeSelector Node selector for the Content Tagger pods
+  # @key contentTagger.affinity Affinity rules for the *Content Tagger* pods
+  affinity: {}
+  # @key contentTagger.nodeSelector Node selector for the *Content Tagger* pods
   nodeSelector: {}
-
-  # @key contentTagger.tolerations Tolerations for the Content Tagger pods
+  # @key contentTagger.tolerations Tolerations for the *Content Tagger* pods
   tolerations: []
 
-  # @key contentTagger.affinity Affinity rules for the Content Tagger pods
-  affinity: {}
+  # @key contentTagger.resources Resource requests and limits for the *Content Tagger*
+  # Note: Optional override, otherwise inherited from the root resource definition
+  resources: {}
+  # @key contentTagger.podSecurityContext Security context for the pod(s)
+  # Note: Optional override, otherwise inherited from the root  security context definition
+  podSecurityContext: {}
+  # @key contentTagger.containerSecurityContext Security context for the container(s)
+  # Note: Optional override, otherwise inherited from main root security context definition
+  containerSecurityContext: {}
 
-  configuration:
-    # @key contentTagger.configuration.inputTopic The Kafka topic from which the content tagger will consume messages
-    inputTopic: document.textandmetadata
-    # @key contentTagger.configuration.outputTopic The Kafka topic to which the content tagger will produce
-    outputTopic: knowledge
-    # @key contentTagger.configuration.rdfTaggerDataUriStub The URI for the RDF Tagger service
-    rdfTaggerDataUriStub: http://telicent.io/data#
-    # @key contentTagger.configuration.dctUri The URI for Dublin Core Terms
-    dctUri: http://purl.org/dc/terms/
-    # @key contentTagger.configuration.iesUri The URI for the IES Ontology
-    iesUri: http://ies.data.gov.uk/ontology/ies4#
-    # @key contentTagger.configuration.tontUri The URI for the Telicent Ontology
-    tontUri: "http://telicent.io/ontology/"
-    # @key contentTagger.configuration.iso3166Uri The URI for the ISO 3166 standard
-    iso3166Uri: "http://iso.org/iso3166#"
-    # @key contentTagger.configuration.loggingLevel The logging level for the Content Tagger, e.g., DEBUG, INFO, WARN, ERROR
-    loggingLevel: INFO
-    # @key contentTagger.configuration.kafkaConfigMode The configuration mode for Kafka, either 'basic' or 'toml'
-    kafkaConfigMode: toml
-
-# @section Entity Extractor
+#
+# @section *Entity Extractor*
+#
 # @descStart
-# This section builds out the Entity Extractor configuration
-# The application configuration is contained within the 'configuration' key
+# The *Entity Extractor* is responsible for extracting entities from the ingested documents.
+# The application settings are defined within the 'topics' key
 # @descEnd
 entityExtractor:
-  # @key entityExtractor.replicaCount The number of replicas for the Entity Extractor
-  replicaCount: 1
+
+  topics:
+    # @key entityExtractor.topics.inputTopic The Kafka topic from which the content tagger will consume messages
+    inputTopic: document.textandmetadata
+    # @key entityExtractor.topics.outputTopic The Kafka topic to which the content tagger will produce
+    outputTopic: document.entities
+    # @key entityExtractor.topics.kafkaConfigMode The configuration mode for Kafka, either 'basic' or 'toml'
+    kafkaConfigMode: toml
+
+  #
+  # @section *Entity Extractor* - Common Parameters
+  #
+  # @key entityExtractor.nameOverride Override the chart name for the *Entity Extractor*
+  nameOverride: ""
+  # @key entityExtractor.fullnameOverride Override the full name for the *Entity Extractor*
+  fullnameOverride: ""
+
+  #
+  # @section *Entity Extractor* - Deployment Parameters
+  #
+  # @key entityExtractor.replicas Number of replicas to deploy
+  replicas: 1
+
+  # @key entityExtractor.annotations Add extra annotations to the deployment object
+  annotations: {}
+  # @key entityExtractor.podLabels Labels to add to the *Entity Extractor* pods
+  podLabels: {}
+  # @key entityExtractor.podAnnotations Annotations to add to the *Entity Extractor* pods
+  podAnnotations: {}
+  # @key entityExtractor.extraEnvVars Array with extra environment variables to add
+  extraEnvVars: []
+  # @key entityExtractor.extraVolumes Additional volumes for the *Entity Extractor*
+  extraVolumes: []
+  # @key entityExtractor.extraVolumeMounts Additional volume mounts for the *Entity Extractor*
+  extraVolumeMounts: []
+   # @key entityExtractor.initContainers Add init containers to the pod
+  initContainers: []
+  # @key entityExtractor.sidecars Add sidecars to the pod.
+  sidecars: []
 
   image:
     # @key entityExtractor.image.registry [default: REGISTRY_NAME] image registry
     registry: quay.io
-    # @key entityExtractor.image.repository The container image repository for the Entity Extractor
+    # @key entityExtractor.image.repository The container image repository for the *Entity Extractor*
     repository: telicent/telicent-pipeline-entity-extraction
-    # @key entityExtractor.image.pullPolicy The image pull policy for the Entity Extractor
-    pullPolicy: IfNotPresent
-    # @key entityExtractor.image.tag The image tag for the Entity Extractor
+    # @key entityExtractor.image.tag The image tag for the *Entity Extractor*
     tag: "3.0.1"
+    # @key entityExtractor.image.pullPolicy The image pull policy for the *Entity Extractor*
+    pullPolicy: IfNotPresent
+    # @key entityExtractor.image.pullSecrets Secrets for pulling an image from a private repository
+    pullSecrets: []
 
-  # @key entityExtractor.imagePullSecrets Secrets for pulling an image from a private repository
-  imagePullSecrets: []
-  # @key entityExtractor.nameOverride Override the chart name for the Entity Extractor
-  nameOverride: ""
-  # @key entityExtractor.fullnameOverride Override the full name for the Entity Extractor
-  fullnameOverride: ""
-
-  # @key entityExtractor.podAnnotations Annotations to add to the Entity Extractor pods
-  podAnnotations: {}
-  # @key entityExtractor.podLabels Labels to add to the Entity Extractor pods
-  podLabels: {}
-
-  # @key entityExtractor.podSecurityContext Security context for the Entity Extractor pods
-  podSecurityContext: {}
-    # fsGroup: 2000
-
-  # @key entityExtractor.securityContext Security context for the Entity Extractor containers
-  securityContext: {}
-    # capabilities:
-    #   drop:
-    #   - ALL
-    # readOnlyRootFilesystem: true
-    # runAsNonRoot: true
-    # runAsUser: 1000
-
-  service:
-    # @key entityExtractor.service.type The service type for the Entity Extractor
-    type: ClusterIP
-    # @key entityExtractor.service.port The service port for the Entity Extractor
-    port: 80
-
-  # @key entityExtractor.resources Resource requests and limits for the Entity Extractor
-  resources: {}
-    # We usually recommend not to specify default resources and to leave this as a conscious
-    # choice for the user. This also increases chances charts run on environments with little
-    # resources, such as Minikube. If you do want to specify resources, uncomment the following
-    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-    # limits:
-    #   cpu: 100m
-    #   memory: 128Mi
-    # requests:
-    #   cpu: 100m
-    #   memory: 128Mi
-
-  # This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
-
-  # @key entityExtractor.volumes Additional volumes for the Entity Extractor
-  volumes: []
-  # - name: foo
-  #   secret:
-  #     secretName: mysecret
-  #     optional: false
-
-  # @key entityExtractor.volumeMounts Additional volume mounts for the Entity Extractor
-  volumeMounts: []
-  # - name: foo
-  #   mountPath: "/etc/foo"
-  #   readOnly: true
-
-  # @key entityExtractor.nodeSelector Node selector for the Entity Extractor pods
+  # @key entityExtractor.affinity Affinity rules for the *Entity Extractor* pods
+  affinity: {}
+  # @key entityExtractor.nodeSelector Node selector for the *Entity Extractor* pods
   nodeSelector: {}
-
-  # @key entityExtractor.tolerations Tolerations for the Entity Extractor pods
+  # @key entityExtractor.tolerations Tolerations for the *Entity Extractor* pods
   tolerations: []
 
-  # @key entityExtractor.affinity Affinity rules for the Entity Extractor pods
-  affinity: {}
-
-  configuration:
-    # @key entityExtractor.configuration.inputTopic The Kafka topic from which the content tagger will consume messages
-    inputTopic: document.textandmetadata
-    # @key entityExtractor.configuration.outputTopic The Kafka topic to which the content tagger will produce
-    outputTopic: document.entities
-    # @key entityExtractor.configuration.kafkaConfigMode The configuration mode for Kafka, either 'basic' or 'toml'
-    kafkaConfigMode: toml
+  # @key entityExtractor.resources Resource requests and limits for the *Entity Extractor*
+  # Note: Optional override, otherwise inherited from the root resource definition
+  resources: {}
+  # @key entityExtractor.podSecurityContext Security context for the pod(s)
+  # Note: Optional override, otherwise inherited from the root  security context definition
+  podSecurityContext: {}
+  # @key entityExtractor.containerSecurityContext Security context for the container(s)
+  # Note: Optional override, otherwise inherited from main root security context definition
+  containerSecurityContext: {}

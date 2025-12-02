@@ -96,7 +96,7 @@ Note: Only global parameters used within this chart will be listed below
 | `global.kafka.password`                 | Password for Kafka authentication                         | `your.kafka.password.here`                     |
 | `global.kafka.protocol`                 | Protocol used for Kafka communication                     | `SASL_SSL`                                     |
 | `global.kafka.mechanism`                | SASL mechanism used for Kafka authentication              | `SCRAM-SHA-512`                                |
-| `global.truststore.existingSecretName`  | Name of an existing secret containing the truststore      | `""`                                           |
+| `global.truststore.existingSecret`      | Name of an existing secret containing the truststore      | `""`                                           |
 | `global.truststore.mountPath`           | The mount path for the truststore in the container        | `/app/config/truststore`                       |
 
 ### ConfigMap Parameters

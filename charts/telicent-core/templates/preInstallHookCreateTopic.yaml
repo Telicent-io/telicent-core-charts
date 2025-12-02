@@ -54,7 +54,7 @@ spec:
         volumeMounts:
         - mountPath: /app/config/kafka-auth/
           name: kafka-auth-config
-      {{- if .Values.global.truststore.existingSecretName }}
+      {{- if .Values.global.truststore.existingSecret }}
         - mountPath: {{ .Values.global.truststore.mountPath | default "/app/config/truststore" }}
           name: truststore-volume
       {{- end }}
@@ -66,10 +66,10 @@ spec:
         {{- else }}
           secretName: {{ include "telicent-core.kafkaAuthConfigSecretName" . }}
         {{- end }}
-      {{- if .Values.global.truststore.existingSecretName }}
+      {{- if .Values.global.truststore.existingSecret }}
       - name: truststore-volume
         secret:
-          secretName: {{ .Values.global.truststore.existingSecretName }}
+          secretName: {{ .Values.global.truststore.existingSecret }}
           optional: true
       {{- end }}
 {{- end -}}
