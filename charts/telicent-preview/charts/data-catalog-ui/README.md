@@ -105,7 +105,7 @@ Note: Only global parameters used within this chart will be listed below
 
 | Name             | Description                                          | Value                           |
 | ---------------- | ---------------------------------------------------- | ------------------------------- |
-| `oauth.clientId` | The OAuth client id to be used by *Data Catalog UI*  | `telicent-data-catalog-ui`      |
+| `oauth.clientId` | The OAuth client id to be used by *Data Catalog UI*  | `telicent-catalog-ui`           |
 | `oauth.scopes`   | List of OAuth scopes to be used by *Data Catalog UI* | `openid profile offline_access` |
 
 ### Common Parameters

@@ -246,11 +246,6 @@
         "bootstrap": {
             "type": "object",
             "properties": {
-                "enabled": {
-                    "type": "boolean",
-                    "description": "Enable",
-                    "default": false
-                },
                 "clients": {
                     "type": "object",
                     "properties": {

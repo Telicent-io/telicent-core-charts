@@ -161,9 +161,6 @@ postgresSql:
 # @descEnd
 
 bootstrap:
-  # @key bootstrap.enabled Enable
-  enabled: false
-
   clients:
     # @key bootstrap.clients.existingConfigMap Name of an existing config map resource containing all required public and confidential clients. If specified, the values for clients.public and clients.confidential will be ignored
     existingConfigMap: ""
