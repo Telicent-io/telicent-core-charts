@@ -30,8 +30,8 @@ global:
   authHostDomain: "auth.telicent.io"
 
   truststore:
-    # @key global.truststore.existingSecretName Name of an existing secret containing the truststore
-    existingSecretName: ""
+    # @key global.truststore.existingSecret Name of an existing secret containing the truststore
+    existingSecret: ""
     # @key global.truststore.mountPath The mount path for the truststore in the container
     mountPath: /app/config/truststore
 

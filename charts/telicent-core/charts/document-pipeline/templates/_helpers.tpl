@@ -1,9 +1,24 @@
 {{/*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
+{{/*
 Expand the name of the chart.
 */}}
 {{- define "document-pipeline.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
+
+{{/*
+Allow the release namespace to be overridden.
+*/}}
+{{- define "document-pipeline.namespace" -}}
+{{- if .Values.namespaceOverride -}}
+{{- .Values.namespaceOverride -}}
+{{- else -}}
+{{- .Release.Namespace -}}
+{{- end -}}
+{{- end -}}
 
 {{/*
 Create a default fully qualified app name.

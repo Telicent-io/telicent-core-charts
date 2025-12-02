@@ -116,8 +116,8 @@ spec:
         volumeMounts:
         - name: kafka-auth-config
           mountPath: /app/config/kafka-auth/
-        {{- if .Values.global.truststore.existingSecretName }}
-        - name: truststore-volume
+        {{- if .Values.global.truststore.existingSecret }}
+        - name: java-truststore
           mountPath: {{ .Values.global.truststore.mountPath | default "/app/config/truststore" }}
         {{- end }}
         {{- with .Values.extraVolumeMounts }}
@@ -135,10 +135,10 @@ spec:
         {{- else }}
           secretName: {{ include "search-projector.fullname" . }}-kafka-config
         {{- end }}
-      {{- if .Values.global.truststore.existingSecretName }}
-      - name: truststore-volume
+      {{- if .Values.global.truststore.existingSecret }}
+      - name: java-truststore
         secret:
-          secretName: {{ .Values.global.truststore.existingSecretName }}
+          secretName: {{ .Values.global.truststore.existingSecret }}
       {{- end }}
       {{- with .Values.extraVolumes }}
         {{- toYaml . | nindent 8 }}

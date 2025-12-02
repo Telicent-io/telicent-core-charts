@@ -1,122 +1,133 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
 {{- if .Values.enabled -}}
 apiVersion: apps/v1
 kind: Deployment
+
 metadata:
   name: {{ include "http-ingester.fullname" . }}
+  namespace: {{ include "document-pipeline.namespace" . | quote }}
   labels:
     {{- include "http-ingester.labels" . | nindent 4 }}
+  {{- with .Values.httpIngester.annotations }}
+  annotations: 
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+
 spec:
-  replicas: {{ .Values.httpIngester.replicaCount }}
+  replicas: {{ .Values.httpIngester.replicas }}
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
   selector:
     matchLabels:
       {{- include "http-ingester.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.httpIngester.podAnnotations }}
-      annotations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
       labels:
-        {{- include "http-ingester.labels" . | nindent 8 }}
-        {{- with .Values.httpIngester.podLabels }}
+      {{- include "http-ingester.labels" . | nindent 8 }}
+      {{- with .Values.httpIngester.podLabels }}
         {{- toYaml . | nindent 8 }}
-        {{- end }}
+      {{- end }}
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/httpIngester/configmap-routes.yaml") . | sha256sum }}
+      {{- with .Values.httpIngester.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    
     spec:
-      {{- with .Values.httpIngester.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
       serviceAccountName: {{ include "document-pipeline.serviceAccountName" . }}
-      {{- with .Values.httpIngester.podSecurityContext }}
-      securityContext:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- $pullSecret := .Values.global.imagePullSecrets | default .Values.imagePullSecrets }}
+      securityContext: {{ .Values.httpIngester.podSecurityContext | default .Values.podSecurityContext | toYaml | nindent 8 }}
+
+      {{- $pullSecret := .Values.global.imagePullSecrets | default .Values.httpIngester.image.pullSecrets }}
       {{- with $pullSecret }}
       imagePullSecrets:
         {{- toYaml . | nindent 6 }}
       {{- end }}
+      {{- if .Values.httpIngester.initContainers }}
+      initContainers:
+      {{- with .Values.httpIngester.initContainers }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- end }}
       containers:
-        - name: {{ .Chart.Name }}
-          {{- with .Values.httpIngester.securityContext }}
-          securityContext:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-          env:
-            - name: ROUTE_CONFIG_DIRECTORY
-              value: /etc/http-ingester/
-            - name: BOOTSTRAP_SERVERS
-              value: {{ .Values.global.kafka.bootstrapServers | quote }}
-            - name: JWKS_URL
-              value: {{ .Values.httpIngester.configuration.jwksUrl | default .Values.global.jwksUrl | quote }}
-            - name: JAVA_OPTIONS
-              value: {{ .Values.httpIngester.configuration.javaOpts | quote }}
-            - name: KAFKA_CONFIG_FILE_PATH
-              value: /app/config/kafka-auth/kafka-config.properties
+      - name: {{ .Chart.Name }}
+        image: {{ include "http-ingester.image" . }}
+        imagePullPolicy: {{ .Values.httpIngester.image.pullPolicy }}
+        resources: {{ .Values.httpIngester.resources | default .Values.resources | toYaml | nindent 8 }}
+        securityContext: {{ .Values.httpIngester.containerSecurityContext | default .Values.containerSecurityContext | toYaml | nindent 8 }}
 
-          image: "{{ .Values.httpIngester.image.registry | default .Values.global.imageRegistry }}/{{ .Values.httpIngester.image.repository }}:{{ .Values.httpIngester.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.httpIngester.image.pullPolicy }}
-          ports:
-            - name: http
-              containerPort: 15431
-              protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /healthz
-              port: 15431
-          readinessProbe:
-            httpGet:
-              path: /version-info
-              port: 15431
-          {{- with .Values.httpIngester.resources }}
-          resources:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-          volumeMounts:
-          - name: config-volume
-            mountPath: /etc/http-ingester
-            readOnly: true
-          {{- if or .Values.httpIngester.cacert .Values.httpIngester.existingCacertConfigmapName }}
-          - name: certs
-            mountPath: /app/config/truststore/
-            readOnly: true
-          {{- end }}
-          - mountPath: /app/config/kafka-auth/
-            name: kafka-auth-config
-          {{- with .Values.httpIngester.volumeMounts }}
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-      {{- with .Values.extraContainers }}
+        env:
+        - name: KAFKA_CONFIG_FILE_PATH
+          value: /app/config/kafka-auth/kafka-config.properties
+        - name: BOOTSTRAP_SERVERS
+          value: {{ .Values.global.kafka.bootstrapServers | quote }}
+        - name: ROUTE_CONFIG_DIRECTORY
+          value: /etc/http-ingester/
+        - name: JWKS_URL
+          value: {{ printf "%s%s%s" "https://" .Values.global.authHostDomain "/oauth2/jwks" | quote }}
+        - name: USERINFO_URL
+          value: {{  printf "http://%s%s" (include "document-pipeline.hostAuth" . ) "/userinfo" | quote }}
+        - name: JAVA_OPTIONS
+          value: {{ .Values.httpIngester.java.jvmOptions | quote }}
+        {{- range .Values.httpIngester.extraEnvVars }}
+        - name: {{ .name | quote  }}
+          value: {{ .value | quote }}
+        {{- end }}  
+
+        ports:
+        - name: http
+          protocol: TCP
+          containerPort: 15431
+
+        readinessProbe:
+          httpGet:
+            path: /version-info
+            port: 15431
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 15431
+
+        volumeMounts:
+        - name: routes-volume
+          mountPath: /etc/http-ingester
+        - name: kafka-auth-config
+          mountPath: /app/config/kafka-auth/
+        {{- if .Values.global.truststore.existingSecret }}
+        - name: java-truststore
+          mountPath: {{ .Values.global.truststore.mountPath | default "/app/config/truststore" }}
+        {{- end }}
+        {{- with .Values.httpIngester.extraVolumeMounts }}
+          {{- toYaml . | nindent 12 }}
+        {{- end }}
+      
+      {{- with .Values.httpIngester.sidecars }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
       volumes:
-        {{- if or .Values.httpIngester.cacert .Values.httpIngester.existingCacertConfigmapName }}
-        - name: certs
-          configMap:
-            {{- if .Values.httpIngester.existingCacertConfigmapName }}
-            name: {{ .Values.httpIngester.existingCacertConfigmapName }}
-            {{- else if .Values.httpIngester.cacert }}
-            name: {{ include "http-ingester.fullname" . }}-cacert
-            {{- end }}
-            optional: true
+      - name: routes-volume
+        configMap:
+          name: {{ include "http-ingester.routesConfigMapName" . }}
+      - name: kafka-auth-config
+        secret:
+        {{- if .Values.global.kafka.existingConfigSecretName }}
+          secretName: {{ .Values.global.kafka.existingConfigSecretName }}
+        {{- else }}
+          secretName: {{ include "document-pipeline.fullname" . }}-kafka-config
         {{- end }}
-        - name: config-volume
-          configMap:
-            {{- if .Values.httpIngester.existingConfigMapName }}
-            name: {{ .Values.httpIngester.existingConfigMapName }}
-            {{- else }}
-            name: {{ include "http-ingester.configMapName" . }}
-            {{- end }}
-        - name: kafka-auth-config
-          secret:
-          {{- if .Values.global.kafka.existingConfigSecretName }}
-            secretName: {{ .Values.global.kafka.existingConfigSecretName }}
-          {{- else }}
-            secretName: {{ include "document-pipeline.fullname" . }}-kafka-config
-          {{- end }}
-      {{- with .Values.httpIngester.volumes }}
+      {{- if .Values.global.truststore.existingSecret }}
+      - name: java-truststore
+        secret:
+          secretName: {{ .Values.global.truststore.existingSecret }}
+      {{- end }}
+      {{- with .Values.httpIngester.extraVolumes }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      
       {{- with .Values.httpIngester.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

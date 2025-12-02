@@ -111,7 +111,7 @@ spec:
        
         volumeMounts:
         {{- if .Values.global.truststore.existingSecret }}
-        - name: truststore-volume
+        - name: java-truststore
           mountPath: /app/config/truststore
         {{- end }}
         {{- if contains "tls=true" .Values.mongo.url }}
@@ -128,10 +128,9 @@ spec:
       {{- end }}
       volumes:
       {{- if .Values.global.truststore.existingSecret }}
-      - name: truststore-volume
+      - name: java-truststore
         secret:
           secretName: {{ .Values.global.truststore.existingSecret }}
-          optional: true
       {{- end }}
       {{- if .Values.mongo.existingCaSecret }}
       - name: ca-certificate-volume
