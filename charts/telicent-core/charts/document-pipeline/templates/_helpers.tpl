@@ -50,6 +50,7 @@ Common labels
 */}}
 {{- define "document-pipeline.labels" -}}
 helm.sh/chart: {{ include "document-pipeline.chart" . }}
+telicent.io/resource: "true"
 {{ include "document-pipeline.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
@@ -104,6 +105,7 @@ Common labels
 */}}
 {{- define "http-ingester.labels" -}}
 app.kubernetes.io/component: http-ingester
+app: http-ingester
 {{ include "document-pipeline.labels" . }}
 {{- end }}
 
@@ -135,6 +137,7 @@ Common labels
 */}}
 {{- define "content-extractor.labels" -}}
 app.kubernetes.io/component: content-extractor
+app: content-extractor
 {{ include "document-pipeline.labels" . }}
 {{- end }}
 
@@ -170,6 +173,7 @@ Common labels
 */}}
 {{- define "content-indexer.labels" -}}
 app.kubernetes.io/component: content-indexer
+app: content-indexer
 {{ include "document-pipeline.labels" . }}
 {{- end }}
 
@@ -201,6 +205,7 @@ Common labels
 */}}
 {{- define "catalogue-updater.labels" -}}
 app.kubernetes.io/component: catalogue-updater
+app: catalogue-updater
 {{ include "document-pipeline.labels" . }}
 {{- end }}
 
@@ -231,6 +236,7 @@ Common labels
 */}}
 {{- define "content-tagger.labels" -}}
 app.kubernetes.io/component: content-tagger
+app: content-tagger
 {{ include "document-pipeline.labels" . }}
 {{- end }}
 
@@ -261,5 +267,6 @@ Common labels
 */}}
 {{- define "entity-extractor.labels" -}}
 app.kubernetes.io/component: entity-extractor
+app: entity-extractor
 {{ include "document-pipeline.labels" . }}
 {{- end }}
