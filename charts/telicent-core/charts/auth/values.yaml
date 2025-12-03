@@ -166,7 +166,7 @@ postgresSql:
 # Contains settings for the underlying Spring framework
 # @descEnd
 spring:
-  # @key spring.profilesActive sets the srping profile to be used. Options are: default, docker, test, and production.
+  # @key spring.profilesActive sets the spring profile to be used. Options are: default, docker, test, and production.
   profilesActive: production
 
 #
@@ -177,9 +177,6 @@ spring:
 # @descEnd
 
 bootstrap:
-  # @key bootstrap.enabled Enable
-  enabled: false
-
   clients:
     # @key bootstrap.clients.existingConfigMap Name of an existing config map resource containing all required public and confidential clients. If specified, the values for clients.public and clients.confidential will be ignored
     existingConfigMap: ""
