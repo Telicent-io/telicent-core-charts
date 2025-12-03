@@ -263,7 +263,7 @@
             "properties": {
                 "profilesActive": {
                     "type": "string",
-                    "description": "sets the srping profile to be used. Options are: default, docker, test, and production.",
+                    "description": "sets the spring profile to be used. Options are: default, docker, test, and production.",
                     "default": "production"
                 }
             }

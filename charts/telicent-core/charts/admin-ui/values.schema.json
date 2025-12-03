@@ -149,7 +149,7 @@
                 "repository": {
                     "type": "string",
                     "description": "*Admin UI* image name",
-                    "default": "telicent-admin-ui"
+                    "default": "telicent/telicent-admin"
                 },
                 "tag": {
                     "type": "string",

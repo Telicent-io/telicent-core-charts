@@ -10,7 +10,37 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
-echo -e "${GREEN}Starting metadata update for all charts...${NC}"
+# Default to using local binary
+USE_CI=false
+README_GENERATOR_CMD=".dev/readme-generator-for-helm"
+
+# Parse command line arguments
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    --ci)
+      USE_CI=true
+      README_GENERATOR_CMD="readme-generator-for-helm"
+      shift
+      ;;
+    -h|--help)
+      echo "Usage: $0 [--ci] [--help]"
+      echo "  --ci     Use npm-installed readme-generator-for-helm instead of local binary"
+      echo "  --help   Show this help message"
+      exit 0
+      ;;
+    *)
+      echo -e "${RED}Unknown option: $1${NC}"
+      echo "Use --help for usage information"
+      exit 1
+      ;;
+  esac
+done
+
+if [[ "$USE_CI" == true ]]; then
+  echo -e "${GREEN}Starting metadata update for all charts (using npm-installed readme-generator-for-helm)...${NC}"
+else
+  echo -e "${GREEN}Starting metadata update for all charts...${NC}"
+fi
 
 # Define ignore list for charts that should be skipped
 IGNORE_LIST=(
@@ -40,10 +70,18 @@ if [[ ! -f "charts/telicent-core/readme.config" ]]; then
 fi
 
 # Check if readme-generator-for-helm tool exists
-if [[ ! -f ".dev/readme-generator-for-helm" ]]; then
-  echo -e "${RED}Error: .dev/readme-generator-for-helm not found${NC}"
-  echo -e "${YELLOW}Please ensure the readme-generator-for-helm tool is installed and executable${NC}"
-  exit 1
+if [[ "$USE_CI" == true ]]; then
+  if ! command -v readme-generator-for-helm &> /dev/null; then
+    echo -e "${RED}Error: readme-generator-for-helm not found in PATH${NC}"
+    echo -e "${YELLOW}Please ensure readme-generator-for-helm is installed via npm (e.g., npm install -g readme-generator-for-helm)${NC}"
+    exit 1
+  fi
+else
+  if [[ ! -f ".dev/readme-generator-for-helm" ]]; then
+    echo -e "${RED}Error: .dev/readme-generator-for-helm not found${NC}"
+    echo -e "${YELLOW}Please ensure the readme-generator-for-helm tool is installed and executable${NC}"
+    exit 1
+  fi
 fi
 
 # Create temporary files to track results across subshell
@@ -85,7 +123,7 @@ find charts -name "Chart.yaml" -type f -not -path "*/.*" | while read -r chart_f
   
   # Capture output and exit code from readme-generator-for-helm
   output_file=$(mktemp)
-  if .dev/readme-generator-for-helm \
+  if $README_GENERATOR_CMD \
     --config="charts/telicent-core/readme.config" \
     --values="$chart_dir/values.yaml" \
     --readme="$chart_dir/README.md" \
@@ -100,7 +138,7 @@ find charts -name "Chart.yaml" -type f -not -path "*/.*" | while read -r chart_f
     
     # Read the output to check for missing metadata keys
     output_content=$(cat "$output_file")
-    echo -e "${BLUE}  Output from readme-generator-for-helm:${NC}"
+    echo -e "${BLUE}  Output from $README_GENERATOR_CMD:${NC}"
     echo "$output_content" | sed 's/^/    /'
     
     # Check for common patterns that indicate missing metadata keys
