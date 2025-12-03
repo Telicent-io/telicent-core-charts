@@ -11,6 +11,12 @@ http:
 
   middlewares:
     search-ui-redirect:
-      redirectregex:
+      redirectRegex:
         regex: "^https?://([^/]+)/?$"
         replacement: "https://$1/search"
+
+    path-slash-redirect:
+      redirectRegex:
+        regex: "^(https?://[^/]+/[a-z0-9_-]+)$"
+        replacement: "${1}/"
+        permanent: true
