@@ -6,7 +6,7 @@ metadata:
   name: {{ include "document-pipeline.fullname" . }}-ingress
   namespace: {{ include "document-pipeline.namespace" . | quote }}
   labels:
-  {{- include "document-pipeline.labels" . | nindent 4 }}
+  {{- include "http-ingester.labels" . | nindent 4 }}
 
 spec:
   selector:
