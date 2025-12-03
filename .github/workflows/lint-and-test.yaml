@@ -60,7 +60,8 @@ jobs:
 
       - name: Run metadata updater
         run: .dev/metadataUpdater.sh --ci
-
+        env:
+          PATH: "$(npm config get prefix)/bin:$PATH"
       - name: Check for uncommitted changes
         run: |
           if git diff --exit-code; then
