@@ -21,19 +21,19 @@ data:
         id: "telicent-graph",
         name: "graph",
         url: "https://{{ .Values.global.appHostDomain }}/graph",
-        icon: "./admin/assets/icons/graph.svg",
+        icon: "/admin/assets/icons/graph.svg",
       },
       {
         id: "telicent-search",
         name: "search",
         url: "https://{{ .Values.global.appHostDomain }}/search",
-        icon: "./admin/assets/icons/search.svg",
+        icon: "/admin/assets/icons/search.svg",
       },
       {
         id: "telicent-catalog",
         name: "catalog",
         url: "https://{{ .Values.global.appHostDomain }}/data-catalog",
-        icon: "./admin/assets/icons/catalog.svg",
+        icon: "/admin/assets/icons/catalog.svg",
       },
     ];
 
