@@ -35,5 +35,8 @@ dependencies:
 - name: canonicals-event-document-mapper
   repository: file://./charts/canonicals-event-document-mapper
   version: 0.1.0
-digest: sha256:e03766d1e8bf7b7a1d611c6ab8683a9b56a7bbeee2d60e7f36d6f639a743eea1
-generated: "2025-10-16T12:08:01.906465+01:00"
+- name: canonicals-ontology
+  repository: file://./charts/canonicals-ontology
+  version: 0.1.0
+digest: sha256:0fa7079add052a22d8658f1d7d23fa821310f926cca8a979373765477e6e45c3
+generated: "2025-12-03T12:30:08.052557Z"

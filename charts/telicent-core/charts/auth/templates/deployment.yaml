@@ -152,7 +152,6 @@ spec:
       - name: groups-config-volume
         configMap:
           name: {{ include "auth.groupsConfigMapName" . }}
-      {{- end }}
       {{- if .Values.global.truststore.existingSecret }}
       - name: java-truststore
         secret:
