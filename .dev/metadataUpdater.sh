@@ -19,7 +19,7 @@ while [[ $# -gt 0 ]]; do
   case $1 in
     --ci)
       USE_CI=true
-      README_GENERATOR_CMD="readme-generator-for-helm"
+      README_GENERATOR_CMD="npx @bitnami/readme-generator-for-helm"
       shift
       ;;
     -h|--help)
@@ -71,9 +71,9 @@ fi
 
 # Check if readme-generator-for-helm tool exists
 if [[ "$USE_CI" == true ]]; then
-  if ! command -v readme-generator-for-helm &> /dev/null; then
-    echo -e "${RED}Error: readme-generator-for-helm not found in PATH${NC}"
-    echo -e "${YELLOW}Please ensure readme-generator-for-helm is installed via npm (e.g., npm install -g readme-generator-for-helm)${NC}"
+  if ! command -v npx &> /dev/null; then
+    echo -e "${RED}Error: npx not found in PATH${NC}"
+    echo -e "${YELLOW}Please ensure Node.js and npm are properly installed${NC}"
     exit 1
   fi
 else

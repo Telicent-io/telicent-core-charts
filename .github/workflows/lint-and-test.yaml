@@ -56,12 +56,10 @@ jobs:
         run: chmod +x .dev/metadataUpdater.sh
 
       - name: Install readme-generator-for-helm
-        run: npm install -g @bitnami/readme-generator-for-helm
+        run: npm install @bitnami/readme-generator-for-helm
 
       - name: Run metadata updater
-        run: |
-          export PATH="$(npm config get prefix)/bin:$PATH"
-          .dev/metadataUpdater.sh --ci
+        run: .dev/metadataUpdater.sh --ci
       - name: Check for uncommitted changes
         run: |
           if git diff --exit-code; then
