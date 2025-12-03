@@ -90,10 +90,10 @@ with Kafka, ensuring consistent connectivity and authentication across the platf
 
 Contains global truststore parameters, these parameters are mirrored across Telicent Core sub charts.
 
-| Name                                   | Description                                          | Value                    |
-| -------------------------------------- | ---------------------------------------------------- | ------------------------ |
-| `global.truststore.existingSecretName` | Name of an existing secret containing the truststore | `""`                     |
-| `global.truststore.mountPath`          | The mount path for the truststore in the container   | `/app/config/truststore` |
+| Name                               | Description                                          | Value                    |
+| ---------------------------------- | ---------------------------------------------------- | ------------------------ |
+| `global.truststore.existingSecret` | Name of an existing secret containing the truststore | `""`                     |
+| `global.truststore.mountPath`      | The mount path for the truststore in the container   | `/app/config/truststore` |
 
 ### Service Account Parameters
 

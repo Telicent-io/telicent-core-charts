@@ -15,37 +15,39 @@ data:
   clients.yaml: |
     clients: 
       public:
+        {{- if .Values.bootstrap.clients.public}}
         {{- toYaml .Values.bootstrap.clients.public | nindent 8 }}
+        {{- end }}
         {{- if .Values.global.enterprise }}
         - client_id: telicent-admin-ui
           client_name: Telicent Admin UI Client
           redirect_uris: 
-            - {{.Values.global.appHostDomain}}/admin/callback
-            - {{.Values.global.appHostDomain}}/admin/auth-redirect-uri
+            - https://{{.Values.global.appHostDomain}}/admin/callback
+            - https://{{.Values.global.appHostDomain}}/admin/auth-redirect-uri
           post_logout_redirect_uris:
-            - {{.Values.global.appHostDomain}}/admin
+            - https://{{.Values.global.appHostDomain}}/admin
         - client_id: telicent-search-ui
           client_name: Telicent Search UI Client
           redirect_uris: 
-            - {{.Values.global.appHostDomain}}/search/callback
-            - {{.Values.global.appHostDomain}}/search/auth-redirect-uri
+            - https://{{.Values.global.appHostDomain}}/search/callback
+            - https://{{.Values.global.appHostDomain}}/search/auth-redirect-uri
           post_logout_redirect_uris:
-            - {{.Values.global.appHostDomain}}/search
+            - https://{{.Values.global.appHostDomain}}/search
         - client_id: telicent-graph-ui
           client_name: Telicent Graph UI Client
           redirect_uris: 
-            - {{.Values.global.appHostDomain}}/graph/callback
-            - {{.Values.global.appHostDomain}}/graph/auth-redirect-uri
+            - https://{{.Values.global.appHostDomain}}/graph/callback
+            - https://{{.Values.global.appHostDomain}}/graph/auth-redirect-uri
           post_logout_redirect_uris:
-            - {{.Values.global.appHostDomain}}/graph
+            - https://{{.Values.global.appHostDomain}}/graph
         {{- end}}
         - client_id: telicent-query-ui
           client_name: Telicent Query UI Client
           redirect_uris: 
-            - {{.Values.global.appHostDomain}}/query/callback
-            - {{.Values.global.appHostDomain}}/query/auth-redirect-uri
+            - https://{{.Values.global.appHostDomain}}/query/callback
+            - https://{{.Values.global.appHostDomain}}/query/auth-redirect-uri
           post_logout_redirect_uris:
-            - {{.Values.global.appHostDomain}}/query
+            - https://{{.Values.global.appHostDomain}}/query
      
       {{- if .Values.bootstrap.clients.confidential }}
       confidential:

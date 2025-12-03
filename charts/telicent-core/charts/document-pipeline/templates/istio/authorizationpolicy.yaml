@@ -1,10 +1,10 @@
 {{- if .Values.enabled -}}
-
 apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
 
 metadata:
   name: {{ include "document-pipeline.fullname" . }}-ingress
+  namespace: {{ include "document-pipeline.namespace" . | quote }}
   labels:
   {{- include "document-pipeline.labels" . | nindent 4 }}
 
@@ -12,17 +12,13 @@ spec:
   selector:
     matchLabels:
     {{- include "http-ingester.selectorLabels" . | nindent 6 }}
-
   action: ALLOW
-
   rules:
   - from:
     - source:
         principals:
-        - cluster.local/ns/{{ .Release.Namespace }}/sa/{{ include "document-pipeline.serviceAccountName" . }}
+          {{- include "document-pipeline.ingressPrincipal" . | nindent 8 }}
     to:
     - operation:
-        methods:
-        - '*'
-
+        methods: ["GET", "POST", "PUT", "HEAD"]
 {{- end -}}

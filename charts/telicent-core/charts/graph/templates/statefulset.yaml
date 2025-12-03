@@ -116,9 +116,9 @@ spec:
         - name: kafka-auth-config
           mountPath: /app/config/kafka-auth/
           
-        {{- if .Values.global.truststore.existingSecretName }}
-        - mountPath: {{ .Values.global.truststore.mountPath | default "/app/config/truststore" }}
-          name: truststore-volume
+        {{- if .Values.global.truststore.existingSecret }}
+        - name: java-truststore
+          mountPath: {{ .Values.global.truststore.mountPath | default "/app/config/truststore" }}
         {{- end }}
        {{- with .Values.extraVolumeMounts }}
           {{- toYaml . | nindent 12 }}
@@ -138,11 +138,10 @@ spec:
         {{- else }}
           secretName: {{ include "graph.fullname" . }}-kafka-config
         {{- end }}
-      {{- if .Values.global.truststore.existingSecretName }}
-      - name: truststore-volume
+      {{- if .Values.global.truststore.existingSecret }}
+      - name: java-truststore
         secret:
-          secretName: {{ .Values.global.truststore.existingSecretName }}
-          optional: true
+          secretName: {{ .Values.global.truststore.existingSecret }}
       {{- end }}
       {{- with .Values.extraVolumes }}
         {{- toYaml . | nindent 8 }}

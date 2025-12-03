@@ -16,6 +16,11 @@
                     "default": [],
                     "items": {}
                 },
+                "releaseNameTelicentPreview": {
+                    "type": "string",
+                    "description": "Release name used during the Telicent Preview chart installation. Note: ensure the value is correct, otherwise there will be no access to data-catalog, user-portal & paperback-writer",
+                    "default": ""
+                },
                 "enterprise": {
                     "type": "boolean",
                     "description": "Enable enterprise mode, adding additional features and configurations",
@@ -36,10 +41,20 @@
                     "description": "Domain associated with Telicent authentication services, including OIDC providers",
                     "default": "auth.telicent.io"
                 },
-                "releaseNameTelicentPreview": {
-                    "type": "string",
-                    "description": "Release name used during the Telicent Preview chart installation. Note: ensure the value is correct, otherwise there will be no access to data-catalog, user-portal & paperback-writer",
-                    "default": ""
+                "truststore": {
+                    "type": "object",
+                    "properties": {
+                        "existingSecret": {
+                            "type": "string",
+                            "description": "Name of an existing secret containing the truststore",
+                            "default": ""
+                        },
+                        "mountPath": {
+                            "type": "string",
+                            "description": "The mount path for the truststore in the container",
+                            "default": "/app/config/truststore"
+                        }
+                    }
                 }
             }
         },
@@ -240,6 +255,16 @@
                     "type": "string",
                     "description": "PostgreSQL password",
                     "default": ""
+                }
+            }
+        },
+        "spring": {
+            "type": "object",
+            "properties": {
+                "profilesActive": {
+                    "type": "string",
+                    "description": "sets the srping profile to be used. Options are: default, docker, test, and production.",
+                    "default": "production"
                 }
             }
         },

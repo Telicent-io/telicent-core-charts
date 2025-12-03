@@ -112,9 +112,8 @@ spec:
           periodSeconds: 60
           timeoutSeconds: 5
 
-       
         volumeMounts:
-        {{- if .Values.global.truststore.existingSecretName }}
+        {{- if .Values.global.truststore.existingSecret }}
         - name: java-truststore
           mountPath: {{ .Values.global.truststore.mountPath | default "/app/config/truststore" }}
         {{- end }}
@@ -127,10 +126,10 @@ spec:
       {{- end }}
      
       volumes:
-      {{- if .Values.global.truststore.existingSecretName }}
+      {{- if .Values.global.truststore.existingSecret }}
       - name: java-truststore
         secret:
-          secretName: {{ .Values.global.truststore.existingSecretName }}
+          secretName: {{ .Values.global.truststore.existingSecret }}
       {{- end }}
       {{- with .Values.extraVolumes }}
         {{- toYaml . | nindent 8 }}

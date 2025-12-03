@@ -134,6 +134,11 @@ spec:
           mountPath: /app/config/startup/groups.yaml
           subPath: groups.yaml
           readOnly: true
+        {{- end }}
+        {{- if .Values.global.truststore.existingSecret }}
+        - name: java-truststore
+          mountPath: {{ .Values.global.truststore.mountPath | default "/app/config/truststore" }}
+        {{- end }}
         {{- with .Values.extraVolumeMounts }}
           {{- toYaml . | nindent 12 }}
         {{- end }}
@@ -148,6 +153,12 @@ spec:
       - name: groups-config-volume
         configMap:
           name: {{ include "auth.groupsConfigMapName" . }}
+      {{- end }}
+      {{- if .Values.global.truststore.existingSecret }}
+      - name: java-truststore
+        secret:
+          secretName: {{ .Values.global.truststore.existingSecret }}
+      {{- end }}
       {{- with .Values.extraVolumes }}
         {{- toYaml . | nindent 8 }}
       {{- end }}

@@ -87,15 +87,17 @@ the [kubernetes documentation](https://kubernetes.io/docs/concepts/configuration
 Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart
 Note: Only global parameters used within this chart will be listed below
 
-| Name                                | Description                                                                                                                                                                            | Value              |
-| ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
-| `global.imageRegistry`              | Global image registry                                                                                                                                                                  | `""`               |
-| `global.imagePullSecrets`           | Global registry secret names as an array                                                                                                                                               | `[]`               |
-| `global.enterprise`                 | Enable enterprise mode, adding additional features and configurations                                                                                                                  | `false`            |
-| `global.appHostDomain`              | Domain associated with Telicent application/ui services                                                                                                                                | `apps.telicent.io` |
-| `global.apiHostDomain`              | Domain associated with Telicent Api services                                                                                                                                           | `api.telicent.io`  |
-| `global.authHostDomain`             | Domain associated with Telicent authentication services, including OIDC providers                                                                                                      | `auth.telicent.io` |
-| `global.releaseNameTelicentPreview` | Release name used during the Telicent Preview chart installation. Note: ensure the value is correct, otherwise there will be no access to data-catalog, user-portal & paperback-writer | `""`               |
+| Name                                | Description                                                                                                                                                                            | Value                    |
+| ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ |
+| `global.imageRegistry`              | Global image registry                                                                                                                                                                  | `""`                     |
+| `global.imagePullSecrets`           | Global registry secret names as an array                                                                                                                                               | `[]`                     |
+| `global.releaseNameTelicentPreview` | Release name used during the Telicent Preview chart installation. Note: ensure the value is correct, otherwise there will be no access to data-catalog, user-portal & paperback-writer | `""`                     |
+| `global.enterprise`                 | Enable enterprise mode, adding additional features and configurations                                                                                                                  | `false`                  |
+| `global.appHostDomain`              | Domain associated with Telicent application/ui services                                                                                                                                | `apps.telicent.io`       |
+| `global.apiHostDomain`              | Domain associated with Telicent Api services                                                                                                                                           | `api.telicent.io`        |
+| `global.authHostDomain`             | Domain associated with Telicent authentication services, including OIDC providers                                                                                                      | `auth.telicent.io`       |
+| `global.truststore.existingSecret`  | Name of an existing secret containing the truststore                                                                                                                                   | `""`                     |
+| `global.truststore.mountPath`       | The mount path for the truststore in the container                                                                                                                                     | `/app/config/truststore` |
 
 ### ConfigMap Parameters
 
@@ -168,6 +170,14 @@ For Quick Start purposes, a secret named `tc-auth-usr-psql-auth` will be created
 | `postgresSql.existingSecret` | Name of an existing secret. The secret must contain 2 keys: 'username', 'password' | `""`  |
 | `postgresSql.username`       | PostgreSQL username                                                                | `""`  |
 | `postgresSql.password`       | PostgreSQL password                                                                | `""`  |
+
+### Spring
+
+Contains settings for the underlying Spring framework
+
+| Name                    | Description                                                                             | Value        |
+| ----------------------- | --------------------------------------------------------------------------------------- | ------------ |
+| `spring.profilesActive` | sets the spring profile to be used. Options are: default, docker, test, and production. | `production` |
 
 ### Bootstrap Parameters
 

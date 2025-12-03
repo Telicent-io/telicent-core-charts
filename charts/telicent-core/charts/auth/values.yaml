@@ -19,6 +19,11 @@ global:
   # @key global.imagePullSecrets Global registry secret names as an array
   imagePullSecrets: []
 
+  # @key global.releaseNameTelicentPreview Release name used during the Telicent Preview chart installation. Note: ensure the value is correct, otherwise there will be no access to data-catalog, user-portal & paperback-writer
+  # If installed through the parent-chart this value needs to reflect the name of the release name used when 'telicent-preview' chart was installed.
+  # If all applications were installed through sub-charts, leaving this value empty will provide the correct behaviour.
+  releaseNameTelicentPreview: ""
+
   # @key global.enterprise Enable enterprise mode, adding additional features and configurations
   enterprise: false
 
@@ -29,10 +34,11 @@ global:
   # @key global.authHostDomain Domain associated with Telicent authentication services, including OIDC providers
   authHostDomain: "auth.telicent.io"
 
-  # @key global.releaseNameTelicentPreview Release name used during the Telicent Preview chart installation. Note: ensure the value is correct, otherwise there will be no access to data-catalog, user-portal & paperback-writer
-  # If installed through the parent-chart this value needs to reflect the name of the release name used when 'telicent-preview' chart was installed.
-  # If all applications were installed through sub-charts, leaving this value empty will provide the correct behaviour.
-  releaseNameTelicentPreview: ""
+  truststore:
+    # @key global.truststore.existingSecret Name of an existing secret containing the truststore
+    existingSecret: ""
+    # @key global.truststore.mountPath The mount path for the truststore in the container
+    mountPath: /app/config/truststore
 
 #
 # @section ConfigMap Parameters
@@ -152,6 +158,16 @@ postgresSql:
   username: ""
   # @key postgresSql.password PostgreSQL password
   password: ""
+
+#
+# @section Spring
+#
+# @descStart
+# Contains settings for the underlying Spring framework
+# @descEnd
+spring:
+  # @key spring.profilesActive sets the srping profile to be used. Options are: default, docker, test, and production.
+  profilesActive: production
 
 #
 # @section Bootstrap Parameters

@@ -37,8 +37,8 @@ data:
             shortDescription: "Easily navigate the web of information using our state-of-the-art knowledge graph app.",
             url: `${APP_DOMAIN}/graph`,
             buttonText: "Explore graph",
-            buttonIconURL: "./assets/icons/graph.svg",
-            imageURL: `./assets/images/graph.png`,
+            buttonIconURL: "/user-portal/assets/icons/graph.svg",
+            imageURL: `/user-portal/assets/images/graph.png`,
         },
         {
             id: "telicent-search",
@@ -47,8 +47,8 @@ data:
             shortDescription: "Discover insights with web-like search capability.",
             url: `${APP_DOMAIN}/search`,
             buttonText: "Start searching",
-            buttonIconURL: "./assets/icons/search.svg",
-            imageURL: `./assets/images/search.png`,
+            buttonIconURL: "/user-portal/assets/icons/search.svg",
+            imageURL: `/user-portal/assets/images/search.png`,
         },
         {
             id: "telicent-catalog",
@@ -57,8 +57,8 @@ data:
             shortDescription: "Provides an organized overview of the datasets available to you for analysis.",
             url: `${APP_DOMAIN}/data-catalog/`,
             buttonText: "Find your dataset",
-            buttonIconURL: "./assets/icons/catalog.svg",
-            imageURL: `./assets/images/catalog.png`,
+            buttonIconURL: "/user-portal/assets/icons/catalog.svg",
+            imageURL: `/user-portal/assets/images/catalog.png`,
         },
         // {
         //     id: "telicent-ontology",
@@ -67,8 +67,8 @@ data:
         //     shortDescription: "A simple way to create, edit and manage ontologies.",
         //     url: `${APP_DOMAIN}/ontology`,
         //     buttonText: "Start modelling",
-        //     buttonIconURL: "./assets/icons/ontology.svg",
-        //     imageURL: `./assets/images/ontology.png`,
+        //     buttonIconURL: "/user-portal/assets/icons/ontology.svg",
+        //     imageURL: `/user-portal/assets/images/ontology.png`,
         // },
         // {
         //     id: "telicent-instance",
@@ -77,8 +77,8 @@ data:
         //     shortDescription: "A tool to create and visualise diagrams for specific ontologies using the Resource Description Framework.",
         //     url: `${APP_DOMAIN}/instance`,
         //     buttonText: "Start building",
-        //     buttonIconURL: "./assets/icons/instance.svg",
-        //     imageURL: `./assets/images/instance.png`,
+        //     buttonIconURL: "/user-portal/assets/icons/instance.svg",
+        //     imageURL: `/user-portal/assets/images/instance.png`,
         // },
     ];
 
