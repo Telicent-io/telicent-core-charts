@@ -134,7 +134,6 @@ spec:
           mountPath: /app/config/startup/groups.yaml
           subPath: groups.yaml
           readOnly: true
-        {{- end }}
         {{- if .Values.global.truststore.existingSecret }}
         - name: java-truststore
           mountPath: {{ .Values.global.truststore.mountPath | default "/app/config/truststore" }}
