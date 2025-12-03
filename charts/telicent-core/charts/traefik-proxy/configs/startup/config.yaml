@@ -5,6 +5,7 @@ entryPoints:
       middlewares:
       - rate-limit-app@file
       - headers-security@file
+      - path-slash-redirect@file
 
   web-api:
     address: ":8081/tcp"
