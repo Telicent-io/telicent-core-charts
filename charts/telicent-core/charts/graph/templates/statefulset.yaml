@@ -30,7 +30,7 @@ spec:
       {{- end }}
       annotations:
         {{- if .Values.metrics.enabled }}
-        prometheus.io/path: "/"
+        prometheus.io/path: "/metrics"
         prometheus.io/port: {{ .Values.metrics.service.port | quote }}
         prometheus.io/scrape: "true"
         {{- end }}
