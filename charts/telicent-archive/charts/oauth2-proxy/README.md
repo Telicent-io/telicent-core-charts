@@ -91,32 +91,34 @@ the [kubernetes documentation](https://kubernetes.io/docs/concepts/configuration
 
 Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
 
-| Name                                | Description                                                                       | Value              |
-| ----------------------------------- | --------------------------------------------------------------------------------- | ------------------ |
-| `global.enterprise`                 | Enable enterprise mode, adding additional features and configurations             | `false`            |
-| `global.appHostDomain`              | Domain associated with Telicent application/ui services                           | `apps.telicent.io` |
-| `global.apiHostDomain`              | Domain associated with Telicent Api services                                      | `api.telicent.io`  |
-| `global.authHostDomain`             | Domain associated with Telicent authentication services, including OIDC providers | `auth.telicent.io` |
-| `global.groupsClaim`                | Key used to retrieve groups from the OIDC provider                                | `groups`           |
-| `global.istioNamespace`             | Namespace in which Istio is deployed                                              | `istio-system`     |
-| `global.istioServiceAccountName`    | Name of the Istio service account                                                 | `istio-ingress`    |
-| `global.istioGatewayName`           | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)         | `ingress-gateway`  |
-| `global.istioVirtualServiceEnabled` | Enable Istio traffic routing to a named destination service                       | `false`            |
+| Name                                | Description                                                                                       | Value              |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------ |
+| `global.appHostDomain`              | Domain associated with Telicent application/ui services                                           | `apps.telicent.io` |
+| `global.authHostDomain`             | Domain associated with Telicent authentication services, including OIDC providers                 | `auth.telicent.io` |
+| `global.istioIngressNamespace`      | Namespace in which the Istio Ingress resource is deployed; overrides 'istio.ingress.namespace'    | `istio-system`     |
+| `global.istioIngressServiceAccount` | ServiceAccount associated with Istio ingress deployment; overrides 'istio.ingress.serviceAccount' | `istio-ingress`    |
+| `global.istioGatewayNamespace`      | Namespace in which the Istio Gateway resource is deployed; overrides 'istio.gateway.namespace'    | `istio-system`     |
+| `global.istioGatewayName`           | Name of the Istio Gateway resource; overrides 'istio.gateway.namespace'                           | `ingress-gateway`  |
 
-### Configuration Parameters
+### ConfigMap Parameters
 
-Application Specific configuration for the *OAuth2 Proxy*.
+| Name                             | Description                                                                    | Value |
+| -------------------------------- | ------------------------------------------------------------------------------ | ----- |
+| `configMap.existingEnvConfigMap` | Name of existing configmap containing *Oauth2 Proxy* Environment Configuration | `""`  |
 
-| Name                                   | Description                                                                                     | Value                   |
-| -------------------------------------- | ----------------------------------------------------------------------------------------------- | ----------------------- |
-| `configuration.existingEnvConfigMap`   | Name of existing configmap containing *Oauth2 Proxy* Environment Configuration                  | `""`                    |
-| `configuration.oidcIssuerUrl`          | The OpenID Connect issuer URL                                                                   | `your.host/realms/core` |
-| `configuration.redirectUrl`            | OIDC redirect URL override. If not set, 'authHostDomain' + '/oauth2/callback' will be used      | `""`                    |
-| `configuration.cookieDomains`          | Domains that the cookie is valid for. If not set, 'appHostDomain' will be used                  | `""`                    |
-| `configuration.cookieWhiteListDomains` | Allowed domains for redirection after authentication. If not set, 'apphHostDomain' will be used | `""`                    |
-| `configuration.cookieExpire`           | Expire timeframe for cookie                                                                     | `50m`                   |
-| `configuration.cookieCsrfExpire`       | Expire timeframe for CSRF cookie                                                                | `50m`                   |
-| `configuration.cookieRefresh`          | Refresh the cookie after this duration                                                          | `30m`                   |
+### OAuth Parameters
+
+Contains OAuth parameters used by the *OAuth2 Proxy* application
+
+| Name                           | Description                                                                                     | Value                   |
+| ------------------------------ | ----------------------------------------------------------------------------------------------- | ----------------------- |
+| `oauth.oidcIssuerUrl`          | The OpenID Connect issuer URL                                                                   | `your.host/realms/core` |
+| `oauth.redirectUrl`            | OIDC redirect URL override. If not set, 'authHostDomain' + '/oauth2/callback' will be used      | `""`                    |
+| `oauth.cookieDomains`          | Domains that the cookie is valid for. If not set, 'appHostDomain' will be used                  | `""`                    |
+| `oauth.cookieWhiteListDomains` | Allowed domains for redirection after authentication. If not set, 'apphHostDomain' will be used | `""`                    |
+| `oauth.cookieExpire`           | Expire timeframe for cookie                                                                     | `50m`                   |
+| `oauth.cookieCsrfExpire`       | Expire timeframe for CSRF cookie                                                                | `50m`                   |
+| `oauth.cookieRefresh`          | Refresh the cookie after this duration                                                          | `30m`                   |
 
 ### Identity Provider (IDP) Parameters and Secret
 
@@ -207,9 +209,12 @@ For Quick Start purposes, a secret named `tc-auth-gen-idp-oauth2-proxy` will be 
 
 ### Istio Parameters
 
-| Name                               | Description                                                                                                                                              | Value           |
-| ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- |
-| `istio.ingress.principal`          | Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using Release namespace and serviceAccountName | `""`            |
-| `istio.ingress.serviceAccountName` | Name of the Ingress service account (traefik and istio supported)                                                                                        | `traefik-proxy` |
-| `istio.virtualService.enabled`     | Enable Istio traffic into *Oauth2 Proxy*                                                                                                                 | `false`         |
-| `istio.virtualService.host`        | Host associated with *Oauth2 Proxy* If not set, 'appHostDomain' will be used                                                                             | `""`            |
+| Name                              | Description                                                                         | Value             |
+| --------------------------------- | ----------------------------------------------------------------------------------- | ----------------- |
+| `istio.ingress.namespace`         | Namespace in which the Istio Ingress resource is deployed                           | `istio-system`    |
+| `istio.ingress.serviceAccount`    | ServiceAccount associated with Istio ingress deployment                             | `istio-ingress`   |
+| `istio.gateway.namespace`         | Namespace in which the Istio Gateway resource is deployed                           | `istio-system`    |
+| `istio.gateway.name`              | Name of the Istio Gateway resource                                                  | `ingress-gateway` |
+| `istio.virtualService.enabled`    | Enable Istio traffic into *OAuth2 Proxy*                                            | `true`            |
+| `istio.virtualService.host`       | Host associated with *Oauth2 Proxy* If not set, 'global.appHostDomain' will be used | `""`              |
+| `istio.virtualService.extraHosts` | Additional hosts (excluding appHostDomain) to be managed by *OAuth2 Proxy*          | `[]`              |
