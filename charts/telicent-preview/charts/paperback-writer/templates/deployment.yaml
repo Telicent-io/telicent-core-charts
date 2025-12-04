@@ -100,6 +100,7 @@ spec:
           {{- with .Values.extraVolumeMounts }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
+          {{- end }}
        
       {{- with .Values.sidecars }}
         {{- toYaml . | nindent 8 }}
