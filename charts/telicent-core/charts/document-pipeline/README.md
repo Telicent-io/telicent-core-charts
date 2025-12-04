@@ -219,7 +219,7 @@ The application settings are defined within the 'java' & 'routes' keys
 | `httpIngester.sidecars`                  | Add sidecars to the pod.                                    | `[]`                                       |
 | `httpIngester.image.registry`            | image registry                                              | `REGISTRY_NAME`                            |
 | `httpIngester.image.repository`          | The container image repository for the *HTTP Ingester*      | `telicent/telicent-document-http-ingester` |
-| `httpIngester.image.tag`                 | The image tag for the *HTTP Ingester*                       | `3.2.0`                                    |
+| `httpIngester.image.tag`                 | The image tag for the *HTTP Ingester*                       | `3.3.0`                                    |
 | `httpIngester.image.pullPolicy`          | The image pull policy for the *HTTP Ingester*               | `IfNotPresent`                             |
 | `httpIngester.image.pullSecrets`         | Specify registry secret names as an array                   | `[]`                                       |
 | `httpIngester.affinity`                  | Affinity for pod assignment                                 | `{}`                                       |
@@ -276,7 +276,7 @@ The application settings are defined within the 'topics' key
 | `contentExtractor.sidecars`                 | Add sidecars to the pod.                                   | `[]`                                           |
 | `contentExtractor.image.registry`           | image registry                                             | `REGISTRY_NAME`                                |
 | `contentExtractor.image.repository`         | The container image repository for the *Content Extractor* | `telicent/telicent-document-content-extractor` |
-| `contentExtractor.image.tag`                | The image tag for the *Content Extractor*                  | `3.2.0`                                        |
+| `contentExtractor.image.tag`                | The image tag for the *Content Extractor*                  | `3.3.0`                                        |
 | `contentExtractor.image.pullPolicy`         | The image pull policy for the *Content Extractor*          | `IfNotPresent`                                 |
 | `contentExtractor.image.pullSecrets`        | Secrets for pulling an image from a private repository     | `[]`                                           |
 | `contentExtractor.affinity`                 | Affinity rules for the *Content Extractor* pods            | `{}`                                           |
@@ -339,7 +339,7 @@ For Quick Start purposes, a secret named `tc-auth-usr-elastic-document-pipeline-
 | `contentIndexer.image.registry`           | image registry                                           | `REGISTRY_NAME`                              |
 | `contentIndexer.image.repository`         | The container image repository for the *Content Indexer* | `telicent/telicent-document-content-indexer` |
 | `contentIndexer.image.pullPolicy`         | The image pull policy for the *Content Indexer*          | `IfNotPresent`                               |
-| `contentIndexer.image.tag`                | The image tag for the *Content Indexer*                  | `3.2.0`                                      |
+| `contentIndexer.image.tag`                | The image tag for the *Content Indexer*                  | `3.3.0`                                      |
 | `contentIndexer.image.pullSecrets`        | Secrets for pulling an image from a private repository   | `[]`                                         |
 | `contentIndexer.affinity`                 | Affinity rules for the *Content Indexer* pods            | `{}`                                         |
 | `contentIndexer.nodeSelector`             | Node selector for the *Content Indexer* pods             | `{}`                                         |
@@ -388,7 +388,7 @@ The application settings are defined within the 'topics' key
 | `catalogueUpdater.image.registry`           | image registry                                             | `REGISTRY_NAME`                                |
 | `catalogueUpdater.image.repository`         | The container image repository for the *Catalogue Updater* | `telicent/telicent-document-catalogue-updater` |
 | `catalogueUpdater.image.pullPolicy`         | The image pull policy for the *Catalogue Updater*          | `IfNotPresent`                                 |
-| `catalogueUpdater.image.tag`                | The image tag for the *Catalogue Updater*                  | `3.2.0`                                        |
+| `catalogueUpdater.image.tag`                | The image tag for the *Catalogue Updater*                  | `3.3.0`                                        |
 | `catalogueUpdater.image.pullSecrets`        | Secrets for pulling an image from a private repository     | `[]`                                           |
 | `catalogueUpdater.affinity`                 | Affinity rules for the *Catalogue Updater* pods            | `{}`                                           |
 | `catalogueUpdater.nodeSelector`             | Node selector for the *Catalogue Updater* pods             | `{}`                                           |
