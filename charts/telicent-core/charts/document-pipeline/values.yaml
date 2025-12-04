@@ -231,7 +231,7 @@ httpIngester:
     # @key httpIngester.image.repository The container image repository for the *HTTP Ingester*
     repository: telicent/telicent-document-http-ingester
     # @key httpIngester.image.tag The image tag for the *HTTP Ingester*
-    tag: "3.2.0"
+    tag: "3.3.0"
     # @key httpIngester.image.pullPolicy The image pull policy for the *HTTP Ingester*
     pullPolicy: IfNotPresent
     # @key httpIngester.image.pullSecrets Specify registry secret names as an array
@@ -331,7 +331,7 @@ contentExtractor:
     # @key contentExtractor.image.repository The container image repository for the *Content Extractor*
     repository: telicent/telicent-document-content-extractor
     # @key contentExtractor.image.tag The image tag for the *Content Extractor*
-    tag: "3.2.0"
+    tag: "3.3.0"
     # @key contentExtractor.image.pullPolicy The image pull policy for the *Content Extractor*
     pullPolicy: IfNotPresent
     # @key contentExtractor.image.pullSecrets Secrets for pulling an image from a private repository
@@ -440,7 +440,7 @@ contentIndexer:
     repository: telicent/telicent-document-content-indexer
     # @key contentIndexer.image.pullPolicy The image pull policy for the *Content Indexer*
     # @key contentIndexer.image.tag The image tag for the *Content Indexer*
-    tag: "3.2.0"
+    tag: "3.3.0"
     pullPolicy: IfNotPresent
     # @key contentIndexer.image.pullSecrets Secrets for pulling an image from a private repository
     pullSecrets: []
@@ -526,7 +526,7 @@ catalogueUpdater:
     repository: telicent/telicent-document-catalogue-updater
     # @key catalogueUpdater.image.pullPolicy The image pull policy for the *Catalogue Updater*
     # @key catalogueUpdater.image.tag The image tag for the *Catalogue Updater*
-    tag: "3.2.0"
+    tag: "3.3.0"
     pullPolicy: IfNotPresent
     # @key catalogueUpdater.image.pullSecrets Secrets for pulling an image from a private repository
     pullSecrets: []
