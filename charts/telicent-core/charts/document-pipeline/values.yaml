@@ -50,7 +50,7 @@ global:
     mountPath: /app/config/truststore
 
 #
-# @section Resources - Default resource allocation applied to all sub-chart deployments
+# @section Deployment Resources Parameters - Default resource allocation applied to all sub-chart deployments
 #
 resources:
   requests:
@@ -65,7 +65,7 @@ resources:
     memory: "1000Mi"
 
 #
-# @section Security Context - Default security context applied to all sub-chart deployments
+# @section Deployment Security Context Parameters - Default security context applied to all sub-chart deployments
 #
 podSecurityContext:
   # @key podSecurityContext.runAsUser Set the provisioning pod's Security Context runAsUser User ID
@@ -137,22 +137,14 @@ hosts:
 httpIngester:
 
   #
-  # @section *HTTP Ingester* - Configmap Parameters
-  #
-  configMap:
-    # @key httpIngester.configMap.existingRoutesConfigMap Name of existing configmap containing Routes Configuration
-    # Note: When it's set it will disable the routes configmap creation.
-    existingRoutesConfigMap: ""
-
-  #
-  # @section *HTTP Ingester* - Java Parameters
+  # @section *HTTP Ingester* Application Parameters - Java
   #
   java:
     # @key httpIngester.java.jvmOptions Java options to pass to the JVM
     jvmOptions: "-XX:MaxRAMPercentage=80.0"
 
   #
-  # @section *HTTP Ingester* - Routes Parameters
+  # @section *HTTP Ingester* Application Parameters - Routes
   #
   routes:
     # @key httpIngester.routes[0].name A unique name for the route
@@ -194,6 +186,13 @@ httpIngester:
           defaultValue: '{"EDH":{"classification":"O","permittedNats":["GBR"],"permittedOrgs":["Telicent"],"orGroups":[],"andGroups":[]}}'
           # @key httpIngester.routes[0].headers[4].priority The priority for the EDH/IDH policy information header
           priority: REQUEST
+    #
+    # @section *HTTP Ingester* - Configmap Parameters
+    #
+  configMap:
+    # @key httpIngester.configMap.existingRoutesConfigMap Name of existing configmap containing Routes Configuration
+    # Note: When it's set it will disable the routes configmap creation.
+    existingRoutesConfigMap: ""
 
   #
   # @section *HTTP Ingester* - Common Parameters
@@ -280,10 +279,13 @@ httpIngester:
 #
 # @descStart
 # The *Content Extractor* is responsible for extracting information from the ingested documents.
-# The application settings are defined within the 'topic' key
+# The application settings are defined within the 'topics' key
 # @descEnd
 contentExtractor:
 
+  #
+  # @section *Content Extractor* Application Parameters - Topics
+  #
   topics:
     # @key contentExtractor.topics.inputTopic The Kafka topic from which the *Content Extractor* will consume messages
     inputTopic: document.extractrequest
@@ -362,14 +364,14 @@ contentExtractor:
 contentIndexer:
 
   #
-  # @section Java Parameters
+  # @section *Content Indexer* Application Parameters - Java
   #
   java:
      # @key contentIndexer.java.jvmOptions JVM options for the application
     jvmOptions: "-XX:MaxRAMPercentage=80.0"
 
   #
-  # @section Elastic/OpenSearch Parameters and Secret
+  # @section *Content Indexer* Application Parameters - Elastic/OpenSearch and Secret
   #
   # @descStart
   # The following contains connection details to an Elastic/OpenSearch service, on which the application relies.
@@ -469,6 +471,9 @@ contentIndexer:
 # @descEnd
 catalogueUpdater:
 
+  #
+  # @section *Catalogue Updater* Application Parameters - Topics
+  #
   topics:
     # @key catalogueUpdater.topics.inputTopic The Kafka topic from which the *Catalogue Updater* will consume messages
     inputTopic: document.textandmetadata
@@ -482,7 +487,6 @@ catalogueUpdater:
     maxBufferSize: 100
     # @key catalogueUpdater.topics.dlqTopic The Kafka topic to which the *Catalogue Updater* will produce dead-lettered messages
     dlqTopic: document.extractrequest.dlq
-
 
   #
   # @section *Catalogue Updater* - Common Parameters
@@ -553,6 +557,9 @@ catalogueUpdater:
 # @descEnd
 contentTagger:
 
+  #
+  # @section *Content Tagger* Application Parameters - Topics
+  #
   topics:
     # @key contentTagger.topics.inputTopic The Kafka topic from which the *Content Tagger* will consume messages
     inputTopic: document.textandmetadata
@@ -642,6 +649,9 @@ contentTagger:
 # @descEnd
 entityExtractor:
 
+  #
+  # @section *Entity Extractor* Application Parameters - Topics
+  #
   topics:
     # @key entityExtractor.topics.inputTopic The Kafka topic from which the content tagger will consume messages
     inputTopic: document.textandmetadata

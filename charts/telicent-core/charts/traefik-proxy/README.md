@@ -100,7 +100,7 @@ Note: Only global parameters used within this chart will be listed below
 | `global.istioGatewayNamespace`      | Namespace in which the Istio Gateway resource is deployed; overrides 'istio.gateway.namespace'                                                                                         | `istio-system`     |
 | `global.istioGatewayName`           | Name of the Istio Gateway resource; overrides 'istio.gateway.namespace'                                                                                                                | `ingress-gateway`  |
 
-### Rate Limit Parameters
+### Application Parameters - Rate Limit
 
 The following section allows for setting Traefik Rate Limiting on the Web Applications, API Services and the Authentication Service.
 Ref: https://doc.traefik.io/traefik/reference/routing-configuration/http/middlewares/ratelimit/#rate-and-burst
@@ -114,13 +114,13 @@ Ref: https://doc.traefik.io/traefik/reference/routing-configuration/http/middlew
 | `rateLimit.auth.average` | Maximum number of requests per second allowed to the Authentication Service (0 means no rate limiting). | `20`  |
 | `rateLimit.auth.burst`   | Maximum number of requests allowed to go through at the very same moment to the Authentication Service. | `10`  |
 
-### CORS Parameters
+### Application Parameters - CORS
 
 | Name              | Description                                           | Value |
 | ----------------- | ----------------------------------------------------- | ----- |
 | `cors.extraHosts` | Additional hosts to be added to the 'AllowOriginList' | `[]`  |
 
-### ForwardAuth Parameters and Secret
+### Application Parameters - ForwardAuth and Secret
 
 When making requests to the *Auth* Application endpoint `/auth/forward`, `X-ForwardAuth-Secret` header is required.
 The secret associated with that header is defined within this section.
@@ -132,14 +132,14 @@ For Quick Start purposes, a secret named `tc-auth-gen-forward-traefik-proxy` wil
 | `forwardAuth.existingSecret` | Name of an existing secret. The secret must contain 1 key: 'secret' | `""`  |
 | `forwardAuth.header`         | The secret value to be associated with the `X-ForwardAuth-Secret`.  | `""`  |
 
-### *Traefik Proxy* Logs Parameters
+### Application Parameters - Logs
 
 | Name                  | Description                                                                        | Value   |
 | --------------------- | ---------------------------------------------------------------------------------- | ------- |
 | `logs.general.level`  | Set logging levels, values are: TRACE, DEBUG, INFO, WARN, ERROR, FATAL, and PANIC. | `INFO`  |
 | `logs.access.enabled` | Enable access logging. Note: should only be enabled in development environments.   | `false` |
 
-### *Traefik Proxy* Dashboard Parameters
+### Application Parameters - Dashboard
 
 | Name                 | Description                                                                                 | Value      |
 | -------------------- | ------------------------------------------------------------------------------------------- | ---------- |
@@ -158,41 +158,61 @@ For Quick Start purposes, a secret named `tc-auth-gen-forward-traefik-proxy` wil
 
 ### Deployment Parameters
 
-| Name                                                | Description                                                                    | Value                     |
-| --------------------------------------------------- | ------------------------------------------------------------------------------ | ------------------------- |
-| `replicas`                                          | Number of *Traefik Proxy* replicas to deploy                                   | `1`                       |
-| `revisionHistoryLimit`                              | Number of controller revisions to keep                                         | `5`                       |
-| `annotations`                                       | Add extra annotations to the deployment object                                 | `{}`                      |
-| `podLabels`                                         | Add extra labels to the *Traefik Proxy* pod                                    | `{}`                      |
-| `podAnnotations`                                    | Add extra annotations to the *Traefik Proxy* pod                               | `{}`                      |
-| `extraEnvVars`                                      | Array with extra environment variables to add to *Traefik Proxy* pod           | `[]`                      |
-| `extraVolumes`                                      | Additional containers to be added to the *Traefik Proxy* pod                   | `[]`                      |
-| `extraVolumeMounts`                                 | Optionally specify extra list of additional volumeMounts                       | `[]`                      |
-| `initContainers`                                    | Add init containers to the pod                                                 | `[]`                      |
-| `sidecars`                                          | Add sidecars to the pod.                                                       | `[]`                      |
-| `image.registry`                                    | *Traefik Proxy* image registry                                                 | `REGISTRY_NAME`           |
-| `image.repository`                                  | *Traefik Proxy* image name                                                     | `REPOSITORY_NAME/traefik` |
-| `image.tag`                                         | *Traefik Proxy* image tag. If not set, a tag is generated using the appVersion | `""`                      |
-| `image.pullPolicy`                                  | *Traefik Proxy* image pull policy                                              | `IfNotPresent`            |
-| `image.pullSecrets`                                 | Specify registry secret names as an array                                      | `[]`                      |
-| `resources.requests.cpu`                            | Set containers' CPU request                                                    | `500m`                    |
-| `resources.requests.memory`                         | Set containers' memory request                                                 | `512Mi`                   |
-| `resources.limits.cpu`                              | Set containers' CPU limit                                                      | `750m`                    |
-| `resources.limits.memory`                           | Set containers' memory limit                                                   | `768Mi`                   |
-| `containerSecurityContext.runAsUser`                | Set containers' Security Context runAsUser User ID                             | `185`                     |
-| `containerSecurityContext.runAsGroup`               | Set containers' Security Context runAsGroup Group ID                           | `185`                     |
-| `containerSecurityContext.runAsNonRoot`             | Set container's Security Context runAsNonRoot                                  | `true`                    |
-| `containerSecurityContext.allowPrivilegeEscalation` | Set container's Security Context allowPrivilegeEscalation                      | `false`                   |
-| `containerSecurityContext.capabilities.drop`        | List of capabilities to be dropped                                             | `["ALL"]`                 |
-| `containerSecurityContext.seccompProfile.type`      | Set container's Security Context seccomp profile                               | `RuntimeDefault`          |
-| `podSecurityContext.runAsUser`                      | Set the provisioning pod's Security Context runAsUser User ID                  | `185`                     |
-| `podSecurityContext.runAsGroup`                     | Set the provisioning pod's Security Context runAsGroup Group ID                | `185`                     |
-| `podSecurityContext.runAsNonRoot`                   | Set the provisioning pod's Security Context runAsNonRoot                       | `true`                    |
-| `podSecurityContext.fsGroup`                        | Set the provisioning pod's Group ID for the mounted volumes' filesystem        | `185`                     |
-| `podSecurityContext.seccompProfile.type`            | Set the provisioning pod's Security Context seccomp profile                    | `RuntimeDefault`          |
-| `affinity`                                          | Affinity for pod assignment                                                    | `{}`                      |
-| `nodeSelector`                                      | Node labels for pod assignment                                                 | `{}`                      |
-| `tolerations`                                       | Tolerations for pod assignment                                                 | `[]`                      |
+| Name                   | Description                                                          | Value |
+| ---------------------- | -------------------------------------------------------------------- | ----- |
+| `replicas`             | Number of *Traefik Proxy* replicas to deploy                         | `1`   |
+| `revisionHistoryLimit` | Number of controller revisions to keep                               | `5`   |
+| `annotations`          | Add extra annotations to the deployment object                       | `{}`  |
+| `podLabels`            | Add extra labels to the *Traefik Proxy* pod                          | `{}`  |
+| `podAnnotations`       | Add extra annotations to the *Traefik Proxy* pod                     | `{}`  |
+| `extraEnvVars`         | Array with extra environment variables to add to *Traefik Proxy* pod | `[]`  |
+| `extraVolumes`         | Additional containers to be added to the *Traefik Proxy* pod         | `[]`  |
+| `extraVolumeMounts`    | Optionally specify extra list of additional volumeMounts             | `[]`  |
+| `initContainers`       | Add init containers to the pod                                       | `[]`  |
+| `sidecars`             | Add sidecars to the pod.                                             | `[]`  |
+
+### Deployment Image Parameters
+
+| Name                | Description                                                                    | Value                     |
+| ------------------- | ------------------------------------------------------------------------------ | ------------------------- |
+| `image.registry`    | *Traefik Proxy* image registry                                                 | `REGISTRY_NAME`           |
+| `image.repository`  | *Traefik Proxy* image name                                                     | `REPOSITORY_NAME/traefik` |
+| `image.tag`         | *Traefik Proxy* image tag. If not set, a tag is generated using the appVersion | `""`                      |
+| `image.pullPolicy`  | *Traefik Proxy* image pull policy                                              | `IfNotPresent`            |
+| `image.pullSecrets` | Specify registry secret names as an array                                      | `[]`                      |
+
+### Deployment Resources Parameters - Requests and Limits
+
+| Name                        | Description                    | Value   |
+| --------------------------- | ------------------------------ | ------- |
+| `resources.requests.cpu`    | Set containers' CPU request    | `500m`  |
+| `resources.requests.memory` | Set containers' memory request | `512Mi` |
+| `resources.limits.cpu`      | Set containers' CPU limit      | `750m`  |
+| `resources.limits.memory`   | Set containers' memory limit   | `768Mi` |
+
+### Statefulset Security Context Parameters - Default Security Context
+
+| Name                                                | Description                                                             | Value            |
+| --------------------------------------------------- | ----------------------------------------------------------------------- | ---------------- |
+| `podSecurityContext.runAsUser`                      | Set the provisioning pod's Security Context runAsUser User ID           | `185`            |
+| `podSecurityContext.runAsGroup`                     | Set the provisioning pod's Security Context runAsGroup Group ID         | `185`            |
+| `podSecurityContext.runAsNonRoot`                   | Set the provisioning pod's Security Context runAsNonRoot                | `true`           |
+| `podSecurityContext.fsGroup`                        | Set the provisioning pod's Group ID for the mounted volumes' filesystem | `185`            |
+| `podSecurityContext.seccompProfile.type`            | Set the provisioning pod's Security Context seccomp profile             | `RuntimeDefault` |
+| `containerSecurityContext.runAsUser`                | Set containers' Security Context runAsUser User ID                      | `185`            |
+| `containerSecurityContext.runAsGroup`               | Set containers' Security Context runAsGroup Group ID                    | `185`            |
+| `containerSecurityContext.runAsNonRoot`             | Set container's Security Context runAsNonRoot                           | `true`           |
+| `containerSecurityContext.allowPrivilegeEscalation` | Set container's Security Context allowPrivilegeEscalation               | `false`          |
+| `containerSecurityContext.capabilities.drop`        | List of capabilities to be dropped                                      | `["ALL"]`        |
+| `containerSecurityContext.seccompProfile.type`      | Set container's Security Context seccomp profile                        | `RuntimeDefault` |
+
+### Deployment Affinity Parameters
+
+| Name           | Description                    | Value |
+| -------------- | ------------------------------ | ----- |
+| `affinity`     | Affinity for pod assignment    | `{}`  |
+| `nodeSelector` | Node labels for pod assignment | `{}`  |
+| `tolerations`  | Tolerations for pod assignment | `[]`  |
 
 ### Service Account Parameters
 

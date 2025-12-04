@@ -128,12 +128,12 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       
-      {{- with .Values.httpIngester.nodeSelector }}
-      nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
       {{- with .Values.httpIngester.affinity }}
       affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.httpIngester.nodeSelector }}
+      nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       {{- with .Values.httpIngester.tolerations }}

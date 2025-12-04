@@ -33,16 +33,6 @@
                 }
             }
         },
-        "configMap": {
-            "type": "object",
-            "properties": {
-                "existingConfigMap": {
-                    "type": "string",
-                    "description": "The name of an existing config map containing env-config.js.",
-                    "default": ""
-                }
-            }
-        },
         "oauth": {
             "type": "object",
             "properties": {
@@ -55,6 +45,16 @@
                     "type": "string",
                     "description": "List of OAuth scopes to be used by *User Portal UI*",
                     "default": "openid profile offline_access"
+                }
+            }
+        },
+        "configMap": {
+            "type": "object",
+            "properties": {
+                "existingConfigMap": {
+                    "type": "string",
+                    "description": "The name of an existing config map containing env-config.js.",
+                    "default": ""
                 }
             }
         },
@@ -199,6 +199,41 @@
                 }
             }
         },
+        "podSecurityContext": {
+            "type": "object",
+            "properties": {
+                "runAsUser": {
+                    "type": "number",
+                    "description": "Set the provisioning pod's Security Context runAsUser User ID",
+                    "default": 185
+                },
+                "runAsGroup": {
+                    "type": "number",
+                    "description": "Set the provisioning pod's Security Context runAsGroup Group ID",
+                    "default": 185
+                },
+                "runAsNonRoot": {
+                    "type": "boolean",
+                    "description": "Set the provisioning pod's Security Context runAsNonRoot",
+                    "default": true
+                },
+                "fsGroup": {
+                    "type": "number",
+                    "description": "Set the provisioning pod's Group ID for the mounted volumes' filesystem",
+                    "default": 185
+                },
+                "seccompProfile": {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "description": "Set the provisioning pod's Security Context seccomp profile",
+                            "default": "RuntimeDefault"
+                        }
+                    }
+                }
+            }
+        },
         "containerSecurityContext": {
             "type": "object",
             "properties": {
@@ -243,41 +278,6 @@
                         "type": {
                             "type": "string",
                             "description": "Set container's Security Context seccomp profile",
-                            "default": "RuntimeDefault"
-                        }
-                    }
-                }
-            }
-        },
-        "podSecurityContext": {
-            "type": "object",
-            "properties": {
-                "runAsUser": {
-                    "type": "number",
-                    "description": "Set the provisioning pod's Security Context runAsUser User ID",
-                    "default": 185
-                },
-                "runAsGroup": {
-                    "type": "number",
-                    "description": "Set the provisioning pod's Security Context runAsGroup Group ID",
-                    "default": 185
-                },
-                "runAsNonRoot": {
-                    "type": "boolean",
-                    "description": "Set the provisioning pod's Security Context runAsNonRoot",
-                    "default": true
-                },
-                "fsGroup": {
-                    "type": "number",
-                    "description": "Set the provisioning pod's Group ID for the mounted volumes' filesystem",
-                    "default": 185
-                },
-                "seccompProfile": {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "type": "string",
-                            "description": "Set the provisioning pod's Security Context seccomp profile",
                             "default": "RuntimeDefault"
                         }
                     }

@@ -99,21 +99,15 @@ Note: Only global parameters used within this chart will be listed below
 | `global.truststore.existingSecret` | Name of an existing secret containing the truststore                              | `""`                     |
 | `global.truststore.mountPath`      | The mount path for the truststore in the container                                | `/app/config/truststore` |
 
-### ConfigMap Parameters
+### Application Parameters - Java
 
-| Name                             | Description                                                                        | Value |
-| -------------------------------- | ---------------------------------------------------------------------------------- | ----- |
-| `configMap.existingEnvConfigMap` | Name of existing configmap containing *User Preferences* Environment Configuration | `""`  |
-
-### Java Parameters
-
-Contains Java configuration parameters to be used by the *Search* application
+Contains Java configuration parameters to be used by the *User Preferences* application
 
 | Name              | Description                     | Value                       |
 | ----------------- | ------------------------------- | --------------------------- |
 | `java.jvmOptions` | JVM options for the application | `-XX:MaxRAMPercentage=80.0` |
 
-### MongoDB Parameters and Secret
+### Application Parameters - MongoDB and Secret
 
 The following contains connection details to a MongoDB instance, on which the application relies.
 It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
@@ -130,6 +124,12 @@ For Quick Start purposes, a secret named `tc-auth-usr-mongo-user-preferences` wi
 | `mongo.existingCaSecret` | If you have an existing secret for the CA certificate, you can specify it here. If you've specified to use TLS in the url, you must provide a CA certificate. | `""`                                                                           |
 | `mongo.cacertPath`       | Path to the CA certificate file, must be set if TLS is enabled in the url and mirror the path in the connectionStringOptions                                  | `""`                                                                           |
 
+### ConfigMap Parameters
+
+| Name                             | Description                                                                        | Value |
+| -------------------------------- | ---------------------------------------------------------------------------------- | ----- |
+| `configMap.existingEnvConfigMap` | Name of existing configmap containing *User Preferences* Environment Configuration | `""`  |
+
 ### Common Parameters
 
 | Name                | Description                                                            | Value |
@@ -141,41 +141,61 @@ For Quick Start purposes, a secret named `tc-auth-usr-mongo-user-preferences` wi
 
 ### Deployment Parameters
 
-| Name                                                | Description                                                                       | Value                                               |
-| --------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------- |
-| `replicas`                                          | Number of *User Preferences* replicas to deploy                                   | `1`                                                 |
-| `revisionHistoryLimit`                              | Number of controller revisions to keep                                            | `5`                                                 |
-| `annotations`                                       | Add extra annotations to the deployment object                                    | `{}`                                                |
-| `podLabels`                                         | Add extra labels to the *User Preferences* pod                                    | `{}`                                                |
-| `podAnnotations`                                    | Add extra annotations to the *User Preferences* pod                               | `{}`                                                |
-| `extraEnvVars`                                      | Array with extra environment variables to add to *User Preferences* pod           | `[]`                                                |
-| `extraVolumes`                                      | Additional containers to be added to the *User Preferences* pod                   | `[]`                                                |
-| `extraVolumeMounts`                                 | Optionally specify extra list of additional volumeMounts                          | `[]`                                                |
-| `initContainers`                                    | Add init containers to the pod                                                    | `[]`                                                |
-| `sidecars`                                          | Add sidecars to the pod.                                                          | `[]`                                                |
-| `image.registry`                                    | *User Preferences* image registry                                                 | `REGISTRY_NAME`                                     |
-| `image.repository`                                  | *User Preferences* image name                                                     | `REPOSITORY_NAME/telicent-user-preferences-service` |
-| `image.tag`                                         | *User Preferences* image tag. If not set, a tag is generated using the appVersion | `""`                                                |
-| `image.pullPolicy`                                  | *User Preferences* image pull policy                                              | `IfNotPresent`                                      |
-| `image.pullSecrets`                                 | Specify registry secret names as an array                                         | `[]`                                                |
-| `resources.requests.cpu`                            | Set containers' CPU request                                                       | `300m`                                              |
-| `resources.requests.memory`                         | Set containers' memory request                                                    | `768Mi`                                             |
-| `resources.limits.cpu`                              | Set containers' CPU limit                                                         | `550m`                                              |
-| `resources.limits.memory`                           | Set containers' memory limit                                                      | `1024Mi`                                            |
-| `containerSecurityContext.runAsUser`                | Set containers' Security Context runAsUser User ID                                | `185`                                               |
-| `containerSecurityContext.runAsGroup`               | Set containers' Security Context runAsGroup Group ID                              | `185`                                               |
-| `containerSecurityContext.runAsNonRoot`             | Set container's Security Context runAsNonRoot                                     | `true`                                              |
-| `containerSecurityContext.allowPrivilegeEscalation` | Set container's Security Context allowPrivilegeEscalation                         | `false`                                             |
-| `containerSecurityContext.capabilities.drop`        | List of capabilities to be dropped                                                | `["ALL"]`                                           |
-| `containerSecurityContext.seccompProfile.type`      | Set container's Security Context seccomp profile                                  | `RuntimeDefault`                                    |
-| `podSecurityContext.runAsUser`                      | Set the provisioning pod's Security Context runAsUser User ID                     | `185`                                               |
-| `podSecurityContext.runAsGroup`                     | Set the provisioning pod's Security Context runAsGroup Group ID                   | `185`                                               |
-| `podSecurityContext.runAsNonRoot`                   | Set the provisioning pod's Security Context runAsNonRoot                          | `true`                                              |
-| `podSecurityContext.fsGroup`                        | Set the provisioning pod's Group ID for the mounted volumes' filesystem           | `185`                                               |
-| `podSecurityContext.seccompProfile.type`            | Set the provisioning pod's Security Context seccomp profile                       | `RuntimeDefault`                                    |
-| `affinity`                                          | Affinity for pod assignment                                                       | `{}`                                                |
-| `nodeSelector`                                      | Node labels for pod assignment                                                    | `{}`                                                |
-| `tolerations`                                       | Tolerations for pod assignment                                                    | `[]`                                                |
+| Name                   | Description                                                             | Value |
+| ---------------------- | ----------------------------------------------------------------------- | ----- |
+| `replicas`             | Number of *User Preferences* replicas to deploy                         | `1`   |
+| `revisionHistoryLimit` | Number of controller revisions to keep                                  | `5`   |
+| `annotations`          | Add extra annotations to the deployment object                          | `{}`  |
+| `podLabels`            | Add extra labels to the *User Preferences* pod                          | `{}`  |
+| `podAnnotations`       | Add extra annotations to the *User Preferences* pod                     | `{}`  |
+| `extraEnvVars`         | Array with extra environment variables to add to *User Preferences* pod | `[]`  |
+| `extraVolumes`         | Additional containers to be added to the *User Preferences* pod         | `[]`  |
+| `extraVolumeMounts`    | Optionally specify extra list of additional volumeMounts                | `[]`  |
+| `initContainers`       | Add init containers to the pod                                          | `[]`  |
+| `sidecars`             | Add sidecars to the pod.                                                | `[]`  |
+
+### Deployment Image Parameters
+
+| Name                | Description                                                                       | Value                                               |
+| ------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------- |
+| `image.registry`    | *User Preferences* image registry                                                 | `REGISTRY_NAME`                                     |
+| `image.repository`  | *User Preferences* image name                                                     | `REPOSITORY_NAME/telicent-user-preferences-service` |
+| `image.tag`         | *User Preferences* image tag. If not set, a tag is generated using the appVersion | `""`                                                |
+| `image.pullPolicy`  | *User Preferences* image pull policy                                              | `IfNotPresent`                                      |
+| `image.pullSecrets` | Specify registry secret names as an array                                         | `[]`                                                |
+
+### Deployment Resources Parameters - Requests and Limits
+
+| Name                        | Description                    | Value    |
+| --------------------------- | ------------------------------ | -------- |
+| `resources.requests.cpu`    | Set containers' CPU request    | `300m`   |
+| `resources.requests.memory` | Set containers' memory request | `768Mi`  |
+| `resources.limits.cpu`      | Set containers' CPU limit      | `550m`   |
+| `resources.limits.memory`   | Set containers' memory limit   | `1024Mi` |
+
+### Deployment Security Context Parameters - Default Security Context
+
+| Name                                                | Description                                                             | Value            |
+| --------------------------------------------------- | ----------------------------------------------------------------------- | ---------------- |
+| `podSecurityContext.runAsUser`                      | Set the provisioning pod's Security Context runAsUser User ID           | `185`            |
+| `podSecurityContext.runAsGroup`                     | Set the provisioning pod's Security Context runAsGroup Group ID         | `185`            |
+| `podSecurityContext.runAsNonRoot`                   | Set the provisioning pod's Security Context runAsNonRoot                | `true`           |
+| `podSecurityContext.fsGroup`                        | Set the provisioning pod's Group ID for the mounted volumes' filesystem | `185`            |
+| `podSecurityContext.seccompProfile.type`            | Set the provisioning pod's Security Context seccomp profile             | `RuntimeDefault` |
+| `containerSecurityContext.runAsUser`                | Set containers' Security Context runAsUser User ID                      | `185`            |
+| `containerSecurityContext.runAsGroup`               | Set containers' Security Context runAsGroup Group ID                    | `185`            |
+| `containerSecurityContext.runAsNonRoot`             | Set container's Security Context runAsNonRoot                           | `true`           |
+| `containerSecurityContext.allowPrivilegeEscalation` | Set container's Security Context allowPrivilegeEscalation               | `false`          |
+| `containerSecurityContext.capabilities.drop`        | List of capabilities to be dropped                                      | `["ALL"]`        |
+| `containerSecurityContext.seccompProfile.type`      | Set container's Security Context seccomp profile                        | `RuntimeDefault` |
+
+### Deployment Affinity Parameters
+
+| Name           | Description                    | Value |
+| -------------- | ------------------------------ | ----- |
+| `affinity`     | Affinity for pod assignment    | `{}`  |
+| `nodeSelector` | Node labels for pod assignment | `{}`  |
+| `tolerations`  | Tolerations for pod assignment | `[]`  |
 
 ### Service Account Parameters
 

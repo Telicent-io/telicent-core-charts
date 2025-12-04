@@ -40,18 +40,7 @@ global:
     mountPath: /app/config/truststore
 
 #
-# @section ConfigMap Parameters
-#
-# @descStart
-# Contains configuration parameters specific to the *Search Projector* application
-# @descEnd
-configMap:
-  # @key configMap.existingEnvConfigMap Name of existing configmap containing *Search Projector* Environment Configuration
-  # Note: When it's set it will disable configmap creation.
-  existingEnvConfigMap: ""
-
-#
-# @section Java Parameters
+# @section Application Parameters - Java
 #
 # @descStart
 # Contains Java configuration parameters to be used by the *Search Projector* application
@@ -60,7 +49,8 @@ java:
   # @key java.jvmOptions JVM options for the application
   jvmOptions: "-XX:MaxRAMPercentage=80.0"
 
-# @section Elastic/OpenSearch Parameters and Secret
+#
+# @section Application Parameters - Elastic/OpenSearch and Secret
 #
 # @descStart
 # The following contains connection details to an Elastic/OpenSearch service, on which the application relies.
@@ -92,6 +82,17 @@ elastic:
   username: ""
   # @key elastic.password OpenSearch/Elastic user password
   password: ""
+
+#
+# @section ConfigMap Parameters
+#
+# @descStart
+# Contains configuration parameters specific to the *Search Projector* application
+# @descEnd
+configMap:
+  # @key configMap.existingEnvConfigMap Name of existing configmap containing *Search Projector* Environment Configuration
+  # Note: When it's set it will disable configmap creation.
+  existingEnvConfigMap: ""
 
 #
 # @section Common Parameters
@@ -141,6 +142,9 @@ initContainers: []
 # @key sidecars Add sidecars to the pod.
 sidecars: []
 
+#
+# @section Deployment Image Parameters
+#
 image:
   # @key image.registry [default: REGISTRY_NAME] *Search Projector* image registry
   registry: quay.io
@@ -153,6 +157,9 @@ image:
   # @key image.pullSecrets Specify registry secret names as an array
   pullSecrets: []
 
+#
+# @section Deployment Resources Parameters - Requests and Limits
+#
 resources:
   requests:
     # @key resources.requests.cpu Set containers' CPU request
@@ -165,6 +172,21 @@ resources:
     # @key resources.limits.memory Set containers' memory limit
     memory: "2000Mi"
 
+#
+# @section Deployment Security Context Parameters - Default Security Context
+#
+podSecurityContext:
+  # @key podSecurityContext.runAsUser Set the provisioning pod's Security Context runAsUser User ID
+  runAsUser: 185
+  # @key podSecurityContext.runAsGroup Set the provisioning pod's Security Context runAsGroup Group ID
+  runAsGroup: 185
+  # @key podSecurityContext.runAsNonRoot Set the provisioning pod's Security Context runAsNonRoot
+  runAsNonRoot: true
+  # @key podSecurityContext.fsGroup Set the provisioning pod's Group ID for the mounted volumes' filesystem
+  fsGroup: 185
+  seccompProfile:
+    # @key podSecurityContext.seccompProfile.type Set the provisioning pod's Security Context seccomp profile
+    type: RuntimeDefault
 containerSecurityContext:
   # @key containerSecurityContext.runAsUser Set containers' Security Context runAsUser User ID
   runAsUser: 185
@@ -182,19 +204,9 @@ containerSecurityContext:
     # @key containerSecurityContext.seccompProfile.type Set container's Security Context seccomp profile
     type: RuntimeDefault
 
-podSecurityContext:
-  # @key podSecurityContext.runAsUser Set the provisioning pod's Security Context runAsUser User ID
-  runAsUser: 185
-  # @key podSecurityContext.runAsGroup Set the provisioning pod's Security Context runAsGroup Group ID
-  runAsGroup: 185
-  # @key podSecurityContext.runAsNonRoot Set the provisioning pod's Security Context runAsNonRoot
-  runAsNonRoot: true
-  # @key podSecurityContext.fsGroup Set the provisioning pod's Group ID for the mounted volumes' filesystem
-  fsGroup: 185
-  seccompProfile:
-    # @key podSecurityContext.seccompProfile.type Set the provisioning pod's Security Context seccomp profile
-    type: RuntimeDefault
-
+#
+# @section Deployment Affinity Parameters
+#
 # @key affinity Affinity for pod assignment
 # Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 affinity: {}

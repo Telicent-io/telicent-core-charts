@@ -99,15 +99,7 @@ Note: Only global parameters used within this chart will be listed below
 | `global.truststore.existingSecret`      | Name of an existing secret containing the truststore      | `""`                                           |
 | `global.truststore.mountPath`           | The mount path for the truststore in the container        | `/app/config/truststore`                       |
 
-### ConfigMap Parameters
-
-Contains configuration parameters specific to the *Search Projector* application
-
-| Name                             | Description                                                                        | Value |
-| -------------------------------- | ---------------------------------------------------------------------------------- | ----- |
-| `configMap.existingEnvConfigMap` | Name of existing configmap containing *Search Projector* Environment Configuration | `""`  |
-
-### Java Parameters
+### Application Parameters - Java
 
 Contains Java configuration parameters to be used by the *Search Projector* application
 
@@ -115,7 +107,7 @@ Contains Java configuration parameters to be used by the *Search Projector* appl
 | ----------------- | ------------------------------- | --------------------------- |
 | `java.jvmOptions` | JVM options for the application | `-XX:MaxRAMPercentage=80.0` |
 
-### Elastic/OpenSearch Parameters and Secret
+### Application Parameters - Elastic/OpenSearch and Secret
 
 The following contains connection details to an Elastic/OpenSearch service, on which the application relies.
 It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
@@ -134,6 +126,14 @@ For Quick Start purposes, a secret named `tc-auth-usr-elastic-search-projector` 
 | `elastic.username`                | OpenSearch/Elastic username                                                        | `""`                           |
 | `elastic.password`                | OpenSearch/Elastic user password                                                   | `""`                           |
 
+### ConfigMap Parameters
+
+Contains configuration parameters specific to the *Search Projector* application
+
+| Name                             | Description                                                                        | Value |
+| -------------------------------- | ---------------------------------------------------------------------------------- | ----- |
+| `configMap.existingEnvConfigMap` | Name of existing configmap containing *Search Projector* Environment Configuration | `""`  |
+
 ### Common Parameters
 
 | Name                | Description                                                            | Value |
@@ -145,41 +145,61 @@ For Quick Start purposes, a secret named `tc-auth-usr-elastic-search-projector` 
 
 ### Deployment Parameters
 
-| Name                                                | Description                                                                       | Value                                       |
-| --------------------------------------------------- | --------------------------------------------------------------------------------- | ------------------------------------------- |
-| `replicas`                                          | Number of *Search Projector* replicas to deploy                                   | `1`                                         |
-| `revisionHistoryLimit`                              | Number of controller revisions to keep                                            | `5`                                         |
-| `annotations`                                       | Add extra annotations to the deployment object                                    | `{}`                                        |
-| `podLabels`                                         | Add extra labels to the *Search Projector* pod                                    | `{}`                                        |
-| `podAnnotations`                                    | Add extra annotations to the *Search Projector* pod                               | `{}`                                        |
-| `extraEnvVars`                                      | Array with extra environment variables to add to *Search Projector* pod           | `[]`                                        |
-| `extraVolumes`                                      | Additional containers to be added to the *Search Projector* pod                   | `[]`                                        |
-| `extraVolumeMounts`                                 | Optionally specify extra list of additional volumeMounts                          | `[]`                                        |
-| `initContainers`                                    | Add init containers to the pod                                                    | `[]`                                        |
-| `sidecars`                                          | Add sidecars to the pod.                                                          | `[]`                                        |
-| `image.registry`                                    | *Search Projector* image registry                                                 | `REGISTRY_NAME`                             |
-| `image.repository`                                  | *Search Projector* image name                                                     | `REPOSITORY_NAME/smart-cache-elastic-index` |
-| `image.tag`                                         | *Search Projector* image tag. If not set, a tag is generated using the appVersion | `""`                                        |
-| `image.pullPolicy`                                  | *Search Projector* image pull policy                                              | `IfNotPresent`                              |
-| `image.pullSecrets`                                 | Specify registry secret names as an array                                         | `[]`                                        |
-| `resources.requests.cpu`                            | Set containers' CPU request                                                       | `250m`                                      |
-| `resources.requests.memory`                         | Set containers' memory request                                                    | `1000Mi`                                    |
-| `resources.limits.cpu`                              | Set containers' CPU limit                                                         | `500m`                                      |
-| `resources.limits.memory`                           | Set containers' memory limit                                                      | `2000Mi`                                    |
-| `containerSecurityContext.runAsUser`                | Set containers' Security Context runAsUser User ID                                | `185`                                       |
-| `containerSecurityContext.runAsGroup`               | Set containers' Security Context runAsGroup Group ID                              | `185`                                       |
-| `containerSecurityContext.runAsNonRoot`             | Set container's Security Context runAsNonRoot                                     | `true`                                      |
-| `containerSecurityContext.allowPrivilegeEscalation` | Set container's Security Context allowPrivilegeEscalation                         | `false`                                     |
-| `containerSecurityContext.capabilities.drop`        | List of capabilities to be dropped                                                | `["ALL"]`                                   |
-| `containerSecurityContext.seccompProfile.type`      | Set container's Security Context seccomp profile                                  | `RuntimeDefault`                            |
-| `podSecurityContext.runAsUser`                      | Set the provisioning pod's Security Context runAsUser User ID                     | `185`                                       |
-| `podSecurityContext.runAsGroup`                     | Set the provisioning pod's Security Context runAsGroup Group ID                   | `185`                                       |
-| `podSecurityContext.runAsNonRoot`                   | Set the provisioning pod's Security Context runAsNonRoot                          | `true`                                      |
-| `podSecurityContext.fsGroup`                        | Set the provisioning pod's Group ID for the mounted volumes' filesystem           | `185`                                       |
-| `podSecurityContext.seccompProfile.type`            | Set the provisioning pod's Security Context seccomp profile                       | `RuntimeDefault`                            |
-| `affinity`                                          | Affinity for pod assignment                                                       | `{}`                                        |
-| `nodeSelector`                                      | Node labels for pod assignment                                                    | `{}`                                        |
-| `tolerations`                                       | Tolerations for pod assignment                                                    | `[]`                                        |
+| Name                   | Description                                                             | Value |
+| ---------------------- | ----------------------------------------------------------------------- | ----- |
+| `replicas`             | Number of *Search Projector* replicas to deploy                         | `1`   |
+| `revisionHistoryLimit` | Number of controller revisions to keep                                  | `5`   |
+| `annotations`          | Add extra annotations to the deployment object                          | `{}`  |
+| `podLabels`            | Add extra labels to the *Search Projector* pod                          | `{}`  |
+| `podAnnotations`       | Add extra annotations to the *Search Projector* pod                     | `{}`  |
+| `extraEnvVars`         | Array with extra environment variables to add to *Search Projector* pod | `[]`  |
+| `extraVolumes`         | Additional containers to be added to the *Search Projector* pod         | `[]`  |
+| `extraVolumeMounts`    | Optionally specify extra list of additional volumeMounts                | `[]`  |
+| `initContainers`       | Add init containers to the pod                                          | `[]`  |
+| `sidecars`             | Add sidecars to the pod.                                                | `[]`  |
+
+### Deployment Image Parameters
+
+| Name                | Description                                                                       | Value                                       |
+| ------------------- | --------------------------------------------------------------------------------- | ------------------------------------------- |
+| `image.registry`    | *Search Projector* image registry                                                 | `REGISTRY_NAME`                             |
+| `image.repository`  | *Search Projector* image name                                                     | `REPOSITORY_NAME/smart-cache-elastic-index` |
+| `image.tag`         | *Search Projector* image tag. If not set, a tag is generated using the appVersion | `""`                                        |
+| `image.pullPolicy`  | *Search Projector* image pull policy                                              | `IfNotPresent`                              |
+| `image.pullSecrets` | Specify registry secret names as an array                                         | `[]`                                        |
+
+### Deployment Resources Parameters - Requests and Limits
+
+| Name                        | Description                    | Value    |
+| --------------------------- | ------------------------------ | -------- |
+| `resources.requests.cpu`    | Set containers' CPU request    | `250m`   |
+| `resources.requests.memory` | Set containers' memory request | `1000Mi` |
+| `resources.limits.cpu`      | Set containers' CPU limit      | `500m`   |
+| `resources.limits.memory`   | Set containers' memory limit   | `2000Mi` |
+
+### Deployment Security Context Parameters - Default Security Context
+
+| Name                                                | Description                                                             | Value            |
+| --------------------------------------------------- | ----------------------------------------------------------------------- | ---------------- |
+| `podSecurityContext.runAsUser`                      | Set the provisioning pod's Security Context runAsUser User ID           | `185`            |
+| `podSecurityContext.runAsGroup`                     | Set the provisioning pod's Security Context runAsGroup Group ID         | `185`            |
+| `podSecurityContext.runAsNonRoot`                   | Set the provisioning pod's Security Context runAsNonRoot                | `true`           |
+| `podSecurityContext.fsGroup`                        | Set the provisioning pod's Group ID for the mounted volumes' filesystem | `185`            |
+| `podSecurityContext.seccompProfile.type`            | Set the provisioning pod's Security Context seccomp profile             | `RuntimeDefault` |
+| `containerSecurityContext.runAsUser`                | Set containers' Security Context runAsUser User ID                      | `185`            |
+| `containerSecurityContext.runAsGroup`               | Set containers' Security Context runAsGroup Group ID                    | `185`            |
+| `containerSecurityContext.runAsNonRoot`             | Set container's Security Context runAsNonRoot                           | `true`           |
+| `containerSecurityContext.allowPrivilegeEscalation` | Set container's Security Context allowPrivilegeEscalation               | `false`          |
+| `containerSecurityContext.capabilities.drop`        | List of capabilities to be dropped                                      | `["ALL"]`        |
+| `containerSecurityContext.seccompProfile.type`      | Set container's Security Context seccomp profile                        | `RuntimeDefault` |
+
+### Deployment Affinity Parameters
+
+| Name           | Description                    | Value |
+| -------------- | ------------------------------ | ----- |
+| `affinity`     | Affinity for pod assignment    | `{}`  |
+| `nodeSelector` | Node labels for pod assignment | `{}`  |
+| `tolerations`  | Tolerations for pod assignment | `[]`  |
 
 ### Service Account Parameters
 

@@ -30,15 +30,7 @@ global:
   authHostDomain: "auth.telicent.io"
 
 #
-# @section ConfigMap Parameters
-#
-configMap:
-  # @key configMap.existingConfigMap The name of an existing config map containing env-config.js.
-  # Note: When it's set, it will disable configmap creation
-  existingConfigMap: ""
-
-#
-# @section UI Parameters
+# @section Application Parameters - UI
 #
 # @descStart
 # Contains parameters specific to the Graph User Interface
@@ -51,26 +43,32 @@ ui:
   # @key ui.dataCatalogUiDeployed If set to true, *Data Catalog UI* links will be available within *Graph UI*
   dataCatalogUiDeployed: true
 
-  # @key ui.graphUiMaptilerToken is the MapTiler token for the *Graph UI*
+  # @key ui.graphUiMaptilerToken The MapTiler token for the *Graph UI*
   graphUiMaptilerToken: "your.maptiler.token.here"
-  # @key ui.graphUiMapboxStyleSpecUrl
+  # @key ui.graphUiMapboxStyleSpecUrl The Mapbox style spec URL for the *Graph UI* can be specified if using Mapbox styles
   # For examples of the map configuration, see: _secret_config_js.tpl
-  # graphUiMapboxStyleSpecUrl is the Mapbox style spec URL for the *Graph UI* can be specified if using Mapbox styles
   graphUiMapboxStyleSpecUrl: ""
-  # @key ui.graphUiArcgisToken
-  # graphUiArcgisToken is the ArcGIS token for the *Graph UI* can be specified if using ArcGIS styles
+  # @key ui.graphUiArcgisToken  The ArcGIS token for the *Graph UI* can be specified if using ArcGIS styles
   graphUiArcgisToken: ""
   # @key ui.existingMapConfigSecretName The name of an existing secret containing map configuration
   existingMapConfigSecretName: ""
 
 #
-# @section OAuth Parameters
+# @section Application Parameters - OAuth
 #
 oauth:
   # @key oauth.clientId The OAuth client id to be used by *Graph UI*
   clientId: "telicent-graph-ui"
   # @key oauth.scopes List of OAuth scopes to be used by *Graph UI*
   scopes: "openid profile offline_access"
+
+#
+# @section ConfigMap Parameters
+#
+configMap:
+  # @key configMap.existingConfigMap The name of an existing config map containing env-config.js.
+  # Note: When it's set, it will disable configmap creation
+  existingConfigMap: ""
 
 #
 # @section Common Parameters
@@ -120,6 +118,9 @@ initContainers: []
 # @key sidecars Add sidecars to the pod.
 sidecars: []
 
+#
+# @section Deployment Image Parameters
+#
 image:
   # @key image.registry [default: REGISTRY_NAME] *Graph UI* image registry
   registry: quay.io
@@ -132,6 +133,9 @@ image:
   # @key image.pullSecrets Specify registry secret names as an array
   pullSecrets: []
 
+#
+# @section Deployment Resources Parameters - Requests and Limits
+#
 resources:
   requests:
     # @key resources.requests.cpu Set containers' CPU request
@@ -144,6 +148,21 @@ resources:
     # @key resources.limits.memory Set containers' memory limit
     memory: "768Mi"
 
+#
+# @section Deployment Security Context Parameters - Default Security Context
+#
+podSecurityContext:
+  # @key podSecurityContext.runAsUser Set the provisioning pod's Security Context runAsUser User ID
+  runAsUser: 185
+  # @key podSecurityContext.runAsGroup Set the provisioning pod's Security Context runAsGroup Group ID
+  runAsGroup: 185
+  # @key podSecurityContext.runAsNonRoot Set the provisioning pod's Security Context runAsNonRoot
+  runAsNonRoot: true
+  # @key podSecurityContext.fsGroup Set the provisioning pod's Group ID for the mounted volumes' filesystem
+  fsGroup: 185
+  seccompProfile:
+    # @key podSecurityContext.seccompProfile.type Set the provisioning pod's Security Context seccomp profile
+    type: RuntimeDefault
 containerSecurityContext:
   # @key containerSecurityContext.runAsUser Set containers' Security Context runAsUser User ID
   runAsUser: 185
@@ -161,19 +180,9 @@ containerSecurityContext:
     # @key containerSecurityContext.seccompProfile.type Set container's Security Context seccomp profile
     type: RuntimeDefault
 
-podSecurityContext:
-  # @key podSecurityContext.runAsUser Set the provisioning pod's Security Context runAsUser User ID
-  runAsUser: 185
-  # @key podSecurityContext.runAsGroup Set the provisioning pod's Security Context runAsGroup Group ID
-  runAsGroup: 185
-  # @key podSecurityContext.runAsNonRoot Set the provisioning pod's Security Context runAsNonRoot
-  runAsNonRoot: true
-  # @key podSecurityContext.fsGroup Set the provisioning pod's Group ID for the mounted volumes' filesystem
-  fsGroup: 185
-  seccompProfile:
-    # @key podSecurityContext.seccompProfile.type Set the provisioning pod's Security Context seccomp profile
-    type: RuntimeDefault
-
+#
+# @section Deployment Affinity Parameters
+#
 # @key affinity Affinity for pod assignment
 # Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 affinity: {}

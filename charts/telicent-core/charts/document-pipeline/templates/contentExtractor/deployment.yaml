@@ -111,12 +111,12 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
    
-      {{- with .Values.contentExtractor.nodeSelector }}
-      nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
       {{- with .Values.contentExtractor.affinity }}
       affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.contentExtractor.nodeSelector }}
+      nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       {{- with .Values.contentExtractor.tolerations }}

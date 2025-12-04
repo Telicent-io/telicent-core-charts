@@ -95,18 +95,18 @@ Note: Only global parameters used within this chart will be listed below
 | `global.apiHostDomain`    | Domain associated with Telicent Api services                                      | `api.telicent.io`  |
 | `global.authHostDomain`   | Domain associated with Telicent authentication services, including OIDC providers | `auth.telicent.io` |
 
-### ConfigMap Parameters
-
-| Name                          | Description                                                  | Value |
-| ----------------------------- | ------------------------------------------------------------ | ----- |
-| `configMap.existingConfigMap` | The name of an existing config map containing env-config.js. | `""`  |
-
-### OAuth Parameters
+### Application Parameters - OAuth
 
 | Name             | Description                                   | Value                           |
 | ---------------- | --------------------------------------------- | ------------------------------- |
 | `oauth.clientId` | The OAuth client id to be used by *Query UI*  | `telicent-query-ui`             |
 | `oauth.scopes`   | List of OAuth scopes to be used by *Query UI* | `openid profile offline_access` |
+
+### ConfigMap Parameters
+
+| Name                          | Description                                                  | Value |
+| ----------------------------- | ------------------------------------------------------------ | ----- |
+| `configMap.existingConfigMap` | The name of an existing config map containing env-config.js. | `""`  |
 
 ### Common Parameters
 
@@ -119,41 +119,61 @@ Note: Only global parameters used within this chart will be listed below
 
 ### Deployment Parameters
 
-| Name                                                | Description                                                             | Value                            |
-| --------------------------------------------------- | ----------------------------------------------------------------------- | -------------------------------- |
-| `replicas`                                          | Number of *Query UI* replicas to deploy                                 | `1`                              |
-| `revisionHistoryLimit`                              | Number of controller revisions to keep                                  | `5`                              |
-| `annotations`                                       | Add extra annotations to the deployment object                          | `{}`                             |
-| `podLabels`                                         | Add extra labels to the *Search UI* pod                                 | `{}`                             |
-| `podAnnotations`                                    | Add extra annotations to the *Search UI* pod                            | `{}`                             |
-| `extraEnvVars`                                      | Array with extra environment variables to add to *Search UI* pod        | `[]`                             |
-| `extraVolumes`                                      | Additional containers to be added to the *Search UI* pod                | `[]`                             |
-| `extraVolumeMounts`                                 | Optionally specify extra list of additional volumeMounts                | `[]`                             |
-| `initContainers`                                    | Add init containers to the pod                                          | `[]`                             |
-| `sidecars`                                          | Add sidecars to the pod.                                                | `[]`                             |
-| `image.registry`                                    | *Query UI* image registry                                               | `REGISTRY_NAME`                  |
-| `image.repository`                                  | *Query UI* image name                                                   | `REPOSITORY_NAME/telicent-query` |
-| `image.tag`                                         | Query UI image tag. If not set, a tag is generated using the appVersion | `""`                             |
-| `image.pullPolicy`                                  | *Query UI* image pull policy                                            | `IfNotPresent`                   |
-| `image.pullSecrets`                                 | Specify registry secret names as an array                               | `[]`                             |
-| `resources.requests.cpu`                            | Set containers' CPU request                                             | `125m`                           |
-| `resources.requests.memory`                         | Set containers' memory request                                          | `512Mi`                          |
-| `resources.limits.cpu`                              | Set containers' CPU limit                                               | `250m`                           |
-| `resources.limits.memory`                           | Set containers' memory limit                                            | `768Mi`                          |
-| `containerSecurityContext.runAsUser`                | Set containers' Security Context runAsUser User ID                      | `185`                            |
-| `containerSecurityContext.runAsGroup`               | Set containers' Security Context runAsGroup Group ID                    | `185`                            |
-| `containerSecurityContext.runAsNonRoot`             | Set container's Security Context runAsNonRoot                           | `true`                           |
-| `containerSecurityContext.allowPrivilegeEscalation` | Set container's Security Context allowPrivilegeEscalation               | `false`                          |
-| `containerSecurityContext.capabilities.drop`        | List of capabilities to be dropped                                      | `["ALL"]`                        |
-| `containerSecurityContext.seccompProfile.type`      | Set container's Security Context seccomp profile                        | `RuntimeDefault`                 |
-| `podSecurityContext.runAsUser`                      | Set the provisioning pod's Security Context runAsUser User ID           | `185`                            |
-| `podSecurityContext.runAsGroup`                     | Set the provisioning pod's Security Context runAsGroup Group ID         | `185`                            |
-| `podSecurityContext.runAsNonRoot`                   | Set the provisioning pod's Security Context runAsNonRoot                | `true`                           |
-| `podSecurityContext.fsGroup`                        | Set the provisioning pod's Group ID for the mounted volumes' filesystem | `185`                            |
-| `podSecurityContext.seccompProfile.type`            | Set the provisioning pod's Security Context seccomp profile             | `RuntimeDefault`                 |
-| `affinity`                                          | Affinity for pod assignment                                             | `{}`                             |
-| `nodeSelector`                                      | Node labels for pod assignment                                          | `{}`                             |
-| `tolerations`                                       | Tolerations for pod assignment                                          | `[]`                             |
+| Name                   | Description                                                      | Value |
+| ---------------------- | ---------------------------------------------------------------- | ----- |
+| `replicas`             | Number of *Query UI* replicas to deploy                          | `1`   |
+| `revisionHistoryLimit` | Number of controller revisions to keep                           | `5`   |
+| `annotations`          | Add extra annotations to the deployment object                   | `{}`  |
+| `podLabels`            | Add extra labels to the *Search UI* pod                          | `{}`  |
+| `podAnnotations`       | Add extra annotations to the *Search UI* pod                     | `{}`  |
+| `extraEnvVars`         | Array with extra environment variables to add to *Search UI* pod | `[]`  |
+| `extraVolumes`         | Additional containers to be added to the *Search UI* pod         | `[]`  |
+| `extraVolumeMounts`    | Optionally specify extra list of additional volumeMounts         | `[]`  |
+| `initContainers`       | Add init containers to the pod                                   | `[]`  |
+| `sidecars`             | Add sidecars to the pod.                                         | `[]`  |
+
+### Deployment Image Parameters
+
+| Name                | Description                                                             | Value                            |
+| ------------------- | ----------------------------------------------------------------------- | -------------------------------- |
+| `image.registry`    | *Query UI* image registry                                               | `REGISTRY_NAME`                  |
+| `image.repository`  | *Query UI* image name                                                   | `REPOSITORY_NAME/telicent-query` |
+| `image.tag`         | Query UI image tag. If not set, a tag is generated using the appVersion | `""`                             |
+| `image.pullPolicy`  | *Query UI* image pull policy                                            | `IfNotPresent`                   |
+| `image.pullSecrets` | Specify registry secret names as an array                               | `[]`                             |
+
+### Deployment Resources Parameters - Requests and Limits
+
+| Name                        | Description                    | Value   |
+| --------------------------- | ------------------------------ | ------- |
+| `resources.requests.cpu`    | Set containers' CPU request    | `125m`  |
+| `resources.requests.memory` | Set containers' memory request | `512Mi` |
+| `resources.limits.cpu`      | Set containers' CPU limit      | `250m`  |
+| `resources.limits.memory`   | Set containers' memory limit   | `768Mi` |
+
+### Deployment Security Context Parameters - Default Security Context
+
+| Name                                                | Description                                                             | Value            |
+| --------------------------------------------------- | ----------------------------------------------------------------------- | ---------------- |
+| `podSecurityContext.runAsUser`                      | Set the provisioning pod's Security Context runAsUser User ID           | `185`            |
+| `podSecurityContext.runAsGroup`                     | Set the provisioning pod's Security Context runAsGroup Group ID         | `185`            |
+| `podSecurityContext.runAsNonRoot`                   | Set the provisioning pod's Security Context runAsNonRoot                | `true`           |
+| `podSecurityContext.fsGroup`                        | Set the provisioning pod's Group ID for the mounted volumes' filesystem | `185`            |
+| `podSecurityContext.seccompProfile.type`            | Set the provisioning pod's Security Context seccomp profile             | `RuntimeDefault` |
+| `containerSecurityContext.runAsUser`                | Set containers' Security Context runAsUser User ID                      | `185`            |
+| `containerSecurityContext.runAsGroup`               | Set containers' Security Context runAsGroup Group ID                    | `185`            |
+| `containerSecurityContext.runAsNonRoot`             | Set container's Security Context runAsNonRoot                           | `true`           |
+| `containerSecurityContext.allowPrivilegeEscalation` | Set container's Security Context allowPrivilegeEscalation               | `false`          |
+| `containerSecurityContext.capabilities.drop`        | List of capabilities to be dropped                                      | `["ALL"]`        |
+| `containerSecurityContext.seccompProfile.type`      | Set container's Security Context seccomp profile                        | `RuntimeDefault` |
+
+### Deployment Affinity Parameters
+
+| Name           | Description                    | Value |
+| -------------- | ------------------------------ | ----- |
+| `affinity`     | Affinity for pod assignment    | `{}`  |
+| `nodeSelector` | Node labels for pod assignment | `{}`  |
+| `tolerations`  | Tolerations for pod assignment | `[]`  |
 
 ### Service Account Parameters
 

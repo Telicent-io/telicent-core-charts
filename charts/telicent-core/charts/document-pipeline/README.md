@@ -108,7 +108,7 @@ Note: Only global parameters used within this chart will be listed below
 | `global.truststore.existingSecret`      | Name of an existing secret containing the truststore                                                              | `""`                                           |
 | `global.truststore.mountPath`           | The mount path for the truststore in the container                                                                | `/app/config/truststore`                       |
 
-### Resources - Default resource allocation applied to all sub-chart deployments
+### Deployment Resources Parameters - Default resource allocation applied to all sub-chart deployments
 
 | Name                        | Description                    | Value    |
 | --------------------------- | ------------------------------ | -------- |
@@ -117,7 +117,7 @@ Note: Only global parameters used within this chart will be listed below
 | `resources.limits.cpu`      | Set containers' CPU limit      | `1000m`  |
 | `resources.limits.memory`   | Set containers' memory limit   | `1000Mi` |
 
-### Security Context - Default security context applied to all sub-chart deployments
+### Deployment Security Context Parameters - Default security context applied to all sub-chart deployments
 
 | Name                                                | Description                                                             | Value            |
 | --------------------------------------------------- | ----------------------------------------------------------------------- | ---------------- |
@@ -161,19 +161,13 @@ The *HTTP Ingester* is responsible for ingesting documents via https.
 The application settings are defined within the 'java' & 'routes' keys
 
 
-### *HTTP Ingester* - Configmap Parameters
-
-| Name                                             | Description                                                | Value |
-| ------------------------------------------------ | ---------------------------------------------------------- | ----- |
-| `httpIngester.configMap.existingRoutesConfigMap` | Name of existing configmap containing Routes Configuration | `""`  |
-
-### *HTTP Ingester* - Java Parameters
+### *HTTP Ingester* Application Parameters - Java
 
 | Name                           | Description                     | Value                       |
 | ------------------------------ | ------------------------------- | --------------------------- |
 | `httpIngester.java.jvmOptions` | Java options to pass to the JVM | `-XX:MaxRAMPercentage=80.0` |
 
-### *HTTP Ingester* - Routes Parameters
+### *HTTP Ingester* Application Parameters - Routes
 
 | Name                                             | Description                                                                                                                                                                                                                                       | Value                                                                                                              |
 | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
@@ -196,6 +190,12 @@ The application settings are defined within the 'java' & 'routes' keys
 | `httpIngester.routes[0].headers[4].name`         | The EDH/IDH policy information header                                                                                                                                                                                                             | `Policy-Information`                                                                                               |
 | `httpIngester.routes[0].headers[4].defaultValue` | The default value for the EDH/IDH policy information header                                                                                                                                                                                       | `{"EDH":{"classification":"O","permittedNats":["GBR"],"permittedOrgs":["Telicent"],"orGroups":[],"andGroups":[]}}` |
 | `httpIngester.routes[0].headers[4].priority`     | The priority for the EDH/IDH policy information header                                                                                                                                                                                            | `REQUEST`                                                                                                          |
+
+### *HTTP Ingester* - Configmap Parameters
+
+| Name                                             | Description                                                | Value |
+| ------------------------------------------------ | ---------------------------------------------------------- | ----- |
+| `httpIngester.configMap.existingRoutesConfigMap` | Name of existing configmap containing Routes Configuration | `""`  |
 
 ### *HTTP Ingester* - Common Parameters
 
@@ -243,7 +243,10 @@ The application settings are defined within the 'java' & 'routes' keys
 ### *Content Extractor*
 
 The *Content Extractor* is responsible for extracting information from the ingested documents.
-The application settings are defined within the 'topic' key
+The application settings are defined within the 'topics' key
+
+
+### *Content Extractor* Application Parameters - Topics
 
 | Name                                  | Description                                                                          | Value                         |
 | ------------------------------------- | ------------------------------------------------------------------------------------ | ----------------------------- |
@@ -289,13 +292,13 @@ The *Content Indexer* is responsible for indexing documents.
 The application settings are defined within the 'java' & 'elastic' keys
 
 
-### Java Parameters
+### *Content Indexer* Application Parameters - Java
 
 | Name                             | Description                     | Value                       |
 | -------------------------------- | ------------------------------- | --------------------------- |
 | `contentIndexer.java.jvmOptions` | JVM options for the application | `-XX:MaxRAMPercentage=80.0` |
 
-### Elastic/OpenSearch Parameters and Secret
+### *Content Indexer* Application Parameters - Elastic/OpenSearch and Secret
 
 The following contains connection details to an Elastic/OpenSearch service, on which the application relies.
 It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
@@ -350,6 +353,9 @@ For Quick Start purposes, a secret named `tc-auth-usr-elastic-document-pipeline-
 The *Catalogue Updater* is responsible for updating the catalogue store.
 The application settings are defined within the 'topics' key
 
+
+### *Catalogue Updater* Application Parameters - Topics
+
 | Name                                       | Description                                                                          | Value                         |
 | ------------------------------------------ | ------------------------------------------------------------------------------------ | ----------------------------- |
 | `catalogueUpdater.topics.inputTopic`       | The Kafka topic from which the *Catalogue Updater* will consume messages             | `document.textandmetadata`    |
@@ -395,6 +401,9 @@ The application settings are defined within the 'topics' key
 
 The *Content Tagger* is responsible for tagging documents that have been ingested.
 The application settings are defined within the 'topics' key
+
+
+### *Content Tagger* Application Parameters - Topics
 
 | Name                                        | Description                                                                | Value                                   |
 | ------------------------------------------- | -------------------------------------------------------------------------- | --------------------------------------- |
@@ -444,6 +453,9 @@ The application settings are defined within the 'topics' key
 
 The *Entity Extractor* is responsible for extracting entities from the ingested documents.
 The application settings are defined within the 'topics' key
+
+
+### *Entity Extractor* Application Parameters - Topics
 
 | Name                                     | Description                                                         | Value                      |
 | ---------------------------------------- | ------------------------------------------------------------------- | -------------------------- |
