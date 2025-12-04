@@ -14,7 +14,7 @@ metadata:
 
 spec:
   gateways:
-  - {{ required "A valid .Values.global.istioNamespace entry required!" .Values.global.istioNamespace }}/{{ required "A valid .Values.global.istioGatewayName entry required!" .Values.global.istioGatewayName }}
+  - {{ include "istio.gatewayNamespace" . }}/{{ include "istio.gatewayName" . }}
   hosts:
   - {{ .Values.istio.virtualService.host | default .Values.global.appHostDomain }}
   http:

@@ -2,7 +2,7 @@
 Copyright (C) 2025 Telicent Limited
 */}}
 
-{{- if not .Values.configuration.existingEnvConfigMap -}}
+{{- if not .Values.configMap.existingEnvConfigMap -}}
 apiVersion: v1
 kind: ConfigMap
 
@@ -16,7 +16,7 @@ data:
   OAUTH2_PROXY_HTTP_ADDRESS: 0.0.0.0:4080
 
   OAUTH2_PROXY_PROVIDER: "oidc"
-  OAUTH2_PROXY_OIDC_ISSUER_URL: {{ required "You must supply OAUTH2_PROXY_OIDC_ISSUER_URL" .Values.configuration.oidcIssuerUrl | quote }}
+  OAUTH2_PROXY_OIDC_ISSUER_URL: {{ required "You must supply OAUTH2_PROXY_OIDC_ISSUER_URL" .Values.oauth.oidcIssuerUrl | quote }}
   OAUTH2_PROXY_EMAIL_DOMAINS: "*"
 
   OAUTH2_PROXY_REDIRECT_URL: {{ include "oauth2-proxy.oidcRedirectUrl" . | quote }}
@@ -36,12 +36,12 @@ data:
   OAUTH2_PROXY_COOKIE_NAME: __Secure-session
   OAUTH2_PROXY_COOKIE_SAMESITE: lax
 
-  OAUTH2_PROXY_COOKIE_EXPIRE: {{ .Values.configuration.cookieExpire | quote }}
-  OAUTH2_PROXY_COOKIE_REFRESH: {{ .Values.configuration.cookieRefresh | quote }}
+  OAUTH2_PROXY_COOKIE_EXPIRE: {{ .Values.oauth.cookieExpire | quote }}
+  OAUTH2_PROXY_COOKIE_REFRESH: {{ .Values.oauth.cookieRefresh | quote }}
 
   OAUTH2_PROXY_COOKIE_PATH: "/"
-  OAUTH2_PROXY_COOKIE_DOMAINS: {{ .Values.configuration.cookieDomains| default .Values.global.authHostDomain | quote }}
-  OAUTH2_PROXY_WHITELIST_DOMAINS:  {{ .Values.configuration.cookieWhiteListDomains | default .Values.global.authHostDomain | quote }}
+  OAUTH2_PROXY_COOKIE_DOMAINS: {{ .Values.oauth.cookieDomains | default .Values.global.authHostDomain | quote }}
+  OAUTH2_PROXY_WHITELIST_DOMAINS:  {{ .Values.oauth.cookieWhiteListDomains | default .Values.global.authHostDomain | quote }}
 
   # todo: ab: check headers are stripped, should reduce header size
   # strip X-Forwarded-* & Authorization headers, if set by oauth2-proxy
@@ -50,7 +50,7 @@ data:
   # fix - 403 Unable to find a valid CSRF token
   OAUTH2_PROXY_COOKIE_CSRF_PER_REQUEST_LIMIT: "5"
   OAUTH2_PROXY_COOKIE_CSRF_PER_REQUEST: "true"
-  OAUTH2_PROXY_COOKIE_CSRF_EXPIRE:  {{ .Values.configuration.cookieCsrfExpire | quote }}
+  OAUTH2_PROXY_COOKIE_CSRF_EXPIRE:  {{ .Values.oauth.cookieCsrfExpire | quote }}
 
   OAUTH2_PROXY_SET_AUTHORIZATION_HEADER: "true"
 
