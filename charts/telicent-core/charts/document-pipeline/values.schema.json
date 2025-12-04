@@ -256,16 +256,6 @@
         "httpIngester": {
             "type": "object",
             "properties": {
-                "configMap": {
-                    "type": "object",
-                    "properties": {
-                        "existingRoutesConfigMap": {
-                            "type": "string",
-                            "description": "Name of existing configmap containing Routes Configuration",
-                            "default": ""
-                        }
-                    }
-                },
                 "java": {
                     "type": "object",
                     "properties": {
@@ -319,6 +309,16 @@
                                     }
                                 }
                             }
+                        }
+                    }
+                },
+                "configMap": {
+                    "type": "object",
+                    "properties": {
+                        "existingRoutesConfigMap": {
+                            "type": "string",
+                            "description": "Name of existing configmap containing Routes Configuration",
+                            "default": ""
                         }
                     }
                 },

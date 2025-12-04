@@ -96,32 +96,32 @@ Note: Only global parameters used within this chart will be listed below
 | `global.apiHostDomain`    | Domain associated with Telicent Api services                                      | `api.telicent.io`  |
 | `global.authHostDomain`   | Domain associated with Telicent authentication services, including OIDC providers | `auth.telicent.io` |
 
-### ConfigMap Parameters
-
-| Name                          | Description                                                  | Value |
-| ----------------------------- | ------------------------------------------------------------ | ----- |
-| `configMap.existingConfigMap` | The name of an existing config map containing env-config.js. | `""`  |
-
-### UI Parameters
+### Application Parameters - UI
 
 Contains parameters specific to the Graph User Interface
 
-| Name                             | Description                                                                 | Value                      |
-| -------------------------------- | --------------------------------------------------------------------------- | -------------------------- |
-| `ui.searchUiDeployed`            | If set to true, *Search UI* links will be available within *Graph UI*       | `true`                     |
-| `ui.userPortalUiDeployed`        | If set to true, *User Portal* links will be available within *Graph UI*     | `true`                     |
-| `ui.dataCatalogUiDeployed`       | If set to true, *Data Catalog UI* links will be available within *Graph UI* | `true`                     |
-| `ui.graphUiMaptilerToken`        | is the MapTiler token for the *Graph UI*                                    | `your.maptiler.token.here` |
-| `ui.graphUiMapboxStyleSpecUrl`   |                                                                             | `""`                       |
-| `ui.graphUiArcgisToken`          |                                                                             | `""`                       |
-| `ui.existingMapConfigSecretName` | The name of an existing secret containing map configuration                 | `""`                       |
+| Name                             | Description                                                                          | Value                      |
+| -------------------------------- | ------------------------------------------------------------------------------------ | -------------------------- |
+| `ui.searchUiDeployed`            | If set to true, *Search UI* links will be available within *Graph UI*                | `true`                     |
+| `ui.userPortalUiDeployed`        | If set to true, *User Portal* links will be available within *Graph UI*              | `true`                     |
+| `ui.dataCatalogUiDeployed`       | If set to true, *Data Catalog UI* links will be available within *Graph UI*          | `true`                     |
+| `ui.graphUiMaptilerToken`        | The MapTiler token for the *Graph UI*                                                | `your.maptiler.token.here` |
+| `ui.graphUiMapboxStyleSpecUrl`   | The Mapbox style spec URL for the *Graph UI* can be specified if using Mapbox styles | `""`                       |
+| `ui.graphUiArcgisToken`          | The ArcGIS token for the *Graph UI* can be specified if using ArcGIS styles          | `""`                       |
+| `ui.existingMapConfigSecretName` | The name of an existing secret containing map configuration                          | `""`                       |
 
-### OAuth Parameters
+### Application Parameters - OAuth
 
 | Name             | Description                                   | Value                           |
 | ---------------- | --------------------------------------------- | ------------------------------- |
 | `oauth.clientId` | The OAuth client id to be used by *Graph UI*  | `telicent-graph-ui`             |
 | `oauth.scopes`   | List of OAuth scopes to be used by *Graph UI* | `openid profile offline_access` |
+
+### ConfigMap Parameters
+
+| Name                          | Description                                                  | Value |
+| ----------------------------- | ------------------------------------------------------------ | ----- |
+| `configMap.existingConfigMap` | The name of an existing config map containing env-config.js. | `""`  |
 
 ### Common Parameters
 
@@ -134,41 +134,61 @@ Contains parameters specific to the Graph User Interface
 
 ### Deployment Parameters
 
-| Name                                                | Description                                                               | Value                            |
-| --------------------------------------------------- | ------------------------------------------------------------------------- | -------------------------------- |
-| `replicas`                                          | Number of *Graph UI* replicas to deploy                                   | `1`                              |
-| `revisionHistoryLimit`                              | Number of controller revisions to keep                                    | `5`                              |
-| `annotations`                                       | Add extra annotations to the deployment object                            | `{}`                             |
-| `podLabels`                                         | Add extra labels to the *Graph UI* pod                                    | `{}`                             |
-| `podAnnotations`                                    | Add extra annotations to the *Graph UI* pod                               | `{}`                             |
-| `extraEnvVars`                                      | Array with extra environment variables to add to *Graph UI* pod           | `[]`                             |
-| `extraVolumes`                                      | Additional containers to be added to the *Graph UI* pod                   | `[]`                             |
-| `extraVolumeMounts`                                 | Optionally specify extra list of additional volumeMounts                  | `[]`                             |
-| `initContainers`                                    | Add init containers to the pod                                            | `[]`                             |
-| `sidecars`                                          | Add sidecars to the pod.                                                  | `[]`                             |
-| `image.registry`                                    | *Graph UI* image registry                                                 | `REGISTRY_NAME`                  |
-| `image.repository`                                  | *Graph UI* image name                                                     | `REPOSITORY_NAME/telicent-graph` |
-| `image.tag`                                         | Seearch UI image tag. If not set, a tag is generated using the appVersion | `""`                             |
-| `image.pullPolicy`                                  | *Graph UI* image pull policy                                              | `IfNotPresent`                   |
-| `image.pullSecrets`                                 | Specify registry secret names as an array                                 | `[]`                             |
-| `resources.requests.cpu`                            | Set containers' CPU request                                               | `250m`                           |
-| `resources.requests.memory`                         | Set containers' memory request                                            | `512Mi`                          |
-| `resources.limits.cpu`                              | Set containers' CPU limit                                                 | `375m`                           |
-| `resources.limits.memory`                           | Set containers' memory limit                                              | `768Mi`                          |
-| `containerSecurityContext.runAsUser`                | Set containers' Security Context runAsUser User ID                        | `185`                            |
-| `containerSecurityContext.runAsGroup`               | Set containers' Security Context runAsGroup Group ID                      | `185`                            |
-| `containerSecurityContext.runAsNonRoot`             | Set container's Security Context runAsNonRoot                             | `true`                           |
-| `containerSecurityContext.allowPrivilegeEscalation` | Set container's Security Context allowPrivilegeEscalation                 | `false`                          |
-| `containerSecurityContext.capabilities.drop`        | List of capabilities to be dropped                                        | `["ALL"]`                        |
-| `containerSecurityContext.seccompProfile.type`      | Set container's Security Context seccomp profile                          | `RuntimeDefault`                 |
-| `podSecurityContext.runAsUser`                      | Set the provisioning pod's Security Context runAsUser User ID             | `185`                            |
-| `podSecurityContext.runAsGroup`                     | Set the provisioning pod's Security Context runAsGroup Group ID           | `185`                            |
-| `podSecurityContext.runAsNonRoot`                   | Set the provisioning pod's Security Context runAsNonRoot                  | `true`                           |
-| `podSecurityContext.fsGroup`                        | Set the provisioning pod's Group ID for the mounted volumes' filesystem   | `185`                            |
-| `podSecurityContext.seccompProfile.type`            | Set the provisioning pod's Security Context seccomp profile               | `RuntimeDefault`                 |
-| `affinity`                                          | Affinity for pod assignment                                               | `{}`                             |
-| `nodeSelector`                                      | Node labels for pod assignment                                            | `{}`                             |
-| `tolerations`                                       | Tolerations for pod assignment                                            | `[]`                             |
+| Name                   | Description                                                     | Value |
+| ---------------------- | --------------------------------------------------------------- | ----- |
+| `replicas`             | Number of *Graph UI* replicas to deploy                         | `1`   |
+| `revisionHistoryLimit` | Number of controller revisions to keep                          | `5`   |
+| `annotations`          | Add extra annotations to the deployment object                  | `{}`  |
+| `podLabels`            | Add extra labels to the *Graph UI* pod                          | `{}`  |
+| `podAnnotations`       | Add extra annotations to the *Graph UI* pod                     | `{}`  |
+| `extraEnvVars`         | Array with extra environment variables to add to *Graph UI* pod | `[]`  |
+| `extraVolumes`         | Additional containers to be added to the *Graph UI* pod         | `[]`  |
+| `extraVolumeMounts`    | Optionally specify extra list of additional volumeMounts        | `[]`  |
+| `initContainers`       | Add init containers to the pod                                  | `[]`  |
+| `sidecars`             | Add sidecars to the pod.                                        | `[]`  |
+
+### Deployment Image Parameters
+
+| Name                | Description                                                               | Value                            |
+| ------------------- | ------------------------------------------------------------------------- | -------------------------------- |
+| `image.registry`    | *Graph UI* image registry                                                 | `REGISTRY_NAME`                  |
+| `image.repository`  | *Graph UI* image name                                                     | `REPOSITORY_NAME/telicent-graph` |
+| `image.tag`         | Seearch UI image tag. If not set, a tag is generated using the appVersion | `""`                             |
+| `image.pullPolicy`  | *Graph UI* image pull policy                                              | `IfNotPresent`                   |
+| `image.pullSecrets` | Specify registry secret names as an array                                 | `[]`                             |
+
+### Deployment Resources Parameters - Requests and Limits
+
+| Name                        | Description                    | Value   |
+| --------------------------- | ------------------------------ | ------- |
+| `resources.requests.cpu`    | Set containers' CPU request    | `250m`  |
+| `resources.requests.memory` | Set containers' memory request | `512Mi` |
+| `resources.limits.cpu`      | Set containers' CPU limit      | `375m`  |
+| `resources.limits.memory`   | Set containers' memory limit   | `768Mi` |
+
+### Deployment Security Context Parameters - Default Security Context
+
+| Name                                                | Description                                                             | Value            |
+| --------------------------------------------------- | ----------------------------------------------------------------------- | ---------------- |
+| `podSecurityContext.runAsUser`                      | Set the provisioning pod's Security Context runAsUser User ID           | `185`            |
+| `podSecurityContext.runAsGroup`                     | Set the provisioning pod's Security Context runAsGroup Group ID         | `185`            |
+| `podSecurityContext.runAsNonRoot`                   | Set the provisioning pod's Security Context runAsNonRoot                | `true`           |
+| `podSecurityContext.fsGroup`                        | Set the provisioning pod's Group ID for the mounted volumes' filesystem | `185`            |
+| `podSecurityContext.seccompProfile.type`            | Set the provisioning pod's Security Context seccomp profile             | `RuntimeDefault` |
+| `containerSecurityContext.runAsUser`                | Set containers' Security Context runAsUser User ID                      | `185`            |
+| `containerSecurityContext.runAsGroup`               | Set containers' Security Context runAsGroup Group ID                    | `185`            |
+| `containerSecurityContext.runAsNonRoot`             | Set container's Security Context runAsNonRoot                           | `true`           |
+| `containerSecurityContext.allowPrivilegeEscalation` | Set container's Security Context allowPrivilegeEscalation               | `false`          |
+| `containerSecurityContext.capabilities.drop`        | List of capabilities to be dropped                                      | `["ALL"]`        |
+| `containerSecurityContext.seccompProfile.type`      | Set container's Security Context seccomp profile                        | `RuntimeDefault` |
+
+### Deployment Affinity Parameters
+
+| Name           | Description                    | Value |
+| -------------- | ------------------------------ | ----- |
+| `affinity`     | Affinity for pod assignment    | `{}`  |
+| `nodeSelector` | Node labels for pod assignment | `{}`  |
+| `tolerations`  | Tolerations for pod assignment | `[]`  |
 
 ### Service Account Parameters
 

@@ -104,20 +104,20 @@ Note: Only global parameters used within this chart will be listed below.
 | `global.truststore.existingSecret`      | Name of an existing secret containing the truststore                                                                                                                                   | `""`                                           |
 | `global.truststore.mountPath`           | The mount path for the truststore in the container                                                                                                                                     | `/app/config/truststore`                       |
 
-### ConfigMap Parameters
-
-| Name                                | Description                                                             | Value |
-| ----------------------------------- | ----------------------------------------------------------------------- | ----- |
-| `configMap.existingEnvConfigMap`    | Name of existing configmap containing *Graph* Environment Configuration | `""`  |
-| `configMap.existingFusekiConfigMap` | Name of existing configmap containing Fuseki Configuration              | `""`  |
-
-### Java Parameters
+### Application Parameters - Java
 
 Contains Java configuration parameters to be used by the *Graph* application
 
 | Name              | Description                     | Value                       |
 | ----------------- | ------------------------------- | --------------------------- |
 | `java.jvmOptions` | JVM options for the application | `-XX:MaxRAMPercentage=80.0` |
+
+### ConfigMap Parameters
+
+| Name                                | Description                                                             | Value |
+| ----------------------------------- | ----------------------------------------------------------------------- | ----- |
+| `configMap.existingEnvConfigMap`    | Name of existing configmap containing *Graph* Environment Configuration | `""`  |
+| `configMap.existingFusekiConfigMap` | Name of existing configmap containing Fuseki Configuration              | `""`  |
 
 ### Common Parameters
 
@@ -130,41 +130,61 @@ Contains Java configuration parameters to be used by the *Graph* application
 
 ### Statefulset Parameters
 
-| Name                                                | Description                                                             | Value                               |
-| --------------------------------------------------- | ----------------------------------------------------------------------- | ----------------------------------- |
-| `replicas`                                          | Number of *Graph* replicas to deploy                                    | `1`                                 |
-| `revisionHistoryLimit`                              | Number of controller revisions to keep                                  | `5`                                 |
-| `annotations`                                       | Add extra annotations to the Statefulset object                         | `{}`                                |
-| `podLabels`                                         | Add extra labels to the *Graph* pod                                     | `{}`                                |
-| `podAnnotations`                                    | Add extra annotations to the *Graph* pod                                | `{}`                                |
-| `extraEnvVars`                                      | Array with extra environment variables to add to *Graph* pod            | `[]`                                |
-| `extraVolumes`                                      | Additional containers to be added to the *Graph* pod                    | `[]`                                |
-| `extraVolumeMounts`                                 | Optionally specify extra list of additional volumeMounts                | `[]`                                |
-| `initContainers`                                    | Add init containers to the pod                                          | `[]`                                |
-| `sidecars`                                          | Add sidecars to the pod.                                                | `[]`                                |
-| `image.registry`                                    | *Graph* image registry                                                  | `REGISTRY_NAME`                     |
-| `image.repository`                                  | *Graph* image name                                                      | `REPOSITORY_NAME/smart-cache-graph` |
-| `image.tag`                                         | *Graph* image tag. If not set, a tag is generated using the appVersion  | `""`                                |
-| `image.pullPolicy`                                  | *Graph* image pull policy                                               | `IfNotPresent`                      |
-| `image.pullSecrets`                                 | Specify registry secret names as an array                               | `[]`                                |
-| `resources.requests.cpu`                            | Set containers' CPU request                                             | `1200m`                             |
-| `resources.requests.memory`                         | Set containers' memory request                                          | `8000Mi`                            |
-| `resources.limits.cpu`                              | Set containers' CPU limit                                               | `1500m`                             |
-| `resources.limits.memory`                           | Set containers' memory limit                                            | `12000Mi`                           |
-| `containerSecurityContext.runAsUser`                | Set containers' Security Context runAsUser User ID                      | `185`                               |
-| `containerSecurityContext.runAsGroup`               | Set containers' Security Context runAsGroup Group ID                    | `185`                               |
-| `containerSecurityContext.runAsNonRoot`             | Set container's Security Context runAsNonRoot                           | `true`                              |
-| `containerSecurityContext.allowPrivilegeEscalation` | Set container's Security Context allowPrivilegeEscalation               | `false`                             |
-| `containerSecurityContext.capabilities.drop`        | List of capabilities to be dropped                                      | `["ALL"]`                           |
-| `containerSecurityContext.seccompProfile.type`      | Set container's Security Context seccomp profile                        | `RuntimeDefault`                    |
-| `podSecurityContext.runAsUser`                      | Set the provisioning pod's Security Context runAsUser User ID           | `185`                               |
-| `podSecurityContext.runAsGroup`                     | Set the provisioning pod's Security Context runAsGroup Group ID         | `185`                               |
-| `podSecurityContext.runAsNonRoot`                   | Set the provisioning pod's Security Context runAsNonRoot                | `true`                              |
-| `podSecurityContext.fsGroup`                        | Set the provisioning pod's Group ID for the mounted volumes' filesystem | `185`                               |
-| `podSecurityContext.seccompProfile.type`            | Set the provisioning pod's Security Context seccomp profile             | `RuntimeDefault`                    |
-| `affinity`                                          | Affinity for pod assignment                                             | `{}`                                |
-| `nodeSelector`                                      | Node labels for pod assignment                                          | `{}`                                |
-| `tolerations`                                       | Tolerations for pod assignment                                          | `[]`                                |
+| Name                   | Description                                                  | Value |
+| ---------------------- | ------------------------------------------------------------ | ----- |
+| `replicas`             | Number of *Graph* replicas to deploy                         | `1`   |
+| `revisionHistoryLimit` | Number of controller revisions to keep                       | `5`   |
+| `annotations`          | Add extra annotations to the Statefulset object              | `{}`  |
+| `podLabels`            | Add extra labels to the *Graph* pod                          | `{}`  |
+| `podAnnotations`       | Add extra annotations to the *Graph* pod                     | `{}`  |
+| `extraEnvVars`         | Array with extra environment variables to add to *Graph* pod | `[]`  |
+| `extraVolumes`         | Additional containers to be added to the *Graph* pod         | `[]`  |
+| `extraVolumeMounts`    | Optionally specify extra list of additional volumeMounts     | `[]`  |
+| `initContainers`       | Add init containers to the pod                               | `[]`  |
+| `sidecars`             | Add sidecars to the pod.                                     | `[]`  |
+
+### Statefulset Image Parameters
+
+| Name                | Description                                                            | Value                               |
+| ------------------- | ---------------------------------------------------------------------- | ----------------------------------- |
+| `image.registry`    | *Graph* image registry                                                 | `REGISTRY_NAME`                     |
+| `image.repository`  | *Graph* image name                                                     | `REPOSITORY_NAME/smart-cache-graph` |
+| `image.tag`         | *Graph* image tag. If not set, a tag is generated using the appVersion | `""`                                |
+| `image.pullPolicy`  | *Graph* image pull policy                                              | `IfNotPresent`                      |
+| `image.pullSecrets` | Specify registry secret names as an array                              | `[]`                                |
+
+### Statefulset Resources Parameters - Requests and Limits
+
+| Name                        | Description                    | Value     |
+| --------------------------- | ------------------------------ | --------- |
+| `resources.requests.cpu`    | Set containers' CPU request    | `1200m`   |
+| `resources.requests.memory` | Set containers' memory request | `8000Mi`  |
+| `resources.limits.cpu`      | Set containers' CPU limit      | `1500m`   |
+| `resources.limits.memory`   | Set containers' memory limit   | `12000Mi` |
+
+### Statefulset Security Context Parameters - Default Security Context
+
+| Name                                                | Description                                                             | Value            |
+| --------------------------------------------------- | ----------------------------------------------------------------------- | ---------------- |
+| `podSecurityContext.runAsUser`                      | Set the provisioning pod's Security Context runAsUser User ID           | `185`            |
+| `podSecurityContext.runAsGroup`                     | Set the provisioning pod's Security Context runAsGroup Group ID         | `185`            |
+| `podSecurityContext.runAsNonRoot`                   | Set the provisioning pod's Security Context runAsNonRoot                | `true`           |
+| `podSecurityContext.fsGroup`                        | Set the provisioning pod's Group ID for the mounted volumes' filesystem | `185`            |
+| `podSecurityContext.seccompProfile.type`            | Set the provisioning pod's Security Context seccomp profile             | `RuntimeDefault` |
+| `containerSecurityContext.runAsUser`                | Set containers' Security Context runAsUser User ID                      | `185`            |
+| `containerSecurityContext.runAsGroup`               | Set containers' Security Context runAsGroup Group ID                    | `185`            |
+| `containerSecurityContext.runAsNonRoot`             | Set container's Security Context runAsNonRoot                           | `true`           |
+| `containerSecurityContext.allowPrivilegeEscalation` | Set container's Security Context allowPrivilegeEscalation               | `false`          |
+| `containerSecurityContext.capabilities.drop`        | List of capabilities to be dropped                                      | `["ALL"]`        |
+| `containerSecurityContext.seccompProfile.type`      | Set container's Security Context seccomp profile                        | `RuntimeDefault` |
+
+### Statefulset Affinity Parameters
+
+| Name           | Description                    | Value |
+| -------------- | ------------------------------ | ----- |
+| `affinity`     | Affinity for pod assignment    | `{}`  |
+| `nodeSelector` | Node labels for pod assignment | `{}`  |
+| `tolerations`  | Tolerations for pod assignment | `[]`  |
 
 ### Persistent Volume Claim Parameters
 

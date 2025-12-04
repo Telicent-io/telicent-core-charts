@@ -99,13 +99,7 @@ Note: Only global parameters used within this chart will be listed below
 | `global.truststore.existingSecret`  | Name of an existing secret containing the truststore                                                                                                                                   | `""`                     |
 | `global.truststore.mountPath`       | The mount path for the truststore in the container                                                                                                                                     | `/app/config/truststore` |
 
-### ConfigMap Parameters
-
-| Name                             | Description                                                            | Value |
-| -------------------------------- | ---------------------------------------------------------------------- | ----- |
-| `configMap.existingEnvConfigMap` | Name of existing configmap containing *Auth* Environment Configuration | `""`  |
-
-### Identity Provider (IDP) Parameters and Secret
+### Application Parameters - Identity Provider (IDP) and Secret
 
 Contains details pertinent to the OIDC Identity Provider to be used by the *Auth* OAuth application.
 It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
@@ -126,7 +120,7 @@ For Quick Start purposes, a secret named `tc-auth-gen-idp-auth` will be created 
 | `idp.clientId`            | The OAuth Client ID                                                                    | `""`           |
 | `idp.clientSecret`        | The OAuth Client Secret                                                                | `""`           |
 
-### ForwardAuth Parameters and Secret
+### Application Parameters - ForwardAuth and Secret
 
 When making requests to the `/auth/forward` endpoint (used by reverse proxies), `X-ForwardAuth-Secret` header is required.
 The secret associated with that header is defined within this section.
@@ -138,15 +132,16 @@ For Quick Start purposes, a secret named `tc-auth-gen-forward-auth` will be crea
 | `forwardAuth.existingSecret` | Name of an existing secret. The secret must contain 1 key: 'header' | `""`  |
 | `forwardAuth.header`         | The header value to be associated with the `X-ForwardAuth-Secret`.  | `""`  |
 
-### Java Parameters
+### Application Parameters - Java
 
-Contains Java configuration parameters to be used by the *Auth* application
+Contains Java parameters to be used by the *Auth* application
 
-| Name              | Description                     | Value                       |
-| ----------------- | ------------------------------- | --------------------------- |
-| `java.jvmOptions` | JVM options for the application | `-XX:MaxRAMPercentage=80.0` |
+| Name                  | Description                                                                             | Value                       |
+| --------------------- | --------------------------------------------------------------------------------------- | --------------------------- |
+| `java.jvmOptions`     | JVM options for the application                                                         | `-XX:MaxRAMPercentage=80.0` |
+| `java.spring.profile` | Sets the Spring profile to be used. Options are: default, docker, test, and production. | `production`                |
 
-### Logs Parameters
+### Application Parameters - Logs
 
 | Name                  | Description                                                                               | Value   |
 | --------------------- | ----------------------------------------------------------------------------------------- | ------- |
@@ -158,7 +153,7 @@ Contains Java configuration parameters to be used by the *Auth* application
 | `logs.general.level`  | Logging Level for 'io.telicent.auth'. Values include: ERROR, WARN, INFO, DEBUG, TRACE.    | `WARN`  |
 | `logs.trace.level`    | Logging Level for 'Spring RestTemplate'. Values include: ERROR, WARN, INFO, DEBUG, TRACE. | `ERROR` |
 
-### PostgreSQL Parameters and Secret
+### Application Parameters - PostgreSQL and Secret
 
 The following contains connection details to a PostgreSQL instance, on which the application relies.
 It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
@@ -171,15 +166,7 @@ For Quick Start purposes, a secret named `tc-auth-usr-psql-auth` will be created
 | `postgresSql.username`       | PostgreSQL username                                                                | `""`  |
 | `postgresSql.password`       | PostgreSQL password                                                                | `""`  |
 
-### Spring
-
-Contains settings for the underlying Spring framework
-
-| Name                    | Description                                                                             | Value        |
-| ----------------------- | --------------------------------------------------------------------------------------- | ------------ |
-| `spring.profilesActive` | sets the spring profile to be used. Options are: default, docker, test, and production. | `production` |
-
-### Bootstrap Parameters
+### Application Parameters - Bootstrap
 
 Contains configuration to be used to bootstrap a clean instance of the Auth application to a working state.
 
@@ -190,6 +177,12 @@ Contains configuration to be used to bootstrap a clean instance of the Auth appl
 | `bootstrap.clients.confidential`      | A list of confidential client objects                                                                                                                                                 | `[]`  |
 | `bootstrap.groups.existingConfigMap`  | Name of an existing config map containing a list of group objects.                                                                                                                    | `""`  |
 | `bootstrap.groups.list`               | A list containing group objects                                                                                                                                                       | `[]`  |
+
+### ConfigMap Parameters
+
+| Name                             | Description                                                            | Value |
+| -------------------------------- | ---------------------------------------------------------------------- | ----- |
+| `configMap.existingEnvConfigMap` | Name of existing configmap containing *Auth* Environment Configuration | `""`  |
 
 ### Common Parameters
 
@@ -202,41 +195,61 @@ Contains configuration to be used to bootstrap a clean instance of the Auth appl
 
 ### Deployment Parameters
 
-| Name                                                | Description                                                             | Value                           |
-| --------------------------------------------------- | ----------------------------------------------------------------------- | ------------------------------- |
-| `replicas`                                          | Number of *Auth* replicas to deploy                                     | `1`                             |
-| `revisionHistoryLimit`                              | Number of controller revisions to keep                                  | `5`                             |
-| `annotations`                                       | Add extra annotations to the deployment object                          | `{}`                            |
-| `podLabels`                                         | Add extra labels to the *Auth* pod                                      | `{}`                            |
-| `podAnnotations`                                    | Add extra annotations to the *Auth* pod                                 | `{}`                            |
-| `extraEnvVars`                                      | Array with extra environment variables to add to *Auth* pod             | `[]`                            |
-| `extraVolumes`                                      | Additional containers to be added to the *Auth* pod                     | `[]`                            |
-| `extraVolumeMounts`                                 | Optionally specify extra list of additional volumeMounts                | `[]`                            |
-| `initContainers`                                    | Add init containers to the pod                                          | `[]`                            |
-| `sidecars`                                          | Add sidecars to the pod.                                                | `[]`                            |
-| `image.registry`                                    | *Auth* image registry                                                   | `REGISTRY_NAME`                 |
-| `image.repository`                                  | *Auth* image name                                                       | `telicent/telicent-auth-server` |
-| `image.tag`                                         | *Auth* image tag. If not set, a tag is generated using the appVersion   | `""`                            |
-| `image.pullPolicy`                                  | *Auth* image pull policy                                                | `IfNotPresent`                  |
-| `image.pullSecrets`                                 | Specify registry secret names as an array                               | `[]`                            |
-| `resources.requests.cpu`                            | Set containers' CPU request                                             | `700m`                          |
-| `resources.requests.memory`                         | Set containers' memory request                                          | `1024Mi`                        |
-| `resources.limits.cpu`                              | Set containers' CPU limit                                               | `1500m`                         |
-| `resources.limits.memory`                           | Set containers' memory limit                                            | `2048Mi`                        |
-| `containerSecurityContext.runAsUser`                | Set containers' Security Context runAsUser User ID                      | `185`                           |
-| `containerSecurityContext.runAsGroup`               | Set containers' Security Context runAsGroup Group ID                    | `185`                           |
-| `containerSecurityContext.runAsNonRoot`             | Set container's Security Context runAsNonRoot                           | `true`                          |
-| `containerSecurityContext.allowPrivilegeEscalation` | Set container's Security Context allowPrivilegeEscalation               | `false`                         |
-| `containerSecurityContext.capabilities.drop`        | List of capabilities to be dropped                                      | `["ALL"]`                       |
-| `containerSecurityContext.seccompProfile.type`      | Set container's Security Context seccomp profile                        | `RuntimeDefault`                |
-| `podSecurityContext.runAsUser`                      | Set the provisioning pod's Security Context runAsUser User ID           | `185`                           |
-| `podSecurityContext.runAsGroup`                     | Set the provisioning pod's Security Context runAsGroup Group ID         | `185`                           |
-| `podSecurityContext.runAsNonRoot`                   | Set the provisioning pod's Security Context runAsNonRoot                | `true`                          |
-| `podSecurityContext.fsGroup`                        | Set the provisioning pod's Group ID for the mounted volumes' filesystem | `185`                           |
-| `podSecurityContext.seccompProfile.type`            | Set the provisioning pod's Security Context seccomp profile             | `RuntimeDefault`                |
-| `affinity`                                          | Affinity for pod assignment                                             | `{}`                            |
-| `nodeSelector`                                      | Node labels for pod assignment                                          | `{}`                            |
-| `tolerations`                                       | Tolerations for pod assignment                                          | `[]`                            |
+| Name                   | Description                                                 | Value |
+| ---------------------- | ----------------------------------------------------------- | ----- |
+| `replicas`             | Number of *Auth* replicas to deploy                         | `1`   |
+| `revisionHistoryLimit` | Number of controller revisions to keep                      | `5`   |
+| `annotations`          | Add extra annotations to the deployment object              | `{}`  |
+| `podLabels`            | Add extra labels to the *Auth* pod                          | `{}`  |
+| `podAnnotations`       | Add extra annotations to the *Auth* pod                     | `{}`  |
+| `extraEnvVars`         | Array with extra environment variables to add to *Auth* pod | `[]`  |
+| `extraVolumes`         | Additional containers to be added to the *Auth* pod         | `[]`  |
+| `extraVolumeMounts`    | Optionally specify extra list of additional volumeMounts    | `[]`  |
+| `initContainers`       | Add init containers to the pod                              | `[]`  |
+| `sidecars`             | Add sidecars to the pod.                                    | `[]`  |
+
+### Deployment Image Parameters
+
+| Name                | Description                                                           | Value                           |
+| ------------------- | --------------------------------------------------------------------- | ------------------------------- |
+| `image.registry`    | *Auth* image registry                                                 | `REGISTRY_NAME`                 |
+| `image.repository`  | *Auth* image name                                                     | `telicent/telicent-auth-server` |
+| `image.tag`         | *Auth* image tag. If not set, a tag is generated using the appVersion | `""`                            |
+| `image.pullPolicy`  | *Auth* image pull policy                                              | `IfNotPresent`                  |
+| `image.pullSecrets` | Specify registry secret names as an array                             | `[]`                            |
+
+### Deployment Resources Parameters - Requests and Limits
+
+| Name                        | Description                    | Value    |
+| --------------------------- | ------------------------------ | -------- |
+| `resources.requests.cpu`    | Set containers' CPU request    | `700m`   |
+| `resources.requests.memory` | Set containers' memory request | `1024Mi` |
+| `resources.limits.cpu`      | Set containers' CPU limit      | `1500m`  |
+| `resources.limits.memory`   | Set containers' memory limit   | `2048Mi` |
+
+### Deployment Security Context Parameters - Default Security Context
+
+| Name                                                | Description                                                             | Value            |
+| --------------------------------------------------- | ----------------------------------------------------------------------- | ---------------- |
+| `podSecurityContext.runAsUser`                      | Set the provisioning pod's Security Context runAsUser User ID           | `185`            |
+| `podSecurityContext.runAsGroup`                     | Set the provisioning pod's Security Context runAsGroup Group ID         | `185`            |
+| `podSecurityContext.runAsNonRoot`                   | Set the provisioning pod's Security Context runAsNonRoot                | `true`           |
+| `podSecurityContext.fsGroup`                        | Set the provisioning pod's Group ID for the mounted volumes' filesystem | `185`            |
+| `podSecurityContext.seccompProfile.type`            | Set the provisioning pod's Security Context seccomp profile             | `RuntimeDefault` |
+| `containerSecurityContext.runAsUser`                | Set containers' Security Context runAsUser User ID                      | `185`            |
+| `containerSecurityContext.runAsGroup`               | Set containers' Security Context runAsGroup Group ID                    | `185`            |
+| `containerSecurityContext.runAsNonRoot`             | Set container's Security Context runAsNonRoot                           | `true`           |
+| `containerSecurityContext.allowPrivilegeEscalation` | Set container's Security Context allowPrivilegeEscalation               | `false`          |
+| `containerSecurityContext.capabilities.drop`        | List of capabilities to be dropped                                      | `["ALL"]`        |
+| `containerSecurityContext.seccompProfile.type`      | Set container's Security Context seccomp profile                        | `RuntimeDefault` |
+
+### Deployment Affinity Parameters
+
+| Name           | Description                    | Value |
+| -------------- | ------------------------------ | ----- |
+| `affinity`     | Affinity for pod assignment    | `{}`  |
+| `nodeSelector` | Node labels for pod assignment | `{}`  |
+| `tolerations`  | Tolerations for pod assignment | `[]`  |
 
 ### Service Account Parameters
 

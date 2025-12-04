@@ -25,7 +25,7 @@ data:
   TOKEN_ISSUER_URL: {{ printf "%s%s" "https://" .Values.global.authHostDomain | quote }}
 
   #Spring
-  SPRING_PROFILES_ACTIVE: {{ .Values.spring.profilesActive | quote }}
+  SPRING_PROFILES_ACTIVE: {{ .Values.java.spring.profile | quote }}
 
   JAVA_OPTS:  {{ .Values.java.jvmOptions | quote }}
 

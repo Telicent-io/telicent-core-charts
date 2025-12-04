@@ -58,16 +58,6 @@
                 }
             }
         },
-        "configMap": {
-            "type": "object",
-            "properties": {
-                "existingEnvConfigMap": {
-                    "type": "string",
-                    "description": "Name of existing configmap containing *Auth* Environment Configuration",
-                    "default": ""
-                }
-            }
-        },
         "idp": {
             "type": "object",
             "properties": {
@@ -155,6 +145,16 @@
                     "type": "string",
                     "description": "JVM options for the application",
                     "default": "-XX:MaxRAMPercentage=80.0"
+                },
+                "spring": {
+                    "type": "object",
+                    "properties": {
+                        "profile": {
+                            "type": "string",
+                            "description": "Sets the Spring profile to be used. Options are: default, docker, test, and production.",
+                            "default": "production"
+                        }
+                    }
                 }
             }
         },
@@ -258,16 +258,6 @@
                 }
             }
         },
-        "spring": {
-            "type": "object",
-            "properties": {
-                "profilesActive": {
-                    "type": "string",
-                    "description": "sets the spring profile to be used. Options are: default, docker, test, and production.",
-                    "default": "production"
-                }
-            }
-        },
         "bootstrap": {
             "type": "object",
             "properties": {
@@ -308,6 +298,16 @@
                             "items": {}
                         }
                     }
+                }
+            }
+        },
+        "configMap": {
+            "type": "object",
+            "properties": {
+                "existingEnvConfigMap": {
+                    "type": "string",
+                    "description": "Name of existing configmap containing *Auth* Environment Configuration",
+                    "default": ""
                 }
             }
         },
@@ -452,6 +452,41 @@
                 }
             }
         },
+        "podSecurityContext": {
+            "type": "object",
+            "properties": {
+                "runAsUser": {
+                    "type": "number",
+                    "description": "Set the provisioning pod's Security Context runAsUser User ID",
+                    "default": 185
+                },
+                "runAsGroup": {
+                    "type": "number",
+                    "description": "Set the provisioning pod's Security Context runAsGroup Group ID",
+                    "default": 185
+                },
+                "runAsNonRoot": {
+                    "type": "boolean",
+                    "description": "Set the provisioning pod's Security Context runAsNonRoot",
+                    "default": true
+                },
+                "fsGroup": {
+                    "type": "number",
+                    "description": "Set the provisioning pod's Group ID for the mounted volumes' filesystem",
+                    "default": 185
+                },
+                "seccompProfile": {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "description": "Set the provisioning pod's Security Context seccomp profile",
+                            "default": "RuntimeDefault"
+                        }
+                    }
+                }
+            }
+        },
         "containerSecurityContext": {
             "type": "object",
             "properties": {
@@ -496,41 +531,6 @@
                         "type": {
                             "type": "string",
                             "description": "Set container's Security Context seccomp profile",
-                            "default": "RuntimeDefault"
-                        }
-                    }
-                }
-            }
-        },
-        "podSecurityContext": {
-            "type": "object",
-            "properties": {
-                "runAsUser": {
-                    "type": "number",
-                    "description": "Set the provisioning pod's Security Context runAsUser User ID",
-                    "default": 185
-                },
-                "runAsGroup": {
-                    "type": "number",
-                    "description": "Set the provisioning pod's Security Context runAsGroup Group ID",
-                    "default": 185
-                },
-                "runAsNonRoot": {
-                    "type": "boolean",
-                    "description": "Set the provisioning pod's Security Context runAsNonRoot",
-                    "default": true
-                },
-                "fsGroup": {
-                    "type": "number",
-                    "description": "Set the provisioning pod's Group ID for the mounted volumes' filesystem",
-                    "default": 185
-                },
-                "seccompProfile": {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "type": "string",
-                            "description": "Set the provisioning pod's Security Context seccomp profile",
                             "default": "RuntimeDefault"
                         }
                     }

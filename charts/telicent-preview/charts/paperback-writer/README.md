@@ -97,15 +97,17 @@ Note: Only global parameters used within this chart will be listed below
 | `global.apiHostDomain`           | Domain associated with Telicent Api services                                                                                                        | `api.telicent.io`  |
 | `global.authHostDomain`          | Domain associated with Telicent authentication services, including OIDC providers                                                                   | `auth.telicent.io` |
 
-### Application Configuration
+### Application Parameters - Sparql
 
-| Name                               | Description                                                                                                        | Value |
-| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------ | ----- |
-| `configuration.sparqlDefaultLabel` | Default label for SPARQL queries                                                                                   | `!`   |
-| `configuration.cacertPath`         | Path to CA certs in the container                                                                                  | `""`  |
-| `existingConfigMapName`            | Name of an existing ConfigMap to use for configuration                                                             | `""`  |
-| `existingCacertConfigmapName`      | Name of an existing ConfigMap to use for CA certs. If not set, and cacert is provided, a ConfigMap will be created | `""`  |
-| `cacert`                           | CA certificate data in PEM format                                                                                  | `""`  |
+| Name                  | Description                      | Value |
+| --------------------- | -------------------------------- | ----- |
+| `sparql.defaultLabel` | Default label for SPARQL queries | `!`   |
+
+### ConfigMap Parameters
+
+| Name                             | Description                                                                        | Value |
+| -------------------------------- | ---------------------------------------------------------------------------------- | ----- |
+| `configMap.existingEnvConfigMap` | Name of existing configmap containing *Paperback Writer* Environment Configuration | `""`  |
 
 ### Common Parameters
 
@@ -118,41 +120,56 @@ Note: Only global parameters used within this chart will be listed below
 
 ### Deployment Parameters
 
-| Name                                                | Description                                                                       | Value                                       |
-| --------------------------------------------------- | --------------------------------------------------------------------------------- | ------------------------------------------- |
-| `replicas`                                          | Number of *Paperback Writer* replicas to deploy                                   | `1`                                         |
-| `revisionHistoryLimit`                              | Number of controller revisions to keep                                            | `5`                                         |
-| `annotations`                                       | Add extra annotations to the deployment object                                    | `{}`                                        |
-| `podLabels`                                         | Add extra labels to the *Paperback Writer* pod                                    | `{}`                                        |
-| `podAnnotations`                                    | Add extra annotations to the *Paperback Writer* pod                               | `{}`                                        |
-| `extraEnvVars`                                      | Array with extra environment variables to add to *Paperback Writer* pod           | `[]`                                        |
-| `extraVolumes`                                      | Additional containers to be added to the *Paperback Writer* pod                   | `[]`                                        |
-| `extraVolumeMounts`                                 | Optionally specify extra list of additional volumeMounts                          | `[]`                                        |
-| `initContainers`                                    | Add init containers to the pod                                                    | `[]`                                        |
-| `sidecars`                                          | Add sidecars to the pod.                                                          | `[]`                                        |
-| `image.registry`                                    | *Paperback Writer* image registry                                                 | `REGISTRY_NAME`                             |
-| `image.repository`                                  | *Paperback Writer* image name                                                     | `REPOSITORY_NAME/telicent-paperback-writer` |
-| `image.tag`                                         | *Paperback Writer* image tag. If not set, a tag is generated using the appVersion | `""`                                        |
-| `image.pullPolicy`                                  | *Paperback Writer* image pull policy                                              | `IfNotPresent`                              |
-| `image.pullSecrets`                                 | Specify registry secret names as an array                                         | `[]`                                        |
-| `resources.requests.cpu`                            | Set containers' CPU request                                                       | `250m`                                      |
-| `resources.requests.memory`                         | Set containers' memory request                                                    | `1000Mi`                                    |
-| `resources.limits.cpu`                              | Set containers' CPU limit                                                         | `500m`                                      |
-| `resources.limits.memory`                           | Set containers' memory limit                                                      | `2000Mi`                                    |
-| `containerSecurityContext.runAsUser`                | Set containers' Security Context runAsUser User ID                                | `185`                                       |
-| `containerSecurityContext.runAsGroup`               | Set containers' Security Context runAsGroup Group ID                              | `185`                                       |
-| `containerSecurityContext.runAsNonRoot`             | Set container's Security Context runAsNonRoot                                     | `true`                                      |
-| `containerSecurityContext.allowPrivilegeEscalation` | Set container's Security Context allowPrivilegeEscalation                         | `false`                                     |
-| `containerSecurityContext.capabilities.drop`        | List of capabilities to be dropped                                                | `["ALL"]`                                   |
-| `containerSecurityContext.seccompProfile.type`      | Set container's Security Context seccomp profile                                  | `RuntimeDefault`                            |
-| `podSecurityContext.runAsUser`                      | Set the provisioning pod's Security Context runAsUser User ID                     | `185`                                       |
-| `podSecurityContext.runAsGroup`                     | Set the provisioning pod's Security Context runAsGroup Group ID                   | `185`                                       |
-| `podSecurityContext.runAsNonRoot`                   | Set the provisioning pod's Security Context runAsNonRoot                          | `true`                                      |
-| `podSecurityContext.fsGroup`                        | Set the provisioning pod's Group ID for the mounted volumes' filesystem           | `185`                                       |
-| `podSecurityContext.seccompProfile.type`            | Set the provisioning pod's Security Context seccomp profile                       | `RuntimeDefault`                            |
-| `affinity`                                          | Affinity for pod assignment                                                       | `{}`                                        |
-| `nodeSelector`                                      | Node labels for pod assignment                                                    | `{}`                                        |
-| `tolerations`                                       | Tolerations for pod assignment                                                    | `[]`                                        |
+| Name                   | Description                                                             | Value |
+| ---------------------- | ----------------------------------------------------------------------- | ----- |
+| `replicas`             | Number of *Paperback Writer* replicas to deploy                         | `1`   |
+| `revisionHistoryLimit` | Number of controller revisions to keep                                  | `5`   |
+| `annotations`          | Add extra annotations to the deployment object                          | `{}`  |
+| `podLabels`            | Add extra labels to the *Paperback Writer* pod                          | `{}`  |
+| `podAnnotations`       | Add extra annotations to the *Paperback Writer* pod                     | `{}`  |
+| `extraEnvVars`         | Array with extra environment variables to add to *Paperback Writer* pod | `[]`  |
+| `extraVolumes`         | Additional containers to be added to the *Paperback Writer* pod         | `[]`  |
+| `extraVolumeMounts`    | Optionally specify extra list of additional volumeMounts                | `[]`  |
+| `initContainers`       | Add init containers to the pod                                          | `[]`  |
+| `sidecars`             | Add sidecars to the pod.                                                | `[]`  |
+
+### Deployment Image Parameters
+
+| Name                | Description                                                                       | Value                                       |
+| ------------------- | --------------------------------------------------------------------------------- | ------------------------------------------- |
+| `image.registry`    | *Paperback Writer* image registry                                                 | `REGISTRY_NAME`                             |
+| `image.repository`  | *Paperback Writer* image name                                                     | `REPOSITORY_NAME/telicent-paperback-writer` |
+| `image.tag`         | *Paperback Writer* image tag. If not set, a tag is generated using the appVersion | `""`                                        |
+| `image.pullPolicy`  | *Paperback Writer* image pull policy                                              | `IfNotPresent`                              |
+| `image.pullSecrets` | Specify registry secret names as an array                                         | `[]`                                        |
+
+### Deployment Resources Parameters - Requests and Limits
+
+| Name                        | Description                    | Value    |
+| --------------------------- | ------------------------------ | -------- |
+| `resources.requests.cpu`    | Set containers' CPU request    | `250m`   |
+| `resources.requests.memory` | Set containers' memory request | `1000Mi` |
+| `resources.limits.cpu`      | Set containers' CPU limit      | `500m`   |
+| `resources.limits.memory`   | Set containers' memory limit   | `2000Mi` |
+
+### Statefulset Security Context Parameters - Default Security Context
+
+| Name                                                | Description                                                             | Value            |
+| --------------------------------------------------- | ----------------------------------------------------------------------- | ---------------- |
+| `podSecurityContext.runAsUser`                      | Set the provisioning pod's Security Context runAsUser User ID           | `185`            |
+| `podSecurityContext.runAsGroup`                     | Set the provisioning pod's Security Context runAsGroup Group ID         | `185`            |
+| `podSecurityContext.runAsNonRoot`                   | Set the provisioning pod's Security Context runAsNonRoot                | `true`           |
+| `podSecurityContext.fsGroup`                        | Set the provisioning pod's Group ID for the mounted volumes' filesystem | `185`            |
+| `podSecurityContext.seccompProfile.type`            | Set the provisioning pod's Security Context seccomp profile             | `RuntimeDefault` |
+| `containerSecurityContext.runAsUser`                | Set containers' Security Context runAsUser User ID                      | `185`            |
+| `containerSecurityContext.runAsGroup`               | Set containers' Security Context runAsGroup Group ID                    | `185`            |
+| `containerSecurityContext.runAsNonRoot`             | Set container's Security Context runAsNonRoot                           | `true`           |
+| `containerSecurityContext.allowPrivilegeEscalation` | Set container's Security Context allowPrivilegeEscalation               | `false`          |
+| `containerSecurityContext.capabilities.drop`        | List of capabilities to be dropped                                      | `["ALL"]`        |
+| `containerSecurityContext.seccompProfile.type`      | Set container's Security Context seccomp profile                        | `RuntimeDefault` |
+| `affinity`                                          | Affinity for pod assignment                                             | `{}`             |
+| `nodeSelector`                                      | Node labels for pod assignment                                          | `{}`             |
+| `tolerations`                                       | Tolerations for pod assignment                                          | `[]`             |
 
 ### Service Account Parameters
 

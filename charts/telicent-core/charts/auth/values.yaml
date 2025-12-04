@@ -41,15 +41,7 @@ global:
     mountPath: /app/config/truststore
 
 #
-# @section ConfigMap Parameters
-#
-configMap:
-  # @key configMap.existingEnvConfigMap Name of existing configmap containing *Auth* Environment Configuration
-  # Note: When it's set, it will disable configmap creation.
-  existingEnvConfigMap: ""
-
-#
-# @section Identity Provider (IDP) Parameters and Secret
+# @section Application Parameters - Identity Provider (IDP) and Secret
 #
 # @descStart
 # Contains details pertinent to the OIDC Identity Provider to be used by the *Auth* OAuth application.
@@ -88,7 +80,7 @@ idp:
   clientSecret: ""
 
 #
-# @section ForwardAuth Parameters and Secret
+# @section Application Parameters - ForwardAuth and Secret
 #
 # @descStart
 # When making requests to the `/auth/forward` endpoint (used by reverse proxies), `X-ForwardAuth-Secret` header is required.
@@ -104,17 +96,21 @@ forwardAuth:
   header: ""
 
 #
-# @section Java Parameters
+# @section Application Parameters - Java
 #
 # @descStart
-# Contains Java configuration parameters to be used by the *Auth* application
+# Contains Java parameters to be used by the *Auth* application
 # @descEnd
 java:
   # @key java.jvmOptions JVM options for the application
   jvmOptions: "-XX:MaxRAMPercentage=80.0"
 
+  spring:
+    # @key java.spring.profile Sets the Spring profile to be used. Options are: default, docker, test, and production.
+    profile: production
+
 #
-# @section Logs Parameters
+# @section Application Parameters - Logs
 #
 logs:
   api:
@@ -140,7 +136,7 @@ logs:
     level: "ERROR"
 
 #
-# @section PostgreSQL Parameters and Secret
+# @section Application Parameters - PostgreSQL and Secret
 #
 # @descStart
 # The following contains connection details to a PostgreSQL instance, on which the application relies.
@@ -160,17 +156,7 @@ postgresSql:
   password: ""
 
 #
-# @section Spring
-#
-# @descStart
-# Contains settings for the underlying Spring framework
-# @descEnd
-spring:
-  # @key spring.profilesActive sets the spring profile to be used. Options are: default, docker, test, and production.
-  profilesActive: production
-
-#
-# @section Bootstrap Parameters
+# @section Application Parameters - Bootstrap
 #
 # @descStart
 # Contains configuration to be used to bootstrap a clean instance of the Auth application to a working state.
@@ -209,6 +195,14 @@ bootstrap:
     # - name: admin
     #   urn: urn:telicent:groups:admin
     #   description: 'Administrator group'
+
+#
+# @section ConfigMap Parameters
+#
+configMap:
+  # @key configMap.existingEnvConfigMap Name of existing configmap containing *Auth* Environment Configuration
+  # Note: When it's set, it will disable configmap creation.
+  existingEnvConfigMap: ""
 
 #
 # @section Common Parameters
@@ -258,6 +252,9 @@ initContainers: []
 # @key sidecars Add sidecars to the pod.
 sidecars: []
 
+#
+# @section Deployment Image Parameters
+#
 image:
   # @key image.registry [default: REGISTRY_NAME] *Auth* image registry
   registry: quay.io
@@ -270,6 +267,9 @@ image:
   # @key image.pullSecrets Specify registry secret names as an array
   pullSecrets: []
 
+#
+# @section Deployment Resources Parameters - Requests and Limits
+#
 resources:
   requests:
     # @key resources.requests.cpu Set containers' CPU request
@@ -282,6 +282,21 @@ resources:
     # @key resources.limits.memory Set containers' memory limit
     memory: "2048Mi"
 
+#
+# @section Deployment Security Context Parameters - Default Security Context
+#
+podSecurityContext:
+  # @key podSecurityContext.runAsUser Set the provisioning pod's Security Context runAsUser User ID
+  runAsUser: 185
+  # @key podSecurityContext.runAsGroup Set the provisioning pod's Security Context runAsGroup Group ID
+  runAsGroup: 185
+  # @key podSecurityContext.runAsNonRoot Set the provisioning pod's Security Context runAsNonRoot
+  runAsNonRoot: true
+  # @key podSecurityContext.fsGroup Set the provisioning pod's Group ID for the mounted volumes' filesystem
+  fsGroup: 185
+  seccompProfile:
+    # @key podSecurityContext.seccompProfile.type Set the provisioning pod's Security Context seccomp profile
+    type: RuntimeDefault
 containerSecurityContext:
   # @key containerSecurityContext.runAsUser Set containers' Security Context runAsUser User ID
   runAsUser: 185
@@ -299,19 +314,9 @@ containerSecurityContext:
     # @key containerSecurityContext.seccompProfile.type Set container's Security Context seccomp profile
     type: RuntimeDefault
 
-podSecurityContext:
-  # @key podSecurityContext.runAsUser Set the provisioning pod's Security Context runAsUser User ID
-  runAsUser: 185
-  # @key podSecurityContext.runAsGroup Set the provisioning pod's Security Context runAsGroup Group ID
-  runAsGroup: 185
-  # @key podSecurityContext.runAsNonRoot Set the provisioning pod's Security Context runAsNonRoot
-  runAsNonRoot: true
-  # @key podSecurityContext.fsGroup Set the provisioning pod's Group ID for the mounted volumes' filesystem
-  fsGroup: 185
-  seccompProfile:
-    # @key podSecurityContext.seccompProfile.type Set the provisioning pod's Security Context seccomp profile
-    type: RuntimeDefault
-
+#
+# @section Deployment Affinity Parameters
+#
 # @key affinity Affinity for pod assignment
 # Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 affinity: {}
