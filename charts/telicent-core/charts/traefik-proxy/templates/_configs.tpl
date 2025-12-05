@@ -35,5 +35,5 @@ Create the name of the routes-app config map
 Create the name of the routes-auth config map
 */}}
 {{- define "traefik-proxy.routesAuthConfigMapName" -}}
-{{- printf "tc-%s-%s" .Chart.Name "routes-app" }}
+{{- printf "tc-%s-%s" .Chart.Name "routes-auth" }}
 {{- end }}
