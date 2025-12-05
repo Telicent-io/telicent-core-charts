@@ -10,25 +10,30 @@ Create the name of the startup config map
 {{- end }}
 
 {{/*
-Create the name of the routes config map
+Create the name of the routes-common config map
 */}}
-{{- define "traefik-proxy.routesConfigMapName" -}}
-{{- printf "tc-%s-%s" .Chart.Name "routes" }}
+{{- define "traefik-proxy.routesCommonConfigMapName" -}}
+{{- printf "tc-%s-%s" .Chart.Name "routes-common" }}
 {{- end }}
 
 {{/*
-Returns the service name, used by routes configuration files.
-a.) installed through the parent chart, the service name will include the release name.
-b.) installed through a sub chart, where the srelease name equals 'traefik proxy' (chart name) the
-    release name will not be included.
+Create the name of the routes-api config map
 */}}
-{{- define "traefik-proxy.routesService" -}}
-{{- $envVal := index . 0 -}}
-{{- $service := index . 1 -}}
-{{- $name := default $envVal.Chart.Name $envVal.Values.nameOverride }}
-{{- if contains $name $envVal.Release.Name }}
-{{- printf "%s" $service  -}}
-{{- else }}
-{{- printf "%s-%s" $envVal.Release.Name $service }}
+{{- define "traefik-proxy.routesApiConfigMapName" -}}
+{{- printf "tc-%s-%s" .Chart.Name "routes-api" }}
 {{- end }}
+
+{{/*
+Create the name of the routes-app config map
+*/}}
+{{- define "traefik-proxy.routesAppConfigMapName" -}}
+{{- printf "tc-%s-%s" .Chart.Name "routes-app" }}
+{{- end }}
+
+
+{{/*
+Create the name of the routes-auth config map
+*/}}
+{{- define "traefik-proxy.routesAuthConfigMapName" -}}
+{{- printf "tc-%s-%s" .Chart.Name "routes-app" }}
 {{- end }}

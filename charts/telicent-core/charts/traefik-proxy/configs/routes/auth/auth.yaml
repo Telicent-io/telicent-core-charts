@@ -20,19 +20,9 @@ http:
         - host-auth
         - oauth2
 
-    auth-admin:
-      rule: {{ printf "Host(`%s`) && PathRegexp(`^/(sessions|groups|roles|permissions|users|clients)`)" .Values.global.authHostDomain }}
-      priority: 7
-      service: auth
-      entryPoints:
-        - web-auth
-      middleWares:
-        - host-auth
-        - oauth2
-
     auth-oidc:
       rule: {{ printf "Host(`%s`) && PathPrefix(`/.well-known`)" .Values.global.authHostDomain }}
-      priority: 6
+      priority: 7
       service: auth
       entryPoints:
         - web-auth
@@ -41,7 +31,7 @@ http:
 
     auth-oauth2:
       rule: {{ printf "Host(`%s`) && PathRegexp(`^/(session|oauth2|login|logout|favicon\\.svg|account-inactive|access-denied|error)`)" .Values.global.authHostDomain }}
-      priority: 5
+      priority: 6
       service: auth
       entryPoints:
         - web-auth
@@ -57,7 +47,6 @@ http:
       middleWares:
         - host-auth
         - oauth2
-
 
   services:
     auth:

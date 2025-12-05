@@ -1,0 +1,10 @@
+# Declare routers / services / middlewares
+http:
+  routers:
+    auth-admin:
+      rule: {{ printf "Host(`%s`) && PathRegexp(`^/(users|clients|groups|roles|permissions|sessions)`)" .Values.global.apiHostDomain }}
+      service: auth
+      entryPoints:
+        - web-api
+      middleWares:
+        - host-auth
