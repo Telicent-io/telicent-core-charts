@@ -10,10 +10,10 @@ Create the name of the startup config map
 {{- end }}
 
 {{/*
-Create the name of the routes-common config map
+Create the name of the routes-app config map
 */}}
-{{- define "traefik-proxy.routesCommonConfigMapName" -}}
-{{- printf "tc-%s-%s" .Chart.Name "routes-common" }}
+{{- define "traefik-proxy.routesAppConfigMapName" -}}
+{{- printf "tc-%s-%s" .Chart.Name "routes-app" }}
 {{- end }}
 
 {{/*
@@ -24,16 +24,15 @@ Create the name of the routes-api config map
 {{- end }}
 
 {{/*
-Create the name of the routes-app config map
-*/}}
-{{- define "traefik-proxy.routesAppConfigMapName" -}}
-{{- printf "tc-%s-%s" .Chart.Name "routes-app" }}
-{{- end }}
-
-
-{{/*
 Create the name of the routes-auth config map
 */}}
 {{- define "traefik-proxy.routesAuthConfigMapName" -}}
 {{- printf "tc-%s-%s" .Chart.Name "routes-auth" }}
+{{- end }}
+
+{{/*
+Create the name of the routes-common config map
+*/}}
+{{- define "traefik-proxy.routesCommonConfigMapName" -}}
+{{- printf "tc-%s-%s" .Chart.Name "routes-common" }}
 {{- end }}
