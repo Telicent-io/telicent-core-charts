@@ -147,13 +147,13 @@ spec:
         projected:
           sources:
           - configMap:
-            name: {{ include "traefik-proxy.routesAppConfigMapName" . }}
+              name: {{ include "traefik-proxy.routesAppConfigMapName" . }}
           - configMap:
-            name: {{ include "traefik-proxy.routesApiConfigMapName" . }}
+              name: {{ include "traefik-proxy.routesApiConfigMapName" . }}
           - configMap:
-            name: {{ include "traefik-proxy.routesAuthConfigMapName" . }}
+              name: {{ include "traefik-proxy.routesAuthConfigMapName" . }}
           - configMap:
-            name: {{ include "traefik-proxy.routesCommonConfigMapName" . }}
+              name: {{ include "traefik-proxy.routesCommonConfigMapName" . }}
       {{- with .Values.extraVolumes }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
