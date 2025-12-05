@@ -128,18 +128,10 @@ spec:
         - name: traefik-config-volume
           mountPath: /app/config
           readOnly: true
-        - name: traefik-routes-app-volume
+        - name: traefik-routes-volume
           mountPath: /app/config/routes
           readOnly: true
-        - name: traefik-routes-api-volume
-          mountPath: /app/config/routes
-          readOnly: true
-        - name: traefik-routes-auth-volume
-          mountPath: /app/config/routes
-          readOnly: true
-        - name: traefik-routes-common-volume
-          mountPath: /app/config/routes
-          readOnly: true
+
         {{- with .Values.extraVolumeMounts }}
           {{- toYaml . | nindent 12 }}
         {{- end }}
@@ -151,18 +143,17 @@ spec:
       - name: traefik-config-volume
         configMap:
           name: {{ include "traefik-proxy.startupConfigMapName" . }}
-      - name: traefik-routes-app-volume
-        configMap:
-          name: {{ include "traefik-proxy.routesAppConfigMapName" . }}
-      - name: traefik-routes-api-volume
-        configMap:
-          name: {{ include "traefik-proxy.routesApiConfigMapName" . }}
-      - name: traefik-routes-auth-volume
-        configMap:
-          name: {{ include "traefik-proxy.routesAuthConfigMapName" . }}
-      - name: traefik-routes-common-volume
-        configMap:
-          name: {{ include "traefik-proxy.routesCommonConfigMapName" . }}
+      - name: traefik-routes-volume
+        projected:
+          sources:
+          - configMap:
+            name: {{ include "traefik-proxy.routesAppConfigMapName" . }}
+          - configMap:
+            name: {{ include "traefik-proxy.routesApiConfigMapName" . }}
+          - configMap:
+            name: {{ include "traefik-proxy.routesAuthConfigMapName" . }}
+          - configMap:
+            name: {{ include "traefik-proxy.routesCommonConfigMapName" . }}
       {{- with .Values.extraVolumes }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
