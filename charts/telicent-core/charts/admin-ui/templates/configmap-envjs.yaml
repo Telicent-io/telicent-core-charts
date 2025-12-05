@@ -39,7 +39,7 @@ data:
 
 
     // Admin APi end-point
-    window._env_.AUTH_API_URL = "https://{{ .Values.global.apiHostDomain }}";
+    window._env_.AUTH_API_URL = "https://{{ .Values.global.apiHostDomain }}/auth";
 
     // Apps
     window._env_.AUTH_V2_CONFIG = {
