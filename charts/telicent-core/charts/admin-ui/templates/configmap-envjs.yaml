@@ -38,13 +38,10 @@ data:
     ];
 
 
-    // Apis & services
-    window._env_.SIGN_OUT_URL = "https://{{ .Values.global.appHostDomain }}/oauth2/sign_out?rd=/oauth2/authorize";
-    window._env_.AUTH_API_URL = "https://{{ .Values.global.authHostDomain }}";
+    // Admin APi end-point
+    window._env_.AUTH_API_URL = "https://{{ .Values.global.apiHostDomain }}";
 
     // Apps
-    window._env_.ACCESS_APP_URL = "https://{{ .Values.global.appHostDomain }}/access";
-    window._env_.ACCESS_API_URL = "https://{{ .Values.global.apiHostDomain }}/access";
     window._env_.AUTH_V2_CONFIG = {
       authServerUrl: "https://{{ .Values.global.authHostDomain }}",
       clientId: "{{ .Values.oauth.clientId }}",
