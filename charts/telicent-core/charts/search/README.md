@@ -153,21 +153,21 @@ Contains configuration parameters specific to the *Search* application
 | `extraVolumes`         | Additional containers to be added to the *Search* pod         | `[]`  |
 | `extraVolumeMounts`    | Optionally specify extra list of additional volumeMounts      | `[]`  |
 | `initContainers`       | Add init containers to the pod                                | `[]`  |
-| `sidecars`             | Add sidecars to the pod.                                      | `[]`  |
+| `sidecars`             | Add sidecars to the pod                                       | `[]`  |
 
 ### Deployment Image Parameters
 
-| Name                        | Description                                                             | Value                               |
-| --------------------------- | ----------------------------------------------------------------------- | ----------------------------------- |
-| `image.registry`            | *Search* image registry                                                 | `REGISTRY_NAME`                     |
-| `image.repository`          | *Search* image name                                                     | `REPOSITORY_NAME/search-api-server` |
-| `image.tag`                 | *Search* image tag. If not set, a tag is generated using the appVersion | `""`                                |
-| `image.pullPolicy`          | *Search* image pull policy                                              | `IfNotPresent`                      |
-| `image.pullSecrets`         | Specify registry secret names as an array                               | `[]`                                |
-| `resources.requests.cpu`    | Set containers' CPU request                                             | `500m`                              |
-| `resources.requests.memory` | Set containers' memory request                                          | `4000Mi`                            |
-| `resources.limits.cpu`      | Set containers' CPU limit                                               | `1000m`                             |
-| `resources.limits.memory`   | Set containers' memory limit                                            | `8000Mi`                            |
+| Name                        | Description                                                             | Value                        |
+| --------------------------- | ----------------------------------------------------------------------- | ---------------------------- |
+| `image.registry`            | *Search* image registry                                                 | `quay.io`                    |
+| `image.repository`          | *Search* image name                                                     | `telicent/search-api-server` |
+| `image.tag`                 | *Search* image tag. If not set, a tag is generated using the appVersion | `""`                         |
+| `image.pullPolicy`          | *Search* image pull policy                                              | `IfNotPresent`               |
+| `image.pullSecrets`         | Specify registry secret names as an array                               | `[]`                         |
+| `resources.requests.cpu`    | Set containers' CPU request                                             | `500m`                       |
+| `resources.requests.memory` | Set containers' memory request                                          | `4000Mi`                     |
+| `resources.limits.cpu`      | Set containers' CPU limit                                               | `1000m`                      |
+| `resources.limits.memory`   | Set containers' memory limit                                            | `8000Mi`                     |
 
 ### Deployment Security Context Parameters - Default Security Context
 
@@ -223,12 +223,12 @@ Contains configuration parameters specific to the *Search* application
 *Search* interacts directly with other Telicent Applications using their default service/serviceAccount and port.
 If either of those details changes, you can use this section to correctly referer to those apps.
 
-| Name                      | Description                                                                                                                                                                                                                        | Value                |
-| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
-| `hosts.enableAutoCorrect` | Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as is, without any modification. | `true`               |
-| `hosts.auth`              | Auth application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                                   | `auth:8080`          |
-| `hosts.traefikProxy`      | Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                          | `traefik-proxy:8080` |
-| `hosts.graph`             | Graph application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                                  | `graph:8080`         |
+| Name                      | Description                                                                                                                                                                                                                          | Value                |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------- |
+| `hosts.enableAutoCorrect` | Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as it is, without any modification | `true`               |
+| `hosts.auth`              | Auth application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                                     | `auth:8080`          |
+| `hosts.traefikProxy`      | Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                            | `traefik-proxy:8080` |
+| `hosts.graph`             | Graph application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                                    | `graph:8080`         |
 
 ## License
 

@@ -104,9 +104,9 @@ Note: Only global parameters used within this chart will be listed below
 
 ### ConfigMap Parameters
 
-| Name                          | Description                                                  | Value |
-| ----------------------------- | ------------------------------------------------------------ | ----- |
-| `configMap.existingConfigMap` | The name of an existing config map containing env-config.js. | `""`  |
+| Name                          | Description                                                 | Value |
+| ----------------------------- | ----------------------------------------------------------- | ----- |
+| `configMap.existingConfigMap` | The name of an existing config map containing env-config.js | `""`  |
 
 ### Common Parameters
 
@@ -127,20 +127,20 @@ Note: Only global parameters used within this chart will be listed below
 | `podLabels`            | Add extra labels to the *Search UI* pod                          | `{}`  |
 | `podAnnotations`       | Add extra annotations to the *Search UI* pod                     | `{}`  |
 | `extraEnvVars`         | Array with extra environment variables to add to *Search UI* pod | `[]`  |
-| `extraVolumes`         | Additional containers to be added to the *Search UI* pod         | `[]`  |
+| `extraVolumes`         | Optionally specify extra list of additional volumes              | `[]`  |
 | `extraVolumeMounts`    | Optionally specify extra list of additional volumeMounts         | `[]`  |
 | `initContainers`       | Add init containers to the pod                                   | `[]`  |
-| `sidecars`             | Add sidecars to the pod.                                         | `[]`  |
+| `sidecars`             | Add sidecars to the pod                                          | `[]`  |
 
 ### Deployment Image Parameters
 
-| Name                | Description                                                             | Value                            |
-| ------------------- | ----------------------------------------------------------------------- | -------------------------------- |
-| `image.registry`    | *Query UI* image registry                                               | `REGISTRY_NAME`                  |
-| `image.repository`  | *Query UI* image name                                                   | `REPOSITORY_NAME/telicent-query` |
-| `image.tag`         | Query UI image tag. If not set, a tag is generated using the appVersion | `""`                             |
-| `image.pullPolicy`  | *Query UI* image pull policy                                            | `IfNotPresent`                   |
-| `image.pullSecrets` | Specify registry secret names as an array                               | `[]`                             |
+| Name                | Description                                                               | Value                     |
+| ------------------- | ------------------------------------------------------------------------- | ------------------------- |
+| `image.registry`    | *Query UI* image registry                                                 | `quay.io`                 |
+| `image.repository`  | *Query UI* image name                                                     | `telicent/telicent-query` |
+| `image.tag`         | *Query UI* image tag. If not set, a tag is generated using the appVersion | `""`                      |
+| `image.pullPolicy`  | *Query UI* image pull policy                                              | `IfNotPresent`            |
+| `image.pullSecrets` | Specify registry secret names as an array                                 | `[]`                      |
 
 ### Deployment Resources Parameters - Requests and Limits
 
@@ -197,10 +197,10 @@ Note: Only global parameters used within this chart will be listed below
 *Query UI* interacts directly with other Telicent Applications using their default service/serviceAccount and port.
 If either of those details changes, you can use this section to correctly referer to those applications.
 
-| Name                      | Description                                                                                                                                                                                                                        | Value                |
-| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
-| `hosts.enableAutoCorrect` | Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as is, without any modification. | `true`               |
-| `hosts.traefikProxy`      | Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                          | `traefik-proxy:8080` |
+| Name                      | Description                                                                                                                                                                                                                          | Value                |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------- |
+| `hosts.enableAutoCorrect` | Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as it is, without any modification | `true`               |
+| `hosts.traefikProxy`      | Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                            | `traefik-proxy:8080` |
 
 
 ## License

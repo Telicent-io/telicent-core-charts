@@ -8,7 +8,12 @@ kind: Role
 metadata:
   name: label-namespace-role
   labels:
-    {{- include "telicent-core.labels" . | nindent 4 }}s
+    {{- include "telicent-core.labels" . | nindent 4 }}
+
+  annotations:
+    "helm.sh/hook": pre-install
+    "helm.sh/hook-delete-policy": hook-succeeded
+    "helm.sh/hook-weight": "-10"
 
 rules:
   - apiGroups: [""]

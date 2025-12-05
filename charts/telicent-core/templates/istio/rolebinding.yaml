@@ -9,6 +9,10 @@ metadata:
   name: {{ .Release.Namespace }}:label-namespace-binding
   labels:
     {{- include "telicent-core.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": pre-install
+    "helm.sh/hook-delete-policy": hook-succeeded
+    "helm.sh/hook-weight": "-10"
 
 subjects:
   - kind: ServiceAccount

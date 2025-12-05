@@ -5,8 +5,8 @@
 # @section Global Parameters
 #
 # @descStart
-# Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart
-# Note: Only global parameters used within this chart will be listed below
+# Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart.
+# Note: Only global parameters used within this chart will be listed below.
 # @descEnd
 global:
   ## Current available global image parameters: imageRegistry and imagePullSecrets
@@ -114,7 +114,7 @@ podAnnotations: {}
 # - name: FOO
 # - value: instance
 extraEnvVars: []
-# @key extraVolumes Additional containers to be added to the *User Preferences* pod
+# @key extraVolumes Optionally specify extra list of additional volumes
 extraVolumes: []
 # @key extraVolumeMounts Optionally specify extra list of additional volumeMounts
 extraVolumeMounts: []
@@ -127,16 +127,16 @@ initContainers: []
 #   ports:
 #   - name: portname
 #     containerPort: 1234
-# @key sidecars Add sidecars to the pod.
+# @key sidecars Add sidecars to the pod
 sidecars: []
 
 #
 # @section Deployment Image Parameters
 #
 image:
-  # @key image.registry [default: REGISTRY_NAME] *User Preferences* image registry
+  # @key image.registry *User Preferences* image registry
   registry: quay.io
-  # @key image.repository [default: REPOSITORY_NAME/telicent-user-preferences-service] *User Preferences* image name
+  # @key image.repository  *User Preferences* image name
   repository: telicent/telicent-user-preferences-service
   # @key image.tag *User Preferences* image tag. If not set, a tag is generated using the appVersion
   tag: ""
@@ -249,7 +249,7 @@ metrics:
 # If either of those details changes, you can use this section to correctly referer to those apps.
 # @descEnd
 hosts:
-  # @key hosts.enableAutoCorrect Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as is, without any modification.
+  # @key hosts.enableAutoCorrect Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as it is, without any modification
   enableAutoCorrect: true
   # @key hosts.auth Auth application default host value, as defined by 'service/serviceAccount:port'
   auth: "auth:8080"

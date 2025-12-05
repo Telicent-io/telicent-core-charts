@@ -83,8 +83,8 @@ the [kubernetes documentation](https://kubernetes.io/docs/concepts/configuration
 
 ### Global Parameters
 
-Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart
-Note: Only global parameters used within this chart will be listed below
+Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart.
+Note: Only global parameters used within this chart will be listed below.
 
 | Name                                    | Description                                               | Value                                          |
 | --------------------------------------- | --------------------------------------------------------- | ---------------------------------------------- |
@@ -153,20 +153,20 @@ Contains configuration parameters specific to the *Search Projector* application
 | `podLabels`            | Add extra labels to the *Search Projector* pod                          | `{}`  |
 | `podAnnotations`       | Add extra annotations to the *Search Projector* pod                     | `{}`  |
 | `extraEnvVars`         | Array with extra environment variables to add to *Search Projector* pod | `[]`  |
-| `extraVolumes`         | Additional containers to be added to the *Search Projector* pod         | `[]`  |
+| `extraVolumes`         | Optionally specify extra list of additional volumes                     | `[]`  |
 | `extraVolumeMounts`    | Optionally specify extra list of additional volumeMounts                | `[]`  |
 | `initContainers`       | Add init containers to the pod                                          | `[]`  |
-| `sidecars`             | Add sidecars to the pod.                                                | `[]`  |
+| `sidecars`             | Add sidecars to the pod                                                 | `[]`  |
 
 ### Deployment Image Parameters
 
-| Name                | Description                                                                       | Value                                       |
-| ------------------- | --------------------------------------------------------------------------------- | ------------------------------------------- |
-| `image.registry`    | *Search Projector* image registry                                                 | `REGISTRY_NAME`                             |
-| `image.repository`  | *Search Projector* image name                                                     | `REPOSITORY_NAME/smart-cache-elastic-index` |
-| `image.tag`         | *Search Projector* image tag. If not set, a tag is generated using the appVersion | `""`                                        |
-| `image.pullPolicy`  | *Search Projector* image pull policy                                              | `IfNotPresent`                              |
-| `image.pullSecrets` | Specify registry secret names as an array                                         | `[]`                                        |
+| Name                | Description                                                                       | Value                                |
+| ------------------- | --------------------------------------------------------------------------------- | ------------------------------------ |
+| `image.registry`    | *Search Projector* image registry                                                 | `quay.io`                            |
+| `image.repository`  | *Search Projector* image name                                                     | `telicent/smart-cache-elastic-index` |
+| `image.tag`         | *Search Projector* image tag. If not set, a tag is generated using the appVersion | `""`                                 |
+| `image.pullPolicy`  | *Search Projector* image pull policy                                              | `IfNotPresent`                       |
+| `image.pullSecrets` | Specify registry secret names as an array                                         | `[]`                                 |
 
 ### Deployment Resources Parameters - Requests and Limits
 

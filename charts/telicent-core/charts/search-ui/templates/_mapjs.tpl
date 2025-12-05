@@ -2,20 +2,20 @@
 Copyright (C) 2025 Telicent Limited
 */}}
 
-{{- define "graph-ui.secretConfigJs"  -}}
+{{- define "search-ui.mapJs" -}}
 // Config values
 
-{{- if .Values.ui.graphUiMaptilerToken }}
-const MAP_TILER_TOKEN = {{ .Values.ui.graphUiMaptilerToken | quote }};
+{{- if .Values.ui.maptilerToken }}
+const MAP_TILER_TOKEN = {{ .Values.ui.maptilerToken | quote }};
 {{- end }}
 
-{{- if .Values.ui.graphUiMapboxStyleSpecUrl }}
-const VECTOR_STYLE_URI = `{{ .Values.ui.graphUiMapboxStyleSpecUrl }}`;
+{{- if .Values.ui.mapboxStyleSpecUrl }}
+const VECTOR_STYLE_URI = `{{ .Values.ui.mapboxStyleSpecUrl }}`;
 {{- end }}
 
-{{- if .Values.ui.graphUiArcgisToken }}
+{{- if .Values.ui.arcgisToken }}
 // ArcGIS API token
-const ARC_GIS_API_TOKEN = `{{ .Values.ui.graphUiArcgisToken }}`;
+const ARC_GIS_API_TOKEN = `{{ .Values.ui.arcgisToken }}`;
 
 // Utility values
 const VECTOR_STYLE_URI = `https://basemapstyles-api.arcgis.com/arcgis/rest/services/styles/v2/styles/arcgis/streets-night?token=${ARC_GIS_API_TOKEN}`;
@@ -23,7 +23,7 @@ const VECTOR_STYLE_URI = `https://basemapstyles-api.arcgis.com/arcgis/rest/servi
 // These are src values for <image /> tag.
 // Can be regular image urls e.g. https://www.domain.com/satellite.png
 // Or base64 strings to avoid hosting requirements
-// How to encode images as base64 strings 
+// How to encode images as base64 strings
 // 1. Open image in https://www.photopea.com/
 // 2. Image -> reduce colors
 // 3. Select "Reduce noise", Select "Photo", Select min acceptable "colors", Press "OK"
@@ -79,40 +79,35 @@ mapConfigExamples.ONLY_VECTOR_STYLES = {
         image: mapImgSrc.DEFAULT,
     },
 };
-
 {{- end }}
 
-// Map configuration options
-// -------------------------
-
-
-{{- if .Values.ui.graphUiArcgisToken }}
-// [BEST] 
+{{- if .Values.ui.arcgisToken }}
+// [BEST]
 // IF set, can generate multiple layers from ANY map service that adheres to the map-box SPEC
 window.MAP_CONFIG = mapConfigExamples['VECTOR_AND_TILE_SETS']
-{{ else }}
-// [BEST] 
+{{- else }}
+// [BEST]
 // IF set, can generate multiple layers from ANY map service that adheres to the map-box SPEC
 //window.MAP_CONFIG = mapConfigExamples['VECTOR_AND_TILE_SETS']
-{{ end }}
+{{- end }}
 
-{{- if .Values.ui.graphUiMapboxStyleSpecUrl }}
-// [LIMITED] 
+{{- if .Values.ui.mapboxStyleSpecUrl }}
+// [LIMITED]
 // ELSE IF set will default to single vector style from ANY map service
 window.MAP_BOX_SPEC_STYLE_OVERRIDE = VECTOR_STYLE_URI;
 {{ else }}
-// [LIMITED] 
+// [LIMITED]
 // ELSE IF set will default to single vector style from ANY map service
 // window.MAP_BOX_SPEC_STYLE_OVERRIDE = VECTOR_STYLE_URI;
-{{ end }}
+{{- end }}
 
-{{- if .Values.ui.graphUiMaptilerToken }}
+{{- if .Values.ui.maptilerToken }}
 // [LIMITED]
 // ELSE will default to mapbox service's streets-v2-dark styled source
 window.MAP_TILER_TOKEN = MAP_TILER_TOKEN;
-{{ else}}
+{{- else }}
 // [LIMITED]
 // ELSE will default to mapbox service's streets-v2-dark styled source
 //window.MAP_TILER_TOKEN = MAP_TILER_TOKEN;
-{{ end }}
-{{- end -}}
+{{- end }}
+{{- end }}

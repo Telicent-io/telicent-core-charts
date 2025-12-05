@@ -133,7 +133,7 @@
                 },
                 "header": {
                     "type": "string",
-                    "description": "The header value to be associated with the `X-ForwardAuth-Secret`.",
+                    "description": "The header value to be associated with the `X-ForwardAuth-Secret`",
                     "default": ""
                 }
             }
@@ -151,7 +151,7 @@
                     "properties": {
                         "profile": {
                             "type": "string",
-                            "description": "Sets the Spring profile to be used. Options are: default, docker, test, and production.",
+                            "description": "Sets the Spring profile to be used. Options are: default, docker, test, and production",
                             "default": "production"
                         }
                     }
@@ -166,7 +166,7 @@
                     "properties": {
                         "level": {
                             "type": "string",
-                            "description": "Api package Logging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE.",
+                            "description": "Api package Logging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE",
                             "default": "WARN"
                         }
                     }
@@ -176,7 +176,7 @@
                     "properties": {
                         "level": {
                             "type": "string",
-                            "description": "Service package Logging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE.",
+                            "description": "Service package Logging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE",
                             "default": "WARN"
                         }
                     }
@@ -186,7 +186,7 @@
                     "properties": {
                         "level": {
                             "type": "string",
-                            "description": "Repo package Logging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE.",
+                            "description": "Repo package Logging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE",
                             "default": "WARN"
                         }
                     }
@@ -196,7 +196,7 @@
                     "properties": {
                         "level": {
                             "type": "string",
-                            "description": "Security packageLogging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE.",
+                            "description": "Security packageLogging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE",
                             "default": "WARN"
                         }
                     }
@@ -206,7 +206,7 @@
                     "properties": {
                         "level": {
                             "type": "string",
-                            "description": "Oauth2 package Logging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE.",
+                            "description": "Oauth2 package Logging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE",
                             "default": "WARN"
                         }
                     }
@@ -216,7 +216,7 @@
                     "properties": {
                         "level": {
                             "type": "string",
-                            "description": "Logging Level for 'io.telicent.auth'. Values include: ERROR, WARN, INFO, DEBUG, TRACE.",
+                            "description": "Logging Level for 'io.telicent.auth'. Values include: ERROR, WARN, INFO, DEBUG, TRACE",
                             "default": "WARN"
                         }
                     }
@@ -226,7 +226,7 @@
                     "properties": {
                         "level": {
                             "type": "string",
-                            "description": "Logging Level for 'Spring RestTemplate'. Values include: ERROR, WARN, INFO, DEBUG, TRACE.",
+                            "description": "Logging Level for 'Spring RestTemplate'. Values include: ERROR, WARN, INFO, DEBUG, TRACE",
                             "default": "ERROR"
                         }
                     }
@@ -288,7 +288,7 @@
                     "properties": {
                         "existingConfigMap": {
                             "type": "string",
-                            "description": "Name of an existing config map containing a list of group objects.",
+                            "description": "Name of an existing config map containing a list of group objects",
                             "default": ""
                         },
                         "list": {
@@ -364,7 +364,7 @@
         },
         "extraVolumes": {
             "type": "array",
-            "description": "Additional containers to be added to the *Auth* pod",
+            "description": "Optionally specify extra list of additional volumes",
             "default": [],
             "items": {}
         },
@@ -382,7 +382,7 @@
         },
         "sidecars": {
             "type": "array",
-            "description": "Add sidecars to the pod.",
+            "description": "Add sidecars to the pod",
             "default": [],
             "items": {}
         },
@@ -392,7 +392,7 @@
                 "registry": {
                     "type": "string",
                     "description": "*Auth* image registry",
-                    "default": "REGISTRY_NAME"
+                    "default": "quay.io"
                 },
                 "repository": {
                     "type": "string",
@@ -603,7 +603,7 @@
             "properties": {
                 "enableAutoCorrect": {
                     "type": "boolean",
-                    "description": "Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as is, without any modification.",
+                    "description": "Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as it is, without any modification",
                     "default": true
                 },
                 "traefikProxy": {
@@ -613,7 +613,7 @@
                 },
                 "userPreferences": {
                     "type": "string",
-                    "description": "User Preferences host value, If not set a host is generated using service:'user-preferences',port:'8080' and Release namespace & name.",
+                    "description": "User Preferences host value, If not set a host is generated using service:'user-preferences',port:'8080' and Release namespace & name",
                     "default": "user-preferences:8080"
                 },
                 "search": {
@@ -633,7 +633,7 @@
             "properties": {
                 "enableAutoCorrect": {
                     "type": "boolean",
-                    "description": "Prefix 'global.releaseNameTelicentPreview' to each host value. Alternatively, the host value will be used as is, without any modification.",
+                    "description": "Prefix 'global.releaseNameTelicentPreview' value to each host value. Alternatively, the host value will be used as it is, without any modification",
                     "default": true
                 },
                 "paperbackWriter": {

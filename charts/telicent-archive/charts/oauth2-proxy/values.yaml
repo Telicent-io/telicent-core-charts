@@ -128,7 +128,7 @@ podAnnotations: {}
 # - name: FOO
 # - value: instance
 extraEnvVars: []
-# @key extraVolumes Additional containers to be added to the *Auth* pod
+# @key extraVolumes Optionally specify extra list of additional volumes
 extraVolumes: []
 # @key extraVolumeMounts Optionally specify extra list of additional volumeMounts
 extraVolumeMounts: []
@@ -141,13 +141,13 @@ initContainers: []
 #   ports:
 #   - name: portname
 #     containerPort: 1234
-# @key sidecars Add sidecars to the pod.
+# @key sidecars Add sidecars to the pod
 sidecars: []
 
 image:
-  # @key image.registry [default: REGISTRY_NAME] *Oauth2 Proxy* image registry
+  # @key image.registry *Oauth2 Proxy* image registry
   registry: quay.io
-  # @key image.repository [default: REPOSITORY_NAME/oauth2-proxy] *Oauth2 Proxy* image name
+  # @key image.repository *Oauth2 Proxy* image name
   repository: oauth2-proxy/oauth2-proxy
   # @key image.tag *Oauth2 Proxy* image tag. If not set, a tag is generated using the appVersion
   tag: ""

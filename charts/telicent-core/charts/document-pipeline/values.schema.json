@@ -218,7 +218,7 @@
                 },
                 "automount": {
                     "type": "boolean",
-                    "description": "Automatically mount a ServiceAccount's API credentials?",
+                    "description": "Automatically mount a ServiceAccount's API credentials",
                     "default": true
                 },
                 "annotations": {
@@ -238,7 +238,7 @@
             "properties": {
                 "enableAutoCorrect": {
                     "type": "boolean",
-                    "description": "Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as is, without any modification.",
+                    "description": "Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as it is, without any modification",
                     "default": true
                 },
                 "auth": {
@@ -387,8 +387,8 @@
                     "properties": {
                         "registry": {
                             "type": "string",
-                            "description": "image registry",
-                            "default": "REGISTRY_NAME"
+                            "description": "*HTTP Ingester* image registry",
+                            "default": "quay.io"
                         },
                         "repository": {
                             "type": "string",
@@ -412,22 +412,6 @@
                             "items": {}
                         }
                     }
-                },
-                "affinity": {
-                    "type": "object",
-                    "description": "Affinity for pod assignment",
-                    "default": {}
-                },
-                "nodeSelector": {
-                    "type": "object",
-                    "description": "Node labels for pod assignment",
-                    "default": {}
-                },
-                "tolerations": {
-                    "type": "array",
-                    "description": "Tolerations for pod assignment",
-                    "default": [],
-                    "items": {}
                 },
                 "resources": {
                     "type": "object",
@@ -464,14 +448,30 @@
                         }
                     }
                 },
+                "affinity": {
+                    "type": "object",
+                    "description": "Affinity for pod assignment",
+                    "default": {}
+                },
+                "nodeSelector": {
+                    "type": "object",
+                    "description": "Node labels for pod assignment",
+                    "default": {}
+                },
+                "tolerations": {
+                    "type": "array",
+                    "description": "Tolerations for pod assignment",
+                    "default": [],
+                    "items": {}
+                },
                 "podSecurityContext": {
                     "type": "object",
-                    "description": "Security context for the pod(s)",
+                    "description": "Security context for the pod(s). Optional override, otherwise inherited from the root security context definition",
                     "default": {}
                 },
                 "containerSecurityContext": {
                     "type": "object",
-                    "description": "Security context for the container(s)",
+                    "description": "Security context for the container(s). Optional override, otherwise inherited from the root security context definition",
                     "default": {}
                 },
                 "service": {
@@ -584,8 +584,8 @@
                     "properties": {
                         "registry": {
                             "type": "string",
-                            "description": "image registry",
-                            "default": "REGISTRY_NAME"
+                            "description": "*Content Extractor* image registry",
+                            "default": "quay.io"
                         },
                         "repository": {
                             "type": "string",
@@ -628,17 +628,17 @@
                 },
                 "resources": {
                     "type": "object",
-                    "description": "Resource requests and limits for the *Content Extractor*",
+                    "description": "Resource requests and limits for the *Content Extractor*. Optional override, otherwise inherited from the root resource definition",
                     "default": {}
                 },
                 "podSecurityContext": {
                     "type": "object",
-                    "description": "Security context for the pod(s)",
+                    "description": "Security context for the pod(s). Optional override, otherwise inherited from the root security context definition",
                     "default": {}
                 },
                 "containerSecurityContext": {
                     "type": "object",
-                    "description": "Security context for the container(s)",
+                    "description": "Security context for the container(s). Optional override, otherwise inherited from the root security context definition",
                     "default": {}
                 }
             }
@@ -771,8 +771,8 @@
                     "properties": {
                         "registry": {
                             "type": "string",
-                            "description": "image registry",
-                            "default": "REGISTRY_NAME"
+                            "description": "*Content Indexer* image registry",
+                            "default": "quay.io"
                         },
                         "repository": {
                             "type": "string",
@@ -815,17 +815,17 @@
                 },
                 "resources": {
                     "type": "object",
-                    "description": "Resource requests and limits for the *Content Indexer*",
+                    "description": "Resource requests and limits for the *Content Indexer*. Optional override, otherwise inherited from the root resource definition",
                     "default": {}
                 },
                 "podSecurityContext": {
                     "type": "object",
-                    "description": "Security context for the pod(s)",
+                    "description": "Security context for the pod(s). Optional override, otherwise inherited from the root security context definition",
                     "default": {}
                 },
                 "containerSecurityContext": {
                     "type": "object",
-                    "description": "Security context for the container(s)",
+                    "description": "Security context for the container(s). Optional override, otherwise inherited from the root security context definition",
                     "default": {}
                 }
             }
@@ -933,8 +933,8 @@
                     "properties": {
                         "registry": {
                             "type": "string",
-                            "description": "image registry",
-                            "default": "REGISTRY_NAME"
+                            "description": "*Catalogue Updater* image registry",
+                            "default": "quay.io"
                         },
                         "repository": {
                             "type": "string",
@@ -977,17 +977,17 @@
                 },
                 "resources": {
                     "type": "object",
-                    "description": "Resource requests and limits for the *Catalogue Updater*",
+                    "description": "Resource requests and limits for the *Catalogue Updater*. Optional override, otherwise inherited from the root resource definition",
                     "default": {}
                 },
                 "podSecurityContext": {
                     "type": "object",
-                    "description": "Security context for the pod(s)",
+                    "description": "Security context for the pod(s). Optional override, otherwise inherited from the root security context definition",
                     "default": {}
                 },
                 "containerSecurityContext": {
                     "type": "object",
-                    "description": "Security context for the container(s)",
+                    "description": "Security context for the container(s). Optional override, otherwise inherited from the root security context definition",
                     "default": {}
                 }
             }
@@ -1110,8 +1110,8 @@
                     "properties": {
                         "registry": {
                             "type": "string",
-                            "description": "image registry",
-                            "default": "REGISTRY_NAME"
+                            "description": "*Content Tagger* image registry",
+                            "default": "quay.io"
                         },
                         "repository": {
                             "type": "string",
@@ -1159,12 +1159,12 @@
                 },
                 "podSecurityContext": {
                     "type": "object",
-                    "description": "Security context for the pod(s)",
+                    "description": "Security context for the pod(s). Optional override, otherwise inherited from the root security context definition",
                     "default": {}
                 },
                 "containerSecurityContext": {
                     "type": "object",
-                    "description": "Security context for the container(s)",
+                    "description": "Security context for the container(s). Optional override, otherwise inherited from the root security context definition",
                     "default": {}
                 }
             }
@@ -1257,8 +1257,8 @@
                     "properties": {
                         "registry": {
                             "type": "string",
-                            "description": "image registry",
-                            "default": "REGISTRY_NAME"
+                            "description": "*Entity Extractor* image registry",
+                            "default": "quay.io"
                         },
                         "repository": {
                             "type": "string",
@@ -1301,17 +1301,17 @@
                 },
                 "resources": {
                     "type": "object",
-                    "description": "Resource requests and limits for the *Entity Extractor*",
+                    "description": "Resource requests and limits for the *Entity Extractor*. Optional override, otherwise inherited from the root resource definition",
                     "default": {}
                 },
                 "podSecurityContext": {
                     "type": "object",
-                    "description": "Security context for the pod(s)",
+                    "description": "Security context for the pod(s). Optional override, otherwise inherited from the root security context definition",
                     "default": {}
                 },
                 "containerSecurityContext": {
                     "type": "object",
-                    "description": "Security context for the container(s)",
+                    "description": "Security context for the container(s). Optional override, otherwise inherited from root security context definition",
                     "default": {}
                 }
             }

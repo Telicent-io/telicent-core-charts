@@ -5,8 +5,8 @@
 # @section Global Parameters
 #
 # @descStart
-# Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart
-# Note: Only global parameters used within this chart will be listed below
+# Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart.
+# Note: Only global parameters used within this chart will be listed below.
 # @descEnd
 global:
   ## Current available global image parameters: imageRegistry and imagePullSecrets
@@ -30,28 +30,32 @@ global:
   authHostDomain: "auth.telicent.io"
 
 #
-# @section Application Parameters - UI
+# @section Application Parameters - UI and Secret
 #
 # @descStart
-# Contains parameters specific to the Graph User Interface
+# Contains parameters specific to the Graph User Interface.
+# Map functionality requires tokens and configuration defined within a secret.
+# It is recommended to store sensitive information including tokens/passwords in a Kubernetes secret and not in Helm values.
+# For Quick Start purposes, a secret named `tc-auth-gen-mapjs-graph-ui` will be created if one is not set.
 # @descEnd
 ui:
   # @key ui.searchUiDeployed If set to true, *Search UI* links will be available within *Graph UI*
   searchUiDeployed: true
-  # @key ui.userPortalUiDeployed If set to true, *User Portal* links will be available within *Graph UI*
+  # @key ui.userPortalUiDeployed If set to true, *User Portal UI* links will be available within *Graph UI*
   userPortalUiDeployed: true
   # @key ui.dataCatalogUiDeployed If set to true, *Data Catalog UI* links will be available within *Graph UI*
   dataCatalogUiDeployed: true
 
-  # @key ui.graphUiMaptilerToken The MapTiler token for the *Graph UI*
-  graphUiMaptilerToken: "your.maptiler.token.here"
-  # @key ui.graphUiMapboxStyleSpecUrl The Mapbox style spec URL for the *Graph UI* can be specified if using Mapbox styles
-  # For examples of the map configuration, see: _secret_config_js.tpl
-  graphUiMapboxStyleSpecUrl: ""
-  # @key ui.graphUiArcgisToken  The ArcGIS token for the *Graph UI* can be specified if using ArcGIS styles
-  graphUiArcgisToken: ""
-  # @key ui.existingMapConfigSecretName The name of an existing secret containing map configuration
-  existingMapConfigSecretName: ""
+  # @key ui.maptilerToken The MapTiler token for the *Graph UI*
+  maptilerToken: "your.maptiler.token.here"
+  # @key ui.mapboxStyleSpecUrl The Mapbox style spec URL for the *Graph UI* can be specified if using Mapbox styles
+  # For examples of the map configuration, see: _mapjs.tpl
+  mapboxStyleSpecUrl: ""
+  # @key ui.arcgisToken The ArcGIS token for the *Graph UI* can be specified if using ArcGIS styles
+  arcgisToken: ""
+  # @key ui.existingMapConfigSecret The name of an existing secret containing map configuration. See: '_mapjs.tpl' & 'secret-mapjs.yaml'
+  # Note: Left unset, it will create a secret named: tc-auth-gen-mapjs-graph-ui
+  existingMapConfigSecret: ""
 
 #
 # @section Application Parameters - OAuth
@@ -66,7 +70,7 @@ oauth:
 # @section ConfigMap Parameters
 #
 configMap:
-  # @key configMap.existingConfigMap The name of an existing config map containing env-config.js.
+  # @key configMap.existingConfigMap The name of an existing config map containing env-config.js
   # Note: When it's set, it will disable configmap creation
   existingConfigMap: ""
 
@@ -102,7 +106,7 @@ podAnnotations: {}
 # - name: FOO
 # - value: instance
 extraEnvVars: []
-# @key extraVolumes Additional containers to be added to the *Graph UI* pod
+# @key extraVolumes Optionally specify extra list of additional volumes
 extraVolumes: []
 # @key extraVolumeMounts Optionally specify extra list of additional volumeMounts
 extraVolumeMounts: []
@@ -115,18 +119,18 @@ initContainers: []
 #   ports:
 #   - name: portname
 #     containerPort: 1234
-# @key sidecars Add sidecars to the pod.
+# @key sidecars Add sidecars to the pod
 sidecars: []
 
 #
 # @section Deployment Image Parameters
 #
 image:
-  # @key image.registry [default: REGISTRY_NAME] *Graph UI* image registry
+  # @key image.registry *Graph UI* image registry
   registry: quay.io
-  # @key image.repository [default: REPOSITORY_NAME/telicent-graph] *Graph UI* image name
+  # @key image.repository *Graph UI* image name
   repository: telicent/telicent-graph
-  # @key image.tag Seearch UI image tag. If not set, a tag is generated using the appVersion
+  # @key image.tag *Graph UI* image tag. If not set, a tag is generated using the appVersion
   tag: ""
   # @key image.pullPolicy *Graph UI* image pull policy
   pullPolicy: IfNotPresent
@@ -225,7 +229,7 @@ service:
 # If either of those details changes, you can use this section to correctly referer to those applications.
 # @descEnd
 hosts:
-  # @key hosts.enableAutoCorrect Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as is, without any modification.
+  # @key hosts.enableAutoCorrect Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as it is, without any modification
   enableAutoCorrect: true
   # @key hosts.traefikProxy Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'
   traefikProxy: "traefik-proxy:8080"

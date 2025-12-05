@@ -84,8 +84,8 @@ the [kubernetes documentation](https://kubernetes.io/docs/concepts/configuration
 
 ### Global Parameters
 
-Contains global parameters; these parameters are mirrored within the Telicent preview umbrella chart
-Note: Only global parameters used within this chart will be listed below
+Contains global parameters; these parameters are mirrored within the Telicent preview umbrella chart.
+Note: Only global parameters used within this chart will be listed below.
 
 | Name                             | Description                                                                                                                                         | Value              |
 | -------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
@@ -128,20 +128,20 @@ Note: Only global parameters used within this chart will be listed below
 | `podLabels`            | Add extra labels to the *Paperback Writer* pod                          | `{}`  |
 | `podAnnotations`       | Add extra annotations to the *Paperback Writer* pod                     | `{}`  |
 | `extraEnvVars`         | Array with extra environment variables to add to *Paperback Writer* pod | `[]`  |
-| `extraVolumes`         | Additional containers to be added to the *Paperback Writer* pod         | `[]`  |
+| `extraVolumes`         | Optionally specify extra list of additional volumes                     | `[]`  |
 | `extraVolumeMounts`    | Optionally specify extra list of additional volumeMounts                | `[]`  |
 | `initContainers`       | Add init containers to the pod                                          | `[]`  |
-| `sidecars`             | Add sidecars to the pod.                                                | `[]`  |
+| `sidecars`             | Add sidecars to the pod                                                 | `[]`  |
 
 ### Deployment Image Parameters
 
-| Name                | Description                                                                       | Value                                       |
-| ------------------- | --------------------------------------------------------------------------------- | ------------------------------------------- |
-| `image.registry`    | *Paperback Writer* image registry                                                 | `REGISTRY_NAME`                             |
-| `image.repository`  | *Paperback Writer* image name                                                     | `REPOSITORY_NAME/telicent-paperback-writer` |
-| `image.tag`         | *Paperback Writer* image tag. If not set, a tag is generated using the appVersion | `""`                                        |
-| `image.pullPolicy`  | *Paperback Writer* image pull policy                                              | `IfNotPresent`                              |
-| `image.pullSecrets` | Specify registry secret names as an array                                         | `[]`                                        |
+| Name                | Description                                                                       | Value                                |
+| ------------------- | --------------------------------------------------------------------------------- | ------------------------------------ |
+| `image.registry`    | *Paperback Writer* image registry                                                 | `quay.io`                            |
+| `image.repository`  | *Paperback Writer* image name                                                     | `telicent/telicent-paperback-writer` |
+| `image.tag`         | *Paperback Writer* image tag. If not set, a tag is generated using the appVersion | `""`                                 |
+| `image.pullPolicy`  | *Paperback Writer* image pull policy                                              | `IfNotPresent`                       |
+| `image.pullSecrets` | Specify registry secret names as an array                                         | `[]`                                 |
 
 ### Deployment Resources Parameters - Requests and Limits
 
@@ -193,12 +193,12 @@ Note: Only global parameters used within this chart will be listed below
 *Paperback Writer* interacts with applications deployed via *telicent-core* using their default service/serviceAccount and port.
 If either of those details changes, you can use this section to correctly referer to those applications.
 
-| Name                          | Description                                                                                                                             | Value                |
-| ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
-| `hostsCore.enableAutoCorrect` | Prefix 'global.releaseNameTelicentCore' to each host value. Alternatively, the host value will be used as is, without any modification. | `true`               |
-| `hostsCore.traefikProxy`      | Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'                                               | `traefik-proxy:8080` |
-| `hostsCore.auth`              | Auth application default host value, as defined by 'service/serviceAccount:port'                                                        | `auth:8080`          |
-| `hostsCore.graph`             | Graph application host value, as defined by 'service/serviceAccount:port'                                                               | `graph:8080`         |
+| Name                          | Description                                                                                                                                     | Value                |
+| ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
+| `hostsCore.enableAutoCorrect` | Prefix 'global.releaseNameTelicentCore' value to each host value. Alternatively, the host value will be used as it is, without any modification | `true`               |
+| `hostsCore.traefikProxy`      | Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'                                                       | `traefik-proxy:8080` |
+| `hostsCore.auth`              | Auth application default host value, as defined by 'service/serviceAccount:port'                                                                | `auth:8080`          |
+| `hostsCore.graph`             | Graph application host value, as defined by 'service/serviceAccount:port'                                                                       | `graph:8080`         |
 
 
 ## License

@@ -194,7 +194,7 @@
         },
         "sidecars": {
             "type": "array",
-            "description": "Add sidecars to the pod.",
+            "description": "Add sidecars to the pod",
             "default": [],
             "items": {}
         },
@@ -204,12 +204,12 @@
                 "registry": {
                     "type": "string",
                     "description": "*Search* image registry",
-                    "default": "REGISTRY_NAME"
+                    "default": "quay.io"
                 },
                 "repository": {
                     "type": "string",
                     "description": "*Search* image name",
-                    "default": "REPOSITORY_NAME/search-api-server"
+                    "default": "telicent/search-api-server"
                 },
                 "tag": {
                     "type": "string",
@@ -440,7 +440,7 @@
             "properties": {
                 "enableAutoCorrect": {
                     "type": "boolean",
-                    "description": "Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as is, without any modification.",
+                    "description": "Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as it is, without any modification",
                     "default": true
                 },
                 "auth": {

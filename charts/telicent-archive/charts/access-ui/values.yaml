@@ -80,7 +80,7 @@ podAnnotations: {}
 # - name: FOO
 # - value: instance
 extraEnvVars: []
-# @key extraVolumes Additional containers to be added to the *Access UI* pod
+# @key extraVolumes Optionally specify extra list of additional volumes
 extraVolumes: []
 # @key extraVolumeMounts Optionally specify extra list of additional volumeMounts
 extraVolumeMounts: []
@@ -93,13 +93,13 @@ initContainers: []
 #   ports:
 #   - name: portname
 #     containerPort: 1234
-# @key sidecars Add sidecars to the pod.
+# @key sidecars Add sidecars to the pod
 sidecars: []
 
 image:
-  # @key image.registry [default: REGISTRY_NAME] *Access UI* image registry
+  # @key image.registry  *Access UI* image registry
   registry: quay.io
-  # @key image.repository [default: REPOSITORY_NAME/telicent-access] *Access UI* image name
+  # @key image.repository  *Access UI* image name
   repository: telicent/telicent-access
   # @key image.tag Access UI image tag. If not set, a tag is generated using the appVersion
   tag: ""

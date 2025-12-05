@@ -140,20 +140,20 @@ This section builds out the service account more information can be found here: 
 | Name                         | Description                                                                                                            | Value  |
 | ---------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ------ |
 | `serviceAccount.create`      | Specifies whether a service account should be created                                                                  | `true` |
-| `serviceAccount.automount`   | Automatically mount a ServiceAccount's API credentials?                                                                | `true` |
+| `serviceAccount.automount`   | Automatically mount a ServiceAccount's API credentials                                                                 | `true` |
 | `serviceAccount.annotations` | Annotations to add to the service account                                                                              | `{}`   |
 | `serviceAccount.name`        | The name of the service account to use. If not set and create is true, a name is generated using the fullname template | `""`   |
 
-### Host(s) Parameters - Contains host information for applications deployed via *telicent-core* chart.
+### Host(s) Parameters - Contains host information for applications deployed via *telicent-core* chart
 
 *Document Pipeline* interacts directly with other Telicent Applications using their default service/serviceAccount and port.
 If either of those details changes, you can use this section to correctly referer to those applications.
 
-| Name                      | Description                                                                                                                                                                                                                        | Value                |
-| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
-| `hosts.enableAutoCorrect` | Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as is, without any modification. | `true`               |
-| `hosts.auth`              | Auth application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                                   | `auth:8080`          |
-| `hosts.traefikProxy`      | Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                          | `traefik-proxy:8080` |
+| Name                      | Description                                                                                                                                                                                                                          | Value                |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------- |
+| `hosts.enableAutoCorrect` | Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as it is, without any modification | `true`               |
+| `hosts.auth`              | Auth application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                                     | `auth:8080`          |
+| `hosts.traefikProxy`      | Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                            | `traefik-proxy:8080` |
 
 ### *HTTP Ingester*
 
@@ -161,13 +161,13 @@ The *HTTP Ingester* is responsible for ingesting documents via https.
 The application settings are defined within the 'java' & 'routes' keys
 
 
-### *HTTP Ingester* Application Parameters - Java
+### *HTTP Ingester* - Application Parameters - Java
 
 | Name                           | Description                     | Value                       |
 | ------------------------------ | ------------------------------- | --------------------------- |
 | `httpIngester.java.jvmOptions` | Java options to pass to the JVM | `-XX:MaxRAMPercentage=80.0` |
 
-### *HTTP Ingester* Application Parameters - Routes
+### *HTTP Ingester* - Application Parameters - Routes
 
 | Name                                             | Description                                                                                                                                                                                                                                       | Value                                                                                                              |
 | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
@@ -206,31 +206,51 @@ The application settings are defined within the 'java' & 'routes' keys
 
 ### *HTTP Ingester* - Deployment Parameters
 
-| Name                                     | Description                                                 | Value                                      |
-| ---------------------------------------- | ----------------------------------------------------------- | ------------------------------------------ |
-| `httpIngester.replicas`                  | Number of replicas to deploy                                | `1`                                        |
-| `httpIngester.annotations`               | Add extra annotations to the deployment object              | `{}`                                       |
-| `httpIngester.podLabels`                 | Labels to add to the *HTTP Ingester* pods                   | `{}`                                       |
-| `httpIngester.podAnnotations`            | Annotations to add to the *HTTP Ingester* pods              | `{}`                                       |
-| `httpIngester.extraEnvVars`              | Array with extra environment variables to add               | `[]`                                       |
-| `httpIngester.extraVolumes`              | Additional volumes on the output Deployment definition      | `[]`                                       |
-| `httpIngester.extraVolumeMounts`         | Additional volumeMounts on the output Deployment definition | `[]`                                       |
-| `httpIngester.initContainers`            | Add init containers to the pod                              | `[]`                                       |
-| `httpIngester.sidecars`                  | Add sidecars to the pod.                                    | `[]`                                       |
-| `httpIngester.image.registry`            | image registry                                              | `REGISTRY_NAME`                            |
-| `httpIngester.image.repository`          | The container image repository for the *HTTP Ingester*      | `telicent/telicent-document-http-ingester` |
-| `httpIngester.image.tag`                 | The image tag for the *HTTP Ingester*                       | `3.3.0`                                    |
-| `httpIngester.image.pullPolicy`          | The image pull policy for the *HTTP Ingester*               | `IfNotPresent`                             |
-| `httpIngester.image.pullSecrets`         | Specify registry secret names as an array                   | `[]`                                       |
-| `httpIngester.affinity`                  | Affinity for pod assignment                                 | `{}`                                       |
-| `httpIngester.nodeSelector`              | Node labels for pod assignment                              | `{}`                                       |
-| `httpIngester.tolerations`               | Tolerations for pod assignment                              | `[]`                                       |
-| `httpIngester.resources.requests.cpu`    | Set containers' CPU request                                 | `500m`                                     |
-| `httpIngester.resources.requests.memory` | Set containers' memory request                              | `1000Mi`                                   |
-| `httpIngester.resources.limits.cpu`      | Set containers' CPU limit                                   | `1000m`                                    |
-| `httpIngester.resources.limits.memory`   | Set containers' memory limit                                | `1500Mi`                                   |
-| `httpIngester.podSecurityContext`        | Security context for the pod(s)                             | `{}`                                       |
-| `httpIngester.containerSecurityContext`  | Security context for the container(s)                       | `{}`                                       |
+| Name                             | Description                                                 | Value |
+| -------------------------------- | ----------------------------------------------------------- | ----- |
+| `httpIngester.replicas`          | Number of replicas to deploy                                | `1`   |
+| `httpIngester.annotations`       | Add extra annotations to the deployment object              | `{}`  |
+| `httpIngester.podLabels`         | Labels to add to the *HTTP Ingester* pods                   | `{}`  |
+| `httpIngester.podAnnotations`    | Annotations to add to the *HTTP Ingester* pods              | `{}`  |
+| `httpIngester.extraEnvVars`      | Array with extra environment variables to add               | `[]`  |
+| `httpIngester.extraVolumes`      | Additional volumes on the output Deployment definition      | `[]`  |
+| `httpIngester.extraVolumeMounts` | Additional volumeMounts on the output Deployment definition | `[]`  |
+| `httpIngester.initContainers`    | Add init containers to the pod                              | `[]`  |
+| `httpIngester.sidecars`          | Add sidecars to the pod.                                    | `[]`  |
+
+### *HTTP Ingester* - Deployment Image Parameters
+
+| Name                             | Description                                            | Value                                      |
+| -------------------------------- | ------------------------------------------------------ | ------------------------------------------ |
+| `httpIngester.image.registry`    | *HTTP Ingester* image registry                         | `quay.io`                                  |
+| `httpIngester.image.repository`  | The container image repository for the *HTTP Ingester* | `telicent/telicent-document-http-ingester` |
+| `httpIngester.image.tag`         | The image tag for the *HTTP Ingester*                  | `3.3.0`                                    |
+| `httpIngester.image.pullPolicy`  | The image pull policy for the *HTTP Ingester*          | `IfNotPresent`                             |
+| `httpIngester.image.pullSecrets` | Specify registry secret names as an array              | `[]`                                       |
+
+### *HTTP Ingester* - Deployment Resources Parameters - Requests and Limits
+
+| Name                                     | Description                    | Value    |
+| ---------------------------------------- | ------------------------------ | -------- |
+| `httpIngester.resources.requests.cpu`    | Set containers' CPU request    | `500m`   |
+| `httpIngester.resources.requests.memory` | Set containers' memory request | `1000Mi` |
+| `httpIngester.resources.limits.cpu`      | Set containers' CPU limit      | `1000m`  |
+| `httpIngester.resources.limits.memory`   | Set containers' memory limit   | `1500Mi` |
+
+### *HTTP Ingester* - Deployment Affinity Parameters
+
+| Name                        | Description                    | Value |
+| --------------------------- | ------------------------------ | ----- |
+| `httpIngester.affinity`     | Affinity for pod assignment    | `{}`  |
+| `httpIngester.nodeSelector` | Node labels for pod assignment | `{}`  |
+| `httpIngester.tolerations`  | Tolerations for pod assignment | `[]`  |
+
+### *HTTP Ingester* - Deployment Security Context Parameters - Default Security Context
+
+| Name                                    | Description                                                                                                             | Value |
+| --------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | ----- |
+| `httpIngester.podSecurityContext`       | Security context for the pod(s). Optional override, otherwise inherited from the root security context definition       | `{}`  |
+| `httpIngester.containerSecurityContext` | Security context for the container(s). Optional override, otherwise inherited from the root security context definition | `{}`  |
 
 ### *HTTP Ingester* - Traffic Exposure Parameters
 
@@ -246,7 +266,7 @@ The *Content Extractor* is responsible for extracting information from the inges
 The application settings are defined within the 'topics' key
 
 
-### *Content Extractor* Application Parameters - Topics
+### *Content Extractor* - Application Parameters - Topics
 
 | Name                                  | Description                                                                          | Value                         |
 | ------------------------------------- | ------------------------------------------------------------------------------------ | ----------------------------- |
@@ -263,28 +283,28 @@ The application settings are defined within the 'topics' key
 
 ### *Content Extractor* - Deployment Parameters
 
-| Name                                        | Description                                                | Value                                          |
-| ------------------------------------------- | ---------------------------------------------------------- | ---------------------------------------------- |
-| `contentExtractor.replicas`                 | The number of replicas for the *Content Extractor*         | `1`                                            |
-| `contentExtractor.annotations`              | Add extra annotations to the deployment object             | `{}`                                           |
-| `contentExtractor.podLabels`                | Labels to add to the *Content Extractor* pods              | `{}`                                           |
-| `contentExtractor.podAnnotations`           | Annotations to add to the *Content Extractor* pods         | `{}`                                           |
-| `contentExtractor.extraEnvVars`             | Array with extra environment variables to add              | `[]`                                           |
-| `contentExtractor.extraVolumes`             | Additional volumes for the *Content Extractor*             | `[]`                                           |
-| `contentExtractor.extraVolumeMounts`        | Additional volume mounts for the *Content Extractor*       | `[]`                                           |
-| `contentExtractor.initContainers`           | Add init containers to the pod                             | `[]`                                           |
-| `contentExtractor.sidecars`                 | Add sidecars to the pod.                                   | `[]`                                           |
-| `contentExtractor.image.registry`           | image registry                                             | `REGISTRY_NAME`                                |
-| `contentExtractor.image.repository`         | The container image repository for the *Content Extractor* | `telicent/telicent-document-content-extractor` |
-| `contentExtractor.image.tag`                | The image tag for the *Content Extractor*                  | `3.3.0`                                        |
-| `contentExtractor.image.pullPolicy`         | The image pull policy for the *Content Extractor*          | `IfNotPresent`                                 |
-| `contentExtractor.image.pullSecrets`        | Secrets for pulling an image from a private repository     | `[]`                                           |
-| `contentExtractor.affinity`                 | Affinity rules for the *Content Extractor* pods            | `{}`                                           |
-| `contentExtractor.nodeSelector`             | Node selector for the *Content Extractor* pods             | `{}`                                           |
-| `contentExtractor.tolerations`              | Tolerations for the *Content Extractor* pods               | `[]`                                           |
-| `contentExtractor.resources`                | Resource requests and limits for the *Content Extractor*   | `{}`                                           |
-| `contentExtractor.podSecurityContext`       | Security context for the pod(s)                            | `{}`                                           |
-| `contentExtractor.containerSecurityContext` | Security context for the container(s)                      | `{}`                                           |
+| Name                                        | Description                                                                                                                        | Value                                          |
+| ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| `contentExtractor.replicas`                 | The number of replicas for the *Content Extractor*                                                                                 | `1`                                            |
+| `contentExtractor.annotations`              | Add extra annotations to the deployment object                                                                                     | `{}`                                           |
+| `contentExtractor.podLabels`                | Labels to add to the *Content Extractor* pods                                                                                      | `{}`                                           |
+| `contentExtractor.podAnnotations`           | Annotations to add to the *Content Extractor* pods                                                                                 | `{}`                                           |
+| `contentExtractor.extraEnvVars`             | Array with extra environment variables to add                                                                                      | `[]`                                           |
+| `contentExtractor.extraVolumes`             | Additional volumes for the *Content Extractor*                                                                                     | `[]`                                           |
+| `contentExtractor.extraVolumeMounts`        | Additional volume mounts for the *Content Extractor*                                                                               | `[]`                                           |
+| `contentExtractor.initContainers`           | Add init containers to the pod                                                                                                     | `[]`                                           |
+| `contentExtractor.sidecars`                 | Add sidecars to the pod.                                                                                                           | `[]`                                           |
+| `contentExtractor.image.registry`           | *Content Extractor* image registry                                                                                                 | `quay.io`                                      |
+| `contentExtractor.image.repository`         | The container image repository for the *Content Extractor*                                                                         | `telicent/telicent-document-content-extractor` |
+| `contentExtractor.image.tag`                | The image tag for the *Content Extractor*                                                                                          | `3.3.0`                                        |
+| `contentExtractor.image.pullPolicy`         | The image pull policy for the *Content Extractor*                                                                                  | `IfNotPresent`                                 |
+| `contentExtractor.image.pullSecrets`        | Secrets for pulling an image from a private repository                                                                             | `[]`                                           |
+| `contentExtractor.affinity`                 | Affinity rules for the *Content Extractor* pods                                                                                    | `{}`                                           |
+| `contentExtractor.nodeSelector`             | Node selector for the *Content Extractor* pods                                                                                     | `{}`                                           |
+| `contentExtractor.tolerations`              | Tolerations for the *Content Extractor* pods                                                                                       | `[]`                                           |
+| `contentExtractor.resources`                | Resource requests and limits for the *Content Extractor*. Optional override, otherwise inherited from the root resource definition | `{}`                                           |
+| `contentExtractor.podSecurityContext`       | Security context for the pod(s). Optional override, otherwise inherited from the root security context definition                  | `{}`                                           |
+| `contentExtractor.containerSecurityContext` | Security context for the container(s). Optional override, otherwise inherited from the root security context definition            | `{}`                                           |
 
 ### *Content Indexer*
 
@@ -292,7 +312,7 @@ The *Content Indexer* is responsible for indexing documents.
 The application settings are defined within the 'java' & 'elastic' keys
 
 
-### *Content Indexer* Application Parameters - Java
+### *Content Indexer* - Application Parameters - Java
 
 | Name                             | Description                     | Value                       |
 | -------------------------------- | ------------------------------- | --------------------------- |
@@ -325,28 +345,28 @@ For Quick Start purposes, a secret named `tc-auth-usr-elastic-document-pipeline-
 
 ### *Content Indexer* - Deployment Parameters
 
-| Name                                      | Description                                              | Value                                        |
-| ----------------------------------------- | -------------------------------------------------------- | -------------------------------------------- |
-| `contentIndexer.replicas`                 | Number of replicas to deploy                             | `1`                                          |
-| `contentIndexer.annotations`              | Add extra annotations to the deployment object           | `{}`                                         |
-| `contentIndexer.podLabels`                | Labels to add to the *Content Indexer* pods              | `{}`                                         |
-| `contentIndexer.podAnnotations`           | Annotations to add to the *Content Indexer* pods         | `{}`                                         |
-| `contentIndexer.extraEnvVars`             | Array with extra environment variables to add            | `[]`                                         |
-| `contentIndexer.extraVolumes`             | Additional volumes for the *Content Indexer*             | `[]`                                         |
-| `contentIndexer.extraVolumeMounts`        | Additional volume mounts for the *Content Indexer*       | `[]`                                         |
-| `contentIndexer.initContainers`           | Add init containers to the pod                           | `[]`                                         |
-| `contentIndexer.sidecars`                 | Add sidecars to the pod.                                 | `[]`                                         |
-| `contentIndexer.image.registry`           | image registry                                           | `REGISTRY_NAME`                              |
-| `contentIndexer.image.repository`         | The container image repository for the *Content Indexer* | `telicent/telicent-document-content-indexer` |
-| `contentIndexer.image.pullPolicy`         | The image pull policy for the *Content Indexer*          | `IfNotPresent`                               |
-| `contentIndexer.image.tag`                | The image tag for the *Content Indexer*                  | `3.3.0`                                      |
-| `contentIndexer.image.pullSecrets`        | Secrets for pulling an image from a private repository   | `[]`                                         |
-| `contentIndexer.affinity`                 | Affinity rules for the *Content Indexer* pods            | `{}`                                         |
-| `contentIndexer.nodeSelector`             | Node selector for the *Content Indexer* pods             | `{}`                                         |
-| `contentIndexer.tolerations`              | Tolerations for the *Content Indexer* pods               | `[]`                                         |
-| `contentIndexer.resources`                | Resource requests and limits for the *Content Indexer*   | `{}`                                         |
-| `contentIndexer.podSecurityContext`       | Security context for the pod(s)                          | `{}`                                         |
-| `contentIndexer.containerSecurityContext` | Security context for the container(s)                    | `{}`                                         |
+| Name                                      | Description                                                                                                                      | Value                                        |
+| ----------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------- |
+| `contentIndexer.replicas`                 | Number of replicas to deploy                                                                                                     | `1`                                          |
+| `contentIndexer.annotations`              | Add extra annotations to the deployment object                                                                                   | `{}`                                         |
+| `contentIndexer.podLabels`                | Labels to add to the *Content Indexer* pods                                                                                      | `{}`                                         |
+| `contentIndexer.podAnnotations`           | Annotations to add to the *Content Indexer* pods                                                                                 | `{}`                                         |
+| `contentIndexer.extraEnvVars`             | Array with extra environment variables to add                                                                                    | `[]`                                         |
+| `contentIndexer.extraVolumes`             | Additional volumes for the *Content Indexer*                                                                                     | `[]`                                         |
+| `contentIndexer.extraVolumeMounts`        | Additional volume mounts for the *Content Indexer*                                                                               | `[]`                                         |
+| `contentIndexer.initContainers`           | Add init containers to the pod                                                                                                   | `[]`                                         |
+| `contentIndexer.sidecars`                 | Add sidecars to the pod.                                                                                                         | `[]`                                         |
+| `contentIndexer.image.registry`           | *Content Indexer* image registry                                                                                                 | `quay.io`                                    |
+| `contentIndexer.image.repository`         | The container image repository for the *Content Indexer*                                                                         | `telicent/telicent-document-content-indexer` |
+| `contentIndexer.image.pullPolicy`         | The image pull policy for the *Content Indexer*                                                                                  | `IfNotPresent`                               |
+| `contentIndexer.image.tag`                | The image tag for the *Content Indexer*                                                                                          | `3.3.0`                                      |
+| `contentIndexer.image.pullSecrets`        | Secrets for pulling an image from a private repository                                                                           | `[]`                                         |
+| `contentIndexer.affinity`                 | Affinity rules for the *Content Indexer* pods                                                                                    | `{}`                                         |
+| `contentIndexer.nodeSelector`             | Node selector for the *Content Indexer* pods                                                                                     | `{}`                                         |
+| `contentIndexer.tolerations`              | Tolerations for the *Content Indexer* pods                                                                                       | `[]`                                         |
+| `contentIndexer.resources`                | Resource requests and limits for the *Content Indexer*. Optional override, otherwise inherited from the root resource definition | `{}`                                         |
+| `contentIndexer.podSecurityContext`       | Security context for the pod(s). Optional override, otherwise inherited from the root security context definition                | `{}`                                         |
+| `contentIndexer.containerSecurityContext` | Security context for the container(s). Optional override, otherwise inherited from the root security context definition          | `{}`                                         |
 
 ### *Catalogue Updater*
 
@@ -354,7 +374,7 @@ The *Catalogue Updater* is responsible for updating the catalogue store.
 The application settings are defined within the 'topics' key
 
 
-### *Catalogue Updater* Application Parameters - Topics
+### *Catalogue Updater* - Application Parameters - Topics
 
 | Name                                       | Description                                                                          | Value                         |
 | ------------------------------------------ | ------------------------------------------------------------------------------------ | ----------------------------- |
@@ -374,28 +394,28 @@ The application settings are defined within the 'topics' key
 
 ### *Catalogue Updater* - Deployment Parameters
 
-| Name                                        | Description                                                | Value                                          |
-| ------------------------------------------- | ---------------------------------------------------------- | ---------------------------------------------- |
-| `catalogueUpdater.replicas`                 | The number of replicas for the *Catalogue Updater*         | `1`                                            |
-| `catalogueUpdater.annotations`              | Add extra annotations to the deployment object             | `{}`                                           |
-| `catalogueUpdater.podAnnotations`           | Annotations to add to the *Catalogue Updater* pods         | `{}`                                           |
-| `catalogueUpdater.podLabels`                | Labels to add to the *Catalogue Updater* pods              | `{}`                                           |
-| `catalogueUpdater.extraEnvVars`             | Array with extra environment variables to add              | `[]`                                           |
-| `catalogueUpdater.extraVolumes`             | Additional volumes for the *Catalogue Updater*             | `[]`                                           |
-| `catalogueUpdater.extraVolumeMounts`        | Additional volume mounts for the *Catalogue Updater*       | `[]`                                           |
-| `catalogueUpdater.initContainers`           | Add init containers to the pod                             | `[]`                                           |
-| `catalogueUpdater.sidecars`                 | Add sidecars to the pod.                                   | `[]`                                           |
-| `catalogueUpdater.image.registry`           | image registry                                             | `REGISTRY_NAME`                                |
-| `catalogueUpdater.image.repository`         | The container image repository for the *Catalogue Updater* | `telicent/telicent-document-catalogue-updater` |
-| `catalogueUpdater.image.pullPolicy`         | The image pull policy for the *Catalogue Updater*          | `IfNotPresent`                                 |
-| `catalogueUpdater.image.tag`                | The image tag for the *Catalogue Updater*                  | `3.3.0`                                        |
-| `catalogueUpdater.image.pullSecrets`        | Secrets for pulling an image from a private repository     | `[]`                                           |
-| `catalogueUpdater.affinity`                 | Affinity rules for the *Catalogue Updater* pods            | `{}`                                           |
-| `catalogueUpdater.nodeSelector`             | Node selector for the *Catalogue Updater* pods             | `{}`                                           |
-| `catalogueUpdater.tolerations`              | Tolerations for the *Catalogue Updater* pods               | `[]`                                           |
-| `catalogueUpdater.resources`                | Resource requests and limits for the *Catalogue Updater*   | `{}`                                           |
-| `catalogueUpdater.podSecurityContext`       | Security context for the pod(s)                            | `{}`                                           |
-| `catalogueUpdater.containerSecurityContext` | Security context for the container(s)                      | `{}`                                           |
+| Name                                        | Description                                                                                                                        | Value                                          |
+| ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| `catalogueUpdater.replicas`                 | The number of replicas for the *Catalogue Updater*                                                                                 | `1`                                            |
+| `catalogueUpdater.annotations`              | Add extra annotations to the deployment object                                                                                     | `{}`                                           |
+| `catalogueUpdater.podAnnotations`           | Annotations to add to the *Catalogue Updater* pods                                                                                 | `{}`                                           |
+| `catalogueUpdater.podLabels`                | Labels to add to the *Catalogue Updater* pods                                                                                      | `{}`                                           |
+| `catalogueUpdater.extraEnvVars`             | Array with extra environment variables to add                                                                                      | `[]`                                           |
+| `catalogueUpdater.extraVolumes`             | Additional volumes for the *Catalogue Updater*                                                                                     | `[]`                                           |
+| `catalogueUpdater.extraVolumeMounts`        | Additional volume mounts for the *Catalogue Updater*                                                                               | `[]`                                           |
+| `catalogueUpdater.initContainers`           | Add init containers to the pod                                                                                                     | `[]`                                           |
+| `catalogueUpdater.sidecars`                 | Add sidecars to the pod.                                                                                                           | `[]`                                           |
+| `catalogueUpdater.image.registry`           | *Catalogue Updater* image registry                                                                                                 | `quay.io`                                      |
+| `catalogueUpdater.image.repository`         | The container image repository for the *Catalogue Updater*                                                                         | `telicent/telicent-document-catalogue-updater` |
+| `catalogueUpdater.image.pullPolicy`         | The image pull policy for the *Catalogue Updater*                                                                                  | `IfNotPresent`                                 |
+| `catalogueUpdater.image.tag`                | The image tag for the *Catalogue Updater*                                                                                          | `3.3.0`                                        |
+| `catalogueUpdater.image.pullSecrets`        | Secrets for pulling an image from a private repository                                                                             | `[]`                                           |
+| `catalogueUpdater.affinity`                 | Affinity rules for the *Catalogue Updater* pods                                                                                    | `{}`                                           |
+| `catalogueUpdater.nodeSelector`             | Node selector for the *Catalogue Updater* pods                                                                                     | `{}`                                           |
+| `catalogueUpdater.tolerations`              | Tolerations for the *Catalogue Updater* pods                                                                                       | `[]`                                           |
+| `catalogueUpdater.resources`                | Resource requests and limits for the *Catalogue Updater*. Optional override, otherwise inherited from the root resource definition | `{}`                                           |
+| `catalogueUpdater.podSecurityContext`       | Security context for the pod(s). Optional override, otherwise inherited from the root security context definition                  | `{}`                                           |
+| `catalogueUpdater.containerSecurityContext` | Security context for the container(s). Optional override, otherwise inherited from the root security context definition            | `{}`                                           |
 
 ### *Content Tagger*
 
@@ -403,7 +423,7 @@ The *Content Tagger* is responsible for tagging documents that have been ingeste
 The application settings are defined within the 'topics' key
 
 
-### *Content Tagger* Application Parameters - Topics
+### *Content Tagger* - Application Parameters - Topics
 
 | Name                                        | Description                                                                | Value                                   |
 | ------------------------------------------- | -------------------------------------------------------------------------- | --------------------------------------- |
@@ -426,28 +446,28 @@ The application settings are defined within the 'topics' key
 
 ### *Content Tagger* - Deployment Parameters
 
-| Name                                     | Description                                             | Value                                      |
-| ---------------------------------------- | ------------------------------------------------------- | ------------------------------------------ |
-| `contentTagger.replicas`                 | The number of replicas for the *Content Tagger*         | `1`                                        |
-| `contentTagger.annotations`              | Add extra annotations to the deployment object          | `{}`                                       |
-| `contentTagger.podLabels`                | Labels to add to the *Content Tagger* pods              | `{}`                                       |
-| `contentTagger.podAnnotations`           | Annotations to add to the *Content Tagger* pods         | `{}`                                       |
-| `contentTagger.extraEnvVars`             | Array with extra environment variables to add           | `[]`                                       |
-| `contentTagger.extraVolumes`             | Additional volumes for the *Content Tagger*             | `[]`                                       |
-| `contentTagger.extraVolumeMounts`        | Additional volume mounts for the *Content Tagger*       | `[]`                                       |
-| `contentTagger.initContainers`           | Add init containers to the pod                          | `[]`                                       |
-| `contentTagger.sidecars`                 | Add sidecars to the pod                                 | `[]`                                       |
-| `contentTagger.image.registry`           | image registry                                          | `REGISTRY_NAME`                            |
-| `contentTagger.image.repository`         | The container image repository for the *Content Tagger* | `telicent/telicent-rdf-document-tagger-dc` |
-| `contentTagger.image.tag`                | The image tag for the *Content Tagger*                  | `2.0.0`                                    |
-| `contentTagger.image.pullPolicy`         | The image pull policy for the *Content Tagger*          | `IfNotPresent`                             |
-| `contentTagger.image.pullSecrets`        | Secrets for pulling an image from a private repository  | `[]`                                       |
-| `contentTagger.affinity`                 | Affinity rules for the *Content Tagger* pods            | `{}`                                       |
-| `contentTagger.nodeSelector`             | Node selector for the *Content Tagger* pods             | `{}`                                       |
-| `contentTagger.tolerations`              | Tolerations for the *Content Tagger* pods               | `[]`                                       |
-| `contentTagger.resources`                | Resource requests and limits for the *Content Tagger*   | `{}`                                       |
-| `contentTagger.podSecurityContext`       | Security context for the pod(s)                         | `{}`                                       |
-| `contentTagger.containerSecurityContext` | Security context for the container(s)                   | `{}`                                       |
+| Name                                     | Description                                                                                                             | Value                                      |
+| ---------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------ |
+| `contentTagger.replicas`                 | The number of replicas for the *Content Tagger*                                                                         | `1`                                        |
+| `contentTagger.annotations`              | Add extra annotations to the deployment object                                                                          | `{}`                                       |
+| `contentTagger.podLabels`                | Labels to add to the *Content Tagger* pods                                                                              | `{}`                                       |
+| `contentTagger.podAnnotations`           | Annotations to add to the *Content Tagger* pods                                                                         | `{}`                                       |
+| `contentTagger.extraEnvVars`             | Array with extra environment variables to add                                                                           | `[]`                                       |
+| `contentTagger.extraVolumes`             | Additional volumes for the *Content Tagger*                                                                             | `[]`                                       |
+| `contentTagger.extraVolumeMounts`        | Additional volume mounts for the *Content Tagger*                                                                       | `[]`                                       |
+| `contentTagger.initContainers`           | Add init containers to the pod                                                                                          | `[]`                                       |
+| `contentTagger.sidecars`                 | Add sidecars to the pod                                                                                                 | `[]`                                       |
+| `contentTagger.image.registry`           | *Content Tagger* image registry                                                                                         | `quay.io`                                  |
+| `contentTagger.image.repository`         | The container image repository for the *Content Tagger*                                                                 | `telicent/telicent-rdf-document-tagger-dc` |
+| `contentTagger.image.tag`                | The image tag for the *Content Tagger*                                                                                  | `2.0.0`                                    |
+| `contentTagger.image.pullPolicy`         | The image pull policy for the *Content Tagger*                                                                          | `IfNotPresent`                             |
+| `contentTagger.image.pullSecrets`        | Secrets for pulling an image from a private repository                                                                  | `[]`                                       |
+| `contentTagger.affinity`                 | Affinity rules for the *Content Tagger* pods                                                                            | `{}`                                       |
+| `contentTagger.nodeSelector`             | Node selector for the *Content Tagger* pods                                                                             | `{}`                                       |
+| `contentTagger.tolerations`              | Tolerations for the *Content Tagger* pods                                                                               | `[]`                                       |
+| `contentTagger.resources`                | Resource requests and limits for the *Content Tagger*                                                                   | `{}`                                       |
+| `contentTagger.podSecurityContext`       | Security context for the pod(s). Optional override, otherwise inherited from the root security context definition       | `{}`                                       |
+| `contentTagger.containerSecurityContext` | Security context for the container(s). Optional override, otherwise inherited from the root security context definition | `{}`                                       |
 
 ### *Entity Extractor*
 
@@ -455,7 +475,7 @@ The *Entity Extractor* is responsible for extracting entities from the ingested 
 The application settings are defined within the 'topics' key
 
 
-### *Entity Extractor* Application Parameters - Topics
+### *Entity Extractor* - Application Parameters - Topics
 
 | Name                                     | Description                                                         | Value                      |
 | ---------------------------------------- | ------------------------------------------------------------------- | -------------------------- |
@@ -472,28 +492,28 @@ The application settings are defined within the 'topics' key
 
 ### *Entity Extractor* - Deployment Parameters
 
-| Name                                       | Description                                               | Value                                          |
-| ------------------------------------------ | --------------------------------------------------------- | ---------------------------------------------- |
-| `entityExtractor.replicas`                 | Number of replicas to deploy                              | `1`                                            |
-| `entityExtractor.annotations`              | Add extra annotations to the deployment object            | `{}`                                           |
-| `entityExtractor.podLabels`                | Labels to add to the *Entity Extractor* pods              | `{}`                                           |
-| `entityExtractor.podAnnotations`           | Annotations to add to the *Entity Extractor* pods         | `{}`                                           |
-| `entityExtractor.extraEnvVars`             | Array with extra environment variables to add             | `[]`                                           |
-| `entityExtractor.extraVolumes`             | Additional volumes for the *Entity Extractor*             | `[]`                                           |
-| `entityExtractor.extraVolumeMounts`        | Additional volume mounts for the *Entity Extractor*       | `[]`                                           |
-| `entityExtractor.initContainers`           | Add init containers to the pod                            | `[]`                                           |
-| `entityExtractor.sidecars`                 | Add sidecars to the pod.                                  | `[]`                                           |
-| `entityExtractor.image.registry`           | image registry                                            | `REGISTRY_NAME`                                |
-| `entityExtractor.image.repository`         | The container image repository for the *Entity Extractor* | `telicent/telicent-pipeline-entity-extraction` |
-| `entityExtractor.image.tag`                | The image tag for the *Entity Extractor*                  | `3.0.1`                                        |
-| `entityExtractor.image.pullPolicy`         | The image pull policy for the *Entity Extractor*          | `IfNotPresent`                                 |
-| `entityExtractor.image.pullSecrets`        | Secrets for pulling an image from a private repository    | `[]`                                           |
-| `entityExtractor.affinity`                 | Affinity rules for the *Entity Extractor* pods            | `{}`                                           |
-| `entityExtractor.nodeSelector`             | Node selector for the *Entity Extractor* pods             | `{}`                                           |
-| `entityExtractor.tolerations`              | Tolerations for the *Entity Extractor* pods               | `[]`                                           |
-| `entityExtractor.resources`                | Resource requests and limits for the *Entity Extractor*   | `{}`                                           |
-| `entityExtractor.podSecurityContext`       | Security context for the pod(s)                           | `{}`                                           |
-| `entityExtractor.containerSecurityContext` | Security context for the container(s)                     | `{}`                                           |
+| Name                                       | Description                                                                                                                       | Value                                          |
+| ------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| `entityExtractor.replicas`                 | Number of replicas to deploy                                                                                                      | `1`                                            |
+| `entityExtractor.annotations`              | Add extra annotations to the deployment object                                                                                    | `{}`                                           |
+| `entityExtractor.podLabels`                | Labels to add to the *Entity Extractor* pods                                                                                      | `{}`                                           |
+| `entityExtractor.podAnnotations`           | Annotations to add to the *Entity Extractor* pods                                                                                 | `{}`                                           |
+| `entityExtractor.extraEnvVars`             | Array with extra environment variables to add                                                                                     | `[]`                                           |
+| `entityExtractor.extraVolumes`             | Additional volumes for the *Entity Extractor*                                                                                     | `[]`                                           |
+| `entityExtractor.extraVolumeMounts`        | Additional volume mounts for the *Entity Extractor*                                                                               | `[]`                                           |
+| `entityExtractor.initContainers`           | Add init containers to the pod                                                                                                    | `[]`                                           |
+| `entityExtractor.sidecars`                 | Add sidecars to the pod.                                                                                                          | `[]`                                           |
+| `entityExtractor.image.registry`           | *Entity Extractor* image registry                                                                                                 | `quay.io`                                      |
+| `entityExtractor.image.repository`         | The container image repository for the *Entity Extractor*                                                                         | `telicent/telicent-pipeline-entity-extraction` |
+| `entityExtractor.image.tag`                | The image tag for the *Entity Extractor*                                                                                          | `3.0.1`                                        |
+| `entityExtractor.image.pullPolicy`         | The image pull policy for the *Entity Extractor*                                                                                  | `IfNotPresent`                                 |
+| `entityExtractor.image.pullSecrets`        | Secrets for pulling an image from a private repository                                                                            | `[]`                                           |
+| `entityExtractor.affinity`                 | Affinity rules for the *Entity Extractor* pods                                                                                    | `{}`                                           |
+| `entityExtractor.nodeSelector`             | Node selector for the *Entity Extractor* pods                                                                                     | `{}`                                           |
+| `entityExtractor.tolerations`              | Tolerations for the *Entity Extractor* pods                                                                                       | `[]`                                           |
+| `entityExtractor.resources`                | Resource requests and limits for the *Entity Extractor*. Optional override, otherwise inherited from the root resource definition | `{}`                                           |
+| `entityExtractor.podSecurityContext`       | Security context for the pod(s). Optional override, otherwise inherited from the root security context definition                 | `{}`                                           |
+| `entityExtractor.containerSecurityContext` | Security context for the container(s). Optional override, otherwise inherited from root security context definition               | `{}`                                           |
 
 
 ## License

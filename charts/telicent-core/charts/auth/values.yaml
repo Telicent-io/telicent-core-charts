@@ -5,8 +5,8 @@
 # @section Global Parameters
 #
 # @descStart
-# Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart
-# Note: Only global parameters used within this chart will be listed below
+# Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart.
+# Note: Only global parameters used within this chart will be listed below.
 # @descEnd
 global:
   ## Current available global image parameters: imageRegistry and imagePullSecrets
@@ -92,7 +92,7 @@ forwardAuth:
   # @key forwardAuth.existingSecret Name of an existing secret. The secret must contain 1 key: 'header'
   # Note: Left unset, it will create a secret named: tc-auth-gen-forward-auth
   existingSecret: ""
-  # @key forwardAuth.header The header value to be associated with the `X-ForwardAuth-Secret`.
+  # @key forwardAuth.header The header value to be associated with the `X-ForwardAuth-Secret`
   header: ""
 
 #
@@ -106,7 +106,7 @@ java:
   jvmOptions: "-XX:MaxRAMPercentage=80.0"
 
   spring:
-    # @key java.spring.profile Sets the Spring profile to be used. Options are: default, docker, test, and production.
+    # @key java.spring.profile Sets the Spring profile to be used. Options are: default, docker, test, and production
     profile: production
 
 #
@@ -114,25 +114,25 @@ java:
 #
 logs:
   api:
-    # @key logs.api.level Api package Logging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE.
+    # @key logs.api.level Api package Logging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE
     level: "WARN"
   service:
-    # @key logs.service.level Service package Logging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE.
+    # @key logs.service.level Service package Logging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE
     level: "WARN"
   repo:
-    # @key logs.repo.level Repo package Logging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE.
+    # @key logs.repo.level Repo package Logging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE
     level: "WARN"
   security:
-    # @key logs.security.level Security packageLogging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE.
+    # @key logs.security.level Security packageLogging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE
     level: "WARN"
   oauth2:
-    # @key logs.oauth2.level Oauth2 package Logging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE.
+    # @key logs.oauth2.level Oauth2 package Logging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE
     level: "WARN"
   general:
-    # @key logs.general.level Logging Level for 'io.telicent.auth'. Values include: ERROR, WARN, INFO, DEBUG, TRACE.
+    # @key logs.general.level Logging Level for 'io.telicent.auth'. Values include: ERROR, WARN, INFO, DEBUG, TRACE
     level: "WARN"
   trace:
-    # @key logs.trace.level Logging Level for 'Spring RestTemplate'. Values include: ERROR, WARN, INFO, DEBUG, TRACE.
+    # @key logs.trace.level Logging Level for 'Spring RestTemplate'. Values include: ERROR, WARN, INFO, DEBUG, TRACE
     level: "ERROR"
 
 #
@@ -182,7 +182,7 @@ bootstrap:
     #   scope: write
 
   groups:
-    # @key bootstrap.groups.existingConfigMap Name of an existing config map containing a list of group objects.
+    # @key bootstrap.groups.existingConfigMap Name of an existing config map containing a list of group objects
     existingConfigMap: ""
     # @key bootstrap.groups.list  A list containing group objects
     list: []
@@ -236,7 +236,7 @@ podAnnotations: {}
 # - name: FOO
 # - value: instance
 extraEnvVars: []
-# @key extraVolumes Additional containers to be added to the *Auth* pod
+# @key extraVolumes Optionally specify extra list of additional volumes
 extraVolumes: []
 # @key extraVolumeMounts Optionally specify extra list of additional volumeMounts
 extraVolumeMounts: []
@@ -249,14 +249,14 @@ initContainers: []
 #   ports:
 #   - name: portname
 #     containerPort: 1234
-# @key sidecars Add sidecars to the pod.
+# @key sidecars Add sidecars to the pod
 sidecars: []
 
 #
 # @section Deployment Image Parameters
 #
 image:
-  # @key image.registry [default: REGISTRY_NAME] *Auth* image registry
+  # @key image.registry *Auth* image registry
   registry: quay.io
   # @key image.repository *Auth* image name
   repository: telicent/telicent-auth-server
@@ -359,11 +359,11 @@ service:
 # If either of those details changes, you can use this section to correctly referer to those applications.
 # @descEnd
 hosts:
-  # @key hosts.enableAutoCorrect Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as is, without any modification.
+  # @key hosts.enableAutoCorrect Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as it is, without any modification
   enableAutoCorrect: true
   # @key hosts.traefikProxy Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'
   traefikProxy: "traefik-proxy:8080"
-  # @key hosts.userPreferences User Preferences host value, If not set a host is generated using service:'user-preferences',port:'8080' and Release namespace & name.
+  # @key hosts.userPreferences User Preferences host value, If not set a host is generated using service:'user-preferences',port:'8080' and Release namespace & name
   userPreferences: "user-preferences:8080"
   # @key hosts.search Search application default host value, as defined by 'service/serviceAccount:port'
   search: "search:8080"
@@ -377,7 +377,7 @@ hosts:
 # Host values will be used as defined in this section, release name cannot be autocorrected, as the release name is unknown.
 # @descEnd
 hostsPreview:
-  # @key hostsPreview.enableAutoCorrect Prefix 'global.releaseNameTelicentPreview' to each host value. Alternatively, the host value will be used as is, without any modification.
+  # @key hostsPreview.enableAutoCorrect Prefix 'global.releaseNameTelicentPreview' value to each host value. Alternatively, the host value will be used as it is, without any modification
   enableAutoCorrect: true
   # @key hostsPreview.paperbackWriter Paperback Writer application host value, as defined by 'service/serviceAccount:port'
   paperbackWriter: "paperback-writer:8080"

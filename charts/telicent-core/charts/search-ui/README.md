@@ -84,8 +84,8 @@ the [kubernetes documentation](https://kubernetes.io/docs/concepts/configuration
 
 ### Global Parameters
 
-Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart
-Note: Only global parameters used within this chart will be listed below
+Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart.
+Note: Only global parameters used within this chart will be listed below.
 
 | Name                      | Description                                                                       | Value              |
 | ------------------------- | --------------------------------------------------------------------------------- | ------------------ |
@@ -96,19 +96,22 @@ Note: Only global parameters used within this chart will be listed below
 | `global.apiHostDomain`    | Domain associated with Telicent Api services                                      | `api.telicent.io`  |
 | `global.authHostDomain`   | Domain associated with Telicent authentication services, including OIDC providers | `auth.telicent.io` |
 
-### Application Parameters - UI
+### Application Parameters - UI and Secret
 
-Contains parameters specific to the Search User Interface
+Contains parameters specific to the Search User Interface.
+Map functionality requires tokens and configuration defined within a secret.
+It is recommended to store sensitive information including tokens/passwords in a Kubernetes secret and not in Helm values.
+For Quick Start purposes, a secret named `tc-auth-gen-mapjs-search-ui` will be created if one is not set.
 
-| Name                             | Description                                                                | Value                      |
-| -------------------------------- | -------------------------------------------------------------------------- | -------------------------- |
-| `ui.graphUiDeployed`             | If set to true, Graph UI links will be available within *Search UI*        | `true`                     |
-| `ui.userPortalUiDeployed`        | If set to true, User Portal links will be available within *Search UI*     | `true`                     |
-| `ui.dataCatalogUiDeployed`       | If set to true, Data Catalog UI links will be available within *Search UI* | `true`                     |
-| `ui.searchUiMaptilerToken`       | MapTiler token for *Search UI*                                             | `your.maptiler.token.here` |
-| `ui.searchUiMapboxStyleSpecUrl`  | Mapbox style spec URL for *Search UI*                                      | `""`                       |
-| `ui.searchUiArcgisToken`         | ArcGIS token for *Search UI*                                               | `""`                       |
-| `ui.existingMapConfigSecretName` | The name of an existing secret containing map configuration                | `""`                       |
+| Name                         | Description                                                                                          | Value                      |
+| ---------------------------- | ---------------------------------------------------------------------------------------------------- | -------------------------- |
+| `ui.graphUiDeployed`         | If set to true, *Graph UI* links will be available within *Search UI*                                | `true`                     |
+| `ui.userPortalUiDeployed`    | If set to true, *User Portal UI* links will be available within *Search UI*                          | `true`                     |
+| `ui.dataCatalogUiDeployed`   | If set to true, *Data Catalog UI* links will be available within *Search UI*                         | `true`                     |
+| `ui.maptilerToken`           | MapTiler token for *Search UI*                                                                       | `your.maptiler.token.here` |
+| `ui.mapboxStyleSpecUrl`      | Mapbox style spec URL for *Search UI*                                                                | `""`                       |
+| `ui.arcgisToken`             | ArcGIS token for *Search UI*                                                                         | `""`                       |
+| `ui.existingMapConfigSecret` | The name of an existing secret containing map configuration. See: '_mapjs.tpl' & 'secret-mapjs.yaml' | `""`                       |
 
 ### Application Parameters - OAuth
 
@@ -142,20 +145,20 @@ Contains parameters specific to the Search User Interface
 | `podLabels`            | Add extra labels to the *Search UI* pod                          | `{}`  |
 | `podAnnotations`       | Add extra annotations to the *Search UI* pod                     | `{}`  |
 | `extraEnvVars`         | Array with extra environment variables to add to *Search UI* pod | `[]`  |
-| `extraVolumes`         | Additional containers to be added to the *Search UI* pod         | `[]`  |
+| `extraVolumes`         | Optionally specify extra list of additional volumes              | `[]`  |
 | `extraVolumeMounts`    | Optionally specify extra list of additional volumeMounts         | `[]`  |
 | `initContainers`       | Add init containers to the pod                                   | `[]`  |
-| `sidecars`             | Add sidecars to the pod.                                         | `[]`  |
+| `sidecars`             | Add sidecars to the pod                                          | `[]`  |
 
 ### Deployment Image Parameters
 
-| Name                | Description                                                                | Value                             |
-| ------------------- | -------------------------------------------------------------------------- | --------------------------------- |
-| `image.registry`    | *Search UI* image registry                                                 | `REGISTRY_NAME`                   |
-| `image.repository`  | *Search UI* image name                                                     | `REPOSITORY_NAME/telicent-search` |
-| `image.tag`         | *Search UI* image tag. If not set, a tag is generated using the appVersion | `""`                              |
-| `image.pullPolicy`  | *Search UI* image pull policy                                              | `IfNotPresent`                    |
-| `image.pullSecrets` | Specify registry secret names as an array                                  | `[]`                              |
+| Name                | Description                                                                | Value                      |
+| ------------------- | -------------------------------------------------------------------------- | -------------------------- |
+| `image.registry`    | *Search UI* image registry                                                 | `quay.io`                  |
+| `image.repository`  | *Search UI* image name                                                     | `telicent/telicent-search` |
+| `image.tag`         | *Search UI* image tag. If not set, a tag is generated using the appVersion | `""`                       |
+| `image.pullPolicy`  | *Search UI* image pull policy                                              | `IfNotPresent`             |
+| `image.pullSecrets` | Specify registry secret names as an array                                  | `[]`                       |
 
 ### Deployment Resources Parameters - Requests and Limits
 
@@ -212,10 +215,10 @@ Contains parameters specific to the Search User Interface
 *Search UI* interacts directly with other Telicent Applications using their default service/serviceAccount and port.
 If either of those details changes, you can use this section to correctly referer to those applications.
 
-| Name                      | Description                                                                                                                                                                                                                        | Value                |
-| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
-| `hosts.enableAutoCorrect` | Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as is, without any modification. | `true`               |
-| `hosts.traefikProxy`      | Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                          | `traefik-proxy:8080` |
+| Name                      | Description                                                                                                                                                                                                                          | Value                |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------- |
+| `hosts.enableAutoCorrect` | Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as it is, without any modification | `true`               |
+| `hosts.traefikProxy`      | Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                            | `traefik-proxy:8080` |
 
 
 ## License
