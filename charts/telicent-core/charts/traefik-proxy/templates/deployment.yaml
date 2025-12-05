@@ -34,10 +34,10 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       annotations:
-        checksum/configRoutes: {{ include (print $.Template.BasePath "/configmap-routes-api.yaml") . | sha256sum }}
-        checksum/configRoutes: {{ include (print $.Template.BasePath "/configmap-routes-app.yaml") . | sha256sum }}
-        checksum/configRoutes: {{ include (print $.Template.BasePath "/configmap-routes-auth.yaml") . | sha256sum }}
-        checksum/configRoutes: {{ include (print $.Template.BasePath "/configmap-routes-common.yaml") . | sha256sum }}
+        checksum/configRoutesApp: {{ include (print $.Template.BasePath "/configmap-routes-app.yaml") . | sha256sum }}
+        checksum/configRoutesApi: {{ include (print $.Template.BasePath "/configmap-routes-api.yaml") . | sha256sum }}
+        checksum/configRoutesAuth: {{ include (print $.Template.BasePath "/configmap-routes-auth.yaml") . | sha256sum }}
+        checksum/configRoutesCommon: {{ include (print $.Template.BasePath "/configmap-routes-common.yaml") . | sha256sum }}
         checksum/configStartup: {{ include (print $.Template.BasePath "/configmap-startup.yaml") . | sha256sum }}
         checksum/secretForward: {{ include (print $.Template.BasePath "/secret-forward-auth.yaml") . | sha256sum }}
         {{- with .Values.podAnnotations }}
