@@ -200,7 +200,7 @@
         },
         "extraVolumes": {
             "type": "array",
-            "description": "Additional containers to be added to the *Auth* pod",
+            "description": "Optionally specify extra list of additional volumes",
             "default": [],
             "items": {}
         },
@@ -218,7 +218,7 @@
         },
         "sidecars": {
             "type": "array",
-            "description": "Add sidecars to the pod.",
+            "description": "Add sidecars to the pod",
             "default": [],
             "items": {}
         },
@@ -228,12 +228,12 @@
                 "registry": {
                     "type": "string",
                     "description": "*Oauth2 Proxy* image registry",
-                    "default": "REGISTRY_NAME"
+                    "default": "quay.io"
                 },
                 "repository": {
                     "type": "string",
                     "description": "*Oauth2 Proxy* image name",
-                    "default": "REPOSITORY_NAME/oauth2-proxy"
+                    "default": "oauth2-proxy/oauth2-proxy"
                 },
                 "tag": {
                     "type": "string",

@@ -43,37 +43,37 @@
             "properties": {
                 "graphUiDeployed": {
                     "type": "boolean",
-                    "description": "If set to true, Graph UI links will be available within *Search UI*",
+                    "description": "If set to true, *Graph UI* links will be available within *Search UI*",
                     "default": true
                 },
                 "userPortalUiDeployed": {
                     "type": "boolean",
-                    "description": "If set to true, User Portal links will be available within *Search UI*",
+                    "description": "If set to true, *User Portal UI* links will be available within *Search UI*",
                     "default": true
                 },
                 "dataCatalogUiDeployed": {
                     "type": "boolean",
-                    "description": "If set to true, Data Catalog UI links will be available within *Search UI*",
+                    "description": "If set to true, *Data Catalog UI* links will be available within *Search UI*",
                     "default": true
                 },
-                "searchUiMaptilerToken": {
+                "maptilerToken": {
                     "type": "string",
                     "description": "MapTiler token for *Search UI*",
                     "default": "your.maptiler.token.here"
                 },
-                "searchUiMapboxStyleSpecUrl": {
+                "mapboxStyleSpecUrl": {
                     "type": "string",
                     "description": "Mapbox style spec URL for *Search UI*",
                     "default": ""
                 },
-                "searchUiArcgisToken": {
+                "arcgisToken": {
                     "type": "string",
                     "description": "ArcGIS token for *Search UI*",
                     "default": ""
                 },
-                "existingMapConfigSecretName": {
+                "existingMapConfigSecret": {
                     "type": "string",
-                    "description": "The name of an existing secret containing map configuration",
+                    "description": "The name of an existing secret containing map configuration. See: '_mapjs.tpl' & 'secret-mapjs.yaml'",
                     "default": ""
                 }
             }
@@ -156,7 +156,7 @@
         },
         "extraVolumes": {
             "type": "array",
-            "description": "Additional containers to be added to the *Search UI* pod",
+            "description": "Optionally specify extra list of additional volumes",
             "default": [],
             "items": {}
         },
@@ -174,7 +174,7 @@
         },
         "sidecars": {
             "type": "array",
-            "description": "Add sidecars to the pod.",
+            "description": "Add sidecars to the pod",
             "default": [],
             "items": {}
         },
@@ -184,12 +184,12 @@
                 "registry": {
                     "type": "string",
                     "description": "*Search UI* image registry",
-                    "default": "REGISTRY_NAME"
+                    "default": "quay.io"
                 },
                 "repository": {
                     "type": "string",
                     "description": "*Search UI* image name",
-                    "default": "REPOSITORY_NAME/telicent-search"
+                    "default": "telicent/telicent-search"
                 },
                 "tag": {
                     "type": "string",
@@ -395,7 +395,7 @@
             "properties": {
                 "enableAutoCorrect": {
                     "type": "boolean",
-                    "description": "Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as is, without any modification.",
+                    "description": "Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as it is, without any modification",
                     "default": true
                 },
                 "traefikProxy": {

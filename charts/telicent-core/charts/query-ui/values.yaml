@@ -39,7 +39,7 @@ oauth:
 # @section ConfigMap Parameters
 #
 configMap:
-  # @key configMap.existingConfigMap The name of an existing config map containing env-config.js.
+  # @key configMap.existingConfigMap The name of an existing config map containing env-config.js
   # Note: When it's set, it will disable configmap creation
   existingConfigMap: ""
 
@@ -75,7 +75,7 @@ podAnnotations: {}
 # - name: FOO
 # - value: instance
 extraEnvVars: []
-# @key extraVolumes Additional containers to be added to the *Search UI* pod
+# @key extraVolumes Optionally specify extra list of additional volumes
 extraVolumes: []
 # @key extraVolumeMounts Optionally specify extra list of additional volumeMounts
 extraVolumeMounts: []
@@ -88,18 +88,18 @@ initContainers: []
 #   ports:
 #   - name: portname
 #     containerPort: 1234
-# @key sidecars Add sidecars to the pod.
+# @key sidecars Add sidecars to the pod
 sidecars: []
 
 #
 # @section Deployment Image Parameters
 #
 image:
-  # @key image.registry [default: REGISTRY_NAME] *Query UI* image registry
+  # @key image.registry *Query UI* image registry
   registry: quay.io
-  # @key image.repository [default: REPOSITORY_NAME/telicent-query] *Query UI* image name
+  # @key image.repository *Query UI* image name
   repository: telicent/telicent-query
-  # @key image.tag Query UI image tag. If not set, a tag is generated using the appVersion
+  # @key image.tag *Query UI* image tag. If not set, a tag is generated using the appVersion
   tag: ""
   # @key image.pullPolicy *Query UI* image pull policy
   pullPolicy: IfNotPresent
@@ -198,7 +198,7 @@ service:
 # If either of those details changes, you can use this section to correctly referer to those applications.
 # @descEnd
 hosts:
-  # @key hosts.enableAutoCorrect Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as is, without any modification.
+  # @key hosts.enableAutoCorrect Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as it is, without any modification
   enableAutoCorrect: true
   # @key hosts.traefikProxy Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'
   traefikProxy: "traefik-proxy:8080"

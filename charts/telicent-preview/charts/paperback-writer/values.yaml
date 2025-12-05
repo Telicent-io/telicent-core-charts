@@ -5,8 +5,8 @@
 # @section Global Parameters
 #
 # @descStart
-# Contains global parameters; these parameters are mirrored within the Telicent preview umbrella chart
-# Note: Only global parameters used within this chart will be listed below
+# Contains global parameters; these parameters are mirrored within the Telicent preview umbrella chart.
+# Note: Only global parameters used within this chart will be listed below.
 # @descEnd
 global:
   ## Current available global image parameters: imageRegistry and imagePullSecrets
@@ -81,7 +81,7 @@ podAnnotations: {}
 # - name: FOO
 # - value: instance
 extraEnvVars: []
-# @key extraVolumes Additional containers to be added to the *Paperback Writer* pod
+# @key extraVolumes Optionally specify extra list of additional volumes
 extraVolumes: []
 # @key extraVolumeMounts Optionally specify extra list of additional volumeMounts
 extraVolumeMounts: []
@@ -94,16 +94,16 @@ initContainers: []
 #   ports:
 #   - name: portname
 #     containerPort: 1234
-# @key sidecars Add sidecars to the pod.
+# @key sidecars Add sidecars to the pod
 sidecars: []
 
 #
 # @section Deployment Image Parameters
 #
 image:
-  # @key image.registry [default: REGISTRY_NAME] *Paperback Writer* image registry
+  # @key image.registry *Paperback Writer* image registry
   registry: quay.io
-  # @key image.repository [default: REPOSITORY_NAME/telicent-paperback-writer] *Paperback Writer* image name
+  # @key image.repository *Paperback Writer* image name
   repository: telicent/telicent-paperback-writer
   # @key image.tag *Paperback Writer* image tag. If not set, a tag is generated using the appVersion
   tag: ""
@@ -203,7 +203,7 @@ service:
 # If either of those details changes, you can use this section to correctly referer to those applications.
 # @descEnd
 hostsCore:
-  # @key hostsCore.enableAutoCorrect Prefix 'global.releaseNameTelicentCore' to each host value. Alternatively, the host value will be used as is, without any modification.
+  # @key hostsCore.enableAutoCorrect Prefix 'global.releaseNameTelicentCore' value to each host value. Alternatively, the host value will be used as it is, without any modification
   enableAutoCorrect: true
   # @key hostsCore.traefikProxy Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'
   traefikProxy: "traefik-proxy:8080"

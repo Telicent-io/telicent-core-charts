@@ -84,8 +84,8 @@ the [kubernetes documentation](https://kubernetes.io/docs/concepts/configuration
 
 ### Global Parameters
 
-Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart
-Note: Only global parameters used within this chart will be listed below
+Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart.
+Note: Only global parameters used within this chart will be listed below.
 
 | Name                                | Description                                                                                                                                                                            | Value                    |
 | ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ |
@@ -130,28 +130,28 @@ For Quick Start purposes, a secret named `tc-auth-gen-forward-auth` will be crea
 | Name                         | Description                                                         | Value |
 | ---------------------------- | ------------------------------------------------------------------- | ----- |
 | `forwardAuth.existingSecret` | Name of an existing secret. The secret must contain 1 key: 'header' | `""`  |
-| `forwardAuth.header`         | The header value to be associated with the `X-ForwardAuth-Secret`.  | `""`  |
+| `forwardAuth.header`         | The header value to be associated with the `X-ForwardAuth-Secret`   | `""`  |
 
 ### Application Parameters - Java
 
 Contains Java parameters to be used by the *Auth* application
 
-| Name                  | Description                                                                             | Value                       |
-| --------------------- | --------------------------------------------------------------------------------------- | --------------------------- |
-| `java.jvmOptions`     | JVM options for the application                                                         | `-XX:MaxRAMPercentage=80.0` |
-| `java.spring.profile` | Sets the Spring profile to be used. Options are: default, docker, test, and production. | `production`                |
+| Name                  | Description                                                                            | Value                       |
+| --------------------- | -------------------------------------------------------------------------------------- | --------------------------- |
+| `java.jvmOptions`     | JVM options for the application                                                        | `-XX:MaxRAMPercentage=80.0` |
+| `java.spring.profile` | Sets the Spring profile to be used. Options are: default, docker, test, and production | `production`                |
 
 ### Application Parameters - Logs
 
-| Name                  | Description                                                                               | Value   |
-| --------------------- | ----------------------------------------------------------------------------------------- | ------- |
-| `logs.api.level`      | Api package Logging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE.               | `WARN`  |
-| `logs.service.level`  | Service package Logging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE.           | `WARN`  |
-| `logs.repo.level`     | Repo package Logging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE.              | `WARN`  |
-| `logs.security.level` | Security packageLogging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE.           | `WARN`  |
-| `logs.oauth2.level`   | Oauth2 package Logging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE.            | `WARN`  |
-| `logs.general.level`  | Logging Level for 'io.telicent.auth'. Values include: ERROR, WARN, INFO, DEBUG, TRACE.    | `WARN`  |
-| `logs.trace.level`    | Logging Level for 'Spring RestTemplate'. Values include: ERROR, WARN, INFO, DEBUG, TRACE. | `ERROR` |
+| Name                  | Description                                                                              | Value   |
+| --------------------- | ---------------------------------------------------------------------------------------- | ------- |
+| `logs.api.level`      | Api package Logging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE               | `WARN`  |
+| `logs.service.level`  | Service package Logging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE           | `WARN`  |
+| `logs.repo.level`     | Repo package Logging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE              | `WARN`  |
+| `logs.security.level` | Security packageLogging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE           | `WARN`  |
+| `logs.oauth2.level`   | Oauth2 package Logging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE            | `WARN`  |
+| `logs.general.level`  | Logging Level for 'io.telicent.auth'. Values include: ERROR, WARN, INFO, DEBUG, TRACE    | `WARN`  |
+| `logs.trace.level`    | Logging Level for 'Spring RestTemplate'. Values include: ERROR, WARN, INFO, DEBUG, TRACE | `ERROR` |
 
 ### Application Parameters - PostgreSQL and Secret
 
@@ -175,7 +175,7 @@ Contains configuration to be used to bootstrap a clean instance of the Auth appl
 | `bootstrap.clients.existingConfigMap` | Name of an existing config map resource containing all required public and confidential clients. If specified, the values for clients.public and clients.confidential will be ignored | `""`  |
 | `bootstrap.clients.public`            | A list of public client objects                                                                                                                                                       | `[]`  |
 | `bootstrap.clients.confidential`      | A list of confidential client objects                                                                                                                                                 | `[]`  |
-| `bootstrap.groups.existingConfigMap`  | Name of an existing config map containing a list of group objects.                                                                                                                    | `""`  |
+| `bootstrap.groups.existingConfigMap`  | Name of an existing config map containing a list of group objects                                                                                                                     | `""`  |
 | `bootstrap.groups.list`               | A list containing group objects                                                                                                                                                       | `[]`  |
 
 ### ConfigMap Parameters
@@ -203,16 +203,16 @@ Contains configuration to be used to bootstrap a clean instance of the Auth appl
 | `podLabels`            | Add extra labels to the *Auth* pod                          | `{}`  |
 | `podAnnotations`       | Add extra annotations to the *Auth* pod                     | `{}`  |
 | `extraEnvVars`         | Array with extra environment variables to add to *Auth* pod | `[]`  |
-| `extraVolumes`         | Additional containers to be added to the *Auth* pod         | `[]`  |
+| `extraVolumes`         | Optionally specify extra list of additional volumes         | `[]`  |
 | `extraVolumeMounts`    | Optionally specify extra list of additional volumeMounts    | `[]`  |
 | `initContainers`       | Add init containers to the pod                              | `[]`  |
-| `sidecars`             | Add sidecars to the pod.                                    | `[]`  |
+| `sidecars`             | Add sidecars to the pod                                     | `[]`  |
 
 ### Deployment Image Parameters
 
 | Name                | Description                                                           | Value                           |
 | ------------------- | --------------------------------------------------------------------- | ------------------------------- |
-| `image.registry`    | *Auth* image registry                                                 | `REGISTRY_NAME`                 |
+| `image.registry`    | *Auth* image registry                                                 | `quay.io`                       |
 | `image.repository`  | *Auth* image name                                                     | `telicent/telicent-auth-server` |
 | `image.tag`         | *Auth* image tag. If not set, a tag is generated using the appVersion | `""`                            |
 | `image.pullPolicy`  | *Auth* image pull policy                                              | `IfNotPresent`                  |
@@ -273,24 +273,22 @@ Contains configuration to be used to bootstrap a clean instance of the Auth appl
 *Auth* interacts directly with other Telicent Applications using their default service/serviceAccount and port.
 If either of those details changes, you can use this section to correctly referer to those applications.
 
-| Name                      | Description                                                                                                                                                                                                                        | Value                   |
-| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------- |
-| `hosts.enableAutoCorrect` | Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as is, without any modification. | `true`                  |
-| `hosts.traefikProxy`      | Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                          | `traefik-proxy:8080`    |
-| `hosts.userPreferences`   | User Preferences host value, If not set a host is generated using service:'user-preferences',port:'8080' and Release namespace & name.                                                                                             | `user-preferences:8080` |
-| `hosts.search`            | Search application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                                 | `search:8080`           |
-| `hosts.graph`             | Graph application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                                  | `graph:8080`            |
+| Name                      | Description                                                                                                                                                                                                                          | Value                   |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------- |
+| `hosts.enableAutoCorrect` | Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as it is, without any modification | `true`                  |
+| `hosts.traefikProxy`      | Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                            | `traefik-proxy:8080`    |
+| `hosts.userPreferences`   | User Preferences host value, If not set a host is generated using service:'user-preferences',port:'8080' and Release namespace & name                                                                                                | `user-preferences:8080` |
+| `hosts.search`            | Search application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                                   | `search:8080`           |
+| `hosts.graph`             | Graph application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                                    | `graph:8080`            |
 
 ### Host(s) Preview Parameters - Contains host information for applications deployed via *telicent-preview* chart
 
 Host values will be used as defined in this section, release name cannot be autocorrected, as the release name is unknown.
 
-| Name                             | Description                                                                                                                                | Value                   |
-| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------- |
-| `hostsPreview.enableAutoCorrect` | Prefix 'global.releaseNameTelicentPreview' to each host value. Alternatively, the host value will be used as is, without any modification. | `true`                  |
-| `hostsPreview.paperbackWriter`   | Paperback Writer application host value, as defined by 'service/serviceAccount:port'                                                       | `paperback-writer:8080` |
-
-Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
+| Name                             | Description                                                                                                                                        | Value                   |
+| -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------- |
+| `hostsPreview.enableAutoCorrect` | Prefix 'global.releaseNameTelicentPreview' value to each host value. Alternatively, the host value will be used as it is, without any modification | `true`                  |
+| `hostsPreview.paperbackWriter`   | Paperback Writer application host value, as defined by 'service/serviceAccount:port'                                                               | `paperback-writer:8080` |
 
 ## License
 

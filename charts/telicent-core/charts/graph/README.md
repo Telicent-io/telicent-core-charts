@@ -83,7 +83,7 @@ the [kubernetes documentation](https://kubernetes.io/docs/concepts/configuration
 
 ### Global Parameters
 
-Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart
+Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart.
 Note: Only global parameters used within this chart will be listed below.
 
 | Name                                    | Description                                                                                                                                                                            | Value                                          |
@@ -138,20 +138,20 @@ Contains Java configuration parameters to be used by the *Graph* application
 | `podLabels`            | Add extra labels to the *Graph* pod                          | `{}`  |
 | `podAnnotations`       | Add extra annotations to the *Graph* pod                     | `{}`  |
 | `extraEnvVars`         | Array with extra environment variables to add to *Graph* pod | `[]`  |
-| `extraVolumes`         | Additional containers to be added to the *Graph* pod         | `[]`  |
+| `extraVolumes`         | Optionally specify extra list of additional volumes          | `[]`  |
 | `extraVolumeMounts`    | Optionally specify extra list of additional volumeMounts     | `[]`  |
 | `initContainers`       | Add init containers to the pod                               | `[]`  |
-| `sidecars`             | Add sidecars to the pod.                                     | `[]`  |
+| `sidecars`             | Add sidecars to the pod                                      | `[]`  |
 
 ### Statefulset Image Parameters
 
-| Name                | Description                                                            | Value                               |
-| ------------------- | ---------------------------------------------------------------------- | ----------------------------------- |
-| `image.registry`    | *Graph* image registry                                                 | `REGISTRY_NAME`                     |
-| `image.repository`  | *Graph* image name                                                     | `REPOSITORY_NAME/smart-cache-graph` |
-| `image.tag`         | *Graph* image tag. If not set, a tag is generated using the appVersion | `""`                                |
-| `image.pullPolicy`  | *Graph* image pull policy                                              | `IfNotPresent`                      |
-| `image.pullSecrets` | Specify registry secret names as an array                              | `[]`                                |
+| Name                | Description                                                            | Value                        |
+| ------------------- | ---------------------------------------------------------------------- | ---------------------------- |
+| `image.registry`    | *Graph* image registry                                                 | `quay.io`                    |
+| `image.repository`  | *Graph* image name                                                     | `telicent/smart-cache-graph` |
+| `image.tag`         | *Graph* image tag. If not set, a tag is generated using the appVersion | `""`                         |
+| `image.pullPolicy`  | *Graph* image pull policy                                              | `IfNotPresent`               |
+| `image.pullSecrets` | Specify registry secret names as an array                              | `[]`                         |
 
 ### Statefulset Resources Parameters - Requests and Limits
 
@@ -237,10 +237,10 @@ If either of those details changes, you can use this section to correctly refere
 *Graph* interacts with applications deployed via *telicent-preview* using their default service/serviceAccount and port.
 If either of those details changes, you can use this section to correctly referer to those applications.
 
-| Name                             | Description                                                                                                                                | Value                   |
-| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------- |
-| `hostsPreview.enableAutoCorrect` | Prefix 'global.releaseNameTelicentPreview' to each host value. Alternatively, the host value will be used as is, without any modification. | `true`                  |
-| `hostsPreview.paperbackWriter`   | Paperback Writer application host value, as defined by 'service/serviceAccount:port'                                                       | `paperback-writer:8080` |
+| Name                             | Description                                                                                                                                        | Value                   |
+| -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------- |
+| `hostsPreview.enableAutoCorrect` | Prefix 'global.releaseNameTelicentPreview' value to each host value. Alternatively, the host value will be used as it is, without any modification | `true`                  |
+| `hostsPreview.paperbackWriter`   | Paperback Writer application host value, as defined by 'service/serviceAccount:port'                                                               | `paperback-writer:8080` |
 
 ## License
 

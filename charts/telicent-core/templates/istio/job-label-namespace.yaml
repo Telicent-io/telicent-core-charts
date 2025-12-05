@@ -11,9 +11,10 @@ metadata:
     {{- include "telicent-core.labels" . | nindent 4 }}
 
   annotations:
-    "helm.sh/hook": post-install  # only run after the required resources have been created
-    "helm.sh/hook-delete-policy": before-hook-creation, hook-succeeded
     "sidecar.istio.io/inject": "false"
+    "helm.sh/hook": pre-install
+    "helm.sh/hook-delete-policy": hook-succeeded
+    "helm.sh/hook-weight": "-7"
 
 spec:
   backoffLimit: 3
@@ -35,7 +36,7 @@ spec:
           command: [ "/bin/sh", "-c" ]
           args:
             - |
-              sleep 30;
+              sleep 20;
               output="$(kubectl label namespace {{ .Release.Namespace }} istio-injection=enabled --overwrite)";
               echo "attempting to add istio label... $output";
               echo "$output" | grep "labeled" || ( echo "error: expected namespace/{{ .Release.Namespace }} (not) labeled" && exit 1 );

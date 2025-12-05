@@ -1,6 +1,5 @@
 {{/*
 Copyright (C) 2025 Telicent Limited
-todo: truststore in consistent way
 */}}
 
 {{/*

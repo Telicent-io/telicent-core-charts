@@ -85,8 +85,8 @@ the [kubernetes documentation](https://kubernetes.io/docs/concepts/configuration
 
 ### Global Parameters
 
-Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart
-Note: Only global parameters used within this chart will be listed below
+Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart.
+Note: Only global parameters used within this chart will be listed below.
 
 | Name                               | Description                                                                       | Value                    |
 | ---------------------------------- | --------------------------------------------------------------------------------- | ------------------------ |
@@ -149,20 +149,20 @@ For Quick Start purposes, a secret named `tc-auth-usr-mongo-user-preferences` wi
 | `podLabels`            | Add extra labels to the *User Preferences* pod                          | `{}`  |
 | `podAnnotations`       | Add extra annotations to the *User Preferences* pod                     | `{}`  |
 | `extraEnvVars`         | Array with extra environment variables to add to *User Preferences* pod | `[]`  |
-| `extraVolumes`         | Additional containers to be added to the *User Preferences* pod         | `[]`  |
+| `extraVolumes`         | Optionally specify extra list of additional volumes                     | `[]`  |
 | `extraVolumeMounts`    | Optionally specify extra list of additional volumeMounts                | `[]`  |
 | `initContainers`       | Add init containers to the pod                                          | `[]`  |
-| `sidecars`             | Add sidecars to the pod.                                                | `[]`  |
+| `sidecars`             | Add sidecars to the pod                                                 | `[]`  |
 
 ### Deployment Image Parameters
 
-| Name                | Description                                                                       | Value                                               |
-| ------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------- |
-| `image.registry`    | *User Preferences* image registry                                                 | `REGISTRY_NAME`                                     |
-| `image.repository`  | *User Preferences* image name                                                     | `REPOSITORY_NAME/telicent-user-preferences-service` |
-| `image.tag`         | *User Preferences* image tag. If not set, a tag is generated using the appVersion | `""`                                                |
-| `image.pullPolicy`  | *User Preferences* image pull policy                                              | `IfNotPresent`                                      |
-| `image.pullSecrets` | Specify registry secret names as an array                                         | `[]`                                                |
+| Name                | Description                                                                       | Value                                        |
+| ------------------- | --------------------------------------------------------------------------------- | -------------------------------------------- |
+| `image.registry`    | *User Preferences* image registry                                                 | `quay.io`                                    |
+| `image.repository`  | *User Preferences* image name                                                     | `telicent/telicent-user-preferences-service` |
+| `image.tag`         | *User Preferences* image tag. If not set, a tag is generated using the appVersion | `""`                                         |
+| `image.pullPolicy`  | *User Preferences* image pull policy                                              | `IfNotPresent`                               |
+| `image.pullSecrets` | Specify registry secret names as an array                                         | `[]`                                         |
 
 ### Deployment Resources Parameters - Requests and Limits
 
@@ -227,11 +227,11 @@ For Quick Start purposes, a secret named `tc-auth-usr-mongo-user-preferences` wi
 *User Preferences* interacts directly with other Telicent Applications using their default service/serviceAccount and port.
 If either of those details changes, you can use this section to correctly referer to those apps.
 
-| Name                      | Description                                                                                                                                                                                                                        | Value                |
-| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
-| `hosts.enableAutoCorrect` | Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as is, without any modification. | `true`               |
-| `hosts.auth`              | Auth application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                                   | `auth:8080`          |
-| `hosts.traefikProxy`      | Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                          | `traefik-proxy:8080` |
+| Name                      | Description                                                                                                                                                                                                                          | Value                |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------- |
+| `hosts.enableAutoCorrect` | Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as it is, without any modification | `true`               |
+| `hosts.auth`              | Auth application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                                     | `auth:8080`          |
+| `hosts.traefikProxy`      | Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                            | `traefik-proxy:8080` |
 
 
 ## License

@@ -85,8 +85,8 @@ the [kubernetes documentation](https://kubernetes.io/docs/concepts/configuration
 
 ### Global Parameters
 
-Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart
-Note: Only global parameters used within this chart will be listed below
+Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart.
+Note: Only global parameters used within this chart will be listed below.
 
 | Name                                | Description                                                                                                                                                                            | Value              |
 | ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
@@ -166,20 +166,20 @@ For Quick Start purposes, a secret named `tc-auth-gen-forward-traefik-proxy` wil
 | `podLabels`            | Add extra labels to the *Traefik Proxy* pod                          | `{}`  |
 | `podAnnotations`       | Add extra annotations to the *Traefik Proxy* pod                     | `{}`  |
 | `extraEnvVars`         | Array with extra environment variables to add to *Traefik Proxy* pod | `[]`  |
-| `extraVolumes`         | Additional containers to be added to the *Traefik Proxy* pod         | `[]`  |
+| `extraVolumes`         | Optionally specify extra list of additional volumes                  | `[]`  |
 | `extraVolumeMounts`    | Optionally specify extra list of additional volumeMounts             | `[]`  |
 | `initContainers`       | Add init containers to the pod                                       | `[]`  |
-| `sidecars`             | Add sidecars to the pod.                                             | `[]`  |
+| `sidecars`             | Add sidecars to the pod                                              | `[]`  |
 
 ### Deployment Image Parameters
 
-| Name                | Description                                                                    | Value                     |
-| ------------------- | ------------------------------------------------------------------------------ | ------------------------- |
-| `image.registry`    | *Traefik Proxy* image registry                                                 | `REGISTRY_NAME`           |
-| `image.repository`  | *Traefik Proxy* image name                                                     | `REPOSITORY_NAME/traefik` |
-| `image.tag`         | *Traefik Proxy* image tag. If not set, a tag is generated using the appVersion | `""`                      |
-| `image.pullPolicy`  | *Traefik Proxy* image pull policy                                              | `IfNotPresent`            |
-| `image.pullSecrets` | Specify registry secret names as an array                                      | `[]`                      |
+| Name                | Description                                                                    | Value          |
+| ------------------- | ------------------------------------------------------------------------------ | -------------- |
+| `image.registry`    | *Traefik Proxy* image registry                                                 | `docker.io`    |
+| `image.repository`  | *Traefik Proxy* image name                                                     | `traefik`      |
+| `image.tag`         | *Traefik Proxy* image tag. If not set, a tag is generated using the appVersion | `""`           |
+| `image.pullPolicy`  | *Traefik Proxy* image pull policy                                              | `IfNotPresent` |
+| `image.pullSecrets` | Specify registry secret names as an array                                      | `[]`           |
 
 ### Deployment Resources Parameters - Requests and Limits
 
@@ -268,12 +268,12 @@ If either of those details changes, you can use this section to correctly refere
 *Traefik Proxy* interacts with applications deployed via *telicent-preview* using their default service/serviceAccount and port.
 If either of those details changes, you can use this section to correctly referer to those applications.
 
-| Name                             | Description                                                                                                                                | Value                   |
-| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------- |
-| `hostsPreview.enableAutoCorrect` | Prefix 'global.releaseNameTelicentPreview' to each host value. Alternatively, the host value will be used as is, without any modification. | `true`                  |
-| `hostsPreview.dataCatalogUi`     | Data Catalog UI application default host value, as defined by 'service/serviceAccount:port'                                                | `data-catalog-ui:8080`  |
-| `hostsPreview.userPortalUi`      | User Portal UI application default host value, as defined by 'service/serviceAccount:port'                                                 | `user-portal-ui:8080`   |
-| `hostsPreview.paperbackWriter`   | Paperback Writer application host value, as defined by 'service/serviceAccount:port'                                                       | `paperback-writer:8080` |
+| Name                             | Description                                                                                                                                        | Value                   |
+| -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------- |
+| `hostsPreview.enableAutoCorrect` | Prefix 'global.releaseNameTelicentPreview' value to each host value. Alternatively, the host value will be used as it is, without any modification | `true`                  |
+| `hostsPreview.dataCatalogUi`     | Data Catalog UI application default host value, as defined by 'service/serviceAccount:port'                                                        | `data-catalog-ui:8080`  |
+| `hostsPreview.userPortalUi`      | User Portal UI application default host value, as defined by 'service/serviceAccount:port'                                                         | `user-portal-ui:8080`   |
+| `hostsPreview.paperbackWriter`   | Paperback Writer application host value, as defined by 'service/serviceAccount:port'                                                               | `paperback-writer:8080` |
 
 ## License
 

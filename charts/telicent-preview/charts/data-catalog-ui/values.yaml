@@ -5,8 +5,8 @@
 # @section Global Parameters
 #
 # @descStart
-# Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart
-# Note: Only global parameters used within this chart will be listed below
+# Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart.
+# Note: Only global parameters used within this chart will be listed below.
 # @descEnd
 global:
   ## Current available global image parameters: imageRegistry and imagePullSecrets
@@ -39,7 +39,7 @@ oauth:
 # @section ConfigMap Parameters
 #
 configMap:
-  # @key configMap.existingConfigMap The name of an existing config map containing env-config.js.
+  # @key configMap.existingConfigMap The name of an existing config map containing env-config.js
   # Note: When it's set, it will disable configmap creation
   existingConfigMap: ""
 
@@ -75,7 +75,7 @@ podAnnotations: {}
 # - name: FOO
 # - value: instance
 extraEnvVars: []
-# @key extraVolumes Additional containers to be added to the *Data Catalog UI* pod
+# @key extraVolumes Optionally specify extra list of additional volumes
 extraVolumes: []
 # @key extraVolumeMounts Optionally specify extra list of additional volumeMounts
 extraVolumeMounts: []
@@ -88,7 +88,7 @@ initContainers: []
 #   ports:
 #   - name: portname
 #     containerPort: 1234
-# @key sidecars Add sidecars to the pod.
+# @key sidecars Add sidecars to the pod
 sidecars: []
 
 #
@@ -198,7 +198,7 @@ service:
 # If either of those details changes, you can use this section to correctly referer to those applications.
 # @descEnd
 hostsCore:
-  # @key hostsCore.enableAutoCorrect Prefix 'global.releaseNameTelicentCore' to each host value. Alternatively, the host value will be used as is, without any modification.
+  # @key hostsCore.enableAutoCorrect Prefix 'global.releaseNameTelicentCore' value to each host value. Alternatively, the host value will be used as it is, without any modification
   enableAutoCorrect: true
   # @key hostsCore.traefikProxy Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'
   traefikProxy: "traefik-proxy:8080"

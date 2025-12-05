@@ -78,41 +78,41 @@ Contains configuration parameters specific to the *Access UI* application
 
 ### Deployment Parameters
 
-| Name                                                | Description                                                              | Value                             |
-| --------------------------------------------------- | ------------------------------------------------------------------------ | --------------------------------- |
-| `replicas`                                          | Number of *Access UI* replicas to deploy                                 | `1`                               |
-| `revisionHistoryLimit`                              | Number of controller revisions to keep                                   | `5`                               |
-| `annotations`                                       | Add extra annotations to the deployment object                           | `{}`                              |
-| `podLabels`                                         | Add extra labels to the *Access UI* pod                                  | `{}`                              |
-| `podAnnotations`                                    | Add extra annotations to the *Access UI* pod                             | `{}`                              |
-| `extraEnvVars`                                      | Array with extra environment variables to add to *Access UI* pod         | `[]`                              |
-| `extraVolumes`                                      | Additional containers to be added to the *Access UI* pod                 | `[]`                              |
-| `extraVolumeMounts`                                 | Optionally specify extra list of additional volumeMounts                 | `[]`                              |
-| `initContainers`                                    | Add init containers to the pod                                           | `[]`                              |
-| `sidecars`                                          | Add sidecars to the pod.                                                 | `[]`                              |
-| `image.registry`                                    | *Access UI* image registry                                               | `REGISTRY_NAME`                   |
-| `image.repository`                                  | *Access UI* image name                                                   | `REPOSITORY_NAME/telicent-access` |
-| `image.tag`                                         | Access UI image tag. If not set, a tag is generated using the appVersion | `""`                              |
-| `image.pullPolicy`                                  | *Access UI* image pull policy                                            | `IfNotPresent`                    |
-| `image.pullSecrets`                                 | Specify registry secret names as an array                                | `[]`                              |
-| `resources.requests.cpu`                            | Set containers' CPU request                                              | `250m`                            |
-| `resources.requests.memory`                         | Set containers' memory request                                           | `200Mi`                           |
-| `resources.limits.cpu`                              | Set containers' CPU limit                                                | `350m`                            |
-| `resources.limits.memory`                           | Set containers' memory limit                                             | `768Mi`                           |
-| `containerSecurityContext.runAsUser`                | Set containers' Security Context runAsUser User ID                       | `185`                             |
-| `containerSecurityContext.runAsGroup`               | Set containers' Security Context runAsGroup Group ID                     | `185`                             |
-| `containerSecurityContext.runAsNonRoot`             | Set container's Security Context runAsNonRoot                            | `true`                            |
-| `containerSecurityContext.allowPrivilegeEscalation` | Set container's Security Context allowPrivilegeEscalation                | `false`                           |
-| `containerSecurityContext.capabilities.drop`        | List of capabilities to be dropped                                       | `["ALL"]`                         |
-| `containerSecurityContext.seccompProfile.type`      | Set container's Security Context seccomp profile                         | `RuntimeDefault`                  |
-| `podSecurityContext.runAsUser`                      | Set the provisioning pod's Security Context runAsUser User ID            | `185`                             |
-| `podSecurityContext.runAsGroup`                     | Set the provisioning pod's Security Context runAsGroup Group ID          | `185`                             |
-| `podSecurityContext.runAsNonRoot`                   | Set the provisioning pod's Security Context runAsNonRoot                 | `true`                            |
-| `podSecurityContext.fsGroup`                        | Set the provisioning pod's Group ID for the mounted volumes' filesystem  | `185`                             |
-| `podSecurityContext.seccompProfile.type`            | Set the provisioning pod's Security Context seccomp profile              | `RuntimeDefault`                  |
-| `affinity`                                          | Affinity for pod assignment                                              | `{}`                              |
-| `nodeSelector`                                      | Node labels for pod assignment                                           | `{}`                              |
-| `tolerations`                                       | Tolerations for pod assignment                                           | `[]`                              |
+| Name                                                | Description                                                              | Value                      |
+| --------------------------------------------------- | ------------------------------------------------------------------------ | -------------------------- |
+| `replicas`                                          | Number of *Access UI* replicas to deploy                                 | `1`                        |
+| `revisionHistoryLimit`                              | Number of controller revisions to keep                                   | `5`                        |
+| `annotations`                                       | Add extra annotations to the deployment object                           | `{}`                       |
+| `podLabels`                                         | Add extra labels to the *Access UI* pod                                  | `{}`                       |
+| `podAnnotations`                                    | Add extra annotations to the *Access UI* pod                             | `{}`                       |
+| `extraEnvVars`                                      | Array with extra environment variables to add to *Access UI* pod         | `[]`                       |
+| `extraVolumes`                                      | Optionally specify extra list of additional volumes                      | `[]`                       |
+| `extraVolumeMounts`                                 | Optionally specify extra list of additional volumeMounts                 | `[]`                       |
+| `initContainers`                                    | Add init containers to the pod                                           | `[]`                       |
+| `sidecars`                                          | Add sidecars to the pod                                                  | `[]`                       |
+| `image.registry`                                    | *Access UI* image registry                                               | `quay.io`                  |
+| `image.repository`                                  | *Access UI* image name                                                   | `telicent/telicent-access` |
+| `image.tag`                                         | Access UI image tag. If not set, a tag is generated using the appVersion | `""`                       |
+| `image.pullPolicy`                                  | *Access UI* image pull policy                                            | `IfNotPresent`             |
+| `image.pullSecrets`                                 | Specify registry secret names as an array                                | `[]`                       |
+| `resources.requests.cpu`                            | Set containers' CPU request                                              | `250m`                     |
+| `resources.requests.memory`                         | Set containers' memory request                                           | `200Mi`                    |
+| `resources.limits.cpu`                              | Set containers' CPU limit                                                | `350m`                     |
+| `resources.limits.memory`                           | Set containers' memory limit                                             | `768Mi`                    |
+| `containerSecurityContext.runAsUser`                | Set containers' Security Context runAsUser User ID                       | `185`                      |
+| `containerSecurityContext.runAsGroup`               | Set containers' Security Context runAsGroup Group ID                     | `185`                      |
+| `containerSecurityContext.runAsNonRoot`             | Set container's Security Context runAsNonRoot                            | `true`                     |
+| `containerSecurityContext.allowPrivilegeEscalation` | Set container's Security Context allowPrivilegeEscalation                | `false`                    |
+| `containerSecurityContext.capabilities.drop`        | List of capabilities to be dropped                                       | `["ALL"]`                  |
+| `containerSecurityContext.seccompProfile.type`      | Set container's Security Context seccomp profile                         | `RuntimeDefault`           |
+| `podSecurityContext.runAsUser`                      | Set the provisioning pod's Security Context runAsUser User ID            | `185`                      |
+| `podSecurityContext.runAsGroup`                     | Set the provisioning pod's Security Context runAsGroup Group ID          | `185`                      |
+| `podSecurityContext.runAsNonRoot`                   | Set the provisioning pod's Security Context runAsNonRoot                 | `true`                     |
+| `podSecurityContext.fsGroup`                        | Set the provisioning pod's Group ID for the mounted volumes' filesystem  | `185`                      |
+| `podSecurityContext.seccompProfile.type`            | Set the provisioning pod's Security Context seccomp profile              | `RuntimeDefault`           |
+| `affinity`                                          | Affinity for pod assignment                                              | `{}`                       |
+| `nodeSelector`                                      | Node labels for pod assignment                                           | `{}`                       |
+| `tolerations`                                       | Tolerations for pod assignment                                           | `[]`                       |
 
 ### Service Account Parameters
 

@@ -105,7 +105,7 @@ containerSecurityContext:
 serviceAccount:
   # @key serviceAccount.create Specifies whether a service account should be created
   create: true
-  # @key serviceAccount.automount Automatically mount a ServiceAccount's API credentials?
+  # @key serviceAccount.automount Automatically mount a ServiceAccount's API credentials
   automount: true
   # @key serviceAccount.annotations Annotations to add to the service account
   annotations: {}
@@ -113,14 +113,14 @@ serviceAccount:
   name: ""
 
 #
-# @section Host(s) Parameters - Contains host information for applications deployed via *telicent-core* chart.
+# @section Host(s) Parameters - Contains host information for applications deployed via *telicent-core* chart
 #
 # @descStart
 # *Document Pipeline* interacts directly with other Telicent Applications using their default service/serviceAccount and port.
 # If either of those details changes, you can use this section to correctly referer to those applications.
 # @descEnd
 hosts:
-  # @key hosts.enableAutoCorrect Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as is, without any modification.
+  # @key hosts.enableAutoCorrect Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as it is, without any modification
   enableAutoCorrect: true
   # @key hosts.auth Auth application default host value, as defined by 'service/serviceAccount:port'
   auth: "auth:8080"
@@ -137,14 +137,14 @@ hosts:
 httpIngester:
 
   #
-  # @section *HTTP Ingester* Application Parameters - Java
+  # @section *HTTP Ingester* - Application Parameters - Java
   #
   java:
     # @key httpIngester.java.jvmOptions Java options to pass to the JVM
     jvmOptions: "-XX:MaxRAMPercentage=80.0"
 
   #
-  # @section *HTTP Ingester* Application Parameters - Routes
+  # @section *HTTP Ingester* - Application Parameters - Routes
   #
   routes:
     # @key httpIngester.routes[0].name A unique name for the route
@@ -225,8 +225,11 @@ httpIngester:
   # @key httpIngester.sidecars Add sidecars to the pod.
   sidecars: []
 
+  #
+  # @section *HTTP Ingester* - Deployment Image Parameters
+  #
   image:
-    # @key httpIngester.image.registry [default: REGISTRY_NAME] image registry
+    # @key httpIngester.image.registry *HTTP Ingester* image registry
     registry: quay.io
     # @key httpIngester.image.repository The container image repository for the *HTTP Ingester*
     repository: telicent/telicent-document-http-ingester
@@ -237,13 +240,9 @@ httpIngester:
     # @key httpIngester.image.pullSecrets Specify registry secret names as an array
     pullSecrets: []
 
-  # @key httpIngester.affinity Affinity for pod assignment
-  affinity: {}
-  # @key httpIngester.nodeSelector Node labels for pod assignment
-  nodeSelector: {}
-  # @key httpIngester.tolerations Tolerations for pod assignment
-  tolerations: []
-
+  #
+  # @section *HTTP Ingester* - Deployment Resources Parameters - Requests and Limits
+  #
   resources:
     requests:
       # @key httpIngester.resources.requests.cpu Set containers' CPU request
@@ -256,11 +255,22 @@ httpIngester:
       # @key httpIngester.resources.limits.memory Set containers' memory limit
       memory: "1500Mi"
 
-  # @key httpIngester.podSecurityContext Security context for the pod(s)
-  # Note: Optional override, otherwise inherited from the root security context definition
+  #
+  # @section *HTTP Ingester* - Deployment Affinity Parameters
+  #
+  # @key httpIngester.affinity Affinity for pod assignment
+  affinity: {}
+  # @key httpIngester.nodeSelector Node labels for pod assignment
+  nodeSelector: {}
+  # @key httpIngester.tolerations Tolerations for pod assignment
+  tolerations: []
+
+  #
+  # @section *HTTP Ingester* - Deployment Security Context Parameters - Default Security Context
+  #
+  # @key httpIngester.podSecurityContext Security context for the pod(s). Optional override, otherwise inherited from the root security context definition
   podSecurityContext: {}
-  # @key httpIngester.containerSecurityContext Security context for the container(s)
-  # Note: Optional override, otherwise inherited from the root security context definition
+  # @key httpIngester.containerSecurityContext Security context for the container(s). Optional override, otherwise inherited from the root security context definition
   containerSecurityContext: {}
 
   #
@@ -284,7 +294,7 @@ httpIngester:
 contentExtractor:
 
   #
-  # @section *Content Extractor* Application Parameters - Topics
+  # @section *Content Extractor* - Application Parameters - Topics
   #
   topics:
     # @key contentExtractor.topics.inputTopic The Kafka topic from which the *Content Extractor* will consume messages
@@ -326,7 +336,7 @@ contentExtractor:
   sidecars: []
 
   image:
-    # @key contentExtractor.image.registry [default: REGISTRY_NAME] image registry
+    # @key contentExtractor.image.registry *Content Extractor* image registry
     registry: quay.io
     # @key contentExtractor.image.repository The container image repository for the *Content Extractor*
     repository: telicent/telicent-document-content-extractor
@@ -344,14 +354,11 @@ contentExtractor:
   # @key contentExtractor.tolerations Tolerations for the *Content Extractor* pods
   tolerations: []
 
-   # @key contentExtractor.resources Resource requests and limits for the *Content Extractor*
-  # Note: Optional override, otherwise inherited from the root resource definition
+  # @key contentExtractor.resources Resource requests and limits for the *Content Extractor*. Optional override, otherwise inherited from the root resource definition
   resources: {}
-  # @key contentExtractor.podSecurityContext Security context for the pod(s)
-  # Note: Optional override, otherwise inherited from the root  security context definition
+  # @key contentExtractor.podSecurityContext Security context for the pod(s). Optional override, otherwise inherited from the root security context definition
   podSecurityContext: {}
-  # @key contentExtractor.containerSecurityContext Security context for the container(s)
-  # Note: Optional override, otherwise inherited from main root security context definition
+  # @key contentExtractor.containerSecurityContext Security context for the container(s). Optional override, otherwise inherited from the root security context definition
   containerSecurityContext: {}
 
 #
@@ -364,7 +371,7 @@ contentExtractor:
 contentIndexer:
 
   #
-  # @section *Content Indexer* Application Parameters - Java
+  # @section *Content Indexer* - Application Parameters - Java
   #
   java:
      # @key contentIndexer.java.jvmOptions JVM options for the application
@@ -434,7 +441,7 @@ contentIndexer:
   sidecars: []
 
   image:
-    # @key contentIndexer.image.registry [default: REGISTRY_NAME] image registry
+    # @key contentIndexer.image.registry  *Content Indexer* image registry
     registry: quay.io
     # @key contentIndexer.image.repository The container image repository for the *Content Indexer*
     repository: telicent/telicent-document-content-indexer
@@ -452,14 +459,11 @@ contentIndexer:
   # @key contentIndexer.tolerations Tolerations for the *Content Indexer* pods
   tolerations: []
 
-  # @key contentIndexer.resources Resource requests and limits for the *Content Indexer*
-  # Note: Optional override, otherwise inherited from the root resource definition
+  # @key contentIndexer.resources Resource requests and limits for the *Content Indexer*. Optional override, otherwise inherited from the root resource definition
   resources: {}
-  # @key contentIndexer.podSecurityContext Security context for the pod(s)
-  # Note: Optional override, otherwise inherited from the root  security context definition
+  # @key contentIndexer.podSecurityContext Security context for the pod(s). Optional override, otherwise inherited from the root security context definition
   podSecurityContext: {}
-  # @key contentIndexer.containerSecurityContext Security context for the container(s)
-  # Note: Optional override, otherwise inherited from main root security context definition
+  # @key contentIndexer.containerSecurityContext Security context for the container(s). Optional override, otherwise inherited from the root security context definition
   containerSecurityContext: {}
 
 #
@@ -472,7 +476,7 @@ contentIndexer:
 catalogueUpdater:
 
   #
-  # @section *Catalogue Updater* Application Parameters - Topics
+  # @section *Catalogue Updater* - Application Parameters - Topics
   #
   topics:
     # @key catalogueUpdater.topics.inputTopic The Kafka topic from which the *Catalogue Updater* will consume messages
@@ -520,7 +524,7 @@ catalogueUpdater:
   sidecars: []
 
   image:
-    # @key catalogueUpdater.image.registry [default: REGISTRY_NAME] image registry
+    # @key catalogueUpdater.image.registry  *Catalogue Updater* image registry
     registry: quay.io
     # @key catalogueUpdater.image.repository The container image repository for the *Catalogue Updater*
     repository: telicent/telicent-document-catalogue-updater
@@ -538,14 +542,11 @@ catalogueUpdater:
   # @key catalogueUpdater.tolerations Tolerations for the *Catalogue Updater* pods
   tolerations: []
 
-  # @key catalogueUpdater.resources Resource requests and limits for the *Catalogue Updater*
-  # Note: Optional override, otherwise inherited from the root resource definition
+  # @key catalogueUpdater.resources Resource requests and limits for the *Catalogue Updater*. Optional override, otherwise inherited from the root resource definition
   resources: {}
-  # @key catalogueUpdater.podSecurityContext Security context for the pod(s)
-  # Note: Optional override, otherwise inherited from the root  security context definition
+  # @key catalogueUpdater.podSecurityContext Security context for the pod(s). Optional override, otherwise inherited from the root security context definition
   podSecurityContext: {}
-  # @key catalogueUpdater.containerSecurityContext Security context for the container(s)
-  # Note: Optional override, otherwise inherited from main root security context definition
+  # @key catalogueUpdater.containerSecurityContext Security context for the container(s). Optional override, otherwise inherited from the root security context definition
   containerSecurityContext: {}
 
 #
@@ -558,7 +559,7 @@ catalogueUpdater:
 contentTagger:
 
   #
-  # @section *Content Tagger* Application Parameters - Topics
+  # @section *Content Tagger* - Application Parameters - Topics
   #
   topics:
     # @key contentTagger.topics.inputTopic The Kafka topic from which the *Content Tagger* will consume messages
@@ -612,7 +613,7 @@ contentTagger:
   sidecars: []
 
   image:
-    # @key contentTagger.image.registry [default: REGISTRY_NAME] image registry
+    # @key contentTagger.image.registry *Content Tagger* image registry
     registry: quay.io
     # @key contentTagger.image.repository The container image repository for the *Content Tagger*
     repository: telicent/telicent-rdf-document-tagger-dc
@@ -633,11 +634,9 @@ contentTagger:
   # @key contentTagger.resources Resource requests and limits for the *Content Tagger*
   # Note: Optional override, otherwise inherited from the root resource definition
   resources: {}
-  # @key contentTagger.podSecurityContext Security context for the pod(s)
-  # Note: Optional override, otherwise inherited from the root  security context definition
+  # @key contentTagger.podSecurityContext Security context for the pod(s). Optional override, otherwise inherited from the root security context definition
   podSecurityContext: {}
-  # @key contentTagger.containerSecurityContext Security context for the container(s)
-  # Note: Optional override, otherwise inherited from main root security context definition
+  # @key contentTagger.containerSecurityContext Security context for the container(s). Optional override, otherwise inherited from the root security context definition
   containerSecurityContext: {}
 
 #
@@ -650,7 +649,7 @@ contentTagger:
 entityExtractor:
 
   #
-  # @section *Entity Extractor* Application Parameters - Topics
+  # @section *Entity Extractor* - Application Parameters - Topics
   #
   topics:
     # @key entityExtractor.topics.inputTopic The Kafka topic from which the content tagger will consume messages
@@ -692,7 +691,7 @@ entityExtractor:
   sidecars: []
 
   image:
-    # @key entityExtractor.image.registry [default: REGISTRY_NAME] image registry
+    # @key entityExtractor.image.registry *Entity Extractor* image registry
     registry: quay.io
     # @key entityExtractor.image.repository The container image repository for the *Entity Extractor*
     repository: telicent/telicent-pipeline-entity-extraction
@@ -710,12 +709,9 @@ entityExtractor:
   # @key entityExtractor.tolerations Tolerations for the *Entity Extractor* pods
   tolerations: []
 
-  # @key entityExtractor.resources Resource requests and limits for the *Entity Extractor*
-  # Note: Optional override, otherwise inherited from the root resource definition
+  # @key entityExtractor.resources Resource requests and limits for the *Entity Extractor*. Optional override, otherwise inherited from the root resource definition
   resources: {}
-  # @key entityExtractor.podSecurityContext Security context for the pod(s)
-  # Note: Optional override, otherwise inherited from the root  security context definition
+  # @key entityExtractor.podSecurityContext Security context for the pod(s). Optional override, otherwise inherited from the root security context definition
   podSecurityContext: {}
-  # @key entityExtractor.containerSecurityContext Security context for the container(s)
-  # Note: Optional override, otherwise inherited from main root security context definition
+  # @key entityExtractor.containerSecurityContext Security context for the container(s). Optional override, otherwise inherited from root security context definition
   containerSecurityContext: {}

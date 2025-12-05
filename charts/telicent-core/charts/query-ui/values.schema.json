@@ -53,7 +53,7 @@
             "properties": {
                 "existingConfigMap": {
                     "type": "string",
-                    "description": "The name of an existing config map containing env-config.js.",
+                    "description": "The name of an existing config map containing env-config.js",
                     "default": ""
                 }
             }
@@ -111,7 +111,7 @@
         },
         "extraVolumes": {
             "type": "array",
-            "description": "Additional containers to be added to the *Search UI* pod",
+            "description": "Optionally specify extra list of additional volumes",
             "default": [],
             "items": {}
         },
@@ -129,7 +129,7 @@
         },
         "sidecars": {
             "type": "array",
-            "description": "Add sidecars to the pod.",
+            "description": "Add sidecars to the pod",
             "default": [],
             "items": {}
         },
@@ -139,16 +139,16 @@
                 "registry": {
                     "type": "string",
                     "description": "*Query UI* image registry",
-                    "default": "REGISTRY_NAME"
+                    "default": "quay.io"
                 },
                 "repository": {
                     "type": "string",
                     "description": "*Query UI* image name",
-                    "default": "REPOSITORY_NAME/telicent-query"
+                    "default": "telicent/telicent-query"
                 },
                 "tag": {
                     "type": "string",
-                    "description": "Query UI image tag. If not set, a tag is generated using the appVersion",
+                    "description": "*Query UI* image tag. If not set, a tag is generated using the appVersion",
                     "default": ""
                 },
                 "pullPolicy": {
@@ -350,7 +350,7 @@
             "properties": {
                 "enableAutoCorrect": {
                     "type": "boolean",
-                    "description": "Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as is, without any modification.",
+                    "description": "Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as it is, without any modification",
                     "default": true
                 },
                 "traefikProxy": {

@@ -95,7 +95,7 @@ spec:
         - name: app-config-volume
           mountPath: /usr/local/nginx/html/env-config.js
           subPath: env-config.js
-        - name: secret-config-js-volume
+        - name: map-config-volume
           mountPath: /usr/local/nginx/html/secret-config.js
           subPath: secret-config.js
         {{- with .Values.extraVolumeMounts }}
@@ -109,16 +109,10 @@ spec:
       - name: app-config-volume
         configMap:
           name: {{ include "graph-ui.configMapName" . }}
-
-      {{- if .Values.ui.existingMapConfigSecretName }}
-      - name: secret-config-js-volume
+      - name: map-config-volume
         secret:
-          secretName: {{ .Values.ui.existingMapConfigSecretName }}
-      {{- else }}
-      - name: secret-config-js-volume
-        secret:
-          secretName: {{ include "graph-ui.fullname" . }}-secret-config-js
-      {{- end }}
+          secretName: {{ include "graph-ui.mapSecretName" . }}
+    
       {{- with .Values.extraVolumes }}
         {{- toYaml . | nindent 8 }}
       {{- end }}

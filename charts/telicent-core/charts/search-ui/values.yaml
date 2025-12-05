@@ -5,8 +5,8 @@
 # @section Global Parameters
 #
 # @descStart
-# Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart
-# Note: Only global parameters used within this chart will be listed below
+# Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart.
+# Note: Only global parameters used within this chart will be listed below.
 # @descEnd
 global:
   ## Current available global image parameters: imageRegistry and imagePullSecrets
@@ -30,30 +30,34 @@ global:
   authHostDomain: "auth.telicent.io"
 
 #
-# @section Application Parameters - UI
+# @section Application Parameters - UI and Secret
 #
 # @descStart
-# Contains parameters specific to the Search User Interface
+# Contains parameters specific to the Search User Interface.
+# Map functionality requires tokens and configuration defined within a secret.
+# It is recommended to store sensitive information including tokens/passwords in a Kubernetes secret and not in Helm values.
+# For Quick Start purposes, a secret named `tc-auth-gen-mapjs-search-ui` will be created if one is not set.
 # @descEnd
 ui:
-  # @key ui.graphUiDeployed If set to true, Graph UI links will be available within *Search UI*
+  # @key ui.graphUiDeployed If set to true, *Graph UI* links will be available within *Search UI*
   graphUiDeployed: true
-  # @key ui.userPortalUiDeployed If set to true, User Portal links will be available within *Search UI*
+  # @key ui.userPortalUiDeployed If set to true, *User Portal UI* links will be available within *Search UI*
   userPortalUiDeployed: true
-  # @key ui.dataCatalogUiDeployed If set to true, Data Catalog UI links will be available within *Search UI*
+  # @key ui.dataCatalogUiDeployed If set to true, *Data Catalog UI* links will be available within *Search UI*
   dataCatalogUiDeployed: true
 
-  # @key ui.searchUiMaptilerToken MapTiler token for *Search UI*
-  searchUiMaptilerToken: "your.maptiler.token.here"
-  # For examples of the map configuration, see: _secret_config_js.tpl
-  # @key ui.searchUiMapboxStyleSpecUrl Mapbox style spec URL for *Search UI*
+  # @key ui.maptilerToken MapTiler token for *Search UI*
+  maptilerToken: "your.maptiler.token.here"
+  # For examples of the map configuration, see: _mapjs.tpl
+  # @key ui.mapboxStyleSpecUrl Mapbox style spec URL for *Search UI*
   # Note: If set, it will default to a single vector style from any map service that adheres to the Mapbox style spec.
-  searchUiMapboxStyleSpecUrl: ""
-  # @key ui.searchUiArcgisToken ArcGIS token for *Search UI*
+  mapboxStyleSpecUrl: ""
+  # @key ui.arcgisToken ArcGIS token for *Search UI*
   # Note: If set, it can generate multiple layers from any map service that adheres to the Mapbox style spec.
-  searchUiArcgisToken: ""
-  # @key ui.existingMapConfigSecretName The name of an existing secret containing map configuration
-  existingMapConfigSecretName: ""
+  arcgisToken: ""
+  # @key ui.existingMapConfigSecret The name of an existing secret containing map configuration. See: '_mapjs.tpl' & 'secret-mapjs.yaml'
+  # Note: Left unset, it will create a secret named: tc-auth-gen-mapjs-search-ui
+  existingMapConfigSecret: ""
 
 #
 # @section Application Parameters - OAuth
@@ -104,7 +108,7 @@ podAnnotations: {}
 # - name: FOO
 # - value: instance
 extraEnvVars: []
-# @key extraVolumes Additional containers to be added to the *Search UI* pod
+# @key extraVolumes Optionally specify extra list of additional volumes
 extraVolumes: []
 # @key extraVolumeMounts Optionally specify extra list of additional volumeMounts
 extraVolumeMounts: []
@@ -117,16 +121,16 @@ initContainers: []
 #   ports:
 #   - name: portname
 #     containerPort: 1234
-# @key sidecars Add sidecars to the pod.
+# @key sidecars Add sidecars to the pod
 sidecars: []
 
 #
 # @section Deployment Image Parameters
 #
 image:
-  # @key image.registry [default: REGISTRY_NAME] *Search UI* image registry
+  # @key image.registry *Search UI* image registry
   registry: quay.io
-  # @key image.repository [default: REPOSITORY_NAME/telicent-search] *Search UI* image name
+  # @key image.repository *Search UI* image name
   repository: telicent/telicent-search
   # @key image.tag *Search UI* image tag. If not set, a tag is generated using the appVersion
   tag: ""
@@ -227,7 +231,7 @@ service:
 # If either of those details changes, you can use this section to correctly referer to those applications.
 # @descEnd
 hosts:
-  # @key hosts.enableAutoCorrect Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as is, without any modification.
+  # @key hosts.enableAutoCorrect Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as it is, without any modification
   enableAutoCorrect: true
   # @key hosts.traefikProxy Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'
   traefikProxy: "traefik-proxy:8080"

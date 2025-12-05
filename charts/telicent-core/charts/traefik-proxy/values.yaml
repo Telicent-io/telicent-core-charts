@@ -5,8 +5,8 @@
 # @section Global Parameters
 #
 # @descStart
-# Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart
-# Note: Only global parameters used within this chart will be listed below
+# Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart.
+# Note: Only global parameters used within this chart will be listed below.
 # @descEnd
 global:
   # Note: not supported as this is a third party application
@@ -137,7 +137,7 @@ podAnnotations: {}
 # - name: FOO
 # - value: instance
 extraEnvVars: []
-# @key extraVolumes Additional containers to be added to the *Traefik Proxy* pod
+# @key extraVolumes Optionally specify extra list of additional volumes
 extraVolumes: []
 # @key extraVolumeMounts Optionally specify extra list of additional volumeMounts
 extraVolumeMounts: []
@@ -150,16 +150,16 @@ initContainers: []
 #   ports:
 #   - name: portname
 #     containerPort: 1234
-# @key sidecars Add sidecars to the pod.
+# @key sidecars Add sidecars to the pod
 sidecars: []
 
 #
 # @section Deployment Image Parameters
 #
 image:
-  # @key image.registry [default: REGISTRY_NAME] *Traefik Proxy* image registry
+  # @key image.registry *Traefik Proxy* image registry
   registry: docker.io
-  # @key image.repository [default: REPOSITORY_NAME/traefik] *Traefik Proxy* image name
+  # @key image.repository *Traefik Proxy* image name
   repository: traefik
   # @key image.tag *Traefik Proxy* image tag. If not set, a tag is generated using the appVersion
   tag: ""
@@ -320,7 +320,7 @@ hosts:
 # If either of those details changes, you can use this section to correctly referer to those applications.
 # @descEnd
 hostsPreview:
-  # @key hostsPreview.enableAutoCorrect Prefix 'global.releaseNameTelicentPreview' to each host value. Alternatively, the host value will be used as is, without any modification.
+  # @key hostsPreview.enableAutoCorrect Prefix 'global.releaseNameTelicentPreview' value to each host value. Alternatively, the host value will be used as it is, without any modification
   enableAutoCorrect: true
   # @key hostsPreview.dataCatalogUi Data Catalog UI application default host value, as defined by 'service/serviceAccount:port'
   dataCatalogUi: "data-catalog-ui:8080"

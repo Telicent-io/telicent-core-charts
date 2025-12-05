@@ -134,16 +134,16 @@ initContainers: []
 #   ports:
 #   - name: portname
 #     containerPort: 1234
-# @key sidecars Add sidecars to the pod.
+# @key sidecars Add sidecars to the pod
 sidecars: []
 
 #
 # @section Deployment Image Parameters
 #
 image:
-  # @key image.registry [default: REGISTRY_NAME] *Search* image registry
+  # @key image.registry *Search* image registry
   registry: quay.io
-  # @key image.repository [default: REPOSITORY_NAME/search-api-server] *Search* image name
+  # @key image.repository *Search* image name
   repository: telicent/search-api-server
   # @key image.tag *Search* image tag. If not set, a tag is generated using the appVersion
   tag: ""
@@ -253,7 +253,7 @@ metrics:
 # If either of those details changes, you can use this section to correctly referer to those apps.
 # @descEnd
 hosts:
-  # @key hosts.enableAutoCorrect Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as is, without any modification.
+  # @key hosts.enableAutoCorrect Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as it is, without any modification
   enableAutoCorrect: true
   # @key hosts.auth Auth application default host value, as defined by 'service/serviceAccount:port'
   auth: "auth:8080"

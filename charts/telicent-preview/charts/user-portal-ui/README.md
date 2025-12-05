@@ -84,8 +84,8 @@ the [kubernetes documentation](https://kubernetes.io/docs/concepts/configuration
 
 ### Global Parameters
 
-Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart
-Note: Only global parameters used within this chart will be listed below
+Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart.
+Note: Only global parameters used within this chart will be listed below.
 
 | Name                      | Description                                                                       | Value              |
 | ------------------------- | --------------------------------------------------------------------------------- | ------------------ |
@@ -104,9 +104,9 @@ Note: Only global parameters used within this chart will be listed below
 
 ### ConfigMap Parameters
 
-| Name                          | Description                                                  | Value |
-| ----------------------------- | ------------------------------------------------------------ | ----- |
-| `configMap.existingConfigMap` | The name of an existing config map containing env-config.js. | `""`  |
+| Name                          | Description                                                   | Value |
+| ----------------------------- | ------------------------------------------------------------- | ----- |
+| `configMap.existingConfigMap` | The name of an existing config map containing `env-config.js` | `""`  |
 
 ### Common Parameters
 
@@ -127,10 +127,10 @@ Note: Only global parameters used within this chart will be listed below
 | `podLabels`            | Add extra labels to the *User Portal UI* pod                          | `{}`  |
 | `podAnnotations`       | Add extra annotations to the *User Portal UI* pod                     | `{}`  |
 | `extraEnvVars`         | Array with extra environment variables to add to *User Portal UI* pod | `[]`  |
-| `extraVolumes`         | Additional containers to be added to the *User Portal UI* pod         | `[]`  |
+| `extraVolumes`         | Optionally specify extra list of additional volumes                   | `[]`  |
 | `extraVolumeMounts`    | Optionally specify extra list of additional volumeMounts              | `[]`  |
 | `initContainers`       | Add init containers to the pod                                        | `[]`  |
-| `sidecars`             | Add sidecars to the pod.                                              | `[]`  |
+| `sidecars`             | Add sidecars to the pod                                               | `[]`  |
 
 ### Deployment Image Parameters
 
@@ -197,11 +197,11 @@ Note: Only global parameters used within this chart will be listed below
 *User Portal UI* interacts with applications deployed via *telicent-core* using their default service/serviceAccount and port.
 If either of those details changes, you can use this section to correctly referer to those applications.
 
-| Name                          | Description                                                                                                                             | Value                |
-| ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
-| `hostsCore.enableAutoCorrect` | Prefix 'global.releaseNameTelicentCore' to each host value. Alternatively, the host value will be used as is, without any modification. | `true`               |
-| `hostsCore.traefikProxy`      | Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'                                               | `traefik-proxy:8080` |
-| `hostsCore.auth`              | Auth application default host value, as defined by 'service/serviceAccount:port'                                                        | `auth:8080`          |
+| Name                          | Description                                                                                                                                     | Value                |
+| ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
+| `hostsCore.enableAutoCorrect` | Prefix 'global.releaseNameTelicentCore' value to each host value. Alternatively, the host value will be used as it is, without any modification | `true`               |
+| `hostsCore.traefikProxy`      | Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'                                                       | `traefik-proxy:8080` |
+| `hostsCore.auth`              | Auth application default host value, as defined by 'service/serviceAccount:port'                                                                | `auth:8080`          |
 
 
 
