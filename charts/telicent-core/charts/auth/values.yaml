@@ -68,7 +68,7 @@ idp:
 
   # @key idp.clientName The OAuth Client Name (used for display)
   clientName: ""
-  # @key idp.username Claim The OIDC claim containing the attribute to be used as the username
+  # @key idp.usernameClaim The OIDC claim containing the attribute to be used as the username
   usernameClaim: "sub"
 
   # @key idp.existingSecret Name of an existing secret. The secret must contain 2 keys: 'clientid', 'clientsecret'
