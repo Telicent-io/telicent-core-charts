@@ -78,7 +78,7 @@ spec:
               key: password
               name: {{ include "search.elasticSecretName" . }} 
         {{- range .Values.extraEnvVars }}
-        - name: {{ .name | quote  }}
+        - name: {{ .name }}
           value: {{ .value | quote }}
         {{- end }}
         envFrom:

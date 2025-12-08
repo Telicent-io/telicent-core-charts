@@ -71,7 +71,7 @@ spec:
         - name: DLQ_TOPIC
           value: {{ .Values.contentExtractor.topics.dlqTopic | quote }}
         {{- range .Values.contentExtractor.extraEnvVars }}
-        - name: {{ .name | quote  }}
+        - name: {{ .name }}
           value: {{ .value | quote }}
         {{- end }}  
 

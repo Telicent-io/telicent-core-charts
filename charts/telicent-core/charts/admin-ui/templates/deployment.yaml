@@ -64,7 +64,7 @@ spec:
         {{- if .Values.extraEnvVars }}
         env:
         {{- range .Values.extraEnvVars }}
-        - name: {{ .name | quote  }}
+        - name: {{ .name }}
           value: {{ .value | quote }}
         {{- end }}
         {{- end }}

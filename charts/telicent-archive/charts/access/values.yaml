@@ -119,7 +119,7 @@ podAnnotations: {}
 # Example:
 # extraEnvVars:
 # - name: FOO
-# - value: instance
+#   value: instance
 extraEnvVars: []
 # @key extraVolumes Optionally specify extra list of additional volumes
 extraVolumes: []

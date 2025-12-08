@@ -193,9 +193,10 @@ The application settings are defined within the 'java' & 'routes' keys
 
 ### *HTTP Ingester* - Configmap Parameters
 
-| Name                                             | Description                                                | Value |
-| ------------------------------------------------ | ---------------------------------------------------------- | ----- |
-| `httpIngester.configMap.existingRoutesConfigMap` | Name of existing configmap containing Routes Configuration | `""`  |
+| Name                                             | Description                                                                     | Value |
+| ------------------------------------------------ | ------------------------------------------------------------------------------- | ----- |
+| `httpIngester.configMap.existingEnvConfigMap`    | Name of existing configmap containing *HTTP Ingester* Environment Configuration | `""`  |
+| `httpIngester.configMap.existingRoutesConfigMap` | Name of existing configmap containing Routes Configuration                      | `""`  |
 
 ### *HTTP Ingester* - Common Parameters
 

@@ -83,7 +83,7 @@ spec:
         - name: iso3166_URI
           value: {{ .Values.contentTagger.topics.iso3166Uri | quote }}
         {{- range .Values.contentTagger.extraEnvVars }}
-        - name: {{ .name | quote  }}
+        - name: {{ .name }}
           value: {{ .value | quote }}
         {{- end }}   
 

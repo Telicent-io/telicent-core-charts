@@ -40,7 +40,7 @@ data:
             - https://{{.Values.global.appHostDomain}}/graph/auth-redirect-uri
           post_logout_redirect_uris:
             - https://{{.Values.global.appHostDomain}}/graph
-        {{- end}}
+        {{- end }}
         - client_id: telicent-query-ui
           client_name: Telicent Query UI Client
           redirect_uris: 

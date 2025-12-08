@@ -89,7 +89,7 @@ spec:
               key: password
               name: {{ include "contentIndexer.elasticSecretName" . }}
         {{- range .Values.contentIndexer.extraEnvVars }}
-        - name: {{ .name | quote  }}
+        - name: {{ .name }}
           value: {{ .value | quote }}
         {{- end }}  
 

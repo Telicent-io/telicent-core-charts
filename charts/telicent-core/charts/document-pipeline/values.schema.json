@@ -315,6 +315,11 @@
                 "configMap": {
                     "type": "object",
                     "properties": {
+                        "existingEnvConfigMap": {
+                            "type": "string",
+                            "description": "Name of existing configmap containing *HTTP Ingester* Environment Configuration",
+                            "default": ""
+                        },
                         "existingRoutesConfigMap": {
                             "type": "string",
                             "description": "Name of existing configmap containing Routes Configuration",

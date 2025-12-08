@@ -33,7 +33,8 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       annotations:
-        checksum/config: {{ include (print $.Template.BasePath "/httpIngester/configmap-routes.yaml") . | sha256sum }}
+        checksum/configEnv: {{ include (print $.Template.BasePath "/httpIngester/configmap-env.yaml") . | sha256sum }}
+        checksum/configRoutes: {{ include (print $.Template.BasePath "/httpIngester/configmap-routes.yaml") . | sha256sum }}
       {{- with .Values.httpIngester.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
@@ -60,23 +61,17 @@ spec:
         resources: {{ .Values.httpIngester.resources | default .Values.resources | toYaml | nindent 10 }}
         securityContext: {{ .Values.httpIngester.containerSecurityContext | default .Values.containerSecurityContext | toYaml | nindent 10 }}
 
+
+        {{- if .Values.httpIngester.extraEnvVars }}
         env:
-        - name: KAFKA_CONFIG_FILE_PATH
-          value: /app/config/kafka-auth/kafka-config.properties
-        - name: BOOTSTRAP_SERVERS
-          value: {{ .Values.global.kafka.bootstrapServers | quote }}
-        - name: ROUTE_CONFIG_DIRECTORY
-          value: /etc/http-ingester/
-        - name: JWKS_URL
-          value: {{ printf "%s%s%s" "https://" .Values.global.authHostDomain "/oauth2/jwks" | quote }}
-        - name: USERINFO_URL
-          value: {{  printf "http://%s%s" (include "document-pipeline.hostAuth" . ) "/userinfo" | quote }}
-        - name: JAVA_OPTIONS
-          value: {{ .Values.httpIngester.java.jvmOptions | quote }}
         {{- range .Values.httpIngester.extraEnvVars }}
-        - name: {{ .name | quote  }}
+        - name: {{ .name }}
           value: {{ .value | quote }}
-        {{- end }}  
+        {{- end }}
+        {{- end }}
+        envFrom:
+        - configMapRef:
+            name: {{ include "http-ingester.envConfigMapName" . }}
 
         ports:
         - name: http
@@ -94,9 +89,9 @@ spec:
 
         volumeMounts:
         - name: routes-volume
-          mountPath: /etc/http-ingester
+          mountPath: /app/config/routes
         - name: kafka-auth-config
-          mountPath: /app/config/kafka-auth/
+          mountPath: /app/config/kafka-auth
         {{- if .Values.global.truststore.existingSecret }}
         - name: java-truststore
           mountPath: {{ .Values.global.truststore.mountPath | default "/app/config/truststore" }}
