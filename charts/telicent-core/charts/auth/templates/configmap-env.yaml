@@ -32,7 +32,7 @@ data:
   # IDP
   EXTERNAL_IDP_URL: {{ .Values.idp.issuerUrl | quote }}
   EXTERNAL_IDP_CLIENT_NAME: {{ .Values.idp.clientName | quote }}
-  EXTERNAL_IDP_ID_CLAIM: {{ .Values.idp.emailClaim | quote }}
+  EXTERNAL_IDP_ID_CLAIM: {{ .Values.idp.usernameClaim | quote }}
   EXTERNAL_IDP_AUTHORIZE_ENDPOINT:  {{ .Values.idp.authorizationPath | quote }}
   EXTERNAL_IDP_JWK_SET_ENDPOINT:  {{ .Values.idp.jwksPath | quote }}
 
