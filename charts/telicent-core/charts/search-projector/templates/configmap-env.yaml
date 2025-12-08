@@ -28,5 +28,5 @@ data:
   {{- if .Values.metrics.enabled }}
   OTEL_METRICS_EXPORTER: "prometheus"
   OTEL_TRACES_EXPORTER: "none"
-  {{- end}}
-{{- end}}
+  {{- end }}
+{{- end }}

@@ -71,7 +71,7 @@ spec:
         - name: TARGET_TOPIC
           value: {{ .Values.entityExtractor.topics.outputTopic | quote }}
         {{- range .Values.entityExtractor.extraEnvVars }}
-        - name: {{ .name | quote  }}
+        - name: {{ .name }}
           value: {{ .value | quote }}
         {{- end }} 
   

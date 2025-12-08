@@ -23,10 +23,10 @@ data:
 
   {{- if .Values.global.enterprise }}
   SEARCH_API_URL: {{  printf "http://%s" (include "graph.hostSearch" .) | quote }}
-  {{- end}}
+  {{- end }}
 
   {{- if .Values.metrics.enabled }}
   OTEL_METRICS_EXPORTER: "prometheus"
   OTEL_TRACES_EXPORTER: "none"
-  {{- end}}
+  {{- end }}
 {{- end }}

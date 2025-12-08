@@ -190,6 +190,9 @@ httpIngester:
     # @section *HTTP Ingester* - Configmap Parameters
     #
   configMap:
+    # @key httpIngester.configMap.existingEnvConfigMap Name of existing configmap containing *HTTP Ingester* Environment Configuration
+    # Note: When it's set it will disable configmap creation.
+    existingEnvConfigMap: ""
     # @key httpIngester.configMap.existingRoutesConfigMap Name of existing configmap containing Routes Configuration
     # Note: When it's set it will disable the routes configmap creation.
     existingRoutesConfigMap: ""

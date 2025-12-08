@@ -77,7 +77,7 @@ spec:
               key: password
               name: {{ include "access.mongoSecretName" . }}
         {{- range .Values.extraEnvVars }}
-        - name: {{ .name | quote  }}
+        - name: {{ .name }}
           value: {{ .value | quote }}
         {{- end }}
         envFrom:

@@ -21,4 +21,4 @@ data:
   JAVA_OPTIONS: {{ .Values.java.jvmOptions | quote }}
   JWKS_URL: {{ printf "%s%s%s" "https://" .Values.global.authHostDomain "/oauth2/jwks" | quote }}
   USERINFO_URL: {{ printf "http://%s%s" (include "user-preferences.hostAuth" . ) "/userinfo" | quote }}
-{{- end}}
+{{- end }}

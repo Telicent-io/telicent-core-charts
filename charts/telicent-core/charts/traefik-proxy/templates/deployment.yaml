@@ -73,7 +73,7 @@ spec:
               key: header
               name: {{ include "traefik-proxy.forwardAuthSecretName" . }}
         {{- range .Values.extraEnvVars }}
-        - name: {{ .name | quote  }}
+        - name: {{ .name }}
           value: {{ .value | quote }}
         {{- end }}
         args:

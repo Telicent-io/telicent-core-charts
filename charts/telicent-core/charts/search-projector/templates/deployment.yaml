@@ -79,7 +79,7 @@ spec:
               name: {{ include "search-projector.elasticSecretName" . }}
 
         {{- range .Values.extraEnvVars }}
-        - name: {{ .name | quote  }}
+        - name: {{ .name }}
           value: {{ .value | quote }}
         {{- end }}
         envFrom:
