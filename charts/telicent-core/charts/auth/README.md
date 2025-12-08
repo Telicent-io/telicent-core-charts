@@ -115,7 +115,7 @@ For Quick Start purposes, a secret named `tc-auth-gen-idp-auth` will be created 
 | `idp.cookieSecure`        | Enable secure cookies                                                                  | `true`         |
 | `idp.superUserIdentifier` | Super user identification, set to 'ALL' to allow for everyone to be a superuser        | `ALL`          |
 | `idp.clientName`          | The OAuth Client Name (used for display)                                               | `""`           |
-| `idp.emailClaim`          | The OIDC claim containing the user's email                                             | `email`        |
+| `idp.usernameClaim`       | The OIDC claim containing the attribute to be used as the username                     | `sub`          |
 | `idp.existingSecret`      | Name of an existing secret. The secret must contain 2 keys: 'clientid', 'clientsecret' | `""`           |
 | `idp.clientId`            | The OAuth Client ID                                                                    | `""`           |
 | `idp.clientSecret`        | The OAuth Client Secret                                                                | `""`           |

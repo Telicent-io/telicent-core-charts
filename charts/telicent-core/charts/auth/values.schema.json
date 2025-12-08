@@ -101,10 +101,10 @@
                     "description": "The OAuth Client Name (used for display)",
                     "default": ""
                 },
-                "emailClaim": {
+                "usernameClaim": {
                     "type": "string",
-                    "description": "The OIDC claim containing the user's email",
-                    "default": "email"
+                    "description": "The OIDC claim containing the attribute to be used as the username",
+                    "default": "sub"
                 },
                 "existingSecret": {
                     "type": "string",

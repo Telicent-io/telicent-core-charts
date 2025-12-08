@@ -68,8 +68,8 @@ idp:
 
   # @key idp.clientName The OAuth Client Name (used for display)
   clientName: ""
-  # @key idp.emailClaim The OIDC claim containing the user's email
-  emailClaim: "email"
+  # @key idp.usernameClaim The OIDC claim containing the attribute to be used as the username
+  usernameClaim: "sub"
 
   # @key idp.existingSecret Name of an existing secret. The secret must contain 2 keys: 'clientid', 'clientsecret'
   # Note: Left unset, it will create a secret named: tc-auth-gen-idp-auth
