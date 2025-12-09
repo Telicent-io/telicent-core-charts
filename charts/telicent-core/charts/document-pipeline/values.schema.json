@@ -403,7 +403,7 @@
                         "tag": {
                             "type": "string",
                             "description": "The image tag for the *HTTP Ingester*",
-                            "default": "3.3.0"
+                            "default": "3.3.2"
                         },
                         "pullPolicy": {
                             "type": "string",
@@ -600,7 +600,7 @@
                         "tag": {
                             "type": "string",
                             "description": "The image tag for the *Content Extractor*",
-                            "default": "3.3.0"
+                            "default": "3.3.2"
                         },
                         "pullPolicy": {
                             "type": "string",
@@ -792,7 +792,7 @@
                         "tag": {
                             "type": "string",
                             "description": "The image tag for the *Content Indexer*",
-                            "default": "3.3.0"
+                            "default": "3.3.2"
                         },
                         "pullSecrets": {
                             "type": "array",
@@ -946,15 +946,15 @@
                             "description": "The container image repository for the *Catalogue Updater*",
                             "default": "telicent/telicent-document-catalogue-updater"
                         },
+                        "tag": {
+                            "type": "string",
+                            "description": "The image tag for the *Catalogue Updater*",
+                            "default": "3.3.2"
+                        },
                         "pullPolicy": {
                             "type": "string",
                             "description": "The image pull policy for the *Catalogue Updater*",
                             "default": "IfNotPresent"
-                        },
-                        "tag": {
-                            "type": "string",
-                            "description": "The image tag for the *Catalogue Updater*",
-                            "default": "3.3.0"
                         },
                         "pullSecrets": {
                             "type": "array",

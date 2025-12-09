@@ -135,7 +135,6 @@ hosts:
 # The application settings are defined within the 'java' & 'routes' keys
 # @descEnd
 httpIngester:
-
   #
   # @section *HTTP Ingester* - Application Parameters - Java
   #
@@ -237,7 +236,7 @@ httpIngester:
     # @key httpIngester.image.repository The container image repository for the *HTTP Ingester*
     repository: telicent/telicent-document-http-ingester
     # @key httpIngester.image.tag The image tag for the *HTTP Ingester*
-    tag: "3.3.0"
+    tag: "3.3.2"
     # @key httpIngester.image.pullPolicy The image pull policy for the *HTTP Ingester*
     pullPolicy: IfNotPresent
     # @key httpIngester.image.pullSecrets Specify registry secret names as an array
@@ -295,7 +294,6 @@ httpIngester:
 # The application settings are defined within the 'topics' key
 # @descEnd
 contentExtractor:
-
   #
   # @section *Content Extractor* - Application Parameters - Topics
   #
@@ -344,7 +342,7 @@ contentExtractor:
     # @key contentExtractor.image.repository The container image repository for the *Content Extractor*
     repository: telicent/telicent-document-content-extractor
     # @key contentExtractor.image.tag The image tag for the *Content Extractor*
-    tag: "3.3.0"
+    tag: "3.3.2"
     # @key contentExtractor.image.pullPolicy The image pull policy for the *Content Extractor*
     pullPolicy: IfNotPresent
     # @key contentExtractor.image.pullSecrets Secrets for pulling an image from a private repository
@@ -372,12 +370,11 @@ contentExtractor:
 # The application settings are defined within the 'java' & 'elastic' keys
 # @descEnd
 contentIndexer:
-
   #
   # @section *Content Indexer* - Application Parameters - Java
   #
   java:
-     # @key contentIndexer.java.jvmOptions JVM options for the application
+    # @key contentIndexer.java.jvmOptions JVM options for the application
     jvmOptions: "-XX:MaxRAMPercentage=80.0"
 
   #
@@ -399,8 +396,9 @@ contentIndexer:
     # @key contentIndexer.elastic.index Elastic/OpenSearch index to be used
     index: doc-content
     # @key contentIndexer.elastic.topic The Kafka topic from which the content indexer will consume messages
-    topic: document.textandmetadata,document.entities
-     # @key contentIndexer.elastic.dlqTopic The Kafka topic to which the content indexer will produce dead-lettered messages
+    topic:
+      document.textandmetadata,document.entities
+      # @key contentIndexer.elastic.dlqTopic The Kafka topic to which the content indexer will produce dead-lettered messages
     dlqTopic: document.textandmetadata.dlq
 
     # @key contentIndexer.elastic.existingSecret Name of an existing secret. The secret must contain 2 keys: 'username', 'password'
@@ -450,7 +448,7 @@ contentIndexer:
     repository: telicent/telicent-document-content-indexer
     # @key contentIndexer.image.pullPolicy The image pull policy for the *Content Indexer*
     # @key contentIndexer.image.tag The image tag for the *Content Indexer*
-    tag: "3.3.0"
+    tag: "3.3.2"
     pullPolicy: IfNotPresent
     # @key contentIndexer.image.pullSecrets Secrets for pulling an image from a private repository
     pullSecrets: []
@@ -477,7 +475,6 @@ contentIndexer:
 # The application settings are defined within the 'topics' key
 # @descEnd
 catalogueUpdater:
-
   #
   # @section *Catalogue Updater* - Application Parameters - Topics
   #
@@ -515,7 +512,7 @@ catalogueUpdater:
   podAnnotations: {}
   # @key catalogueUpdater.podLabels Labels to add to the *Catalogue Updater* pods
   podLabels: {}
-   # @key catalogueUpdater.extraEnvVars Array with extra environment variables to add
+    # @key catalogueUpdater.extraEnvVars Array with extra environment variables to add
   extraEnvVars: []
   # @key catalogueUpdater.extraVolumes Additional volumes for the *Catalogue Updater*
   extraVolumes: []
@@ -531,9 +528,9 @@ catalogueUpdater:
     registry: quay.io
     # @key catalogueUpdater.image.repository The container image repository for the *Catalogue Updater*
     repository: telicent/telicent-document-catalogue-updater
-    # @key catalogueUpdater.image.pullPolicy The image pull policy for the *Catalogue Updater*
     # @key catalogueUpdater.image.tag The image tag for the *Catalogue Updater*
-    tag: "3.3.0"
+    tag: "3.3.2"
+    # @key catalogueUpdater.image.pullPolicy The image pull policy for the *Catalogue Updater*
     pullPolicy: IfNotPresent
     # @key catalogueUpdater.image.pullSecrets Secrets for pulling an image from a private repository
     pullSecrets: []
@@ -560,7 +557,6 @@ catalogueUpdater:
 # The application settings are defined within the 'topics' key
 # @descEnd
 contentTagger:
-
   #
   # @section *Content Tagger* - Application Parameters - Topics
   #
@@ -591,7 +587,7 @@ contentTagger:
   nameOverride: ""
   # @key contentTagger.fullnameOverride Override the full name for the *Content Tagger*
   fullnameOverride: ""
-  
+
   #
   # @section *Content Tagger* - Deployment Parameters
   #
@@ -650,7 +646,6 @@ contentTagger:
 # The application settings are defined within the 'topics' key
 # @descEnd
 entityExtractor:
-
   #
   # @section *Entity Extractor* - Application Parameters - Topics
   #
@@ -688,7 +683,7 @@ entityExtractor:
   extraVolumes: []
   # @key entityExtractor.extraVolumeMounts Additional volume mounts for the *Entity Extractor*
   extraVolumeMounts: []
-   # @key entityExtractor.initContainers Add init containers to the pod
+    # @key entityExtractor.initContainers Add init containers to the pod
   initContainers: []
   # @key entityExtractor.sidecars Add sidecars to the pod.
   sidecars: []
