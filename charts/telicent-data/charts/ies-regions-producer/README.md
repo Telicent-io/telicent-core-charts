@@ -97,7 +97,7 @@ These parameters can be referenced in sub-charts as `.Values.global.<parameter-n
 
 | Name                          | Description                                                                                                                                                    | Value |
 | ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
-| `job.activeDeadlineSeconds`   | Specifies the duration in seconds relative to the startTime that the job may be active before the system tries to terminate it; value must be positive integer | `100` |
+| `job.activeDeadlineSeconds`   | Specifies the duration in seconds relative to the startTime that the job may be active before the system tries to terminate it; value must be positive integer | `360` |
 | `job.backoffLimit`            | Specifies the number of retries before marking this job as failed                                                                                              | `3`   |
 | `job.completions`             | Specifies the desired number of successfully finished pods the job should be run with                                                                          | `1`   |
 | `job.parallelism`             | Specifies the maximum desired number of pods the job should run at any given time                                                                              | `1`   |

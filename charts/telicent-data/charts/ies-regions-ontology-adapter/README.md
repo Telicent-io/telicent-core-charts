@@ -97,7 +97,7 @@ These parameters can be referenced in sub-charts as `.Values.global.<parameter-n
 
 | Name                          | Description                                                          | Value |
 | ----------------------------- | -------------------------------------------------------------------- | ----- |
-| `job.activeDeadlineSeconds`   | Maximum time in seconds a job can run                                | `100` |
+| `job.activeDeadlineSeconds`   | Maximum time in seconds a job can run                                | `360` |
 | `job.backoffLimit`            | Number of retries before marking this job as failed                  | `3`   |
 | `job.completions`             | Number of successful completions before marking this job as complete | `1`   |
 | `job.parallelism`             | Maximum number of pods that can run in parallel                      | `1`   |

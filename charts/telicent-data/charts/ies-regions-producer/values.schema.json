@@ -166,7 +166,7 @@
                 "activeDeadlineSeconds": {
                     "type": "number",
                     "description": "Specifies the duration in seconds relative to the startTime that the job may be active before the system tries to terminate it; value must be positive integer",
-                    "default": 100
+                    "default": 360
                 },
                 "backoffLimit": {
                     "type": "number",

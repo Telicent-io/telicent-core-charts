@@ -166,7 +166,7 @@
                 "activeDeadlineSeconds": {
                     "type": "number",
                     "description": "Maximum time in seconds a job can run",
-                    "default": 100
+                    "default": 360
                 },
                 "backoffLimit": {
                     "type": "number",
