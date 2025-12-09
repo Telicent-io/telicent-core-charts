@@ -707,8 +707,17 @@ entityExtractor:
   # @key entityExtractor.tolerations Tolerations for the *Entity Extractor* pods
   tolerations: []
 
-  # @key entityExtractor.resources Resource requests and limits for the *Entity Extractor*. Optional override, otherwise inherited from the root resource definition
-  resources: {}
+  resources:
+    requests:
+      # @key entityExtractor.resources.requests.cpu Set containers' CPU request
+      cpu: "500m"
+      # @key entityExtractor.resources.requests.memory Set containers' memory request
+      memory: "750Mi"
+    limits:
+      # @key entityExtractor.resources.limits.cpu Set containers' CPU limit
+      cpu: "1000m"
+      # @key entityExtractor.resources.limits.memory Set containers' memory limit
+      memory: "4000Mi"
   # @key entityExtractor.podSecurityContext Security context for the pod(s). Optional override, otherwise inherited from the root security context definition
   podSecurityContext: {}
   # @key entityExtractor.containerSecurityContext Security context for the container(s). Optional override, otherwise inherited from root security context definition
