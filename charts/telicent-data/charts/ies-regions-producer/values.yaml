@@ -89,7 +89,7 @@ fullnameOverride: ""
 # @section Job Parameters
 job:
   # @key job.activeDeadlineSeconds Specifies the duration in seconds relative to the startTime that the job may be active before the system tries to terminate it; value must be positive integer
-  activeDeadlineSeconds: 100
+  activeDeadlineSeconds: 360
   # @key job.backoffLimit Specifies the number of retries before marking this job as failed
   backoffLimit: 3
   # @key job.completions Specifies the desired number of successfully finished pods the job should be run with

@@ -89,7 +89,7 @@ fullnameOverride: ""
 # @section Job settings
 job:
   # @key job.activeDeadlineSeconds Maximum time in seconds a job can run
-  activeDeadlineSeconds: 100
+  activeDeadlineSeconds: 360
   # @key job.backoffLimit Number of retries before marking this job as failed
   backoffLimit: 3
   # @key job.completions Number of successful completions before marking this job as complete
