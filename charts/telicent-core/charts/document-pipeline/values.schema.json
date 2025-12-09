@@ -1306,8 +1306,38 @@
                 },
                 "resources": {
                     "type": "object",
-                    "description": "Resource requests and limits for the *Entity Extractor*. Optional override, otherwise inherited from the root resource definition",
-                    "default": {}
+                    "properties": {
+                        "requests": {
+                            "type": "object",
+                            "properties": {
+                                "cpu": {
+                                    "type": "string",
+                                    "description": "Set containers' CPU request",
+                                    "default": "500m"
+                                },
+                                "memory": {
+                                    "type": "string",
+                                    "description": "Set containers' memory request",
+                                    "default": "750Mi"
+                                }
+                            }
+                        },
+                        "limits": {
+                            "type": "object",
+                            "properties": {
+                                "cpu": {
+                                    "type": "string",
+                                    "description": "Set containers' CPU limit",
+                                    "default": "1000m"
+                                },
+                                "memory": {
+                                    "type": "string",
+                                    "description": "Set containers' memory limit",
+                                    "default": "2000Mi"
+                                }
+                            }
+                        }
+                    }
                 },
                 "podSecurityContext": {
                     "type": "object",
