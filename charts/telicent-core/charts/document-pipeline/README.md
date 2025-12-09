@@ -515,7 +515,7 @@ The application settings are defined within the 'topics' key
 | `entityExtractor.resources.requests.cpu`    | Set containers' CPU request                                                                                         | `500m`                                         |
 | `entityExtractor.resources.requests.memory` | Set containers' memory request                                                                                      | `750Mi`                                        |
 | `entityExtractor.resources.limits.cpu`      | Set containers' CPU limit                                                                                           | `1000m`                                        |
-| `entityExtractor.resources.limits.memory`   | Set containers' memory limit                                                                                        | `2000Mi`                                       |
+| `entityExtractor.resources.limits.memory`   | Set containers' memory limit                                                                                        | `4000Mi`                                       |
 | `entityExtractor.podSecurityContext`        | Security context for the pod(s). Optional override, otherwise inherited from the root security context definition   | `{}`                                           |
 | `entityExtractor.containerSecurityContext`  | Security context for the container(s). Optional override, otherwise inherited from root security context definition | `{}`                                           |
 

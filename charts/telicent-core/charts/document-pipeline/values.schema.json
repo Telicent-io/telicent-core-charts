@@ -1333,7 +1333,7 @@
                                 "memory": {
                                     "type": "string",
                                     "description": "Set containers' memory limit",
-                                    "default": "2000Mi"
+                                    "default": "4000Mi"
                                 }
                             }
                         }
