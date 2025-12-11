@@ -145,12 +145,12 @@ Contains Java parameters to be used by the *Auth* application
 
 | Name                  | Description                                                                              | Value   |
 | --------------------- | ---------------------------------------------------------------------------------------- | ------- |
-| `logs.api.level`      | Api package Logging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE               | `WARN`  |
-| `logs.service.level`  | Service package Logging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE           | `WARN`  |
+| `logs.api.level`      | Api package Logging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE               | `INFO`  |
+| `logs.service.level`  | Service package Logging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE           | `INFO`  |
 | `logs.repo.level`     | Repo package Logging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE              | `WARN`  |
 | `logs.security.level` | Security packageLogging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE           | `WARN`  |
 | `logs.oauth2.level`   | Oauth2 package Logging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE            | `WARN`  |
-| `logs.general.level`  | Logging Level for 'io.telicent.auth'. Values include: ERROR, WARN, INFO, DEBUG, TRACE    | `WARN`  |
+| `logs.general.level`  | Logging Level for 'io.telicent.auth'. Values include: ERROR, WARN, INFO, DEBUG, TRACE    | `INFO`  |
 | `logs.trace.level`    | Logging Level for 'Spring RestTemplate'. Values include: ERROR, WARN, INFO, DEBUG, TRACE | `ERROR` |
 
 ### Application Parameters - PostgreSQL and Secret
