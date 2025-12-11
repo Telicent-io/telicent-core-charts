@@ -43,8 +43,6 @@ helm uninstall my-release
 
 The `telicent-core` chart includes the following sub-charts:
 
-- **[access](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-core/charts/access/README.md)** - Access control service
-- **[access-ui](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-core/charts/access-ui/README.md)** - Access control user interface
 - **[admin-ui](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-core/charts/admin-ui/README.md)** - Administration user interface
 - **[auth](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-core/charts/auth/README.md)** - Auth service
 - **[graph-ui](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-core/charts/graph-ui/README.md)** - Graph visualization interface

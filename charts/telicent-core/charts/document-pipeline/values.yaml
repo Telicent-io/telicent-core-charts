@@ -710,12 +710,12 @@ entityExtractor:
   resources:
     requests:
       # @key entityExtractor.resources.requests.cpu Set containers' CPU request
-      cpu: "500m"
+      cpu: "1100m"
       # @key entityExtractor.resources.requests.memory Set containers' memory request
-      memory: "750Mi"
+      memory: "2048Mi"
     limits:
       # @key entityExtractor.resources.limits.cpu Set containers' CPU limit
-      cpu: "1000m"
+      cpu: "1800m"
       # @key entityExtractor.resources.limits.memory Set containers' memory limit
       memory: "4000Mi"
   # @key entityExtractor.podSecurityContext Security context for the pod(s). Optional override, otherwise inherited from the root security context definition
