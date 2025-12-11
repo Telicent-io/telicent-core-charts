@@ -115,10 +115,10 @@ java:
 logs:
   api:
     # @key logs.api.level Api package Logging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE
-    level: "WARN"
+    level: "INFO"
   service:
     # @key logs.service.level Service package Logging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE
-    level: "WARN"
+    level: "INFO"
   repo:
     # @key logs.repo.level Repo package Logging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE
     level: "WARN"
