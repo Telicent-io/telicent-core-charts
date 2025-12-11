@@ -130,7 +130,7 @@ logs:
     level: "WARN"
   general:
     # @key logs.general.level Logging Level for 'io.telicent.auth'. Values include: ERROR, WARN, INFO, DEBUG, TRACE
-    level: "WARN"
+    level: "INFO"
   trace:
     # @key logs.trace.level Logging Level for 'Spring RestTemplate'. Values include: ERROR, WARN, INFO, DEBUG, TRACE
     level: "ERROR"
