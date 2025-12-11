@@ -91,12 +91,12 @@
                         "average": {
                             "type": "number",
                             "description": "Maximum number of requests per second allowed to the Authentication Service (0 means no rate limiting).",
-                            "default": 20
+                            "default": 10
                         },
                         "burst": {
                             "type": "number",
                             "description": "Maximum number of requests allowed to go through at the very same moment to the Authentication Service.",
-                            "default": 10
+                            "default": 5
                         }
                     }
                 }
