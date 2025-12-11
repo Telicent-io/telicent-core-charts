@@ -167,7 +167,7 @@
                         "level": {
                             "type": "string",
                             "description": "Api package Logging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE",
-                            "default": "WARN"
+                            "default": "INFO"
                         }
                     }
                 },
@@ -177,7 +177,7 @@
                         "level": {
                             "type": "string",
                             "description": "Service package Logging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE",
-                            "default": "WARN"
+                            "default": "INFO"
                         }
                     }
                 },
@@ -217,7 +217,7 @@
                         "level": {
                             "type": "string",
                             "description": "Logging Level for 'io.telicent.auth'. Values include: ERROR, WARN, INFO, DEBUG, TRACE",
-                            "default": "WARN"
+                            "default": "INFO"
                         }
                     }
                 },
