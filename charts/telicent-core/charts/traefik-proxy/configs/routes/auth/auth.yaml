@@ -46,7 +46,6 @@ http:
         - web-auth
       middleWares:
         - host-auth
-        - oauth2
 
   services:
     auth:
