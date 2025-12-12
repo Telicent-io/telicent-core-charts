@@ -73,8 +73,17 @@ spec:
         {{- range .Values.entityExtractor.extraEnvVars }}
         - name: {{ .name }}
           value: {{ .value | quote }}
-        {{- end }} 
-  
+        {{- end }}
+
+        readinessProbe:
+          httpGet:
+            path: /healthz/ready
+            port: 15021
+        livenessProbe:
+          httpGet:
+            path: /healthz/ready
+            port: 15021
+
         volumeMounts:
         - mountPath: /app/config/kafka-auth/
           name: kafka-auth-config
