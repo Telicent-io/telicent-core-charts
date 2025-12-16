@@ -57,9 +57,9 @@ rateLimit:
     burst: 25
   auth:
     # @key rateLimit.auth.average Maximum number of requests per second allowed to the Authentication Service (0 means no rate limiting).
-    average: 20
+    average: 10
     # @key rateLimit.auth.burst Maximum number of requests allowed to go through at the very same moment to the Authentication Service.
-    burst: 10
+    burst: 5
 
 #
 # @section Application Parameters - CORS

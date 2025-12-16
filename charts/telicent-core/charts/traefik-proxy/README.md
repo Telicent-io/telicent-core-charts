@@ -111,8 +111,8 @@ Ref: https://doc.traefik.io/traefik/reference/routing-configuration/http/middlew
 | `rateLimit.app.burst`    | Maximum number of requests allowed to go through at the very same moment to the Web Applications.       | `100` |
 | `rateLimit.api.average`  | Maximum number of requests per second allowed to the API Services (0 means no rate limiting).           | `100` |
 | `rateLimit.api.burst`    | Maximum number of requests allowed to go through at the very same moment to the API Services.           | `25`  |
-| `rateLimit.auth.average` | Maximum number of requests per second allowed to the Authentication Service (0 means no rate limiting). | `20`  |
-| `rateLimit.auth.burst`   | Maximum number of requests allowed to go through at the very same moment to the Authentication Service. | `10`  |
+| `rateLimit.auth.average` | Maximum number of requests per second allowed to the Authentication Service (0 means no rate limiting). | `10`  |
+| `rateLimit.auth.burst`   | Maximum number of requests allowed to go through at the very same moment to the Authentication Service. | `5`   |
 
 ### Application Parameters - CORS
 
