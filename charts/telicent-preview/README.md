@@ -60,8 +60,8 @@ Contains global parameters, these parameters are mirrored across all Telicent Pr
 | `global.istioGatewayName`               | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)         | `ingress-gateway`                                |
 | `global.kafka.bootstrapServers`         | Comma separated list containing Kafka bootstrap servers                           | `kafka-bootstrap.kafka.svc.cluster.local:9092`   |
 | `global.kafka.existingConfigSecretName` | Name of an existing secret containing Kafka configuration                         | `""`                                             |
-| `global.kafka.username`                 | Username for Kafka authentication                                                 | `""`                       |
-| `global.kafka.password`                 | Password for Kafka authentication                                                 | `""`                       |
+| `global.kafka.username`                 | Username for Kafka authentication                                                 | `your.kafka.username.here`                       |
+| `global.kafka.password`                 | Password for Kafka authentication                                                 | `your.kafka.password.here`                       |
 | `global.kafka.protocol`                 | Protocol used for Kafka communication                                             | `SASL_SSL`                                       |
 | `global.kafka.mechanism`                | SASL mechanism used for Kafka authentication                                      | `SCRAM-SHA-512`                                  |
 | `global.truststore.existingSecret`      | Name of an existing secret containing the truststore                              | `""`                                             |

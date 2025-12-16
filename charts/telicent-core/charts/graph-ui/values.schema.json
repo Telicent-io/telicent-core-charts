@@ -59,7 +59,7 @@
                 "maptilerToken": {
                     "type": "string",
                     "description": "The MapTiler token for the *Graph UI*",
-                    "default": ""
+                    "default": "your.maptiler.token.here"
                 },
                 "mapboxStyleSpecUrl": {
                     "type": "string",
