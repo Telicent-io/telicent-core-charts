@@ -21,7 +21,7 @@ global:
 
   # @key global.releaseNameTelicentPreview Release name used during the Telicent Preview chart installation. Note: ensure the value is correct, otherwise there will be no access to data-catalog, user-portal & paperback-writer
   # If installed through the parent-chart this value needs to reflect the name of the release name used when 'telicent-preview' chart was installed.
-  # If all applications were installed through sub-charts, leaving this value empty will provide the correct behaviour.
+  # If all applications were installed through sub-charts, leaving this value empty will provide the correct behavior.
   releaseNameTelicentPreview: ""
 
   # @key global.enterprise Enable enterprise mode, adding additional features and configurations
@@ -356,7 +356,7 @@ service:
 #
 # @descStart
 # *Auth* interacts directly with other Telicent Applications using their default service/serviceAccount and port.
-# If either of those details changes, you can use this section to correctly referer to those applications.
+# If either of those details changes, you can use this section to correctly refer to those applications.
 # @descEnd
 hosts:
   # @key hosts.enableAutoCorrect Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as it is, without any modification

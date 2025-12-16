@@ -147,7 +147,7 @@ This section builds out the service account more information can be found here: 
 ### Host(s) Parameters - Contains host information for applications deployed via *telicent-core* chart
 
 *Document Pipeline* interacts directly with other Telicent Applications using their default service/serviceAccount and port.
-If either of those details changes, you can use this section to correctly referer to those applications.
+If either of those details changes, you can use this section to correctly refer to those applications.
 
 | Name                      | Description                                                                                                                                                                                                                          | Value                |
 | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------- |

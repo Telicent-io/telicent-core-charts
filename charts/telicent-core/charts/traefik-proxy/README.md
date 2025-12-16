@@ -111,8 +111,8 @@ Ref: https://doc.traefik.io/traefik/reference/routing-configuration/http/middlew
 | `rateLimit.app.burst`    | Maximum number of requests allowed to go through at the very same moment to the Web Applications.       | `100` |
 | `rateLimit.api.average`  | Maximum number of requests per second allowed to the API Services (0 means no rate limiting).           | `100` |
 | `rateLimit.api.burst`    | Maximum number of requests allowed to go through at the very same moment to the API Services.           | `25`  |
-| `rateLimit.auth.average` | Maximum number of requests per second allowed to the Authentication Service (0 means no rate limiting). | `20`  |
-| `rateLimit.auth.burst`   | Maximum number of requests allowed to go through at the very same moment to the Authentication Service. | `10`  |
+| `rateLimit.auth.average` | Maximum number of requests per second allowed to the Authentication Service (0 means no rate limiting). | `10`  |
+| `rateLimit.auth.burst`   | Maximum number of requests allowed to go through at the very same moment to the Authentication Service. | `5`   |
 
 ### Application Parameters - CORS
 
@@ -249,7 +249,7 @@ For Quick Start purposes, a secret named `tc-auth-gen-forward-traefik-proxy` wil
 ### Host(s) Parameters - Contains host information for applications deployed via *telicent-core* chart
 
 *Traefik Proxy* routes traffic to Telicent Applications using their default service/serviceAccount and port.
-If either of those details changes, you can use this section to correctly referer to those applications.
+If either of those details changes, you can use this section to correctly refer to those applications.
 
 | Name                      | Description                                                                                                                                                                                                                        | Value                   |
 | ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------- |
@@ -266,7 +266,7 @@ If either of those details changes, you can use this section to correctly refere
 ### Host(s) Preview Parameters - Contains host information for applications deployed via *telicent-preview* chart
 
 *Traefik Proxy* interacts with applications deployed via *telicent-preview* using their default service/serviceAccount and port.
-If either of those details changes, you can use this section to correctly referer to those applications.
+If either of those details changes, you can use this section to correctly refer to those applications.
 
 | Name                             | Description                                                                                                                                        | Value                   |
 | -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------- |

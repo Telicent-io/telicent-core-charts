@@ -200,7 +200,7 @@ service:
 #
 # @descStart
 # *Paperback Writer* interacts with applications deployed via *telicent-core* using their default service/serviceAccount and port.
-# If either of those details changes, you can use this section to correctly referer to those applications.
+# If either of those details changes, you can use this section to correctly refer to those applications.
 # @descEnd
 hostsCore:
   # @key hostsCore.enableAutoCorrect Prefix 'global.releaseNameTelicentCore' value to each host value. Alternatively, the host value will be used as it is, without any modification

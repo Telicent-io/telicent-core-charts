@@ -1,5 +1,46 @@
 # Changelog
 
+## [1.0.0](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v0.5.0...telicent-core-v1.0.0) (2025-12-16)
+
+
+### ⚠ BREAKING CHANGES
+
+* New Auth image bump
+
+### Features
+
+* New Auth image bump ([93f3700](https://github.com/Telicent-io/telicent-core-charts/commit/93f3700a4be2a8596df3f5d63e4ae0ba9d639131))
+* upversion admin-ui to 1.2.10 ([71b53fd](https://github.com/Telicent-io/telicent-core-charts/commit/71b53fd21d542da030459d70af8d174a270785c5))
+* upversion admin-ui to 1.2.10 ([3d91a60](https://github.com/Telicent-io/telicent-core-charts/commit/3d91a602e2da30c3e37cfe6fe3ff0761e207dc5b))
+
+
+### Bug Fixes
+
+* Add 'auth' to chart dependencies. ([fa507bb](https://github.com/Telicent-io/telicent-core-charts/commit/fa507bbd8f41f5a4aaaa6c9fd6d3148b62122dab))
+* Add Auth server chart. ([93ec589](https://github.com/Telicent-io/telicent-core-charts/commit/93ec5890fc178bb2b81286eba515ef71f86c87d9))
+* Add Helm chart for Admin UI. ([6e7d5b6](https://github.com/Telicent-io/telicent-core-charts/commit/6e7d5b680efcceb3087a2f79a5eb276eee2d1d17))
+* Add working Auth server chart. ([cff7a95](https://github.com/Telicent-io/telicent-core-charts/commit/cff7a9552adb9d902b4b95afefc038e70194a6e7))
+* apply routing for auth pages favicon ([4d55e7e](https://github.com/Telicent-io/telicent-core-charts/commit/4d55e7e49d4480aaf00439c30637d061b4627a34))
+* apply routing for auth pages favicon ([1da2b07](https://github.com/Telicent-io/telicent-core-charts/commit/1da2b07f393bccc2854f5834a4ad7c2a137ef5ef))
+* apply routing for auth pages favicon ([79c4c91](https://github.com/Telicent-io/telicent-core-charts/commit/79c4c91ecc0b43afc491357da62b99269604fe38))
+* apply routing for auth pages favicon ([e0c988b](https://github.com/Telicent-io/telicent-core-charts/commit/e0c988bf2487d2403727c06e257ae9d4beff325d))
+* change claim attribute name and default ([c5136c4](https://github.com/Telicent-io/telicent-core-charts/commit/c5136c4668857561fa4b13f1fb723de62c76a84f))
+* change claim attribute name and default ([3f70089](https://github.com/Telicent-io/telicent-core-charts/commit/3f70089afbe1bb1be72363e09d2290b90c2e2819))
+* default projector index ([2ad63e1](https://github.com/Telicent-io/telicent-core-charts/commit/2ad63e107a3d5e9cf930401d7740f19e55d8fd17))
+* default projector index ([1894231](https://github.com/Telicent-io/telicent-core-charts/commit/1894231d122d8645023e37c2a64b580158dbc563))
+* missed silly access api requirement ([dcf3293](https://github.com/Telicent-io/telicent-core-charts/commit/dcf329351300f043b40fbc08e103e3ecf1a58f6a))
+* missed silly access api requirement ([8219c7a](https://github.com/Telicent-io/telicent-core-charts/commit/8219c7a396d816c59f619716a873b17d7aa16493))
+* re-remove oauth2 from session and put it on sessions for admin use ([476d910](https://github.com/Telicent-io/telicent-core-charts/commit/476d910e0f592dbe5182e0c8a628365ed15de873))
+* re-remove oauth2 from session and put it on sessions for admin use ([3200ee0](https://github.com/Telicent-io/telicent-core-charts/commit/3200ee06823cee07df7916878b1191fb56104664))
+* Remove dpuplcate 'ies-' from source name configuration value. ([419ef0d](https://github.com/Telicent-io/telicent-core-charts/commit/419ef0de9592a993bed6645ae564ffca0aac86a1))
+* Remove duplicate 'ies-' from source name configuration value. ([a117a6e](https://github.com/Telicent-io/telicent-core-charts/commit/a117a6edf271536454fb6185117b950eabea06fa))
+* remove oauth2 middleware ([ec187b8](https://github.com/Telicent-io/telicent-core-charts/commit/ec187b8893d4b6514d43c858d48d99fc41a70164))
+* remove oauth2 middleware ([1931996](https://github.com/Telicent-io/telicent-core-charts/commit/1931996a2c0d8a53d2264baa92023a416403f7b1))
+* update configmap for admin UI and CORS for FE local development ([caeecae](https://github.com/Telicent-io/telicent-core-charts/commit/caeecae5a208870e3179909720b0347cb0846d61))
+* update configmap for admin UI and CORS for FE local development ([331db3f](https://github.com/Telicent-io/telicent-core-charts/commit/331db3fee2db7e8933af6a8c0a38a1f1c24af8ef))
+* Update path to App Switcher icons ([6cde7a5](https://github.com/Telicent-io/telicent-core-charts/commit/6cde7a5fa68533b425517d5a16998bb24cedb288))
+* Update path to App Switcher icons ([0042952](https://github.com/Telicent-io/telicent-core-charts/commit/0042952defd7563c191f28acc6d15727f143b51b))
+
 ## [0.5.0](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v0.4.2...telicent-core-v0.5.0) (2025-10-29)
 
 

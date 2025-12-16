@@ -11,7 +11,7 @@
       "prerelease": false,
       "manifest-file": ".github/release-please-manifest.json",
       "initial-version": "0.1.0",
-      "bump-minor-pre-major": true
+      "bump-minor-pre-major": false
     },
     "charts/telicent-preview": {
       "labels": [
