@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.3.1](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-data-v0.3.0...telicent-data-v0.3.1) (2025-12-16)
+
+
+### Bug Fixes
+
+* incorrect default source name ([983cea4](https://github.com/Telicent-io/telicent-core-charts/commit/983cea47d86bcde5f7a9631306484c3c2caf830c))
+* Remove dpuplcate 'ies-' from source name configuration value. ([419ef0d](https://github.com/Telicent-io/telicent-core-charts/commit/419ef0de9592a993bed6645ae564ffca0aac86a1))
+* Remove duplicate 'ies-' from source name configuration value. ([a117a6e](https://github.com/Telicent-io/telicent-core-charts/commit/a117a6edf271536454fb6185117b950eabea06fa))
+
 ## [0.3.0](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-data-v0.2.0...telicent-data-v0.3.0) (2025-11-03)
 
 
