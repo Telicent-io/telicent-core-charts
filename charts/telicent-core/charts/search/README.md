@@ -164,9 +164,9 @@ Contains configuration parameters specific to the *Search* application
 | `image.tag`                 | *Search* image tag. If not set, a tag is generated using the appVersion | `""`                         |
 | `image.pullPolicy`          | *Search* image pull policy                                              | `IfNotPresent`               |
 | `image.pullSecrets`         | Specify registry secret names as an array                               | `[]`                         |
-| `resources.requests.cpu`    | Set containers' CPU request                                             | `500m`                       |
+| `resources.requests.cpu`    | Set containers' CPU request                                             | `1000m`                      |
 | `resources.requests.memory` | Set containers' memory request                                          | `4000Mi`                     |
-| `resources.limits.cpu`      | Set containers' CPU limit                                               | `1000m`                      |
+| `resources.limits.cpu`      | Set containers' CPU limit                                               | `2000m`                      |
 | `resources.limits.memory`   | Set containers' memory limit                                            | `8000Mi`                     |
 
 ### Deployment Security Context Parameters - Default Security Context

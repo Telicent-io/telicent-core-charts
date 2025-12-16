@@ -155,12 +155,12 @@ image:
 resources:
   requests:
     # @key resources.requests.cpu Set containers' CPU request
-    cpu: "500m"
+    cpu: "1000m"
     # @key resources.requests.memory Set containers' memory request
     memory: "4000Mi"
   limits:
     # @key resources.limits.cpu Set containers' CPU limit
-    cpu: "1000m"
+    cpu: "2000m"
     # @key resources.limits.memory Set containers' memory limit
     memory: "8000Mi"
 
