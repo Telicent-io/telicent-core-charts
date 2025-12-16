@@ -6,7 +6,7 @@ Copyright (C) 2025 Telicent Limited
 This file contains the names of other host/service(s) and serviceAccount(s) on which this
 application relies on. They are defined here and referenced in resources such as config maps and istio.
 
-The default behaviour when installing through the parent chart 'telicent-core' is the releasename
+The default behavior when installing through the parent chart 'telicent-core' is the releasename
 being prefixed to all sub-chart resources.
 Example: naming a release 'core', will result in 'core-auth-*' resources being generated.
 The helpers functions in this file is used to update those references accordingly.

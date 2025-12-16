@@ -36,7 +36,7 @@ helm uninstall my-release
 ### Main Charts
 
 - **[telicent-CORE](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-core/README.md)** - The main Telicent CORE platform chart.
-- **[telicent-DATA](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-data/README.md)** -  Supplmentary Chart to provide some premade Producers.
+- **[telicent-DATA](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-data/README.md)** -  Supplementary Chart to provide some premade Producers.
 - **[telicent-PREVIEW](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-preview/README.md)** - Secondary chart with items still under active development.
 
 ### Core Components
