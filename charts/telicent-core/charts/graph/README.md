@@ -188,12 +188,12 @@ Contains Java configuration parameters to be used by the *Graph* application
 
 ### Persistent Volume Claim Parameters
 
-| Name                                                 | Description                                    | Value  |
-| ---------------------------------------------------- | ---------------------------------------------- | ------ |
-| `persistentVolumeClaims.backupsVolume.size`          | PVC Storage Request for the Backup volume      | `25Gi` |
-| `persistentVolumeClaims.backupsVolume.storageClass`  | PVC Storage Class for the Backup data volume   | `gp3`  |
-| `persistentVolumeClaims.datasetsVolume.size`         | PVC Storage Request for the *Graph* volume     | `25Gi` |
-| `persistentVolumeClaims.datasetsVolume.storageClass` | iPVC Storage Class for the *Graph* data volume | `gp3`  |
+| Name                                                 | Description                                   | Value  |
+| ---------------------------------------------------- | --------------------------------------------- | ------ |
+| `persistentVolumeClaims.backupsVolume.size`          | PVC Storage Request for the Backup volume     | `25Gi` |
+| `persistentVolumeClaims.backupsVolume.storageClass`  | PVC Storage Class for the Backup data volume  | `gp3`  |
+| `persistentVolumeClaims.datasetsVolume.size`         | PVC Storage Request for the *Graph* volume    | `25Gi` |
+| `persistentVolumeClaims.datasetsVolume.storageClass` | PVC Storage Class for the *Graph* data volume | `gp3`  |
 
 ### Service Account Parameters
 
@@ -223,7 +223,7 @@ Contains Java configuration parameters to be used by the *Graph* application
 ### Host(s) Parameters - Contains host information for applications deployed via *telicent-core* chart.
 
 *Graph* interacts directly with other Telicent Applications using their default service/serviceAccount and port.
-If either of those details changes, you can use this section to correctly referer to those applications.
+If either of those details changes, you can use this section to correctly refer to those applications.
 
 | Name                      | Description                                                                                                                                                                                                                        | Value                |
 | ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
@@ -235,7 +235,7 @@ If either of those details changes, you can use this section to correctly refere
 ### Host(s) Preview Parameters - Contains host information for applications deployed via *telicent-preview* chart
 
 *Graph* interacts with applications deployed via *telicent-preview* using their default service/serviceAccount and port.
-If either of those details changes, you can use this section to correctly referer to those applications.
+If either of those details changes, you can use this section to correctly refer to those applications.
 
 | Name                             | Description                                                                                                                                        | Value                   |
 | -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------- |

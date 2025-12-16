@@ -388,7 +388,7 @@
                         },
                         "storageClass": {
                             "type": "string",
-                            "description": "iPVC Storage Class for the *Graph* data volume",
+                            "description": "PVC Storage Class for the *Graph* data volume",
                             "default": "gp3"
                         }
                     }

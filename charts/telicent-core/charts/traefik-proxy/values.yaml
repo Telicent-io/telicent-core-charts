@@ -290,7 +290,7 @@ istio:
 #
 # @descStart
 # *Traefik Proxy* routes traffic to Telicent Applications using their default service/serviceAccount and port.
-# If either of those details changes, you can use this section to correctly referer to those applications.
+# If either of those details changes, you can use this section to correctly refer to those applications.
 # @descEnd
 hosts:
   # @key hosts.enableAutoCorrect Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as is, without any modification.
@@ -317,7 +317,7 @@ hosts:
 #
 # @descStart
 # *Traefik Proxy* interacts with applications deployed via *telicent-preview* using their default service/serviceAccount and port.
-# If either of those details changes, you can use this section to correctly referer to those applications.
+# If either of those details changes, you can use this section to correctly refer to those applications.
 # @descEnd
 hostsPreview:
   # @key hostsPreview.enableAutoCorrect Prefix 'global.releaseNameTelicentPreview' value to each host value. Alternatively, the host value will be used as it is, without any modification

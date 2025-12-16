@@ -213,7 +213,7 @@ For Quick Start purposes, a secret named `tc-auth-gen-mapjs-search-ui` will be c
 ### Host(s) Parameters - Contains host information for applications deployed via *telicent-core* chart.
 
 *Search UI* interacts directly with other Telicent Applications using their default service/serviceAccount and port.
-If either of those details changes, you can use this section to correctly referer to those applications.
+If either of those details changes, you can use this section to correctly refer to those applications.
 
 | Name                      | Description                                                                                                                                                                                                                          | Value                |
 | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------- |

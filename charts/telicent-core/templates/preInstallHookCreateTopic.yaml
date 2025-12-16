@@ -41,7 +41,7 @@ spec:
             value: "-Djavax.net.ssl.trustStore={{ .Values.global.truststore.path | default "/app/config/truststore" }}/truststore.jks"
         args:
           - |
-            for i in $(echo {{ .Values.global.kafka.topics | quote }} | tr -d "[]"); do
+            for i in $(echo {{ .Values.kafkaTopics.topics | quote }} | tr -d "[]"); do
               /opt/kafka/bin/kafka-topics.sh \
                 --create \
                 --topic $i \

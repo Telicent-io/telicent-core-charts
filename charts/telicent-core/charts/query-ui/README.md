@@ -195,7 +195,7 @@ Note: Only global parameters used within this chart will be listed below
 ### Host(s) Parameters - Contains host information for applications deployed via *telicent-core* chart.
 
 *Query UI* interacts directly with other Telicent Applications using their default service/serviceAccount and port.
-If either of those details changes, you can use this section to correctly referer to those applications.
+If either of those details changes, you can use this section to correctly refer to those applications.
 
 | Name                      | Description                                                                                                                                                                                                                          | Value                |
 | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------- |
