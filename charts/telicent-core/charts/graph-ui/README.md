@@ -108,7 +108,7 @@ For Quick Start purposes, a secret named `tc-auth-gen-mapjs-graph-ui` will be cr
 | `ui.searchUiDeployed`        | If set to true, *Search UI* links will be available within *Graph UI*                                | `true`                     |
 | `ui.userPortalUiDeployed`    | If set to true, *User Portal UI* links will be available within *Graph UI*                           | `true`                     |
 | `ui.dataCatalogUiDeployed`   | If set to true, *Data Catalog UI* links will be available within *Graph UI*                          | `true`                     |
-| `ui.maptilerToken`           | The MapTiler token for the *Graph UI*                                                                | `your.maptiler.token.here` |
+| `ui.maptilerToken`           | The MapTiler token for the *Graph UI*                                                                | `""` |
 | `ui.mapboxStyleSpecUrl`      | The Mapbox style spec URL for the *Graph UI* can be specified if using Mapbox styles                 | `""`                       |
 | `ui.arcgisToken`             | The ArcGIS token for the *Graph UI* can be specified if using ArcGIS styles                          | `""`                       |
 | `ui.existingMapConfigSecret` | The name of an existing secret containing map configuration. See: '_mapjs.tpl' & 'secret-mapjs.yaml' | `""`                       |
@@ -213,7 +213,7 @@ For Quick Start purposes, a secret named `tc-auth-gen-mapjs-graph-ui` will be cr
 ### Host(s) Parameters - Contains host information for applications deployed via *telicent-core* chart.
 
 *Graph UI* interacts directly with other Telicent Applications using their default service/serviceAccount and port.
-If either of those details changes, you can use this section to correctly referer to those applications.
+If either of those details changes, you can use this section to correctly refer to those applications.
 
 | Name                      | Description                                                                                                                                                                                                                          | Value                |
 | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------- |

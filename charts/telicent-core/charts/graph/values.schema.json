@@ -57,12 +57,12 @@
                         "username": {
                             "type": "string",
                             "description": "Username for Kafka authentication",
-                            "default": "your.kafka.username.here"
+                            "default": ""
                         },
                         "password": {
                             "type": "string",
                             "description": "Password for Kafka authentication",
-                            "default": "your.kafka.password.here"
+                            "default": ""
                         },
                         "protocol": {
                             "type": "string",
@@ -388,7 +388,7 @@
                         },
                         "storageClass": {
                             "type": "string",
-                            "description": "iPVC Storage Class for the *Graph* data volume",
+                            "description": "PVC Storage Class for the *Graph* data volume",
                             "default": "gp3"
                         }
                     }

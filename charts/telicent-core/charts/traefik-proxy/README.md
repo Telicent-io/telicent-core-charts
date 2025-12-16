@@ -249,7 +249,7 @@ For Quick Start purposes, a secret named `tc-auth-gen-forward-traefik-proxy` wil
 ### Host(s) Parameters - Contains host information for applications deployed via *telicent-core* chart
 
 *Traefik Proxy* routes traffic to Telicent Applications using their default service/serviceAccount and port.
-If either of those details changes, you can use this section to correctly referer to those applications.
+If either of those details changes, you can use this section to correctly refer to those applications.
 
 | Name                      | Description                                                                                                                                                                                                                        | Value                   |
 | ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------- |
@@ -266,7 +266,7 @@ If either of those details changes, you can use this section to correctly refere
 ### Host(s) Preview Parameters - Contains host information for applications deployed via *telicent-preview* chart
 
 *Traefik Proxy* interacts with applications deployed via *telicent-preview* using their default service/serviceAccount and port.
-If either of those details changes, you can use this section to correctly referer to those applications.
+If either of those details changes, you can use this section to correctly refer to those applications.
 
 | Name                             | Description                                                                                                                                        | Value                   |
 | -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------- |

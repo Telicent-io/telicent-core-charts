@@ -32,12 +32,12 @@
                         "username": {
                             "type": "string",
                             "description": "Username for Kafka authentication",
-                            "default": "your.kafka.username.here"
+                            "default": ""
                         },
                         "password": {
                             "type": "string",
                             "description": "Password for Kafka authentication",
-                            "default": "your.kafka.password.here"
+                            "default": ""
                         },
                         "protocol": {
                             "type": "string",

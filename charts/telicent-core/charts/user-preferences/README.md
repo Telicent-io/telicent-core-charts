@@ -225,7 +225,7 @@ For Quick Start purposes, a secret named `tc-auth-usr-mongo-user-preferences` wi
 ### Host(s) Parameters - Contains host information for applications deployed via *telicent-core* chart.
 
 *User Preferences* interacts directly with other Telicent Applications using their default service/serviceAccount and port.
-If either of those details changes, you can use this section to correctly referer to those apps.
+If either of those details changes, you can use this section to correctly refer to those apps.
 
 | Name                      | Description                                                                                                                                                                                                                          | Value                |
 | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------- |

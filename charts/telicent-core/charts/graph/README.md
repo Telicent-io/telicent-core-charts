@@ -97,8 +97,8 @@ Note: Only global parameters used within this chart will be listed below.
 | `global.authHostDomain`                 | Domain associated with Telicent authentication services, including OIDC providers                                                                                                      | `auth.telicent.io`                             |
 | `global.kafka.bootstrapServers`         | Comma separated list containing Kafka bootstrap servers                                                                                                                                | `kafka-bootstrap.kafka.svc.cluster.local:9092` |
 | `global.kafka.existingConfigSecretName` | Name of an existing secret containing Kafka configuration (preferred over individual settings below for security)                                                                      | `""`                                           |
-| `global.kafka.username`                 | Username for Kafka authentication                                                                                                                                                      | `your.kafka.username.here`                     |
-| `global.kafka.password`                 | Password for Kafka authentication                                                                                                                                                      | `your.kafka.password.here`                     |
+| `global.kafka.username`                 | Username for Kafka authentication                                                                                                                                                      | `""`                     |
+| `global.kafka.password`                 | Password for Kafka authentication                                                                                                                                                      | `""`                     |
 | `global.kafka.protocol`                 | Protocol used for Kafka communication                                                                                                                                                  | `SASL_SSL`                                     |
 | `global.kafka.mechanism`                | SASL mechanism used for Kafka authentication                                                                                                                                           | `SCRAM-SHA-512`                                |
 | `global.truststore.existingSecret`      | Name of an existing secret containing the truststore                                                                                                                                   | `""`                                           |
@@ -190,10 +190,10 @@ Contains Java configuration parameters to be used by the *Graph* application
 
 | Name                                                 | Description                                    | Value  |
 | ---------------------------------------------------- | ---------------------------------------------- | ------ |
-| `persistentVolumeClaims.backupsVolume.size`          | PVC Storage Request for the Backup volume      | `25Gi` |
-| `persistentVolumeClaims.backupsVolume.storageClass`  | PVC Storage Class for the Backup data volume   | `gp3`  |
-| `persistentVolumeClaims.datasetsVolume.size`         | PVC Storage Request for the *Graph* volume     | `25Gi` |
-| `persistentVolumeClaims.datasetsVolume.storageClass` | iPVC Storage Class for the *Graph* data volume | `gp3`  |
+| `persistentVolumeClaims.backupsVolume.size`          | PVC Storage Request for the Backup volume     | `25Gi` |
+| `persistentVolumeClaims.backupsVolume.storageClass`  | PVC Storage Class for the Backup data volume  | `gp3`  |
+| `persistentVolumeClaims.datasetsVolume.size`         | PVC Storage Request for the *Graph* volume    | `25Gi` |
+| `persistentVolumeClaims.datasetsVolume.storageClass` | PVC Storage Class for the *Graph* data volume | `gp3`  |
 
 ### Service Account Parameters
 
@@ -223,7 +223,7 @@ Contains Java configuration parameters to be used by the *Graph* application
 ### Host(s) Parameters - Contains host information for applications deployed via *telicent-core* chart.
 
 *Graph* interacts directly with other Telicent Applications using their default service/serviceAccount and port.
-If either of those details changes, you can use this section to correctly referer to those applications.
+If either of those details changes, you can use this section to correctly refer to those applications.
 
 | Name                      | Description                                                                                                                                                                                                                        | Value                |
 | ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
@@ -235,7 +235,7 @@ If either of those details changes, you can use this section to correctly refere
 ### Host(s) Preview Parameters - Contains host information for applications deployed via *telicent-preview* chart
 
 *Graph* interacts with applications deployed via *telicent-preview* using their default service/serviceAccount and port.
-If either of those details changes, you can use this section to correctly referer to those applications.
+If either of those details changes, you can use this section to correctly refer to those applications.
 
 | Name                             | Description                                                                                                                                        | Value                   |
 | -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------- |

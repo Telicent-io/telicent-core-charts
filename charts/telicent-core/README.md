@@ -20,6 +20,10 @@ To install the chart with the release name `my-release`:
 helm install my-release ./charts/telicent-core
 ```
 
+**⚠️ IMPORTANT:** Before deploying, you must configure Kafka credentials. See [CONFIGURATION.md](./CONFIGURATION.md) for detailed setup instructions.
+
+The chart will fail validation if placeholder values are detected or required credentials are missing.
+
 ## Uninstalling the Chart
 
 To uninstall/delete the `my-release` deployment:
@@ -81,8 +85,8 @@ with Kafka, ensuring consistent connectivity and authentication across the platf
 | --------------------------------------- | --------------------------------------------------------- | ---------------------------------------------- |
 | `global.kafka.bootstrapServers`         | Comma separated list containing Kafka bootstrap servers   | `kafka-bootstrap.kafka.svc.cluster.local:9092` |
 | `global.kafka.existingConfigSecretName` | Name of an existing secret containing Kafka configuration | `""`                                           |
-| `global.kafka.username`                 | Username for Kafka authentication                         | `your.kafka.username.here`                     |
-| `global.kafka.password`                 | Password for Kafka authentication                         | `your.kafka.password.here`                     |
+| `global.kafka.username`                 | Username for Kafka authentication                         | `""`                     |
+| `global.kafka.password`                 | Password for Kafka authentication                         | `""`                     |
 | `global.kafka.protocol`                 | Protocol used for Kafka communication                     | `SASL_SSL`                                     |
 | `global.kafka.mechanism`                | SASL mechanism used for Kafka authentication              | `SCRAM-SHA-512`                                |
 
@@ -123,17 +127,17 @@ They are addressed by their names, and each subchart has its own set of configur
 
 | Name              | Description | Link                                                      |
 |-------------------|-------------|-----------------------------------------------------------|
-| Admin UI          | XX          | [admin-ui](./charts/admin-ui/README.md)                   |
-| Auth              | XX          | [auth](./charts/auth/README.md)                           |
-| Document Pipeline | XX          | [document-pipeline](./charts/document-pipeline/README.md) |
-| Graph             | XX          | [graph](./charts/graph/README.md)                         |
-| Graph UI          | XX          | [graph-ui](./charts/graph-ui/README.md)                   |
-| Query UI          | XX          | [query-ui](./charts/query-ui/README.md)                   |
-| Search            | XX          | [search](./charts/search/README.md)                       |
-| Search Projector  | XX          | [search-projector](./charts/search-projector/README.md)   |
-| Search UI         | XX          | [search-ui](./charts/search-ui/README.md)                 |
-| Traefik Proxy     | XX          | [traefik-proxy](charts/traefik-proxy/README.md)           |
-| User Preferences  | XX          | [user-preferences](./charts/user-preferences/README.md)   |
+| Admin UI          | Administrative interface for managing Telicent Core components | [admin-ui](./charts/admin-ui/README.md)                   |
+| Auth              | Authentication broker providing OAuth/OIDC integration | [auth](./charts/auth/README.md)                           |
+| Document Pipeline | Document processing and ingestion pipeline | [document-pipeline](./charts/document-pipeline/README.md) |
+| Graph             | RDF graph database and SPARQL query engine | [graph](./charts/graph/README.md)                         |
+| Graph UI          | Visual graph exploration and query interface | [graph-ui](./charts/graph-ui/README.md)                   |
+| Query UI          | SPARQL query interface for graph data | [query-ui](./charts/query-ui/README.md)                   |
+| Search            | Search backend service with indexing capabilities | [search](./charts/search/README.md)                       |
+| Search Projector  | Kafka-to-search indexing service | [search-projector](./charts/search-projector/README.md)   |
+| Search UI         | Search interface for discovering and exploring data | [search-ui](./charts/search-ui/README.md)                 |
+| Traefik Proxy     | Reverse proxy for internal service routing | [traefik-proxy](charts/traefik-proxy/README.md)           |
+| User Preferences  | User settings and preferences management service | [user-preferences](./charts/user-preferences/README.md)   |
 
 ## License
 
