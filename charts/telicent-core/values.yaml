@@ -19,27 +19,34 @@ global:
   # @key global.enterprise Enable enterprise mode, adding additional features and configurations
   enterprise: false
 
-  # @key global.appHostDomain Domain associated with Telicent application services
+  #
+  # @section Global Parameters - Domains
+  #
+  # @key global.appHostDomain Domain associated with Telicent application/ui services
   appHostDomain: "apps.telicent.io"
+  # @key global.apiHostDomain Domain associated with Telicent Api services
+  apiHostDomain: "api.telicent.io"
   # @key global.authHostDomain Domain associated with Telicent authentication services, including OIDC providers
   authHostDomain: "auth.telicent.io"
-  # @key global.groupsClaim Key used to retrieve groups from the OIDC provider
-  groupsClaim: "groups"
-  # @key global.jwksUrl Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)
-  # Note: For Dex the endpoint would be https://{yourDexDomain}/keys
-  jwksUrl: "https://{yourAuthdomain}/.well-known/jwks.json"
 
-  # @key global.istioNamespace Namespace in which Istio is deployed
-  # Note: By default, Istio namespace is set to 'istio-system'
-  istioNamespace: istio-system
-  # @key global.istioServiceAccountName Name of the Istio service account
-  istioServiceAccountName: istio-ingress
-  # @key global.istioGatewayName Name of the Istio Gateway Resource (LB operating at the edge of the mesh)
+  #
+  # @section Global Parameters - Istio
+  #
+  # @descStart
+  # These settings will be used by all Telicent Core components using Istio resources.
+  # @descEnd
+  # @key global.istioIngressNamespace Namespace in which the Istio Ingress resource is deployed
+  istioIngressNamespace: istio-system
+  # @key global.istioIngressServiceAccount ServiceAccount associated with Istio ingress deployment
+  istioIngressServiceAccount: istio-ingress
+  # @key global.istioGatewayNamespace Namespace in which the Istio Gateway resource is deployed
+  istioGatewayNamespace: istio-system
+  # @key global.istioGatewayName Name of the Istio Gateway resource
   istioGatewayName: ingress-gateway
-  # @key global.istioVirtualServiceEnabled Enable Istio traffic routing to a named destination service
-  istioVirtualServiceEnabled: true
 
+  #
   # @section Global Parameters - Kafka
+  #
   # @descStart
   # Kafka configuration parameters. These settings will be used by all Telicent Core components that interact
   # with Kafka, ensuring consistent connectivity and authentication across the platform.
@@ -58,27 +65,36 @@ global:
     # @key global.kafka.mechanism SASL mechanism used for Kafka authentication
     mechanism: "SCRAM-SHA-512"
 
+  #
   # @section Global Parameters - Truststore
+  #
   # @descStart
   # Contains global truststore parameters, these parameters are mirrored across Telicent Core sub charts.
   # @descEnd
   truststore:
-    # @key global.truststore.existingSecretName Name of an existing secret containing the truststore
-    existingSecretName: ""
+    # @key global.truststore.existingSecret Name of an existing secret containing the truststore
+    existingSecret: ""
     # @key global.truststore.mountPath The mount path for the truststore in the container
     mountPath: /app/config/truststore
 
+#
 # @section Service Account Parameters
+#
 serviceAccount:
   # @key serviceAccount.name Name of the ServiceAccount to use. If not set, a name is generated using the fullname
   name: ""
   # @key serviceAccount.annotations Additional custom annotations for the ServiceAccount
   annotations: {}
 
+#
+# @section Jobs Parameters
+#
 # @key jobServiceAccountName Service account used for running jobs in Kubernetes.
 jobServiceAccountName: producers
 
+#
 # @section Kafka Topics Parameters
+#
 kafkaTopics:
   # @key kafkaTopics.enabled Enable or disable the creation of Kafka topics during installation
   enabled: false

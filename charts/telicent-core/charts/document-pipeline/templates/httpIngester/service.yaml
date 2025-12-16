@@ -1,18 +1,24 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
 {{- if .Values.enabled -}}
 apiVersion: v1
 kind: Service
+
 metadata:
   name: {{ include "http-ingester.fullname" . }}
+  namespace: {{ include "document-pipeline.namespace" . | quote }}
   labels:
-    {{- include "document-pipeline.labels" . | nindent 4 }}
-    {{- include "http-ingester.selectorLabels" . | nindent 4 }}
+    {{- include "http-ingester.labels" . | nindent 4 }}
+
 spec:
   type: ClusterIP
-  ports:
-    - port: 15431
-      targetPort: 15431
-      protocol: TCP
-      name: http
   selector:
     {{- include "http-ingester.selectorLabels" . | nindent 4 }}
+  ports:
+    - name: http
+      appProtocol: http
+      protocol: TCP
+      targetPort: http
+      port:  {{ .Values.httpIngester.service.port }}
 {{- end -}}

@@ -1,0 +1,32 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+{{- if not .Values.configMap.existingEnvConfigMap -}}
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: {{ include "search.envConfigMapName" . }}
+  namespace: {{ include "search.namespace" . | quote }}
+  labels:
+    {{- include "search.labels" . | nindent 4 }}
+
+data:
+  FEATURE_FLAG_AUTHZ: "true"
+  
+  ELASTIC_HOST: {{ .Values.elastic.host | quote }}
+  ELASTIC_PORT: {{ .Values.elastic.port | quote }}
+  OPENSEARCH_COMPATIBILITY: {{ .Values.elastic.opensearchCompatibility | quote }}
+  ELASTIC_INDEX: {{ .Values.elastic.index | quote }}
+  FIELD_OPTIONS: {{ .Values.elastic.searchFieldOptions | quote }}
+  INDEX_BATCH_SIZE: {{ .Values.elastic.indexBatchSize | quote }}
+  
+  JAVA_OPTIONS: {{ .Values.java.jvmOptions | quote }}
+  JWKS_URL: {{ printf "%s%s%s" "https://" .Values.global.authHostDomain "/oauth2/jwks" | quote }}
+  USERINFO_URL: {{ printf "http://%s%s" (include "search.hostAuth" . ) "/userinfo" | quote }}
+  
+  {{- if .Values.metrics.enabled }}
+  OTEL_METRICS_EXPORTER: "prometheus"
+  OTEL_TRACES_EXPORTER: "none"
+  {{- end }}
+{{- end }}

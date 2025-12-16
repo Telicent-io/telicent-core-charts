@@ -1,0 +1,24 @@
+{{- if .Values.enabled -}}
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+
+metadata:
+  name: {{ include "document-pipeline.fullname" . }}-ingress
+  namespace: {{ include "document-pipeline.namespace" . | quote }}
+  labels:
+  {{- include "http-ingester.labels" . | nindent 4 }}
+
+spec:
+  selector:
+    matchLabels:
+    {{- include "http-ingester.selectorLabels" . | nindent 6 }}
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        principals:
+          {{- include "document-pipeline.ingressPrincipal" . | nindent 8 }}
+    to:
+    - operation:
+        methods: ["GET", "POST", "PUT", "HEAD"]
+{{- end -}}

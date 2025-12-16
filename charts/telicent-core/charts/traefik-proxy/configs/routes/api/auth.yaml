@@ -1,0 +1,17 @@
+# Declare routers / services / middlewares
+http:
+  routers:
+    auth-admin:
+      rule: {{ printf "Host(`%s`) && PathRegexp(`^/auth/(users|clients|groups|roles|permissions|sessions)`)" .Values.global.apiHostDomain }}
+      service: auth
+      entryPoints:
+        - web-api
+      middleWares:
+        - path-auth-admin
+        - host-auth
+
+  middlewares:
+    path-auth-admin:
+      replacePathRegex:
+        regex: "^/auth/(.*)"
+        replacement: "/$1"

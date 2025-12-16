@@ -1,0 +1,23 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+{{- if and (.Values.enabled) (not .Values.existingConfigMapName) -}}
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: {{ include "paperback-writer.configMapName" . }}
+  namespace: {{ include "paperback-writer.namespace" . | quote }}
+  labels:
+    {{- include "paperback-writer.labels" . | nindent 4 }}
+
+data:
+  SPARQL_DEFAULT_LABEL: {{ .Values.sparql.defaultLabel | default "!" |  quote }}
+  SPARQL_URL:  {{ printf "http://%s" (include "paperback-writer.hostGraph" . )  | quote }}
+
+  JWT_HEADER: "Authorization"
+  JWT_USER_ID_ATTR: "preferred_name"
+  JWKS_URL: {{ printf "https://%s%s" .Values.global.authHostDomain "/oauth2/jwks" | quote }}
+  AUTH_SERVER_BASE_URL: {{ printf "http://%s" (include "paperback-writer.hostAuth" . ) | quote }}
+
+{{- end }}

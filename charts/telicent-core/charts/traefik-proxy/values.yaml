@@ -1,0 +1,330 @@
+# Copyright (C) 2025 Telicent Limited
+# Telicent *Traefik Proxy* stand-alone chart
+
+#
+# @section Global Parameters
+#
+# @descStart
+# Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart.
+# Note: Only global parameters used within this chart will be listed below.
+# @descEnd
+global:
+  # Note: not supported as this is a third party application
+  # imageRegistry: ""
+  # imagePullSecrets: []
+
+  # @key global.releaseNameTelicentPreview Release name used during the Telicent Preview chart installation. Note: ensure the value is correct, otherwise there will be no access to data-catalog, user-portal & paperback-writer
+  # If installed through the parent-chart this value needs to reflect the name of the release name used when 'telicent-preview' chart was installed.
+  # If all applications were installed through sub-charts, leaving this value empty will provide the correct behavior.
+  releaseNameTelicentPreview: ""
+
+  # @key global.enterprise Enable enterprise mode, adding additional features and configurations
+  enterprise: false
+
+  # @key global.appHostDomain Domain associated with Telicent application/ui services
+  appHostDomain: "apps.telicent.io"
+  # @key global.apiHostDomain Domain associated with Telicent Api services
+  apiHostDomain: "api.telicent.io"
+  # @key global.authHostDomain Domain associated with Telicent authentication services, including OIDC providers
+  authHostDomain: "auth.telicent.io"
+
+  # @key global.istioIngressNamespace Namespace in which the Istio Ingress resource is deployed; overrides 'istio.ingress.namespace'
+  istioIngressNamespace: istio-system
+  # @key global.istioIngressServiceAccount ServiceAccount associated with Istio ingress deployment; overrides 'istio.ingress.serviceAccount'
+  istioIngressServiceAccount: istio-ingress
+  # @key global.istioGatewayNamespace Namespace in which the Istio Gateway resource is deployed; overrides 'istio.gateway.namespace'
+  istioGatewayNamespace: istio-system
+  # @key global.istioGatewayName Name of the Istio Gateway resource; overrides 'istio.gateway.namespace'
+  istioGatewayName: ingress-gateway
+
+#
+# @section Application Parameters - Rate Limit
+#
+# @descStart
+# The following section allows for setting Traefik Rate Limiting on the Web Applications, API Services and the Authentication Service.
+# Ref: https://doc.traefik.io/traefik/reference/routing-configuration/http/middlewares/ratelimit/#rate-and-burst
+# @descEnd
+rateLimit:
+  app:
+    # @key rateLimit.app.average Maximum number of requests per second allowed to the Web Applications (0 means no rate limiting).
+    average: 0
+    # @key rateLimit.app.burst Maximum number of requests allowed to go through at the very same moment to the Web Applications.
+    burst: 100
+  api:
+    # @key rateLimit.api.average Maximum number of requests per second allowed to the API Services (0 means no rate limiting).
+    average: 100
+    # @key rateLimit.api.burst Maximum number of requests allowed to go through at the very same moment to the API Services.
+    burst: 25
+  auth:
+    # @key rateLimit.auth.average Maximum number of requests per second allowed to the Authentication Service (0 means no rate limiting).
+    average: 10
+    # @key rateLimit.auth.burst Maximum number of requests allowed to go through at the very same moment to the Authentication Service.
+    burst: 5
+
+#
+# @section Application Parameters - CORS
+#
+cors:
+  # @key cors.extraHosts Additional hosts to be added to the 'AllowOriginList'
+  extraHosts: []
+
+#
+# @section Application Parameters - ForwardAuth and Secret
+#
+# @descStart
+# When making requests to the *Auth* Application endpoint `/auth/forward`, `X-ForwardAuth-Secret` header is required.
+# The secret associated with that header is defined within this section.
+# It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
+# For Quick Start purposes, a secret named `tc-auth-gen-forward-traefik-proxy` will be created if one is not set.
+# @descEnd
+forwardAuth:
+  # @key forwardAuth.existingSecret Name of an existing secret. The secret must contain 1 key: 'secret'
+  # Note: Left unset, it will create a secret named: tc-auth-gen-forward-traefik-proxy
+  existingSecret: ""
+  # @key forwardAuth.header The secret value to be associated with the `X-ForwardAuth-Secret`.
+  header: ""
+
+#
+# @section Application Parameters - Logs
+#
+logs:
+  general:
+    # @key logs.general.level Set logging levels, values are: TRACE, DEBUG, INFO, WARN, ERROR, FATAL, and PANIC.
+    level: "INFO"
+  access:
+    # @key logs.access.enabled Enable access logging. Note: should only be enabled in development environments.
+    enabled: false
+
+#
+# @section Application Parameters - Dashboard
+#
+dashboard:
+  # @key dashboard.enabled Enable *Traefik Proxy* dashboard. Note: should only be enabled in development environments.
+  enabled: false
+  # @key dashboard.domain Domain associated with *Traefik Proxy* dashboard. If not set, 'appHostDomain' will be used
+  domain: ""
+  # @key dashboard.basepath Set the base path to be used for accessing the dashboard
+  basepath: "/traefik"
+
+#
+# @section Common Parameters
+#
+# @key nameOverride String to partially override fullname (will maintain the release name)
+nameOverride: ""
+# @key fullnameOverride String to fully override the generated release name
+fullnameOverride: ""
+# @key namespaceOverride String to fully override all deployed resources namespace
+namespaceOverride: ""
+# @key commonLabels Add labels to all the deployed resources
+commonLabels: {}
+
+#
+# @section Deployment Parameters
+#
+# @key replicas Number of *Traefik Proxy* replicas to deploy
+replicas: 1
+# @key revisionHistoryLimit Number of controller revisions to keep
+revisionHistoryLimit: 5
+# @key annotations Add extra annotations to the deployment object
+annotations: {}
+# @key podLabels Add extra labels to the *Traefik Proxy* pod
+podLabels: {}
+# @key podAnnotations Add extra annotations to the *Traefik Proxy* pod
+podAnnotations: {}
+# @key extraEnvVars Array with extra environment variables to add to *Traefik Proxy* pod
+# Example:
+# extraEnvVars:
+# - name: FOO
+#   value: instance
+extraEnvVars: []
+# @key extraVolumes Optionally specify extra list of additional volumes
+extraVolumes: []
+# @key extraVolumeMounts Optionally specify extra list of additional volumeMounts
+extraVolumeMounts: []
+# @key initContainers Add init containers to the pod
+initContainers: []
+# Example:
+# sidecars:
+# - name: your-image-name
+#   image: your-image
+#   ports:
+#   - name: portname
+#     containerPort: 1234
+# @key sidecars Add sidecars to the pod
+sidecars: []
+
+#
+# @section Deployment Image Parameters
+#
+image:
+  # @key image.registry *Traefik Proxy* image registry
+  registry: docker.io
+  # @key image.repository *Traefik Proxy* image name
+  repository: traefik
+  # @key image.tag *Traefik Proxy* image tag. If not set, a tag is generated using the appVersion
+  tag: ""
+  # @key image.pullPolicy *Traefik Proxy* image pull policy
+  pullPolicy: IfNotPresent
+  # @key image.pullSecrets Specify registry secret names as an array
+  pullSecrets: []
+
+#
+# @section Deployment Resources Parameters - Requests and Limits
+#
+resources:
+  requests:
+    # @key resources.requests.cpu Set containers' CPU request
+    cpu: "500m"
+    # @key resources.requests.memory Set containers' memory request
+    memory: "512Mi"
+  limits:
+    # @key resources.limits.cpu Set containers' CPU limit
+    cpu: "750m"
+    # @key resources.limits.memory Set containers' memory limit
+    memory: "768Mi"
+
+#
+# @section Statefulset Security Context Parameters - Default Security Context
+#
+podSecurityContext:
+  # @key podSecurityContext.runAsUser Set the provisioning pod's Security Context runAsUser User ID
+  runAsUser: 185
+  # @key podSecurityContext.runAsGroup Set the provisioning pod's Security Context runAsGroup Group ID
+  runAsGroup: 185
+  # @key podSecurityContext.runAsNonRoot Set the provisioning pod's Security Context runAsNonRoot
+  runAsNonRoot: true
+  # @key podSecurityContext.fsGroup Set the provisioning pod's Group ID for the mounted volumes' filesystem
+  fsGroup: 185
+  seccompProfile:
+    # @key podSecurityContext.seccompProfile.type Set the provisioning pod's Security Context seccomp profile
+    type: RuntimeDefault
+containerSecurityContext:
+  # @key containerSecurityContext.runAsUser Set containers' Security Context runAsUser User ID
+  runAsUser: 185
+  # @key containerSecurityContext.runAsGroup Set containers' Security Context runAsGroup Group ID
+  runAsGroup: 185
+  # @key containerSecurityContext.runAsNonRoot Set container's Security Context runAsNonRoot
+  runAsNonRoot: true
+  # @key containerSecurityContext.allowPrivilegeEscalation Set container's Security Context allowPrivilegeEscalation
+  allowPrivilegeEscalation: false
+  capabilities:
+    # @key containerSecurityContext.capabilities.drop List of capabilities to be dropped
+    drop:
+      - ALL
+  seccompProfile:
+    # @key containerSecurityContext.seccompProfile.type Set container's Security Context seccomp profile
+    type: RuntimeDefault
+
+#
+# @section Deployment Affinity Parameters
+#
+# @key affinity Affinity for pod assignment
+# Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+affinity: {}
+# @key nodeSelector Node labels for pod assignment
+# Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
+nodeSelector: {}
+# @key tolerations Tolerations for pod assignment
+# Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+tolerations: []
+
+#
+# @section Service Account Parameters
+#
+serviceAccount:
+  # @key serviceAccount.create Specifies whether a service account should be created
+  create: true
+  # @key serviceAccount.name Name of the ServiceAccount to use. If not set, a name is generated using the fullname
+  name: ""
+  # @key serviceAccount.annotations Additional custom annotations for the ServiceAccount
+  annotations: {}
+  # @key serviceAccount.automount Automatically mount a ServiceAccount's API credentials
+  automount: true
+
+#
+# @section Traffic Exposure Parameters
+#
+service:
+  # @key service.name *Traefik Proxy* service name. If not set, a name is generated using the fullname
+  name: ""
+  app:
+    # @key service.app.port *Traefik Proxy* APP/UI service port
+    port: 8080
+    # @key service.app.type *Traefik Proxy* APP/UI service type
+    type: ClusterIP
+  api:
+    # @key service.api.port *Traefik Proxy* API service port
+    port: 8081
+    # @key service.api.type *Traefik Proxy* API service type
+    type: ClusterIP
+  auth:
+    # @key service.auth.port *Traefik Proxy* AUTH service port
+    port: 8082
+    # @key service.auth.type *Traefik Proxy* AUTH service type
+    type: ClusterIP
+
+#
+# @section Istio Parameters
+#
+istio:
+  # istio Ingress resource (lookup: 'kubectl get deployment -l istio=ingress -n <ns>').
+  ingress:
+    # @key istio.ingress.namespace Namespace in which the Istio Ingress resource is deployed
+    namespace: istio-system
+    # @key istio.ingress.serviceAccount ServiceAccount associated with Istio ingress deployment
+    serviceAccount: istio-ingress
+  # istio Gateway resource (lookup: 'kubectl get gateway/<name> -n <ns>')
+  gateway:
+    # @key istio.gateway.namespace Namespace in which the Istio Gateway resource is deployed
+    namespace: istio-system
+    # @key istio.gateway.name Name of the Istio Gateway resource
+    name: ingress-gateway
+  virtualService:
+    # @key istio.virtualService.enabled Enable Istio traffic into *Traefik Proxy*
+    enabled: true
+    # @key istio.virtualService.extraHosts Additional hosts (excluding appHostDomain) to be managed by *Traefik Proxy*
+    extraHosts: []
+
+#
+# @section Host(s) Parameters - Contains host information for applications deployed via *telicent-core* chart
+#
+# @descStart
+# *Traefik Proxy* routes traffic to Telicent Applications using their default service/serviceAccount and port.
+# If either of those details changes, you can use this section to correctly refer to those applications.
+# @descEnd
+hosts:
+  # @key hosts.enableAutoCorrect Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as is, without any modification.
+  enableAutoCorrect: true
+  # @key hosts.auth Auth application default host value, as defined by 'service/serviceAccount:port'
+  auth: "auth:8080"
+  # @key hosts.userPreferences User Preferences host value, If not set a host is generated using service:'user-preferences',port:'8080' and Release namespace & name.
+  userPreferences: "user-preferences:8080"
+  # @key hosts.adminUi Admin UI application default host value, as defined by 'service/serviceAccount:port'
+  adminUi: "admin-ui:8080"
+  # @key hosts.searchUi Search UI application default host value, as defined by 'service/serviceAccount:port'
+  searchUi: "search-ui:8080"
+  # @key hosts.graphUi Graph UI application default host value, as defined by 'service/serviceAccount:port'
+  graphUi: "graph-ui:8080"
+  # @key hosts.queryUi Query UI application default host value, as defined by 'service/serviceAccount:port'
+  queryUi: "query-ui:8080"
+  # @key hosts.search Search application default host value, as defined by 'service/serviceAccount:port'
+  search: "search:8080"
+  # @key hosts.graph Graph application default host value, as defined by 'service/serviceAccount:port'
+  graph: "graph:8080"
+
+#
+# @section Host(s) Preview Parameters - Contains host information for applications deployed via *telicent-preview* chart
+#
+# @descStart
+# *Traefik Proxy* interacts with applications deployed via *telicent-preview* using their default service/serviceAccount and port.
+# If either of those details changes, you can use this section to correctly refer to those applications.
+# @descEnd
+hostsPreview:
+  # @key hostsPreview.enableAutoCorrect Prefix 'global.releaseNameTelicentPreview' value to each host value. Alternatively, the host value will be used as it is, without any modification
+  enableAutoCorrect: true
+  # @key hostsPreview.dataCatalogUi Data Catalog UI application default host value, as defined by 'service/serviceAccount:port'
+  dataCatalogUi: "data-catalog-ui:8080"
+  # @key hostsPreview.userPortalUi User Portal UI application default host value, as defined by 'service/serviceAccount:port'
+  userPortalUi: "user-portal-ui:8080"
+  # @key hostsPreview.paperbackWriter Paperback Writer application host value, as defined by 'service/serviceAccount:port'
+  paperbackWriter: "paperback-writer:8080"

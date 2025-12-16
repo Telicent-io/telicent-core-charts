@@ -6,23 +6,20 @@ This provides an accurate view of the current deployment state.
 
 Note: lookup returns empty if the resource doesn't exist or if running in --dry-run mode
 */}}
-{{- $accessSvc := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "access") }}
-{{- $accessUI := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "access-ui") }}
-{{- $graphUI := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "graph-ui") }}
-{{- $queryUI := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "query-ui") }}
-{{- $searchUI := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "search-ui") }}
-{{- $searchSvc := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "search") }}
+{{- $auth := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "auth") }}
+{{- $graph := lookup "apps/v1" "StatefulSet" .Release.Namespace (printf "%s-%s" .Release.Name "graph") }}
+{{- $userPref := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "user-preferences") }}
+{{- $search := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "search") }}
 {{- $searchProjector := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "search-projector") }}
-{{- $userPrefs := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "user-preferences") }}
-{{- $graphSvc := lookup "apps/v1" "StatefulSet" .Release.Namespace (printf "%s-%s" .Release.Name "graph") }}
-{{- $oauth2Proxy := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "oauth2-proxy") }}
-{{- $paperbackWriter := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "paperback-writer") }}
-{{- $dataCatalog := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "data-catalog") }}
+{{- $adminUi := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "admin-ui") }}
+{{- $graphUi := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "graph-ui") }}
+{{- $queryUi := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "query-ui") }}
+{{- $searchUi := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "search-ui") }}
 
 {{/*
 Check if we're in dry-run mode or if lookup is unavailable
 */}}
-{{- $isDryRun := or (not $accessSvc) (not $accessUI) -}}
+{{- $isDryRun := or (not $auth) (not $adminUi) -}}
 {{- if and (not .Values.global.appHostDomain) $isDryRun -}}
 {{- $isDryRun = true -}}
 {{- end }}
@@ -41,18 +38,15 @@ Release Name:         {{ .Release.Name }}
 Namespace:            {{ .Release.Namespace }}
 
 {{- $deployedCount := 0 }}
-{{- if $accessSvc }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
-{{- if $accessUI }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
-{{- if $graphSvc }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
-{{- if $graphUI }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
-{{- if $queryUI }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
-{{- if $searchUI }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
-{{- if $searchSvc }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
+{{- if $auth }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
+{{- if $userPref }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
+{{- if $graph }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
+{{- if $search }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
 {{- if $searchProjector }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
-{{- if $userPrefs }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
-{{- if $oauth2Proxy }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
-{{- if $paperbackWriter }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
-{{- if $dataCatalog }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
+{{- if $adminUi }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
+{{- if $graphUi }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
+{{- if $queryUi }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
+{{- if $searchUi }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
 
 {{- if .Values.global.enterprise }}
 🚀 Enterprise Mode:   ENABLED
@@ -69,45 +63,38 @@ Namespace:            {{ .Release.Namespace }}
 ========================
 {{- if $isDryRun }}
 {{/* Show configuration-based status when lookup is not available */}}
-📋 Access Service     - Authentication & Authorization
-📋 Access UI          - Authentication Interface
+📋 Auth Service       - Authentication Brokering
 📋 Graph Service      - Graph Data Management
 📋 Query UI           - Data Query Interface
 {{- if .Values.global.enterprise }}
+📋 Admin UI           - Administration Interface
 📋 Graph UI           - Graph Data Visualization
 📋 Search UI          - Search Interface  
+📋 User Preferences   - User Settings Management
 📋 Search Service     - Search Backend
 📋 Search Projector   - Search Data Indexing
-📋 User Preferences   - User Settings Management
 {{- end }}
 
 {{- else }}
 {{/* Show actual deployment status using lookup */}}
-{{- if $accessSvc }}
-✅ Access Service     - Authentication & Authorization
+
+{{- if $auth }}
+✅ Auth              - Authentication Brokering
 {{- else }}
-❌ Access Service     - Authentication & Authorization (not deployed)
+❌ Auth              - Authentication Brokering (not deployed)
 {{- end }}
 
-{{- if $accessUI }}
-✅ Access UI          - Authentication Interface
+{{- if $userPref }}
+✅ User Preferences   - User Settings Management
+{{- end }}
+
+{{- if $graph }}
+✅ Graph Service      - Graph Data Management
 {{- else }}
-❌ Access UI          - Authentication Interface (not deployed)
+❌ Graph Service      - Graph Data Management (not deployed)
 {{- end }}
 
-{{- if $graphUI }}
-✅ Graph UI           - Graph Data Visualization
-{{- end }}
-
-{{- if $queryUI }}
-✅ Query UI           - Data Query Interface
-{{- end }}
-
-{{- if $searchUI }}
-✅ Search UI          - Search Interface
-{{- end }}
-
-{{- if $searchSvc }}
+{{- if $search }}
 ✅ Search Service     - Search Backend
 {{- end }}
 
@@ -115,50 +102,44 @@ Namespace:            {{ .Release.Namespace }}
 ✅ Search Projector   - Search Data Indexing
 {{- end }}
 
-{{- if $userPrefs }}
-✅ User Preferences   - User Settings Management
-{{- end }}
-
-{{- if $graphSvc }}
-✅ Graph Service      - Graph Data Management
+{{- if $adminUi }}
+✅ Admin UI          - Administration Interface
 {{- else }}
-❌ Graph Service      - Graph Data Management (not deployed)
+❌ Admin UI          - Administration Interface (not deployed)
 {{- end }}
 
-{{- if $oauth2Proxy }}
-✅ OAuth2 Proxy       - Authentication Proxy
+{{- if $graphUi }}
+✅ Graph UI           - Graph Data Visualization
 {{- end }}
 
-{{- if $paperbackWriter }}
-✅ Paperback Writer   - Data Processing Pipeline
+{{- if $queryUi }}
+✅ Query UI           - Data Query Interface
 {{- end }}
 
-{{- if $dataCatalog }}
-✅ Data Catalog       - Dataset Management & Discovery
+{{- if $searchUi }}
+✅ Search UI          - Search Interface
 {{- end }}
-{{- end }}
+
 
 🌐 ACCESS INFORMATION:
 ======================
 {{- if .Values.global.appHostDomain }}
-Application Domain:   {{ .Values.global.appHostDomain }}
-Authentication Domain: {{ .Values.global.authHostDomain | default "auth.telicent.io" }}
+Application Domain:    {{ .Values.global.appHostDomain }}
+API Domain:            {{ .Values.global.apiHostDomain }}
+Authentication Domain: {{ .Values.global.authHostDomain }}
 
 🔗 Access your applications at:
-{{- if $accessUI }}
-- Access UI:         https://{{ .Values.global.appHostDomain }}/access
+{{- if $adminUi }}
+- Admin UI:         https://{{ .Values.global.appHostDomain }}/admin
 {{- end }}
-{{- if $graphUI }}
+{{- if $graphUi }}
 - Graph UI:          https://{{ .Values.global.appHostDomain }}/graph
 {{- end }}
-{{- if $queryUI }}
+{{- if $queryUi }}
 - Query UI:          https://{{ .Values.global.appHostDomain }}/query
 {{- end }}
-{{- if $searchUI }}
+{{- if $searchUi }}
 - Search UI:         https://{{ .Values.global.appHostDomain }}/search
-{{- end }}
-{{- if $dataCatalog }}
-- Data Catalog:      https://{{ .Values.global.appHostDomain }}/data-catalog
 {{- end }}
 {{- else }}
 ⚠️  No appHostDomain configured. Access via port-forward or configure ingress manually.
@@ -166,14 +147,15 @@ Authentication Domain: {{ .Values.global.authHostDomain | default "auth.telicent
 
 ⚙️  CONFIGURATION:
 ===================
-{{- if .Values.global.kafkaBootstrapUrls }}
-Kafka Bootstrap:     {{ .Values.global.kafkaBootstrapUrls }}
+{{- if .Values.global.kafka.bootstrapServers }}
+Kafka Bootstrap:     {{ .Values.global.kafka.bootstrapServers }}
 {{- end }}
-{{- if .Values.global.jwksUrl }}
-JWKS URL:           {{ .Values.global.jwksUrl }}
-{{- end }}
-{{- if .Values.global.istioNamespace }}
-Istio Namespace:    {{ .Values.global.istioNamespace }}
+
+{{- if .Values.global.istioIngressNamespace }}
+Istio Ingress Namespace:      {{ .Values.global.istioIngressNamespace}}
+Istio Ingress ServiceAccount: {{ .Values.global.istioIngressServiceAccount}}
+Istio Gateway Namespace:      {{ .Values.global.istioGatewayNamespace}}
+Istio Gateway Names:          {{ .Values.global.istioGatewayName}}
 {{- end }}
 
 🛠️  HELPFUL COMMANDS:
@@ -188,31 +170,29 @@ helm status {{ .Release.Name }} -n {{ .Release.Namespace }}
 kubectl get svc -n {{ .Release.Namespace }}
 
 # Port-forward to access services locally (examples):
-{{- if $accessUI }}
-kubectl port-forward svc/{{ .Release.Name }}-access-ui 8083:80 -n {{ .Release.Namespace }}
+{{- if $adminUi }}
+kubectl port-forward svc/{{ .Release.Name }}-admin-ui 8080:8080 -n {{ .Release.Namespace }}
 {{- end }}
-{{- if $graphUI }}
-kubectl port-forward svc/{{ .Release.Name }}-graph-ui 8080:80 -n {{ .Release.Namespace }}
+{{- if $graphUi }}
+kubectl port-forward svc/{{ .Release.Name }}-graph-ui 8080:8080 -n {{ .Release.Namespace }}
 {{- end }}
-{{- if $queryUI }}
-kubectl port-forward svc/{{ .Release.Name }}-query-ui 8081:80 -n {{ .Release.Namespace }}
+{{- if $queryUi }}
+kubectl port-forward svc/{{ .Release.Name }}-query-ui 8080:8080 -n {{ .Release.Namespace }}
 {{- end }}
-{{- if $searchUI }}
-kubectl port-forward svc/{{ .Release.Name }}-search-ui 8082:80 -n {{ .Release.Namespace }}
-{{- end }}
-{{- if $dataCatalog }}
-kubectl port-forward svc/{{ .Release.Name }}-data-catalog 8084:80 -n {{ .Release.Namespace }}
+{{- if $searchUi }}
+kubectl port-forward svc/{{ .Release.Name }}-search-ui 8080:8080 -n {{ .Release.Namespace }}
 {{- end }}
 
+
 # View logs for specific components (examples):
-{{- if $graphSvc }}
-kubectl logs -l app.kubernetes.io/name=graph -n {{ .Release.Namespace }}
+{{- if $auth }}
+kubectl logs -l app=auth -n {{ .Release.Namespace }}
 {{- end }}
-{{- if $accessSvc }}
-kubectl logs -l app.kubernetes.io/name=access -n {{ .Release.Namespace }}
+{{- if $graph }}
+kubectl logs -l app=graph -n {{ .Release.Namespace }}
 {{- end }}
-{{- if $searchSvc }}
-kubectl logs -l app.kubernetes.io/name=search -n {{ .Release.Namespace }}
+{{- if $search }}
+kubectl logs -l app=search -n {{ .Release.Namespace }}
 {{- end }}
 
 🔧 CONFIGURATION UPDATES:
@@ -224,7 +204,7 @@ helm upgrade {{ .Release.Name }} ./charts/telicent-core -n {{ .Release.Namespace
 helm get values {{ .Release.Name }} -n {{ .Release.Namespace }}
 
 {{- $enterpriseFeatures := false }}
-{{- if or $graphUI $searchUI $searchSvc $searchProjector $userPrefs $dataCatalog }}
+{{- if or $adminUi $graphUi $searchUi $search $searchProjector $userPref }}
 {{- $enterpriseFeatures = true }}
 {{- end }}
 
@@ -236,12 +216,12 @@ Enterprise mode is disabled. To enable enterprise features:
   helm upgrade {{ .Release.Name }} ./charts/telicent-core -n {{ .Release.Namespace }} --set global.enterprise=true
 
 Available enterprise features include:
+- Admin UI (Administration Interface)
 - Graph UI (Graph Data Visualization)
 - Search UI (Search Interface) 
 - Search Service (Search Backend)
 - Search Projector (Search Data Indexing)
 - User Preferences (User Settings Management)
-- Data Catalog (Dataset Management & Discovery)
 
 🏢 Need an enterprise license? Contact us at: https://telicent.io/contact-2/
 {{- else }}
@@ -249,17 +229,16 @@ Enterprise mode is enabled but some enterprise components may not be deployed.
 Check individual component configurations or dependencies.
 {{- end }}
 {{- end }}
+{{- end }}
 
 ⚠️  IMPORTANT NOTES:
 ====================
-{{- if or (not .Values.global.jwksUrl) (contains "{yourAuthdomain}" .Values.global.jwksUrl) }}
-🔐 Configure JWKS URL: Update global.jwksUrl with your actual OIDC provider's JWKS endpoint
-{{- end }}
+
 {{- if contains "your.kafka" .Values.global.kafka.username }}
 📡 Configure Kafka: Update Kafka connection details in global.kafka.* values
 {{- end }}
 {{- if or (not .Values.global.appHostDomain) (eq .Values.global.appHostDomain "apps.telicent.io") }}
-🌍 Configure Domains: Set global.appHostDomain and global.authHostDomain for your environment
+🌍 Configure Domains: Set global.appHostDomain, global.apiHostDomain and global.authHostDomain for your environment
 {{- end }}
 
 📚 DOCUMENTATION:

@@ -10,7 +10,7 @@ the [Helm](https://helm.sh) package manager.
 ## Prerequisites
 
 - Kubernetes 1.23+
-- Helm 3.8.0+
+- Helm 3.9+
 
 ## Installing the Chart
 
@@ -40,125 +40,195 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ## Configuration and installation details
 
+### Resource requests and limits
+
+These are inside the `resources` value (check parameter table). Setting requests is essential for production workloads
+and these should be adapted to your specific use case.
+
+### Sidecars and Init Containers
+
+If you have a need for additional containers to run within the same pod (e.g. an additional metrics or logging
+exporter), you can do so via the `sidecars` config parameter.
+Define your container according to the Kubernetes container spec.
+
+```yaml
+sidecars:
+- name: your-image-name
+  image: your-image
+  imagePullPolicy: Always
+  ports:
+  - name: portname
+    containerPort: 1234
+```
+
+Similarly, you can add extra init containers using the `initContainers` parameter.
+
+```yaml
+initContainers:
+- name: your-image-name
+  image: your-image
+  imagePullPolicy: Always
+  ports:
+  - name: portname
+    containerPort: 1234
+```
+
+### Setting Pod's affinity
+
+This chart allows you to set your custom affinity using the `affinity` parameter.
+Find more information about Pod's affinity in
+the [kubernetes documentation](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity).
+
 ## Parameters
 
 ### Global Parameters
 
-Contains global parameters, these parameters are mirrored within the Telicent core umbrella chart
+Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart
+Note: Only global parameters used within this chart will be listed below
 
-| Name                                   | Description                                                                       | Value                                            |
-| -------------------------------------- | --------------------------------------------------------------------------------- | ------------------------------------------------ |
-| `global.imageRegistry`                 | Global image registry                                                             | `""`                                             |
-| `global.imagePullSecrets`              | Global registry secret names as an array                                          | `[]`                                             |
-| `global.enterprise`                    | Enable enterprise mode, adding additional features and configurations             | `false`                                          |
-| `global.appHostDomain`                 | Domain associated with Telicent application services                              | `apps.telicent.io`                               |
-| `global.authHostDomain`                | Domain associated with Telicent authentication services, including OIDC providers | `auth.telicent.io`                               |
-| `global.groupsClaim`                   | Key used to retrieve groups from the OIDC provider                                | `groups`                                         |
-| `global.jwksUrl`                       | Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)     | `https://{yourAuthdomain}/.well-known/jwks.json` |
-| `global.istioNamespace`                | Namespace in which Istio is deployed                                              | `istio-system`                                   |
-| `global.istioServiceAccountName`       | Name of the Istio service account                                                 | `istio-ingress`                                  |
-| `global.istioGatewayName`              | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)         | `ingress-gateway`                                |
-| `global.istioVirtualServiceEnabled`    | Enable Istio traffic routing to a named destination service                       | `true`                                           |
-| `global.kafkaBootstrapUrls`            | Comma separated list containing Kafka bootstrap URLs                              | `kafka-bootstrap.kafka.svc.cluster.local:9092`   |
-| `global.existingConfigSecretName`      | Name of an existing secret containing Kafka configuration                         | `""`                                             |
-| `global.truststore.existingSecretName` | Name of an existing secret containing the truststore                              | `""`                                             |
-| `global.truststore.mountPath`          | The mount path for the truststore in the container                                | `/app/config/truststore`                         |
+| Name                               | Description                                                                       | Value                    |
+| ---------------------------------- | --------------------------------------------------------------------------------- | ------------------------ |
+| `global.imageRegistry`             | Global image registry                                                             | `""`                     |
+| `global.imagePullSecrets`          | Global registry secret names as an array                                          | `[]`                     |
+| `global.enterprise`                | Enable enterprise mode, adding additional features and configurations             | `false`                  |
+| `global.appHostDomain`             | Domain associated with Telicent application/ui services                           | `apps.telicent.io`       |
+| `global.apiHostDomain`             | Domain associated with Telicent Api services                                      | `api.telicent.io`        |
+| `global.authHostDomain`            | Domain associated with Telicent authentication services, including OIDC providers | `auth.telicent.io`       |
+| `global.truststore.existingSecret` | Name of an existing secret containing the truststore                              | `""`                     |
+| `global.truststore.mountPath`      | The mount path for the truststore in the container                                | `/app/config/truststore` |
 
-### Search Parameters
+### Application Parameters - Java
 
+Contains Java configuration parameters to be used by the *Search* application
 
-### Configuration Parameters - Search
+| Name              | Description                     | Value                       |
+| ----------------- | ------------------------------- | --------------------------- |
+| `java.jvmOptions` | JVM options for the application | `-XX:MaxRAMPercentage=80.0` |
 
-Contains configuration parameters specific to the Smart Cach Search application
+### Application Parameters - Elastic/OpenSearch and Secret
 
-| Name                                    | Description                                              | Value                                                                                        |
-| --------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| `configuration.userAttributesUrl`       | URL for the user details endpoint                        | `""`                                                                                         |
-| `configuration.attributeHierarchyUrl`   | URL for the user hierarchy endpoint                      | `""`                                                                                         |
-| `configuration.javaOptions`             | JVM options for the application                          | `-XX:MaxRAMPercentage=70.0 -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks` |
-| `configuration.otelMetricsExporter`     | OpenTelemetry metrics exporter                           | `prometheus`                                                                                 |
-| `configuration.otelTracesExporter`      | OpenTelemetry traces exporter                            | `none`                                                                                       |
-| `configuration.elasticHost`             | OpenSearch host                                          | `https://your.opensearch.host.here:443`                                                      |
-| `configuration.elasticPort`             | OpenSearch port number                                   | `443`                                                                                        |
-| `configuration.elasticClusterPort`      | OpenSearch cluster port                                  | `9200`                                                                                       |
-| `configuration.opensearchCompatibility` | Enable OpenSearch compatibility                          | `true`                                                                                       |
-| `configuration.elasticIndexNames`       | OpenSearch index name(s)                                 | `search,doc-content`                                                                         |
-| `configuration.searchFieldOptions`      | Field options for search                                 | `primaryName^2,*`                                                                            |
-| `configuration.indexBatchSize`          | Number of documents to index in a single batch operation | `100`                                                                                        |
+The following contains connection details to an Elastic/OpenSearch service, on which the application relies.
+It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
+For Quick Start purposes, a secret named `tc-auth-usr-elastic-search` will be created if one is not set.
 
-### OpenSearch/Elastic secret - Search
+| Name                              | Description                                                                        | Value                          |
+| --------------------------------- | ---------------------------------------------------------------------------------- | ------------------------------ |
+| `elastic.host`                    | Elastic/OpenSearch host                                                            | `https://your.opensearch.host` |
+| `elastic.port`                    | Elastic/OpenSearch port number                                                     | `443`                          |
+| `elastic.opensearchCompatibility` | Enable OpenSearch compatibility                                                    | `true`                         |
+| `elastic.index`                   | Elastic/OpenSearch index to be used                                                | `search,doc-content`           |
+| `elastic.searchFieldOptions`      | Field options for search                                                           | `primaryName^2,*`              |
+| `elastic.indexBatchSize`          | Number of documents to index in a single batch operation                           | `100`                          |
+| `elastic.existingSecret`          | Name of an existing secret. The secret must contain 2 keys: 'username', 'password' | `""`                           |
+| `elastic.username`                | OpenSearch/Elastic username                                                        | `""`                           |
+| `elastic.password`                | OpenSearch/Elastic user password                                                   | `""`                           |
 
-| Name                           | Description                                                            | Value |
-| ------------------------------ | ---------------------------------------------------------------------- | ----- |
-| `elasticSecret.existingSecret` | Name of an existing secret resource containing the username & password | `""`  |
-| `elasticSecret.username`       | OpenSearch/Elastic username                                            | `""`  |
-| `elasticSecret.password`       | OpenSearch/Elastic user password                                       | `""`  |
+### ConfigMap Parameters
 
-### Common Parameters - Search
+Contains configuration parameters specific to the *Search* application
 
-| Name               | Description                                                            | Value |
-| ------------------ | ---------------------------------------------------------------------- | ----- |
-| `fullnameOverride` | String to fully override the generated release name                    | `""`  |
-| `nameOverride`     | String to partially override fullname (will maintain the release name) | `""`  |
+| Name                             | Description                                                              | Value |
+| -------------------------------- | ------------------------------------------------------------------------ | ----- |
+| `configMap.existingEnvConfigMap` | Name of existing configmap containing *Search* Environment Configuration | `""`  |
 
-### Deployment Parameters - Search
+### Common Parameters
 
-| Name                                                | Description                                                             | Value                               |
-| --------------------------------------------------- | ----------------------------------------------------------------------- | ----------------------------------- |
-| `replicas`                                          | Number of Search replicas to deploy                                     | `1`                                 |
-| `revisionHistoryLimit`                              | Number of controller revisions to keep                                  | `5`                                 |
-| `annotations`                                       | Add extra annotations to the Deployment object                          | `{}`                                |
-| `extraEnvs`                                         | List of additional environment variables to set in the pod              | `[]`                                |
-| `image.registry`                                    | Search image registry                                                   | `REGISTRY_NAME`                     |
-| `image.repository`                                  | Search image name                                                       | `REPOSITORY_NAME/search-api-server` |
-| `image.tag`                                         | Search image tag. If not set, a tag is generated using the appVersion   | `""`                                |
-| `image.pullPolicy`                                  | Search image pull policy                                                | `IfNotPresent`                      |
-| `image.pullSecrets`                                 | Specify registry secret names as an array                               | `[]`                                |
-| `resources.requests.cpu`                            | Set containers' CPU request                                             | `500m`                              |
-| `resources.requests.memory`                         | Set containers' memory request                                          | `4000Mi`                            |
-| `resources.limits.cpu`                              | Set containers' CPU limit                                               | `1000m`                             |
-| `resources.limits.memory`                           | Set containers' memory limit                                            | `8000Mi`                            |
-| `containerSecurityContext.runAsUser`                | Set containers' Security Context runAsUser User ID                      | `185`                               |
-| `containerSecurityContext.runAsGroup`               | Set containers' Security Context runAsGroup Group ID                    | `185`                               |
-| `containerSecurityContext.runAsNonRoot`             | Set container's Security Context runAsNonRoot                           | `true`                              |
-| `containerSecurityContext.allowPrivilegeEscalation` | Set container's Security Context allowPrivilegeEscalation               | `false`                             |
-| `containerSecurityContext.capabilities.drop`        | List of capabilities to be dropped                                      | `["ALL"]`                           |
-| `containerSecurityContext.seccompProfile.type`      | Set container's Security Context seccomp profile                        | `RuntimeDefault`                    |
-| `podSecurityContext.runAsUser`                      | Set the provisioning pod's Security Context runAsUser User ID           | `185`                               |
-| `podSecurityContext.runAsGroup`                     | Set the provisioning pod's Security Context runAsGroup Group ID         | `185`                               |
-| `podSecurityContext.runAsNonRoot`                   | Set the provisioning pod's Security Context runAsNonRoot                | `true`                              |
-| `podSecurityContext.fsGroup`                        | Set the provisioning pod's Group ID for the mounted volumes' filesystem | `185`                               |
-| `podSecurityContext.seccompProfile.type`            | Set the provisioning pod's Security Context seccomp profile             | `RuntimeDefault`                    |
+| Name                | Description                                                            | Value |
+| ------------------- | ---------------------------------------------------------------------- | ----- |
+| `nameOverride`      | String to partially override fullname (will maintain the release name) | `""`  |
+| `fullnameOverride`  | String to fully override the generated release name                    | `""`  |
+| `namespaceOverride` | String to fully override all deployed resources namespace              | `""`  |
+| `commonLabels`      | Add labels to all the deployed resources                               | `{}`  |
 
-### Metrics Parameters - Search
+### Deployment Parameters
+
+| Name                   | Description                                                   | Value |
+| ---------------------- | ------------------------------------------------------------- | ----- |
+| `replicas`             | Number of *Search* replicas to deploy                         | `1`   |
+| `revisionHistoryLimit` | Number of controller revisions to keep                        | `5`   |
+| `annotations`          | Add extra annotations to the deployment object                | `{}`  |
+| `podLabels`            | Add extra labels to the *Search* pod                          | `{}`  |
+| `podAnnotations`       | Add extra annotations to the *Search* pod                     | `{}`  |
+| `extraEnvVars`         | Array with extra environment variables to add to *Search* pod | `[]`  |
+| `extraVolumes`         | Additional containers to be added to the *Search* pod         | `[]`  |
+| `extraVolumeMounts`    | Optionally specify extra list of additional volumeMounts      | `[]`  |
+| `initContainers`       | Add init containers to the pod                                | `[]`  |
+| `sidecars`             | Add sidecars to the pod                                       | `[]`  |
+
+### Deployment Image Parameters
+
+| Name                        | Description                                                             | Value                        |
+| --------------------------- | ----------------------------------------------------------------------- | ---------------------------- |
+| `image.registry`            | *Search* image registry                                                 | `quay.io`                    |
+| `image.repository`          | *Search* image name                                                     | `telicent/search-api-server` |
+| `image.tag`                 | *Search* image tag. If not set, a tag is generated using the appVersion | `""`                         |
+| `image.pullPolicy`          | *Search* image pull policy                                              | `IfNotPresent`               |
+| `image.pullSecrets`         | Specify registry secret names as an array                               | `[]`                         |
+| `resources.requests.cpu`    | Set containers' CPU request                                             | `1000m`                      |
+| `resources.requests.memory` | Set containers' memory request                                          | `4000Mi`                     |
+| `resources.limits.cpu`      | Set containers' CPU limit                                               | `2000m`                      |
+| `resources.limits.memory`   | Set containers' memory limit                                            | `8000Mi`                     |
+
+### Deployment Security Context Parameters - Default Security Context
+
+| Name                                                | Description                                                             | Value            |
+| --------------------------------------------------- | ----------------------------------------------------------------------- | ---------------- |
+| `podSecurityContext.runAsUser`                      | Set the provisioning pod's Security Context runAsUser User ID           | `185`            |
+| `podSecurityContext.runAsGroup`                     | Set the provisioning pod's Security Context runAsGroup Group ID         | `185`            |
+| `podSecurityContext.runAsNonRoot`                   | Set the provisioning pod's Security Context runAsNonRoot                | `true`           |
+| `podSecurityContext.fsGroup`                        | Set the provisioning pod's Group ID for the mounted volumes' filesystem | `185`            |
+| `podSecurityContext.seccompProfile.type`            | Set the provisioning pod's Security Context seccomp profile             | `RuntimeDefault` |
+| `containerSecurityContext.runAsUser`                | Set containers' Security Context runAsUser User ID                      | `185`            |
+| `containerSecurityContext.runAsGroup`               | Set containers' Security Context runAsGroup Group ID                    | `185`            |
+| `containerSecurityContext.runAsNonRoot`             | Set container's Security Context runAsNonRoot                           | `true`           |
+| `containerSecurityContext.allowPrivilegeEscalation` | Set container's Security Context allowPrivilegeEscalation               | `false`          |
+| `containerSecurityContext.capabilities.drop`        | List of capabilities to be dropped                                      | `["ALL"]`        |
+| `containerSecurityContext.seccompProfile.type`      | Set container's Security Context seccomp profile                        | `RuntimeDefault` |
+
+### Deployment Affinity Parameters
+
+| Name           | Description                    | Value |
+| -------------- | ------------------------------ | ----- |
+| `affinity`     | Affinity for pod assignment    | `{}`  |
+| `nodeSelector` | Node labels for pod assignment | `{}`  |
+| `tolerations`  | Tolerations for pod assignment | `[]`  |
+
+### Service Account Parameters
+
+| Name                         | Description                                                                           | Value  |
+| ---------------------------- | ------------------------------------------------------------------------------------- | ------ |
+| `serviceAccount.create`      | Specifies whether a service account should be created                                 | `true` |
+| `serviceAccount.name`        | Name of the ServiceAccount to use. If not set, a name is generated using the fullname | `""`   |
+| `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                  | `{}`   |
+| `serviceAccount.automount`   | Automatically mount a ServiceAccount's API credentials                                | `true` |
+
+### Traffic Exposure Parameters
+
+| Name           | Description                                                               | Value       |
+| -------------- | ------------------------------------------------------------------------- | ----------- |
+| `service.name` | *Search* service name. If not set, a name is generated using the fullname | `""`        |
+| `service.port` | *Search* service port                                                     | `8080`      |
+| `service.type` | *Search* service port                                                     | `ClusterIP` |
+
+### Metrics (Prometheus) Exposure Parameters
 
 | Name                   | Description                     | Value     |
 | ---------------------- | ------------------------------- | --------- |
+| `metrics.enabled`      | Enable Prometheus metrics       | `true`    |
 | `metrics.service.name` | Name for the Prometheus service | `metrics` |
 | `metrics.service.port` | Port for the Prometheus service | `9464`    |
 
-### Traffic Exposure Parameters - Search
+### Host(s) Parameters - Contains host information for applications deployed via *telicent-core* chart.
 
-| Name                             | Description                                                                                                                                                                  | Value       |
-| -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| `service.port`                   | Search service port                                                                                                                                                          | `8181`      |
-| `service.type`                   | Search service port                                                                                                                                                          | `ClusterIP` |
-| `istio.ingress.principal`        | Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName' | `""`        |
-| `istio.graph.principal`          | Principal used for Graph traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'serviceAccountName' and the current namespace                 | `""`        |
-| `istio.graph.serviceAccountName` | Name of the Graph service account                                                                                                                                            | `graph`     |
+*Search* interacts directly with other Telicent Applications using their default service/serviceAccount and port.
+If either of those details changes, you can use this section to correctly refer to those apps.
 
-### Extra Containers Parameters
-
-| Name              | Description                                  | Value |
-| ----------------- | -------------------------------------------- | ----- |
-| `extraContainers` | Additional containers to be added to the pod | `[]`  |
-
-### Service Account Parameters - Search
-
-| Name                         | Description                                                                                     | Value |
-| ---------------------------- | ----------------------------------------------------------------------------------------------- | ----- |
-| `serviceAccount.name`        | Name of the created ServiceAccount. If not set, a name is generated using the fullname template | `""`  |
-| `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                            | `{}`  |
+| Name                      | Description                                                                                                                                                                                                                          | Value                |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------- |
+| `hosts.enableAutoCorrect` | Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as it is, without any modification | `true`               |
+| `hosts.auth`              | Auth application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                                     | `auth:8080`          |
+| `hosts.traefikProxy`      | Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                            | `traefik-proxy:8080` |
+| `hosts.graph`             | Graph application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                                    | `graph:8080`         |
 
 ## License
 

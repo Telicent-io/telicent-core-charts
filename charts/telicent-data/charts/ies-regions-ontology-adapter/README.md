@@ -62,11 +62,11 @@ These parameters can be referenced in sub-charts as `.Values.global.<parameter-n
 | --------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
 | `global.kafka.bootstrapServers`         | Comma separated list containing Kafka bootstrap servers                                                           | `kafka-bootstrap.kafka.svc.cluster.local:9092` |
 | `global.kafka.existingConfigSecretName` | Name of an existing secret containing Kafka configuration (preferred over individual settings below for security) | `""`                                           |
-| `global.kafka.username`                 | Username for Kafka authentication                                                                                 | `your.kafka.username.here`                     |
-| `global.kafka.password`                 | Password for Kafka authentication                                                                                 | `your.kafka.password.here`                     |
+| `global.kafka.username`                 | Username for Kafka authentication                                                                                 | `""`                                           |
+| `global.kafka.password`                 | Password for Kafka authentication                                                                                 | `""`                                           |
 | `global.kafka.protocol`                 | Protocol used for Kafka communication                                                                             | `SASL_SSL`                                     |
 | `global.kafka.mechanism`                | SASL mechanism used for Kafka authentication                                                                      | `SCRAM-SHA-512`                                |
-| `global.truststore.existingSecretName`  | Name of an existing secret containing the truststore                                                              | `""`                                           |
+| `global.truststore.existingSecret`      | Name of an existing secret containing the truststore                                                              | `""`                                           |
 | `global.truststore.mountPath`           | The mount path for the truststore in the container                                                                | `/app/config/truststore`                       |
 
 ### Deployment Parameters
@@ -97,7 +97,7 @@ These parameters can be referenced in sub-charts as `.Values.global.<parameter-n
 
 | Name                          | Description                                                          | Value |
 | ----------------------------- | -------------------------------------------------------------------- | ----- |
-| `job.activeDeadlineSeconds`   | Maximum time in seconds a job can run                                | `100` |
+| `job.activeDeadlineSeconds`   | Maximum time in seconds a job can run                                | `360` |
 | `job.backoffLimit`            | Number of retries before marking this job as failed                  | `3`   |
 | `job.completions`             | Number of successful completions before marking this job as complete | `1`   |
 | `job.parallelism`             | Maximum number of pods that can run in parallel                      | `1`   |
@@ -155,7 +155,7 @@ These parameters can be referenced in sub-charts as `.Values.global.<parameter-n
 
 Contains configuration parameters specific to the application
 
-| Name                        | Description                             | Value                                         |
-| --------------------------- | --------------------------------------- | --------------------------------------------- |
-| `configuration.targetTopic` | Kafka topic to publish ontology data to | `ontology`                                    |
-| `configuration.sourceName`  | Source name or identifier for the data  | `ies-ies-regions.generation.iso3166_ontology` |
+| Name                        | Description                             | Value                                     |
+| --------------------------- | --------------------------------------- | ----------------------------------------- |
+| `configuration.targetTopic` | Kafka topic to publish ontology data to | `ontology`                                |
+| `configuration.sourceName`  | Source name or identifier for the data  | `ies-regions.generation.iso3166_ontology` |

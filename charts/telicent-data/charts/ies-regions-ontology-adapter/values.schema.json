@@ -72,12 +72,12 @@
                         "username": {
                             "type": "string",
                             "description": "Username for Kafka authentication",
-                            "default": "your.kafka.username.here"
+                            "default": ""
                         },
                         "password": {
                             "type": "string",
                             "description": "Password for Kafka authentication",
-                            "default": "your.kafka.password.here"
+                            "default": ""
                         },
                         "protocol": {
                             "type": "string",
@@ -94,7 +94,7 @@
                 "truststore": {
                     "type": "object",
                     "properties": {
-                        "existingSecretName": {
+                        "existingSecret": {
                             "type": "string",
                             "description": "Name of an existing secret containing the truststore",
                             "default": ""
@@ -166,7 +166,7 @@
                 "activeDeadlineSeconds": {
                     "type": "number",
                     "description": "Maximum time in seconds a job can run",
-                    "default": 100
+                    "default": 360
                 },
                 "backoffLimit": {
                     "type": "number",
@@ -304,7 +304,7 @@
                 "sourceName": {
                     "type": "string",
                     "description": "Source name or identifier for the data",
-                    "default": "ies-ies-regions.generation.iso3166_ontology"
+                    "default": "ies-regions.generation.iso3166_ontology"
                 }
             }
         }

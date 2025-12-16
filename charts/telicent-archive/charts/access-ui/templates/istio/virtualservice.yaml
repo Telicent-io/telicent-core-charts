@@ -1,0 +1,33 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
+{{- if .Values.global.istioVirtualServiceEnabled }}
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+
+metadata:
+  name: {{ include "access-ui.fullname" . }}
+  labels:
+    {{- include "access-ui.labels" . | nindent 4 }}
+
+spec:
+  gateways:
+  - {{ .Values.global.istioNamespace }}/{{ .Values.global.istioGatewayName }}
+  hosts:
+  - {{ .Values.global.appHostDomain }}
+  http:
+  - match:
+    - uri:
+        exact: /access
+    redirect:
+      uri: /access/
+  - match:
+    - uri:
+        prefix: /access/
+    route:
+    - destination:
+        host: {{ include "access-ui.serviceName" . }}
+        port:
+          number: {{ .Values.service.port }}
+{{- end }}

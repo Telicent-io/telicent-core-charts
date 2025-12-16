@@ -1,88 +1,102 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
 {{- if .Values.enabled -}}
 apiVersion: apps/v1
 kind: Deployment
+
 metadata:
   name: {{ include "catalogue-updater.fullname" . }}
+  namespace: {{ include "document-pipeline.namespace" . | quote }}
   labels:
-    {{- include "document-pipeline.labels" . | nindent 4 }}
+    {{- include "catalogue-updater.labels" . | nindent 4 }}
+  {{- with .Values.catalogueUpdater.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+
 spec:
-  replicas: {{ .Values.catalogueUpdater.replicaCount }}
+  replicas: {{ .Values.catalogueUpdater.replicas}}
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
   selector:
     matchLabels:
       {{- include "catalogue-updater.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      labels:
+      {{- include "catalogue-updater.labels" . | nindent 8 }}
+      {{- with .Values.catalogueUpdater.podLabels }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       {{- with .Values.catalogueUpdater.podAnnotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      labels:
-        {{- include "document-pipeline.labels" . | nindent 8 }}
-        {{- include "catalogue-updater.selectorLabels" . | nindent 8 }}
-        {{- with .Values.catalogueUpdater.podLabels }}
-        {{- toYaml . | nindent 8 }}
-        {{- end }}
+    
     spec:
-      {{- with .Values.catalogueUpdater.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
       serviceAccountName: {{ include "document-pipeline.serviceAccountName" . }}
-      {{- with .Values.catalogueUpdater.podSecurityContext }}
-      securityContext:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- $pullSecret := .Values.global.imagePullSecrets | default .Values.imagePullSecrets }}
+      securityContext: {{ .Values.catalogueUpdater.podSecurityContext | default .Values.podSecurityContext | toYaml | nindent 8 }}
+
+      {{- $pullSecret := .Values.global.imagePullSecrets | default .Values.catalogueUpdater.image.pullSecrets }}
       {{- with $pullSecret }}
       imagePullSecrets:
         {{- toYaml . | nindent 6 }}
       {{- end }}
+      {{- if .Values.catalogueUpdater.initContainers }}
+      initContainers:
+      {{- with .Values.catalogueUpdater.initContainers }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- end }}
       containers:
-        - name: {{ .Chart.Name }}
-          {{- with .Values.catalogueUpdater.securityContext }}
-          securityContext:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-          image: "{{ .Values.catalogueUpdater.image.registry | default .Values.global.imageRegistry }}/{{ .Values.catalogueUpdater.image.repository }}:{{ .Values.catalogueUpdater.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.catalogueUpdater.image.pullPolicy }}
-          ports:
-            - name: http
-              containerPort: {{ .Values.catalogueUpdater.service.port }}
-              protocol: TCP
-          env:
-            - name: BOOTSTRAP_SERVERS
-              value: {{ .Values.global.kafka.bootstrapServers | quote }}
-            - name: INPUT_TOPIC
-              value: {{ .Values.catalogueUpdater.configuration.inputTopic | quote }}
-            - name: OUTPUT_TOPIC
-              value: {{ .Values.catalogueUpdater.configuration.outputTopic | quote }}
-            - name: DEBOUNCE_WINDOW_MS
-              value: {{ .Values.catalogueUpdater.configuration.debounceWindowMs | quote }}
-            - name: FLUSH_INTERVAL_MS
-              value: {{ .Values.catalogueUpdater.configuration.flushIntervalMs | quote }}
-            - name: MAX_BUFFER_SIZE
-              value: {{ .Values.catalogueUpdater.configuration.maxBufferSize | quote }}
-            - name: KAFKA_CONFIG_FILE_PATH
-              value: /app/config/kafka-auth/kafka-config.properties
-          livenessProbe:
-            httpGet:
-              path: /healthz
-              port: 10101
-          readinessProbe:
-            httpGet:
-              path: /version-info
-              port: 10101
-          {{- with .Values.catalogueUpdater.resources }}
-          resources:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-          volumeMounts:
-          - mountPath: /app/config/kafka-auth/
-            name: kafka-auth-config
-          {{- with .Values.catalogueUpdater.volumeMounts }}
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-      {{- with .Values.extraContainers }}
+      - name: {{ .Chart.Name }}
+        image: {{ include "catalogue-updater.image" . }}
+        imagePullPolicy: {{ .Values.catalogueUpdater.image.pullPolicy }}
+        resources: {{ .Values.catalogueUpdater.resources | default .Values.resources | toYaml | nindent 10 }}
+        securityContext: {{ .Values.catalogueUpdater.containerSecurityContext | default .Values.containerSecurityContext | toYaml | nindent 10 }}
+
+        env:
+        - name: KAFKA_CONFIG_FILE_PATH
+          value: /app/config/kafka-auth/kafka-config.properties
+        - name: BOOTSTRAP_SERVERS
+          value: {{ .Values.global.kafka.bootstrapServers | quote }}
+        - name: INPUT_TOPIC
+          value: {{ .Values.catalogueUpdater.topics.inputTopic | quote }}
+        - name: OUTPUT_TOPIC
+          value: {{ .Values.catalogueUpdater.topics.outputTopic | quote }}
+        - name: DEBOUNCE_WINDOW_MS
+          value: {{ .Values.catalogueUpdater.topics.debounceWindowMs | quote }}
+        - name: FLUSH_INTERVAL_MS
+          value: {{ .Values.catalogueUpdater.topics.flushIntervalMs | quote }}
+        - name: MAX_BUFFER_SIZE
+          value: {{ .Values.catalogueUpdater.topics.maxBufferSize | quote }}
+       
+        ports:
+        - name: http
+          protocol: TCP
+          containerPort: 10101
+
+        readinessProbe:
+          httpGet:
+            path: /version-info
+            port: 10101
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 10101
+ 
+        volumeMounts:
+        - mountPath: /app/config/kafka-auth/
+          name: kafka-auth-config
+       {{- with .Values.catalogueUpdater.extraVolumeMounts }}
+          {{- toYaml . | nindent 12 }}
+       {{- end }}
+      
+      {{- with .Values.catalogueUpdater.sidecars }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
       volumes:
@@ -93,15 +107,16 @@ spec:
         {{- else }}
           secretName: {{ include "document-pipeline.fullname" . }}-kafka-config
         {{- end }}
-      {{- with .Values.catalogueUpdater.volumes }}
+      {{- with .Values.catalogueUpdater.extraVolumes }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+
+      {{- with .Values.catalogueUpdater.affinity }}
+      affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       {{- with .Values.catalogueUpdater.nodeSelector }}
       nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.catalogueUpdater.affinity }}
-      affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       {{- with .Values.catalogueUpdater.tolerations }}

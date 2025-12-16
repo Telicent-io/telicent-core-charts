@@ -1,0 +1,28 @@
+# Declare routers / services / middlewares
+http:
+  routers:
+    data-catalog-ui:
+      rule: {{ printf "Host(`%s`) && PathPrefix(`/data-catalog`)" .Values.global.appHostDomain }}
+      service: data-catalog-ui
+      entryPoints:
+        - web-app
+      middleWares:
+        - path-data-catalog-ui
+        - host-data-catalog-ui
+
+  services:
+    data-catalog-ui:
+      loadBalancer:
+        servers:
+          - url: {{ printf "http://%s"  (include "traefik-proxy.hostDataCatalogUi" .) }}
+
+  middlewares:
+    path-data-catalog-ui:
+      replacePathRegex:
+        regex: "^/data-catalog(.*)"
+        replacement: "/data-catalog/$1"
+
+    host-data-catalog-ui:
+      headers:
+        customRequestHeaders:
+          host: {{ include "traefik-proxy.hostDataCatalogUi" . }}

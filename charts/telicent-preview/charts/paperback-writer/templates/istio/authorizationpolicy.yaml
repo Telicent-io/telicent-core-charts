@@ -1,0 +1,40 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+{{- if .Values.enabled -}}
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+
+metadata:
+  name: {{ include "paperback-writer.fullname" . }}-ingress
+spec:
+  selector:
+    matchLabels:
+    {{- include "paperback-writer.selectorLabels" . | nindent 6 }}
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        principals:
+        {{- include "paperback-writer.ingressPrincipal" . | nindent 8 }}
+    to:
+    - operation:
+        paths:
+        - /annotation
+        - /annotation/*
+        - /document-link
+        - /document-link/*
+        - /object-property
+        - /object-property/*
+        - /availability
+        - /availability/*
+        - /dcat/*
+        - /dcterms/*
+        - /vcard/*
+        - /prov/*
+        - /telicent/*
+        - /ontology/*
+        - /readiness/*
+        - /readiness
+        methods: ["GET", "POST","DELETE"]
+{{- end }}

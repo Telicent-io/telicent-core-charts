@@ -17,7 +17,7 @@ Returns the image registry
 {{- end -}}
 
 {{/*
-Returns the image 
+Returns the image
 */}}
 {{- define "paperback-writer.image" -}}
 {{- printf "%s/%s:%s" (include "paperback-writer.imageRegistry" .) .Values.image.repository  (include "paperback-writer.version" .) }}

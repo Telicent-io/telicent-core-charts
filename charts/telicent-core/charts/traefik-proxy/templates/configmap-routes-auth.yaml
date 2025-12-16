@@ -1,0 +1,18 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: {{ include "traefik-proxy.routesAuthConfigMapName" . }}
+  namespace: {{ include "traefik-proxy.namespace" . | quote }}
+  labels:
+    {{- include "traefik-proxy.labels" . | nindent 4 }}
+
+data:
+  {{- range $path, $content := .Files.Glob "configs/routes/auth/*.yaml" }}
+  {{ printf "auth-%s" ($path | base) }}: |-
+  {{- tpl ($.Files.Get $path) $ | toString | nindent 4 }}
+  {{- end }}

@@ -1,0 +1,27 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+{{- if .Values.global.enterprise }}
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+
+metadata:
+  name: {{ include "graph-ui.fullname" . }}-ingress
+  namespace: {{ include "graph-ui.namespace" . | quote }}
+  labels: 
+    {{- include "graph-ui.labels" . | nindent 4 }}
+
+spec:
+  selector:
+    matchLabels:
+      {{- include "graph-ui.selectorLabels" . | nindent 6 }}
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        principals:
+          {{- include "graph-ui.ingressPrincipal" . | nindent 8 }}
+    to:
+    - operation:
+        methods: ["GET"]
+{{- end }}

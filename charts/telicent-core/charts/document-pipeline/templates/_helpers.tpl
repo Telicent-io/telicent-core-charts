@@ -1,9 +1,24 @@
 {{/*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
+{{/*
 Expand the name of the chart.
 */}}
 {{- define "document-pipeline.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
+
+{{/*
+Allow the release namespace to be overridden.
+*/}}
+{{- define "document-pipeline.namespace" -}}
+{{- if .Values.namespaceOverride -}}
+{{- .Values.namespaceOverride -}}
+{{- else -}}
+{{- .Release.Namespace -}}
+{{- end -}}
+{{- end -}}
 
 {{/*
 Create a default fully qualified app name.
@@ -35,6 +50,7 @@ Common labels
 */}}
 {{- define "document-pipeline.labels" -}}
 helm.sh/chart: {{ include "document-pipeline.chart" . }}
+telicent.io/resource: "true"
 {{ include "document-pipeline.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
@@ -85,6 +101,15 @@ app.kubernetes.io/component: http-ingester
 {{- end }}
 
 {{/*
+Common labels
+*/}}
+{{- define "http-ingester.labels" -}}
+app.kubernetes.io/component: http-ingester
+app: http-ingester
+{{ include "document-pipeline.labels" . }}
+{{- end }}
+
+{{/*
 *************************
 *** Content Extractor ***
 *************************
@@ -108,6 +133,15 @@ app.kubernetes.io/component: content-extractor
 {{- end }}
 
 {{/*
+Common labels
+*/}}
+{{- define "content-extractor.labels" -}}
+app.kubernetes.io/component: content-extractor
+app: content-extractor
+{{ include "document-pipeline.labels" . }}
+{{- end }}
+
+{{/*
 ***********************
 *** Content Indexer ***
 ***********************
@@ -121,6 +155,10 @@ Fullname
 {{ printf "%s-%s" (include "document-pipeline.fullname" .) "content-indexer"}}
 {{- end }}
 
+{{- define "content-indexer.name" -}}
+{{ printf "%s-%s" (include "document-pipeline.name" .) "content-indexer"}}
+{{- end }}
+
 {{/*
 Selector labels
 */}}
@@ -128,6 +166,15 @@ Selector labels
 app.kubernetes.io/name: {{ include "document-pipeline.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 app.kubernetes.io/component: content-indexer
+{{- end }}
+
+{{/*
+Common labels
+*/}}
+{{- define "content-indexer.labels" -}}
+app.kubernetes.io/component: content-indexer
+app: content-indexer
+{{ include "document-pipeline.labels" . }}
 {{- end }}
 
 {{/*
@@ -154,6 +201,15 @@ app.kubernetes.io/component: catalogue-updater
 {{- end }}
 
 {{/*
+Common labels
+*/}}
+{{- define "catalogue-updater.labels" -}}
+app.kubernetes.io/component: catalogue-updater
+app: catalogue-updater
+{{ include "document-pipeline.labels" . }}
+{{- end }}
+
+{{/*
 **********************
 *** Content Tagger ***
 **********************
@@ -176,6 +232,15 @@ app.kubernetes.io/component: content-tagger
 {{- end }}
 
 {{/*
+Common labels
+*/}}
+{{- define "content-tagger.labels" -}}
+app.kubernetes.io/component: content-tagger
+app: content-tagger
+{{ include "document-pipeline.labels" . }}
+{{- end }}
+
+{{/*
 ************************
 *** Entity Extractor ***
 ************************
@@ -195,4 +260,13 @@ Selector labels
 app.kubernetes.io/name: {{ include "document-pipeline.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 app.kubernetes.io/component: entity-extractor
+{{- end }}
+
+{{/*
+Common labels
+*/}}
+{{- define "entity-extractor.labels" -}}
+app.kubernetes.io/component: entity-extractor
+app: entity-extractor
+{{ include "document-pipeline.labels" . }}
 {{- end }}

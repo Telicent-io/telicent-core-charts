@@ -10,6 +10,17 @@ Expand the name of the chart.
 {{- end }}
 
 {{/*
+Allow the release namespace to be overridden.
+*/}}
+{{- define "graph.namespace" -}}
+{{- if .Values.namespaceOverride -}}
+{{- .Values.namespaceOverride -}}
+{{- else -}}
+{{- .Release.Namespace -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
 Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
@@ -35,17 +46,6 @@ Create chart name and version as used by the chart label.
 {{- end }}
 
 {{/*
-Common labels
-*/}}
-{{- define "graph.labels" -}}
-helm.sh/chart: {{ include "graph.chart" . }}
-{{ include "graph.selectorLabels" . }}
-app.kubernetes.io/version: {{ include "graph.version" . | quote }}
-app.kubernetes.io/managed-by: {{ .Release.Service }}
-telicent.io/resource: "true"
-{{- end }}
-
-{{/*
 Selector labels
 */}}
 {{- define "graph.selectorLabels" -}}
@@ -53,73 +53,39 @@ app.kubernetes.io/name: {{ include "graph.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
+{{/*
+Common labels
+*/}}
+{{- define "graph.labels" -}}
+helm.sh/chart: {{ include "graph.chart" . }}
+{{ include "graph.selectorLabels" . }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+app.kubernetes.io/version: {{ include "graph.version" . | quote }}
+app: {{ include "graph.name" . }}
+telicent.io/resource: "true"
+{{- range $key, $value := .Values.commonLabels }}
+{{ $key }}: {{ $value | quote }}
+{{- end }}
+{{- end }}
 
 {{/*
-Create the name of the service account to use
+Create the name of the service account to use (based on the fullname).
 */}}
 {{- define "graph.serviceAccountName" -}}
+{{- if .Values.serviceAccount.create }}
 {{- default (include "graph.fullname" .) .Values.serviceAccount.name }}
-{{ end }}
+{{- else }}
+{{- .Values.serviceAccount.name | default "default" }}
+{{- end }}
+{{- end }}
 
 {{/*
-Create the name of the service to use
+Create the name of the service to use (based on the fullname).
 */}}
 {{- define "graph.serviceName" -}}
-{{ include "graph.fullname" . }}
-{{- end }}
-
-{{/*
-Create the name of the config map
-*/}}
-{{- define "graph.envConfigmapName" -}}
-{{- if .Values.existingConfigmap }}
-{{- .Values.existingConfigmap }}
+{{- if .Values.service.name }}
+{{- .Values.service.name -}}
 {{- else }}
-{{- printf "%s-%s" (include "graph.fullname" .) "env" }}
+{{- include "graph.fullname" . }}
 {{- end }}
-{{- end }}
-
-{{- define "graph.envSecretName" -}}
-{{ include "graph.fullname" . }}
-{{- end }}
-
-{{/*
-Create a fuseki config name to use
-*/}}
-{{- define "graph.fusekiConfig" -}}
-{{ include "graph.fullname" . }}-fuseki
-{{- end }}
-
-{{/* 
-Create Kafka Auth Config name to use
-*/}}
-{{- define "graph.kafkaAuthConfig" -}}
-{{ include "graph.fullname" . }}-kafka-config
-{{- end }}
-
-{{/*
-Search API URL
-*/}}
-{{- define "graph.searchUrl" -}}
-{{- printf "http://%s-search:8181" (.Release.Name) }}
-{{- end }}
-{{/*
-*/}}
-
-{{/*
-Default User Preferences URL
-*/}}
-{{- define "graph.userPreferencesUrl" -}}
-{{- printf "http://%s-access:8080/users/lookup/{user}" (.Release.Name) }}
-{{- end }}
-
-{{/*
-Default Atrribute Hierarchy URL
-*/}}
-{{- define "graph.attributeHierachyUrl" -}}
-{{- printf "http://%s-access:8080/hierarchies/lookup/{name}" (.Release.Name) }}
-{{- end }}
-
-{{- define "graph.ingressPrincipal" -}}
-{{- .Values.istio.ingress.principal | default (printf "cluster.local/ns/%s/sa/%s" .Values.global.istioNamespace .Values.global.istioServiceAccountName) | quote }}
 {{- end }}

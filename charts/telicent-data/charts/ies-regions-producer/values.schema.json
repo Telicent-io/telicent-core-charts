@@ -72,12 +72,12 @@
                         "username": {
                             "type": "string",
                             "description": "Username for Kafka authentication",
-                            "default": "your.kafka.username.here"
+                            "default": ""
                         },
                         "password": {
                             "type": "string",
                             "description": "Password for Kafka authentication",
-                            "default": "your.kafka.password.here"
+                            "default": ""
                         },
                         "protocol": {
                             "type": "string",
@@ -94,7 +94,7 @@
                 "truststore": {
                     "type": "object",
                     "properties": {
-                        "existingSecretName": {
+                        "existingSecret": {
                             "type": "string",
                             "description": "Name of an existing secret containing the truststore",
                             "default": ""
@@ -166,7 +166,7 @@
                 "activeDeadlineSeconds": {
                     "type": "number",
                     "description": "Specifies the duration in seconds relative to the startTime that the job may be active before the system tries to terminate it; value must be positive integer",
-                    "default": 100
+                    "default": 360
                 },
                 "backoffLimit": {
                     "type": "number",

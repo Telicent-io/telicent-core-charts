@@ -10,6 +10,17 @@ Expand the name of the chart.
 {{- end }}
 
 {{/*
+Allow the release namespace to be overridden.
+*/}}
+{{- define "user-preferences.namespace" -}}
+{{- if .Values.namespaceOverride -}}
+{{- .Values.namespaceOverride -}}
+{{- else -}}
+{{- .Release.Namespace -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
 Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
@@ -35,17 +46,6 @@ Create chart name and version as used by the chart label.
 {{- end }}
 
 {{/*
-Common labels
-*/}}
-{{- define "user-preferences.labels" -}}
-helm.sh/chart: {{ include "user-preferences.chart" . }}
-{{ include "user-preferences.selectorLabels" . }}
-app.kubernetes.io/version: {{ include "user-preferences.version" . | quote }}
-app.kubernetes.io/managed-by: {{ .Release.Service }}
-telicent.io/resource: "true"
-{{- end }}
-
-{{/*
 Selector labels
 */}}
 {{- define "user-preferences.selectorLabels" -}}
@@ -54,55 +54,38 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
-Create the name of the service account to use
+Common labels
+*/}}
+{{- define "user-preferences.labels" -}}
+helm.sh/chart: {{ include "user-preferences.chart" . }}
+{{ include "user-preferences.selectorLabels" . }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+app.kubernetes.io/version: {{ include "user-preferences.version" . | quote }}
+app: {{ include "user-preferences.name" . }}
+telicent.io/resource: "true"
+{{- range $key, $value := .Values.commonLabels }}
+{{ $key }}: {{ $value | quote }}
+{{- end }}
+{{- end }}
+
+{{/*
+Create the name of the service account to use (based on the fullname).
 */}}
 {{- define "user-preferences.serviceAccountName" -}}
+{{- if .Values.serviceAccount.create }}
 {{- default (include "user-preferences.fullname" .) .Values.serviceAccount.name }}
-{{ end }}
+{{- else }}
+{{- .Values.serviceAccount.name | default "default" }}
+{{- end }}
+{{- end }}
 
 {{/*
-Create the name of the service to use
+Create the name of the service to use (based on the fullname).
 */}}
 {{- define "user-preferences.serviceName" -}}
-{{ include "user-preferences.fullname" . }}
-{{- end }}
-
-{{- define "user-preferences.envSecretName" -}}
-{{ include "user-preferences.fullname" . }}-server
-{{- end }}
-
-{{/*
-Create the name of the config map
-*/}}
-{{- define "user-preferences.envConfigmapName" -}}
-{{- if .Values.existingConfigmap }}
-{{- .Values.existingConfigmap }}
+{{- if .Values.service.name }}
+{{- .Values.service.name -}}
 {{- else }}
-{{- printf "%s-%s" (include "user-preferences.fullname" .) "env" }}
+{{- include "user-preferences.fullname" . }}
 {{- end }}
-{{- end }}
-
-{{/*
-Create Server config name to use
-*/}}
-{{- define "user-preferences.serverConfig" -}}
-{{ include "user-preferences.fullname" . }}-server-config
-{{- end }}
-
-{{/* 
-Create Kafka Auth Config name to use
-*/}}
-{{- define "user-preferences.kafkaAuthConfig" -}}
-{{ include "user-preferences.fullname" . }}-kafka-config
-{{- end }}
-
-{{/* 
-Create MongoPassword name to use
-*/}}
-{{- define "user-preferences.secret" -}}
-{{ include "user-preferences.fullname" . }}-secret
-{{- end }}
-
-{{- define "user-preferences.ingressPrincipal" -}}
-{{- .Values.istio.ingress.principal | default (printf "cluster.local/ns/%s/sa/%s" .Values.global.istioNamespace .Values.global.istioServiceAccountName) | quote }}
 {{- end }}

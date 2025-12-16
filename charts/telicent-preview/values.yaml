@@ -52,8 +52,8 @@ global:
     mechanism: "SCRAM-SHA-512"
 
   truststore:
-    # @key global.truststore.existingSecretName Name of an existing secret containing the truststore
-    existingSecretName: ""
+    # @key global.truststore.existingSecret Name of an existing secret containing the truststore
+    existingSecret: ""
     # @key global.truststore.mountPath The mount path for the truststore in the container
     mountPath: /app/config/truststore
 
@@ -62,7 +62,7 @@ paperback-writer:
   # @key paperback-writer.enabled Enable or disable the paperback-writer component
   enabled: true
 
-# @section data-catalog Parameters
-data-catalog:
-  # @key data-catalog.enabled Enable or disable the data-catalog component
+# @section data-catalog-ui Parameters
+data-catalog-ui:
+  # @key data-catalog-ui.enabled Enable or disable the data-catalog-ui component
   enabled: true

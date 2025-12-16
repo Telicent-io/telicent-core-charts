@@ -10,7 +10,7 @@ the [Helm](https://helm.sh) package manager.
 ## Prerequisites
 
 - Kubernetes 1.23+
-- Helm 3.8.0+
+- Helm 3.9+
 
 ## Installing the Chart
 
@@ -40,113 +40,165 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ## Configuration and installation details
 
+### Resource requests and limits
+
+These are inside the `resources` value (check parameter table). Setting requests is essential for production workloads
+and these should be adapted to your specific use case.
+
+### Sidecars and Init Containers
+
+If you have a need for additional containers to run within the same pod (e.g. an additional metrics or logging
+exporter), you can do so via the `sidecars` config parameter.
+Define your container according to the Kubernetes container spec.
+
+```yaml
+sidecars:
+- name: your-image-name
+  image: your-image
+  imagePullPolicy: Always
+  ports:
+  - name: portname
+    containerPort: 1234
+```
+
+Similarly, you can add extra init containers using the `initContainers` parameter.
+
+```yaml
+initContainers:
+- name: your-image-name
+  image: your-image
+  imagePullPolicy: Always
+  ports:
+  - name: portname
+    containerPort: 1234
+```
+
+### Setting Pod's affinity
+
+This chart allows you to set your custom affinity using the `affinity` parameter.
+Find more information about Pod's affinity in
+the [kubernetes documentation](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity).
+
+
 ## Parameters
 
 ### Global Parameters
 
-Contains global parameters, these parameters are mirrored across all Telicent Core sub charts, these values will be authoritative.
+Contains global parameters; these parameters are mirrored within the Telicent preview umbrella chart.
+Note: Only global parameters used within this chart will be listed below.
 
-| Name                                  | Description                                                                       | Value                                            |
-| ------------------------------------- | --------------------------------------------------------------------------------- | ------------------------------------------------ |
-| `global.imageRegistry`                | Global image registry                                                             | `""`                                             |
-| `global.imagePullSecrets`             | Global registry secret names as an array                                          | `[]`                                             |
-| `global.enterprise`                   | Enable enterprise mode, adding additional features and configurations             | `false`                                          |
-| `global.appHostDomain`                | Domain associated with Telicent application services                              | `apps.telicent.io`                               |
-| `global.authHostDomain`               | Domain associated with Telicent authentication services, including OIDC providers | `auth.telicent.io`                               |
-| `global.groupsClaim`                  | Key used to retrieve groups from the OIDC provider                                | `groups`                                         |
-| `global.jwksUrl`                      | Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)     | `https://{yourAuthdomain}/.well-known/jwks.json` |
-| `global.istioNamespace`               | Namespace in which Istio is deployed                                              | `istio-system`                                   |
-| `global.istioServiceAccountName`      | Name of the Istio service account                                                 | `istio-ingress`                                  |
-| `global.istioGatewayName`             | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)         | `ingress-gateway`                                |
-| `global.kafkaBootstrapUrls`           | Comma separated list containing Kafka bootstrap URLs                              | `kafka-bootstrap.kafka.svc.cluster.local:9092`   |
-| `global.existingConfigSecretName`     | Name of an existing secret containing Kafka configuration                         | `""`                                             |
-| `global.kafkaConfigUsername`          | Username for Kafka authentication                                                 | `your.kafka.username.here`                       |
-| `global.kafkaConfigPassword`          | Password for Kafka authentication                                                 | `your.kafka.password.here`                       |
-| `global.kafkaConfigProtocol`          | Protocol used for Kafka communication                                             | `SASL_SSL`                                       |
-| `global.kafkaConfigMechanism`         | SASL mechanism used for Kafka authentication                                      | `SCRAM-SHA-512`                                  |
-| `global.existingTruststoreSecretName` | Name of an existing secret containing the truststore                              | `""`                                             |
-| `global.truststore.mountPath`         | The mount path for the truststore in the container                                | `/app/config/truststore`                         |
+| Name                             | Description                                                                                                                                         | Value              |
+| -------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
+| `global.imageRegistry`           | Global image registry                                                                                                                               | `""`               |
+| `global.imagePullSecrets`        | Global registry secret names as an array                                                                                                            | `[]`               |
+| `global.enabled`                 | enabled Enable *Paperback Writer* deployment                                                                                                        | `false`            |
+| `global.releaseNameTelicentCore` | Release name used during the Telicent Core chart installation. Note: ensure the value is correct, otherwise there will be no access to auth & graph | `""`               |
+| `global.appHostDomain`           | Domain associated with Telicent application/ui services                                                                                             | `apps.telicent.io` |
+| `global.apiHostDomain`           | Domain associated with Telicent Api services                                                                                                        | `api.telicent.io`  |
+| `global.authHostDomain`          | Domain associated with Telicent authentication services, including OIDC providers                                                                   | `auth.telicent.io` |
 
-### Chart Parameters
+### Application Parameters - Sparql
 
-| Name           | Description                                   | Value   |
-| -------------- | --------------------------------------------- | ------- |
-| `enabled`      | Enable paperback-writer deployment            | `false` |
-| `replicaCount` | Number of paperback-writer replicas to deploy | `1`     |
+| Name                  | Description                      | Value |
+| --------------------- | -------------------------------- | ----- |
+| `sparql.defaultLabel` | Default label for SPARQL queries | `!`   |
 
-### Image Parameters
+### ConfigMap Parameters
 
-| Name               | Description                                                          | Value                                |
-| ------------------ | -------------------------------------------------------------------- | ------------------------------------ |
-| `image.repository` | paperback-writer image repository                                    | `telicent/telicent-paperback-writer` |
-| `image.pullPolicy` | paperback-writer image pull policy                                   | `IfNotPresent`                       |
-| `image.tag`        | paperback-writer image tag. If not set, defaults to chart appVersion | `""`                                 |
-| `imagePullSecrets` | Specify registry secret names as an array                            | `[]`                                 |
-| `nameOverride`     | String to replace the name of the chart in the Chart.yaml file       | `""`                                 |
-| `fullnameOverride` | String to fully override the generated release name                  | `""`                                 |
+| Name                             | Description                                                                        | Value |
+| -------------------------------- | ---------------------------------------------------------------------------------- | ----- |
+| `configMap.existingEnvConfigMap` | Name of existing configmap containing *Paperback Writer* Environment Configuration | `""`  |
+
+### Common Parameters
+
+| Name                | Description                                                            | Value |
+| ------------------- | ---------------------------------------------------------------------- | ----- |
+| `nameOverride`      | String to partially override fullname (will maintain the release name) | `""`  |
+| `fullnameOverride`  | String to fully override the generated release name                    | `""`  |
+| `namespaceOverride` | String to fully override all deployed resources namespace              | `""`  |
+| `commonLabels`      | Add labels to all the deployed resources                               | `{}`  |
+
+### Deployment Parameters
+
+| Name                   | Description                                                             | Value |
+| ---------------------- | ----------------------------------------------------------------------- | ----- |
+| `replicas`             | Number of *Paperback Writer* replicas to deploy                         | `1`   |
+| `revisionHistoryLimit` | Number of controller revisions to keep                                  | `5`   |
+| `annotations`          | Add extra annotations to the deployment object                          | `{}`  |
+| `podLabels`            | Add extra labels to the *Paperback Writer* pod                          | `{}`  |
+| `podAnnotations`       | Add extra annotations to the *Paperback Writer* pod                     | `{}`  |
+| `extraEnvVars`         | Array with extra environment variables to add to *Paperback Writer* pod | `[]`  |
+| `extraVolumes`         | Optionally specify extra list of additional volumes                     | `[]`  |
+| `extraVolumeMounts`    | Optionally specify extra list of additional volumeMounts                | `[]`  |
+| `initContainers`       | Add init containers to the pod                                          | `[]`  |
+| `sidecars`             | Add sidecars to the pod                                                 | `[]`  |
+
+### Deployment Image Parameters
+
+| Name                | Description                                                                       | Value                                |
+| ------------------- | --------------------------------------------------------------------------------- | ------------------------------------ |
+| `image.registry`    | *Paperback Writer* image registry                                                 | `quay.io`                            |
+| `image.repository`  | *Paperback Writer* image name                                                     | `telicent/telicent-paperback-writer` |
+| `image.tag`         | *Paperback Writer* image tag. If not set, a tag is generated using the appVersion | `""`                                 |
+| `image.pullPolicy`  | *Paperback Writer* image pull policy                                              | `IfNotPresent`                       |
+| `image.pullSecrets` | Specify registry secret names as an array                                         | `[]`                                 |
+
+### Deployment Resources Parameters - Requests and Limits
+
+| Name                        | Description                    | Value    |
+| --------------------------- | ------------------------------ | -------- |
+| `resources.requests.cpu`    | Set containers' CPU request    | `250m`   |
+| `resources.requests.memory` | Set containers' memory request | `1000Mi` |
+| `resources.limits.cpu`      | Set containers' CPU limit      | `500m`   |
+| `resources.limits.memory`   | Set containers' memory limit   | `2000Mi` |
+
+### Statefulset Security Context Parameters - Default Security Context
+
+| Name                                                | Description                                                             | Value            |
+| --------------------------------------------------- | ----------------------------------------------------------------------- | ---------------- |
+| `podSecurityContext.runAsUser`                      | Set the provisioning pod's Security Context runAsUser User ID           | `185`            |
+| `podSecurityContext.runAsGroup`                     | Set the provisioning pod's Security Context runAsGroup Group ID         | `185`            |
+| `podSecurityContext.runAsNonRoot`                   | Set the provisioning pod's Security Context runAsNonRoot                | `true`           |
+| `podSecurityContext.fsGroup`                        | Set the provisioning pod's Group ID for the mounted volumes' filesystem | `185`            |
+| `podSecurityContext.seccompProfile.type`            | Set the provisioning pod's Security Context seccomp profile             | `RuntimeDefault` |
+| `containerSecurityContext.runAsUser`                | Set containers' Security Context runAsUser User ID                      | `185`            |
+| `containerSecurityContext.runAsGroup`               | Set containers' Security Context runAsGroup Group ID                    | `185`            |
+| `containerSecurityContext.runAsNonRoot`             | Set container's Security Context runAsNonRoot                           | `true`           |
+| `containerSecurityContext.allowPrivilegeEscalation` | Set container's Security Context allowPrivilegeEscalation               | `false`          |
+| `containerSecurityContext.capabilities.drop`        | List of capabilities to be dropped                                      | `["ALL"]`        |
+| `containerSecurityContext.seccompProfile.type`      | Set container's Security Context seccomp profile                        | `RuntimeDefault` |
+| `affinity`                                          | Affinity for pod assignment                                             | `{}`             |
+| `nodeSelector`                                      | Node labels for pod assignment                                          | `{}`             |
+| `tolerations`                                       | Tolerations for pod assignment                                          | `[]`             |
 
 ### Service Account Parameters
 
-| Name                         | Description                                                                                                       | Value  |
-| ---------------------------- | ----------------------------------------------------------------------------------------------------------------- | ------ |
-| `serviceAccount.create`      | Specifies whether a service account should be created                                                             | `true` |
-| `serviceAccount.automount`   | Automatically mount a ServiceAccount's API credentials                                                            | `true` |
-| `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                                              | `{}`   |
-| `serviceAccount.name`        | Name of the ServiceAccount to use. If not set and create is true, a name is generated using the fullname template | `""`   |
+| Name                         | Description                                                                           | Value  |
+| ---------------------------- | ------------------------------------------------------------------------------------- | ------ |
+| `serviceAccount.create`      | Specifies whether a service account should be created                                 | `true` |
+| `serviceAccount.name`        | Name of the ServiceAccount to use. If not set, a name is generated using the fullname | `""`   |
+| `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                  | `{}`   |
+| `serviceAccount.automount`   | Automatically mount a ServiceAccount's API credentials                                | `true` |
 
-### Pod Parameters
+### Traffic Exposure Parameters
 
-| Name                 | Description                        | Value |
-| -------------------- | ---------------------------------- | ----- |
-| `podAnnotations`     | Additional annotations for the pod | `{}`  |
-| `podLabels`          | Additional labels for the pod      | `{}`  |
-| `podSecurityContext` | security context for the pod       | `{}`  |
-| `securityContext`    | security context for the container | `{}`  |
+| Name           | Description                                                                         | Value       |
+| -------------- | ----------------------------------------------------------------------------------- | ----------- |
+| `service.name` | *Paperback Writer* service name. If not set, a name is generated using the fullname | `""`        |
+| `service.port` | *Paperback Writer* service port                                                     | `8080`      |
+| `service.type` | *Paperback Writer* service type                                                     | `ClusterIP` |
 
-### Service Parameters
+### Host(s) Core Parameters - Contains host information for applications deployed via *telicent-core* chart
 
-| Name           | Description                                    | Value       |
-| -------------- | ---------------------------------------------- | ----------- |
-| `service.type` | paperback-writer service type                  | `ClusterIP` |
-| `service.port` | paperback-writer service port                  | `8000`      |
-| `resources`    | Resource requests and limits for the container | `{}`        |
+*Paperback Writer* interacts with applications deployed via *telicent-core* using their default service/serviceAccount and port.
+If either of those details changes, you can use this section to correctly refer to those applications.
 
-### Probe Parameters
-
-| Name                          | Description              | Value           |
-| ----------------------------- | ------------------------ | --------------- |
-| `livenessProbe.httpGet.path`  | Path for liveness probe  | `/availability` |
-| `livenessProbe.httpGet.port`  | Port for liveness probe  | `http`          |
-| `readinessProbe.httpGet.path` | Path for readiness probe | `/availability` |
-| `readinessProbe.httpGet.port` | Port for readiness probe | `http`          |
-
-### Volume Parameters
-
-| Name           | Description                                                 | Value |
-| -------------- | ----------------------------------------------------------- | ----- |
-| `volumes`      | Additional volumes on the output Deployment definition      | `[]`  |
-| `volumeMounts` | Additional volumeMounts on the output Deployment definition | `[]`  |
-| `nodeSelector` | Node labels for pod assignment                              | `{}`  |
-| `tolerations`  | Tolerations for pod assignment                              | `[]`  |
-| `affinity`     | Affinity for pod assignment                                 | `{}`  |
-
-### Application Configuration
-
-| Name                               | Description                                                                                                                                                                  | Value           |
-| ---------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- |
-| `configuration.sparqlUrl`          | SPARQL endpoint URL. Defaults to http://release-name-graph.release-namespace.svc.cluster.local:3030                                                                          | `""`            |
-| `configuration.sparqlUser`         | SPARQL endpoint username. Use existing secret to set these values if possible (.Values.existingSecretName)                                                                   | `""`            |
-| `configuration.sparqlPwd`          | SPARQL endpoint password. Use existing secret to set these values if possible (.Values.existingSecretName)                                                                   | `""`            |
-| `configuration.sparqlDefaultLabel` | Default label for SPARQL queries                                                                                                                                             | `!`             |
-| `configuration.jwksDisabled`       | Disable JWKS validation                                                                                                                                                      | `false`         |
-| `configuration.jwtHeader`          | JWT header name                                                                                                                                                              | `Authorization` |
-| `configuration.accessApiUrl`       | URL for the Access API. Defaults to http://release-name-access-api.release-namespace.svc.cluster.local:8080                                                                  | `""`            |
-| `configuration.cacertPath`         | Path to CA certs in the container                                                                                                                                            | `""`            |
-| `existingConfigMapName`            | Name of an existing ConfigMap to use for configuration                                                                                                                       | `""`            |
-| `existingSecretName`               | Name of an existing Secret to use for credentials                                                                                                                            | `""`            |
-| `existingCacertConfigmapName`      | Name of an existing ConfigMap to use for CA certs. If not set, and cacert is provided, a ConfigMap will be created                                                           | `""`            |
-| `cacert`                           | CA certificate data in PEM format                                                                                                                                            | `""`            |
-| `istio.ingress.principal`          | Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName' | `""`            |
+| Name                          | Description                                                                                                                                     | Value                |
+| ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
+| `hostsCore.enableAutoCorrect` | Prefix 'global.releaseNameTelicentCore' value to each host value. Alternatively, the host value will be used as it is, without any modification | `true`               |
+| `hostsCore.traefikProxy`      | Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'                                                       | `traefik-proxy:8080` |
+| `hostsCore.auth`              | Auth application default host value, as defined by 'service/serviceAccount:port'                                                                | `auth:8080`          |
+| `hostsCore.graph`             | Graph application host value, as defined by 'service/serviceAccount:port'                                                                       | `graph:8080`         |
 
 
 ## License

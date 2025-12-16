@@ -64,7 +64,7 @@ Contains global parameters, these parameters are mirrored across all Telicent Pr
 | `global.kafka.password`                 | Password for Kafka authentication                                                 | `your.kafka.password.here`                       |
 | `global.kafka.protocol`                 | Protocol used for Kafka communication                                             | `SASL_SSL`                                       |
 | `global.kafka.mechanism`                | SASL mechanism used for Kafka authentication                                      | `SCRAM-SHA-512`                                  |
-| `global.truststore.existingSecretName`  | Name of an existing secret containing the truststore                              | `""`                                             |
+| `global.truststore.existingSecret`      | Name of an existing secret containing the truststore                              | `""`                                             |
 | `global.truststore.mountPath`           | The mount path for the truststore in the container                                | `/app/config/truststore`                         |
 
 ### paperback-writer Parameters
@@ -73,11 +73,11 @@ Contains global parameters, these parameters are mirrored across all Telicent Pr
 | -------------------------- | ------------------------------------------------ | ------ |
 | `paperback-writer.enabled` | Enable or disable the paperback-writer component | `true` |
 
-### data-catalog Parameters
+### data-catalog-ui Parameters
 
-| Name                   | Description                                  | Value  |
-| ---------------------- | -------------------------------------------- | ------ |
-| `data-catalog.enabled` | Enable or disable the data-catalog component | `true` |
+| Name                      | Description                                     | Value  |
+| ------------------------- | ----------------------------------------------- | ------ |
+| `data-catalog-ui.enabled` | Enable or disable the data-catalog-ui component | `true` |
 
 ## Subchart configurations
 

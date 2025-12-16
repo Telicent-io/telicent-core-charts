@@ -72,12 +72,12 @@
                         "username": {
                             "type": "string",
                             "description": "Username for Kafka authentication",
-                            "default": "your.kafka.username.here"
+                            "default": ""
                         },
                         "password": {
                             "type": "string",
                             "description": "Password for Kafka authentication",
-                            "default": "your.kafka.password.here"
+                            "default": ""
                         },
                         "protocol": {
                             "type": "string",
@@ -94,7 +94,7 @@
                 "truststore": {
                     "type": "object",
                     "properties": {
-                        "existingSecretName": {
+                        "existingSecret": {
                             "type": "string",
                             "description": "Name of an existing secret containing the truststore",
                             "default": ""

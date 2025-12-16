@@ -1,9 +1,24 @@
 {{/*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
+{{/*
 Expand the name of the chart.
 */}}
 {{- define "auth.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
+
+{{/*
+Allow the release namespace to be overridden.
+*/}}
+{{- define "auth.namespace" -}}
+{{- if .Values.namespaceOverride -}}
+{{- .Values.namespaceOverride -}}
+{{- else -}}
+{{- .Release.Namespace -}}
+{{- end -}}
+{{- end -}}
 
 {{/*
 Create a default fully qualified app name.
@@ -31,18 +46,6 @@ Create chart name and version as used by the chart label.
 {{- end }}
 
 {{/*
-Common labels
-*/}}
-{{- define "auth.labels" -}}
-helm.sh/chart: {{ include "auth.chart" . }}
-{{ include "auth.selectorLabels" . }}
-{{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
-{{- end }}
-app.kubernetes.io/managed-by: {{ .Release.Service }}
-{{- end }}
-
-{{/*
 Selector labels
 */}}
 {{- define "auth.selectorLabels" -}}
@@ -51,37 +54,38 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
-Create the name of the service account to use
+Common labels
+*/}}
+{{- define "auth.labels" -}}
+helm.sh/chart: {{ include "auth.chart" . }}
+{{ include "auth.selectorLabels" . }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+app.kubernetes.io/version: {{ include "auth.version" . | quote }}
+app: {{ include "auth.name" . }}
+telicent.io/resource: "true"
+{{- range $key, $value := .Values.commonLabels }}
+{{ $key }}: {{ $value | quote }}
+{{- end }}
+{{- end }}
+
+{{/*
+Create the name of the service account to use (based on the fullname).
 */}}
 {{- define "auth.serviceAccountName" -}}
-{{- default (printf "%s" (include "auth.fullname" .)) .Values.serviceAccount.name }}
+{{- if .Values.serviceAccount.create }}
+{{- default (include "auth.fullname" .) .Values.serviceAccount.name }}
+{{- else }}
+{{- .Values.serviceAccount.name | default "default" }}
+{{- end }}
 {{- end }}
 
 {{/*
-Create the name of the service to use
+Create the name of the service to use (based on the fullname).
 */}}
 {{- define "auth.serviceName" -}}
+{{- if .Values.service.name }}
+{{- .Values.service.name -}}
+{{- else }}
 {{- include "auth.fullname" . }}
 {{- end }}
-
-{{/*
-Create the name of the environment variables config map
-*/}}
-{{- define "auth.envConfigMapName" -}}
-{{- printf "%s-%s" (include "auth.fullname" .) "env" }}
-{{- end }}
-
-{{/*
-Create the name of the clients config map
-*/}}
-{{- define "auth.clientsConfigMapName" -}}
-{{- if .Values.clients.existingConfigmap }}
-{{- .Values.clients.existingConfigmap }}
-{{- else }}
-{{- printf "%s-%s" (include "auth.fullname" .) "clients" }}
-{{- end }}
-{{- end }}
-
-{{- define "auth.ingressPrincipal" -}}
-{{- .Values.istio.ingress.principal | default (printf "cluster.local/ns/%s/sa/%s" .Values.global.istioNamespace .Values.global.istioServiceAccountName) | quote }}
 {{- end }}

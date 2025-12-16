@@ -1,0 +1,21 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
+{{- if .Values.istio.virtualService.enabled }}
+apiVersion: security.istio.io/v1
+kind: RequestAuthentication
+
+metadata:
+  name: {{ include "oauth2-proxy.name" . }}-authenticate-req
+  namespace: {{ include "oauth2-proxy.namespace" . | quote }}
+  labels:
+    {{- include "oauth2-proxy.labels" . | nindent 4 }}
+
+spec:
+  jwtRules:
+    - forwardOriginalToken: true
+      issuer: {{ required "A valid .Values.idp.issuerUrl entry required!" .Values.idp.issuerUrl | quote }}
+      jwksUri: {{ printf "%s%s" .Values.idp.issuerUrl .Values.idp.jwksPath | quote }}
+
+{{- end }}

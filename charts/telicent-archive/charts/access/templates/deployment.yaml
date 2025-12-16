@@ -1,0 +1,139 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: {{ include "access.fullname" . }}
+  namespace: {{ include "access.namespace" . | quote }}
+  labels:
+    {{- include "access.labels" . | nindent 4 }}
+  {{- with .Values.annotations }}
+  annotations: 
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+
+spec:
+  replicas: {{ .Values.replicas }}
+  revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      {{- include "access.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+      {{- include "access.labels" . | nindent 8 }}
+      {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        {{- with .Values.podAnnotations }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+
+    spec:
+      serviceAccountName: {{ include "access.serviceAccountName" . }}
+      securityContext: {{- toYaml .Values.podSecurityContext | nindent 8 }}
+
+      {{- $pullSecret := .Values.global.imagePullSecrets | default .Values.image.pullSecrets }}
+      {{- with $pullSecret }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 6 }}
+      {{- end }}
+      {{- if .Values.initContainers }}
+      initContainers:
+      {{- with .Values.initContainers }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- end }}
+      containers:
+      - name: {{ .Chart.Name }}
+        image: {{ include "access.image" . }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        resources: {{- toYaml .Values.resources | nindent 10 }}
+        securityContext: {{- toYaml .Values.containerSecurityContext | nindent 10 }}
+
+        env:
+        {{- if or .Values.existingCacertConfigmap .Values.existingCacertSecretName .Values.cacert }}
+        - name: NODE_EXTRA_CA_CERTS
+          value: "/certs/ca.crt"
+        {{- end }}
+        - name: MONGO_USER
+          valueFrom:
+            secretKeyRef:
+              key: username
+              name: {{ include "access.mongoSecretName" . }}
+        - name: MONGO_PWD
+          valueFrom:
+            secretKeyRef:
+              key: password
+              name: {{ include "access.mongoSecretName" . }}
+        {{- range .Values.extraEnvVars }}
+        - name: {{ .name }}
+          value: {{ .value | quote }}
+        {{- end }}
+        envFrom:
+        - configMapRef:
+            name: {{ include "access.envConfigmapName" . }}
+
+        ports:
+        - name: http
+          protocol: TCP
+          containerPort: 8080
+
+        volumeMounts:
+        {{- if or .Values.existingCacertConfigmap .Values.existingCacertSecretName .Values.cacert }}
+        - name: cert-volume
+          mountPath: /certs
+        {{- end }}
+        {{- if contains "tls=true" .Values.mongo.connectionStringOptions }}
+        - name: ca-certificate-volume
+          mountPath: {{ .Values.mongo.cacertPath | default "/app/config/ca-certificate" }}
+        {{- end }}
+        {{- with .Values.extraVolumeMounts }}
+          {{- toYaml . | nindent 12 }}
+        {{- end }}
+
+      {{- with .Values.sidecars }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+      {{- if or .Values.existingCacertConfigmap .Values.existingCacertSecretName .Values.cacert }}
+      - name: cert-volume
+        {{- if .Values.existingCacertSecretName }}
+        secret:
+          secretName: {{ .Values.existingCacertSecretName }}
+        {{- else }}
+        configMap:
+          name: {{ include "access.cacertConfigmapName" . }}
+        {{- end }}
+      {{- end }}
+      {{- if .Values.mongo.existingCaSecret }}
+      - name: ca-certificate-volume
+        secret:
+          secretName: {{ .Values.mongo.existingCaSecret }}
+      {{- end }}
+      {{- with .Values.extraVolumes }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

@@ -62,11 +62,11 @@ These parameters can be referenced in sub-charts as `.Values.global.<parameter-n
 | --------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
 | `global.kafka.bootstrapServers`         | Comma separated list containing Kafka bootstrap servers                                                           | `kafka-bootstrap.kafka.svc.cluster.local:9092` |
 | `global.kafka.existingConfigSecretName` | Name of an existing secret containing Kafka configuration (preferred over individual settings below for security) | `""`                                           |
-| `global.kafka.username`                 | Username for Kafka authentication                                                                                 | `your.kafka.username.here`                     |
-| `global.kafka.password`                 | Password for Kafka authentication                                                                                 | `your.kafka.password.here`                     |
+| `global.kafka.username`                 | Username for Kafka authentication                                                                                 | `""`                                           |
+| `global.kafka.password`                 | Password for Kafka authentication                                                                                 | `""`                                           |
 | `global.kafka.protocol`                 | Protocol used for Kafka communication                                                                             | `SASL_SSL`                                     |
 | `global.kafka.mechanism`                | SASL mechanism used for Kafka authentication                                                                      | `SCRAM-SHA-512`                                |
-| `global.truststore.existingSecretName`  | Name of an existing secret containing the truststore                                                              | `""`                                           |
+| `global.truststore.existingSecret`      | Name of an existing secret containing the truststore                                                              | `""`                                           |
 | `global.truststore.mountPath`           | The mount path for the truststore in the container                                                                | `/app/config/truststore`                       |
 
 ### Deployment Parameters
@@ -97,7 +97,7 @@ These parameters can be referenced in sub-charts as `.Values.global.<parameter-n
 
 | Name                          | Description                                                                                                                                                    | Value |
 | ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
-| `job.activeDeadlineSeconds`   | Specifies the duration in seconds relative to the startTime that the job may be active before the system tries to terminate it; value must be positive integer | `100` |
+| `job.activeDeadlineSeconds`   | Specifies the duration in seconds relative to the startTime that the job may be active before the system tries to terminate it; value must be positive integer | `360` |
 | `job.backoffLimit`            | Specifies the number of retries before marking this job as failed                                                                                              | `3`   |
 | `job.completions`             | Specifies the desired number of successfully finished pods the job should be run with                                                                          | `1`   |
 | `job.parallelism`             | Specifies the maximum desired number of pods the job should run at any given time                                                                              | `1`   |

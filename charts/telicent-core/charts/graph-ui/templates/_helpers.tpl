@@ -10,6 +10,17 @@ Expand the name of the chart.
 {{- end }}
 
 {{/*
+Allow the release namespace to be overridden.
+*/}}
+{{- define "graph-ui.namespace" -}}
+{{- if .Values.namespaceOverride -}}
+{{- .Values.namespaceOverride -}}
+{{- else -}}
+{{- .Release.Namespace -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
 Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
@@ -35,17 +46,6 @@ Create chart name and version as used by the chart label.
 {{- end }}
 
 {{/*
-Common labels
-*/}}
-{{- define "graph-ui.labels" -}}
-helm.sh/chart: {{ include "graph-ui.chart" . }}
-{{ include "graph-ui.selectorLabels" . }}
-app.kubernetes.io/version: {{ include "graph-ui.version" . | quote }}
-app.kubernetes.io/managed-by: {{ .Release.Service }}
-telicent.io/resource: "true"
-{{- end }}
-
-{{/*
 Selector labels
 */}}
 {{- define "graph-ui.selectorLabels" -}}
@@ -54,33 +54,38 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
-Create the name of the service account to use
+Common labels
+*/}}
+{{- define "graph-ui.labels" -}}
+helm.sh/chart: {{ include "graph-ui.chart" . }}
+{{ include "graph-ui.selectorLabels" . }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+app.kubernetes.io/version: {{ include "graph-ui.version" . | quote }}
+app: {{ include "graph-ui.name" . }}
+telicent.io/resource: "true"
+{{- range $key, $value := .Values.commonLabels }}
+{{ $key }}: {{ $value | quote }}
+{{- end }}
+{{- end }}
+
+{{/*
+Create the name of the service account to use (based on the fullname).
 */}}
 {{- define "graph-ui.serviceAccountName" -}}
+{{- if .Values.serviceAccount.create }}
 {{- default (include "graph-ui.fullname" .) .Values.serviceAccount.name }}
+{{- else }}
+{{- .Values.serviceAccount.name | default "default" }}
+{{- end }}
 {{- end }}
 
 {{/*
-Create the name of the service to use
+Create the name of the service to use (based on the fullname).
 */}}
 {{- define "graph-ui.serviceName" -}}
+{{- if .Values.service.name }}
+{{- .Values.service.name -}}
+{{- else }}
 {{- include "graph-ui.fullname" . }}
 {{- end }}
-
-{{/*
-Create the name of the config map
-*/}}
-{{- define "graph-ui.configMapName" -}}
-{{- printf "%s-%s" (include "graph-ui.fullname" .) "env-configjs" }}
-{{- end }}
-
-{{/*
-Create the name of the config secret
-*/}}
-{{- define "graph-ui.configSecretName" -}}
-{{- printf "%s-%s" (include "graph-ui.fullname" .) "secret-config-js" }}
-{{- end }}
-
-{{- define "graph-ui.ingressPrincipal" -}}
-{{- .Values.istio.ingress.principal | default (printf "cluster.local/ns/%s/sa/%s" .Values.global.istioNamespace .Values.global.istioServiceAccountName) | quote }}
 {{- end }}

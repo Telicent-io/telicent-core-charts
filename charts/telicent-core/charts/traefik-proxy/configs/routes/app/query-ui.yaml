@@ -1,0 +1,28 @@
+# Declare routers / services / middlewares
+http:
+  routers:
+    query-ui:
+      rule: {{ printf "Host(`%s`) && PathPrefix(`/query`)" .Values.global.appHostDomain }}
+      service: query-ui
+      entryPoints:
+        - web-app
+      middleWares:
+        - path-query-ui
+        - host-query-ui
+
+  services:
+    query-ui:
+      loadBalancer:
+        servers:
+          - url: {{ printf "http://%s"  (include "traefik-proxy.hostQueryUi" .) }}
+
+  middlewares:
+    path-query-ui:
+      replacePathRegex:
+        regex: "^/query(.*)"
+        replacement: "/query/$1"
+
+    host-query-ui:
+      headers:
+        customRequestHeaders:
+          host: {{ include "traefik-proxy.hostQueryUi" . }}

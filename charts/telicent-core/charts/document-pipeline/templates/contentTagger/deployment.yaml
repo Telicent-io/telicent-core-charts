@@ -1,12 +1,27 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
 {{- if .Values.enabled -}}
 apiVersion: apps/v1
 kind: Deployment
+
 metadata:
   name: {{ include "content-tagger.fullname" . }}
+  namespace: {{ include "document-pipeline.namespace" . | quote }}
   labels:
-    {{- include "document-pipeline.labels" . | nindent 4 }}
+    {{- include "content-tagger.labels" . | nindent 4 }}
+  {{- with .Values.contentTagger.annotations }}
+  annotations: 
+    {{- toYaml . | nindent 4 }}
+  {{- end }} 
+
 spec:
-  replicas: {{ .Values.contentTagger.replicaCount }}
+  replicas: {{ .Values.contentTagger.replicas }}
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
   selector:
     matchLabels:
       {{- include "content-tagger.selectorLabels" . | nindent 6 }}
@@ -17,104 +32,89 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "document-pipeline.labels" . | nindent 8 }}
-        {{- include "content-tagger.selectorLabels" . | nindent 8 }}
+        {{- include "content-tagger.labels" . | nindent 8 }}
         {{- with .Values.contentTagger.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
+    
     spec:
-      {{- with .Values.contentTagger.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
       serviceAccountName: {{ include "document-pipeline.serviceAccountName" . }}
-      {{- with .Values.contentTagger.podSecurityContext }}
-      securityContext:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- $pullSecret := .Values.global.imagePullSecrets | default .Values.imagePullSecrets }}
+      securityContext: {{ .Values.contentTagger.podSecurityContext | default .Values.podSecurityContext | toYaml | nindent 8 }}
+
+      {{- $pullSecret := .Values.global.imagePullSecrets | default .Values.contentTagger.image.pullSecrets }}
       {{- with $pullSecret }}
       imagePullSecrets:
         {{- toYaml . | nindent 6 }}
       {{- end }}
-      containers:
-        - name: {{ .Chart.Name }}
-          {{- with .Values.contentTagger.securityContext }}
-          securityContext:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-          # command: ["tail", "-f", "/dev/null"]
-          env:
-            - name: SOURCE_TOPIC
-              value: {{ .Values.contentTagger.configuration.inputTopic | quote }}
-            - name: TARGET_TOPIC
-              value: {{ .Values.contentTagger.configuration.outputTopic | quote }}
-            - name: RDF_TAGGER_DATA_URI_STUB
-              value: {{ .Values.contentTagger.configuration.rdfTaggerDataUriStub | quote }}
-            - name: DCT_URI
-              value: {{ .Values.contentTagger.configuration.dctUri | quote }}
-            - name: IES_URI
-              value: {{ .Values.contentTagger.configuration.iesUri | quote }}
-            - name: TONT_URI
-              value: {{ .Values.contentTagger.configuration.tontUri | quote }}
-            - name: iso3166_URI
-              value: {{ .Values.contentTagger.configuration.iso3166Uri | quote }}
-            - name: LOGGING_LEVEL
-              value: {{ .Values.contentTagger.configuration.loggingLevel | quote }}
-            - name: BOOTSTRAP_SERVERS
-              value: {{ .Values.global.kafka.bootstrapServers | quote }}
-            - name: KAFKA_CONFIG_FILE_PATH
-              value: /app/config/kafka-auth/kafka-config.toml
-            - name: KAFKA_CONFIG_MODE
-              value: {{ .Values.contentTagger.configuration.kafkaConfigMode | quote }}
-
-          image: "{{ .Values.contentTagger.image.registry | default .Values.global.imageRegistry }}/{{ .Values.contentTagger.image.repository }}:{{ .Values.contentTagger.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.contentTagger.image.pullPolicy }}
-          {{- with .Values.contentTagger.resources }}
-          resources:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-          volumeMounts:
-          {{- if or .Values.contentTagger.cacert .Values.contentTagger.existingCacertConfigmapName }}
-          - name: certs
-            mountPath: /app/config/truststore/
-            readOnly: true
-          {{- end }}
-          - mountPath: /app/config/kafka-auth/
-            name: kafka-auth-config
-          {{- with .Values.contentTagger.volumeMounts }}
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-      {{- with .Values.extraContainers }}
+      {{- if .Values.contentTagger.initContainers }}
+      initContainers:
+      {{- with .Values.contentTagger.initContainers }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      volumes:
-        {{- if or .Values.contentTagger.cacert .Values.contentTagger.existingCacertConfigmapName }}
-        - name: certs
-          configMap:
-            {{- if .Values.contentTagger.existingCacertConfigmapName }}
-            name: {{ .Values.contentTagger.existingCacertConfigmapName }}
-            {{- else if .Values.contentTagger.cacert }}
-            name: {{ include "content-tagger.fullname" . }}-cacert
-            {{- end }}
-            optional: true
-        {{- end }}
+      {{- end }}
+      containers:
+      - name: {{ .Chart.Name }}
+        image: {{ include "content-tagger.image" . }}
+        imagePullPolicy: {{ .Values.contentTagger.image.pullPolicy }}
+        resources: {{ .Values.contentTagger.resources | default .Values.resources | toYaml | nindent 10 }}
+        securityContext: {{ .Values.contentTagger.containerSecurityContext | default .Values.containerSecurityContext | toYaml | nindent 10 }}
+
+        env:
+        - name: KAFKA_CONFIG_FILE_PATH
+          value: /app/config/kafka-auth/kafka-config.toml
+        - name: BOOTSTRAP_SERVERS
+          value: {{ .Values.global.kafka.bootstrapServers | quote }}
+        - name: KAFKA_CONFIG_MODE
+          value: {{ .Values.contentTagger.topics.kafkaConfigMode | quote }}
+        - name: LOGGING_LEVEL
+          value: {{ .Values.contentTagger.topics.loggingLevel | quote }}
+        - name: SOURCE_TOPIC
+          value: {{ .Values.contentTagger.topics.inputTopic | quote }}
+        - name: TARGET_TOPIC
+          value: {{ .Values.contentTagger.topics.outputTopic | quote }}
+        - name: RDF_TAGGER_DATA_URI_STUB
+          value: {{ .Values.contentTagger.topics.rdfTaggerDataUriStub | quote }}
+        - name: DCT_URI
+          value: {{ .Values.contentTagger.topics.dctUri | quote }}
+        - name: IES_URI
+          value: {{ .Values.contentTagger.topics.iesUri | quote }}
+        - name: TONT_URI
+          value: {{ .Values.contentTagger.topics.tontUri | quote }}
+        - name: iso3166_URI
+          value: {{ .Values.contentTagger.topics.iso3166Uri | quote }}
+        {{- range .Values.contentTagger.extraEnvVars }}
+        - name: {{ .name }}
+          value: {{ .value | quote }}
+        {{- end }}   
+
+        volumeMounts:
         - name: kafka-auth-config
-          secret:
-          {{- if .Values.global.kafka.existingConfigSecretName }}
-            secretName: {{ .Values.global.kafka.existingConfigSecretName }}
-          {{- else }}
-            secretName: {{ include "document-pipeline.fullname" . }}-kafka-config
-          {{- end }}
-      {{- with .Values.contentTagger.volumes }}
+          mountPath: /app/config/kafka-auth/
+        {{- with .Values.contentTagger.extraVolumeMounts }}
+          {{- toYaml . | nindent 12 }}
+        {{- end }}
+      
+      {{- with .Values.contentTagger.sidecars }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes: 
+      - name: kafka-auth-config
+        secret:
+        {{- if .Values.global.kafka.existingConfigSecretName }}
+          secretName: {{ .Values.global.kafka.existingConfigSecretName }}
+        {{- else }}
+          secretName: {{ include "document-pipeline.fullname" . }}-kafka-config
+        {{- end }}
+      {{- with .Values.contentTagger.extraVolumes }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+
+      {{- with .Values.contentTagger.affinity }}
+      affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       {{- with .Values.contentTagger.nodeSelector }}
       nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.contentTagger.affinity }}
-      affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       {{- with .Values.contentTagger.tolerations }}

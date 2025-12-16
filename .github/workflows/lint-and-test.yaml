@@ -41,13 +41,32 @@ jobs:
           helm dependency update ./charts/telicent-data
           ct lint --config .github/ct.yaml
 
-      # Uncomment the following lines if you want to create a kind cluster and run chart-testing install
-      # TODO: need to sort the prerequisite charts first
+  values-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Make metadataUpdater executable
+        run: chmod +x .dev/metadataUpdater.sh
 
-      # - name: Create kind cluster
-      #   if: steps.list-changed.outputs.changed == 'true'
-      #   uses: helm/kind-action@v1.12.0
+      - name: Install readme-generator-for-helm
+        run: npm install @bitnami/readme-generator-for-helm
 
-      # - name: Run chart-testing (install)
-      #   if: steps.list-changed.outputs.changed == 'true'
-      #   run: ct install --target-branch ${{ github.event.repository.default_branch }}
+      - name: Run metadata updater
+        run: .dev/metadataUpdater.sh --ci
+      - name: Check for uncommitted changes
+        run: |
+          if git diff --exit-code; then
+            echo "✓ All documentation is up to date"
+          else
+            echo "✗ README files and schemas are out of sync with values.yaml"
+            echo "Please run '.dev/metadataUpdater.sh' locally and commit the changes"
+            git diff
+            exit 1
+          fi
