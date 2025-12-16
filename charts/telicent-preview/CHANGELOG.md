@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.4.0](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-preview-v0.3.0...telicent-preview-v0.4.0) (2025-12-16)
+
+
+### ⚠ BREAKING CHANGES
+
+* New Auth image bump
+
+### Features
+
+* New Auth image bump ([93f3700](https://github.com/Telicent-io/telicent-core-charts/commit/93f3700a4be2a8596df3f5d63e4ae0ba9d639131))
+
+
+### Bug Fixes
+
+* data-catalog env ref ([1c31043](https://github.com/Telicent-io/telicent-core-charts/commit/1c31043b2f6f282462c2990d6693097402618fb0))
+* data-catalog env ref ([71e795f](https://github.com/Telicent-io/telicent-core-charts/commit/71e795ff430218377ba27ee6b417db75a96c7836))
+
 ## [0.3.0](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-preview-v0.2.0...telicent-preview-v0.3.0) (2025-10-29)
 
 
