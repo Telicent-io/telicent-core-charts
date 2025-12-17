@@ -311,6 +311,8 @@ hosts:
   search: "search:8080"
   # @key hosts.graph Graph application default host value, as defined by 'service/serviceAccount:port'
   graph: "graph:8080"
+  # @key hosts.spatial Spatial application default host value, as defined by 'service/serviceAccount:port'
+  spatial: "spatial:9000"
 
 #
 # @section Host(s) Preview Parameters - Contains host information for applications deployed via *telicent-preview* chart

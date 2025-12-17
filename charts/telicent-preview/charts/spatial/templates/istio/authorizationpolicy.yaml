@@ -1,6 +1,7 @@
 {{- /*
 Copyright (C) 2025 Telicent Limited
 */}}
+{{- if .Values.enabled -}}
 apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
 
@@ -19,3 +20,4 @@ spec:
   selector:
     matchLabels:
     {{- include "spatial.selectorLabels" . | nindent 6 }}
+{{- end }}
