@@ -2,6 +2,11 @@
     "title": "Chart Values",
     "type": "object",
     "properties": {
+        "enabled": {
+            "type": "boolean",
+            "description": "Enable Spatial chart",
+            "default": false
+        },
         "global": {
             "type": "object",
             "properties": {

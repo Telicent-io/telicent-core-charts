@@ -71,8 +71,9 @@ data-catalog-ui:
 # @section Spatial Parameters
 #
 spatial:
-  # @key spatial.enabled Enable or disable the spatial and spatial-projector components
+  # @key spatial.enabled Enable or disable the spatial components.
   enabled: false
 
 spatial-projector:
+  # @key spatial-projector.enabled Enable or disable the spatial-projector components.
   enabled: false

@@ -79,6 +79,13 @@ Contains global parameters, these parameters are mirrored across all Telicent Pr
 | ------------------------- | ----------------------------------------------- | ------ |
 | `data-catalog-ui.enabled` | Enable or disable the data-catalog-ui component | `true` |
 
+### Spatial Parameters
+
+| Name                        | Description                                         | Value   |
+| --------------------------- | --------------------------------------------------- | ------- |
+| `spatial.enabled`           | Enable or disable the spatial components.           | `false` |
+| `spatial-projector.enabled` | Enable or disable the spatial-projector components. | `false` |
+
 ## Subchart configurations
 
 This section contains configurations for the various preview subcharts included in the Telicent Preview chart.
