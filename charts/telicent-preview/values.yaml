@@ -72,7 +72,7 @@ data-catalog-ui:
 #
 spatial:
   # @key spatial.enabled Enable or disable the spatial and spatial-projector components
-  enabled: true
+  enabled: false
 
 spatial-projector:
   enabled: false
