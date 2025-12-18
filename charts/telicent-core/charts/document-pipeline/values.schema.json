@@ -1036,7 +1036,7 @@
                         "iso3166Uri": {
                             "type": "string",
                             "description": "The URI for the ISO 3166 standard",
-                            "default": "http://iso.org/iso3166#"
+                            "default": "http://iso.org/iso3166/country#"
                         },
                         "loggingLevel": {
                             "type": "string",

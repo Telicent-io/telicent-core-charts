@@ -574,7 +574,7 @@ contentTagger:
     # @key contentTagger.topics.tontUri The URI for the Telicent Ontology
     tontUri: "http://telicent.io/ontology/"
     # @key contentTagger.topics.iso3166Uri The URI for the ISO 3166 standard
-    iso3166Uri: "http://iso.org/iso3166#"
+    iso3166Uri: "http://iso.org/iso3166/country#"
     # @key contentTagger.topics.loggingLevel The logging level for the *Content Tagger*, e.g., DEBUG, INFO, WARN, ERROR
     loggingLevel: INFO
     # @key contentTagger.topics.kafkaConfigMode The configuration mode for Kafka, either 'basic' or 'toml'
