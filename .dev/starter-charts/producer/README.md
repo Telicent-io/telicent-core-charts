@@ -109,6 +109,58 @@ global:
     existingConfigSecretName: "kafka-config-secret"  # Optional: use existing secret
 ```
 
+### Kafka Secret Format
+
+If you're using an existing Kafka config secret, it should contain the following data keys:
+
+- `kafka-config.properties` - Java properties format for Kafka clients
+- `kafka-config.toml` - TOML format configuration
+- `application.properties` - Spring/Camel application properties format
+
+Example Kafka configuration values:
+
+```yaml
+global:
+  kafka:
+    bootstrapServers: "kafka-bootstrap.kafka.svc.cluster.local:9092"
+    protocol: "SASL_PLAINTEXT"
+    mechanism: "SCRAM-SHA-512"  # or "PLAIN"
+    username: "my-kafka-user"
+    password: "my-kafka-password"
+```
+
+The chart will automatically generate the config secret with the appropriate formats for all three files based on these values.
+
+#### Sample `kafka-config.properties` format:
+
+```properties
+security.protocol=SASL_PLAINTEXT
+sasl.mechanism=SCRAM-SHA-512
+sasl.jaas.config=org.apache.kafka.common.security.scram.ScramLoginModule required \
+  username="my-kafka-user" \
+  password="my-kafka-password";
+```
+
+#### Sample `kafka-config.toml` format:
+
+```toml
+bootstrap.servers=kafka-bootstrap.kafka.svc.cluster.local:9092
+security.protocol=SASL_PLAINTEXT
+sasl.mechanism=SCRAM-SHA-512
+sasl.username=my-kafka-user
+sasl.password=my-kafka-password
+```
+
+#### Sample `application.properties` format:
+
+```properties
+camel.component.kafka.security-protocol=SASL_PLAINTEXT
+camel.component.kafka.sasl-mechanism=SCRAM-SHA-512
+camel.component.kafka.sasl-jaas-config=org.apache.kafka.common.security.scram.ScramLoginModule required \
+  username="my-kafka-user" \
+  password="my-kafka-password";
+```
+
 ### Storage and Volumes
 
 To mount additional storage:
