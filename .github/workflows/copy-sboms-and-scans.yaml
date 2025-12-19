@@ -2,6 +2,7 @@ name: Copy SBOMs and Vulnerability Scans to S3
 run-name: Copy SBOMs and Vulnerability Scans to S3
 
 on:
+  # See 'env' below for the vales that will be used for push triggered workflow runs.
   push:
     branches:
       - 'main'
@@ -38,10 +39,12 @@ on:
         default: auto-select
 
 env:
+  # Each environment variable attempts to set it's value from the workflow_dispatch input.
+  # Otherwise (e.g. when a push to main triggers the workflow) the defaults specified below are used.
   AWS_DEFAULT_REGION: ${{ github.event.inputs.region || 'eu-west-2' }}
   AWS_ROLE: ${{ github.event.inputs.role-override || 'auto-select' }}
   CLUSTER: ${{ github.event.inputs.cluster || 'system-release-cluster' }}
-  CUSTOMER: ${{ github.event.inputs.customer || 'test' }}
+  CUSTOMER: ${{ github.event.inputs.customer || 'ody' }}
   S3_BUCKET: ${{ github.event.inputs.s3-bucket || 'aws-transfer-20240617162907559800000001' }}
   RELEASE_PREFIX: 'chore(main): release telicent-core'
 
