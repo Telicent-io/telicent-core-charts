@@ -65,7 +65,7 @@ jobs:
 
   copy-objects:
     runs-on: ubuntu-latest
-    if: needs.prepare.outputs.release-created != 'true'
+    if: needs.prepare.outputs.release-created == 'true' || github.event_name == 'workflow_dispatch'
     needs:
       - prepare
     steps:
