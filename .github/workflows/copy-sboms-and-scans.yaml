@@ -73,11 +73,11 @@ jobs:
       - prepare
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
-            '.dev/copy-sboms-and-scans/**'
-            'charts/telicent-core/**'
+            .dev/copy-sboms-and-scans
+            charts/telicent-core
           sparse-checkout-cone-mode: false
       - name: Select AWS role based on cluster
         if: env.AWS_ROLE == 'auto-select'
