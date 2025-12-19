@@ -28,6 +28,9 @@ on:
         default: dgtest-trivy-sbom-crd-to-s3
       customer:
         description: The customer to copy SBOM's and vulnerability reports for
+        required: false
+        type: string
+        default: test
       role-override:
         description: The AWS role to assume instead of the one that will be automatically selected based on the cluster
         required: false
