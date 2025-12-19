@@ -166,13 +166,13 @@ resources:
 livenessProbe:
   httpGet:
     # @key livenessProbe.httpGet.path The path to use for the Auth server liveness probe
-    path: /health/readiness
+    path: /readiness
     # @key livenessProbe.httpGet.port The port to use for the Auth server liveness probe
     port: http
 readinessProbe:
   httpGet:
     # @key readinessProbe.httpGet.path The path to use for the Auth server liveness probe
-    path: /health/readiness
+    path: /readiness
     # @key readinessProbe.httpGet.port The port to use for the Auth server liveness probe
     port: http
 
