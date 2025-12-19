@@ -26,14 +26,16 @@ Replace `my-data-job` with your desired chart name.
 After creating your chart, edit the `values.yaml` file and configure these essential settings:
 
 #### 1. Container Image
+
 ```yaml
 image:
   registry: "quay.io"
   repository: "your-org/your-data-processor"  # Change this!
-  tag: "v1.0.0"  # Use specific versions in production
+  tag: "v1.0.0"                               # Use specific versions in production
 ```
 
 #### 2. Environment Variables
+
 ```yaml
 env:
   LOG_LEVEL: "INFO"
@@ -58,16 +60,18 @@ kubectl logs job/my-job-release
 ### Advanced Configuration
 
 #### Job Behavior
+
 ```yaml
 job:
-  activeDeadlineSeconds: 3600  # 1 hour timeout
-  backoffLimit: 3              # Retry 3 times on failure
-  completions: 1               # Run once successfully
-  parallelism: 1               # Single pod
+  activeDeadlineSeconds: 3600     # 1 hour timeout
+  backoffLimit: 3                 # Retry 3 times on failure
+  completions: 1                  # Run once successfully
+  parallelism: 1                  # Single pod
   ttlSecondsAfterFinished: 86400  # Clean up after 24 hours
 ```
 
 #### Resource Limits
+
 ```yaml
 resources:
   limits:
@@ -79,6 +83,7 @@ resources:
 ```
 
 #### Security Context
+
 ```yaml
 podSecurityContext:
   runAsNonRoot: true
@@ -122,6 +127,7 @@ volumeMounts:
 ### Examples
 
 #### Simple Python Data Processing Job
+
 ```yaml
 image:
   repository: "my-org/python-processor"
@@ -142,6 +148,7 @@ resources:
 ```
 
 #### Spark Job
+
 ```yaml
 image:
   repository: "my-org/spark-job"
@@ -178,21 +185,25 @@ resources:
 ## Troubleshooting
 
 ### Job Fails Immediately
+
 - Check your image name and tag
 - Verify your container registry access
 - Review the pod logs for error messages
 
 ### Out of Memory Errors
+
 - Increase memory limits in `resources.limits.memory`
 - Optimize your data processing code
 - Consider processing data in smaller chunks
 
 ### Timeout Issues
+
 - Increase `activeDeadlineSeconds`
 - Optimize your processing logic
 - Consider breaking large jobs into smaller tasks
 
 ### Access Issues
+
 - Check service account permissions
 - Verify network policies
 - Review security contexts
