@@ -6,7 +6,7 @@ metadata:
   labels:
     {{- include "spatial.labels" . | nindent 4 }}
 data:
-  BOOTSTRAP_SERVERS: {{ .Values.global.kafkaBootstrapUrls }}
+  BOOTSTRAP_SERVERS: {{ .Values.global.kafka.bootstrapServers }}
   SOURCE_TOPIC: {{ .Values.configuration.sourceTopic}}
   AUTO_ENABLE_DLQ: "True"
   GEO_CLEAN_POSTGRESQL_SC: geo_clean
