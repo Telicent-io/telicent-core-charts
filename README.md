@@ -55,23 +55,26 @@ The `telicent-core` chart includes the following sub-charts:
 
 ### Data Components
 
-#### ACLED 
+#### ACLED
 
 - **[acled-locations-mapper](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-data/charts/acled-locations-mapper/README.md)** - ACLED Locations mapper
 - **[acled-participants-mapper](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-data/charts/acled-participants-mapper/README.md)** - ACLED Participants mapper
 - **[acled-validation-mapper](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-data/charts/acled-validation-mapper/README.md)** - ACLED Validation mapper
 - **[producer-acled-ontology](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-data/charts/producer-acled-ontology/README.md)** - ACLED Ontology Producer
-#### Canonical Event 
+
+#### Canonical Event
+
 - **[canonicals-event-knowledge-mapper](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-data/charts/canonicals-event-knowledge-mapper/README.md)** - Canonicals Event Knowledge Mapper
 - **[canonicals-event-validation-mapper](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-data/charts/canonicals-event-validation-mapper/README.md)** - Canonicals Event Validation Mapper
 - **[ies-regions-producer](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-data/charts/ies-regions-producer/README.md)** - IES Regions Producer
 - **[canonicals-event-document-mapper](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-data/charts/canonicals-event-document-mapper/README.md)** - Canonicals Event Document Mapper
 - **[canonicals-event-geo-mapper](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-data/charts/canonicals-event-geo-mapper/README.md)** - Canonicals Event Geo Mapper
+
 #### IES / RDF
+
 - **[ies-regions-ontology-adapter](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-data/charts/ies-regions-ontology-adapter/README.md)** - IES Regions Ontology Adapter
 - **[ies-ontology-producer](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-data/charts/ies-ontology-producer/README.md)** - IES Ontology Producer
 - **[ontologies-rdf-rdfs-owl-producer](https://github.com/Telicent-io/telicent-core-charts/blob/main/charts/telicent-data/charts/ontologies-rdf-rdfs-owl-producer/README.md)** - Ontologies RDF RDFS Owl Producer
-
 
 ### Demo Prerequisites
 
@@ -101,6 +104,18 @@ helm install my-release ./telicent-core -f values.yaml
 5. More configuration information can be found [here](https://docs.telicent.io/core/getting-started/installation/helm/)
 
 For more detailed information about each component, please consult the individual chart documentation.
+
+## Chart Development
+
+### New Producer Chart
+
+First Create a new blank producer from the template:
+
+```bash
+helm create -p .dev/starter-charts/producer <producer-name> 
+```
+
+Modify the SOURCE_TOPIC, TARGET_TOPIC, image name, along with any other changes this particular producer requires.
 
 ## License
 
