@@ -6,7 +6,7 @@ metadata:
   labels:
     {{- include "spatial-projector.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: 1
   selector:
     matchLabels:
       {{- include "spatial-projector.selectorLabels" . | nindent 6 }}
