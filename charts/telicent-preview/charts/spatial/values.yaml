@@ -146,7 +146,7 @@ containerSecurityContext:
 # @section Traffic Exposure Parameters
 service:
   # @key service.port Auth server service port
-  port: 9000
+  port: 8000
   # @key service.type Auth server service port
   type: ClusterIP
 
@@ -166,13 +166,13 @@ resources:
 livenessProbe:
   httpGet:
     # @key livenessProbe.httpGet.path The path to use for the Auth server liveness probe
-    path: /
+    path: /health/readiness
     # @key livenessProbe.httpGet.port The port to use for the Auth server liveness probe
     port: http
 readinessProbe:
   httpGet:
     # @key readinessProbe.httpGet.path The path to use for the Auth server liveness probe
-    path: /
+    path: /health/readiness
     # @key readinessProbe.httpGet.port The port to use for the Auth server liveness probe
     port: http
 
