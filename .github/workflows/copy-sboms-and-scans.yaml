@@ -1,5 +1,5 @@
-name: Copy SBOMs to S3
-run-name: Copy SBOMs to S3
+name: Copy SBOMs and Vulnerability Scans to S3
+run-name: Copy SBOMs and Vulnerability Scans to S3
 
 on:
   push:
