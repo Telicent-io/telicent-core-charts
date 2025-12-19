@@ -39,7 +39,7 @@ data:
         id: "telicent-user-portal",
         name: "user-portal",
         url: "https://{{ .Values.global.appHostDomain }}/user-portal",
-        icon: "/admin/assets/icons/user-portal-light.svg",
+        icon: "/admin/assets/icons/UserPortalDark.svg",
       },
     ];
 
