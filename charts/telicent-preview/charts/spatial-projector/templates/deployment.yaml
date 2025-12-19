@@ -42,7 +42,12 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: {{ include "spatial-projector.postgresSecretName" . }}
-                  key: POSTGRES_PASSWORD
+                  key: password
+            - name: GEO_CLEAN_POSTGRESQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "spatial-projector.postgresSecretName" . }}
+                  key: username
           envFrom:
             - configMapRef:
                 name: {{ include "spatial-projector.fullname" . }}-config

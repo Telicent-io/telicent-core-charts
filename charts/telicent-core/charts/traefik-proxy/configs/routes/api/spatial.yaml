@@ -2,7 +2,7 @@
 http:
   routers:
     spatial:
-      rule: {{ printf "Host(`%s`) && PathPrefix(`/spatial`)" .Values.global.apiHostDomain }}
+      rule: {{printf "Host(`%s`) && PathPrefix(`/spatial`)" .Values.global.apiHostDomain }}
       service: spatial
       entryPoints:
         - web-api

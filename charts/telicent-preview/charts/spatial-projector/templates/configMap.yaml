@@ -13,5 +13,4 @@ data:
   GEO_CLEAN_POSTGRESQL_PORT: "5432"
   GEO_CLEAN_POSTGRESQL_HOST: {{.Values.postgres.uri }}
   GEO_CLEAN_POSTGRESQL_SC: {{ .Values.postgres.db }}
-  GEO_CLEAN_POSTGRESQL_USER: {{ .Values.postgres.username }}
 {{- end }}
