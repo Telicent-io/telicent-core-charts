@@ -13,4 +13,5 @@ data:
   GEO_CLEAN_POSTGRESQL_PORT: "5432"
   GEO_CLEAN_POSTGRESQL_HOST: {{.Values.postgres.uri }}
   GEO_CLEAN_POSTGRESQL_SC: {{ .Values.postgres.db }}
+  JWKS_URL: {{ printf "https://%s%s" .Values.global.authHostDomain "/oauth2/jwks" | quote }}
 {{- end }}
