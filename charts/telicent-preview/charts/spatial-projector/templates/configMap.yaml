@@ -14,4 +14,5 @@ data:
   GEO_CLEAN_POSTGRESQL_HOST: {{.Values.postgres.uri }}
   GEO_CLEAN_POSTGRESQL_SC: {{ .Values.postgres.db }}
   KAFKA_CONFIG_MODE: "toml"
+  KAFKA_CONFIG_FILE_PATH: "/app/config/kafka-auth/kafka-config.toml"
 {{- end }} 
