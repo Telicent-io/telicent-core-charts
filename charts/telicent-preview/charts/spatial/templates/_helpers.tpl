@@ -61,10 +61,6 @@ Create the name of the service account to use
 {{- end }}
 {{- end }}
 
-{{- define "spatial.ingressPrincipal" -}}
-{{- .Values.istio.ingress.principal | default (printf "cluster.local/ns/%s/sa/%s" .Values.global.istioNamespace .Values.global.istioServiceAccountName) | quote }}
-{{- end }}
-
 {{- define "spatial.postgresSecretName" -}}
 {{- default (printf "%s-postgresql" (include "spatial.fullname" .)) .Values.postgres.existingSecret }}
 {{- end }}

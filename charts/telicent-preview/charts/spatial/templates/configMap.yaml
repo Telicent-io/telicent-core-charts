@@ -14,4 +14,5 @@ data:
   GEO_CLEAN_POSTGRESQL_HOST: {{.Values.postgres.uri }}
   GEO_CLEAN_POSTGRESQL_SC: {{ .Values.postgres.db }}
   JWKS_URL: {{ printf "https://%s%s" .Values.global.authHostDomain "/oauth2/jwks" | quote }}
+  AUTH_SERVER_BASE_URL: {{ printf "http://%s" (include "spatial.hostAuth" . ) | quote }}
 {{- end }}

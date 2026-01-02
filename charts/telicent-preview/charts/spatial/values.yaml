@@ -184,7 +184,19 @@ affinity: {}
 # @key tolerations ALlows you to schedule pods on nodes with specified taints, see: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
 tolerations: []
 
-istio:
-  ingress:
-    # @key istio.ingress.principal Principal used for ingress traffic to this application by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName'
-    principal: ""
+#
+# @section Host(s) Core Parameters - Contains host information for applications deployed via *telicent-core* chart
+#
+# @descStart
+# *Paperback Writer* interacts with applications deployed via *telicent-core* using their default service/serviceAccount and port.
+# If either of those details changes, you can use this section to correctly refer to those applications.
+# @descEnd
+hostsCore:
+  # @key hostsCore.enableAutoCorrect Prefix 'global.releaseNameTelicentCore' value to each host value. Alternatively, the host value will be used as it is, without any modification
+  enableAutoCorrect: true
+  # @key hostsCore.traefikProxy Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'
+  traefikProxy: "traefik-proxy:8080"
+  # @key hostsCore.auth Auth application default host value, as defined by 'service/serviceAccount:port'
+  auth: "auth:8080"
+  # @key hostsCore.graph Graph application host value, as defined by 'service/serviceAccount:port'
+  graph: "graph:8080"
