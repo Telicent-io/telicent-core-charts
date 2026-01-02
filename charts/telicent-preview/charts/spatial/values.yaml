@@ -155,22 +155,22 @@ resources:
     # @key resources.limits.memory Set containers' memory limit
     memory: "8000Mi"
 
-# @section
-# @descStart
-# Probes This is to setup the liveness and readiness probes, more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
-# @descEnd
-livenessProbe:
-  httpGet:
-    # @key livenessProbe.httpGet.path The path to use for the Auth server liveness probe
-    path: /readiness
-    # @key livenessProbe.httpGet.port The port to use for the Auth server liveness probe
-    port: http
-readinessProbe:
-  httpGet:
-    # @key readinessProbe.httpGet.path The path to use for the Auth server liveness probe
-    path: /readiness
-    # @key readinessProbe.httpGet.port The port to use for the Auth server liveness probe
-    port: http
+# # @section
+# # @descStart
+# # Probes This is to setup the liveness and readiness probes, more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
+# # @descEnd
+# livenessProbe:
+#   httpGet:
+#     # @key livenessProbe.httpGet.path The path to use for the Auth server liveness probe
+#     path: /readiness
+#     # @key livenessProbe.httpGet.port The port to use for the Auth server liveness probe
+#     port: http
+# readinessProbe:
+#   httpGet:
+#     # @key readinessProbe.httpGet.path The path to use for the Auth server liveness probe
+#     path: /readiness
+#     # @key readinessProbe.httpGet.port The port to use for the Auth server liveness probe
+#     port: http
 
 # @section Node Selection
 # @key nodeSelector Allows you to schedule pods on a node with a label matching the given key-value pair.
@@ -179,6 +179,19 @@ nodeSelector: {}
 affinity: {}
 # @key tolerations ALlows you to schedule pods on nodes with specified taints, see: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
 tolerations: []
+
+#
+# @section Service Account Parameters
+#
+serviceAccount:
+  # @key serviceAccount.create Specifies whether a service account should be created
+  create: true
+  # @key serviceAccount.name Name of the ServiceAccount to use. If not set, a name is generated using the fullname
+  name: ""
+  # @key serviceAccount.annotations Additional custom annotations for the ServiceAccount
+  annotations: {}
+  # @key serviceAccount.automount Automatically mount a ServiceAccount's API credentials
+  automount: true
 
 #
 # @section Host(s) Core Parameters - Contains host information for applications deployed via *telicent-core* chart
@@ -196,16 +209,3 @@ hostsCore:
   auth: "auth:8080"
   # @key hostsCore.graph Graph application host value, as defined by 'service/serviceAccount:port'
   graph: "graph:8080"
-
-#
-# @section Service Account Parameters
-#
-serviceAccount:
-  # @key serviceAccount.create Specifies whether a service account should be created
-  create: true
-  # @key serviceAccount.name Name of the ServiceAccount to use. If not set, a name is generated using the fullname
-  name: ""
-  # @key serviceAccount.annotations Additional custom annotations for the ServiceAccount
-  annotations: {}
-  # @key serviceAccount.automount Automatically mount a ServiceAccount's API credentials
-  automount: true
