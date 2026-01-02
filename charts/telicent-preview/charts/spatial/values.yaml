@@ -100,13 +100,6 @@ image:
   # @key image.pullSecrets Specify registry secret names as an array
   pullSecrets: []
 
-# @section Service Account Parameters This section builds out the service account more information can be found here: https://kubernetes.io/docs/concepts/security/service-accounts/
-serviceAccount:
-  # @key serviceAccount.name Name of the created ServiceAccount. If not set, a name is generated using the fullname template
-  name: ""
-  # @key serviceAccount.annotations Additional custom annotations for the ServiceAccount
-  annotations: {}
-
 # @section Deployment Parameters For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 # @key podAnnotations Add extra annotations to the Deployment object
 podAnnotations: {}
@@ -200,3 +193,16 @@ hostsCore:
   auth: "auth:8080"
   # @key hostsCore.graph Graph application host value, as defined by 'service/serviceAccount:port'
   graph: "graph:8080"
+
+#
+# @section Service Account Parameters
+#
+serviceAccount:
+  # @key serviceAccount.create Specifies whether a service account should be created
+  create: true
+  # @key serviceAccount.name Name of the ServiceAccount to use. If not set, a name is generated using the fullname
+  name: ""
+  # @key serviceAccount.annotations Additional custom annotations for the ServiceAccount
+  annotations: {}
+  # @key serviceAccount.automount Automatically mount a ServiceAccount's API credentials
+  automount: true
