@@ -43,3 +43,12 @@ Returns the principal used for Paperback Writer traffic by the Istio Authorizati
 {{- printf "- cluster.local/ns/%s/sa/%s" .Release.Namespace ( include "auth.serviceAccountPaperbackWriter" .) -}}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Returns the principal used for Spatial traffic by the Istio AuthorizationPolicy
+*/}}
+{{- define "auth.spatialPrincipal" -}}
+{{- if .Values.global.enterprise -}}
+{{- printf "- cluster.local/ns/%s/sa/%s" .Release.Namespace ( include "auth.serviceAccountSpatial" .) -}}
+{{- end -}}
+{{- end -}}

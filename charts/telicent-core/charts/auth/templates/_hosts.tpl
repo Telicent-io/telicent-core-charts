@@ -64,3 +64,6 @@ Detailed description of 'discoverHost' & 'discoverServiceAccount' function
 {{- define "auth.serviceAccountPaperbackWriter" -}}
 {{- printf "%s" (include "common.discoverServiceAccountPreview" (list . .Values.hostsPreview.paperbackWriter )) -}}
 {{- end -}}
+{{- define "auth.serviceAccountSpatial" -}}
+{{- printf "%s" (include "common.discoverServiceAccountPreview" (list . .Values.hostsPreview.spatial )) -}}
+{{- end -}}
