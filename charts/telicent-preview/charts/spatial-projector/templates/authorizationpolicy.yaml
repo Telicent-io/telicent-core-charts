@@ -1,0 +1,23 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+{{- if .Values.enabled -}}
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+
+metadata:
+  name: {{ include "spatial-projector.fullname" . }}-ingress
+  labels:
+  {{- include "spatial-projector.labels" . | nindent 4 }}
+
+spec:
+  action: ALLOW
+  rules:
+    - from:
+        - source:
+            principals:
+            - {{ include "spatial-projector.ingressPrincipal" . }}
+  selector:
+    matchLabels:
+    {{- include "spatial-projector.selectorLabels" . | nindent 6 }}
+{{- end }}

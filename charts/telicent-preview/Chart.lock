@@ -1,12 +1,18 @@
 dependencies:
 - name: user-portal-ui
   repository: file://./charts/user-portal-ui
-  version: 0.1.1
+  version: 0.1.4
 - name: paperback-writer
   repository: file://./charts/paperback-writer
   version: 0.1.1
 - name: data-catalog-ui
   repository: file://./charts/data-catalog-ui
-  version: 0.1.1
-digest: sha256:fbb4ac7bc974ea08a57601c11756abc36f2f3ba46745fbed9c285f98d05afbf9
-generated: "2025-12-03T12:30:02.528157Z"
+  version: 0.1.4
+- name: spatial
+  repository: file://./charts/spatial
+  version: 0.1.0
+- name: spatial-projector
+  repository: file://./charts/spatial-projector
+  version: 0.1.0
+digest: sha256:f7f9525417da1a97865f3486986eaa330746c1543d5a6ca76bdfd8df0b0171ce
+generated: "2025-12-17T15:41:04.760459Z"

@@ -66,3 +66,14 @@ paperback-writer:
 data-catalog-ui:
   # @key data-catalog-ui.enabled Enable or disable the data-catalog-ui component
   enabled: true
+
+#
+# @section Spatial Parameters
+#
+spatial:
+  # @key spatial.enabled Enable or disable the spatial components.
+  enabled: false
+
+spatial-projector:
+  # @key spatial-projector.enabled Enable or disable the spatial-projector components.
+  enabled: false

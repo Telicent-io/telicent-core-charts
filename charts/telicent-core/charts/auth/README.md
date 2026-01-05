@@ -289,6 +289,7 @@ Host values will be used as defined in this section, release name cannot be auto
 | -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------- |
 | `hostsPreview.enableAutoCorrect` | Prefix 'global.releaseNameTelicentPreview' value to each host value. Alternatively, the host value will be used as it is, without any modification | `true`                  |
 | `hostsPreview.paperbackWriter`   | Paperback Writer application host value, as defined by 'service/serviceAccount:port'                                                               | `paperback-writer:8080` |
+| `hostsPreview.spatial`           |                                                                                                                                                    | `spatial:8080`          |
 
 ## License
 
