@@ -597,7 +597,7 @@
                 "spatial": {
                     "type": "string",
                     "description": "Spatial application default host value, as defined by 'service/serviceAccount:port'",
-                    "default": "spatial:9000"
+                    "default": "spatial:8080"
                 }
             }
         },
