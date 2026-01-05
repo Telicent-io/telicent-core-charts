@@ -189,21 +189,6 @@
                 }
             }
         },
-        "serviceAccount": {
-            "type": "object",
-            "properties": {
-                "name": {
-                    "type": "string",
-                    "description": "Name of the created ServiceAccount. If not set, a name is generated using the fullname template",
-                    "default": ""
-                },
-                "annotations": {
-                    "type": "object",
-                    "description": "Additional custom annotations for the ServiceAccount",
-                    "default": {}
-                }
-            }
-        },
         "podAnnotations": {
             "type": "object",
             "description": "Add extra annotations to the Deployment object",
@@ -306,7 +291,7 @@
                 "port": {
                     "type": "number",
                     "description": "Auth server service port",
-                    "default": 9000
+                    "default": 8000
                 },
                 "type": {
                     "type": "string",
@@ -324,12 +309,12 @@
                         "cpu": {
                             "type": "string",
                             "description": "Set containers' CPU request",
-                            "default": ""
+                            "default": "1000m"
                         },
                         "memory": {
                             "type": "string",
                             "description": "Set containers' memory request",
-                            "default": ""
+                            "default": "4000Mi"
                         }
                     }
                 },
@@ -339,52 +324,12 @@
                         "cpu": {
                             "type": "string",
                             "description": "Set containers' CPU limit",
-                            "default": ""
+                            "default": "2000m"
                         },
                         "memory": {
                             "type": "string",
                             "description": "Set containers' memory limit",
-                            "default": ""
-                        }
-                    }
-                }
-            }
-        },
-        "livenessProbe": {
-            "type": "object",
-            "properties": {
-                "httpGet": {
-                    "type": "object",
-                    "properties": {
-                        "path": {
-                            "type": "string",
-                            "description": "The path to use for the Auth server liveness probe",
-                            "default": "/"
-                        },
-                        "port": {
-                            "type": "string",
-                            "description": "The port to use for the Auth server liveness probe",
-                            "default": "http"
-                        }
-                    }
-                }
-            }
-        },
-        "readinessProbe": {
-            "type": "object",
-            "properties": {
-                "httpGet": {
-                    "type": "object",
-                    "properties": {
-                        "path": {
-                            "type": "string",
-                            "description": "The path to use for the Auth server liveness probe",
-                            "default": "/"
-                        },
-                        "port": {
-                            "type": "string",
-                            "description": "The port to use for the Auth server liveness probe",
-                            "default": "http"
+                            "default": "8000Mi"
                         }
                     }
                 }
@@ -406,18 +351,53 @@
             "default": [],
             "items": {}
         },
-        "istio": {
+        "serviceAccount": {
             "type": "object",
             "properties": {
-                "ingress": {
+                "create": {
+                    "type": "boolean",
+                    "description": "Specifies whether a service account should be created",
+                    "default": true
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the ServiceAccount to use. If not set, a name is generated using the fullname",
+                    "default": ""
+                },
+                "annotations": {
                     "type": "object",
-                    "properties": {
-                        "principal": {
-                            "type": "string",
-                            "description": "Principal used for ingress traffic to this application by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName'",
-                            "default": ""
-                        }
-                    }
+                    "description": "Additional custom annotations for the ServiceAccount",
+                    "default": {}
+                },
+                "automount": {
+                    "type": "boolean",
+                    "description": "Automatically mount a ServiceAccount's API credentials",
+                    "default": true
+                }
+            }
+        },
+        "hostsCore": {
+            "type": "object",
+            "properties": {
+                "enableAutoCorrect": {
+                    "type": "boolean",
+                    "description": "Prefix 'global.releaseNameTelicentCore' value to each host value. Alternatively, the host value will be used as it is, without any modification",
+                    "default": true
+                },
+                "traefikProxy": {
+                    "type": "string",
+                    "description": "Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'",
+                    "default": "traefik-proxy:8080"
+                },
+                "auth": {
+                    "type": "string",
+                    "description": "Auth application default host value, as defined by 'service/serviceAccount:port'",
+                    "default": "auth:8080"
+                },
+                "graph": {
+                    "type": "string",
+                    "description": "Graph application host value, as defined by 'service/serviceAccount:port'",
+                    "default": "graph:8080"
                 }
             }
         }

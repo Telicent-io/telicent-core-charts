@@ -99,13 +99,6 @@ Note: It is recommended to use a Kubernetes secret for sensitive information lik
 | `image.tag`         | Auth server image tag. If not set, a tag is generated using the appVersion | `""`                                                                            |
 | `image.pullSecrets` | Specify registry secret names as an array                                  | `[]`                                                                            |
 
-### Service Account Parameters This section builds out the service account more information can be found here: https://kubernetes.io/docs/concepts/security/service-accounts/
-
-| Name                         | Description                                                                                     | Value |
-| ---------------------------- | ----------------------------------------------------------------------------------------------- | ----- |
-| `serviceAccount.name`        | Name of the created ServiceAccount. If not set, a name is generated using the fullname template | `""`  |
-| `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                            | `{}`  |
-
 ### Deployment Parameters For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 
 | Name                                                | Description                                                             | Value            |
@@ -128,30 +121,41 @@ Note: It is recommended to use a Kubernetes secret for sensitive information lik
 
 | Name                        | Description                    | Value       |
 | --------------------------- | ------------------------------ | ----------- |
-| `service.port`              | Auth server service port       | `9000`      |
+| `service.port`              | Auth server service port       | `8000`      |
 | `service.type`              | Auth server service port       | `ClusterIP` |
-| `resources.requests.cpu`    | Set containers' CPU request    | `""`        |
-| `resources.requests.memory` | Set containers' memory request | `""`        |
-| `resources.limits.cpu`      | Set containers' CPU limit      | `""`        |
-| `resources.limits.memory`   | Set containers' memory limit   | `""`        |
-
-### Probes This is to setup the liveness and readiness probes, more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
-
-| Name                          | Description                                        | Value  |
-| ----------------------------- | -------------------------------------------------- | ------ |
-| `livenessProbe.httpGet.path`  | The path to use for the Auth server liveness probe | `/`    |
-| `livenessProbe.httpGet.port`  | The port to use for the Auth server liveness probe | `http` |
-| `readinessProbe.httpGet.path` | The path to use for the Auth server liveness probe | `/`    |
-| `readinessProbe.httpGet.port` | The port to use for the Auth server liveness probe | `http` |
+| `resources.requests.cpu`    | Set containers' CPU request    | `1000m`     |
+| `resources.requests.memory` | Set containers' memory request | `4000Mi`    |
+| `resources.limits.cpu`      | Set containers' CPU limit      | `2000m`     |
+| `resources.limits.memory`   | Set containers' memory limit   | `8000Mi`    |
 
 ### Node Selection
 
-| Name                      | Description                                                                                                                                                                                      | Value |
-| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----- |
-| `nodeSelector`            | Allows you to schedule pods on a node with a label matching the given key-value pair.                                                                                                            | `{}`  |
-| `affinity`                | Allows you to define affinity rules for scheduling pods, see: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/                                                           | `{}`  |
-| `tolerations`             | ALlows you to schedule pods on nodes with specified taints, see: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/                                                   | `[]`  |
-| `istio.ingress.principal` | Principal used for ingress traffic to this application by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName' | `""`  |
+| Name           | Description                                                                                                                                    | Value |
+| -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| `nodeSelector` | Allows you to schedule pods on a node with a label matching the given key-value pair.                                                          | `{}`  |
+| `affinity`     | Allows you to define affinity rules for scheduling pods, see: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/         | `{}`  |
+| `tolerations`  | ALlows you to schedule pods on nodes with specified taints, see: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/ | `[]`  |
+
+### Service Account Parameters
+
+| Name                         | Description                                                                           | Value  |
+| ---------------------------- | ------------------------------------------------------------------------------------- | ------ |
+| `serviceAccount.create`      | Specifies whether a service account should be created                                 | `true` |
+| `serviceAccount.name`        | Name of the ServiceAccount to use. If not set, a name is generated using the fullname | `""`   |
+| `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                  | `{}`   |
+| `serviceAccount.automount`   | Automatically mount a ServiceAccount's API credentials                                | `true` |
+
+### Host(s) Core Parameters - Contains host information for applications deployed via *telicent-core* chart
+
+*Paperback Writer* interacts with applications deployed via *telicent-core* using their default service/serviceAccount and port.
+If either of those details changes, you can use this section to correctly refer to those applications.
+
+| Name                          | Description                                                                                                                                     | Value                |
+| ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
+| `hostsCore.enableAutoCorrect` | Prefix 'global.releaseNameTelicentCore' value to each host value. Alternatively, the host value will be used as it is, without any modification | `true`               |
+| `hostsCore.traefikProxy`      | Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'                                                       | `traefik-proxy:8080` |
+| `hostsCore.auth`              | Auth application default host value, as defined by 'service/serviceAccount:port'                                                                | `auth:8080`          |
+| `hostsCore.graph`             | Graph application host value, as defined by 'service/serviceAccount:port'                                                                       | `graph:8080`         |
 
 ## License
 

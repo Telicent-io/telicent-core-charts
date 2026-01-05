@@ -126,23 +126,26 @@ Note: It is recommended to use a Kubernetes secret for sensitive information lik
 
 ### Traffic Exposure Parameters
 
-| Name                        | Description                    | Value       |
-| --------------------------- | ------------------------------ | ----------- |
-| `service.port`              | Auth server service port       | `9000`      |
-| `service.type`              | Auth server service port       | `ClusterIP` |
-| `resources.requests.cpu`    | Set containers' CPU request    | `""`        |
-| `resources.requests.memory` | Set containers' memory request | `""`        |
-| `resources.limits.cpu`      | Set containers' CPU limit      | `""`        |
-| `resources.limits.memory`   | Set containers' memory limit   | `""`        |
+| Name           | Description              | Value       |
+| -------------- | ------------------------ | ----------- |
+| `service.port` | Auth server service port | `9000`      |
+| `service.type` | Auth server service port | `ClusterIP` |
+
+### Deployment Resources Parameters - Requests and Limits
+
+| Name                        | Description                    | Value    |
+| --------------------------- | ------------------------------ | -------- |
+| `resources.requests.cpu`    | Set containers' CPU request    | `250m`   |
+| `resources.requests.memory` | Set containers' memory request | `1000Mi` |
+| `resources.limits.cpu`      | Set containers' CPU limit      | `500m`   |
+| `resources.limits.memory`   | Set containers' memory limit   | `2000Mi` |
 
 ### Probes This is to setup the liveness and readiness probes, more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
 
-| Name                          | Description                                        | Value  |
-| ----------------------------- | -------------------------------------------------- | ------ |
-| `livenessProbe.httpGet.path`  | The path to use for the Auth server liveness probe | `/`    |
-| `livenessProbe.httpGet.port`  | The port to use for the Auth server liveness probe | `http` |
-| `readinessProbe.httpGet.path` | The path to use for the Auth server liveness probe | `/`    |
-| `readinessProbe.httpGet.port` | The port to use for the Auth server liveness probe | `http` |
+| Name                          | Description                          | Value                                                                                                                                                    |
+| ----------------------------- | ------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `livenessProbe.exec.command`  | Command to test the kafka connection | `["bash","-c","KAFKA_HOST=$(echo \"$BOOTSTRAP_SERVERS\" | cut -d',' -f1 | tr ':' '/')\ntimeout 3 bash -c \"cat < /dev/null > /dev/tcp/$KAFKA_HOST\"\n"]` |
+| `readinessProbe.exec.command` | Command to test the kafka connection | `["bash","-c","KAFKA_HOST=$(echo \"$BOOTSTRAP_SERVERS\" | cut -d',' -f1 | tr ':' '/')\ntimeout 3 bash -c \"cat < /dev/null > /dev/tcp/$KAFKA_HOST\"\n"]` |
 
 ### Node Selection
 

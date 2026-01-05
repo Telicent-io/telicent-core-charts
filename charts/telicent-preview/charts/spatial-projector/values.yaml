@@ -165,19 +165,25 @@ resources:
     # @key resources.limits.memory Set containers' memory limit
     memory: "2000Mi"
 
-## @section Probes This is to setup the liveness and readiness probes, more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
-#livenessProbe:
-#  httpGet:
-#    # @key livenessProbe.httpGet.path The path to use for the Auth server liveness probe
-#    path: /readiness
-#    # @key livenessProbe.httpGet.port The port to use for the Auth server liveness probe
-#    port: http
-#readinessProbe:
-#  httpGet:
-#    # @key readinessProbe.httpGet.path The path to use for the Auth server liveness probe
-#    path: /readiness
-#    # @key readinessProbe.httpGet.port The port to use for the Auth server liveness probe
-#    port: http
+# @section Probes This is to setup the liveness and readiness probes, more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
+livenessProbe:
+  exec:
+    # @key livenessProbe.exec.command Command to test the kafka connection
+    command:
+      - bash
+      - -c
+      - |
+        KAFKA_HOST=$(echo "$BOOTSTRAP_SERVERS" | cut -d',' -f1 | tr ':' '/')
+        timeout 3 bash -c "cat < /dev/null > /dev/tcp/$KAFKA_HOST"
+readinessProbe:
+  exec:
+    # @key readinessProbe.exec.command Command to test the kafka connection
+    command:
+      - bash
+      - -c
+      - |
+        KAFKA_HOST=$(echo "$BOOTSTRAP_SERVERS" | cut -d',' -f1 | tr ':' '/')
+        timeout 3 bash -c "cat < /dev/null > /dev/tcp/$KAFKA_HOST"
 
 # @section Node Selection
 # @key nodeSelector Allows you to schedule pods on a node with a label matching the given key-value pair.

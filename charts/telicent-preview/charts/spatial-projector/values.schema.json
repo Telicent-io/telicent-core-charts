@@ -324,12 +324,12 @@
                         "cpu": {
                             "type": "string",
                             "description": "Set containers' CPU request",
-                            "default": ""
+                            "default": "250m"
                         },
                         "memory": {
                             "type": "string",
                             "description": "Set containers' memory request",
-                            "default": ""
+                            "default": "1000Mi"
                         }
                     }
                 },
@@ -339,12 +339,12 @@
                         "cpu": {
                             "type": "string",
                             "description": "Set containers' CPU limit",
-                            "default": ""
+                            "default": "500m"
                         },
                         "memory": {
                             "type": "string",
                             "description": "Set containers' memory limit",
-                            "default": ""
+                            "default": "2000Mi"
                         }
                     }
                 }
@@ -353,18 +353,20 @@
         "livenessProbe": {
             "type": "object",
             "properties": {
-                "httpGet": {
+                "exec": {
                     "type": "object",
                     "properties": {
-                        "path": {
-                            "type": "string",
-                            "description": "The path to use for the Auth server liveness probe",
-                            "default": "/"
-                        },
-                        "port": {
-                            "type": "string",
-                            "description": "The port to use for the Auth server liveness probe",
-                            "default": "http"
+                        "command": {
+                            "type": "array",
+                            "description": "Command to test the kafka connection",
+                            "default": [
+                                "bash",
+                                "-c",
+                                "KAFKA_HOST=$(echo \"$BOOTSTRAP_SERVERS\" | cut -d',' -f1 | tr ':' '/')\ntimeout 3 bash -c \"cat < /dev/null > /dev/tcp/$KAFKA_HOST\"\n"
+                            ],
+                            "items": {
+                                "type": "string"
+                            }
                         }
                     }
                 }
@@ -373,18 +375,20 @@
         "readinessProbe": {
             "type": "object",
             "properties": {
-                "httpGet": {
+                "exec": {
                     "type": "object",
                     "properties": {
-                        "path": {
-                            "type": "string",
-                            "description": "The path to use for the Auth server liveness probe",
-                            "default": "/"
-                        },
-                        "port": {
-                            "type": "string",
-                            "description": "The port to use for the Auth server liveness probe",
-                            "default": "http"
+                        "command": {
+                            "type": "array",
+                            "description": "Command to test the kafka connection",
+                            "default": [
+                                "bash",
+                                "-c",
+                                "KAFKA_HOST=$(echo \"$BOOTSTRAP_SERVERS\" | cut -d',' -f1 | tr ':' '/')\ntimeout 3 bash -c \"cat < /dev/null > /dev/tcp/$KAFKA_HOST\"\n"
+                            ],
+                            "items": {
+                                "type": "string"
+                            }
                         }
                     }
                 }
