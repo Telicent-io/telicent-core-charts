@@ -306,7 +306,7 @@
                 "port": {
                     "type": "number",
                     "description": "Auth server service port",
-                    "default": 9000
+                    "default": 8080
                 },
                 "type": {
                     "type": "string",

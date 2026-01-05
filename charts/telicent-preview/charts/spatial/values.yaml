@@ -139,7 +139,7 @@ containerSecurityContext:
 # @section Traffic Exposure Parameters
 service:
   # @key service.port Auth server service port
-  port: 8000
+  port: 8080
   # @key service.type Auth server service port
   type: ClusterIP
 

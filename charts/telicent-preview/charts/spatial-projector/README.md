@@ -128,7 +128,7 @@ Note: It is recommended to use a Kubernetes secret for sensitive information lik
 
 | Name           | Description              | Value       |
 | -------------- | ------------------------ | ----------- |
-| `service.port` | Auth server service port | `9000`      |
+| `service.port` | Auth server service port | `8080`      |
 | `service.type` | Auth server service port | `ClusterIP` |
 
 ### Deployment Resources Parameters - Requests and Limits

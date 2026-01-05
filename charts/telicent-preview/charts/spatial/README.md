@@ -121,7 +121,7 @@ Note: It is recommended to use a Kubernetes secret for sensitive information lik
 
 | Name                        | Description                    | Value       |
 | --------------------------- | ------------------------------ | ----------- |
-| `service.port`              | Auth server service port       | `8000`      |
+| `service.port`              | Auth server service port       | `8080`      |
 | `service.type`              | Auth server service port       | `ClusterIP` |
 | `resources.requests.cpu`    | Set containers' CPU request    | `1000m`     |
 | `resources.requests.memory` | Set containers' memory request | `4000Mi`    |
