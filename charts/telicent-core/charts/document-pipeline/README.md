@@ -434,7 +434,7 @@ The application settings are defined within the 'topics' key
 | `contentTagger.topics.dctUri`               | The URI for Dublin Core Terms                                              | `http://purl.org/dc/terms/`             |
 | `contentTagger.topics.iesUri`               | The URI for the IES Ontology                                               | `http://ies.data.gov.uk/ontology/ies4#` |
 | `contentTagger.topics.tontUri`              | The URI for the Telicent Ontology                                          | `http://telicent.io/ontology/`          |
-| `contentTagger.topics.iso3166Uri`           | The URI for the ISO 3166 standard                                          | `http://iso.org/iso3166#`               |
+| `contentTagger.topics.iso3166Uri`           | The URI for the ISO 3166 standard                                          | `http://iso.org/iso3166/country#`       |
 | `contentTagger.topics.loggingLevel`         | The logging level for the *Content Tagger*, e.g., DEBUG, INFO, WARN, ERROR | `INFO`                                  |
 | `contentTagger.topics.kafkaConfigMode`      | The configuration mode for Kafka, either 'basic' or 'toml'                 | `toml`                                  |
 

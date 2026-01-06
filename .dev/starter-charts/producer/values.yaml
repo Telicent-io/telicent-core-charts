@@ -1,0 +1,164 @@
+# Copyright (C) 2025 Telicent Limited
+# Telicent data engineering Job Starter Chart
+
+# @section Primary Configuration - data engineers should focus here first
+# @descStart
+# This section contains the essential configuration needed to get your job running.
+# Configure your container image and environment variables here.
+# @descEnd
+
+# @section Image Configuration
+image:
+  # @key image.registry Container image registry
+  registry: "quay.io"
+  # @key image.repository Container image repository (e.g., "my-org/my-data-processor")
+  repository: "telicent/your-job-image"
+  # @key image.tag Container image tag (use specific version tags for production)
+  tag: "latest"
+  # @key image.pullPolicy Image pull policy
+  pullPolicy: IfNotPresent
+
+# @section Environment Variables
+# @key env Environment variables for your job
+# Add your environment variables here as key-value pairs
+env:
+  # Example environment variables - customize these for your job
+  LOG_LEVEL: "INFO"
+  # DATA_SOURCE: "s3://my-bucket/data"
+  # OUTPUT_PATH: "/tmp/output"
+  # PROCESSING_MODE: "batch"
+
+# @section Advanced Configuration
+# @descStart
+# Advanced settings for fine-tuning your Kubernetes job.
+# Most data engineers can use the defaults, but adjust these if needed.
+# @descEnd
+
+# @section Global Parameters
+global:
+  # @key global.imageRegistry Global image registry override
+  imageRegistry: ""
+  # @key global.imagePullSecrets Global registry secret names as an array
+  imagePullSecrets: []
+
+  kafka:
+    # @key global.kafka.bootstrapServers Comma separated list containing Kafka bootstrap servers
+    bootstrapServers: "kafka-bootstrap.kafka.svc.cluster.local:9092"
+    # @key global.kafka.existingConfigSecretName Name of an existing secret containing Kafka configuration
+    existingConfigSecretName: ""
+    # @key global.kafka.username Username for Kafka authentication
+    username: "your.kafka.username.here"
+    # @key global.kafka.password Password for Kafka authentication
+    password: "your.kafka.password.here"
+    # @key global.kafka.protocol Protocol used for Kafka communication
+    protocol: "SASL_SSL"
+    # @key global.kafka.mechanism SASL mechanism used for Kafka authentication
+    mechanism: "SCRAM-SHA-512"
+
+# @section Job Configuration
+job:
+  # @key job.activeDeadlineSeconds Maximum time job can run (seconds)
+  activeDeadlineSeconds: 3600 # 1 hour default
+  # @key job.backoffLimit Number of retries on failure
+  backoffLimit: 3
+  # @key job.completions Number of successful completions needed
+  completions: 1
+  # @key job.parallelism Number of pods to run in parallel
+  parallelism: 1
+  # @key job.ttlSecondsAfterFinished Time to keep finished job before cleanup (0 = no cleanup)
+  ttlSecondsAfterFinished: 86400 # 24 hours
+
+# @section Pod Configuration
+# @key restartPolicy Pod restart policy for failed containers
+restartPolicy: Never
+
+# @key command Override the default command
+command: []
+
+# @key args Override the default arguments
+args: []
+
+# @section Service Account
+serviceAccount:
+  # @key serviceAccount.create Whether to create a service account
+  create: true
+  # @key serviceAccount.automount Auto-mount service account token
+  automount: true
+  # @key serviceAccount.annotations Annotations for service account
+  annotations: {}
+  # @key serviceAccount.name Service account name (auto-generated if empty)
+  name: ""
+
+# @section Security Context
+podSecurityContext:
+  # @key podSecurityContext.runAsNonRoot Run as non-root user
+  runAsNonRoot: true
+  # @key podSecurityContext.runAsUser User ID to run as
+  runAsUser: 1000
+  # @key podSecurityContext.fsGroup Filesystem group ID
+  fsGroup: 1000
+
+securityContext:
+  # @key securityContext.allowPrivilegeEscalation Allow privilege escalation
+  allowPrivilegeEscalation: false
+  # @key securityContext.readOnlyRootFilesystem Read-only root filesystem
+  readOnlyRootFilesystem: false
+  # @key securityContext.capabilities Container capabilities
+  capabilities:
+    drop:
+      - ALL
+
+# @section Resources
+resources:
+  # @key resources.limits Resource limits
+  limits:
+    # cpu: 2000m
+    # memory: 4Gi
+  # @key resources.requests Resource requests
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+# @section Node Selection
+# @key nodeSelector Node selector for pod placement
+nodeSelector: {}
+
+# @key tolerations Tolerations for pod placement
+tolerations: []
+
+# @key affinity Affinity rules for pod placement
+affinity: {}
+
+# @section Storage
+# @key volumes Additional volumes
+volumes: []
+
+# @key volumeMounts Additional volume mounts
+volumeMounts: []
+
+# @section Metadata
+# @key commonLabels Common labels applied to all resources
+commonLabels: {}
+
+# @key podAnnotations Annotations for pods
+podAnnotations: {}
+
+# @key podLabels Additional labels for pods
+podLabels: {}
+
+# @section Advanced Pod Configuration
+# @key initContainers Init containers
+initContainers: []
+
+# @key extraContainers Additional containers in the pod
+extraContainers: []
+
+# @section Override Settings
+# @key nameOverride Override the chart name
+nameOverride: ""
+
+# @key fullnameOverride Override the full resource name
+fullnameOverride: ""
+
+# @key namespaceOverride Override the namespace
+namespaceOverride: ""

@@ -1,0 +1,41 @@
+Thank you for installing {{ .Chart.Name }}!
+
+Your Kubernetes Job "{{ include "<CHARTNAME>.fullname" . }}" has been created in the "{{ include "<CHARTNAME>.namespace" . }}" namespace.
+
+Job Configuration:
+- Image: {{ include "<CHARTNAME>.image" . }}
+- Completions: {{ .Values.job.completions | default 1 }}
+- Parallelism: {{ .Values.job.parallelism | default 1 }}
+- Restart Policy: {{ .Values.restartPolicy | default "Never" }}
+
+{{- if .Values.job.activeDeadlineSeconds }}
+- Timeout: {{ .Values.job.activeDeadlineSeconds }} seconds
+{{- end }}
+
+To check the status of your job, run:
+  kubectl get job {{ include "<CHARTNAME>.fullname" . }} -n {{ include "<CHARTNAME>.namespace" . }}
+
+To view job logs, run:
+  kubectl logs job/{{ include "<CHARTNAME>.fullname" . }} -n {{ include "<CHARTNAME>.namespace" . }}
+
+To follow job logs in real-time, run:
+  kubectl logs job/{{ include "<CHARTNAME>.fullname" . }} -n {{ include "<CHARTNAME>.namespace" . }} -f
+
+{{- if .Values.env }}
+
+Environment Variables Configured:
+{{- range $key, $value := .Values.env }}
+- {{ $key }}: {{ $value }}
+{{- end }}
+{{- end }}
+
+{{- if .Values.job.ttlSecondsAfterFinished }}
+
+Note: This job will be automatically cleaned up {{ .Values.job.ttlSecondsAfterFinished }} seconds after completion.
+{{- else }}
+
+Note: This job will remain after completion. Clean it up manually with:
+  kubectl delete job {{ include "<CHARTNAME>.fullname" . }} -n {{ include "<CHARTNAME>.namespace" . }}
+{{- end }}
+
+For more information about this chart, visit: https://github.com/telicent/telicent-helm-charts

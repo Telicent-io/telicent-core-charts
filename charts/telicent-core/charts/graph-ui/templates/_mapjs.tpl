@@ -79,12 +79,43 @@ mapConfigExamples.ONLY_VECTOR_STYLES = {
         image: mapImgSrc.DEFAULT,
     },
 };
+mapConfigExamples.ESRI = [
+  {
+    kind: 'base-vector-tiles',
+    provider: 'mapbox',
+    label: 'ESRI World Imagery',
+    url: `https://basemapstyles-api.arcgis.com/arcgis/rest/services/styles/v2/styles/arcgis/streets-night?token=${ARC_GIS_API_TOKEN}`,
+    accessToken: ARC_GIS_API_TOKEN,
+    previewImage: mapImgSrc.DEFAULT,
+    visible: false,
+  },
+  {
+    kind: 'base-raster',
+    provider: 'xyz',
+    label: 'OpenStreetMap',
+    url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+    previewImage: mapImgSrc.STREET,
+    visible: false,
+  },
+  {
+    kind: 'base-vector-tiles',
+    provider: 'arcgis',
+    label: 'arcgis',
+    url: 'https://basemaps.arcgis.com/arcgis/rest/services/OpenStreetMap_GCS_v2/VectorTileServer',
+    previewImage: mapImgSrc.SATELLITE,
+    accessToken: ARC_GIS_API_TOKEN,
+    projection: 'EPSG:4326', // <--- important
+    visible: true,
+  },
+];
+
 {{- end }}
 
 {{- if .Values.ui.arcgisToken }}
 // [BEST]
 // IF set, can generate multiple layers from ANY map service that adheres to the map-box SPEC
 window.MAP_CONFIG = mapConfigExamples['VECTOR_AND_TILE_SETS']
+window.MAP_CONFIG_V2 = mapConfigExamples.ESRI;
 {{- else }}
 // [BEST]
 // IF set, can generate multiple layers from ANY map service that adheres to the map-box SPEC
