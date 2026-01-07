@@ -3,7 +3,7 @@ entries:
   access-api:
   - apiVersion: v2
     appVersion: 1.5.3
-    created: "2025-06-05T12:08:23.885788685Z"
+    created: "2026-01-07T13:53:35.564276Z"
     description: A Helm chart for Kubernetes
     digest: 8bc8168d515eac89e0c711be4e0183b2c0b69c0eb95b141b94a68f9005bd1035
     name: access-api
@@ -11,10 +11,20 @@ entries:
     urls:
     - access-api-0.1.0.tgz
     version: 0.1.0
+  - apiVersion: v2
+    appVersion: 1.5.3
+    created: "2026-01-07T13:53:35.829222Z"
+    description: A Helm chart for Kubernetes
+    digest: 69a6fdcc9bd8662f3f82eae3499bdf9729779207e6b151698ee93f631fd1735e
+    name: access-api
+    type: application
+    urls:
+    - packages/access-api-0.1.0.tgz
+    version: 0.1.0
   access-ui:
   - apiVersion: v2
     appVersion: 1.5.3
-    created: "2025-06-05T12:08:23.886813208Z"
+    created: "2026-01-07T13:53:35.566175Z"
     description: A Helm chart for Kubernetes
     digest: 671c6839d5506f6e4b4c27c2c95c339a56e1b4560f9d917d25bab6c1802a6ef6
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
@@ -26,10 +36,20 @@ entries:
     urls:
     - access-ui-0.1.0.tgz
     version: 0.1.0
+  - apiVersion: v2
+    appVersion: 1.5.3
+    created: "2026-01-07T13:53:35.831498Z"
+    description: A Helm chart for Kubernetes
+    digest: 3a6aa2a3cf3d7bce8599af81eaf9bc1fd84febc05efc07fc7334eadf3e0b912a
+    name: access-ui
+    type: application
+    urls:
+    - packages/access-ui-0.1.0.tgz
+    version: 0.1.0
   core-mesh:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2025-06-05T12:08:23.887930638Z"
+    created: "2026-01-07T13:53:35.568393Z"
     description: Prerequisite Istio policy permitting ingress and service-to-service
       access for Telicent apps within the existing Istio service core-mesh
     digest: 407f1a4cbec609aaeb275da9e05516fae3e6471d54c57d95543b35574f45b7ed
@@ -38,9 +58,20 @@ entries:
     urls:
     - core-mesh-0.1.0.tgz
     version: 0.1.0
+  - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2026-01-07T13:53:35.833101Z"
+    description: Prerequisite Istio policy permitting ingress and service-to-service
+      access for Telicent apps within the existing Istio service core-mesh
+    digest: 390826c76fb3c597b59c0ee248a67d0afcc8115dbdab43082b03a4c2611cd1d6
+    name: core-mesh
+    type: application
+    urls:
+    - packages/core-mesh-0.1.0.tgz
+    version: 0.1.0
   demo-prereqs-gateways:
   - apiVersion: v2
-    created: "2025-11-03T15:42:35.374657484Z"
+    created: "2026-01-07T13:53:35.574233Z"
     dependencies:
     - condition: gateway-apps.enabled
       name: gateway-apps
@@ -62,7 +93,7 @@ entries:
     - demo-prereqs-gateways-0.3.0.tgz
     version: 0.3.0
   - apiVersion: v2
-    created: "2025-09-09T15:26:42.249037053Z"
+    created: "2026-01-07T13:53:35.572456Z"
     description: Create Istio gateways and authn configuration for Telicent CORE demo
     digest: b1c5a31292f1b39a3b147816ddc251fe056d904cc794de9352413e75f35f0305
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
@@ -75,7 +106,7 @@ entries:
     - demo-prereqs-gateways-0.2.0.tgz
     version: 0.2.0
   - apiVersion: v2
-    created: "2025-09-09T13:56:44.82343021Z"
+    created: "2026-01-07T13:53:35.570153Z"
     description: Create Istio gateways and authn configuration for Telicent CORE demo
     digest: f9ed5deb5ecf6905ca35494c78465ffd2cc4e1bd874fe2dbd5a267f11e9182f1
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
@@ -89,7 +120,7 @@ entries:
     version: 0.1.0
   demo-prereqs-kafka:
   - apiVersion: v2
-    created: "2025-11-03T15:42:35.374845431Z"
+    created: "2026-01-07T13:53:35.576151Z"
     description: Create a kafka cluster and associated configuration
     digest: abf85c405c5c34400dd4cdd02ca843fc9accaac6c04731b34d0cac5292d90247
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
@@ -102,7 +133,7 @@ entries:
     - demo-prereqs-kafka-0.2.0.tgz
     version: 0.2.0
   - apiVersion: v2
-    created: "2025-09-04T08:22:23.352208879Z"
+    created: "2026-01-07T13:53:35.575229Z"
     description: Create a kafka cluster and associated configuration
     digest: bffe08fb30e839682cfb60a9864b71a5fab17c2c6775d882c8529e5416e87a66
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
@@ -117,7 +148,7 @@ entries:
   demo-prereqs-keycloak:
   - apiVersion: v2
     appVersion: 26.3.0
-    created: "2025-11-03T15:42:35.375128257Z"
+    created: "2026-01-07T13:53:35.578517Z"
     description: Provisions a dev mode instance of keycloak
     digest: f615c1f468d0361a2a763cca4246b9a5ca994e98db653af23871c63c0979ef7a
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
@@ -131,7 +162,7 @@ entries:
     version: 0.2.1
   - apiVersion: v2
     appVersion: 26.2.3
-    created: "2025-09-09T15:12:27.40186964Z"
+    created: "2026-01-07T13:53:35.577822Z"
     description: Provisions a dev mode instance of keycloak
     digest: 7e447a4039b2b0cdc97277b867a9018d58388304de96727f74fc11002a17a4fa
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
@@ -145,7 +176,7 @@ entries:
     version: 0.2.0
   - apiVersion: v2
     appVersion: 26.2.3
-    created: "2025-09-09T14:37:46.465478943Z"
+    created: "2026-01-07T13:53:35.576873Z"
     description: Provisions a dev mode instance of keycloak
     digest: 141ab41cb7d1ad0b410aa052d0300abc8409d198dc343898bffdbc0ee7dc8b14
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
@@ -159,7 +190,7 @@ entries:
     version: 0.1.0
   demo-prereqs-mongodb:
   - apiVersion: v2
-    created: "2025-11-03T15:42:35.375321105Z"
+    created: "2026-01-07T13:53:35.579473Z"
     description: Create a mongodb instance and associated configuration
     digest: c7e8afcff4d29c826647a1f80b7982d65726584544008eca49af35486ddf63c7
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
@@ -174,7 +205,7 @@ entries:
   demo-prereqs-oauth2-proxy:
   - apiVersion: v2
     appVersion: v7.8.1
-    created: "2025-09-04T08:22:23.353115309Z"
+    created: "2026-01-07T13:53:35.582447Z"
     description: A Helm chart for Kubernetes
     digest: 22b7fd1c9eb43a5a64b100034b0d75bdb253a6ce42d04b661d28641232d2a871
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
@@ -188,7 +219,7 @@ entries:
     version: 0.2.0
   demo-prereqs-system-mesh:
   - apiVersion: v2
-    created: "2025-09-04T08:22:23.353431452Z"
+    created: "2026-01-07T13:53:35.583766Z"
     description: A Helm chart for Kubernetes
     digest: b98f8fdb525820ecf588ff66d3389e20859fd9341636721efe5586f2fc931b00
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
@@ -202,7 +233,7 @@ entries:
     version: 0.1.0
   gateways:
   - apiVersion: v2
-    created: "2025-06-04T14:34:53.202688474Z"
+    created: "2026-01-07T13:53:35.58451Z"
     description: Create Istio gateways and authn configuration for Telicent CORE demo
     digest: 021c47f10a7092a586b661d308656580c6d67900bc756c86bd4e216f56ba18d5
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
@@ -214,10 +245,23 @@ entries:
     urls:
     - gateways-0.1.0.tgz
     version: 0.1.0
+  - apiVersion: v2
+    created: "2026-01-07T13:53:35.833858Z"
+    description: Create Istio gateways and authn configuration for Telicent CORE demo
+    digest: 877ad1423703f8e4c8ee593b9a3473eea1a619c472d8c96d7ee7bfb139e2ab8e
+    icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
+    maintainers:
+    - name: telicent
+      url: https://github.com/Telicent-IO
+    name: gateways
+    type: application
+    urls:
+    - packages/gateways-0.1.0.tgz
+    version: 0.1.0
   graph-ui:
   - apiVersion: v2
     appVersion: x.x.x
-    created: "2025-06-05T12:08:23.889658608Z"
+    created: "2026-01-07T13:53:35.585439Z"
     description: Telicent Graph UI
     digest: 4fa4bf3100ca976d2de2a01aa209f3c0b129ff5de3b0cbaad0bc8c4f6bcdf532
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
@@ -229,10 +273,20 @@ entries:
     urls:
     - graph-ui-0.1.0.tgz
     version: 0.1.0
+  - apiVersion: v2
+    appVersion: x.x.x
+    created: "2026-01-07T13:53:35.834735Z"
+    description: Telicent Graph UI
+    digest: 832674a7aea0e895f1edfe748a4dad9487613fecb36003bd01277b48662aa249
+    name: graph-ui
+    type: application
+    urls:
+    - packages/graph-ui-0.1.0.tgz
+    version: 0.1.0
   ies-ontology:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2025-06-05T12:08:23.890129349Z"
+    created: "2026-01-07T13:53:35.586481Z"
     description: A generic chart that creates single run producer jobs as defined
       in the values
     digest: d9121db74ecc78b7a58b213ee8ebe8baac702ef44a340fe7786c7445c31517e1
@@ -245,10 +299,21 @@ entries:
     urls:
     - ies-ontology-0.1.0.tgz
     version: 0.1.0
+  - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2026-01-07T13:53:35.835641Z"
+    description: A generic chart that creates single run producer jobs as defined
+      in the values
+    digest: 89ee7b1bfe7316b835565de6dd20737312c0ff7b2e2cc54c6db1f48df57de1c2
+    name: ies-ontology
+    type: application
+    urls:
+    - packages/ies-ontology-0.1.0.tgz
+    version: 0.1.0
   keycloak:
   - apiVersion: v2
     appVersion: 26.2.3
-    created: "2025-06-04T14:34:53.203907844Z"
+    created: "2026-01-07T13:53:35.587226Z"
     description: Provisions a dev mode instance of keycloak
     digest: 4c9d1b1550f775de5de28baa7789ff120ff6fbf46ea1c4288dd79054037b87c8
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
@@ -263,7 +328,7 @@ entries:
   query-ui:
   - apiVersion: v2
     appVersion: 1.1.7
-    created: "2025-06-05T12:08:23.890454337Z"
+    created: "2026-01-07T13:53:35.588007Z"
     description: Telicent Query UI is a basic free to use app that provides a UI interface
       to run SparQL and GraphQL (via GraphiQL) queries.
     digest: 68aebca07a1f9eb1df89f09c3898b4a17d8b44dec95907b567e5b21613220b5c
@@ -276,10 +341,21 @@ entries:
     urls:
     - query-ui-0.1.0.tgz
     version: 0.1.0
+  - apiVersion: v2
+    appVersion: 1.1.7
+    created: "2026-01-07T13:53:35.836453Z"
+    description: Telicent Query UI is a basic free to use app that provides a UI interface
+      to run SparQL and GraphQL (via GraphiQL) queries.
+    digest: acdc20470bcfbc55451c89b6798a586cb4ad7fc5832026a37a6f3568bd871878
+    name: query-ui
+    type: application
+    urls:
+    - packages/query-ui-0.1.0.tgz
+    version: 0.1.0
   search-ui:
   - apiVersion: v2
     appVersion: x.x.x
-    created: "2025-06-05T12:08:23.890834712Z"
+    created: "2026-01-07T13:53:35.588986Z"
     description: Telicent Search UI
     digest: 0bbb879e1a4cbe2d14a084a1bf6867dacfd42fa3a8bb281fcaed0363a9b2edd0
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
@@ -291,10 +367,20 @@ entries:
     urls:
     - search-ui-0.1.0.tgz
     version: 0.1.0
+  - apiVersion: v2
+    appVersion: x.x.x
+    created: "2026-01-07T13:53:35.837141Z"
+    description: Telicent Search UI
+    digest: 019d39eb1a912918a5beab4a3ba0f1bdf6d2d34045c5f6328bf5f045f76196f1
+    name: search-ui
+    type: application
+    urls:
+    - packages/search-ui-0.1.0.tgz
+    version: 0.1.0
   smart-cache-graph:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2025-06-05T12:08:23.891518093Z"
+    created: "2026-01-07T13:53:35.590372Z"
     description: A Helm chart for Kubernetes
     digest: 1096fde31530a4bf1965c76146894f675b23c44b78b9522bcd41ef5e4842fb18
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
@@ -306,10 +392,20 @@ entries:
     urls:
     - smart-cache-graph-0.1.0.tgz
     version: 0.1.0
+  - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2026-01-07T13:53:35.837928Z"
+    description: A Helm chart for Kubernetes
+    digest: df11ba2b1a78137166c363470aa2a64aabfa8fe909e2afe90c3027f7d6d2187f
+    name: smart-cache-graph
+    type: application
+    urls:
+    - packages/smart-cache-graph-0.1.0.tgz
+    version: 0.1.0
   smart-cache-search:
   - apiVersion: v2
     appVersion: 0.1.1
-    created: "2025-06-05T12:08:23.891962071Z"
+    created: "2026-01-07T13:53:35.591353Z"
     description: A Helm chart for Kubernetes
     digest: 2757451638372aa0649bb0c728a782ee522d262a3c34badd091f47925b9ac085
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
@@ -321,10 +417,79 @@ entries:
     urls:
     - smart-cache-search-0.1.1.tgz
     version: 0.1.1
+  - apiVersion: v2
+    appVersion: 0.1.1
+    created: "2026-01-07T13:53:35.838742Z"
+    description: A Helm chart for Kubernetes
+    digest: 4efa030d7ef1cbcb4d0d148d8945007ebd907fcb24c05c11c008138fe1d092e2
+    icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
+    maintainers:
+    - name: telicent
+      url: https://github.com/Telicent-IO
+    name: smart-cache-search
+    type: application
+    urls:
+    - packages/smart-cache-search-0.1.1.tgz
+    version: 0.1.1
   telicent-core:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-11-03T15:42:35.391210931Z"
+    created: "2026-01-07T13:53:35.77244Z"
+    dependencies:
+    - condition: global.enterprise
+      name: admin-ui
+      repository: file://./charts/admin-ui
+      version: ^0.1.0
+    - name: auth
+      repository: file://./charts/auth
+      version: ^0.1.0
+    - condition: global.enterprise
+      name: graph-ui
+      repository: file://./charts/graph-ui
+      version: ^0.1.0
+    - name: query-ui
+      repository: file://./charts/query-ui
+      version: ^0.1.0
+    - condition: global.enterprise
+      name: search-ui
+      repository: file://./charts/search-ui
+      version: ^0.1.0
+    - name: graph
+      repository: file://./charts/graph
+      version: ^0.1.0
+    - condition: global.enterprise
+      name: search
+      repository: file://./charts/search
+      version: ^0.1.1
+    - condition: global.enterprise
+      name: search-projector
+      repository: file://./charts/search-projector
+      version: ^0.1.1
+    - condition: global.enterprise
+      name: user-preferences
+      repository: file://./charts/user-preferences
+      version: ^0.1.0
+    - name: traefik-proxy
+      repository: file://./charts/traefik-proxy
+      version: ^0.1.0
+    - condition: global.enterprise, document-pipeline.enabled
+      name: document-pipeline
+      repository: file://./charts/document-pipeline
+      version: ^0.1.0
+    description: Telicent CORE platform for knowledge graph and data management
+    digest: 0808b87deaed2de0b01d0238a830656b6977cca05a3dc651425d20387300e795
+    icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
+    maintainers:
+    - name: telicent
+      url: https://github.com/Telicent-IO
+    name: telicent-core
+    type: application
+    urls:
+    - telicent-core-1.0.0.tgz
+    version: 1.0.0
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2026-01-07T13:53:35.762487Z"
     dependencies:
     - name: access
       repository: file://./charts/access
@@ -378,7 +543,7 @@ entries:
     version: 0.5.0
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-10-06T14:13:52.649818836Z"
+    created: "2026-01-07T13:53:35.750884Z"
     dependencies:
     - condition: access.enabled
       name: access
@@ -441,7 +606,7 @@ entries:
     version: 0.4.2
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-09-09T14:45:47.722628032Z"
+    created: "2026-01-07T13:53:35.737903Z"
     dependencies:
     - name: access
       repository: file://./charts/access
@@ -491,7 +656,7 @@ entries:
     version: 0.4.1
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-09-02T09:52:39.115780343Z"
+    created: "2026-01-07T13:53:35.728486Z"
     dependencies:
     - name: access
       repository: file://./charts/access
@@ -536,7 +701,7 @@ entries:
     version: 0.4.0
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-08-13T12:53:34.011789652Z"
+    created: "2026-01-07T13:53:35.719463Z"
     dependencies:
     - name: access-api
       repository: file://./charts/access-api
@@ -578,7 +743,7 @@ entries:
     version: 0.3.4
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-08-13T09:20:15.360344405Z"
+    created: "2026-01-07T13:53:35.710823Z"
     dependencies:
     - name: access-api
       repository: file://./charts/access-api
@@ -620,7 +785,7 @@ entries:
     version: 0.3.3
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-07-22T16:51:57.574389986Z"
+    created: "2026-01-07T13:53:35.702649Z"
     dependencies:
     - name: access-api
       repository: file://./charts/access-api
@@ -662,7 +827,7 @@ entries:
     version: 0.3.2
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-07-08T10:15:28.371473455Z"
+    created: "2026-01-07T13:53:35.69544Z"
     dependencies:
     - name: access-api
       repository: file://./charts/access-api
@@ -704,7 +869,7 @@ entries:
     version: 0.3.1
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-07-07T10:12:37.369295158Z"
+    created: "2026-01-07T13:53:35.687705Z"
     dependencies:
     - name: access-api
       repository: file://./charts/access-api
@@ -746,7 +911,7 @@ entries:
     version: 0.3.0
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-06-30T13:02:06.670513641Z"
+    created: "2026-01-07T13:53:35.62798Z"
     dependencies:
     - name: access-api
       repository: file://./charts/access-api
@@ -791,7 +956,7 @@ entries:
     version: 0.2.11
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-06-30T09:12:57.519651649Z"
+    created: "2026-01-07T13:53:35.621451Z"
     dependencies:
     - name: access-api
       repository: file://./charts/access-api
@@ -836,7 +1001,7 @@ entries:
     version: 0.2.10
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-06-30T08:49:18.004754553Z"
+    created: "2026-01-07T13:53:35.678742Z"
     dependencies:
     - name: access-api
       repository: file://./charts/access-api
@@ -881,7 +1046,7 @@ entries:
     version: 0.2.9
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-06-30T07:49:57.001357397Z"
+    created: "2026-01-07T13:53:35.671284Z"
     dependencies:
     - name: access-api
       repository: file://./charts/access-api
@@ -926,7 +1091,7 @@ entries:
     version: 0.2.8
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-06-27T15:08:33.805344864Z"
+    created: "2026-01-07T13:53:35.66386Z"
     dependencies:
     - name: access-api
       repository: file://./charts/access-api
@@ -971,7 +1136,7 @@ entries:
     version: 0.2.7
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-06-27T13:44:01.454839639Z"
+    created: "2026-01-07T13:53:35.657588Z"
     dependencies:
     - name: access-api
       repository: file://./charts/access-api
@@ -1016,7 +1181,7 @@ entries:
     version: 0.2.6
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-06-27T10:12:10.250914656Z"
+    created: "2026-01-07T13:53:35.651431Z"
     dependencies:
     - name: access-api
       repository: file://./charts/access-api
@@ -1061,7 +1226,7 @@ entries:
     version: 0.2.5
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-06-26T14:48:22.603019729Z"
+    created: "2026-01-07T13:53:35.644784Z"
     dependencies:
     - name: access-api
       repository: file://./charts/access-api
@@ -1106,7 +1271,7 @@ entries:
     version: 0.2.4
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-06-25T13:57:11.023737245Z"
+    created: "2026-01-07T13:53:35.637633Z"
     dependencies:
     - name: access-api
       repository: file://./charts/access-api
@@ -1151,7 +1316,7 @@ entries:
     version: 0.2.3
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-06-25T09:59:59.85421863Z"
+    created: "2026-01-07T13:53:35.632455Z"
     dependencies:
     - name: access-api
       repository: file://./charts/access-api
@@ -1196,7 +1361,7 @@ entries:
     version: 0.2.2
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-06-24T17:19:02.853274701Z"
+    created: "2026-01-07T13:53:35.611844Z"
     dependencies:
     - name: access-api
       repository: file://./charts/access-api
@@ -1241,7 +1406,7 @@ entries:
     version: 0.2.1
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-06-24T15:27:32.107676869Z"
+    created: "2026-01-07T13:53:35.606372Z"
     dependencies:
     - name: access-api
       repository: file://./charts/access-api
@@ -1286,7 +1451,7 @@ entries:
     version: 0.2.0
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-06-24T12:53:12.207845989Z"
+    created: "2026-01-07T13:53:35.601003Z"
     dependencies:
     - name: access-api
       repository: file://./charts/access-api
@@ -1331,7 +1496,7 @@ entries:
     version: 0.1.1
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-06-23T09:21:36.643249533Z"
+    created: "2026-01-07T13:53:35.595823Z"
     dependencies:
     - name: access-api
       repository: file://./charts/access-api
@@ -1377,7 +1542,70 @@ entries:
   telicent-data:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-11-03T15:42:35.403811381Z"
+    created: "2026-01-07T13:53:35.811655Z"
+    dependencies:
+    - name: ies-ontology-producer
+      repository: file://./charts/ies-ontology-producer
+      version: ^0.1.0
+    - name: ies-regions-ontology-adapter
+      repository: file://./charts/ies-regions-ontology-adapter
+      version: ^0.1.0
+    - name: ies-regions-producer
+      repository: file://./charts/ies-regions-producer
+      version: ^0.1.0
+    - name: ontologies-rdf-rdfs-owl-producer
+      repository: file://./charts/ontologies-rdf-rdfs-owl-producer
+      version: ^0.1.0
+    - condition: global.enterprise
+      name: producer-acled-ontology
+      repository: file://./charts/producer-acled-ontology
+      version: ^0.1.0
+    - condition: global.enterprise
+      name: canonicals-event-validation-mapper
+      repository: file://./charts/canonicals-event-validation-mapper
+      version: ^0.1.0
+    - condition: global.enterprise
+      name: canonicals-event-geo-mapper
+      repository: file://./charts/canonicals-event-geo-mapper
+      version: ^0.1.0
+    - condition: global.enterprise
+      name: canonicals-event-knowledge-mapper
+      repository: file://./charts/canonicals-event-knowledge-mapper
+      version: ^0.1.0
+    - condition: global.enterprise
+      name: acled-locations-mapper
+      repository: file://./charts/acled-locations-mapper
+      version: ^0.1.0
+    - condition: global.enterprise
+      name: acled-participants-mapper
+      repository: file://./charts/acled-participants-mapper
+      version: ^0.1.0
+    - condition: global.enterprise
+      name: acled-validation-mapper
+      repository: file://./charts/acled-validation-mapper
+      version: ^0.1.0
+    - condition: global.enterprise
+      name: canonicals-event-document-mapper
+      repository: file://./charts/canonicals-event-document-mapper
+      version: ^0.1.0
+    - condition: global.enterprise
+      name: canonicals-ontology
+      repository: file://./charts/canonicals-ontology
+      version: ^0.1.0
+    description: A Helm chart for Kubernetes
+    digest: 7617299b68e7cda06d00ad2d516dd6fa8091317fec41bbd174edbe99e6643588
+    icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
+    maintainers:
+    - name: telicent
+      url: https://github.com/Telicent-IO
+    name: telicent-data
+    type: application
+    urls:
+    - telicent-data-0.3.1.tgz
+    version: 0.3.1
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2026-01-07T13:53:35.805422Z"
     dependencies:
     - name: ies-ontology-producer
       repository: file://./charts/ies-ontology-producer
@@ -1440,7 +1668,7 @@ entries:
     version: 0.3.0
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-10-29T15:00:03.000097433Z"
+    created: "2026-01-07T13:53:35.794672Z"
     dependencies:
     - name: ies-ontology-producer
       repository: file://./charts/ies-ontology-producer
@@ -1499,7 +1727,7 @@ entries:
     version: 0.2.0
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-10-29T14:48:36.74500044Z"
+    created: "2026-01-07T13:53:35.783944Z"
     dependencies:
     - name: ies-ontology-producer
       repository: file://./charts/ies-ontology-producer
@@ -1559,7 +1787,42 @@ entries:
   telicent-preview:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-11-03T15:42:35.406692169Z"
+    created: "2026-01-07T13:53:35.826462Z"
+    dependencies:
+    - condition: user-portal-ui.enabled
+      name: user-portal-ui
+      repository: file://./charts/user-portal-ui
+      version: ^0.1.0
+    - condition: global.enterprise, paperback-writer.enabled
+      name: paperback-writer
+      repository: file://./charts/paperback-writer
+      version: ^0.1.0
+    - condition: data-catalog-ui.enabled
+      name: data-catalog-ui
+      repository: file://./charts/data-catalog-ui
+      version: ^0.1.0
+    - condition: global.enterprise
+      name: spatial
+      repository: file://./charts/spatial
+      version: ^0.1.0
+    - condition: global.enterprise
+      name: spatial-projector
+      repository: file://./charts/spatial-projector
+      version: ^0.1.0
+    description: A Helm chart for Kubernetes
+    digest: a25c4aa0aa17879fe86f42665d16ed4e1018bb381aceaaffd173644b72ef8511
+    icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
+    maintainers:
+    - name: telicent
+      url: https://github.com/Telicent-IO
+    name: telicent-preview
+    type: application
+    urls:
+    - telicent-preview-0.4.0.tgz
+    version: 0.4.0
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2026-01-07T13:53:35.821031Z"
     dependencies:
     - condition: user-portal-ui.enabled
       name: user-portal-ui
@@ -1586,7 +1849,7 @@ entries:
     version: 0.3.0
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-10-29T14:52:39.631428785Z"
+    created: "2026-01-07T13:53:35.816072Z"
     dependencies:
     - condition: user-portal-ui.enabled
       name: user-portal-ui
@@ -1611,4 +1874,4 @@ entries:
     urls:
     - telicent-preview-0.2.0.tgz
     version: 0.2.0
-generated: "2025-11-03T15:42:35.373789142Z"
+generated: "2026-01-07T13:53:35.552173Z"
