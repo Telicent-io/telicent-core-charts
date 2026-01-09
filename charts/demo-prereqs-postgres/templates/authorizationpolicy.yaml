@@ -21,7 +21,7 @@ spec:
   - from:
     - source:
         principals:
-        - {{ include "demo-prereqs-postgres.ingressPrincipal" . }}
+        - {{ include "demo-prereqs-postgres.authPrincipal" . }}
     to:
     - operation:
         methods:

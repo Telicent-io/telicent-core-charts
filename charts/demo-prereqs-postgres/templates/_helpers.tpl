@@ -65,6 +65,6 @@ Create the name of the service account to use
 {{/*
 Service principals
 */}}
-{{- define "demo-prereqs-postgres.ingressPrincipal" -}}
-{{- printf "cluster.local/ns/%s/sa/%s" .Values.ingress.namespace .Values.ingress.serviceAccountName }}
+{{- define "demo-prereqs-postgres.authPrincipal" -}}
+{{- printf "cluster.local/ns/%s/sa/%s-auth" .Release.Namespace .Release.Name }}
 {{- end }}
