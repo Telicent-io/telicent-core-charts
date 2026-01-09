@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.2](https://github.com/Telicent-io/telicent-core-charts/compare/demo-prereqs-postgres-v0.2.1...demo-prereqs-postgres-v0.2.2) (2026-01-09)
+
+
+### Bug Fixes
+
+* adds Auth Policy ([68237a6](https://github.com/Telicent-io/telicent-core-charts/commit/68237a646872851aed4ba8b5845a8a7129b86b69))
+* adds Auth Policy ([821d5bf](https://github.com/Telicent-io/telicent-core-charts/commit/821d5bf8836ff480361ef289973354c0113b9a6b))
+
 ## [0.2.1](https://github.com/Telicent-io/telicent-core-charts/compare/demo-prereqs-postgres-v0.2.0...demo-prereqs-postgres-v0.2.1) (2026-01-09)
 
 
