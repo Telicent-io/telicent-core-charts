@@ -105,3 +105,12 @@ Service account configuration
 | `nodeSelector`               | Node selector                      | `{}`    |
 | `tolerations`                | Tolerations                        | `[]`    |
 | `affinity`                   | Affinity rules                     | `{}`    |
+
+### Ingress
+
+Istio ingress configuration
+
+| Name                         | Description                                           | Value           |
+| ---------------------------- | ----------------------------------------------------- | --------------- |
+| `ingress.namespace`          | Namespace for the Istio ingress resources             | `istio-system`  |
+| `ingress.serviceAccountName` | Service account name for the Istio ingress controller | `istio-ingress` |

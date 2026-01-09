@@ -60,3 +60,11 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+
+{{/*
+Service principals
+*/}}
+{{- define "demo-prereqs-postgres.ingressPrincipal" -}}
+{{- printf "cluster.local/ns/%s/sa/%s" .Values.ingress.namespace .Values.ingress.serviceAccountName }}
+{{- end }}

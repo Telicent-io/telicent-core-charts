@@ -1,0 +1,31 @@
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  name: {{ include "demo-prereqs-postgres.fullname" . }}
+  labels:
+  {{- include "demo-prereqs-postgres.labels" . | nindent 4 }}
+spec:
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        principals:
+        - '*'
+    to:
+    - operation:
+        methods:
+        - GET
+        paths:
+        - /
+        - /*
+  - from:
+    - source:
+        principals:
+        - {{ include "demo-prereqs-postgres.ingressPrincipal" . }}
+    to:
+    - operation:
+        methods:
+        - '*'
+  selector:
+    matchLabels:
+      {{- include "demo-prereqs-postgres.selectorLabels" . | nindent 6 }}
