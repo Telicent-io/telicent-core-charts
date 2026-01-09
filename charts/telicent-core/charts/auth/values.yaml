@@ -57,6 +57,8 @@ idp:
   jwksPath: "/keys"
   # @key idp.tokenPath The path to use in combination with the issuer URL for generating tokens
   tokenPath: "/token"
+  # @key idp.userinfoPath The path to use in combination with the issuer URL for userinfo
+  userinfoPath: "/userinfo"
 
   # @key idp.cookieParentDomain Cookie domain scope
   cookieParentDomain: ".telicent.io"

@@ -111,6 +111,7 @@ For Quick Start purposes, a secret named `tc-auth-gen-idp-auth` will be created 
 | `idp.authorizationPath`   | The path to use in combination with the issuer URL for authorization                   | `/auth`        |
 | `idp.jwksPath`            | The path to use in combination with the issuer URL for JWKS                            | `/keys`        |
 | `idp.tokenPath`           | The path to use in combination with the issuer URL for generating tokens               | `/token`       |
+| `idp.userinfoPath`        | The path to use in combination with the issuer URL for userinfo                        | `/userinfo`    |
 | `idp.cookieParentDomain`  | Cookie domain scope                                                                    | `.telicent.io` |
 | `idp.cookieSecure`        | Enable secure cookies                                                                  | `true`         |
 | `idp.superUserIdentifier` | Super user identification, set to 'ALL' to allow for everyone to be a superuser        | `ALL`          |
