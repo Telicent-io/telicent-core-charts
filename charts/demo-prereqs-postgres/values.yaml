@@ -1,0 +1,83 @@
+# Default values for demo-prereqs-postgres.
+# Simple PostgreSQL deployment for demo/development purposes.
+
+# PostgreSQL image configuration
+image:
+  repository: postgres
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+# PostgreSQL configuration
+postgres:
+  # Database name to create
+  database: postgres
+  # Username (superuser)
+  user: postgres
+  # Password for the user (required)
+  password: postgres
+  # Additional PostgreSQL configuration parameters
+  # These are passed as environment variables
+  extraEnv: []
+  #   - name: POSTGRES_INITDB_ARGS
+  #     value: "--encoding=UTF8"
+
+# Persistence configuration
+persistence:
+  enabled: true
+  # Storage class - leave empty for default
+  storageClass: ""
+  # Access mode
+  accessMode: ReadWriteOnce
+  # Size of the persistent volume
+  size: 1Gi
+  # Annotations for the PVC
+  annotations: {}
+
+# Service configuration
+service:
+  type: ClusterIP
+  port: 5432
+
+# Service account configuration
+serviceAccount:
+  create: false
+  automount: true
+  annotations: {}
+  name: ""
+
+# Pod annotations and labels
+podAnnotations: {}
+podLabels: {}
+
+# Security context for the pod
+podSecurityContext: {}
+  # fsGroup: 999
+
+# Security context for the container
+securityContext: {}
+  # runAsUser: 999
+  # runAsGroup: 999
+
+# Resource limits and requests
+resources: {}
+  # For demo purposes, you might want to set minimal resources:
+  # limits:
+  #   cpu: 500m
+  #   memory: 512Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 256Mi
+
+# Node selector
+nodeSelector: {}
+
+# Tolerations
+tolerations: []
+
+# Affinity rules
+affinity: {}

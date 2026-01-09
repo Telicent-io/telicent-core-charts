@@ -1,0 +1,10 @@
+apiVersion: v2
+name: demo-prereqs-postgres
+description: A simple PostgreSQL deployment for demo/development purposes
+
+type: application
+
+version: 0.1.0
+
+# PostgreSQL version
+appVersion: "16"
