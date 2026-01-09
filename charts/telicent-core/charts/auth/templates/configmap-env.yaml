@@ -33,8 +33,10 @@ data:
   EXTERNAL_IDP_URL: {{ .Values.idp.issuerUrl | quote }}
   EXTERNAL_IDP_CLIENT_NAME: {{ .Values.idp.clientName | quote }}
   EXTERNAL_IDP_ID_CLAIM: {{ .Values.idp.usernameClaim | quote }}
-  EXTERNAL_IDP_AUTHORIZE_ENDPOINT:  {{ .Values.idp.authorizationPath | quote }}
-  EXTERNAL_IDP_JWK_SET_ENDPOINT:  {{ .Values.idp.jwksPath | quote }}
+  EXTERNAL_IDP_AUTHORIZE_ENDPOINT: {{ .Values.idp.authorizationPath | quote }}
+  EXTERNAL_IDP_JWK_SET_ENDPOINT: {{ .Values.idp.jwksPath | quote }}
+  EXTERNAL_IDP_TOKEN_ENDPOINT: {{ .Values.idp.tokenPath | quote }}
+  EXTERNAL_IDP_USERINFO_ENDPOINT: {{ .Values.idp.userinfoPath | quote }}
 
   # Log levels
   LOGGING_LEVEL_API: {{ .Values.logs.api.level  }}

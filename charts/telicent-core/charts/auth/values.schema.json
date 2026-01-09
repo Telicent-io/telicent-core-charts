@@ -81,6 +81,11 @@
                     "description": "The path to use in combination with the issuer URL for generating tokens",
                     "default": "/token"
                 },
+                "userinfoPath": {
+                    "type": "string",
+                    "description": "The path to use in combination with the issuer URL for userinfo",
+                    "default": "/userinfo"
+                },
                 "cookieParentDomain": {
                     "type": "string",
                     "description": "Cookie domain scope",
