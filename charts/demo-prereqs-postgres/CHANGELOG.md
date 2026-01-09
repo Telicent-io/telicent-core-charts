@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.1](https://github.com/Telicent-io/telicent-core-charts/compare/demo-prereqs-postgres-v0.2.0...demo-prereqs-postgres-v0.2.1) (2026-01-09)
+
+
+### Bug Fixes
+
+* remove archive and whitespace in NOTES ([3ce9356](https://github.com/Telicent-io/telicent-core-charts/commit/3ce9356bcc9c0d51a18915db23bf3f3f6d680612))
+* remove archive and whitespace in NOTES ([e0a52dc](https://github.com/Telicent-io/telicent-core-charts/commit/e0a52dcfb6b62852ff5f24cdb1f76ff6f7e1e479))
+
 ## [0.2.0](https://github.com/Telicent-io/telicent-core-charts/compare/demo-prereqs-postgres-v0.1.0...demo-prereqs-postgres-v0.2.0) (2026-01-09)
 
 
