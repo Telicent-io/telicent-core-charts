@@ -110,3 +110,13 @@ tolerations: []
 
 # @key affinity Affinity rules
 affinity: {}
+
+# @section Ingress
+# @descStart
+# Istio ingress configuration
+# @descEnd
+ingress:
+  # @key ingress.namespace Namespace for the Istio ingress resources
+  namespace: istio-system
+  # @key ingress.serviceAccountName Service account name for the Istio ingress controller
+  serviceAccountName: istio-ingress
