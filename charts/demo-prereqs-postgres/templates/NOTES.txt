@@ -1,5 +1,6 @@
 PostgreSQL has been deployed successfully!
 
+
 Database: {{ .Values.postgres.database }}
 Username: {{ .Values.postgres.user }}
 Port: {{ .Values.service.port }}
