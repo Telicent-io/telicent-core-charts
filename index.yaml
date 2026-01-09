@@ -11,16 +11,6 @@ entries:
     urls:
     - access-api-0.1.0.tgz
     version: 0.1.0
-  - apiVersion: v2
-    appVersion: 1.5.3
-    created: "2026-01-07T13:53:35.829222Z"
-    description: A Helm chart for Kubernetes
-    digest: 69a6fdcc9bd8662f3f82eae3499bdf9729779207e6b151698ee93f631fd1735e
-    name: access-api
-    type: application
-    urls:
-    - packages/access-api-0.1.0.tgz
-    version: 0.1.0
   access-ui:
   - apiVersion: v2
     appVersion: 1.5.3
@@ -36,16 +26,6 @@ entries:
     urls:
     - access-ui-0.1.0.tgz
     version: 0.1.0
-  - apiVersion: v2
-    appVersion: 1.5.3
-    created: "2026-01-07T13:53:35.831498Z"
-    description: A Helm chart for Kubernetes
-    digest: 3a6aa2a3cf3d7bce8599af81eaf9bc1fd84febc05efc07fc7334eadf3e0b912a
-    name: access-ui
-    type: application
-    urls:
-    - packages/access-ui-0.1.0.tgz
-    version: 0.1.0
   core-mesh:
   - apiVersion: v2
     appVersion: 0.1.0
@@ -58,20 +38,9 @@ entries:
     urls:
     - core-mesh-0.1.0.tgz
     version: 0.1.0
-  - apiVersion: v2
-    appVersion: 0.1.0
-    created: "2026-01-07T13:53:35.833101Z"
-    description: Prerequisite Istio policy permitting ingress and service-to-service
-      access for Telicent apps within the existing Istio service core-mesh
-    digest: 390826c76fb3c597b59c0ee248a67d0afcc8115dbdab43082b03a4c2611cd1d6
-    name: core-mesh
-    type: application
-    urls:
-    - packages/core-mesh-0.1.0.tgz
-    version: 0.1.0
   demo-prereqs-gateways:
   - apiVersion: v2
-    created: "2026-01-07T13:53:35.574233Z"
+    created: "2026-01-09T13:13:09.030730634Z"
     dependencies:
     - condition: gateway-apps.enabled
       name: gateway-apps
@@ -82,7 +51,7 @@ entries:
       repository: file://./charts/gateway-authn
       version: ^0.1.0
     description: Create Istio gateways and authn configuration for Telicent CORE demo
-    digest: 1fd4d5f61c9ec0b20787db1475bd659522f90aa2d23f1ace00e0625ac9a07a51
+    digest: 13045266244a68173779a94e13f917810066fee4f7475d1f7ab7dff17196b783
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -120,9 +89,9 @@ entries:
     version: 0.1.0
   demo-prereqs-kafka:
   - apiVersion: v2
-    created: "2026-01-07T13:53:35.576151Z"
+    created: "2026-01-09T13:13:09.030987312Z"
     description: Create a kafka cluster and associated configuration
-    digest: abf85c405c5c34400dd4cdd02ca843fc9accaac6c04731b34d0cac5292d90247
+    digest: 3987f3024cfb46e88dab3e6fefe5bd3282b12cee7bd33a25b3f5701a036670bd
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -148,9 +117,9 @@ entries:
   demo-prereqs-keycloak:
   - apiVersion: v2
     appVersion: 26.3.0
-    created: "2026-01-07T13:53:35.578517Z"
+    created: "2026-01-09T13:13:09.031390942Z"
     description: Provisions a dev mode instance of keycloak
-    digest: f615c1f468d0361a2a763cca4246b9a5ca994e98db653af23871c63c0979ef7a
+    digest: 573a6ee3ed5fa6c9b3bac109a74f4633e93b1a24d96f5dbf9b1ac569888da193
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -190,9 +159,9 @@ entries:
     version: 0.1.0
   demo-prereqs-mongodb:
   - apiVersion: v2
-    created: "2026-01-07T13:53:35.579473Z"
+    created: "2026-01-09T13:13:09.031657728Z"
     description: Create a mongodb instance and associated configuration
-    digest: c7e8afcff4d29c826647a1f80b7982d65726584544008eca49af35486ddf63c7
+    digest: 20b480671c48de7801af68a348f66900d41310aa08708310e84b9ad9c936dce5
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -217,6 +186,21 @@ entries:
     urls:
     - demo-prereqs-oauth2-proxy-0.2.0.tgz
     version: 0.2.0
+  demo-prereqs-postgres:
+  - apiVersion: v2
+    appVersion: "16"
+    created: "2026-01-09T13:13:09.032041201Z"
+    description: A simple PostgreSQL deployment for demo/development purposes
+    digest: 573c918b6202f67d84f0b08fb0d653cd811e43f4ee54664e542bb8362ea90030
+    icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
+    maintainers:
+    - name: telicent
+      url: https://github.com/Telicent-IO
+    name: demo-prereqs-postgres
+    type: application
+    urls:
+    - demo-prereqs-postgres-0.2.1.tgz
+    version: 0.2.1
   demo-prereqs-system-mesh:
   - apiVersion: v2
     created: "2026-01-07T13:53:35.583766Z"
@@ -245,19 +229,6 @@ entries:
     urls:
     - gateways-0.1.0.tgz
     version: 0.1.0
-  - apiVersion: v2
-    created: "2026-01-07T13:53:35.833858Z"
-    description: Create Istio gateways and authn configuration for Telicent CORE demo
-    digest: 877ad1423703f8e4c8ee593b9a3473eea1a619c472d8c96d7ee7bfb139e2ab8e
-    icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
-    maintainers:
-    - name: telicent
-      url: https://github.com/Telicent-IO
-    name: gateways
-    type: application
-    urls:
-    - packages/gateways-0.1.0.tgz
-    version: 0.1.0
   graph-ui:
   - apiVersion: v2
     appVersion: x.x.x
@@ -272,16 +243,6 @@ entries:
     type: application
     urls:
     - graph-ui-0.1.0.tgz
-    version: 0.1.0
-  - apiVersion: v2
-    appVersion: x.x.x
-    created: "2026-01-07T13:53:35.834735Z"
-    description: Telicent Graph UI
-    digest: 832674a7aea0e895f1edfe748a4dad9487613fecb36003bd01277b48662aa249
-    name: graph-ui
-    type: application
-    urls:
-    - packages/graph-ui-0.1.0.tgz
     version: 0.1.0
   ies-ontology:
   - apiVersion: v2
@@ -298,17 +259,6 @@ entries:
     type: application
     urls:
     - ies-ontology-0.1.0.tgz
-    version: 0.1.0
-  - apiVersion: v2
-    appVersion: 0.1.0
-    created: "2026-01-07T13:53:35.835641Z"
-    description: A generic chart that creates single run producer jobs as defined
-      in the values
-    digest: 89ee7b1bfe7316b835565de6dd20737312c0ff7b2e2cc54c6db1f48df57de1c2
-    name: ies-ontology
-    type: application
-    urls:
-    - packages/ies-ontology-0.1.0.tgz
     version: 0.1.0
   keycloak:
   - apiVersion: v2
@@ -341,17 +291,6 @@ entries:
     urls:
     - query-ui-0.1.0.tgz
     version: 0.1.0
-  - apiVersion: v2
-    appVersion: 1.1.7
-    created: "2026-01-07T13:53:35.836453Z"
-    description: Telicent Query UI is a basic free to use app that provides a UI interface
-      to run SparQL and GraphQL (via GraphiQL) queries.
-    digest: acdc20470bcfbc55451c89b6798a586cb4ad7fc5832026a37a6f3568bd871878
-    name: query-ui
-    type: application
-    urls:
-    - packages/query-ui-0.1.0.tgz
-    version: 0.1.0
   search-ui:
   - apiVersion: v2
     appVersion: x.x.x
@@ -366,16 +305,6 @@ entries:
     type: application
     urls:
     - search-ui-0.1.0.tgz
-    version: 0.1.0
-  - apiVersion: v2
-    appVersion: x.x.x
-    created: "2026-01-07T13:53:35.837141Z"
-    description: Telicent Search UI
-    digest: 019d39eb1a912918a5beab4a3ba0f1bdf6d2d34045c5f6328bf5f045f76196f1
-    name: search-ui
-    type: application
-    urls:
-    - packages/search-ui-0.1.0.tgz
     version: 0.1.0
   smart-cache-graph:
   - apiVersion: v2
@@ -392,16 +321,6 @@ entries:
     urls:
     - smart-cache-graph-0.1.0.tgz
     version: 0.1.0
-  - apiVersion: v2
-    appVersion: 0.1.0
-    created: "2026-01-07T13:53:35.837928Z"
-    description: A Helm chart for Kubernetes
-    digest: df11ba2b1a78137166c363470aa2a64aabfa8fe909e2afe90c3027f7d6d2187f
-    name: smart-cache-graph
-    type: application
-    urls:
-    - packages/smart-cache-graph-0.1.0.tgz
-    version: 0.1.0
   smart-cache-search:
   - apiVersion: v2
     appVersion: 0.1.1
@@ -417,24 +336,10 @@ entries:
     urls:
     - smart-cache-search-0.1.1.tgz
     version: 0.1.1
-  - apiVersion: v2
-    appVersion: 0.1.1
-    created: "2026-01-07T13:53:35.838742Z"
-    description: A Helm chart for Kubernetes
-    digest: 4efa030d7ef1cbcb4d0d148d8945007ebd907fcb24c05c11c008138fe1d092e2
-    icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
-    maintainers:
-    - name: telicent
-      url: https://github.com/Telicent-IO
-    name: smart-cache-search
-    type: application
-    urls:
-    - packages/smart-cache-search-0.1.1.tgz
-    version: 0.1.1
   telicent-core:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2026-01-07T13:53:35.77244Z"
+    created: "2026-01-09T13:13:09.05141659Z"
     dependencies:
     - condition: global.enterprise
       name: admin-ui
@@ -477,7 +382,7 @@ entries:
       repository: file://./charts/document-pipeline
       version: ^0.1.0
     description: Telicent CORE platform for knowledge graph and data management
-    digest: 0808b87deaed2de0b01d0238a830656b6977cca05a3dc651425d20387300e795
+    digest: 52f8ac2d37d76fa1ddb20451d34381978eb37a2ab21427c34da3c315e6950f0d
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -1542,7 +1447,7 @@ entries:
   telicent-data:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2026-01-07T13:53:35.811655Z"
+    created: "2026-01-09T13:13:09.063430973Z"
     dependencies:
     - name: ies-ontology-producer
       repository: file://./charts/ies-ontology-producer
@@ -1593,7 +1498,7 @@ entries:
       repository: file://./charts/canonicals-ontology
       version: ^0.1.0
     description: A Helm chart for Kubernetes
-    digest: 7617299b68e7cda06d00ad2d516dd6fa8091317fec41bbd174edbe99e6643588
+    digest: e9be8259e3f841475f0c761e61de6b3ff043a3a24e7cc721f8f15eb4f71677c3
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -1787,7 +1692,7 @@ entries:
   telicent-preview:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2026-01-07T13:53:35.826462Z"
+    created: "2026-01-09T13:13:09.06996357Z"
     dependencies:
     - condition: user-portal-ui.enabled
       name: user-portal-ui
@@ -1810,7 +1715,7 @@ entries:
       repository: file://./charts/spatial-projector
       version: ^0.1.0
     description: A Helm chart for Kubernetes
-    digest: a25c4aa0aa17879fe86f42665d16ed4e1018bb381aceaaffd173644b72ef8511
+    digest: 434d780b178f649a9c8eb94420c9f1346dbe262296cc75406d8b1f2ad1509067
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -1874,4 +1779,4 @@ entries:
     urls:
     - telicent-preview-0.2.0.tgz
     version: 0.2.0
-generated: "2026-01-07T13:53:35.552173Z"
+generated: "2026-01-09T13:13:09.028861121Z"
