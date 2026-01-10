@@ -1,7 +1,9 @@
 global:
   tenantName: change-me
   appsHost: apps.127.0.0.1.nip.io
-  authnHost: auth.127.0.0.1.nip.io
+  idpHost: idp.127.0.0.1.nip.io
+  authHost: auth.127.0.0.1.nip.io
+  apiHost: api.127.0.0.1.nip.io
 
 gateway-apps:
   enabled: true

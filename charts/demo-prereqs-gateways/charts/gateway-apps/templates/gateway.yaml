@@ -19,6 +19,8 @@ spec:
       httpsRedirect: true
   - hosts:
     - {{ .Values.global.appsHost }}
+    - {{ .Values.global.apiHost }}
+    - {{ .Values.global.authHost }}
     port:
       name: https
       number: 443
