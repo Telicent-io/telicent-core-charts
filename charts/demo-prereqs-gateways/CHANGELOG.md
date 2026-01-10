@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.1](https://github.com/Telicent-io/telicent-core-charts/compare/demo-prereqs-gateways-v0.3.0...demo-prereqs-gateways-v0.3.1) (2026-01-10)
+
+
+### Bug Fixes
+
+* fix gateways ([f53206e](https://github.com/Telicent-io/telicent-core-charts/commit/f53206eccf47767983270bbbf627a5eee98564b9))
+* fix gateways ([98a511b](https://github.com/Telicent-io/telicent-core-charts/commit/98a511bc0710d011a63c97564ea162239b52a9d2))
+
 ## [0.3.0](https://github.com/Telicent-io/telicent-core-charts/compare/demo-prereqs-gateways-v0.2.0...demo-prereqs-gateways-v0.3.0) (2025-09-18)
 
 
