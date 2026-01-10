@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.4](https://github.com/Telicent-io/telicent-core-charts/compare/demo-prereqs-postgres-v0.2.3...demo-prereqs-postgres-v0.2.4) (2026-01-10)
+
+
+### Bug Fixes
+
+* fix gateways ([f53206e](https://github.com/Telicent-io/telicent-core-charts/commit/f53206eccf47767983270bbbf627a5eee98564b9))
+* fix gateways ([98a511b](https://github.com/Telicent-io/telicent-core-charts/commit/98a511bc0710d011a63c97564ea162239b52a9d2))
+
 ## [0.2.3](https://github.com/Telicent-io/telicent-core-charts/compare/demo-prereqs-postgres-v0.2.2...demo-prereqs-postgres-v0.2.3) (2026-01-09)
 
 
