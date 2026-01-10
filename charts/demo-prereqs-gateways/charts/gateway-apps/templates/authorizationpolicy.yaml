@@ -6,7 +6,7 @@ metadata:
   labels:
   {{- include "gateway-apps.labels" . | nindent 4 }}
 spec:
-  action: CUSTOM
+  action: ALLOW
   provider:
     name: {{ include "gateway-apps.customAuthzProviderName" . }}
   rules:
@@ -15,9 +15,12 @@ spec:
         hosts:
         - {{ .Values.global.appsHost }}
         - {{ .Values.global.appsHost }}:*
-        notPaths:
-        - /oauth2/*
-        - /oauth2
+        - {{ .Values.global.apiHost }}
+        - {{ .Values.global.apiHost }}:*
+        - {{ .Values.global.authHost }}
+        - {{ .Values.global.authHost }}:*
+        - {{ .Values.global.idpHost }}
+        - {{ .Values.global.idpHost }}:*
         paths:
         - /*
         - /

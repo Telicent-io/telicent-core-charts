@@ -10,22 +10,11 @@ spec:
   - from:
     - source:
         principals:
-        - '*'
-    to:
-    - operation:
-        methods:
-        - GET
-        paths:
-        - /
-        - /*
-  - from:
-    - source:
-        principals:
         - {{ include "demo-prereqs-postgres.authPrincipal" . }}
     to:
     - operation:
-        methods:
-        - '*'
+        ports:
+        - "{{ .Values.service.port }}"
   selector:
     matchLabels:
       {{- include "demo-prereqs-postgres.selectorLabels" . | nindent 6 }}

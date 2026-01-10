@@ -1,4 +1,3 @@
----
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
@@ -10,7 +9,7 @@ spec:
   {{- .Values.ingressSelectors | toYaml | nindent 4 }}
   servers:
   - hosts:
-    - {{ .Values.global.authnHost }}
+    - {{ .Values.global.idpHost }}
     port:
       name: http
       number: 80
@@ -18,7 +17,7 @@ spec:
     tls:
       httpsRedirect: true
   - hosts:
-    - {{ .Values.global.authnHost }}
+    - {{ .Values.global.idpHost }}
     port:
       name: https
       number: 443

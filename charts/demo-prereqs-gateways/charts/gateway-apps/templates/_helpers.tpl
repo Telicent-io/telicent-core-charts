@@ -55,7 +55,7 @@ Jwks URI
 {{- if .Values.jwksUri -}}
 {{- .Values.jwksUri -}}
 {{- else -}}
-{{- printf "https://%s/realms/master/protocol/openid-connect/certs" .Values.global.authnHost -}}
+{{- printf "https://%s/realms/master/protocol/openid-connect/certs" .Values.global.idpHost -}}
 {{- end -}}
 {{- end -}}
 {{/*
@@ -65,7 +65,7 @@ JWT Issuer
 {{- if .Values.jwtIssuer -}}
 {{- .Values.jwtIssuer -}}
 {{- else -}}
-{{- printf "https://%s/realms/master" .Values.global.authnHost -}}
+{{- printf "https://%s/realms/master" .Values.global.idpHost -}}
 {{- end -}}
 {{- end -}}
 

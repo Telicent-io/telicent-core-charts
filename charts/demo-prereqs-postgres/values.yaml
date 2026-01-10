@@ -110,3 +110,15 @@ tolerations: []
 
 # @key affinity Affinity rules
 affinity: {}
+
+# @section Auth
+# @descStart
+# Authentication configuration for Istio AuthorizationPolicy
+# @descEnd
+auth:
+  # @key auth.enabled Enable Istio AuthorizationPolicy for PostgreSQL connections
+  enabled: true
+  # @key auth.namespace Namespace of the service account allowed to connect
+  namespace: tc-core-dev
+  # @key auth.serviceAccountName Service account name allowed to connect to PostgreSQL
+  serviceAccountName: telicent-core-auth

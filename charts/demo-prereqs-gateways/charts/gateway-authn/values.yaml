@@ -1,6 +1,6 @@
 global:
   tenantName: change-me
-  authnHost: auth.127.0.0.1.nip.io
+  idpHost: idp.127.0.0.1.nip.io
 
 tlsCredentialName: ""
 tls:

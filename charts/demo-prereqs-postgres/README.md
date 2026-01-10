@@ -105,3 +105,13 @@ Service account configuration
 | `nodeSelector`               | Node selector                      | `{}`    |
 | `tolerations`                | Tolerations                        | `[]`    |
 | `affinity`                   | Affinity rules                     | `{}`    |
+
+### Auth
+
+Authentication configuration for Istio AuthorizationPolicy
+
+| Name                      | Description                                                 | Value                |
+| ------------------------- | ----------------------------------------------------------- | -------------------- |
+| `auth.enabled`            | Enable Istio AuthorizationPolicy for PostgreSQL connections | `true`               |
+| `auth.namespace`          | Namespace of the service account allowed to connect         | `tc-core-dev`        |
+| `auth.serviceAccountName` | Service account name allowed to connect to PostgreSQL       | `telicent-core-auth` |
