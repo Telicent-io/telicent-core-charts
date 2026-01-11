@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.2](https://github.com/Telicent-io/telicent-core-charts/compare/demo-prereqs-kafka-v0.3.1...demo-prereqs-kafka-v0.3.2) (2026-01-11)
+
+
+### Bug Fixes
+
+* port conflict ([9ca4ab7](https://github.com/Telicent-io/telicent-core-charts/commit/9ca4ab7bec409088117cc386de35cad4392a4ef3))
+* port conflict ([c6af6b2](https://github.com/Telicent-io/telicent-core-charts/commit/c6af6b244c7429f5ab16a5f686ef2dfc0a7ee626))
+
 ## [0.3.1](https://github.com/Telicent-io/telicent-core-charts/compare/demo-prereqs-kafka-v0.3.0...demo-prereqs-kafka-v0.3.1) (2026-01-11)
 
 
