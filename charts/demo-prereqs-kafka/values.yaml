@@ -5,6 +5,18 @@ storageCapacity: "10G"
 existingUserPwdSecretName: ""
 pipelinePassword: ""
 smartCachePassword: ""
+externalPassword: ""
+
+# External access configuration
+externalAccess:
+  enabled: false
+  # Bootstrap port for external access
+  bootstrapPort: 9094
+  # External bootstrap hostname/IP - required for external clients to connect
+  bootstrapHost: ""
+  # TLS configuration for external listener
+  tls: false
+
 topics: []
 # topics:
 #   - name

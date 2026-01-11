@@ -27,6 +27,23 @@ spec:
         tls: true
         authentication:
           type: "scram-sha-512"
+      {{- if .Values.externalAccess.enabled }}
+      - name: external
+        port: 9094
+        type: loadbalancer
+        tls: {{ .Values.externalAccess.tls }}
+        authentication:
+          type: "scram-sha-512"
+        configuration:
+          {{- if .Values.externalAccess.bootstrapHost }}
+          bootstrap:
+            advertisedHost: {{ .Values.externalAccess.bootstrapHost }}
+          brokers:
+            - broker: 0
+              advertisedHost: {{ .Values.externalAccess.bootstrapHost }}
+          {{- end }}
+      {{- end }}
+
     config:
       auto.create.topics.enable: "false"
       offsets.topic.replication.factor: 1
