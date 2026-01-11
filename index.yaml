@@ -40,7 +40,7 @@ entries:
     version: 0.1.0
   demo-prereqs-gateways:
   - apiVersion: v2
-    created: "2026-01-10T18:38:43.022909088Z"
+    created: "2026-01-11T12:57:03.22762902Z"
     dependencies:
     - condition: gateway-apps.enabled
       name: gateway-apps
@@ -51,7 +51,7 @@ entries:
       repository: file://./charts/gateway-authn
       version: ^0.1.0
     description: Create Istio gateways and authn configuration for Telicent CORE demo
-    digest: 9af1d7bcb63365dc347591d63dc7d97d289a538415b517db5064f9f69f9cca44
+    digest: 173831f3d874a008d035d24bd1d6c4530b399815ef031dd99105aba8cf7fd01a
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -111,6 +111,19 @@ entries:
     version: 0.1.0
   demo-prereqs-kafka:
   - apiVersion: v2
+    created: "2026-01-11T12:57:03.22794387Z"
+    description: Create a kafka cluster and associated configuration
+    digest: 281bd810795b8fc5e982734cc9773ee9fb4b52a822187d9b79be3d1ef6d5cb20
+    icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
+    maintainers:
+    - name: telicent
+      url: https://github.com/Telicent-IO
+    name: demo-prereqs-kafka
+    type: application
+    urls:
+    - demo-prereqs-kafka-0.3.0.tgz
+    version: 0.3.0
+  - apiVersion: v2
     created: "2026-01-10T18:38:43.023137596Z"
     description: Create a kafka cluster and associated configuration
     digest: 0237b823d2aa280f1b24663c20f3272e3415229c005c564a735c585263fe5f27
@@ -139,9 +152,9 @@ entries:
   demo-prereqs-keycloak:
   - apiVersion: v2
     appVersion: 26.3.0
-    created: "2026-01-10T18:38:43.023442306Z"
+    created: "2026-01-11T12:57:03.228279709Z"
     description: Provisions a dev mode instance of keycloak
-    digest: 43a74ce6e84195943872036c6a841d539bc7b03b8620e2ab3b54bdd079924184
+    digest: 9c1c992bb2d9fd8b88084079b928b4e1c75926d14e4b280110449e1e2078d6a1
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -181,9 +194,9 @@ entries:
     version: 0.1.0
   demo-prereqs-mongodb:
   - apiVersion: v2
-    created: "2026-01-10T18:38:43.023677005Z"
+    created: "2026-01-11T12:57:03.228508999Z"
     description: Create a mongodb instance and associated configuration
-    digest: 2ae3817e597f05c07fc065629807119df0d8bbc3d79902a98fef6d8f4c563325
+    digest: 8c726c6a5e17e42c0c7391fffb5ba5fa2104df5ba322f4ec9e516e13361eec09
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -211,9 +224,9 @@ entries:
   demo-prereqs-postgres:
   - apiVersion: v2
     appVersion: "16"
-    created: "2026-01-10T18:38:34.431976403Z"
+    created: "2026-01-11T12:57:03.228934266Z"
     description: A simple PostgreSQL deployment for demo/development purposes
-    digest: 634af715ff2ce6c948bea69d0bb1f6394e4c9a7dc63d36022602da0a93851793
+    digest: 5dc06317bf36e4e66bfffe78615364f229ae24a6c28aee8e8bfe3b87ba864cf2
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -403,7 +416,7 @@ entries:
   telicent-core:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2026-01-10T18:38:43.043466294Z"
+    created: "2026-01-11T12:57:03.249077029Z"
     dependencies:
     - condition: global.enterprise
       name: admin-ui
@@ -446,7 +459,7 @@ entries:
       repository: file://./charts/document-pipeline
       version: ^0.1.0
     description: Telicent CORE platform for knowledge graph and data management
-    digest: e1d79cbd758a097f08e007050c5ffcf6ce7eeb02dc7cc6567275eb5270f41e93
+    digest: ba1cf1f48924916231e034e6aa536e3fa8b165d19e6ad18d590002fa10c1fe8a
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -1511,7 +1524,7 @@ entries:
   telicent-data:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2026-01-10T18:38:43.0611991Z"
+    created: "2026-01-11T12:57:03.263148572Z"
     dependencies:
     - name: ies-ontology-producer
       repository: file://./charts/ies-ontology-producer
@@ -1562,7 +1575,7 @@ entries:
       repository: file://./charts/canonicals-ontology
       version: ^0.1.0
     description: A Helm chart for Kubernetes
-    digest: 1c289f9e415de3cad72bc96e7fda7b44caf37a6708fa78dbc94a7cc2e649946f
+    digest: f4902462d0dfd6cf7d6222bc10a319a3c14b67c9e8a05f7cd1c7428aacc1e444
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -1756,7 +1769,7 @@ entries:
   telicent-preview:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2026-01-10T18:38:43.069281276Z"
+    created: "2026-01-11T12:57:03.269075381Z"
     dependencies:
     - condition: user-portal-ui.enabled
       name: user-portal-ui
@@ -1779,7 +1792,7 @@ entries:
       repository: file://./charts/spatial-projector
       version: ^0.1.0
     description: A Helm chart for Kubernetes
-    digest: c9c29bc8e4668a89bf726d80a7d5a8008572642dcfcc202881f73dcd731b9fdb
+    digest: 29dc1182b4977c0829774c825000bf7f793b5b5c00aa0c87475bbe0863934518
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -1843,4 +1856,4 @@ entries:
     urls:
     - telicent-preview-0.2.0.tgz
     version: 0.2.0
-generated: "2026-01-10T18:38:43.021947488Z"
+generated: "2026-01-11T12:57:03.226519741Z"
