@@ -30,20 +30,18 @@ spec:
       {{- if .Values.externalAccess.enabled }}
       - name: external
         port: 9094
-        type: loadbalancer
+        type: nodeport
         tls: {{ .Values.externalAccess.tls }}
         authentication:
           type: "scram-sha-512"
         configuration:
           bootstrap:
-            loadBalancerIP: {{ .Values.externalAccess.bootstrapHost }}
+            nodePort: {{ .Values.externalAccess.bootstrapNodePort }}
             advertisedHost: {{ .Values.externalAccess.bootstrapHost }}
-            advertisedPort: {{ .Values.externalAccess.bootstrapLoadBalancerPort }}
           brokers:
             - broker: 0
-              loadBalancerIP: {{ .Values.externalAccess.bootstrapHost }}
+              nodePort: {{ .Values.externalAccess.brokerNodePort }}
               advertisedHost: {{ .Values.externalAccess.bootstrapHost }}
-              advertisedPort: {{ .Values.externalAccess.brokerLoadBalancerPort }}
       {{- end }}
 
     config:

@@ -12,10 +12,10 @@ externalAccess:
   enabled: false
   # External bootstrap hostname/IP - required for external clients to connect
   bootstrapHost: ""
-  # Bootstrap LoadBalancer port (clients connect here first)
-  bootstrapLoadBalancerPort: 9094
-  # Broker LoadBalancer port (must be different from bootstrap)
-  brokerLoadBalancerPort: 9095
+  # Bootstrap NodePort (must be in range 30000-32767)
+  bootstrapNodePort: 30092
+  # Broker NodePort (must be different from bootstrap, range 30000-32767)
+  brokerNodePort: 30093
   # TLS configuration for external listener
   tls: false
 
