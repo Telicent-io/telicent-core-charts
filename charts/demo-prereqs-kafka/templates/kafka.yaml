@@ -35,13 +35,15 @@ spec:
         authentication:
           type: "scram-sha-512"
         configuration:
-          {{- if .Values.externalAccess.bootstrapHost }}
           bootstrap:
+            loadBalancerIP: {{ .Values.externalAccess.bootstrapHost }}
             advertisedHost: {{ .Values.externalAccess.bootstrapHost }}
+            advertisedPort: {{ .Values.externalAccess.bootstrapLoadBalancerPort }}
           brokers:
             - broker: 0
+              loadBalancerIP: {{ .Values.externalAccess.bootstrapHost }}
               advertisedHost: {{ .Values.externalAccess.bootstrapHost }}
-          {{- end }}
+              advertisedPort: {{ .Values.externalAccess.brokerLoadBalancerPort }}
       {{- end }}
 
     config:
