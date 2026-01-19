@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.1.0](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v1.0.0...telicent-core-v1.1.0) (2026-01-19)
+
+
+### Features
+
+* adds sc-spatial to preview ([980ae3b](https://github.com/Telicent-io/telicent-core-charts/commit/980ae3be8989efd983c139de10115a8856e17485))
+* istio injection label now optional ([0b43299](https://github.com/Telicent-io/telicent-core-charts/commit/0b432998d16cc97cd85a35899ea0ddc305bd3860))
+* istio injection label now optional ([e7b422c](https://github.com/Telicent-io/telicent-core-charts/commit/e7b422c0e0498dc4c551e6442d160afa78e33e08))
+
+
+### Bug Fixes
+
+* resource collision with no values file supplied ([1cb73b0](https://github.com/Telicent-io/telicent-core-charts/commit/1cb73b0742d485f82be4a03931cd376a131d7940))
+* resource collision with no values file supplied ([aaf3e49](https://github.com/Telicent-io/telicent-core-charts/commit/aaf3e49b03a5708e49f3aa57d58301c58bc6c7dc))
+
 ## [1.0.0](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v0.5.0...telicent-core-v1.0.0) (2025-12-16)
 
 
