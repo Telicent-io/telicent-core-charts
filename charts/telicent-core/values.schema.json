@@ -143,6 +143,11 @@
                     "items": {}
                 }
             }
+        },
+        "istioInjectionLabelJobEnabled": {
+            "type": "boolean",
+            "description": "Enable automatically labelling a namespace for Istio injection via a job. Useful when namespace is created via Helm",
+            "default": true
         }
     }
 }
