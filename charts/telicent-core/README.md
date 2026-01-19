@@ -114,10 +114,11 @@ Contains global truststore parameters, these parameters are mirrored across Teli
 
 ### Kafka Topics Parameters
 
-| Name                  | Description                                                        | Value   |
-| --------------------- | ------------------------------------------------------------------ | ------- |
-| `kafkaTopics.enabled` | Enable or disable the creation of Kafka topics during installation | `false` |
-| `kafkaTopics.topics`  | List of Kafka topics to be created                                 | `[]`    |
+| Name                            | Description                                                                                                         | Value   |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------- |
+| `kafkaTopics.enabled`           | Enable or disable the creation of Kafka topics during installation                                                  | `false` |
+| `kafkaTopics.topics`            | List of Kafka topics to be created                                                                                  | `[]`    |
+| `istioInjectionLabelJobEnabled` | Enable automatically labelling a namespace for Istio injection via a job. Useful when namespace is created via Helm | `true`  |
 
 ## Subchart configurations
 

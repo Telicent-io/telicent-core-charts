@@ -1,3 +1,4 @@
+{{- if .Values.istioInjectionLabelJobEnabled }} 
 {{- /*
 Copyright (C) 2025 Telicent Limited
 */}}
@@ -40,3 +41,4 @@ spec:
               output="$(kubectl label namespace {{ .Release.Namespace }} istio-injection=enabled --overwrite)";
               echo "attempting to add istio label... $output";
               echo "$output" | grep "labeled" || ( echo "error: expected namespace/{{ .Release.Namespace }} (not) labeled" && exit 1 );
+{{- end }}
