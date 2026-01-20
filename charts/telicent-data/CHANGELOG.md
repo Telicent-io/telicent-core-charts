@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.2](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-data-v0.3.1...telicent-data-v0.3.2) (2026-01-20)
+
+
+### Bug Fixes
+
+* bump data chart ([04dd4b9](https://github.com/Telicent-io/telicent-core-charts/commit/04dd4b9b00b7a1fccee8f06311debe86f2ae9573))
+
 ## [0.3.1](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-data-v0.3.0...telicent-data-v0.3.1) (2025-12-16)
 
 
