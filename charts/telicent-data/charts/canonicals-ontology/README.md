@@ -15,7 +15,7 @@ This chart deploys the Canonicals Event Validation Mapper, which processes canon
 
 ## Installation
 
-This chart is typically installed as a dependency of the `telicent-data` parent chart:
+This chart is typically installed as a dependency of the `telicent-data` parent chart
 
 ```bash
 helm dependency update ../telicent-data
