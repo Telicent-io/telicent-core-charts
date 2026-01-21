@@ -120,7 +120,7 @@ spec:
         - name: java-truststore
           mountPath: {{ .Values.global.truststore.mountPath | default "/app/config/truststore" }}
         {{- end }}
-       {{- with .Values.extraVolumeMounts }}
+        {{- with .Values.extraVolumeMounts }}
           {{- toYaml . | nindent 12 }}
         {{- end }}
 
@@ -164,7 +164,7 @@ spec:
   - metadata:
       name: datasets-volume
       labels:
-        {{- include "graph.labels" . | nindent 4 }}
+        {{- include "graph.labels" . | nindent 8 }}
     spec:
       accessModes:
       - ReadWriteOnce
@@ -175,7 +175,7 @@ spec:
   - metadata:
       name: backups-volume
       labels:
-        {{- include "graph.labels" . | nindent 4 }}
+        {{- include "graph.labels" . | nindent 8 }}
     spec:
       accessModes:
       - ReadWriteOnce
