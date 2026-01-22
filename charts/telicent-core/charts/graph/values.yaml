@@ -28,11 +28,11 @@ global:
   enterprise: false
 
   # @key global.appHostDomain Domain associated with Telicent application/ui services
-  appHostDomain: "apps.telicent.io"
+  appHostDomain: ""
   # @key global.apiHostDomain Domain associated with Telicent Api services
-  apiHostDomain: "api.telicent.io"
+  apiHostDomain: ""
   # @key global.authHostDomain Domain associated with Telicent authentication services, including OIDC providers
-  authHostDomain: "auth.telicent.io"
+  authHostDomain: ""
 
   kafka:
     # @key global.kafka.bootstrapServers Comma separated list containing Kafka bootstrap servers
