@@ -32,11 +32,11 @@ spec:
         env:
           - name: KAFKA_HEAP_OPTS
             value: "-XX:+UseContainerSupport \
-             -XX:MaxRAMPercentage=75.0 \
-             -XX:InitialRAMPercentage=25.0 \
-             -XX:+UseG1GC \
-             -XX:+UseStringDeduplication \
-             -XX:+OptimizeStringConcat"
+              -XX:MaxRAMPercentage=75.0 \
+              -XX:InitialRAMPercentage=25.0 \
+              -XX:+UseG1GC \
+              -XX:+UseStringDeduplication \
+              -XX:+OptimizeStringConcat"
           - name: KAFKA_OPTS
             value: "-Djavax.net.ssl.trustStore={{ .Values.global.truststore.path | default "/app/config/truststore" }}/truststore.jks"
         args:
