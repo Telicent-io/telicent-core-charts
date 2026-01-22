@@ -23,13 +23,13 @@
                 },
                 "appHostDomain": {
                     "type": "string",
-                    "description": "Domain associated with Telicent application services",
-                    "default": "apps.telicent.io"
+                    "description": "Domain associated with Telicent application services. This value cannot be changed after it is set",
+                    "default": ""
                 },
                 "authHostDomain": {
                     "type": "string",
-                    "description": "Domain associated with Telicent authentication services, including OIDC providers",
-                    "default": "auth.telicent.io"
+                    "description": "Domain associated with Telicent authentication services, including OIDC providers. This value cannot be changed after it is set",
+                    "default": ""
                 },
                 "groupsClaim": {
                     "type": "string",

@@ -59,11 +59,11 @@ Contains global parameters, these parameters are mirrored across all Telicent Co
 
 ### Global Parameters - Domains
 
-| Name                    | Description                                                                       | Value              |
-| ----------------------- | --------------------------------------------------------------------------------- | ------------------ |
-| `global.appHostDomain`  | Domain associated with Telicent application/ui services                           | `apps.telicent.io` |
-| `global.apiHostDomain`  | Domain associated with Telicent Api services                                      | `api.telicent.io`  |
-| `global.authHostDomain` | Domain associated with Telicent authentication services, including OIDC providers | `auth.telicent.io` |
+| Name                    | Description                                                                                                                     | Value |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| `global.appHostDomain`  | Domain associated with Telicent application/ui services. This value cannot be changed after it is set                           | `""`  |
+| `global.apiHostDomain`  | Domain associated with Telicent Api services. This value cannot be changed after it is set                                      | `""`  |
+| `global.authHostDomain` | Domain associated with Telicent authentication services, including OIDC providers. This value cannot be changed after it is set | `""`  |
 
 ### Global Parameters - Istio
 
