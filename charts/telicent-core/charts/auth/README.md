@@ -221,12 +221,9 @@ Contains configuration to be used to bootstrap a clean instance of the Auth appl
 
 ### Deployment Resources Parameters - Requests and Limits
 
-| Name                        | Description                    | Value    |
-| --------------------------- | ------------------------------ | -------- |
-| `resources.requests.cpu`    | Set containers' CPU request    | `700m`   |
-| `resources.requests.memory` | Set containers' memory request | `1024Mi` |
-| `resources.limits.cpu`      | Set containers' CPU limit      | `1500m`  |
-| `resources.limits.memory`   | Set containers' memory limit   | `2048Mi` |
+| Name        | Description                     | Value |
+| ----------- | ------------------------------- | ----- |
+| `resources` | Resources for *Auth* containers | `{}`  |
 
 ### Deployment Security Context Parameters - Default Security Context
 

@@ -171,17 +171,18 @@ image:
 #
 # @section Deployment Resources Parameters - Requests and Limits
 #
-resources:
-  requests:
-    # @key resources.requests.cpu Set containers' CPU request
-    cpu: "500m"
-    # @key resources.requests.memory Set containers' memory request
-    memory: "512Mi"
-  limits:
-    # @key resources.limits.cpu Set containers' CPU limit
-    cpu: "750m"
-    # @key resources.limits.memory Set containers' memory limit
-    memory: "768Mi"
+# @key resources Resources for *Traefik Proxy* containers
+resources: {}
+#  requests:
+#    # @key resources.requests.cpu Set containers' CPU request
+#    cpu: "500m"
+#    # @key resources.requests.memory Set containers' memory request
+#    memory: "512Mi"
+#  limits:
+#    # @key resources.limits.cpu Set containers' CPU limit
+#    cpu: "750m"
+#    # @key resources.limits.memory Set containers' memory limit
+#    memory: "768Mi"
 
 #
 # @section Statefulset Security Context Parameters - Default Security Context

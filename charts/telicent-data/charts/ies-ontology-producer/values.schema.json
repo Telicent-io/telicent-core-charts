@@ -237,7 +237,7 @@
         },
         "resources": {
             "type": "object",
-            "description": "Set containers' resource requests and limits",
+            "description": "Resources for *IES Ontology Producer* containers",
             "default": {}
         },
         "autoscaling": {

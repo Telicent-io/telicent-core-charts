@@ -170,12 +170,9 @@ Contains configuration parameters specific to the *Search Projector* application
 
 ### Deployment Resources Parameters - Requests and Limits
 
-| Name                        | Description                    | Value    |
-| --------------------------- | ------------------------------ | -------- |
-| `resources.requests.cpu`    | Set containers' CPU request    | `250m`   |
-| `resources.requests.memory` | Set containers' memory request | `1000Mi` |
-| `resources.limits.cpu`      | Set containers' CPU limit      | `500m`   |
-| `resources.limits.memory`   | Set containers' memory limit   | `2000Mi` |
+| Name        | Description                                 | Value |
+| ----------- | ------------------------------------------- | ----- |
+| `resources` | Resources for *Search Projector* containers | `{}`  |
 
 ### Deployment Security Context Parameters - Default Security Context
 

@@ -115,17 +115,18 @@ image:
 #
 # @section Deployment Resources Parameters - Requests and Limits
 #
-resources:
-  requests:
-    # @key resources.requests.cpu Set containers' CPU request
-    cpu: "250m"
-    # @key resources.requests.memory Set containers' memory request
-    memory: "1000Mi"
-  limits:
-    # @key resources.limits.cpu Set containers' CPU limit
-    cpu: "500m"
-    # @key resources.limits.memory Set containers' memory limit
-    memory: "2000Mi"
+# @key resources Resources for *Paperback Writer* containers
+resources: {}
+#  requests:
+#    # @key resources.requests.cpu Set containers' CPU request
+#    cpu: "250m"
+#    # @key resources.requests.memory Set containers' memory request
+#    memory: "1000Mi"
+#  limits:
+#    # @key resources.limits.cpu Set containers' CPU limit
+#    cpu: "500m"
+#    # @key resources.limits.memory Set containers' memory limit
+#    memory: "2000Mi"
 
 #
 # @section Statefulset Security Context Parameters - Default Security Context
@@ -158,8 +159,6 @@ containerSecurityContext:
   seccompProfile:
     # @key containerSecurityContext.seccompProfile.type Set container's Security Context seccomp profile
     type: RuntimeDefault
-
-
 
 # @key affinity Affinity for pod assignment
 # Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity

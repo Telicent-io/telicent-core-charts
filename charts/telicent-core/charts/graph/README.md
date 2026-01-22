@@ -155,12 +155,9 @@ Contains Java configuration parameters to be used by the *Graph* application
 
 ### Statefulset Resources Parameters - Requests and Limits
 
-| Name                        | Description                    | Value     |
-| --------------------------- | ------------------------------ | --------- |
-| `resources.requests.cpu`    | Set containers' CPU request    | `1200m`   |
-| `resources.requests.memory` | Set containers' memory request | `8000Mi`  |
-| `resources.limits.cpu`      | Set containers' CPU limit      | `1500m`   |
-| `resources.limits.memory`   | Set containers' memory limit   | `12000Mi` |
+| Name        | Description                      | Value |
+| ----------- | -------------------------------- | ----- |
+| `resources` | Resources for *Graph* containers | `{}`  |
 
 ### Statefulset Security Context Parameters - Default Security Context
 

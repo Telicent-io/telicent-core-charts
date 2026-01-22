@@ -272,17 +272,18 @@ image:
 #
 # @section Deployment Resources Parameters - Requests and Limits
 #
-resources:
-  requests:
-    # @key resources.requests.cpu Set containers' CPU request
-    cpu: "700m"
-    # @key resources.requests.memory Set containers' memory request
-    memory: "1024Mi"
-  limits:
-    # @key resources.limits.cpu Set containers' CPU limit
-    cpu: "1500m"
-    # @key resources.limits.memory Set containers' memory limit
-    memory: "2048Mi"
+# @key resources Resources for *Auth* containers
+resources: {}
+#  requests:
+#    # @key resources.requests.cpu Set containers' CPU request
+#    cpu: "700m"
+#    # @key resources.requests.memory Set containers' memory request
+#    memory: "1024Mi"
+#  limits:
+#    # @key resources.limits.cpu Set containers' CPU limit
+#    cpu: "1500m"
+#    # @key resources.limits.memory Set containers' memory limit
+#    memory: "2048Mi"
 
 #
 # @section Deployment Security Context Parameters - Default Security Context

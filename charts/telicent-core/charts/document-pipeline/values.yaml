@@ -52,17 +52,18 @@ global:
 #
 # @section Deployment Resources Parameters - Default resource allocation applied to all sub-chart deployments
 #
-resources:
-  requests:
-    # @key resources.requests.cpu Set containers' CPU request
-    cpu: "500m"
-    # @key resources.requests.memory Set containers' memory request
-    memory: "750Mi"
-  limits:
-    # @key resources.limits.cpu Set containers' CPU limit
-    cpu: "1000m"
-    # @key resources.limits.memory Set containers' memory limit
-    memory: "1000Mi"
+# @key resources Resources for *Document Pipeline* containers
+resources: {}
+#  requests:
+#    # @key resources.requests.cpu Set containers' CPU request
+#    cpu: "500m"
+#    # @key resources.requests.memory Set containers' memory request
+#    memory: "750Mi"
+#  limits:
+#    # @key resources.limits.cpu Set containers' CPU limit
+#    cpu: "1000m"
+#    # @key resources.limits.memory Set containers' memory limit
+#    memory: "1000Mi"
 
 #
 # @section Deployment Security Context Parameters - Default security context applied to all sub-chart deployments
@@ -245,17 +246,18 @@ httpIngester:
   #
   # @section *HTTP Ingester* - Deployment Resources Parameters - Requests and Limits
   #
-  resources:
-    requests:
-      # @key httpIngester.resources.requests.cpu Set containers' CPU request
-      cpu: "500m"
-      # @key httpIngester.resources.requests.memory Set containers' memory request
-      memory: "1000Mi"
-    limits:
-      # @key httpIngester.resources.limits.cpu Set containers' CPU limit
-      cpu: "1000m"
-      # @key httpIngester.resources.limits.memory Set containers' memory limit
-      memory: "1500Mi"
+  # @key httpIngester.resources Resources for *HTTP Ingester* containers
+  resources: {}
+  #    requests:
+  #      # @key httpIngester.resources.requests.cpu Set containers' CPU request
+  #      cpu: "500m"
+  #      # @key httpIngester.resources.requests.memory Set containers' memory request
+  #      memory: "1000Mi"
+  #    limits:
+  #      # @key httpIngester.resources.limits.cpu Set containers' CPU limit
+  #      cpu: "1000m"
+  #      # @key httpIngester.resources.limits.memory Set containers' memory limit
+  #      memory: "1500Mi"
 
   #
   # @section *HTTP Ingester* - Deployment Affinity Parameters
@@ -707,17 +709,18 @@ entityExtractor:
   # @key entityExtractor.tolerations Tolerations for the *Entity Extractor* pods
   tolerations: []
 
-  resources:
-    requests:
-      # @key entityExtractor.resources.requests.cpu Set containers' CPU request
-      cpu: "1100m"
-      # @key entityExtractor.resources.requests.memory Set containers' memory request
-      memory: "2048Mi"
-    limits:
-      # @key entityExtractor.resources.limits.cpu Set containers' CPU limit
-      cpu: "1800m"
-      # @key entityExtractor.resources.limits.memory Set containers' memory limit
-      memory: "4000Mi"
+  # @key entityExtractor.resources Resources for *Entity Extractor* containers
+  resources: {}
+  #    requests:
+  #      # @key entityExtractor.resources.requests.cpu Set containers' CPU request
+  #      cpu: "1100m"
+  #      # @key entityExtractor.resources.requests.memory Set containers' memory request
+  #      memory: "2048Mi"
+  #    limits:
+  #      # @key entityExtractor.resources.limits.cpu Set containers' CPU limit
+  #      cpu: "1800m"
+  #      # @key entityExtractor.resources.limits.memory Set containers' memory limit
+  #      memory: "4000Mi"
   # @key entityExtractor.podSecurityContext Security context for the pod(s). Optional override, otherwise inherited from the root security context definition
   podSecurityContext: {}
   # @key entityExtractor.containerSecurityContext Security context for the container(s). Optional override, otherwise inherited from root security context definition

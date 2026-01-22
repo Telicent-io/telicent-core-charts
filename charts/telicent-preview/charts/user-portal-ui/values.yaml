@@ -109,17 +109,18 @@ image:
 #
 # @section Deployment Resources Parameters - Requests and Limits
 #
-resources:
-  requests:
-    # @key resources.requests.cpu Set containers' CPU request
-    cpu: "250m"
-    # @key resources.requests.memory Set containers' memory request
-    memory: "500Mi"
-  limits:
-    # @key resources.limits.cpu Set containers' CPU limit
-    cpu: "500m"
-    # @key resources.limits.memory Set containers' memory limit
-    memory: "1000Mi"
+# @key resources Resources for *User Portal UI* containers
+resources: {}
+#  requests:
+#    # @key resources.requests.cpu Set containers' CPU request
+#    cpu: "250m"
+#    # @key resources.requests.memory Set containers' memory request
+#    memory: "500Mi"
+#  limits:
+#    # @key resources.limits.cpu Set containers' CPU limit
+#    cpu: "500m"
+#    # @key resources.limits.memory Set containers' memory limit
+#    memory: "1000Mi"
 
 #
 # @section Statefulset Security Context Parameters - Default Security Context

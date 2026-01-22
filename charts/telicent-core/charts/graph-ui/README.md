@@ -162,12 +162,9 @@ For Quick Start purposes, a secret named `tc-auth-gen-mapjs-graph-ui` will be cr
 
 ### Deployment Resources Parameters - Requests and Limits
 
-| Name                        | Description                    | Value   |
-| --------------------------- | ------------------------------ | ------- |
-| `resources.requests.cpu`    | Set containers' CPU request    | `250m`  |
-| `resources.requests.memory` | Set containers' memory request | `512Mi` |
-| `resources.limits.cpu`      | Set containers' CPU limit      | `375m`  |
-| `resources.limits.memory`   | Set containers' memory limit   | `768Mi` |
+| Name        | Description                         | Value |
+| ----------- | ----------------------------------- | ----- |
+| `resources` | Resources for *Graph UI* containers | `{}`  |
 
 ### Deployment Security Context Parameters - Default Security Context
 

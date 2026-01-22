@@ -110,12 +110,9 @@ Note: Only global parameters used within this chart will be listed below
 
 ### Deployment Resources Parameters - Default resource allocation applied to all sub-chart deployments
 
-| Name                        | Description                    | Value    |
-| --------------------------- | ------------------------------ | -------- |
-| `resources.requests.cpu`    | Set containers' CPU request    | `500m`   |
-| `resources.requests.memory` | Set containers' memory request | `750Mi`  |
-| `resources.limits.cpu`      | Set containers' CPU limit      | `1000m`  |
-| `resources.limits.memory`   | Set containers' memory limit   | `1000Mi` |
+| Name        | Description                                  | Value |
+| ----------- | -------------------------------------------- | ----- |
+| `resources` | Resources for *Document Pipeline* containers | `{}`  |
 
 ### Deployment Security Context Parameters - Default security context applied to all sub-chart deployments
 
@@ -231,12 +228,9 @@ The application settings are defined within the 'java' & 'routes' keys
 
 ### *HTTP Ingester* - Deployment Resources Parameters - Requests and Limits
 
-| Name                                     | Description                    | Value    |
-| ---------------------------------------- | ------------------------------ | -------- |
-| `httpIngester.resources.requests.cpu`    | Set containers' CPU request    | `500m`   |
-| `httpIngester.resources.requests.memory` | Set containers' memory request | `1000Mi` |
-| `httpIngester.resources.limits.cpu`      | Set containers' CPU limit      | `1000m`  |
-| `httpIngester.resources.limits.memory`   | Set containers' memory limit   | `1500Mi` |
+| Name                     | Description                              | Value |
+| ------------------------ | ---------------------------------------- | ----- |
+| `httpIngester.resources` | Resources for *HTTP Ingester* containers | `{}`  |
 
 ### *HTTP Ingester* - Deployment Affinity Parameters
 
@@ -493,31 +487,28 @@ The application settings are defined within the 'topics' key
 
 ### *Entity Extractor* - Deployment Parameters
 
-| Name                                        | Description                                                                                                         | Value                                          |
-| ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
-| `entityExtractor.replicas`                  | Number of replicas to deploy                                                                                        | `1`                                            |
-| `entityExtractor.annotations`               | Add extra annotations to the deployment object                                                                      | `{}`                                           |
-| `entityExtractor.podLabels`                 | Labels to add to the *Entity Extractor* pods                                                                        | `{}`                                           |
-| `entityExtractor.podAnnotations`            | Annotations to add to the *Entity Extractor* pods                                                                   | `{}`                                           |
-| `entityExtractor.extraEnvVars`              | Array with extra environment variables to add                                                                       | `[]`                                           |
-| `entityExtractor.extraVolumes`              | Additional volumes for the *Entity Extractor*                                                                       | `[]`                                           |
-| `entityExtractor.extraVolumeMounts`         | Additional volume mounts for the *Entity Extractor*                                                                 | `[]`                                           |
-| `entityExtractor.initContainers`            | Add init containers to the pod                                                                                      | `[]`                                           |
-| `entityExtractor.sidecars`                  | Add sidecars to the pod.                                                                                            | `[]`                                           |
-| `entityExtractor.image.registry`            | *Entity Extractor* image registry                                                                                   | `quay.io`                                      |
-| `entityExtractor.image.repository`          | The container image repository for the *Entity Extractor*                                                           | `telicent/telicent-pipeline-entity-extraction` |
-| `entityExtractor.image.tag`                 | The image tag for the *Entity Extractor*                                                                            | `3.0.1`                                        |
-| `entityExtractor.image.pullPolicy`          | The image pull policy for the *Entity Extractor*                                                                    | `IfNotPresent`                                 |
-| `entityExtractor.image.pullSecrets`         | Secrets for pulling an image from a private repository                                                              | `[]`                                           |
-| `entityExtractor.affinity`                  | Affinity rules for the *Entity Extractor* pods                                                                      | `{}`                                           |
-| `entityExtractor.nodeSelector`              | Node selector for the *Entity Extractor* pods                                                                       | `{}`                                           |
-| `entityExtractor.tolerations`               | Tolerations for the *Entity Extractor* pods                                                                         | `[]`                                           |
-| `entityExtractor.resources.requests.cpu`    | Set containers' CPU request                                                                                         | `1100m`                                        |
-| `entityExtractor.resources.requests.memory` | Set containers' memory request                                                                                      | `2048Mi`                                       |
-| `entityExtractor.resources.limits.cpu`      | Set containers' CPU limit                                                                                           | `1800m`                                        |
-| `entityExtractor.resources.limits.memory`   | Set containers' memory limit                                                                                        | `4000Mi`                                       |
-| `entityExtractor.podSecurityContext`        | Security context for the pod(s). Optional override, otherwise inherited from the root security context definition   | `{}`                                           |
-| `entityExtractor.containerSecurityContext`  | Security context for the container(s). Optional override, otherwise inherited from root security context definition | `{}`                                           |
+| Name                                       | Description                                                                                                         | Value                                          |
+| ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| `entityExtractor.replicas`                 | Number of replicas to deploy                                                                                        | `1`                                            |
+| `entityExtractor.annotations`              | Add extra annotations to the deployment object                                                                      | `{}`                                           |
+| `entityExtractor.podLabels`                | Labels to add to the *Entity Extractor* pods                                                                        | `{}`                                           |
+| `entityExtractor.podAnnotations`           | Annotations to add to the *Entity Extractor* pods                                                                   | `{}`                                           |
+| `entityExtractor.extraEnvVars`             | Array with extra environment variables to add                                                                       | `[]`                                           |
+| `entityExtractor.extraVolumes`             | Additional volumes for the *Entity Extractor*                                                                       | `[]`                                           |
+| `entityExtractor.extraVolumeMounts`        | Additional volume mounts for the *Entity Extractor*                                                                 | `[]`                                           |
+| `entityExtractor.initContainers`           | Add init containers to the pod                                                                                      | `[]`                                           |
+| `entityExtractor.sidecars`                 | Add sidecars to the pod.                                                                                            | `[]`                                           |
+| `entityExtractor.image.registry`           | *Entity Extractor* image registry                                                                                   | `quay.io`                                      |
+| `entityExtractor.image.repository`         | The container image repository for the *Entity Extractor*                                                           | `telicent/telicent-pipeline-entity-extraction` |
+| `entityExtractor.image.tag`                | The image tag for the *Entity Extractor*                                                                            | `3.0.1`                                        |
+| `entityExtractor.image.pullPolicy`         | The image pull policy for the *Entity Extractor*                                                                    | `IfNotPresent`                                 |
+| `entityExtractor.image.pullSecrets`        | Secrets for pulling an image from a private repository                                                              | `[]`                                           |
+| `entityExtractor.affinity`                 | Affinity rules for the *Entity Extractor* pods                                                                      | `{}`                                           |
+| `entityExtractor.nodeSelector`             | Node selector for the *Entity Extractor* pods                                                                       | `{}`                                           |
+| `entityExtractor.tolerations`              | Tolerations for the *Entity Extractor* pods                                                                         | `[]`                                           |
+| `entityExtractor.resources`                | Resources for *Entity Extractor* containers                                                                         | `{}`                                           |
+| `entityExtractor.podSecurityContext`       | Security context for the pod(s). Optional override, otherwise inherited from the root security context definition   | `{}`                                           |
+| `entityExtractor.containerSecurityContext` | Security context for the container(s). Optional override, otherwise inherited from root security context definition | `{}`                                           |
 
 
 ## License

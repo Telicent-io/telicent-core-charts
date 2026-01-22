@@ -152,17 +152,21 @@ image:
   # @key image.pullSecrets Specify registry secret names as an array
   pullSecrets: []
 
-resources:
-  requests:
-    # @key resources.requests.cpu Set containers' CPU request
-    cpu: "1000m"
-    # @key resources.requests.memory Set containers' memory request
-    memory: "4000Mi"
-  limits:
-    # @key resources.limits.cpu Set containers' CPU limit
-    cpu: "2000m"
-    # @key resources.limits.memory Set containers' memory limit
-    memory: "8000Mi"
+#
+# @section Deployment Resources Parameters - Requests and Limits
+#
+# @key resources Resources for *Search* containers
+resources: {}
+#  requests:
+#    # @key resources.requests.cpu Set containers' CPU request
+#    cpu: "1000m"
+#    # @key resources.requests.memory Set containers' memory request
+#    memory: "4000Mi"
+#  limits:
+#    # @key resources.limits.cpu Set containers' CPU limit
+#    cpu: "2000m"
+#    # @key resources.limits.memory Set containers' memory limit
+#    memory: "8000Mi"
 
 #
 # @section Deployment Security Context Parameters - Default Security Context

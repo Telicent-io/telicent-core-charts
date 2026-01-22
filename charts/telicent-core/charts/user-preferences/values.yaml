@@ -60,7 +60,7 @@ mongo:
   database: "user-preferences"
   # @key mongo.authDatabase The authentication database to use for the given user
   authDatabase: "admin"
-  
+
   # @key mongo.existingSecret Name of an existing secret. The secret must contain 2 keys: 'username', 'password'
   # Note: Left unset, it will create a secret named: tc-auth-usr-mongo-user-preferences
   existingSecret: ""
@@ -148,17 +148,18 @@ image:
 #
 # @section Deployment Resources Parameters - Requests and Limits
 #
-resources:
-  requests:
-    # @key resources.requests.cpu Set containers' CPU request
-    cpu: "300m"
-    # @key resources.requests.memory Set containers' memory request
-    memory: "768Mi"
-  limits:
-    # @key resources.limits.cpu Set containers' CPU limit
-    cpu: "550m"
-    # @key resources.limits.memory Set containers' memory limit
-    memory: "1024Mi"
+# @key resources Resources for *User Preferences* containers
+resources: {}
+#  requests:
+#    # @key resources.requests.cpu Set containers' CPU request
+#    cpu: "300m"
+#    # @key resources.requests.memory Set containers' memory request
+#    memory: "768Mi"
+#  limits:
+#    # @key resources.limits.cpu Set containers' CPU limit
+#    cpu: "550m"
+#    # @key resources.limits.memory Set containers' memory limit
+#    memory: "1024Mi"
 
 #
 # @section Deployment Security Context Parameters - Default Security Context

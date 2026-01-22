@@ -237,7 +237,7 @@
         },
         "resources": {
             "type": "object",
-            "description": "Set containers' resource requests and limits",
+            "description": "Resources for *Producer ACLED Ontology* containers",
             "default": {}
         },
         "autoscaling": {

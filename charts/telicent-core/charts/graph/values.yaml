@@ -141,17 +141,18 @@ image:
 #
 # @section Statefulset Resources Parameters - Requests and Limits
 #
-resources:
-  requests:
-    # @key resources.requests.cpu Set containers' CPU request
-    cpu: "1200m"
-    # @key resources.requests.memory Set containers' memory request
-    memory: "8000Mi"
-  limits:
-    # @key resources.limits.cpu Set containers' CPU limit
-    cpu: "1500m"
-    # @key resources.limits.memory Set containers' memory limit
-    memory: "12000Mi"
+# @key resources Resources for *Graph* containers
+resources: {}
+#  requests:
+#    # @key resources.requests.cpu Set containers' CPU request
+#    cpu: "1200m"
+#    # @key resources.requests.memory Set containers' memory request
+#    memory: "8000Mi"
+#  limits:
+#    # @key resources.limits.cpu Set containers' CPU limit
+#    cpu: "1500m"
+#    # @key resources.limits.memory Set containers' memory limit
+#    memory: "12000Mi"
 
 #
 # @section Statefulset Security Context Parameters - Default Security Context

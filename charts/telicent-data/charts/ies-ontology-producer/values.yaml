@@ -135,7 +135,7 @@ securityContext: {}
   # runAsUser: 1000
 
 # @section Resource Parameters
-# @key resources Set containers' resource requests and limits
+# @key resources Resources for *IES Ontology Producer* containers
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
