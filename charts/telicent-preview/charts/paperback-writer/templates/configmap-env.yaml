@@ -18,6 +18,6 @@ data:
   JWT_HEADER: "Authorization"
   JWT_USER_ID_ATTR: "preferred_name"
   JWKS_URL: {{ printf "https://%s%s" .Values.global.authHostDomain "/oauth2/jwks" | quote }}
-  AUTH_SERVER_BASE_URL: {{ printf "http://%s" (include "paperback-writer.hostAuth" . ) | quote }}
+  AUTH_SERVER_BASE_URL: {{ .Values.global.authHostDomain | printf "https://%s" | quote }}
 
 {{- end }}
