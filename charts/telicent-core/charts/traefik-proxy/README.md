@@ -88,17 +88,17 @@ the [kubernetes documentation](https://kubernetes.io/docs/concepts/configuration
 Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart.
 Note: Only global parameters used within this chart will be listed below.
 
-| Name                                | Description                                                                                                                                                                            | Value              |
-| ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
-| `global.releaseNameTelicentPreview` | Release name used during the Telicent Preview chart installation. Note: ensure the value is correct, otherwise there will be no access to data-catalog, user-portal & paperback-writer | `""`               |
-| `global.enterprise`                 | Enable enterprise mode, adding additional features and configurations                                                                                                                  | `false`            |
-| `global.appHostDomain`              | Domain associated with Telicent application/ui services                                                                                                                                | `apps.telicent.io` |
-| `global.apiHostDomain`              | Domain associated with Telicent Api services                                                                                                                                           | `api.telicent.io`  |
-| `global.authHostDomain`             | Domain associated with Telicent authentication services, including OIDC providers                                                                                                      | `auth.telicent.io` |
-| `global.istioIngressNamespace`      | Namespace in which the Istio Ingress resource is deployed; overrides 'istio.ingress.namespace'                                                                                         | `istio-system`     |
-| `global.istioIngressServiceAccount` | ServiceAccount associated with Istio ingress deployment; overrides 'istio.ingress.serviceAccount'                                                                                      | `istio-ingress`    |
-| `global.istioGatewayNamespace`      | Namespace in which the Istio Gateway resource is deployed; overrides 'istio.gateway.namespace'                                                                                         | `istio-system`     |
-| `global.istioGatewayName`           | Name of the Istio Gateway resource; overrides 'istio.gateway.namespace'                                                                                                                | `ingress-gateway`  |
+| Name                                | Description                                                                                                                                                                            | Value             |
+| ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------- |
+| `global.releaseNameTelicentPreview` | Release name used during the Telicent Preview chart installation. Note: ensure the value is correct, otherwise there will be no access to data-catalog, user-portal & paperback-writer | `""`              |
+| `global.enterprise`                 | Enable enterprise mode, adding additional features and configurations                                                                                                                  | `false`           |
+| `global.appHostDomain`              | Domain associated with Telicent application/ui services. This value cannot be changed after it is set                                                                                  | `""`              |
+| `global.apiHostDomain`              | Domain associated with Telicent Api services. This value cannot be changed after it is set                                                                                             | `""`              |
+| `global.authHostDomain`             | Domain associated with Telicent authentication services, including OIDC providers. This value cannot be changed after it is set                                                        | `""`              |
+| `global.istioIngressNamespace`      | Namespace in which the Istio Ingress resource is deployed; overrides 'istio.ingress.namespace'                                                                                         | `istio-system`    |
+| `global.istioIngressServiceAccount` | ServiceAccount associated with Istio ingress deployment; overrides 'istio.ingress.serviceAccount'                                                                                      | `istio-ingress`   |
+| `global.istioGatewayNamespace`      | Namespace in which the Istio Gateway resource is deployed; overrides 'istio.gateway.namespace'                                                                                         | `istio-system`    |
+| `global.istioGatewayName`           | Name of the Istio Gateway resource; overrides 'istio.gateway.namespace'                                                                                                                | `ingress-gateway` |
 
 ### Application Parameters - Rate Limit
 

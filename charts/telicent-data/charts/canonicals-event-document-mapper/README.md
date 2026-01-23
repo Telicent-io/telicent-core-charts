@@ -43,18 +43,18 @@ helm install canonicals-event-document-mapper .
 Contains global parameters. Not explicitly used in this chart, added to maintain consistency across Telicent charts.
 These parameters can be referenced in sub-charts as `.Values.global.<parameter-name>`.
 
-| Name                             | Description                                                                       | Value                                            |
-| -------------------------------- | --------------------------------------------------------------------------------- | ------------------------------------------------ |
-| `global.imageRegistry`           | Global image registry                                                             | `""`                                             |
-| `global.imagePullSecrets`        | Global registry secret names as an array                                          | `[]`                                             |
-| `global.enterprise`              | Enable enterprise mode, adding additional features and configurations             | `false`                                          |
-| `global.appHostDomain`           | Domain associated with Telicent application services                              | `apps.telicent.io`                               |
-| `global.authHostDomain`          | Domain associated with Telicent authentication services, including OIDC providers | `auth.telicent.io`                               |
-| `global.groupsClaim`             | Claim name for user groups in JWT tokens                                          | `groups`                                         |
-| `global.jwksUrl`                 | Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)     | `https://{yourAuthdomain}/.well-known/jwks.json` |
-| `global.istioNamespace`          | Namespace in which Istio is deployed                                              | `istio-system`                                   |
-| `global.istioServiceAccountName` | Name of the Istio service account                                                 | `istio-ingress`                                  |
-| `global.istioGatewayName`        | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)         | `ingress-gateway`                                |
+| Name                             | Description                                                                                                                     | Value                                            |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
+| `global.imageRegistry`           | Global image registry                                                                                                           | `""`                                             |
+| `global.imagePullSecrets`        | Global registry secret names as an array                                                                                        | `[]`                                             |
+| `global.enterprise`              | Enable enterprise mode, adding additional features and configurations                                                           | `false`                                          |
+| `global.appHostDomain`           | Domain associated with Telicent application services. This value cannot be changed after it is set                              | `""`                                             |
+| `global.authHostDomain`          | Domain associated with Telicent authentication services, including OIDC providers. This value cannot be changed after it is set | `""`                                             |
+| `global.groupsClaim`             | Claim name for user groups in JWT tokens                                                                                        | `groups`                                         |
+| `global.jwksUrl`                 | Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)                                                   | `https://{yourAuthdomain}/.well-known/jwks.json` |
+| `global.istioNamespace`          | Namespace in which Istio is deployed                                                                                            | `istio-system`                                   |
+| `global.istioServiceAccountName` | Name of the Istio service account                                                                                               | `istio-ingress`                                  |
+| `global.istioGatewayName`        | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)                                                       | `ingress-gateway`                                |
 
 ### Kafka Parameters
 

@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.1.1](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v1.1.0...telicent-core-v1.1.1) (2026-01-23)
+
+
+### Bug Fixes
+
+* make host domain values required ([69ac812](https://github.com/Telicent-io/telicent-core-charts/commit/69ac812caf209346986d38997cc27391cc61d46d))
+* removes all default resources and limits ([0a5d96d](https://github.com/Telicent-io/telicent-core-charts/commit/0a5d96dd5060c6c35ead510a3dc7daadf8bd095a))
+* traefik ingress authz ([6e02866](https://github.com/Telicent-io/telicent-core-charts/commit/6e028661e2939b645fc49e0d1db17198f8f5c106))
+* use correct label indentation for volume claim templates ([1d9451c](https://github.com/Telicent-io/telicent-core-charts/commit/1d9451c8168724faccefc456fd50f6cfe5584dfc))
+* use correct label indentation for volume claim templates ([56faabf](https://github.com/Telicent-io/telicent-core-charts/commit/56faabf12638692572411bbf3c9bea08a85fb5c1))
+
 ## [1.1.0](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v1.0.0...telicent-core-v1.1.0) (2026-01-19)
 
 

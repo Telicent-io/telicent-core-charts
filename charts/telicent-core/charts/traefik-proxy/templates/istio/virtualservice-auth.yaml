@@ -15,7 +15,7 @@ spec:
   gateways:
   - {{ include "istio.gatewayNamespace" . }}/{{ include "istio.gatewayName" . }}
   hosts:
-  - {{ required "A valid .Values.global.authHostDomain entry required!" .Values.global.authHostDomain }}
+  - {{ .Values.global.authHostDomain }}
   http:
    - route:
       - destination:

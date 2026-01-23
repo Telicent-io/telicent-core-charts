@@ -86,16 +86,16 @@ the [kubernetes documentation](https://kubernetes.io/docs/concepts/configuration
 Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart
 Note: Only global parameters used within this chart will be listed below
 
-| Name                               | Description                                                                       | Value                    |
-| ---------------------------------- | --------------------------------------------------------------------------------- | ------------------------ |
-| `global.imageRegistry`             | Global image registry                                                             | `""`                     |
-| `global.imagePullSecrets`          | Global registry secret names as an array                                          | `[]`                     |
-| `global.enterprise`                | Enable enterprise mode, adding additional features and configurations             | `false`                  |
-| `global.appHostDomain`             | Domain associated with Telicent application/ui services                           | `apps.telicent.io`       |
-| `global.apiHostDomain`             | Domain associated with Telicent Api services                                      | `api.telicent.io`        |
-| `global.authHostDomain`            | Domain associated with Telicent authentication services, including OIDC providers | `auth.telicent.io`       |
-| `global.truststore.existingSecret` | Name of an existing secret containing the truststore                              | `""`                     |
-| `global.truststore.mountPath`      | The mount path for the truststore in the container                                | `/app/config/truststore` |
+| Name                               | Description                                                                                                                     | Value                    |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | ------------------------ |
+| `global.imageRegistry`             | Global image registry                                                                                                           | `""`                     |
+| `global.imagePullSecrets`          | Global registry secret names as an array                                                                                        | `[]`                     |
+| `global.enterprise`                | Enable enterprise mode, adding additional features and configurations                                                           | `false`                  |
+| `global.appHostDomain`             | Domain associated with Telicent application/ui services. This value cannot be changed after it is set                           | `""`                     |
+| `global.apiHostDomain`             | Domain associated with Telicent Api services. This value cannot be changed after it is set                                      | `""`                     |
+| `global.authHostDomain`            | Domain associated with Telicent authentication services, including OIDC providers. This value cannot be changed after it is set | `""`                     |
+| `global.truststore.existingSecret` | Name of an existing secret containing the truststore                                                                            | `""`                     |
+| `global.truststore.mountPath`      | The mount path for the truststore in the container                                                                              | `/app/config/truststore` |
 
 ### Application Parameters - Java
 
