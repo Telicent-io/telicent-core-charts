@@ -120,14 +120,16 @@ Note: It is recommended to use a Kubernetes secret for sensitive information lik
 
 ### Traffic Exposure Parameters
 
-| Name                        | Description                    | Value       |
-| --------------------------- | ------------------------------ | ----------- |
-| `service.port`              | Auth server service port       | `8080`      |
-| `service.type`              | Auth server service port       | `ClusterIP` |
-| `resources.requests.cpu`    | Set containers' CPU request    | `1000m`     |
-| `resources.requests.memory` | Set containers' memory request | `4000Mi`    |
-| `resources.limits.cpu`      | Set containers' CPU limit      | `2000m`     |
-| `resources.limits.memory`   | Set containers' memory limit   | `8000Mi`    |
+| Name           | Description              | Value       |
+| -------------- | ------------------------ | ----------- |
+| `service.port` | Auth server service port | `8080`      |
+| `service.type` | Auth server service port | `ClusterIP` |
+
+### Deployment Resources Parameters - Requests and Limits
+
+| Name        | Description                        | Value |
+| ----------- | ---------------------------------- | ----- |
+| `resources` | Resources for *Spatial* containers | `{}`  |
 
 ### Node Selection
 

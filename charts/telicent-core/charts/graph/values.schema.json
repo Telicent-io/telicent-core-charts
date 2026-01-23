@@ -226,38 +226,8 @@
         },
         "resources": {
             "type": "object",
-            "properties": {
-                "requests": {
-                    "type": "object",
-                    "properties": {
-                        "cpu": {
-                            "type": "string",
-                            "description": "Set containers' CPU request",
-                            "default": "1200m"
-                        },
-                        "memory": {
-                            "type": "string",
-                            "description": "Set containers' memory request",
-                            "default": "8000Mi"
-                        }
-                    }
-                },
-                "limits": {
-                    "type": "object",
-                    "properties": {
-                        "cpu": {
-                            "type": "string",
-                            "description": "Set containers' CPU limit",
-                            "default": "1500m"
-                        },
-                        "memory": {
-                            "type": "string",
-                            "description": "Set containers' memory limit",
-                            "default": "12000Mi"
-                        }
-                    }
-                }
-            }
+            "description": "Resources for *Graph* containers",
+            "default": {}
         },
         "podSecurityContext": {
             "type": "object",

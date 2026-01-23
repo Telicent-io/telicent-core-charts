@@ -134,12 +134,9 @@ Note: It is recommended to use a Kubernetes secret for sensitive information lik
 
 ### Deployment Resources Parameters - Requests and Limits
 
-| Name                        | Description                    | Value    |
-| --------------------------- | ------------------------------ | -------- |
-| `resources.requests.cpu`    | Set containers' CPU request    | `250m`   |
-| `resources.requests.memory` | Set containers' memory request | `1000Mi` |
-| `resources.limits.cpu`      | Set containers' CPU limit      | `500m`   |
-| `resources.limits.memory`   | Set containers' memory limit   | `2000Mi` |
+| Name        | Description                                  | Value |
+| ----------- | -------------------------------------------- | ----- |
+| `resources` | Resources for *Spatial Projector* containers | `{}`  |
 
 ### Probes This is to setup the liveness and readiness probes, more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
 

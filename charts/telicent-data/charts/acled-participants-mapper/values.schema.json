@@ -222,7 +222,7 @@
         },
         "resources": {
             "type": "object",
-            "description": "Set containers' resource requests and limits",
+            "description": "Resources for *ACLED Participants Mapper* containers",
             "default": {}
         },
         "volumes": {

@@ -232,7 +232,7 @@
         },
         "resources": {
             "type": "object",
-            "description": "Set containers' resource requests and limits",
+            "description": "Resources for *Canonicals Ontology* containers",
             "default": {}
         },
         "autoscaling": {

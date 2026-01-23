@@ -145,17 +145,21 @@ service:
   # @key service.type Auth server service port
   type: ClusterIP
 
-resources:
-  requests:
-    # @key resources.requests.cpu Set containers' CPU request
-    cpu: "1000m"
-    # @key resources.requests.memory Set containers' memory request
-    memory: "4000Mi"
-  limits:
-    # @key resources.limits.cpu Set containers' CPU limit
-    cpu: "2000m"
-    # @key resources.limits.memory Set containers' memory limit
-    memory: "8000Mi"
+#
+# @section Deployment Resources Parameters - Requests and Limits
+#
+# @key resources Resources for *Spatial* containers
+resources: {}
+#  requests:
+#    # @key resources.requests.cpu Set containers' CPU request
+#    cpu: "1000m"
+#    # @key resources.requests.memory Set containers' memory request
+#    memory: "4000Mi"
+#  limits:
+#    # @key resources.limits.cpu Set containers' CPU limit
+#    cpu: "2000m"
+#    # @key resources.limits.memory Set containers' memory limit
+#    memory: "8000Mi"
 
 # # @section
 # # @descStart

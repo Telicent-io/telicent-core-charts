@@ -123,9 +123,9 @@ These parameters can be referenced in sub-charts as `.Values.global.<parameter-n
 
 ### Resource Parameters
 
-| Name        | Description                                  | Value |
-| ----------- | -------------------------------------------- | ----- |
-| `resources` | Set containers' resource requests and limits | `{}`  |
+| Name        | Description                                                 | Value |
+| ----------- | ----------------------------------------------------------- | ----- |
+| `resources` | Resources for *Ontologies RDF RDFS OWL Producer* containers | `{}`  |
 
 ### Autoscaling Parameters
 

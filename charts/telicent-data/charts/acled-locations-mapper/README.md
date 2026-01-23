@@ -115,9 +115,9 @@ These parameters can be referenced in sub-charts as `.Values.global.<parameter-n
 
 ### Resource Parameters
 
-| Name        | Description                                  | Value |
-| ----------- | -------------------------------------------- | ----- |
-| `resources` | Set containers' resource requests and limits | `{}`  |
+| Name        | Description                                       | Value |
+| ----------- | ------------------------------------------------- | ----- |
+| `resources` | Resources for *ACLED Locations Mapper* containers | `{}`  |
 
 ### Volume Parameters
 

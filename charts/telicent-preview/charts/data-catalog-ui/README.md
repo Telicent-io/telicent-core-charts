@@ -144,12 +144,9 @@ Note: Only global parameters used within this chart will be listed below.
 
 ### Deployment Resources Parameters - Requests and Limits
 
-| Name                        | Description                    | Value    |
-| --------------------------- | ------------------------------ | -------- |
-| `resources.requests.cpu`    | Set containers' CPU request    | `250m`   |
-| `resources.requests.memory` | Set containers' memory request | `500Mi`  |
-| `resources.limits.cpu`      | Set containers' CPU limit      | `500m`   |
-| `resources.limits.memory`   | Set containers' memory limit   | `1000Mi` |
+| Name        | Description                                | Value |
+| ----------- | ------------------------------------------ | ----- |
+| `resources` | Resources for *Data Catalog UI* containers | `{}`  |
 
 ### Deployment Security Context Parameters - Default Security Context
 

@@ -166,12 +166,9 @@ For Quick Start purposes, a secret named `tc-auth-usr-mongo-user-preferences` wi
 
 ### Deployment Resources Parameters - Requests and Limits
 
-| Name                        | Description                    | Value    |
-| --------------------------- | ------------------------------ | -------- |
-| `resources.requests.cpu`    | Set containers' CPU request    | `300m`   |
-| `resources.requests.memory` | Set containers' memory request | `768Mi`  |
-| `resources.limits.cpu`      | Set containers' CPU limit      | `550m`   |
-| `resources.limits.memory`   | Set containers' memory limit   | `1024Mi` |
+| Name        | Description                                 | Value |
+| ----------- | ------------------------------------------- | ----- |
+| `resources` | Resources for *User Preferences* containers | `{}`  |
 
 ### Deployment Security Context Parameters - Default Security Context
 

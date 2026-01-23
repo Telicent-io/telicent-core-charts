@@ -155,17 +155,18 @@ service:
 #
 # @section Deployment Resources Parameters - Requests and Limits
 #
-resources:
-  requests:
-    # @key resources.requests.cpu Set containers' CPU request
-    cpu: "250m"
-    # @key resources.requests.memory Set containers' memory request
-    memory: "1000Mi"
-  limits:
-    # @key resources.limits.cpu Set containers' CPU limit
-    cpu: "500m"
-    # @key resources.limits.memory Set containers' memory limit
-    memory: "2000Mi"
+# @key resources Resources for *Spatial Projector* containers
+resources: {}
+#  requests:
+#    # @key resources.requests.cpu Set containers' CPU request
+#    cpu: "250m"
+#    # @key resources.requests.memory Set containers' memory request
+#    memory: "1000Mi"
+#  limits:
+#    # @key resources.limits.cpu Set containers' CPU limit
+#    cpu: "500m"
+#    # @key resources.limits.memory Set containers' memory limit
+#    memory: "2000Mi"
 
 # @section Probes This is to setup the liveness and readiness probes, more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
 livenessProbe:

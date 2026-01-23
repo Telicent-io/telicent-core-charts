@@ -90,38 +90,8 @@
         },
         "resources": {
             "type": "object",
-            "properties": {
-                "requests": {
-                    "type": "object",
-                    "properties": {
-                        "cpu": {
-                            "type": "string",
-                            "description": "Set containers' CPU request",
-                            "default": "500m"
-                        },
-                        "memory": {
-                            "type": "string",
-                            "description": "Set containers' memory request",
-                            "default": "750Mi"
-                        }
-                    }
-                },
-                "limits": {
-                    "type": "object",
-                    "properties": {
-                        "cpu": {
-                            "type": "string",
-                            "description": "Set containers' CPU limit",
-                            "default": "1000m"
-                        },
-                        "memory": {
-                            "type": "string",
-                            "description": "Set containers' memory limit",
-                            "default": "1000Mi"
-                        }
-                    }
-                }
-            }
+            "description": "Resources for *Document Pipeline* containers",
+            "default": {}
         },
         "podSecurityContext": {
             "type": "object",
@@ -420,38 +390,8 @@
                 },
                 "resources": {
                     "type": "object",
-                    "properties": {
-                        "requests": {
-                            "type": "object",
-                            "properties": {
-                                "cpu": {
-                                    "type": "string",
-                                    "description": "Set containers' CPU request",
-                                    "default": "500m"
-                                },
-                                "memory": {
-                                    "type": "string",
-                                    "description": "Set containers' memory request",
-                                    "default": "1000Mi"
-                                }
-                            }
-                        },
-                        "limits": {
-                            "type": "object",
-                            "properties": {
-                                "cpu": {
-                                    "type": "string",
-                                    "description": "Set containers' CPU limit",
-                                    "default": "1000m"
-                                },
-                                "memory": {
-                                    "type": "string",
-                                    "description": "Set containers' memory limit",
-                                    "default": "1500Mi"
-                                }
-                            }
-                        }
-                    }
+                    "description": "Resources for *HTTP Ingester* containers",
+                    "default": {}
                 },
                 "affinity": {
                     "type": "object",
@@ -1306,38 +1246,8 @@
                 },
                 "resources": {
                     "type": "object",
-                    "properties": {
-                        "requests": {
-                            "type": "object",
-                            "properties": {
-                                "cpu": {
-                                    "type": "string",
-                                    "description": "Set containers' CPU request",
-                                    "default": "1100m"
-                                },
-                                "memory": {
-                                    "type": "string",
-                                    "description": "Set containers' memory request",
-                                    "default": "2048Mi"
-                                }
-                            }
-                        },
-                        "limits": {
-                            "type": "object",
-                            "properties": {
-                                "cpu": {
-                                    "type": "string",
-                                    "description": "Set containers' CPU limit",
-                                    "default": "1800m"
-                                },
-                                "memory": {
-                                    "type": "string",
-                                    "description": "Set containers' memory limit",
-                                    "default": "4000Mi"
-                                }
-                            }
-                        }
-                    }
+                    "description": "Resources for *Entity Extractor* containers",
+                    "default": {}
                 },
                 "podSecurityContext": {
                     "type": "object",
