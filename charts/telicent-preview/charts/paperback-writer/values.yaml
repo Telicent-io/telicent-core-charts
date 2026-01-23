@@ -27,12 +27,12 @@ global:
   # If all applications were installed through sub-charts, leaving this value empty will provide the correct behavior.
   releaseNameTelicentCore: ""
 
-  # @key global.appHostDomain Domain associated with Telicent application/ui services
-  appHostDomain: "apps.telicent.io"
-  # @key global.apiHostDomain Domain associated with Telicent Api services
-  apiHostDomain: "api.telicent.io"
-  # @key global.authHostDomain Domain associated with Telicent authentication services, including OIDC providers
-  authHostDomain: "auth.telicent.io"
+  # @key global.appHostDomain Domain associated with Telicent application/ui services. This value cannot be changed after it is set
+  appHostDomain: ""
+  # @key global.apiHostDomain Domain associated with Telicent Api services. This value cannot be changed after it is set
+  apiHostDomain: ""
+  # @key global.authHostDomain Domain associated with Telicent authentication services, including OIDC providers. This value cannot be changed after it is set
+  authHostDomain: ""
 
 #
 # @section Application Parameters - Sparql

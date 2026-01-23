@@ -15,7 +15,7 @@ spec:
   gateways:
   - {{ include "istio.gatewayNamespace" . }}/{{ include "istio.gatewayName" . }}
   hosts:
-  - {{ required "A valid .Values.global.appHostDomain entry required!" .Values.global.appHostDomain }}
+  - {{ .Values.global.appHostDomain }}
   {{- if .Values.istio.virtualService.extraHosts }}
     {{- toYaml .Values.istio.virtualService.extraHosts | nindent 2 }}
   {{- end }}

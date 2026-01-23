@@ -19,10 +19,12 @@ global:
   # @key global.enterprise Enable enterprise mode, adding additional features and configurations
   enterprise: false
 
-  # @key global.appHostDomain Domain associated with Telicent application services
-  appHostDomain: "apps.telicent.io"
-  # @key global.authHostDomain Domain associated with Telicent authentication services, including OIDC providers
-  authHostDomain: "auth.telicent.io"
+  # @key global.appHostDomain Domain associated with Telicent application services. This value cannot be changed after it is set
+  appHostDomain: ""
+  # @key global.apiHostDomain Domain associated with Telicent Api services. This value cannot be changed after it is set
+  apiHostDomain: ""
+  # @key global.authHostDomain Domain associated with Telicent authentication services, including OIDC providers. This value cannot be changed after it is set
+  authHostDomain: ""
   # @key global.groupsClaim Key used to retrieve groups from the OIDC provider
   groupsClaim: "groups"
   # @key global.jwksUrl Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)

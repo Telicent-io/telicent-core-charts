@@ -23,18 +23,18 @@
                 },
                 "appHostDomain": {
                     "type": "string",
-                    "description": "Domain associated with Telicent application/ui services",
-                    "default": "apps.telicent.io"
+                    "description": "Domain associated with Telicent application/ui services. This value cannot be changed after it is set",
+                    "default": ""
                 },
                 "apiHostDomain": {
                     "type": "string",
-                    "description": "Domain associated with Telicent Api services",
-                    "default": "api.telicent.io"
+                    "description": "Domain associated with Telicent Api services. This value cannot be changed after it is set",
+                    "default": ""
                 },
                 "authHostDomain": {
                     "type": "string",
-                    "description": "Domain associated with Telicent authentication services, including OIDC providers",
-                    "default": "auth.telicent.io"
+                    "description": "Domain associated with Telicent authentication services, including OIDC providers. This value cannot be changed after it is set",
+                    "default": ""
                 },
                 "istioIngressNamespace": {
                     "type": "string",

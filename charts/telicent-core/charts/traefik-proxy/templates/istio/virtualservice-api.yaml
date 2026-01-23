@@ -15,9 +15,9 @@ spec:
   gateways:
   - {{ include "istio.gatewayNamespace" . }}/{{ include "istio.gatewayName" . }}
   hosts:
-  - {{ required "A valid .Values.global.apiHostDomain entry required!" .Values.global.apiHostDomain }}
+  - {{ .Values.global.apiHostDomain }}
   http:
-   - route:
+    - route:
       - destination:
           host: {{ include "traefik-proxy.serviceName" . }}
           port:
