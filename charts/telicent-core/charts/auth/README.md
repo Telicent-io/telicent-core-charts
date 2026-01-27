@@ -105,25 +105,25 @@ Contains details pertinent to the OIDC Identity Provider to be used by the *Auth
 It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
 For Quick Start purposes, a secret named `tc-auth-gen-idp-auth` will be created if one is not set.
 
-| Name                        | Description                                                                                                                          | Value          |
-| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | -------------- |
-| `idp.issuerUrl`             | The OpenID Connect issuer URL                                                                                                        | `""`           |
-| `idp.authorizationPath`     | The path to use in combination with the issuer URL for authorization                                                                 | `/auth`        |
-| `idp.jwksPath`              | The path to use in combination with the issuer URL for JWKS                                                                          | `/keys`        |
-| `idp.tokenPath`             | The path to use in combination with the issuer URL for generating tokens                                                             | `/token`       |
-| `idp.userinfoPath`          | The path to use in combination with the issuer URL for userinfo                                                                      | `/userinfo`    |
-| `idp.cookieParentDomain`    | Cookie domain scope                                                                                                                  | `.telicent.io` |
-| `idp.cookieSecure`          | Enable secure cookies                                                                                                                | `true`         |
-| `idp.superUserIdentifier`   | Super user identification, set to 'ALL' to allow for everyone to be a superuser                                                      | `ALL`          |
-| `idp.clientName`            | The OAuth Client Name (used for display)                                                                                             | `""`           |
-| `idp.usernameClaim`         | The OIDC claim containing the attribute to be used as the username                                                                   | `sub`          |
-| `idp.existingSecret`        | Name of an existing secret. The secret must contain 2 keys: 'clientid', 'clientsecret'                                               | `""`           |
-| `idp.clientId`              | The OAuth Client ID                                                                                                                  | `""`           |
-| `idp.clientSecret`          | The OAuth Client Secret                                                                                                              | `""`           |
-| `idp.defaultSessionTtl`     | Default session time-to-live duration (in hours)                                                                                     | `2`            |
-| `idp.defaultSessionIdleTtl` | Default session idle time-to-live duration (in minutes)                                                                              | `30`           |
-| `idp.clientRefreshTokenTtl` | Client refresh token time-to-live duration (in hours). Total time will not exceed idp.defaultSessionTtl even if this value is higher | `2`            |
-| `idp.clientAccessTokenTtl`  | Client access token time-to-live duration (in minutes)                                                                               | `15`           |
+| Name                        | Description                                                                                                                   | Value          |
+| --------------------------- | ----------------------------------------------------------------------------------------------------------------------------- | -------------- |
+| `idp.issuerUrl`             | The OpenID Connect issuer URL                                                                                                 | `""`           |
+| `idp.authorizationPath`     | The path to use in combination with the issuer URL for authorization                                                          | `/auth`        |
+| `idp.jwksPath`              | The path to use in combination with the issuer URL for JWKS                                                                   | `/keys`        |
+| `idp.tokenPath`             | The path to use in combination with the issuer URL for generating tokens                                                      | `/token`       |
+| `idp.userinfoPath`          | The path to use in combination with the issuer URL for userinfo                                                               | `/userinfo`    |
+| `idp.cookieParentDomain`    | Cookie domain scope                                                                                                           | `.telicent.io` |
+| `idp.cookieSecure`          | Enable secure cookies                                                                                                         | `true`         |
+| `idp.superUserIdentifier`   | Super user identification, set to 'ALL' to allow for everyone to be a superuser                                               | `ALL`          |
+| `idp.clientName`            | The OAuth Client Name (used for display)                                                                                      | `""`           |
+| `idp.usernameClaim`         | The OIDC claim containing the attribute to be used as the username                                                            | `sub`          |
+| `idp.existingSecret`        | Name of an existing secret. The secret must contain 2 keys: 'clientid', 'clientsecret'                                        | `""`           |
+| `idp.clientId`              | The OAuth Client ID                                                                                                           | `""`           |
+| `idp.clientSecret`          | The OAuth Client Secret                                                                                                       | `""`           |
+| `idp.sessionTtl`            | Default session time-to-live duration (in hours)                                                                              | `2`            |
+| `idp.sessionIdleTtl`        | Default session idle time-to-live duration (in minutes)                                                                       | `30`           |
+| `idp.clientRefreshTokenTtl` | Client refresh token time-to-live duration (in hours). Total time will not exceed idp.sessionTtl even if this value is higher | `2`            |
+| `idp.clientAccessTokenTtl`  | Client access token time-to-live duration (in minutes)                                                                        | `15`           |
 
 ### Application Parameters - ForwardAuth and Secret
 

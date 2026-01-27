@@ -126,19 +126,19 @@
                     "description": "The OAuth Client Secret",
                     "default": ""
                 },
-                "defaultSessionTtl": {
+                "sessionTtl": {
                     "type": "number",
                     "description": "Default session time-to-live duration (in hours)",
                     "default": 2
                 },
-                "defaultSessionIdleTtl": {
+                "sessionIdleTtl": {
                     "type": "number",
                     "description": "Default session idle time-to-live duration (in minutes)",
                     "default": 30
                 },
                 "clientRefreshTokenTtl": {
                     "type": "number",
-                    "description": "Client refresh token time-to-live duration (in hours). Total time will not exceed idp.defaultSessionTtl even if this value is higher",
+                    "description": "Client refresh token time-to-live duration (in hours). Total time will not exceed idp.sessionTtl even if this value is higher",
                     "default": 2
                 },
                 "clientAccessTokenTtl": {

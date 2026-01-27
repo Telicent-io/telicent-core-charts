@@ -23,8 +23,8 @@ data:
   COOKIE_PARENT_DOMAIN: {{ .Values.idp.cookieParentDomain | quote }}
   COOKIE_SECURE: {{ .Values.idp.cookieSecure | quote  }}
   TOKEN_ISSUER_URL: {{ printf "%s%s" "https://" .Values.global.authHostDomain | quote }}
-  APP_DEFAULT_SESSION_TTL: {{ .Values.idp.defaultSessionTtl | quote }}
-  APP_DEFAULT_SESSION_IDLE_TTL: {{ .Values.idp.defaultSessionIdleTtl | quote }}
+  APP_DEFAULT_SESSION_TTL: {{ .Values.idp.sessionTtl | quote }}
+  APP_DEFAULT_SESSION_IDLE_TTL: {{ .Values.idp.sessionIdleTtl | quote }}
 
   #Spring
   SPRING_PROFILES_ACTIVE: {{ .Values.java.spring.profile | quote }}
