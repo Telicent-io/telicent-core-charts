@@ -120,10 +120,10 @@ For Quick Start purposes, a secret named `tc-auth-gen-idp-auth` will be created 
 | `idp.existingSecret`        | Name of an existing secret. The secret must contain 2 keys: 'clientid', 'clientsecret'                                        | `""`           |
 | `idp.clientId`              | The OAuth Client ID                                                                                                           | `""`           |
 | `idp.clientSecret`          | The OAuth Client Secret                                                                                                       | `""`           |
-| `idp.sessionTtl`            | Default session time-to-live duration (in hours)                                                                              | `2`            |
-| `idp.sessionIdleTtl`        | Default session idle time-to-live duration (in minutes)                                                                       | `30`           |
-| `idp.clientRefreshTokenTtl` | Client refresh token time-to-live duration (in hours). Total time will not exceed idp.sessionTtl even if this value is higher | `2`            |
-| `idp.clientAccessTokenTtl`  | Client access token time-to-live duration (in minutes)                                                                        | `15`           |
+| `idp.sessionTtl`            | Default session time-to-live duration (in hours)                                                                              | `PT2H`         |
+| `idp.sessionIdleTtl`        | Default session idle time-to-live duration (in minutes)                                                                       | `PT30M`        |
+| `idp.clientRefreshTokenTtl` | Client refresh token time-to-live duration (in hours). Total time will not exceed idp.sessionTtl even if this value is higher | `PT2H`         |
+| `idp.clientAccessTokenTtl`  | Client access token time-to-live duration (in minutes)                                                                        | `PT15M`        |
 
 ### Application Parameters - ForwardAuth and Secret
 

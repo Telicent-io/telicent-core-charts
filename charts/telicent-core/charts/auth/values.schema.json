@@ -127,24 +127,24 @@
                     "default": ""
                 },
                 "sessionTtl": {
-                    "type": "number",
+                    "type": "string",
                     "description": "Default session time-to-live duration (in hours)",
-                    "default": 2
+                    "default": "PT2H"
                 },
                 "sessionIdleTtl": {
-                    "type": "number",
+                    "type": "string",
                     "description": "Default session idle time-to-live duration (in minutes)",
-                    "default": 30
+                    "default": "PT30M"
                 },
                 "clientRefreshTokenTtl": {
-                    "type": "number",
+                    "type": "string",
                     "description": "Client refresh token time-to-live duration (in hours). Total time will not exceed idp.sessionTtl even if this value is higher",
-                    "default": 2
+                    "default": "PT2H"
                 },
                 "clientAccessTokenTtl": {
-                    "type": "number",
+                    "type": "string",
                     "description": "Client access token time-to-live duration (in minutes)",
-                    "default": 15
+                    "default": "PT15M"
                 }
             }
         },
