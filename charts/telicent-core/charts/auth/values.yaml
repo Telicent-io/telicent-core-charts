@@ -81,6 +81,16 @@ idp:
   # @key idp.clientSecret The OAuth Client Secret
   clientSecret: ""
 
+  # @key idp.defaultSessionTtl Default session time-to-live duration (in hours)
+  defaultSessionTtl: 2
+  # @key idp.defaultSessionIdleTtl Default session idle time-to-live duration (in minutes)
+  defaultSessionIdleTtl: 30
+
+  # @key idp.clientRefreshTokenTtl Client refresh token time-to-live duration (in hours). Total time will not exceed idp.defaultSessionTtl even if this value is higher
+  clientRefreshTokenTtl: 2
+  # @key idp.clientAccessTokenTtl Client access token time-to-live duration (in minutes)
+  clientAccessTokenTtl: 15
+
 #
 # @section Application Parameters - ForwardAuth and Secret
 #
