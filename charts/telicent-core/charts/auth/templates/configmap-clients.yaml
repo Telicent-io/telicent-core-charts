@@ -21,6 +21,8 @@ data:
         {{- if .Values.global.enterprise }}
         - client_id: telicent-admin-ui
           client_name: Telicent Admin UI Client
+          refresh_token_ttl: {{.Values.idp.clientRefreshTokenTtl}}
+          access_token_ttl: {{.Values.idp.clientAccessTokenTtl}}
           redirect_uris: 
             - https://{{.Values.global.appHostDomain}}/admin/callback
             - https://{{.Values.global.appHostDomain}}/admin/auth-redirect-uri
@@ -28,6 +30,8 @@ data:
             - https://{{.Values.global.appHostDomain}}/admin
         - client_id: telicent-search-ui
           client_name: Telicent Search UI Client
+          refresh_token_ttl: {{.Values.idp.clientRefreshTokenTtl}}
+          access_token_ttl: {{.Values.idp.clientAccessTokenTtl}}
           redirect_uris: 
             - https://{{.Values.global.appHostDomain}}/search/callback
             - https://{{.Values.global.appHostDomain}}/search/auth-redirect-uri
@@ -35,6 +39,8 @@ data:
             - https://{{.Values.global.appHostDomain}}/search
         - client_id: telicent-graph-ui
           client_name: Telicent Graph UI Client
+          refresh_token_ttl: {{.Values.idp.clientRefreshTokenTtl}}
+          access_token_ttl: {{.Values.idp.clientAccessTokenTtl}}
           redirect_uris: 
             - https://{{.Values.global.appHostDomain}}/graph/callback
             - https://{{.Values.global.appHostDomain}}/graph/auth-redirect-uri
@@ -43,12 +49,14 @@ data:
         {{- end }}
         - client_id: telicent-query-ui
           client_name: Telicent Query UI Client
+          refresh_token_ttl: {{.Values.idp.clientRefreshTokenTtl}}
+          access_token_ttl: {{.Values.idp.clientAccessTokenTtl}}
           redirect_uris: 
             - https://{{.Values.global.appHostDomain}}/query/callback
             - https://{{.Values.global.appHostDomain}}/query/auth-redirect-uri
           post_logout_redirect_uris:
             - https://{{.Values.global.appHostDomain}}/query
-     
+
       {{- if .Values.bootstrap.clients.confidential }}
       confidential:
         {{- toYaml .Values.bootstrap.clients.confidential | nindent 6 }}
