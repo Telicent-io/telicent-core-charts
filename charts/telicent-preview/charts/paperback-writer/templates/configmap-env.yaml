@@ -18,7 +18,7 @@ data:
 
   JWT_HEADER: "Authorization"
   JWT_USER_ID_ATTR: "preferred_name"
-  JWT_ISSUER: {{ printf "https://%s%s" .Values.global.authHostDomain "/oauth2/jwks" | quote }}
+  JWT_ISSUER: {{ printf "https://%s" .Values.global.authHostDomain | quote }}
   # point to the internal auth service only!
   AUTH_SERVER_ALLOW_HTTP: "true"
   AUTH_SERVER_BASE_URL: {{ printf "http://%s" (include "paperback-writer.hostAuth" . )  | quote }}
