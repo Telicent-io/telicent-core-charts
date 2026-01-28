@@ -15,11 +15,11 @@ data:
   SPARQL_DEFAULT_LABEL: {{ .Values.sparql.defaultLabel | default "!" |  quote }}
   # point to internal graph service
   SPARQL_URL:  {{ printf "http://%s" (include "paperback-writer.hostGraph" . )  | quote }}
-  # point to internal auth service
-  AUTH_SERVER_BASE_URL: {{ printf "http://%s" (include "paperback-writer.hostAuth" . )  | quote }}
 
   JWT_HEADER: "Authorization"
   JWT_USER_ID_ATTR: "preferred_name"
   JWKS_URL: {{ printf "https://%s%s" .Values.global.authHostDomain "/oauth2/jwks" | quote }}
+  # point to external auth service
+  AUTH_SERVER_BASE_URL: {{ printf "https://%s" .Values.global.authHostDomain  | quote }}
 
 {{- end }}
