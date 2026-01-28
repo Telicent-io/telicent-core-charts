@@ -50,6 +50,7 @@ java:
 #
 # @descStart
 # The following contains connection details to a MongoDB instance, on which the application relies.
+# If the url is left blank then MongoDB storage will not be used.
 # It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
 # For Quick Start purposes, a secret named `tc-auth-usr-mongo-user-preferences` will be created if one is not set.
 # @descEnd
@@ -73,6 +74,29 @@ mongo:
   existingCaSecret: ""
   # @key mongo.cacertPath Path to the CA certificate file, must be set if TLS is enabled in the url and mirror the path in the connectionStringOptions
   cacertPath: ""
+
+#
+# @section Application Parameters - PostgreSQL and Secret
+#
+# @descStart
+# The following contains connection details to a PostgreSQL instance, on which the application relies.
+# If the url is left blank then PostgreSQL storage will not be used.
+# It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
+# For Quick Start purposes, a secret named `tc-auth-usr-psql-user-preferences` will be created if one is not set.
+# If both MongoDB and PostgreSQL are configured, PostgreSQL will be used as the primary database, and any
+# existing MongoDB data will be automatically migrated.
+# @descEnd
+postgresSql:
+  # @key postgresSql.url PostgreSQL connection URL
+  url: "jdbc:postgresql://<host>:<port>/<database>"
+  # @key postgresSql.existingSecret Name of an existing secret. The secret must contain 2 keys: 'username', 'password'
+  # Note: Left unset, it will create a secret named: tc-auth-usr-psql-user-preferences
+  existingSecret: ""
+  # @key postgresSql.username PostgreSQL username
+  # Note: For additional security, the username is read from the secret, as defined by 'existingSecret' and not from this value!
+  username: ""
+  # @key postgresSql.password PostgreSQL password
+  password: ""
 
 #
 # @section ConfigMap Parameters

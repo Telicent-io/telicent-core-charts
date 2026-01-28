@@ -110,6 +110,7 @@ Contains Java configuration parameters to be used by the *User Preferences* appl
 ### Application Parameters - MongoDB and Secret
 
 The following contains connection details to a MongoDB instance, on which the application relies.
+If the url is left blank then MongoDB storage will not be used.
 It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
 For Quick Start purposes, a secret named `tc-auth-usr-mongo-user-preferences` will be created if one is not set.
 
@@ -123,6 +124,22 @@ For Quick Start purposes, a secret named `tc-auth-usr-mongo-user-preferences` wi
 | `mongo.password`         | MongoDB password                                                                                                                                              | `""`                                                                           |
 | `mongo.existingCaSecret` | If you have an existing secret for the CA certificate, you can specify it here. If you've specified to use TLS in the url, you must provide a CA certificate. | `""`                                                                           |
 | `mongo.cacertPath`       | Path to the CA certificate file, must be set if TLS is enabled in the url and mirror the path in the connectionStringOptions                                  | `""`                                                                           |
+
+### Application Parameters - PostgreSQL and Secret
+
+The following contains connection details to a PostgreSQL instance, on which the application relies.
+If the url is left blank then PostgreSQL storage will not be used.
+It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
+For Quick Start purposes, a secret named `tc-auth-usr-psql-user-preferences` will be created if one is not set.
+If both MongoDB and PostgreSQL are configured, PostgreSQL will be used as the primary database, and any
+existing MongoDB data will be automatically migrated.
+
+| Name                         | Description                                                                        | Value                                        |
+| ---------------------------- | ---------------------------------------------------------------------------------- | -------------------------------------------- |
+| `postgresSql.url`            | PostgreSQL connection URL                                                          | `jdbc:postgresql://<host>:<port>/<database>` |
+| `postgresSql.existingSecret` | Name of an existing secret. The secret must contain 2 keys: 'username', 'password' | `""`                                         |
+| `postgresSql.username`       | PostgreSQL username                                                                | `""`                                         |
+| `postgresSql.password`       | PostgreSQL password                                                                | `""`                                         |
 
 ### ConfigMap Parameters
 

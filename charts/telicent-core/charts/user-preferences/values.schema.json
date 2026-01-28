@@ -108,6 +108,31 @@
                 }
             }
         },
+        "postgresSql": {
+            "type": "object",
+            "properties": {
+                "url": {
+                    "type": "string",
+                    "description": "PostgreSQL connection URL",
+                    "default": "jdbc:postgresql://<host>:<port>/<database>"
+                },
+                "existingSecret": {
+                    "type": "string",
+                    "description": "Name of an existing secret. The secret must contain 2 keys: 'username', 'password'",
+                    "default": ""
+                },
+                "username": {
+                    "type": "string",
+                    "description": "PostgreSQL username",
+                    "default": ""
+                },
+                "password": {
+                    "type": "string",
+                    "description": "PostgreSQL password",
+                    "default": ""
+                }
+            }
+        },
         "configMap": {
             "type": "object",
             "properties": {
