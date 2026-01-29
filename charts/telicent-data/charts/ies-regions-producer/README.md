@@ -155,7 +155,9 @@ These parameters can be referenced in sub-charts as `.Values.global.<parameter-n
 
 Contains configuration parameters specific to the application
 
-| Name                        | Description                                | Value              |
-| --------------------------- | ------------------------------------------ | ------------------ |
-| `configuration.targetTopic` | Kafka topic to publish processed events to | `knowledge`        |
-| `configuration.sourceName`  | Source name or identifier for the data     | `ies-regions-ttls` |
+| Name                        | Description                                                      | Value              |
+| --------------------------- | ---------------------------------------------------------------- | ------------------ |
+| `configuration.targetTopic` | Kafka topic to publish processed events to                       | `knowledge`        |
+| `configuration.sourceName`  | Source name or identifier for the data                           | `ies-regions-ttls` |
+| `configuration.addComments` | Whether to add comments to the output. Must be "True" or "False" | `True`             |
+| `configuration.addGeoJson`  | Whether to add GeoJSON to the output. Must be "True" or "False"  | `True`             |
