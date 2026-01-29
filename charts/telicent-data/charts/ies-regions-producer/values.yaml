@@ -191,3 +191,7 @@ configuration:
   targetTopic: "knowledge"
   # @key configuration.sourceName Source name or identifier for the data
   sourceName: "ies-regions-ttls"
+  # @key configuration.addComments Whether to add comments to the output. Must be "True" or "False"
+  addComments: "True"
+  # @key configuration.addGeoJson Whether to add GeoJSON to the output. Must be "True" or "False"
+  addGeoJson: "True"

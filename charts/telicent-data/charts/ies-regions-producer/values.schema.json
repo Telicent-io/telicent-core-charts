@@ -305,6 +305,16 @@
                     "type": "string",
                     "description": "Source name or identifier for the data",
                     "default": "ies-regions-ttls"
+                },
+                "addComments": {
+                    "type": "string",
+                    "description": "Whether to add comments to the output. Must be \"True\" or \"False\"",
+                    "default": "True"
+                },
+                "addGeoJson": {
+                    "type": "string",
+                    "description": "Whether to add GeoJSON to the output. Must be \"True\" or \"False\"",
+                    "default": "True"
                 }
             }
         }

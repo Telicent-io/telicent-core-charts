@@ -98,6 +98,10 @@ spec:
           value: {{ (index .Values.configuration "sourceName") | default "" | quote }}
         - name: KAFKA_CONFIG_MODE
           value: {{ (index .Values.configuration "kafkaConfigMode") | default "toml" | quote }}
+        - name: ADD_COMMENTS
+          value: {{ (index .Values.configuration "addComments") | default "true" | title }}
+        - name: ADD_GEOJSON
+          value: {{ (index .Values.configuration "addGeoJson") | default "true" | title }}
         {{- if .Values.env }}
         {{- range $key, $value := .Values.env }}
         - name: {{ $key }}
