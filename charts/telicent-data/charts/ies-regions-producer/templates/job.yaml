@@ -99,9 +99,9 @@ spec:
         - name: KAFKA_CONFIG_MODE
           value: {{ (index .Values.configuration "kafkaConfigMode") | default "toml" | quote }}
         - name: ADD_COMMENTS
-          value: {{ (index .Values.configuration "addComments") | default "true" | title }}
+          value: {{ (index .Values.configuration "addComments") | default "True" | title }}
         - name: ADD_GEOJSON
-          value: {{ (index .Values.configuration "addGeoJson") | default "true" | title }}
+          value: {{ (index .Values.configuration "addGeoJson") | default "True" | title }}
         {{- if .Values.env }}
         {{- range $key, $value := .Values.env }}
         - name: {{ $key }}
