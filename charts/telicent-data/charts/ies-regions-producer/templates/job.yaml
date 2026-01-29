@@ -26,8 +26,6 @@ spec:
   {{- end }}
   {{- if .Values.job.ttlSecondsAfterFinished }}
   ttlSecondsAfterFinished: {{ .Values.job.ttlSecondsAfterFinished }}
-  {{- else }}
-  backoffLimit: 3
   {{- end }}
   template:
     metadata:
@@ -99,9 +97,9 @@ spec:
         - name: KAFKA_CONFIG_MODE
           value: {{ (index .Values.configuration "kafkaConfigMode") | default "toml" | quote }}
         - name: ADD_COMMENTS
-          value: {{ (index .Values.configuration "addComments") | default "True" | title }}
+          value: {{ (index .Values.configuration "addComments") | default "True" | title | quote }}
         - name: ADD_GEOJSON
-          value: {{ (index .Values.configuration "addGeoJson") | default "True" | title }}
+          value: {{ (index .Values.configuration "addGeoJson") | default "True" | title | quote }}
         {{- if .Values.env }}
         {{- range $key, $value := .Values.env }}
         - name: {{ $key }}
