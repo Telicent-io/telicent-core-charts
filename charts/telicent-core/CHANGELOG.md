@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.1.2](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v1.1.1...telicent-core-v1.1.2) (2026-02-02)
+
+
+### Bug Fixes
+
+* allow auth sessions and clients tokens to be specified though Helm values ([604030e](https://github.com/Telicent-io/telicent-core-charts/commit/604030e8a1052efb74f83a951568306e105296f3))
+* core + preview ([8ad6e7f](https://github.com/Telicent-io/telicent-core-charts/commit/8ad6e7ff8346b9325e1f03d4fd3536132f11df76))
+* core + preview release ([8506964](https://github.com/Telicent-io/telicent-core-charts/commit/85069644df88461ffa5b375e1f46a492de89a1de))
+
 ## [1.1.1](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v1.1.0...telicent-core-v1.1.1) (2026-01-23)
 
 
