@@ -4,7 +4,7 @@ apiVersion: v2
 name: search-ui
 description: Telicent Search UI for full-text search and content discovery across data assets
 type: application
-version: 0.1.12
+version: 0.1.13
 appVersion: "4.18.17"
 
 icon: "https://avatars.githubusercontent.com/u/65304240?s=200&v=4"
