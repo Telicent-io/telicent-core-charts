@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.3.3](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-data-v0.3.2...telicent-data-v0.3.3) (2026-02-02)
+
+
+### Bug Fixes
+
+* add new environment variables ([da9510e](https://github.com/Telicent-io/telicent-core-charts/commit/da9510e981b227caecb8782c043731a9fdff48c4))
+* make host domain values required ([69ac812](https://github.com/Telicent-io/telicent-core-charts/commit/69ac812caf209346986d38997cc27391cc61d46d))
+* removes all default resources and limits ([0a5d96d](https://github.com/Telicent-io/telicent-core-charts/commit/0a5d96dd5060c6c35ead510a3dc7daadf8bd095a))
+* removes all default resources and limits ([033bdc7](https://github.com/Telicent-io/telicent-core-charts/commit/033bdc7998cbe455d91fbf9849fa07e23ce16fbb))
+
 ## [0.3.2](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-data-v0.3.1...telicent-data-v0.3.2) (2026-01-20)
 
 
