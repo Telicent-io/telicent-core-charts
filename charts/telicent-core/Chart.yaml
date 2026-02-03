@@ -2,7 +2,9 @@
 
 apiVersion: v2
 name: telicent-core
-description: Telicent CORE platform for knowledge graph and data management
+description: |
+  Telicent CORE Platform, for all essential services and applications for our
+  secure data integration and knowledge graph platform.
 
 # A chart can be either an 'application' or a 'library' chart.
 #
