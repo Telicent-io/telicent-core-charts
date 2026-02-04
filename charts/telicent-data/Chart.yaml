@@ -1,6 +1,8 @@
 apiVersion: v2
 name: telicent-data
-description: A Helm chart for Kubernetes
+description: |
+  Supplementary chart containing adapters and mappers for specific datasets and
+  ontologies.
 
 # A chart can be either an 'application' or a 'library' chart.
 #

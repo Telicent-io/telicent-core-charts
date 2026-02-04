@@ -1,6 +1,8 @@
 apiVersion: v2
 name: telicent-preview
-description: A Helm chart for Kubernetes
+description: |
+  Secondary chart containing products that are still under active development,
+  and not yet part of CORE. Can be used to try new or preview features early.
 
 # A chart can be either an 'application' or a 'library' chart.
 #
