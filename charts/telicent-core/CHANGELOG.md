@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.1.3](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v1.1.2...telicent-core-v1.1.3) (2026-02-04)
+
+
+### Bug Fixes
+
+* bump graph-ui ([8d555af](https://github.com/Telicent-io/telicent-core-charts/commit/8d555af5548f014f03b9b79b4d94580f9709b885))
+* update app versions ([42620d6](https://github.com/Telicent-io/telicent-core-charts/commit/42620d61d9f5c20ef48c165c37f1ca31531496cd))
+* update app versions ([9ff9491](https://github.com/Telicent-io/telicent-core-charts/commit/9ff9491c733d6e961f3f75453abf01a0112ab17e))
+
 ## [1.1.2](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v1.1.1...telicent-core-v1.1.2) (2026-02-02)
 
 

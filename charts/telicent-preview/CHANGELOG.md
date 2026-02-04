@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.5.1](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-preview-v0.5.0...telicent-preview-v0.5.1) (2026-02-04)
+
+
+### Bug Fixes
+
+* update app versions ([42620d6](https://github.com/Telicent-io/telicent-core-charts/commit/42620d61d9f5c20ef48c165c37f1ca31531496cd))
+* update app versions ([9ff9491](https://github.com/Telicent-io/telicent-core-charts/commit/9ff9491c733d6e961f3f75453abf01a0112ab17e))
+
 ## [0.5.0](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-preview-v0.4.0...telicent-preview-v0.5.0) (2026-02-02)
 
 
