@@ -6,5 +6,5 @@
   "charts/demo-prereqs-postgres": "0.2.4",
   "charts/telicent-core": "1.1.2",
   "charts/telicent-preview": "0.5.0",
-  "charts/telicent-data": "0.3.3"
+  "charts/telicent-data": "0.3.4"
 }
