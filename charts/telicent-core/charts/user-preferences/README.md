@@ -109,7 +109,8 @@ Contains Java configuration parameters to be used by the *User Preferences* appl
 
 ### Application Parameters - MongoDB and Secret
 
-The following contains connection details to a MongoDB instance, on which the application relies.
+The following contains connection details to a MongoDB instance, which is one of the supported persistent storage 
+backends for the application.
 If the url is left blank then MongoDB storage will not be used.
 It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
 For Quick Start purposes, a secret named `tc-auth-usr-mongo-user-preferences` will be created if one is not set.
@@ -127,12 +128,13 @@ For Quick Start purposes, a secret named `tc-auth-usr-mongo-user-preferences` wi
 
 ### Application Parameters - PostgreSQL and Secret
 
-The following contains connection details to a PostgreSQL instance, on which the application relies.
+The following contains connection details to a PostgreSQL instance, which is one of the supported persistent storage 
+backends for the application.
 If the url is left blank then PostgreSQL storage will not be used.
 It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
 For Quick Start purposes, a secret named `tc-auth-usr-psql-user-preferences` will be created if one is not set.
-If both MongoDB and PostgreSQL are configured, PostgreSQL will be used as the primary database, and any
-existing MongoDB data will be automatically migrated.
+If both MongoDB and PostgreSQL are configured, PostgreSQL will be used as the primary database, and any existing 
+MongoDB data will be automatically migrated.
 
 | Name                         | Description                                                                        | Value                                        |
 | ---------------------------- | ---------------------------------------------------------------------------------- | -------------------------------------------- |
