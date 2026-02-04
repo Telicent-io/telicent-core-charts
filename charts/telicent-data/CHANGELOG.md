@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.4](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-data-v0.3.3...telicent-data-v0.3.4) (2026-02-04)
+
+
+### Bug Fixes
+
+* update app versions ([42620d6](https://github.com/Telicent-io/telicent-core-charts/commit/42620d61d9f5c20ef48c165c37f1ca31531496cd))
+* update app versions ([9ff9491](https://github.com/Telicent-io/telicent-core-charts/commit/9ff9491c733d6e961f3f75453abf01a0112ab17e))
+
 ## [0.3.3](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-data-v0.3.2...telicent-data-v0.3.3) (2026-02-02)
 
 
