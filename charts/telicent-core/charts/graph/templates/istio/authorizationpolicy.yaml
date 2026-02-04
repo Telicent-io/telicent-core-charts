@@ -24,7 +24,6 @@ spec:
     to:
     - operation:
         paths:
-        - /knowledge/backups/*
         - /knowledge/sparql
         - /knowledge/sparql/*
         - /knowledge/query
@@ -37,6 +36,14 @@ spec:
         - /catalog/sparql/*
         - /catalog/query
         - /catalog/query/*
+        - /$/backups/create
+        - /$/backups/create/*
+        - /$/backups/restore/*
+        - /$/backups/delete/*
+        - /$/backups/validate/*
+        - /$/backups/report/*
+        - /$/backups/list
+        - /$/backups/list/*
         methods: ["GET", "POST"]
     - operation:
         paths:
