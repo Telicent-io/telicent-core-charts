@@ -72,6 +72,17 @@ spec:
             secretKeyRef:
               key: password
               name: {{ include "user-preferences.mongoSecretName" . }}
+        - name: DATABASE_USER
+          valueFrom:
+            secretKeyRef:
+              key: username
+              name: {{ include "user-preferences.postgresSqlSecretName" . }}
+        - name: DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: password
+              name: {{ include "user-preferences.postgresSqlSecretName" . }}
+
 
         {{- range .Values.extraEnvVars }}
         - name: {{ .name }}

@@ -60,7 +60,7 @@ dependencies:
     repository: file://./charts/search-projector
     condition: global.enterprise
   - name: user-preferences
-    version: "^0.1.0"
+    version: "^0.2.0"
     repository: file://./charts/user-preferences
     condition: global.enterprise
   - name: traefik-proxy
