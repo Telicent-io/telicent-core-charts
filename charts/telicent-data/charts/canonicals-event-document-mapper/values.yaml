@@ -184,3 +184,5 @@ configuration:
   dataNamespace: "http://telicent.io/data#"
   # @key configuration.kafkaConfigMode Kafka configuration mode (toml, json, properties)
   kafkaConfigMode: "toml"
+  # @key configuration.enableSourceRefMode When enabled, treats unstructured content as provenance sources for an event
+  enableSourceRefMode: false
