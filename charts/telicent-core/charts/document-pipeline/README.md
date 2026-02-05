@@ -454,7 +454,7 @@ The application settings are defined within the 'topics' key
 | `contentTagger.sidecars`                 | Add sidecars to the pod                                                                                                 | `[]`                                       |
 | `contentTagger.image.registry`           | *Content Tagger* image registry                                                                                         | `quay.io`                                  |
 | `contentTagger.image.repository`         | The container image repository for the *Content Tagger*                                                                 | `telicent/telicent-rdf-document-tagger-dc` |
-| `contentTagger.image.tag`                | The image tag for the *Content Tagger*                                                                                  | `2.0.3`                                    |
+| `contentTagger.image.tag`                | The image tag for the *Content Tagger*                                                                                  | `3.0.0`                                    |
 | `contentTagger.image.pullPolicy`         | The image pull policy for the *Content Tagger*                                                                          | `IfNotPresent`                             |
 | `contentTagger.image.pullSecrets`        | Secrets for pulling an image from a private repository                                                                  | `[]`                                       |
 | `contentTagger.affinity`                 | Affinity rules for the *Content Tagger* pods                                                                            | `{}`                                       |

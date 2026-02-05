@@ -1066,7 +1066,7 @@
                         "tag": {
                             "type": "string",
                             "description": "The image tag for the *Content Tagger*",
-                            "default": "2.0.3"
+                            "default": "3.0.0"
                         },
                         "pullPolicy": {
                             "type": "string",
