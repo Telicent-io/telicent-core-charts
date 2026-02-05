@@ -152,7 +152,8 @@ These parameters can be referenced in sub-charts as `.Values.global.<parameter-n
 
 Contains configuration parameters specific to the application
 
-| Name                            | Description                                       | Value                      |
-| ------------------------------- | ------------------------------------------------- | -------------------------- |
-| `configuration.dataNamespace`   | Data namespace URI for RDF data                   | `http://telicent.io/data#` |
-| `configuration.kafkaConfigMode` | Kafka configuration mode (toml, json, properties) | `toml`                     |
+| Name                                | Description                                                                  | Value                      |
+| ----------------------------------- | ---------------------------------------------------------------------------- | -------------------------- |
+| `configuration.dataNamespace`       | Data namespace URI for RDF data                                              | `http://telicent.io/data#` |
+| `configuration.kafkaConfigMode`     | Kafka configuration mode (toml, json, properties)                            | `toml`                     |
+| `configuration.enableSourceRefMode` | When enabled, treats unstructured content as provenance sources for an event | `false`                    |

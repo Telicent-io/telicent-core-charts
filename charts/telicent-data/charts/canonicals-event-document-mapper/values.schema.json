@@ -290,6 +290,11 @@
                     "type": "string",
                     "description": "Kafka configuration mode (toml, json, properties)",
                     "default": "toml"
+                },
+                "enableSourceRefMode": {
+                    "type": "boolean",
+                    "description": "When enabled, treats unstructured content as provenance sources for an event",
+                    "default": false
                 }
             }
         }
