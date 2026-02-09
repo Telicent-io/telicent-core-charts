@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.4](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v1.1.3...telicent-core-v1.1.4) (2026-02-09)
+
+
+### Bug Fixes
+
+* allow graph traffic in OSS ([2e24bde](https://github.com/Telicent-io/telicent-core-charts/commit/2e24bde160869d325f3a76a0a049631810912273))
+
 ## [1.1.3](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v1.1.2...telicent-core-v1.1.3) (2026-02-04)
 
 
