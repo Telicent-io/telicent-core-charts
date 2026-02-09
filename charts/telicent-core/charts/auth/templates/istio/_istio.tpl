@@ -18,11 +18,10 @@ Returns the principal used for User Preferences traffic by the Istio Authorizati
 
 {{/*
 Returns the principal used for Graph traffic by the Istio AuthorizationPolicy
+Note: Graph traffic is allowed in both OSS and Enterprise, it is only the Graph UI that is Enterprise-only
 */}}
 {{- define "auth.graphPrincipal" -}}
-{{- if .Values.global.enterprise -}}
 {{- printf "- cluster.local/ns/%s/sa/%s" .Release.Namespace ( include "auth.serviceAccountGraph" .) -}}
-{{- end -}}
 {{- end -}}
 
 
