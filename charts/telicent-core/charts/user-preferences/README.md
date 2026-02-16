@@ -109,39 +109,39 @@ Contains Java configuration parameters to be used by the *User Preferences* appl
 
 ### Application Parameters - MongoDB and Secret
 
-The following contains connection details to a MongoDB instance, which is one of the supported persistent storage 
+The following contains connection details to a MongoDB instance, which is one of the supported persistent storage
 backends for the application.
 If the url is left blank then MongoDB storage will not be used.
 It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
 For Quick Start purposes, a secret named `tc-auth-usr-mongo-user-preferences` will be created if one is not set.
 
-| Name                     | Description                                                                                                                                                   | Value                                                                          |
-| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
-| `mongo.url`              | MongoDB connection URL (database value can be omitted in favour of populating 'database' property)                                                            | `mongodb://<host1>:<port1>,<host2>:<port2>,<host3>:<port3>/?retryWrites=false` |
-| `mongo.database`         | MongoDB database                                                                                                                                              | `user-preferences`                                                             |
-| `mongo.authDatabase`     | The authentication database to use for the given user                                                                                                         | `admin`                                                                        |
-| `mongo.existingSecret`   | Name of an existing secret. The secret must contain 2 keys: 'username', 'password'                                                                            | `""`                                                                           |
-| `mongo.username`         | MongoDB username                                                                                                                                              | `""`                                                                           |
-| `mongo.password`         | MongoDB password                                                                                                                                              | `""`                                                                           |
-| `mongo.existingCaSecret` | If you have an existing secret for the CA certificate, you can specify it here. If you've specified to use TLS in the url, you must provide a CA certificate. | `""`                                                                           |
-| `mongo.cacertPath`       | Path to the CA certificate file, must be set if TLS is enabled in the url and mirror the path in the connectionStringOptions                                  | `""`                                                                           |
+| Name                     | Description                                                                                                                                                                               | Value              |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
+| `mongo.url`              | MongoDB connection URL (database value can be omitted in favour of populating 'database' property) format: "mongodb://<host1>:<port1>,<host2>:<port2>,<host3>:<port3>/?retryWrites=false" | `""`               |
+| `mongo.database`         | MongoDB database                                                                                                                                                                          | `user-preferences` |
+| `mongo.authDatabase`     | The authentication database to use for the given user                                                                                                                                     | `admin`            |
+| `mongo.existingSecret`   | Name of an existing secret. The secret must contain 2 keys: 'username', 'password'                                                                                                        | `""`               |
+| `mongo.username`         | MongoDB username                                                                                                                                                                          | `""`               |
+| `mongo.password`         | MongoDB password                                                                                                                                                                          | `""`               |
+| `mongo.existingCaSecret` | If you have an existing secret for the CA certificate, you can specify it here. If you've specified to use TLS in the url, you must provide a CA certificate.                             | `""`               |
+| `mongo.cacertPath`       | Path to the CA certificate file, must be set if TLS is enabled in the url and mirror the path in the connectionStringOptions                                                              | `""`               |
 
 ### Application Parameters - PostgreSQL and Secret
 
-The following contains connection details to a PostgreSQL instance, which is one of the supported persistent storage 
+The following contains connection details to a PostgreSQL instance, which is one of the supported persistent storage
 backends for the application.
 If the url is left blank then PostgreSQL storage will not be used.
 It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
 For Quick Start purposes, a secret named `tc-auth-usr-psql-user-preferences` will be created if one is not set.
-If both MongoDB and PostgreSQL are configured, PostgreSQL will be used as the primary database, and any existing 
+If both MongoDB and PostgreSQL are configured, PostgreSQL will be used as the primary database, and any existing
 MongoDB data will be automatically migrated.
 
-| Name                         | Description                                                                        | Value                                        |
-| ---------------------------- | ---------------------------------------------------------------------------------- | -------------------------------------------- |
-| `postgresSql.url`            | PostgreSQL connection URL                                                          | `jdbc:postgresql://<host>:<port>/<database>` |
-| `postgresSql.existingSecret` | Name of an existing secret. The secret must contain 2 keys: 'username', 'password' | `""`                                         |
-| `postgresSql.username`       | PostgreSQL username                                                                | `""`                                         |
-| `postgresSql.password`       | PostgreSQL password                                                                | `""`                                         |
+| Name                         | Description                                                                        | Value |
+| ---------------------------- | ---------------------------------------------------------------------------------- | ----- |
+| `postgresSql.url`            | PostgreSQL connection URL format: "jdbc:postgresql://<host>:<port>/<database>"     | `""`  |
+| `postgresSql.existingSecret` | Name of an existing secret. The secret must contain 2 keys: 'username', 'password' | `""`  |
+| `postgresSql.username`       | PostgreSQL username                                                                | `""`  |
+| `postgresSql.password`       | PostgreSQL password                                                                | `""`  |
 
 ### ConfigMap Parameters
 
