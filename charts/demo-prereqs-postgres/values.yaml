@@ -122,3 +122,15 @@ auth:
   namespace: tc-core-dev
   # @key auth.serviceAccountName Service account name allowed to connect to PostgreSQL
   serviceAccountName: telicent-core-auth
+
+# @section User Preferences
+# @descStart
+# Authentication configuration for Istio AuthorizationPolicy
+# @descEnd
+userPreferences:
+  # @key userPreferences.enabled Enable Istio AuthorizationPolicy for PostgreSQL connections
+  enabled: true
+  # @key userPreferences.namespace Namespace of the service account allowed to connect
+  namespace: tc-core-dev
+  # @key userPreferences.serviceAccountName Service account name allowed to connect to PostgreSQL
+  serviceAccountName: telicent-core-user-preferences

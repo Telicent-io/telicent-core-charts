@@ -194,6 +194,26 @@
                     "default": "telicent-core-auth"
                 }
             }
+        },
+        "userPreferences": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable Istio AuthorizationPolicy for PostgreSQL connections",
+                    "default": true
+                },
+                "namespace": {
+                    "type": "string",
+                    "description": "Namespace of the service account allowed to connect",
+                    "default": "tc-core-dev"
+                },
+                "serviceAccountName": {
+                    "type": "string",
+                    "description": "Service account name allowed to connect to PostgreSQL",
+                    "default": "telicent-core-user-preferences"
+                }
+            }
         }
     }
 }
