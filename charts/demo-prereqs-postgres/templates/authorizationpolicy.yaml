@@ -11,6 +11,7 @@ spec:
     - source:
         principals:
         - {{ include "demo-prereqs-postgres.authPrincipal" . }}
+        - {{ include "demo-prereqs-postgres.userPreferencesPrincipal" . }}
     to:
     - operation:
         ports:

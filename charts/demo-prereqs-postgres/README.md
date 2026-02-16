@@ -115,3 +115,13 @@ Authentication configuration for Istio AuthorizationPolicy
 | `auth.enabled`            | Enable Istio AuthorizationPolicy for PostgreSQL connections | `true`               |
 | `auth.namespace`          | Namespace of the service account allowed to connect         | `tc-core-dev`        |
 | `auth.serviceAccountName` | Service account name allowed to connect to PostgreSQL       | `telicent-core-auth` |
+
+### User Preferences
+
+Authentication configuration for Istio AuthorizationPolicy
+
+| Name                                 | Description                                                 | Value                            |
+| ------------------------------------ | ----------------------------------------------------------- | -------------------------------- |
+| `userPreferences.enabled`            | Enable Istio AuthorizationPolicy for PostgreSQL connections | `true`                           |
+| `userPreferences.namespace`          | Namespace of the service account allowed to connect         | `tc-core-dev`                    |
+| `userPreferences.serviceAccountName` | Service account name allowed to connect to PostgreSQL       | `telicent-core-user-preferences` |

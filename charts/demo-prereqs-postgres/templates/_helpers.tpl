@@ -31,6 +31,13 @@ Create chart name and version as used by the chart label.
 {{- end }}
 
 {{/*
+Allow the release namespace to be overridden.
+*/}}
+{{- define "demo-prereqs-postgres.namespace" -}}
+{{- .Release.Namespace -}}
+{{- end -}}
+
+{{/*
 Common labels
 */}}
 {{- define "demo-prereqs-postgres.labels" -}}
@@ -61,10 +68,19 @@ Create the name of the service account to use
 {{- end }}
 {{- end }}
 
+{{/*
+Create the name of the initdbconfig map
+*/}}
+{{- define "demo-prereqs-postgres.initDbConfigMapName" -}}
+{{- printf "tc-%s-%s" .Chart.Name "initdb" }}
+{{- end }}
 
 {{/*
 Service principals
 */}}
 {{- define "demo-prereqs-postgres.authPrincipal" -}}
 {{- printf "cluster.local/ns/%s/sa/%s" .Values.auth.namespace .Values.auth.serviceAccountName }}
+{{- end }}
+{{- define "demo-prereqs-postgres.userPreferencesPrincipal" -}}
+{{- printf "cluster.local/ns/%s/sa/%s" .Values.auth.namespace .Values.userPreferences.serviceAccountName }}
 {{- end }}

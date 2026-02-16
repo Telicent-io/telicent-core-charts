@@ -92,6 +92,8 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /var/lib/postgresql/data
+            - name: initdb
+              mountPath: /docker-entrypoint-initdb.d
       volumes:
         - name: data
           {{- if .Values.persistence.enabled }}
@@ -100,6 +102,9 @@ spec:
           {{- else }}
           emptyDir: {}
           {{- end }}
+        - name: initdb
+          configMap:
+            name: {{ include "demo-prereqs-postgres.initDbConfigMapName" . }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
