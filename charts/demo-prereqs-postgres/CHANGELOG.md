@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.5](https://github.com/Telicent-io/telicent-core-charts/compare/demo-prereqs-postgres-v0.2.4...demo-prereqs-postgres-v0.2.5) (2026-02-16)
+
+
+### Bug Fixes
+
+* allow user-preferences to use the postgres demo prerequisite ([f8f4f61](https://github.com/Telicent-io/telicent-core-charts/commit/f8f4f61bd71ff34dada7dca6cee1514f994c54d2))
+
 ## [0.2.4](https://github.com/Telicent-io/telicent-core-charts/compare/demo-prereqs-postgres-v0.2.3...demo-prereqs-postgres-v0.2.4) (2026-01-10)
 
 

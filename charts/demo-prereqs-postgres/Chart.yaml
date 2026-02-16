@@ -4,7 +4,7 @@ description: A simple PostgreSQL deployment for demo/development purposes
 
 type: application
 
-version: 0.2.4
+version: 0.2.5
 
 # PostgreSQL version
 appVersion: "16"
