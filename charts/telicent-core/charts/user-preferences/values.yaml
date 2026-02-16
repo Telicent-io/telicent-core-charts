@@ -49,15 +49,15 @@ java:
 # @section Application Parameters - MongoDB and Secret
 #
 # @descStart
-# The following contains connection details to a MongoDB instance, which is one of the supported persistent storage 
+# The following contains connection details to a MongoDB instance, which is one of the supported persistent storage
 # backends for the application.
 # If the url is left blank then MongoDB storage will not be used.
 # It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
 # For Quick Start purposes, a secret named `tc-auth-usr-mongo-user-preferences` will be created if one is not set.
 # @descEnd
 mongo:
-  # @key mongo.url MongoDB connection URL (database value can be omitted in favour of populating 'database' property)
-  url: "mongodb://<host1>:<port1>,<host2>:<port2>,<host3>:<port3>/?retryWrites=false"
+  # @key mongo.url MongoDB connection URL (database value can be omitted in favour of populating 'database' property) format: "mongodb://<host1>:<port1>,<host2>:<port2>,<host3>:<port3>/?retryWrites=false"
+  url: ""
   # @key mongo.database MongoDB database
   database: "user-preferences"
   # @key mongo.authDatabase The authentication database to use for the given user
@@ -80,17 +80,17 @@ mongo:
 # @section Application Parameters - PostgreSQL and Secret
 #
 # @descStart
-# The following contains connection details to a PostgreSQL instance, which is one of the supported persistent storage 
+# The following contains connection details to a PostgreSQL instance, which is one of the supported persistent storage
 # backends for the application.
 # If the url is left blank then PostgreSQL storage will not be used.
 # It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
 # For Quick Start purposes, a secret named `tc-auth-usr-psql-user-preferences` will be created if one is not set.
-# If both MongoDB and PostgreSQL are configured, PostgreSQL will be used as the primary database, and any existing 
+# If both MongoDB and PostgreSQL are configured, PostgreSQL will be used as the primary database, and any existing
 # MongoDB data will be automatically migrated.
 # @descEnd
 postgresSql:
-  # @key postgresSql.url PostgreSQL connection URL
-  url: "jdbc:postgresql://<host>:<port>/<database>"
+  # @key postgresSql.url PostgreSQL connection URL format: "jdbc:postgresql://<host>:<port>/<database>"
+  url: ""
   # @key postgresSql.existingSecret Name of an existing secret. The secret must contain 2 keys: 'username', 'password'
   # Note: Left unset, it will create a secret named: tc-auth-usr-psql-user-preferences
   existingSecret: ""
