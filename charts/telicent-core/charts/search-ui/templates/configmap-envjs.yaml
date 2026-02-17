@@ -86,6 +86,7 @@ data:
     window.featureFlags = {
       FF_AI_TRANSLATE: false,
       FF_AUTH_V2: true,
+      FF_MAP_V2: {{ .Values.ui.mapV2Enabled }}
     };
     
     window.AUTH_V2_CONFIG = {

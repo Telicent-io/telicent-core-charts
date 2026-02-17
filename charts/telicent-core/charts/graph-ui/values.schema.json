@@ -75,6 +75,11 @@
                     "type": "string",
                     "description": "The name of an existing secret containing map configuration. See: '_mapjs.tpl' & 'secret-mapjs.yaml'",
                     "default": ""
+                },
+                "mapV2Enabled": {
+                    "type": "boolean",
+                    "description": "Whether to enable the new map implementation. MapV2 will eventually become the default and only map implementation",
+                    "default": false
                 }
             }
         },
