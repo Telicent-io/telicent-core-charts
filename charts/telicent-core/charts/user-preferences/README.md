@@ -8,6 +8,26 @@ Telicent User Preferences API enables sharing of user preferences and data acros
 This chart bootstraps Telicent User Preferences API deployment on a [Kubernetes](https://kubernetes.io) cluster using
 the [Helm](https://helm.sh) package manager.
 
+### Storage Layers
+
+The Chart allows for both [MongoDB](#application-parameters---mongodb-and-secret) and
+[Postgres](#application-parameters---postgresql-and-secret) backed storage to be configured.
+
+If both are configured then Postgres is the preferred storage layer and will be used for the service, any old data from
+a previous install using MongoDB will be automatically migrated in this scenario.  Therefore to migrate from MongoDB to
+Postgres you can do the following:
+
+1. Update your `values.yaml` file with suitable Postgres
+   [configuration](#application-parameters---postgresql-and-secret)
+2. `helm upgrade` your installation with your updated `values.yaml` to run the service with both storage layers
+   configured.  Upon startup the service will automatically migrate data from MongoDB to Postgres and this will be noted
+   in the logs.
+3. Confirm that user preferences are still accessible.
+4. Update your `values.yaml` file again to set the `mongo.url` setting to an empty string i.e. `""`
+5. `helm upgrade` your installation again with the further updated `values.yaml` file, the service will now run with
+   just Postgres storage.
+6. Confirm that user preferences are still accessible.
+
 ## Prerequisites
 
 - Kubernetes 1.23+

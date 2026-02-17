@@ -107,6 +107,16 @@ For more detailed information about each component, please consult the individua
 
 ## Chart Development
 
+### Conventional Commits
+
+Release Please is used to automatically generate release PRs for Charts as changes are made to Charts.  This detects
+eligible changes based upon conventional commit messages, therefore any changes you make to Charts **MUST** use
+conventional commit messages in order for a release PR to be generated e.g.
+
+- `chore(chart): Upgrade version to X.Y.Z`
+- `fix(chart): Fix missing configuration`
+- `feat(chart): Add new storage layer`
+
 ### New Producer Chart
 
 First Create a new blank producer from the template:
