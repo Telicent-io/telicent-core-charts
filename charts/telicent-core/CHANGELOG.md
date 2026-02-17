@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.1.5](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v1.1.4...telicent-core-v1.1.5) (2026-02-17)
+
+
+### Bug Fixes
+
+* add feature flag for mapv2 ([19ca319](https://github.com/Telicent-io/telicent-core-charts/commit/19ca3196783befb69531fbb47e2809f0f5817b82))
+* postgres no longer assumed as default in error ([7d6d460](https://github.com/Telicent-io/telicent-core-charts/commit/7d6d4606aaa6b443d0292326d2159fc4ac0cc80f))
+* postgres no longer assumed as default in error ([7246db4](https://github.com/Telicent-io/telicent-core-charts/commit/7246db480422034fd955525ff5e200b7a4144197))
+
 ## [1.1.4](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v1.1.3...telicent-core-v1.1.4) (2026-02-09)
 
 
