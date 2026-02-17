@@ -103,15 +103,16 @@ Map functionality requires tokens and configuration defined within a secret.
 It is recommended to store sensitive information including tokens/passwords in a Kubernetes secret and not in Helm values.
 For Quick Start purposes, a secret named `tc-auth-gen-mapjs-search-ui` will be created if one is not set.
 
-| Name                         | Description                                                                                          | Value                      |
-| ---------------------------- | ---------------------------------------------------------------------------------------------------- | -------------------------- |
-| `ui.graphUiDeployed`         | If set to true, *Graph UI* links will be available within *Search UI*                                | `true`                     |
-| `ui.userPortalUiDeployed`    | If set to true, *User Portal UI* links will be available within *Search UI*                          | `true`                     |
-| `ui.dataCatalogUiDeployed`   | If set to true, *Data Catalog UI* links will be available within *Search UI*                         | `true`                     |
-| `ui.maptilerToken`           | MapTiler token for *Search UI*                                                                       | `your.maptiler.token.here` |
-| `ui.mapboxStyleSpecUrl`      | Mapbox style spec URL for *Search UI*                                                                | `""`                       |
-| `ui.arcgisToken`             | ArcGIS token for *Search UI*                                                                         | `""`                       |
-| `ui.existingMapConfigSecret` | The name of an existing secret containing map configuration. See: '_mapjs.tpl' & 'secret-mapjs.yaml' | `""`                       |
+| Name                         | Description                                                                                                        | Value                      |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------ | -------------------------- |
+| `ui.graphUiDeployed`         | If set to true, *Graph UI* links will be available within *Search UI*                                              | `true`                     |
+| `ui.userPortalUiDeployed`    | If set to true, *User Portal UI* links will be available within *Search UI*                                        | `true`                     |
+| `ui.dataCatalogUiDeployed`   | If set to true, *Data Catalog UI* links will be available within *Search UI*                                       | `true`                     |
+| `ui.maptilerToken`           | MapTiler token for *Search UI*                                                                                     | `your.maptiler.token.here` |
+| `ui.mapboxStyleSpecUrl`      | Mapbox style spec URL for *Search UI*                                                                              | `""`                       |
+| `ui.arcgisToken`             | ArcGIS token for *Search UI*                                                                                       | `""`                       |
+| `ui.existingMapConfigSecret` | The name of an existing secret containing map configuration. See: '_mapjs.tpl' & 'secret-mapjs.yaml'               | `""`                       |
+| `ui.mapV2Enabled`            | Whether to enable the new map implementation. MapV2 will eventually become the default and only map implementation | `false`                    |
 
 ### Application Parameters - OAuth
 

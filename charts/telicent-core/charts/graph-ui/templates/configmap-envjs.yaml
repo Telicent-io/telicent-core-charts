@@ -79,14 +79,15 @@ data:
     };
 
     window.featureFlags = {
-      FF_AI_TRANSLATE: false,
-      FF_AUTH_V2: true,
+        FF_AI_TRANSLATE: false,
+        FF_AUTH_V2: true,
+        FF_MAP_V2: {{ .Values.ui.mapV2Enabled }}
     };
     
     window.AUTH_V2_CONFIG = {
-      authServerUrl: "https://{{ .Values.global.authHostDomain }}",
-      clientId: "{{ .Values.oauth.clientId }}",
-      scope: "{{ .Values.oauth.scopes }}",
-      redirectUri: "https://{{ .Values.global.appHostDomain }}/graph/callback",
-      popupRedirectUri: "https://{{ .Values.global.appHostDomain }}/graph/auth-redirect-uri",
+        authServerUrl: "https://{{ .Values.global.authHostDomain }}",
+        clientId: "{{ .Values.oauth.clientId }}",
+        scope: "{{ .Values.oauth.scopes }}",
+        redirectUri: "https://{{ .Values.global.appHostDomain }}/graph/callback",
+        popupRedirectUri: "https://{{ .Values.global.appHostDomain }}/graph/auth-redirect-uri",
     };
