@@ -4,7 +4,7 @@
   "charts/demo-prereqs-keycloak": "0.2.1",
   "charts/demo-prereqs-mongodb": "0.1.0",
   "charts/demo-prereqs-postgres": "0.2.5",
-  "charts/telicent-core": "1.1.4",
+  "charts/telicent-core": "1.1.5",
   "charts/telicent-preview": "0.5.1",
   "charts/telicent-data": "0.3.4"
 }
