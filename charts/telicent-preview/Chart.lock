@@ -14,5 +14,11 @@ dependencies:
 - name: spatial-projector
   repository: file://./charts/spatial-projector
   version: 0.1.2
-digest: sha256:62793cc3fbe5a912438634275cbc74be6faddba49dffd5bc6880945ff606098d
-generated: "2026-02-27T08:50:11.630459Z"
+- name: notifications
+  repository: file://./charts/notifications
+  version: 0.1.0
+- name: notifications-projector
+  repository: file://./charts/notifications-projector
+  version: 0.1.0
+digest: sha256:6cd56d326c6f24a84fd524e9024ec55ae07a907c6ef465d1a901c50b6f00ed05
+generated: "2026-02-27T11:49:15.293632Z"

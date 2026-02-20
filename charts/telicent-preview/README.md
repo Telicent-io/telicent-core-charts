@@ -1,6 +1,7 @@
 # Helm Chart for Telicent Preview
 
-Telicent Preview is the umbrella chart under which all the preview subcharts are configured and released. This repository contains products that are still under development and in preview mode.
+Telicent Preview is the umbrella chart under which all the preview subcharts are configured and released. This
+repository contains products that are still under development and in preview mode.
 
 ## Introduction
 
@@ -27,6 +28,7 @@ To uninstall/delete the `my-release` deployment:
 ```console
 helm delete my-release
 ```
+
 The command removes all the Kubernetes components associated with the chart and deletes the release.
 
 ## Automating README and schema generation
@@ -44,10 +46,11 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ### Global Parameters
 
-Contains global parameters, these parameters are mirrored across all Telicent Preview sub charts, these values will be authoritative.
+Contains global parameters, these parameters are mirrored across all Telicent Preview sub charts, these values will be
+authoritative.
 
 | Name                                    | Description                                                                                                                     | Value                                            |
-| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
+|-----------------------------------------|---------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------|
 | `global.imageRegistry`                  | Global image registry                                                                                                           | `""`                                             |
 | `global.imagePullSecrets`               | Global registry secret names as an array                                                                                        | `[]`                                             |
 | `global.enterprise`                     | Enable enterprise mode, adding additional features and configurations                                                           | `false`                                          |
@@ -71,19 +74,19 @@ Contains global parameters, these parameters are mirrored across all Telicent Pr
 ### paperback-writer Parameters
 
 | Name                       | Description                                      | Value  |
-| -------------------------- | ------------------------------------------------ | ------ |
+|----------------------------|--------------------------------------------------|--------|
 | `paperback-writer.enabled` | Enable or disable the paperback-writer component | `true` |
 
 ### data-catalog-ui Parameters
 
 | Name                      | Description                                     | Value  |
-| ------------------------- | ----------------------------------------------- | ------ |
+|---------------------------|-------------------------------------------------|--------|
 | `data-catalog-ui.enabled` | Enable or disable the data-catalog-ui component | `true` |
 
 ### Spatial Parameters
 
 | Name                        | Description                                         | Value   |
-| --------------------------- | --------------------------------------------------- | ------- |
+|-----------------------------|-----------------------------------------------------|---------|
 | `spatial.enabled`           | Enable or disable the spatial components.           | `false` |
 | `spatial-projector.enabled` | Enable or disable the spatial-projector components. | `false` |
 
@@ -92,6 +95,13 @@ Contains global parameters, these parameters are mirrored across all Telicent Pr
 | Name                        | Description                                       | Value   |
 | --------------------------- | ------------------------------------------------- | ------- |
 | `ai-model-provider.enabled` | Enable or disable the ai-model-provider component | `false` |
+
+### Notifications Parameters
+
+| Name                             | Description                                               | Value   |
+|----------------------------------|-----------------------------------------------------------|---------|
+| `notifications.enabled`          | Enable or disable the notifications components.           | `false` |
+| `notificaions-projector.enabled` | Enable of disable the notifications-projector components. | `false` |
 
 ## Subchart configurations
 
