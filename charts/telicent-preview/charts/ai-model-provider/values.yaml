@@ -38,6 +38,9 @@ global:
 #
 # @section Common Parameters
 #
+# @key enabled Enable or disable the ai-model-provider component
+enabled: true
+
 # @key nameOverride String to partially override fullname (will maintain the release name)
 nameOverride: ""
 # @key fullnameOverride String to fully override the generated release name

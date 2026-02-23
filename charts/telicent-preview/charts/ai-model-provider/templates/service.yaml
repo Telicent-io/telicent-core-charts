@@ -1,7 +1,7 @@
 {{- /*
 Copyright (C) 2025 Telicent Limited
 */}}
-
+{{- if .Values.enabled -}}
 apiVersion: v1
 kind: Service
 
@@ -29,3 +29,5 @@ spec:
       targetPort: metrics
       port: {{ .Values.metrics.service.port }}
     {{- end }}
+
+{{- end -}}

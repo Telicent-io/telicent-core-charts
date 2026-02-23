@@ -79,3 +79,8 @@ spatial:
 spatial-projector:
   # @key spatial-projector.enabled Enable or disable the spatial-projector components.
   enabled: false
+
+# @section ai-model-provider Parameters
+ai-model-provider:
+  # @key ai-model-provider.enabled Enable or disable the ai-model-provider component
+  enabled: false
