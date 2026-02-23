@@ -1,0 +1,31 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: {{ include "ai-model-provider.serviceName" . }}
+  namespace: {{ include "ai-model-provider.namespace" . | quote }}
+  labels:
+    {{- include "ai-model-provider.labels" . | nindent 4 }}
+
+spec:
+  type: {{ .Values.service.type }}
+  selector:
+    {{- include "ai-model-provider.selectorLabels" . | nindent 4 }}
+  ports:
+    - name: http
+      appProtocol: http
+      protocol: TCP
+      targetPort: http
+      port: {{ .Values.service.port }}
+
+    {{- if .Values.metrics.enabled }}
+    - name: {{ .Values.metrics.service.name | default "metrics" }}
+      appProtocol: http
+      protocol: TCP
+      targetPort: metrics
+      port: {{ .Values.metrics.service.port }}
+    {{- end }}
