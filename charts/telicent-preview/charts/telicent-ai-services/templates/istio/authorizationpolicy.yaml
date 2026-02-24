@@ -1,0 +1,25 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+{{- if and .Values.enabled .Values.global.enterprise }}
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+
+metadata:
+  name: {{ include "telicent-ai-services.fullname" . }}-ingress
+  namespace: {{ include "telicent-ai-services.namespace" . | quote }}
+  labels:
+    {{- include "telicent-ai-services.labels" . | nindent 4 }}
+
+spec:
+  selector:
+    matchLabels:
+      {{- include "telicent-ai-services.selectorLabels" . | nindent 6 }}
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        principals:
+          {{- include "telicent-ai-services.ingressPrincipal" . | nindent 8 }}
+
+{{- end }}
