@@ -87,6 +87,12 @@ Contains global parameters, these parameters are mirrored across all Telicent Pr
 | `spatial.enabled`           | Enable or disable the spatial components.           | `false` |
 | `spatial-projector.enabled` | Enable or disable the spatial-projector components. | `false` |
 
+### ai-model-provider Parameters
+
+| Name                        | Description                                       | Value   |
+| --------------------------- | ------------------------------------------------- | ------- |
+| `ai-model-provider.enabled` | Enable or disable the ai-model-provider component | `false` |
+
 ## Subchart configurations
 
 This section contains configurations for the various preview subcharts included in the Telicent Preview chart.

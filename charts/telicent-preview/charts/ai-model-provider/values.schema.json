@@ -53,75 +53,10 @@
                 }
             }
         },
-        "java": {
-            "type": "object",
-            "properties": {
-                "jvmOptions": {
-                    "type": "string",
-                    "description": "JVM options for the application",
-                    "default": "-XX:MaxRAMPercentage=80.0"
-                }
-            }
-        },
-        "elastic": {
-            "type": "object",
-            "properties": {
-                "host": {
-                    "type": "string",
-                    "description": "Elastic/OpenSearch host",
-                    "default": "https://your.opensearch.host"
-                },
-                "port": {
-                    "type": "string",
-                    "description": "Elastic/OpenSearch port number",
-                    "default": "443"
-                },
-                "opensearchCompatibility": {
-                    "type": "boolean",
-                    "description": "Enable OpenSearch compatibility",
-                    "default": true
-                },
-                "index": {
-                    "type": "string",
-                    "description": "Elastic/OpenSearch index to be used",
-                    "default": "search,doc-content"
-                },
-                "searchFieldOptions": {
-                    "type": "string",
-                    "description": "Field options for search",
-                    "default": "primaryName^2,*"
-                },
-                "indexBatchSize": {
-                    "type": "string",
-                    "description": "Number of documents to index in a single batch operation",
-                    "default": "100"
-                },
-                "existingSecret": {
-                    "type": "string",
-                    "description": "Name of an existing secret. The secret must contain 2 keys: 'username', 'password'",
-                    "default": ""
-                },
-                "username": {
-                    "type": "string",
-                    "description": "OpenSearch/Elastic username",
-                    "default": ""
-                },
-                "password": {
-                    "type": "string",
-                    "description": "OpenSearch/Elastic user password",
-                    "default": ""
-                }
-            }
-        },
-        "configMap": {
-            "type": "object",
-            "properties": {
-                "existingEnvConfigMap": {
-                    "type": "string",
-                    "description": "Name of existing configmap containing *AI Model Provider* Environment Configuration",
-                    "default": ""
-                }
-            }
+        "enabled": {
+            "type": "boolean",
+            "description": "Enable or disable the ai-model-provider component",
+            "default": true
         },
         "nameOverride": {
             "type": "string",
@@ -371,7 +306,7 @@
                 "port": {
                     "type": "number",
                     "description": "*AI Model Provider* service port",
-                    "default": 8080
+                    "default": 11434
                 },
                 "type": {
                     "type": "string",
@@ -435,12 +370,12 @@
             "properties": {
                 "name": {
                     "type": "string",
-                    "description": "Name of the AI model. Currently only Gemma is supported",
+                    "description": "Name of the AI model Currently only Gemma is supported",
                     "default": "gemma"
                 },
                 "parameters": {
                     "type": "string",
-                    "description": "Parameters in billions of the AI model to use (valid for Gemma models, for example: 1b, 12b are supported). 12b will require a GPU",
+                    "description": "Parameters in billions of the AI model to use (valid for Gemma models, for example: 1b, 12b are supported) 12b will require a GPU",
                     "default": "1b"
                 }
             }
@@ -470,15 +405,24 @@
                 },
                 "tolerations": {
                     "type": "array",
-                    "description": "Additional tolerations for GPU node scheduling",
-                    "default": [
-                        {
-                            "key": "nvidia.com/gpu",
-                            "operator": "Exists",
-                            "effect": "NoSchedule"
+                    "description": "key for toleration to allow scheduling on GPU nodes",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "key": {
+                                "type": "string",
+                                "description": "key for toleration to allow scheduling on GPU nodes"
+                            },
+                            "operator": {
+                                "type": "string",
+                                "description": "operator for the toleration to allow scheduling on GPU nodes"
+                            },
+                            "effect": {
+                                "type": "string",
+                                "description": "effect for the toleration to allow scheduling on GPU nodes"
+                            }
                         }
-                    ],
-                    "items": {}
+                    }
                 }
             }
         }
