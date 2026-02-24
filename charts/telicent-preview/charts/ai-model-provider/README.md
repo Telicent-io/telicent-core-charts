@@ -97,78 +97,45 @@ Note: Only global parameters used within this chart will be listed below
 | `global.truststore.existingSecret` | Name of an existing secret containing the truststore                                                                            | `""`                     |
 | `global.truststore.mountPath`      | The mount path for the truststore in the container                                                                              | `/app/config/truststore` |
 
-### Application Parameters - Java
-
-Contains Java configuration parameters to be used by the *AI Model Provider* application
-
-| Name              | Description                     | Value                       |
-| ----------------- | ------------------------------- | --------------------------- |
-| `java.jvmOptions` | JVM options for the application | `-XX:MaxRAMPercentage=80.0` |
-
-### Application Parameters - Elastic/OpenSearch and Secret
-
-The following contains connection details to an Elastic/OpenSearch service, on which the application relies.
-It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
-For Quick Start purposes, a secret named `tc-auth-usr-elastic-search` will be created if one is not set.
-
-| Name                              | Description                                                                        | Value                          |
-| --------------------------------- | ---------------------------------------------------------------------------------- | ------------------------------ |
-| `elastic.host`                    | Elastic/OpenSearch host                                                            | `https://your.opensearch.host` |
-| `elastic.port`                    | Elastic/OpenSearch port number                                                     | `443`                          |
-| `elastic.opensearchCompatibility` | Enable OpenSearch compatibility                                                    | `true`                         |
-| `elastic.index`                   | Elastic/OpenSearch index to be used                                                | `search,doc-content`           |
-| `elastic.searchFieldOptions`      | Field options for search                                                           | `primaryName^2,*`              |
-| `elastic.indexBatchSize`          | Number of documents to index in a single batch operation                           | `100`                          |
-| `elastic.existingSecret`          | Name of an existing secret. The secret must contain 2 keys: 'username', 'password' | `""`                           |
-| `elastic.username`                | OpenSearch/Elastic username                                                        | `""`                           |
-| `elastic.password`                | OpenSearch/Elastic user password                                                   | `""`                           |
-
-### ConfigMap Parameters
-
-Contains configuration parameters specific to the *AI Model Provider* application
-
-| Name                             | Description                                                              | Value |
-| -------------------------------- | ------------------------------------------------------------------------ | ----- |
-| `configMap.existingEnvConfigMap` | Name of existing configmap containing *AI Model Provider* Environment Configuration | `""`  |
-
 ### Common Parameters
 
-| Name                | Description                                                            | Value |
-| ------------------- | ---------------------------------------------------------------------- | ----- |
-| `nameOverride`      | String to partially override fullname (will maintain the release name) | `""`  |
-| `fullnameOverride`  | String to fully override the generated release name                    | `""`  |
-| `namespaceOverride` | String to fully override all deployed resources namespace              | `""`  |
-| `commonLabels`      | Add labels to all the deployed resources                               | `{}`  |
+| Name                | Description                                                            | Value  |
+| ------------------- | ---------------------------------------------------------------------- | ------ |
+| `enabled`           | Enable or disable the ai-model-provider component                      | `true` |
+| `nameOverride`      | String to partially override fullname (will maintain the release name) | `""`   |
+| `fullnameOverride`  | String to fully override the generated release name                    | `""`   |
+| `namespaceOverride` | String to fully override all deployed resources namespace              | `""`   |
+| `commonLabels`      | Add labels to all the deployed resources                               | `{}`   |
 
 ### Deployment Parameters
 
-| Name                   | Description                                                   | Value |
-| ---------------------- | ------------------------------------------------------------- | ----- |
+| Name                   | Description                                                              | Value |
+| ---------------------- | ------------------------------------------------------------------------ | ----- |
 | `replicas`             | Number of *AI Model Provider* replicas to deploy                         | `1`   |
-| `revisionHistoryLimit` | Number of controller revisions to keep                        | `5`   |
-| `annotations`          | Add extra annotations to the deployment object                | `{}`  |
+| `revisionHistoryLimit` | Number of controller revisions to keep                                   | `5`   |
+| `annotations`          | Add extra annotations to the deployment object                           | `{}`  |
 | `podLabels`            | Add extra labels to the *AI Model Provider* pod                          | `{}`  |
 | `podAnnotations`       | Add extra annotations to the *AI Model Provider* pod                     | `{}`  |
 | `extraEnvVars`         | Array with extra environment variables to add to *AI Model Provider* pod | `[]`  |
 | `extraVolumes`         | Additional containers to be added to the *AI Model Provider* pod         | `[]`  |
-| `extraVolumeMounts`    | Optionally specify extra list of additional volumeMounts      | `[]`  |
-| `initContainers`       | Add init containers to the pod                                | `[]`  |
-| `sidecars`             | Add sidecars to the pod                                       | `[]`  |
+| `extraVolumeMounts`    | Optionally specify extra list of additional volumeMounts                 | `[]`  |
+| `initContainers`       | Add init containers to the pod                                           | `[]`  |
+| `sidecars`             | Add sidecars to the pod                                                  | `[]`  |
 
 ### Deployment Image Parameters
 
-| Name                | Description                                                             | Value                        |
-| ------------------- | ----------------------------------------------------------------------- | ---------------------------- |
+| Name                | Description                                                                        | Value                        |
+| ------------------- | ---------------------------------------------------------------------------------- | ---------------------------- |
 | `image.registry`    | *AI Model Provider* image registry                                                 | `quay.io`                    |
 | `image.repository`  | *AI Model Provider* image name                                                     | `telicent/ai-model-provider` |
 | `image.tag`         | *AI Model Provider* image tag. If not set, a tag is generated using the appVersion | `""`                         |
 | `image.pullPolicy`  | *AI Model Provider* image pull policy                                              | `IfNotPresent`               |
-| `image.pullSecrets` | Specify registry secret names as an array                               | `[]`                         |
+| `image.pullSecrets` | Specify registry secret names as an array                                          | `[]`                         |
 
 ### Deployment Resources Parameters - Requests and Limits
 
-| Name        | Description                       | Value |
-| ----------- | --------------------------------- | ----- |
+| Name        | Description                                  | Value |
+| ----------- | -------------------------------------------- | ----- |
 | `resources` | Resources for *AI Model Provider* containers | `{}`  |
 
 ### Deployment Security Context Parameters - Default Security Context
@@ -206,10 +173,10 @@ Contains configuration parameters specific to the *AI Model Provider* applicatio
 
 ### Traffic Exposure Parameters
 
-| Name           | Description                                                               | Value       |
-| -------------- | ------------------------------------------------------------------------- | ----------- |
+| Name           | Description                                                                          | Value       |
+| -------------- | ------------------------------------------------------------------------------------ | ----------- |
 | `service.name` | *AI Model Provider* service name. If not set, a name is generated using the fullname | `""`        |
-| `service.port` | *AI Model Provider* service port                                                     | `8080`      |
+| `service.port` | *AI Model Provider* service port                                                     | `11434`     |
 | `service.type` | *AI Model Provider* service port                                                     | `ClusterIP` |
 
 ### Metrics (Prometheus) Exposure Parameters
@@ -231,6 +198,29 @@ If either of those details changes, you can use this section to correctly refer 
 | `hosts.auth`              | Auth application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                                     | `auth:8080`          |
 | `hosts.traefikProxy`      | Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                            | `traefik-proxy:8080` |
 | `hosts.graph`             | Graph application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                                    | `graph:8080`         |
+
+### modelProvider Parameters
+
+| Name               | Description                                                                                                                       | Value   |
+| ------------------ | --------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `model.name`       | Name of the AI model Currently only Gemma is supported                                                                            | `gemma` |
+| `model.parameters` | Parameters in billions of the AI model to use (valid for Gemma models, for example: 1b, 12b are supported) 12b will require a GPU | `1b`    |
+
+### GPU Parameters
+
+Enable GPU support for the *AI Model Provider*. When enabled, the deployment will request GPU resources
+and add the appropriate tolerations and runtime class for GPU scheduling.
+Supported GPU types: nvidia.com/gpu, amd.com/gpu
+
+| Name                          | Description                                                                                                        | Value            |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------------ | ---------------- |
+| `gpu.enabled`                 | Enable GPU support for the AI Model Provider                                                                       | `false`          |
+| `gpu.type`                    | The GPU resource type to request (e.g. nvidia.com/gpu, amd.com/gpu)                                                | `nvidia.com/gpu` |
+| `gpu.count`                   | Number of GPUs to request                                                                                          | `1`              |
+| `gpu.runtimeClassName`        | Set the runtimeClassName for the pod (e.g. nvidia for NVIDIA GPU Operator). Leave empty to use the cluster default | `""`             |
+| `gpu.tolerations[0].key`      | key for toleration to allow scheduling on GPU nodes                                                                | `nvidia.com/gpu` |
+| `gpu.tolerations[0].operator` | operator for the toleration to allow scheduling on GPU nodes                                                       | `Exists`         |
+| `gpu.tolerations[0].effect`   | effect for the toleration to allow scheduling on GPU nodes                                                         | `NoSchedule`     |
 
 ## License
 

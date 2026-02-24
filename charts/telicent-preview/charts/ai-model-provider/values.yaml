@@ -241,8 +241,10 @@ gpu:
   count: 1
   # @key gpu.runtimeClassName Set the runtimeClassName for the pod (e.g. nvidia for NVIDIA GPU Operator). Leave empty to use the cluster default
   runtimeClassName: ""
-  # @key gpu.tolerations Additional tolerations for GPU node scheduling
   tolerations:
+    # @key gpu.tolerations[0].key key for toleration to allow scheduling on GPU nodes
     - key: "nvidia.com/gpu"
+      # @key gpu.tolerations[0].operator operator for the toleration to allow scheduling on GPU nodes
       operator: "Exists"
+      # @key gpu.tolerations[0].effect effect for the toleration to allow scheduling on GPU nodes
       effect: "NoSchedule"
