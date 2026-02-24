@@ -44,6 +44,8 @@ spec:
         - /$/backups/report/*
         - /$/backups/list
         - /$/backups/list/*
+        - /$/compact/*
+        - /$/compactall
         methods: ["GET", "POST"]
     - operation:
         paths:
