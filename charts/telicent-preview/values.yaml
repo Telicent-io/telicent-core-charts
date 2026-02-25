@@ -53,6 +53,10 @@ global:
     # @key global.kafka.mechanism SASL mechanism used for Kafka authentication
     mechanism: "SCRAM-SHA-512"
 
+  zeroTrust:
+    # @key global.zeroTrust.mode Set to "enabled" to activate zero-trust features, "minimal" to remove the deny by default or "disabled" to turn them off
+    mode: "enabled"
+
   truststore:
     # @key global.truststore.existingSecret Name of an existing secret containing the truststore
     existingSecret: ""

@@ -1,7 +1,7 @@
 {{- /*
 Copyright (C) 2025 Telicent Limited
 */}}
-
+{{- if eq .Values.global.zeroTrust.mode "enabled" }}
 apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
 
@@ -12,3 +12,4 @@ metadata:
     {{- include "auth.labels" . | nindent 4 }}
 
 spec: {}
+{{- end }}

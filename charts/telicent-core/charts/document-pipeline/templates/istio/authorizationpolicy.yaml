@@ -1,4 +1,4 @@
-{{- if .Values.enabled -}}
+{{- if and .Values.enabled (ne .Values.global.zeroTrust.mode "disabled") -}}
 apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
 

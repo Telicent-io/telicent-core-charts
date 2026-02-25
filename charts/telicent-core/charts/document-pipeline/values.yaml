@@ -29,6 +29,10 @@ global:
   # @key global.authHostDomain Domain associated with Telicent authentication services, including OIDC providers. This value cannot be changed after it is set
   authHostDomain: ""
 
+  zeroTrust:
+    # @key global.zeroTrust.mode Set to "enabled" to activate zero-trust features, "minimal" to remove the deny by default or "disabled" to turn them off
+    mode: "enabled"
+
   kafka:
     # @key global.kafka.bootstrapServers Comma separated list containing Kafka bootstrap servers
     bootstrapServers: "kafka-bootstrap.kafka.svc.cluster.local:9092"

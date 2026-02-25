@@ -37,6 +37,10 @@ global:
   # @key global.istioGatewayName Name of the Istio Gateway resource; overrides 'istio.gateway.namespace'
   istioGatewayName: ingress-gateway
 
+  zeroTrust:
+    # @key global.zeroTrust.mode Set to "enabled" to activate zero-trust features, "minimal" to remove the deny by default or "disabled" to turn them off
+    mode: "enabled"
+
 #
 # @section Application Parameters - Rate Limit
 #

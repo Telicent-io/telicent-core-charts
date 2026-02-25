@@ -1,7 +1,7 @@
 {{- /*
 Copyright (C) 2025 Telicent Limited
 */}}
-
+{{- if ne .Values.global.zeroTrust.mode "disabled" }}
 apiVersion: security.istio.io/v1
 kind: PeerAuthentication
 
@@ -14,3 +14,4 @@ metadata:
 spec:
   mtls:
     mode: STRICT
+{{- end }}
