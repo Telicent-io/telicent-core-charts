@@ -6,10 +6,10 @@ apiVersion: apps/v1
 kind: Deployment
 
 metadata:
-  name: {{ include "ai-model-provider.fullname" . }}
-  namespace: {{ include "ai-model-provider.namespace" . | quote }}
+  name: {{ include "ai-sparql-builder.fullname" . }}
+  namespace: {{ include "ai-sparql-builder.namespace" . | quote }}
   labels:
-    {{- include "ai-model-provider.labels" . | nindent 4 }}
+    {{- include "ai-sparql-builder.labels" . | nindent 4 }}
   {{- with .Values.annotations }}
   annotations: 
     {{- toYaml . | nindent 4 }}
@@ -25,26 +25,22 @@ spec:
     type: RollingUpdate
   selector:
     matchLabels:
-      {{- include "ai-model-provider.selectorLabels" . | nindent 6 }}
+      {{- include "ai-sparql-builder.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-      {{- include "ai-model-provider.labels" . | nindent 8 }}
-      {{- with .Values.podLabels }}
+        {{- include "ai-sparql-builder.labels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}     
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap-env.yaml") . | sha256sum }}
+      {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      annotations:
-        {{- if .Values.metrics.enabled }}
-        prometheus.io/path: "/metrics"
-        prometheus.io/port: {{ .Values.metrics.service.port | quote }}
-        prometheus.io/scrape: "true"
-        {{- end }}
-        {{- with .Values.podAnnotations }}
-          {{- toYaml . | nindent 8 }}
-        {{- end }}
-
+    
     spec:
-      serviceAccountName: {{ include "ai-model-provider.serviceAccountName" . }}
+      serviceAccountName: {{ include "ai-sparql-builder.serviceAccountName" . }}
       securityContext: {{- toYaml .Values.podSecurityContext | nindent 8 }}
       {{- if and .Values.gpu.enabled .Values.gpu.runtimeClassName }}
       runtimeClassName: {{ .Values.gpu.runtimeClassName }}
@@ -63,8 +59,16 @@ spec:
       {{- end }}
       containers:
       - name: {{ .Chart.Name }}
-        image: {{ include "ai-model-provider.image" . }}
+        image: {{ include "ai-sparql-builder.image" . }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
+        {{- with .Values.command }}
+        command:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        {{- with .Values.args }}
+        args:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
         {{- if .Values.gpu.enabled }}
         resources:
           {{- $gpuResource := dict .Values.gpu.type (.Values.gpu.count | int64) }}
@@ -81,63 +85,73 @@ spec:
         {{- end }}
         securityContext: {{- toYaml .Values.containerSecurityContext | nindent 10 }}
 
+        {{- if .Values.extraEnvVars }}
         env:
         {{- range .Values.extraEnvVars }}
-        - name: {{ .name }}
+        - name: {{ .name  }}
           value: {{ .value | quote }}
         {{- end }}
+        {{- end }}
+
+        envFrom:
+        - configMapRef:
+            name: {{ include "ai-sparql-builder.configMapName" . }}
 
         ports:
         - name: http
           protocol: TCP
-          containerPort: 8181
-        {{- if .Values.metrics.enabled }}
-        - name: metrics
-          protocol: TCP
-          containerPort: {{ .Values.metrics.service.port }}
-        {{- end }}
-
-        livenessProbe:
-          httpGet:
-            path: /api/tags
-            port: 11434
-          initialDelaySeconds: 30
-          periodSeconds: 30
-          timeoutSeconds: 10
+          containerPort: 8000
+    
         readinessProbe:
           httpGet:
-            path: /api/tags
-            port: 11434
-          initialDelaySeconds: 10
-          periodSeconds: 10
+            path: /health
+            port: {{ .Values.service.port }}
+            scheme: HTTP
+          initialDelaySeconds: 30
+          periodSeconds: 60
+          timeoutSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: {{ .Values.service.port }}
+            scheme: HTTP
+          initialDelaySeconds: 30
+          periodSeconds: 60
           timeoutSeconds: 5
 
-        volumeMounts:
-        {{- if .Values.global.truststore.existingSecret }}
-        - name: java-truststore
-          mountPath: {{ .Values.global.truststore.mountPath | default "/app/config/truststore" }}
-        {{- end }}
-        {{- with .Values.extraVolumeMounts }}
-          {{- toYaml . | nindent 12 }}
-        {{- end }}
-
+          {{- if .Values.extraVolumeMounts }}
+          volumeMounts:
+          {{- with .Values.extraVolumeMounts }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- end }}
+       
       {{- with .Values.sidecars }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
-     
+      {{- if .Values.extraVolumes }}
       volumes:
-      {{- if .Values.global.truststore.existingSecret }}
-      - name: java-truststore
-        secret:
-          secretName: {{ .Values.global.truststore.existingSecret }}
-      {{- end }}
       {{- with .Values.extraVolumes }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
-     
-      {{- with .Values.affinity }}
+      {{- end }}
+
+      {{- if or .Values.affinity (and .Values.gpu.enabled .Values.gpu.nodeAffinity) }}
       affinity:
+        {{- with .Values.affinity }}
         {{- toYaml . | nindent 8 }}
+        {{- else }}
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: {{ .Values.gpu.nodeAffinity.labelKey }}
+                operator: {{ .Values.gpu.nodeAffinity.operator }}
+                {{- with .Values.gpu.nodeAffinity.values }}
+                values:
+                  {{- toYaml . | nindent 18 }}
+                {{- end }}
+        {{- end }}
       {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:

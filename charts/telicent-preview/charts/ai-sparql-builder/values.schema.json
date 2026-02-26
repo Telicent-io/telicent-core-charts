@@ -16,10 +16,15 @@
                     "default": [],
                     "items": {}
                 },
-                "enterprise": {
+                "enabled": {
                     "type": "boolean",
-                    "description": "Enable enterprise mode, adding additional features and configurations",
+                    "description": "enabled Enable *AI Sparql Builder* deployment",
                     "default": false
+                },
+                "releaseNameTelicentCore": {
+                    "type": "string",
+                    "description": "Release name used during the Telicent Core chart installation. Note: ensure the value is correct, otherwise there will be no access to auth & graph",
+                    "default": ""
                 },
                 "appHostDomain": {
                     "type": "string",
@@ -35,28 +40,28 @@
                     "type": "string",
                     "description": "Domain associated with Telicent authentication services, including OIDC providers. This value cannot be changed after it is set",
                     "default": ""
-                },
-                "truststore": {
-                    "type": "object",
-                    "properties": {
-                        "existingSecret": {
-                            "type": "string",
-                            "description": "Name of an existing secret containing the truststore",
-                            "default": ""
-                        },
-                        "mountPath": {
-                            "type": "string",
-                            "description": "The mount path for the truststore in the container",
-                            "default": "/app/config/truststore"
-                        }
-                    }
                 }
             }
         },
-        "enabled": {
-            "type": "boolean",
-            "description": "Enable or disable the ai-model-provider component",
-            "default": true
+        "sparql": {
+            "type": "object",
+            "properties": {
+                "defaultLabel": {
+                    "type": "string",
+                    "description": "Default label for SPARQL queries",
+                    "default": "!"
+                }
+            }
+        },
+        "configMap": {
+            "type": "object",
+            "properties": {
+                "existingEnvConfigMap": {
+                    "type": "string",
+                    "description": "Name of existing configmap containing *AI Sparql Builder* Environment Configuration",
+                    "default": ""
+                }
+            }
         },
         "nameOverride": {
             "type": "string",
@@ -80,7 +85,7 @@
         },
         "replicas": {
             "type": "number",
-            "description": "Number of *AI Model Provider* replicas to deploy",
+            "description": "Number of *AI Sparql Builder* replicas to deploy",
             "default": 1
         },
         "revisionHistoryLimit": {
@@ -95,23 +100,23 @@
         },
         "podLabels": {
             "type": "object",
-            "description": "Add extra labels to the *AI Model Provider* pod",
+            "description": "Add extra labels to the *AI Sparql Builder* pod",
             "default": {}
         },
         "podAnnotations": {
             "type": "object",
-            "description": "Add extra annotations to the *AI Model Provider* pod",
+            "description": "Add extra annotations to the *AI Sparql Builder* pod",
             "default": {}
         },
         "extraEnvVars": {
             "type": "array",
-            "description": "Array with extra environment variables to add to *AI Model Provider* pod",
+            "description": "Array with extra environment variables to add to *AI Sparql Builder* pod",
             "default": [],
             "items": {}
         },
         "extraVolumes": {
             "type": "array",
-            "description": "Additional containers to be added to the *AI Model Provider* pod",
+            "description": "Optionally specify extra list of additional volumes",
             "default": [],
             "items": {}
         },
@@ -138,22 +143,22 @@
             "properties": {
                 "registry": {
                     "type": "string",
-                    "description": "*AI Model Provider* image registry",
+                    "description": "*AI Sparql Builder* image registry",
                     "default": "quay.io"
                 },
                 "repository": {
                     "type": "string",
-                    "description": "*AI Model Provider* image name",
-                    "default": "telicent/ai-model-provider"
+                    "description": "*AI Sparql Builder* image name",
+                    "default": "telicent/telicent-ai-sparql-builder"
                 },
                 "tag": {
                     "type": "string",
-                    "description": "*AI Model Provider* image tag. If not set, a tag is generated using the appVersion",
+                    "description": "*AI Sparql Builder* image tag. If not set, a tag is generated using the appVersion",
                     "default": ""
                 },
                 "pullPolicy": {
                     "type": "string",
-                    "description": "*AI Model Provider* image pull policy",
+                    "description": "*AI Sparql Builder* image pull policy",
                     "default": "IfNotPresent"
                 },
                 "pullSecrets": {
@@ -166,7 +171,7 @@
         },
         "resources": {
             "type": "object",
-            "description": "Resources for *AI Model Provider* containers",
+            "description": "Resources for *AI Sparql Builder* containers",
             "default": {}
         },
         "podSecurityContext": {
@@ -300,129 +305,43 @@
             "properties": {
                 "name": {
                     "type": "string",
-                    "description": "*AI Model Provider* service name. If not set, a name is generated using the fullname",
+                    "description": "*AI Sparql Builder* service name. If not set, a name is generated using the fullname",
                     "default": ""
                 },
                 "port": {
                     "type": "number",
-                    "description": "*AI Model Provider* service port",
-                    "default": 11434
+                    "description": "*AI Sparql Builder* service port",
+                    "default": 8080
                 },
                 "type": {
                     "type": "string",
-                    "description": "*AI Model Provider* service port",
+                    "description": "*AI Sparql Builder* service type",
                     "default": "ClusterIP"
                 }
             }
         },
-        "metrics": {
-            "type": "object",
-            "properties": {
-                "enabled": {
-                    "type": "boolean",
-                    "description": "Enable Prometheus metrics",
-                    "default": true
-                },
-                "service": {
-                    "type": "object",
-                    "properties": {
-                        "name": {
-                            "type": "string",
-                            "description": "Name for the Prometheus service",
-                            "default": "metrics"
-                        },
-                        "port": {
-                            "type": "number",
-                            "description": "Port for the Prometheus service",
-                            "default": 9464
-                        }
-                    }
-                }
-            }
-        },
-        "hosts": {
+        "hostsCore": {
             "type": "object",
             "properties": {
                 "enableAutoCorrect": {
                     "type": "boolean",
-                    "description": "Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as it is, without any modification",
+                    "description": "Prefix 'global.releaseNameTelicentCore' value to each host value. Alternatively, the host value will be used as it is, without any modification",
                     "default": true
-                },
-                "auth": {
-                    "type": "string",
-                    "description": "Auth application default host value, as defined by 'service/serviceAccount:port'",
-                    "default": "auth:8080"
                 },
                 "traefikProxy": {
                     "type": "string",
                     "description": "Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'",
                     "default": "traefik-proxy:8080"
                 },
+                "auth": {
+                    "type": "string",
+                    "description": "Auth application default host value, as defined by 'service/serviceAccount:port'",
+                    "default": "auth:8080"
+                },
                 "graph": {
                     "type": "string",
-                    "description": "Graph application default host value, as defined by 'service/serviceAccount:port'",
+                    "description": "Graph application host value, as defined by 'service/serviceAccount:port'",
                     "default": "graph:8080"
-                }
-            }
-        },
-        "model": {
-            "type": "object",
-            "properties": {
-                "name": {
-                    "type": "string",
-                    "description": "Name of the AI model Currently only Gemma is supported",
-                    "default": "gemma"
-                },
-                "parameters": {
-                    "type": "string",
-                    "description": "Parameters in billions of the AI model to use (valid for Gemma models, for example: 1b, 12b are supported) 12b will require a GPU",
-                    "default": "1b"
-                }
-            }
-        },
-        "gpu": {
-            "type": "object",
-            "properties": {
-                "enabled": {
-                    "type": "boolean",
-                    "description": "Enable GPU support for the AI Model Provider",
-                    "default": false
-                },
-                "type": {
-                    "type": "string",
-                    "description": "The GPU resource type to request (e.g. nvidia.com/gpu, amd.com/gpu)",
-                    "default": "nvidia.com/gpu"
-                },
-                "count": {
-                    "type": "number",
-                    "description": "Number of GPUs to request",
-                    "default": 1
-                },
-                "runtimeClassName": {
-                    "type": "string",
-                    "description": "Set the runtimeClassName for the pod (e.g. nvidia for NVIDIA GPU Operator). Leave empty to use the cluster default",
-                    "default": ""
-                },
-                "tolerations": {
-                    "type": "array",
-                    "description": "key for toleration to allow scheduling on GPU nodes",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "key": {
-                                "type": "string",
-                                "description": "key for toleration to allow scheduling on GPU nodes"
-                            },
-                            "operator": {
-                                "type": "string",
-                                "description": "operator for the toleration to allow scheduling on GPU nodes"
-                            },
-                            "effect": {
-                                "type": "string",
-                                "description": "effect for the toleration to allow scheduling on GPU nodes"
-                            }
-                        }
-                    }
                 }
             }
         }

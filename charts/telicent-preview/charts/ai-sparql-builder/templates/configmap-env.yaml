@@ -1,0 +1,25 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+{{- if and (.Values.enabled) (not .Values.configMap.existingEnvConfigMap) -}}
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: {{ include "ai-sparql-builder.configMapName" . }}
+  namespace: {{ include "ai-sparql-builder.namespace" . | quote }}
+  labels:
+    {{- include "ai-sparql-builder.labels" . | nindent 4 }}
+
+data:
+  CHATBOT_SPARQL_URL: {{ .Values.configuration.CHATBOT_SPARQL_URL | quote }}
+  CHATBOT_AUTH_SERVER_PUBLIC_URL: {{ .Values.configuration.CHATBOT_AUTH_SERVER_PUBLIC_URL | quote }}
+  CHATBOT_OAUTH_CLIENT_ID: {{ .Values.configuration.CHATBOT_OAUTH_CLIENT_ID | quote }}
+  AUTH_SERVER_BASE_URL: {{ .Values.configuration.AUTH_SERVER_BASE_URL | quote }}
+  AUTH_SERVER_ALLOW_HTTP: {{ .Values.configuration.AUTH_SERVER_ALLOW_HTTP | quote }}
+  JWT_ISSUER: {{ .Values.configuration.JWT_ISSUER | quote }}
+  CHATBOT_LLM_PROVIDER: {{ .Values.configuration.CHATBOT_LLM_PROVIDER | quote }}
+  CHATBOT_PROMPT_VARIANT: {{ .Values.configuration.CHATBOT_PROMPT_VARIANT | quote }}
+  CHATBOT_TRANSFORMERS_MODEL_PATH: {{ .Values.configuration.CHATBOT_TRANSFORMERS_MODEL_PATH | quote }}
+  CHATBOT_SPARQL_DATASET: {{ .Values.configuration.CHATBOT_SPARQL_DATASET | quote }}
+  {{- end }}

@@ -1,0 +1,21 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+{{- if .Values.enabled -}}
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+
+metadata:
+  name: {{ include "ai-sparql-builder.fullname" . }}-ingress
+spec:
+  selector:
+    matchLabels:
+    {{- include "ai-sparql-builder.selectorLabels" . | nindent 6 }}
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        principals:
+        {{- include "ai-sparql-builder.ingressPrincipal" . | nindent 8 }}
+
+{{- end }}
