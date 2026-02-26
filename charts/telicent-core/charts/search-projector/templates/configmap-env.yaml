@@ -28,6 +28,7 @@ data:
   KAFKA_CONFIG_FILE_PATH: /app/config/kafka-auth/kafka-config.properties
   TOPIC: {{ .Values.elastic.topic | quote }}
   DLQ_TOPIC: {{ .Values.elastic.dlqTopic | quote }}
+  ACTIONS_TOPIC: ${{ .Values.elastic.actionsTopic | quote }}
 
   # Java Configuration
   JAVA_OPTIONS: {{ .Values.java.jvmOptions | quote }}

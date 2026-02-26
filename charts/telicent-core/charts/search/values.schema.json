@@ -36,6 +36,41 @@
                     "description": "Domain associated with Telicent authentication services, including OIDC providers. This value cannot be changed after it is set",
                     "default": ""
                 },
+                "kafka": {
+                    "type": "object",
+                    "properties": {
+                        "bootstrapServers": {
+                            "type": "string",
+                            "description": "Comma separated list containing Kafka bootstrap servers",
+                            "default": "kafka-bootstrap.kafka.svc.cluster.local:9092"
+                        },
+                        "existingConfigSecretName": {
+                            "type": "string",
+                            "description": "Name of an existing secret containing Kafka configuration",
+                            "default": ""
+                        },
+                        "username": {
+                            "type": "string",
+                            "description": "Username for Kafka authentication",
+                            "default": "your.kafka.username.here"
+                        },
+                        "password": {
+                            "type": "string",
+                            "description": "Password for Kafka authentication",
+                            "default": "your.kafka.password.here"
+                        },
+                        "protocol": {
+                            "type": "string",
+                            "description": "Protocol used for Kafka communication",
+                            "default": "SASL_SSL"
+                        },
+                        "mechanism": {
+                            "type": "string",
+                            "description": "SASL mechanism used for Kafka authentication",
+                            "default": "SCRAM-SHA-512"
+                        }
+                    }
+                },
                 "truststore": {
                     "type": "object",
                     "properties": {
@@ -95,6 +130,11 @@
                     "type": "string",
                     "description": "Number of documents to index in a single batch operation",
                     "default": "100"
+                },
+                "actionsTopic": {
+                    "type": "string",
+                    "description": "Topic used to synchronise actions between the *Search Projector* and the *Search API* applications.",
+                    "default": "actions"
                 },
                 "existingSecret": {
                     "type": "string",
