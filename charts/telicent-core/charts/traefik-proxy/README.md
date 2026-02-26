@@ -141,11 +141,11 @@ For Quick Start purposes, a secret named `tc-auth-gen-forward-traefik-proxy` wil
 
 ### Application Parameters - Dashboard
 
-| Name                 | Description                                                                                 | Value      |
-| -------------------- | ------------------------------------------------------------------------------------------- | ---------- |
-| `dashboard.enabled`  | Enable *Traefik Proxy* dashboard. Note: should only be enabled in development environments. | `false`    |
-| `dashboard.domain`   | Domain associated with *Traefik Proxy* dashboard. If not set, 'appHostDomain' will be used  | `""`       |
-| `dashboard.basepath` | Set the base path to be used for accessing the dashboard                                    | `/traefik` |
+| Name                 | Description                                                                                 | Value       |
+| -------------------- | ------------------------------------------------------------------------------------------- | ----------- |
+| `dashboard.enabled`  | Enable *Traefik Proxy* dashboard. Note: should only be enabled in development environments. | `false`     |
+| `dashboard.domain`   | Domain associated with *Traefik Proxy* dashboard. If not set, 'appHostDomain' will be used  | `""`        |
+| `dashboard.basepath` | Set the base path to be used for accessing the dashboard                                    | `/traefik/` |
 
 ### Common Parameters
 
