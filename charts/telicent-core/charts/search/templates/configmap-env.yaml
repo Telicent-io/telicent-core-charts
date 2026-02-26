@@ -29,7 +29,7 @@ data:
   # Kafka Connection Details
   BOOTSTRAP_SERVERS: {{ .Values.global.kafka.bootstrapServers | quote }}
   KAFKA_CONFIG_FILE_PATH: /app/config/kafka-auth/kafka-config.properties
-  ACTIONS_TOPIC: ${{ .Values.elastic.actionsTopic | quote }}
+  ACTION_TOPIC: {{ .Values.elastic.actionsTopic | quote }}
 
   # Java Options
   JAVA_OPTIONS: {{ .Values.java.jvmOptions | quote }}
