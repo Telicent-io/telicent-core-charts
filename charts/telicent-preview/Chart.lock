@@ -14,8 +14,8 @@ dependencies:
 - name: spatial-projector
   repository: file://./charts/spatial-projector
   version: 0.1.2
-- name: ai-model-provider
-  repository: file://./charts/ai-model-provider
-  version: 0.1.0
-digest: sha256:fc6a89eca927cad5b41d19748b68bbaaa55da1d6fd2179a5f61887fc8adece06
-generated: "2026-02-23T16:03:53.28724Z"
+- name: ai-sparql-builder
+  repository: file://./charts/ai-sparql-builder
+  version: 0.1.1
+digest: sha256:66725495c82c190a2724e2f122147b763846232bb42835b166a5093a275daba5
+generated: "2026-02-26T11:22:47.761508Z"
