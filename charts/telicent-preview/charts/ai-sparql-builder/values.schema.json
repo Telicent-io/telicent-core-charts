@@ -16,11 +16,6 @@
                     "default": [],
                     "items": {}
                 },
-                "enabled": {
-                    "type": "boolean",
-                    "description": "enabled Enable *AI Sparql Builder* deployment",
-                    "default": false
-                },
                 "releaseNameTelicentCore": {
                     "type": "string",
                     "description": "Release name used during the Telicent Core chart installation. Note: ensure the value is correct, otherwise there will be no access to auth & graph",
@@ -43,16 +38,6 @@
                 }
             }
         },
-        "sparql": {
-            "type": "object",
-            "properties": {
-                "defaultLabel": {
-                    "type": "string",
-                    "description": "Default label for SPARQL queries",
-                    "default": "!"
-                }
-            }
-        },
         "configMap": {
             "type": "object",
             "properties": {
@@ -62,6 +47,11 @@
                     "default": ""
                 }
             }
+        },
+        "enabled": {
+            "type": "boolean",
+            "description": "Enable or disable the *AI Sparql Builder* component",
+            "default": true
         },
         "nameOverride": {
             "type": "string",
@@ -114,6 +104,18 @@
             "default": [],
             "items": {}
         },
+        "command": {
+            "type": "array",
+            "description": "Override the default container command",
+            "default": [],
+            "items": {}
+        },
+        "args": {
+            "type": "array",
+            "description": "Override the default container args",
+            "default": [],
+            "items": {}
+        },
         "extraVolumes": {
             "type": "array",
             "description": "Optionally specify extra list of additional volumes",
@@ -144,12 +146,12 @@
                 "registry": {
                     "type": "string",
                     "description": "*AI Sparql Builder* image registry",
-                    "default": "quay.io"
+                    "default": "098669589541.dkr.ecr.eu-west-2.amazonaws.com"
                 },
                 "repository": {
                     "type": "string",
                     "description": "*AI Sparql Builder* image name",
-                    "default": "telicent/telicent-ai-sparql-builder"
+                    "default": "poc-sparql-chat-bot"
                 },
                 "tag": {
                     "type": "string",
@@ -173,6 +175,61 @@
             "type": "object",
             "description": "Resources for *AI Sparql Builder* containers",
             "default": {}
+        },
+        "configuration": {
+            "type": "object",
+            "properties": {
+                "CHATBOT_SPARQL_URL": {
+                    "type": "string",
+                    "description": "URL of the SPARQL endpoint to query for the chatbot",
+                    "default": ""
+                },
+                "CHATBOT_AUTH_SERVER_PUBLIC_URL": {
+                    "type": "string",
+                    "description": "Public URL of the authentication server, used for OIDC discovery and token validation",
+                    "default": ""
+                },
+                "CHATBOT_OAUTH_CLIENT_ID": {
+                    "type": "string",
+                    "description": "OAuth client ID registered in the authentication server for the chatbot application",
+                    "default": "ai-sparql-builder-client"
+                },
+                "AUTH_SERVER_BASE_URL": {
+                    "type": "string",
+                    "description": "Base URL of the authentication server, used for obtaining tokens. This may differ from CHATBOT_AUTH_SERVER_PUBLIC_URL if the auth server is behind a proxy or has different internal/external URLs",
+                    "default": ""
+                },
+                "AUTH_SERVER_ALLOW_HTTP": {
+                    "type": "string",
+                    "description": "Whether to allow HTTP connections to the authentication server (true/false). Should be set to true for local development with port-forwarding, and false for production deployments with secure connections",
+                    "default": "false"
+                },
+                "JWT_ISSUER": {
+                    "type": "string",
+                    "description": "Expected JWT issuer claim for validating tokens. Should match the issuer configured in the authentication server for the chatbot's OAuth client.",
+                    "default": ""
+                },
+                "CHATBOT_LLM_PROVIDER": {
+                    "type": "string",
+                    "description": "The LLM provider to use for the chatbot. Supported values: transformers.",
+                    "default": "transformers"
+                },
+                "CHATBOT_PROMPT_VARIANT": {
+                    "type": "string",
+                    "description": "The prompt variant to use for the chatbot. Supported values: training, production. The 'training' variant includes additional context and examples in the prompt to improve response quality, while the 'production' variant uses a more concise prompt for faster responses.",
+                    "default": "training"
+                },
+                "CHATBOT_TRANSFORMERS_MODEL_PATH": {
+                    "type": "string",
+                    "description": "The file system path where the chatbot's Transformers models are stored. This should match the path used in the chatbot application code to load the models. In this example, it is set to '/app/models', which means the models should be mounted or copied to that path in the container.",
+                    "default": "/app/models"
+                },
+                "CHATBOT_SPARQL_DATASET": {
+                    "type": "string",
+                    "description": "The name of the dataset to use in the SPARQL endpoint for the chatbot queries. This should match the dataset name configured in the SPARQL endpoint that contains the relevant data for the chatbot.",
+                    "default": "knowledge"
+                }
+            }
         },
         "podSecurityContext": {
             "type": "object",
@@ -274,6 +331,77 @@
             "description": "Tolerations for pod assignment",
             "default": [],
             "items": {}
+        },
+        "gpu": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable GPU support for the AI Sparql Builder",
+                    "default": true
+                },
+                "type": {
+                    "type": "string",
+                    "description": "The GPU resource type to request (e.g. nvidia.com/gpu, amd.com/gpu)",
+                    "default": "nvidia.com/gpu"
+                },
+                "count": {
+                    "type": "number",
+                    "description": "Number of GPUs to request",
+                    "default": 1
+                },
+                "runtimeClassName": {
+                    "type": "string",
+                    "description": "Set the runtimeClassName for the pod (e.g. nvidia for NVIDIA GPU Operator). Leave empty to use the cluster default",
+                    "default": ""
+                },
+                "tolerations": {
+                    "type": "array",
+                    "description": "key for toleration to allow scheduling on GPU nodes",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "key": {
+                                "type": "string",
+                                "description": "key for toleration to allow scheduling on GPU nodes"
+                            },
+                            "operator": {
+                                "type": "string",
+                                "description": "operator for the toleration to allow scheduling on GPU nodes"
+                            },
+                            "effect": {
+                                "type": "string",
+                                "description": "effect for the toleration to allow scheduling on GPU nodes"
+                            }
+                        }
+                    }
+                },
+                "nodeAffinity": {
+                    "type": "object",
+                    "properties": {
+                        "labelKey": {
+                            "type": "string",
+                            "description": "Node label key used to identify GPU nodes",
+                            "default": "nvidia.com/gpu"
+                        },
+                        "operator": {
+                            "type": "string",
+                            "description": "Operator for the label expression (In, Exists, etc.)",
+                            "default": "In"
+                        },
+                        "values": {
+                            "type": "array",
+                            "description": "Label values to match for GPU node selection. Only used when operator is 'In'",
+                            "default": [
+                                "true"
+                            ],
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
         },
         "serviceAccount": {
             "type": "object",

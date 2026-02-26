@@ -46,7 +46,7 @@ dependencies:
     version: "^0.1.0"
     repository: file://./charts/spatial-projector
     condition: global.enterprise
-  - name: ai-model-provider
+  - name: ai-sparql-builder
     version: "^0.1.0"
     repository: file://./charts/ai-sparql-builder
     condition: global.enterprise

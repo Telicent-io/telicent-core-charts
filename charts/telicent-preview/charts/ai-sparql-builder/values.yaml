@@ -136,15 +136,25 @@ resources: {}
 # Application specific configuration settings
 # @descEnd
 configuration:
+  # @key configuration.CHATBOT_SPARQL_URL URL of the SPARQL endpoint to query for the chatbot
   CHATBOT_SPARQL_URL: ""
+  # @key configuration.CHATBOT_AUTH_SERVER_PUBLIC_URL Public URL of the authentication server, used for OIDC discovery and token validation
   CHATBOT_AUTH_SERVER_PUBLIC_URL: ""
-  CHATBOT_OAUTH_CLIENT_ID: ""
+  # @key configuration.CHATBOT_OAUTH_CLIENT_ID OAuth client ID registered in the authentication server for the chatbot application
+  CHATBOT_OAUTH_CLIENT_ID: "ai-sparql-builder-client"
+  # @key configuration.AUTH_SERVER_BASE_URL Base URL of the authentication server, used for obtaining tokens. This may differ from CHATBOT_AUTH_SERVER_PUBLIC_URL if the auth server is behind a proxy or has different internal/external URLs
   AUTH_SERVER_BASE_URL: ""
-  AUTH_SERVER_ALLOW_HTTP: ""
+  # @key configuration.AUTH_SERVER_ALLOW_HTTP Whether to allow HTTP connections to the authentication server (true/false). Should be set to true for local development with port-forwarding, and false for production deployments with secure connections
+  AUTH_SERVER_ALLOW_HTTP: "false"
+  # @key configuration.JWT_ISSUER Expected JWT issuer claim for validating tokens. Should match the issuer configured in the authentication server for the chatbot's OAuth client.
   JWT_ISSUER: ""
+  # @key configuration.CHATBOT_LLM_PROVIDER The LLM provider to use for the chatbot. Supported values: transformers.
   CHATBOT_LLM_PROVIDER: transformers
+  # @key configuration.CHATBOT_PROMPT_VARIANT The prompt variant to use for the chatbot. Supported values: training, production. The 'training' variant includes additional context and examples in the prompt to improve response quality, while the 'production' variant uses a more concise prompt for faster responses.
   CHATBOT_PROMPT_VARIANT: training
+  # @key configuration.CHATBOT_TRANSFORMERS_MODEL_PATH The file system path where the chatbot's Transformers models are stored. This should match the path used in the chatbot application code to load the models. In this example, it is set to '/app/models', which means the models should be mounted or copied to that path in the container.
   CHATBOT_TRANSFORMERS_MODEL_PATH: /app/models
+  # @key configuration.CHATBOT_SPARQL_DATASET The name of the dataset to use in the SPARQL endpoint for the chatbot queries. This should match the dataset name configured in the SPARQL endpoint that contains the relevant data for the chatbot.
   CHATBOT_SPARQL_DATASET: knowledge
 
 #
@@ -213,7 +223,7 @@ gpu:
       operator: "Exists"
       # @key gpu.tolerations[0].effect effect for the toleration to allow scheduling on GPU nodes
       effect: "NoSchedule"
-  # @key gpu.nodeAffinity Node affinity rule applied when gpu.enabled is true, to target nodes with GPU resources
+
   nodeAffinity:
     # @key gpu.nodeAffinity.labelKey Node label key used to identify GPU nodes
     labelKey: "nvidia.com/gpu"
