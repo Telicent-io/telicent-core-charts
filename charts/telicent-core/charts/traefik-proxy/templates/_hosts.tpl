@@ -102,3 +102,12 @@ application relies on. For a full explanation please view '_hosts.tlp' file in t
 {{- define "traefik-proxy.serviceAccountPaperbackWriter" -}}
 {{- printf "%s" (include "common.discoverServiceAccountPreview" (list . .Values.hostsPreview.paperbackWriter )) -}}
 {{- end -}}
+
+
+{{/* ai-sparql-builder | preview - returns host ('service:port') and serviceAccount */}}
+{{- define "traefik-proxy.hostAISparqlBuilder" -}}
+{{- printf "%s" (include "common.discoverHostPreview" (list . .Values.hostsPreview.aiSparqlBuilder )) -}}
+{{- end -}}
+{{- define "traefik-proxy.serviceAccountAISparqlBuilder" -}}
+{{- printf "%s" (include "common.discoverServiceAccountPreview" (list . .Values.hostsPreview.aiSparqlBuilder )) -}}
+{{- end -}}

@@ -331,3 +331,5 @@ hostsPreview:
   userPortalUi: "user-portal-ui:8080"
   # @key hostsPreview.paperbackWriter Paperback Writer application host value, as defined by 'service/serviceAccount:port'
   paperbackWriter: "paperback-writer:8080"
+  # @key hostsPreview.aiSparqlBuilder Ai Sparql Builder application host value, as defined by 'service/serviceAccount:port'
+  aiSparqlBuilder: "ai-sparql-builder:8080"
