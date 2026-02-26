@@ -7,4 +7,6 @@ http:
       service: api@internal
       entryPoints:
         - web-app
+      middleWares:
+        - oauth2
 {{- end }}

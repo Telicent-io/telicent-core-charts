@@ -169,7 +169,7 @@
                 "basepath": {
                     "type": "string",
                     "description": "Set the base path to be used for accessing the dashboard",
-                    "default": "/traefik"
+                    "default": "/traefik/"
                 }
             }
         },
