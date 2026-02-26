@@ -36,6 +36,41 @@
                     "description": "Domain associated with Telicent authentication services, including OIDC providers. This value cannot be changed after it is set",
                     "default": ""
                 },
+                "kafka": {
+                    "type": "object",
+                    "properties": {
+                        "bootstrapServers": {
+                            "type": "string",
+                            "description": "Comma separated list containing Kafka bootstrap servers",
+                            "default": "kafka-bootstrap.kafka.svc.cluster.local:9092"
+                        },
+                        "existingConfigSecretName": {
+                            "type": "string",
+                            "description": "Name of an existing secret containing Kafka configuration (preferred over individual settings below for security)",
+                            "default": ""
+                        },
+                        "username": {
+                            "type": "string",
+                            "description": "Username for Kafka authentication",
+                            "default": "your.kafka.username.here"
+                        },
+                        "password": {
+                            "type": "string",
+                            "description": "Password for Kafka authentication",
+                            "default": "your.kafka.password.here"
+                        },
+                        "protocol": {
+                            "type": "string",
+                            "description": "Protocol used for Kafka communication",
+                            "default": "SASL_SSL"
+                        },
+                        "mechanism": {
+                            "type": "string",
+                            "description": "SASL mechanism used for Kafka authentication",
+                            "default": "SCRAM-SHA-512"
+                        }
+                    }
+                },
                 "truststore": {
                     "type": "object",
                     "properties": {
@@ -80,41 +115,6 @@
                     "type": "boolean",
                     "description": "Enable Istio traffic routing to a named destination service",
                     "default": true
-                },
-                "kafka": {
-                    "type": "object",
-                    "properties": {
-                        "bootstrapServers": {
-                            "type": "string",
-                            "description": "Comma separated list containing Kafka bootstrap servers",
-                            "default": "kafka-bootstrap.kafka.svc.cluster.local:9092"
-                        },
-                        "existingConfigSecretName": {
-                            "type": "string",
-                            "description": "Name of an existing secret containing Kafka configuration (preferred over individual settings below for security)",
-                            "default": ""
-                        },
-                        "username": {
-                            "type": "string",
-                            "description": "Username for Kafka authentication",
-                            "default": "your.kafka.username.here"
-                        },
-                        "password": {
-                            "type": "string",
-                            "description": "Password for Kafka authentication",
-                            "default": "your.kafka.password.here"
-                        },
-                        "protocol": {
-                            "type": "string",
-                            "description": "Protocol used for Kafka communication",
-                            "default": "SASL_SSL"
-                        },
-                        "mechanism": {
-                            "type": "string",
-                            "description": "SASL mechanism used for Kafka authentication",
-                            "default": "SCRAM-SHA-512"
-                        }
-                    }
                 }
             }
         },
@@ -184,12 +184,12 @@
                 "registry": {
                     "type": "string",
                     "description": "*Notifications* image registry",
-                    "default": "098669589541.dkr.ecr.eu-west-2.amazonaws.com"
+                    "default": "quay.io"
                 },
                 "repository": {
                     "type": "string",
                     "description": "*Notifications* image name",
-                    "default": "telicent-notifications-api-server"
+                    "default": "telicent/telicent-notifications-api-server"
                 },
                 "tag": {
                     "type": "string",
@@ -219,6 +219,11 @@
             "description": "List of additional environment variables to set in the pod",
             "default": [],
             "items": {}
+        },
+        "resources": {
+            "type": "object",
+            "description": "Resources for *Notifications* containers",
+            "default": {}
         },
         "podSecurityContext": {
             "type": "object",
@@ -305,24 +310,19 @@
                 }
             }
         },
-        "resources": {
+        "affinity": {
             "type": "object",
-            "description": "Resources for *Notifications* containers",
+            "description": "Affinity for pod assignment",
             "default": {}
         },
         "nodeSelector": {
             "type": "object",
-            "description": "Allows you to schedule pods on a node with a label matching the given key-value pair.",
-            "default": {}
-        },
-        "affinity": {
-            "type": "object",
-            "description": "Allows you to define affinity rules for scheduling pods, see: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/",
+            "description": "Node labels for pod assignment",
             "default": {}
         },
         "tolerations": {
             "type": "array",
-            "description": "ALlows you to schedule pods on nodes with specified taints, see: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/",
+            "description": "Tolerations for pod assignment",
             "default": [],
             "items": {}
         },
@@ -354,6 +354,11 @@
         "service": {
             "type": "object",
             "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "*Notifications* service name. If not set, a name is generated using the fullname",
+                    "default": ""
+                },
                 "port": {
                     "type": "number",
                     "description": "*Notifications* service port",
@@ -366,6 +371,31 @@
                 }
             }
         },
+        "metrics": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable Prometheus metrics",
+                    "default": true
+                },
+                "service": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string",
+                            "description": "Name for the Prometheus service",
+                            "default": "metrics"
+                        },
+                        "port": {
+                            "type": "number",
+                            "description": "Port for the Prometheus service",
+                            "default": 9464
+                        }
+                    }
+                }
+            }
+        },
         "hosts": {
             "type": "object",
             "properties": {
@@ -374,15 +404,15 @@
                     "description": "Prefix 'global.releaseNameTelicentCore' value to each host value. Alternatively, the host value will be used as it is, without any modification",
                     "default": true
                 },
-                "traefikProxy": {
-                    "type": "string",
-                    "description": "Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'",
-                    "default": "traefik-proxy:8080"
-                },
                 "auth": {
                     "type": "string",
                     "description": "Auth application default host value, as defined by 'service/serviceAccount:port'",
                     "default": "auth:8080"
+                },
+                "traefikProxy": {
+                    "type": "string",
+                    "description": "Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'",
+                    "default": "traefik-proxy:8080"
                 }
             }
         },

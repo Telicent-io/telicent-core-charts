@@ -46,11 +46,10 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ### Global Parameters
 
-Contains global parameters, these parameters are mirrored across all Telicent Preview sub charts, these values will be
-authoritative.
+Contains global parameters, these parameters are mirrored across all Telicent Preview sub charts, these values will be authoritative.
 
 | Name                                    | Description                                                                                                                     | Value                                            |
-|-----------------------------------------|---------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------|
+| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
 | `global.imageRegistry`                  | Global image registry                                                                                                           | `""`                                             |
 | `global.imagePullSecrets`               | Global registry secret names as an array                                                                                        | `[]`                                             |
 | `global.enterprise`                     | Enable enterprise mode, adding additional features and configurations                                                           | `false`                                          |
@@ -74,19 +73,19 @@ authoritative.
 ### paperback-writer Parameters
 
 | Name                       | Description                                      | Value  |
-|----------------------------|--------------------------------------------------|--------|
+| -------------------------- | ------------------------------------------------ | ------ |
 | `paperback-writer.enabled` | Enable or disable the paperback-writer component | `true` |
 
 ### data-catalog-ui Parameters
 
 | Name                      | Description                                     | Value  |
-|---------------------------|-------------------------------------------------|--------|
+| ------------------------- | ----------------------------------------------- | ------ |
 | `data-catalog-ui.enabled` | Enable or disable the data-catalog-ui component | `true` |
 
 ### Spatial Parameters
 
 | Name                        | Description                                         | Value   |
-|-----------------------------|-----------------------------------------------------|---------|
+| --------------------------- | --------------------------------------------------- | ------- |
 | `spatial.enabled`           | Enable or disable the spatial components.           | `false` |
 | `spatial-projector.enabled` | Enable or disable the spatial-projector components. | `false` |
 
@@ -98,10 +97,10 @@ authoritative.
 
 ### Notifications Parameters
 
-| Name                             | Description                                               | Value   |
-|----------------------------------|-----------------------------------------------------------|---------|
-| `notifications.enabled`          | Enable or disable the notifications components.           | `false` |
-| `notificaions-projector.enabled` | Enable of disable the notifications-projector components. | `false` |
+| Name                              | Description                                              | Value   |
+| --------------------------------- | -------------------------------------------------------- | ------- |
+| `notifications.enabled`           | Enable or disable the notifications component.           | `false` |
+| `notifications-projector.enabled` | Enable or disable the notifications-projector component. | `false` |
 
 ## Subchart configurations
 

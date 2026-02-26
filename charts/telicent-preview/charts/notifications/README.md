@@ -93,6 +93,12 @@ Note: Only global parameters used within this chart will be listed below
 | `global.appHostDomain`                  | Domain associated with Telicent application services. This value cannot be changed after it is set                              | `""`                                             |
 | `global.apiHostDomain`                  | Domain associated with Telicent Api services. This value cannot be changed after it is set                                      | `""`                                             |
 | `global.authHostDomain`                 | Domain associated with Telicent authentication services, including OIDC providers. This value cannot be changed after it is set | `""`                                             |
+| `global.kafka.bootstrapServers`         | Comma separated list containing Kafka bootstrap servers                                                                         | `kafka-bootstrap.kafka.svc.cluster.local:9092`   |
+| `global.kafka.existingConfigSecretName` | Name of an existing secret containing Kafka configuration (preferred over individual settings below for security)               | `""`                                             |
+| `global.kafka.username`                 | Username for Kafka authentication                                                                                               | `your.kafka.username.here`                       |
+| `global.kafka.password`                 | Password for Kafka authentication                                                                                               | `your.kafka.password.here`                       |
+| `global.kafka.protocol`                 | Protocol used for Kafka communication                                                                                           | `SASL_SSL`                                       |
+| `global.kafka.mechanism`                | SASL mechanism used for Kafka authentication                                                                                    | `SCRAM-SHA-512`                                  |
 | `global.truststore.existingSecret`      | Name of an existing secret containing the truststore                                                                            | `""`                                             |
 | `global.truststore.mountPath`           | The mount path for the truststore in the container                                                                              | `/app/config/truststore`                         |
 | `global.groupsClaim`                    | Key used to retrieve groups from the OIDC provider                                                                              | `groups`                                         |
@@ -101,12 +107,6 @@ Note: Only global parameters used within this chart will be listed below
 | `global.istioServiceAccountName`        | Name of the Istio service account                                                                                               | `istio-ingress`                                  |
 | `global.istioGatewayName`               | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)                                                       | `ingress-gateway`                                |
 | `global.istioVirtualServiceEnabled`     | Enable Istio traffic routing to a named destination service                                                                     | `true`                                           |
-| `global.kafka.bootstrapServers`         | Comma separated list containing Kafka bootstrap servers                                                                         | `kafka-bootstrap.kafka.svc.cluster.local:9092`   |
-| `global.kafka.existingConfigSecretName` | Name of an existing secret containing Kafka configuration (preferred over individual settings below for security)               | `""`                                             |
-| `global.kafka.username`                 | Username for Kafka authentication                                                                                               | `your.kafka.username.here`                       |
-| `global.kafka.password`                 | Password for Kafka authentication                                                                                               | `your.kafka.password.here`                       |
-| `global.kafka.protocol`                 | Protocol used for Kafka communication                                                                                           | `SASL_SSL`                                       |
-| `global.kafka.mechanism`                | SASL mechanism used for Kafka authentication                                                                                    | `SCRAM-SHA-512`                                  |
 
 ### Application Parameters - Kafka
 
@@ -134,20 +134,31 @@ Note: It is recommended to use a Kubernetes secret for sensitive information lik
 
 ### image This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
 
-| Name                | Description                                                                    | Value                                          |
-| ------------------- | ------------------------------------------------------------------------------ | ---------------------------------------------- |
-| `image.registry`    | *Notifications* image registry                                                 | `098669589541.dkr.ecr.eu-west-2.amazonaws.com` |
-| `image.repository`  | *Notifications* image name                                                     | `telicent-notifications-api-server`            |
-| `image.tag`         | *Notifications* image tag. If not set, a tag is generated using the appVersion | `""`                                           |
-| `image.pullPolicy`  | *Notifications* image pull policy                                              | `IfNotPresent`                                 |
-| `image.pullSecrets` | Specify registry secret names as an array                                      | `[]`                                           |
+| Name                | Description                                                                    | Value                                        |
+| ------------------- | ------------------------------------------------------------------------------ | -------------------------------------------- |
+| `image.registry`    | *Notifications* image registry                                                 | `quay.io`                                    |
+| `image.repository`  | *Notifications* image name                                                     | `telicent/telicent-notifications-api-server` |
+| `image.tag`         | *Notifications* image tag. If not set, a tag is generated using the appVersion | `""`                                         |
+| `image.pullPolicy`  | *Notifications* image pull policy                                              | `IfNotPresent`                               |
+| `image.pullSecrets` | Specify registry secret names as an array                                      | `[]`                                         |
 
 ### Deployment Parameters For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 
+| Name             | Description                                                | Value |
+| ---------------- | ---------------------------------------------------------- | ----- |
+| `podAnnotations` | Add extra annotations to the Deployment object             | `{}`  |
+| `extraEnvs`      | List of additional environment variables to set in the pod | `[]`  |
+
+### Deployment Resources Parameters - Requests and Limits
+
+| Name        | Description                              | Value |
+| ----------- | ---------------------------------------- | ----- |
+| `resources` | Resources for *Notifications* containers | `{}`  |
+
+### Deployment Security Context Parameters - Default Security Context
+
 | Name                                                | Description                                                             | Value            |
 | --------------------------------------------------- | ----------------------------------------------------------------------- | ---------------- |
-| `podAnnotations`                                    | Add extra annotations to the Deployment object                          | `{}`             |
-| `extraEnvs`                                         | List of additional environment variables to set in the pod              | `[]`             |
 | `podSecurityContext.runAsUser`                      | Set the provisioning pod's Security Context runAsUser User ID           | `185`            |
 | `podSecurityContext.runAsGroup`                     | Set the provisioning pod's Security Context runAsGroup Group ID         | `185`            |
 | `podSecurityContext.runAsNonRoot`                   | Set the provisioning pod's Security Context runAsNonRoot                | `true`           |
@@ -160,19 +171,13 @@ Note: It is recommended to use a Kubernetes secret for sensitive information lik
 | `containerSecurityContext.capabilities.drop`        | List of capabilities to be dropped                                      | `["ALL"]`        |
 | `containerSecurityContext.seccompProfile.type`      | Set container's Security Context seccomp profile                        | `RuntimeDefault` |
 
-### Deployment Resources Parameters - Requests and Limits
+### Deployment Affinity Parameters
 
-| Name        | Description                              | Value |
-| ----------- | ---------------------------------------- | ----- |
-| `resources` | Resources for *Notifications* containers | `{}`  |
-
-### Node Selection
-
-| Name           | Description                                                                                                                                    | Value |
-| -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
-| `nodeSelector` | Allows you to schedule pods on a node with a label matching the given key-value pair.                                                          | `{}`  |
-| `affinity`     | Allows you to define affinity rules for scheduling pods, see: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/         | `{}`  |
-| `tolerations`  | ALlows you to schedule pods on nodes with specified taints, see: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/ | `[]`  |
+| Name           | Description                    | Value |
+| -------------- | ------------------------------ | ----- |
+| `affinity`     | Affinity for pod assignment    | `{}`  |
+| `nodeSelector` | Node labels for pod assignment | `{}`  |
+| `tolerations`  | Tolerations for pod assignment | `[]`  |
 
 ### Service Account Parameters
 
@@ -185,12 +190,21 @@ Note: It is recommended to use a Kubernetes secret for sensitive information lik
 
 ### Traffic Exposure Parameters
 
-| Name           | Description                  | Value       |
-| -------------- | ---------------------------- | ----------- |
-| `service.port` | *Notifications* service port | `8080`      |
-| `service.type` | *Notifications* service type | `ClusterIP` |
+| Name           | Description                                                                      | Value       |
+| -------------- | -------------------------------------------------------------------------------- | ----------- |
+| `service.name` | *Notifications* service name. If not set, a name is generated using the fullname | `""`        |
+| `service.port` | *Notifications* service port                                                     | `8080`      |
+| `service.type` | *Notifications* service type                                                     | `ClusterIP` |
 
-### Host(s) Core Parameters - Contains host information for applications deployed via *telicent-core* chart
+### Metrics (Prometheus) Exposure Parameters
+
+| Name                   | Description                     | Value     |
+| ---------------------- | ------------------------------- | --------- |
+| `metrics.enabled`      | Enable Prometheus metrics       | `true`    |
+| `metrics.service.name` | Name for the Prometheus service | `metrics` |
+| `metrics.service.port` | Port for the Prometheus service | `9464`    |
+
+### Host(s) Parameters - Contains host information for applications deployed via *telicent-core* chart.
 
 *Notifications* interacts with applications deployed via *telicent-core* using their default service/serviceAccount and port.
 If either of those details changes, you can use this section to correctly refer to those applications.
@@ -198,8 +212,8 @@ If either of those details changes, you can use this section to correctly refer 
 | Name                      | Description                                                                                                                                     | Value                |
 | ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
 | `hosts.enableAutoCorrect` | Prefix 'global.releaseNameTelicentCore' value to each host value. Alternatively, the host value will be used as it is, without any modification | `true`               |
-| `hosts.traefikProxy`      | Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'                                                       | `traefik-proxy:8080` |
 | `hosts.auth`              | Auth application default host value, as defined by 'service/serviceAccount:port'                                                                | `auth:8080`          |
+| `hosts.traefikProxy`      | Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'                                                       | `traefik-proxy:8080` |
 
 ### Validation (Apicurio schema registry) Exposure Parameters
 
