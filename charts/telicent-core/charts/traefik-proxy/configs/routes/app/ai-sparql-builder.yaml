@@ -1,0 +1,29 @@
+
+# Declare routers / services / middlewares
+http:
+  routers:
+    ai-sparql-builder:
+      rule: {{ printf "Host(`%s`) && PathPrefix(`/ai-sparql-builder-poc`)" .Values.global.appHostDomain }}
+      service: ai-sparql-builder
+      entryPoints:
+        - web-app
+      middleWares:
+        - path-ai-sparql-builder
+        - host-ai-sparql-builder
+
+  services:
+    ai-sparql-builder:
+      loadBalancer:
+        servers:
+          - url: "{{ printf "http://%s"  (include "traefik-proxy.hostAISparqlBuilder" .) }}"
+
+  middlewares:
+    path-ai-sparql-builder:
+      replacePathRegex:
+        regex: "^/ai-sparql-builder(.*)"
+        replacement: "/ai-sparql-builder/$1"
+
+    host-ai-sparql-builder:
+      headers:
+        customRequestHeaders:
+          host: "{{ include "traefik-proxy.hostAISparqlBuilder" . }}"
