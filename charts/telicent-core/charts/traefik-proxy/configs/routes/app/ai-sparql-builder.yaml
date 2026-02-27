@@ -20,8 +20,8 @@ http:
   middlewares:
     path-ai-sparql-builder:
       replacePathRegex:
-        regex: "^/ai-sparql-builder(.*)"
-        replacement: "/ai-sparql-builder/$1"
+        regex: "^/ai-sparql-builder-poc/(.*)"
+        replacement: "/$1"
 
     host-ai-sparql-builder:
       headers:
