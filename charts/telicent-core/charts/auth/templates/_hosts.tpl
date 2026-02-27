@@ -49,6 +49,14 @@ Detailed description of 'discoverHost' & 'discoverServiceAccount' function
 {{- printf "%s" (include "common.discoverServiceAccount" (list . .Values.hosts.search )) -}}
 {{- end -}}
 
+{{/* search - returns host ('service:port') and serviceAccount */}}
+{{- define "auth.hostNotifications" -}}
+{{- printf "%s" (include "common.discoverHost" (list . .Values.hosts.notifications )) -}}
+{{- end -}}
+{{- define "auth.serviceAccountNotifications" -}}
+{{- printf "%s" (include "common.discoverServiceAccount" (list . .Values.hosts.notifications )) -}}
+{{- end -}}
+
 {{/* graph - returns host ('service:port') and serviceAccount */}}
 {{- define "auth.hostGraph" -}}
 {{- printf "%s" (include "common.discoverHost" (list . .Values.hosts.graph )) -}}

@@ -314,6 +314,8 @@ hosts:
   graph: "graph:8080"
   # @key hosts.spatial Spatial application default host value, as defined by 'service/serviceAccount:port'
   spatial: "spatial:8080"
+  # @key hosts.notifications Notifications application default host value, as defined by 'service/serviceAccount:port'
+  notifications: "notifications:8080"
 
 #
 # @section Host(s) Preview Parameters - Contains host information for applications deployed via *telicent-preview* chart

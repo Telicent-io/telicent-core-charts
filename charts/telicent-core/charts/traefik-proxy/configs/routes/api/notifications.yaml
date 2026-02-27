@@ -1,0 +1,28 @@
+# Declare routers / services / middlewares
+http:
+  routers:
+    notifications:
+      rule: {{ printf "Host(`%s`) && PathPrefix(`/notifications`)" .Values.global.apiHostDomain }}
+      service: notifications
+      entryPoints:
+        - web-api
+      middleWares:
+        - path-notifications
+        - host-notifications
+
+  services:
+    notifications:
+      loadBalancer:
+        servers:
+          - url: {{ printf "http://%s"  (include "traefik-proxy.hostNotifications" .) }}
+
+  middlewares:
+    path-notifications:
+      replacePathRegex:
+        regex: "^/notifications/(.*)"
+        replacement: "/$1"
+
+    host-notifications:
+      headers:
+        customRequestHeaders:
+          host: {{ include "traefik-proxy.hostNotifications" . }}
