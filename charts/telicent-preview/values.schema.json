@@ -162,6 +162,26 @@
                     "default": false
                 }
             }
+        },
+        "notifications": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable or disable the notifications component.",
+                    "default": false
+                }
+            }
+        },
+        "notifications-projector": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable or disable the notifications-projector component.",
+                    "default": false
+                }
+            }
         }
     }
 }

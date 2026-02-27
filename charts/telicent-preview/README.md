@@ -1,6 +1,7 @@
 # Helm Chart for Telicent Preview
 
-Telicent Preview is the umbrella chart under which all the preview subcharts are configured and released. This repository contains products that are still under development and in preview mode.
+Telicent Preview is the umbrella chart under which all the preview subcharts are configured and released. This
+repository contains products that are still under development and in preview mode.
 
 ## Introduction
 
@@ -27,6 +28,7 @@ To uninstall/delete the `my-release` deployment:
 ```console
 helm delete my-release
 ```
+
 The command removes all the Kubernetes components associated with the chart and deletes the release.
 
 ## Automating README and schema generation
@@ -92,6 +94,13 @@ Contains global parameters, these parameters are mirrored across all Telicent Pr
 | Name                        | Description                                       | Value   |
 | --------------------------- | ------------------------------------------------- | ------- |
 | `ai-model-provider.enabled` | Enable or disable the ai-model-provider component | `false` |
+
+### Notifications Parameters
+
+| Name                              | Description                                              | Value   |
+| --------------------------------- | -------------------------------------------------------- | ------- |
+| `notifications.enabled`           | Enable or disable the notifications component.           | `false` |
+| `notifications-projector.enabled` | Enable or disable the notifications-projector component. | `false` |
 
 ## Subchart configurations
 

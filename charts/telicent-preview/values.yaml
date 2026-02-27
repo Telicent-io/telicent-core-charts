@@ -84,3 +84,14 @@ spatial-projector:
 ai-model-provider:
   # @key ai-model-provider.enabled Enable or disable the ai-model-provider component
   enabled: false
+
+#
+# @section Notifications Parameters
+#
+notifications:
+  # @key notifications.enabled Enable or disable the notifications component.
+  enabled: false
+
+notifications-projector:
+  # @key notifications-projector.enabled Enable or disable the notifications-projector component.
+  enabled: false
