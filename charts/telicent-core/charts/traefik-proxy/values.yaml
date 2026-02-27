@@ -104,7 +104,7 @@ dashboard:
   # @key dashboard.domain Domain associated with *Traefik Proxy* dashboard. If not set, 'appHostDomain' will be used
   domain: ""
   # @key dashboard.basepath Set the base path to be used for accessing the dashboard
-  basepath: "/traefik"
+  basepath: "/traefik/"
 
 #
 # @section Common Parameters
@@ -331,5 +331,3 @@ hostsPreview:
   userPortalUi: "user-portal-ui:8080"
   # @key hostsPreview.paperbackWriter Paperback Writer application host value, as defined by 'service/serviceAccount:port'
   paperbackWriter: "paperback-writer:8080"
-  # @key hostsPreview.aiSparqlBuilder Ai Sparql Builder application host value, as defined by 'service/serviceAccount:port'
-  aiSparqlBuilder: "ai-sparql-builder:8080"
