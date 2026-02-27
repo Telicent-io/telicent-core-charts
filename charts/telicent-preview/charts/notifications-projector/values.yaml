@@ -45,11 +45,12 @@ global:
 # @descStart
 # Contains Kafka topic configuration for the *Notifications Projector* application
 # @descEnd
-kafka:
-  # @key kafka.topic Topic to consume messages from
-  topic: notifications
-  # @key kafka.dlqTopic Dead-letter topic for failed messages
-  dlqTopic: notifications.dlq
+notificationsProjector:
+  topics:
+    # @key notificationsProjector.topics.inputTopic Topic to consume messages from
+    inputTopic: notifications
+    # @key notificationsProjector.topics.dlqTopic Dead-letter topic for failed messages
+    dlqTopic: notifications.dlq
 
 #
 # @section PostgreSQL

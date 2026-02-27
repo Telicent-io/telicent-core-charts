@@ -68,18 +68,23 @@
                 }
             }
         },
-        "kafka": {
+        "notificationsProjector": {
             "type": "object",
             "properties": {
-                "topic": {
-                    "type": "string",
-                    "description": "Topic to consume messages from",
-                    "default": "notifications"
-                },
-                "dlqTopic": {
-                    "type": "string",
-                    "description": "Dead-letter topic for failed messages",
-                    "default": "notifications.dlq"
+                "topics": {
+                    "type": "object",
+                    "properties": {
+                        "inputTopic": {
+                            "type": "string",
+                            "description": "Topic to consume messages from",
+                            "default": "notifications"
+                        },
+                        "dlqTopic": {
+                            "type": "string",
+                            "description": "Dead-letter topic for failed messages",
+                            "default": "notifications.dlq"
+                        }
+                    }
                 }
             }
         },

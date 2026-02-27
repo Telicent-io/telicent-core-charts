@@ -118,18 +118,23 @@
                 }
             }
         },
-        "kafka": {
+        "notifications": {
             "type": "object",
             "properties": {
-                "topic": {
-                    "type": "string",
-                    "description": "Topic to consume messages from",
-                    "default": "notifications"
-                },
-                "dlqTopic": {
-                    "type": "string",
-                    "description": "Dead-letter topic for failed messages",
-                    "default": "notifications.dlq"
+                "topics": {
+                    "type": "object",
+                    "properties": {
+                        "inputTopic": {
+                            "type": "string",
+                            "description": "Topic to consume messages from",
+                            "default": "notifications"
+                        },
+                        "dlqTopic": {
+                            "type": "string",
+                            "description": "Dead-letter topic for failed messages",
+                            "default": "notifications.dlq"
+                        }
+                    }
                 }
             }
         },
@@ -165,11 +170,6 @@
                     "type": "string",
                     "description": "PostgreSQL password",
                     "default": ""
-                },
-                "createSchema": {
-                    "type": "string",
-                    "description": "Whether to create the database schema on startup",
-                    "default": "true"
                 },
                 "existingSecret": {
                     "type": "string",

@@ -112,10 +112,10 @@ Note: Only global parameters used within this chart will be listed below
 
 Contains Kafka topic configuration for the *Notifications* application
 
-| Name             | Description                           | Value               |
-| ---------------- | ------------------------------------- | ------------------- |
-| `kafka.topic`    | Topic to consume messages from        | `notifications`     |
-| `kafka.dlqTopic` | Dead-letter topic for failed messages | `notifications.dlq` |
+| Name                              | Description                           | Value               |
+| --------------------------------- | ------------------------------------- | ------------------- |
+| `notifications.topics.inputTopic` | Topic to consume messages from        | `notifications`     |
+| `notifications.topics.dlqTopic`   | Dead-letter topic for failed messages | `notifications.dlq` |
 
 ### PostgreSQL
 
@@ -129,7 +129,6 @@ Note: It is recommended to use a Kubernetes secret for sensitive information lik
 | `postgres.jdbcUrl`        | PostgreSQL connection URI. If specified the postgres.host, postgres.port and postgres.name will be ignored                                                      | `""`            |
 | `postgres.username`       | PostgreSQL username                                                                                                                                             | `""`            |
 | `postgres.password`       | PostgreSQL password                                                                                                                                             | `""`            |
-| `postgres.createSchema`   | Whether to create the database schema on startup                                                                                                                | `true`          |
 | `postgres.existingSecret` | Name of an existing secret resource containing the PostgreSQL credentials. If specified, the values for postgres.username and postgres.password will be ignored | `""`            |
 
 ### image This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/

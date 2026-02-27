@@ -103,10 +103,10 @@ Note: Only global parameters used within this chart will be listed below.
 
 Contains Kafka topic configuration for the *Notifications Projector* application
 
-| Name             | Description                           | Value               |
-| ---------------- | ------------------------------------- | ------------------- |
-| `kafka.topic`    | Topic to consume messages from        | `notifications`     |
-| `kafka.dlqTopic` | Dead-letter topic for failed messages | `notifications.dlq` |
+| Name                                       | Description                           | Value               |
+| ------------------------------------------ | ------------------------------------- | ------------------- |
+| `notificationsProjector.topics.inputTopic` | Topic to consume messages from        | `notifications`     |
+| `notificationsProjector.topics.dlqTopic`   | Dead-letter topic for failed messages | `notifications.dlq` |
 
 ### PostgreSQL
 

@@ -66,14 +66,16 @@ global:
   istioVirtualServiceEnabled: true
 
 # @section Application Parameters - Kafka
+#
 # @descStart
 # Contains Kafka topic configuration for the *Notifications* application
 # @descEnd
-kafka:
-  # @key kafka.topic Topic to consume messages from
-  topic: notifications
-  # @key kafka.dlqTopic Dead-letter topic for failed messages
-  dlqTopic: notifications.dlq
+notifications:
+  topics:
+    # @key notifications.topics.inputTopic Topic to consume messages from
+    inputTopic: notifications
+    # @key notifications.topics.dlqTopic Dead-letter topic for failed messages
+    dlqTopic: notifications.dlq
 
 # @section PostgreSQL
 # @descStart
@@ -92,8 +94,6 @@ postgres:
   username: ""
   # @key postgres.password PostgreSQL password
   password: ""
-  # @key postgres.createSchema Whether to create the database schema on startup
-  createSchema: "true"
   # @key postgres.existingSecret Name of an existing secret resource containing the PostgreSQL credentials. If specified, the values for postgres.username and postgres.password will be ignored
   existingSecret: ""
 

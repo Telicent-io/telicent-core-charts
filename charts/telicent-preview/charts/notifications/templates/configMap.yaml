@@ -14,14 +14,13 @@ data:
 
   BOOTSTRAP_SERVERS: {{ .Values.global.kafka.bootstrapServers | quote }}
   KAFKA_CONFIG_FILE_PATH: /app/config/kafka-auth/kafka-config.properties
-  INPUT_TOPIC: {{ .Values.kafka.topic | quote }}
-  DLQ_TOPIC: {{ .Values.kafka.dlqTopic | quote }}
+  INPUT_TOPIC: {{ .Values.notifications.topics.inputTopic | quote }}
+  DLQ_TOPIC: {{ .Values.notifications.topics.dlqTopic | quote }}
 
   DATABASE_JDBC_URL: {{ .Values.postgres.jdbcUrl | quote }}
-  DATABASE_CREATE_SCHEMA: {{ .Values.postgres.createSchema | quote }}
 
   JWKS_URL: {{ printf "https://%s%s" .Values.global.authHostDomain "/oauth2/jwks" | quote }}
-  AUTH_SERVER_BASE_URL: {{ printf "http://%s" (include "notifications.hostAuth" . ) | quote }}
+  USERINFO_URL: {{ printf "https://%s%s" .Values.global.authHostDomain "/userinfo" | quote }}
 
   {{- if .Values.validation.enabled }}
   ENABLE_VALIDATION: {{ .Values.validation.enabled | quote }}
