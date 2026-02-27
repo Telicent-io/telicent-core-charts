@@ -266,13 +266,12 @@ If either of those details changes, you can use this section to correctly refer 
 *Traefik Proxy* interacts with applications deployed via *telicent-preview* using their default service/serviceAccount and port.
 If either of those details changes, you can use this section to correctly refer to those applications.
 
-| Name                             | Description                                                                                                                                        | Value                    |
-| -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ |
-| `hostsPreview.enableAutoCorrect` | Prefix 'global.releaseNameTelicentPreview' value to each host value. Alternatively, the host value will be used as it is, without any modification | `true`                   |
-| `hostsPreview.dataCatalogUi`     | Data Catalog UI application default host value, as defined by 'service/serviceAccount:port'                                                        | `data-catalog-ui:8080`   |
-| `hostsPreview.userPortalUi`      | User Portal UI application default host value, as defined by 'service/serviceAccount:port'                                                         | `user-portal-ui:8080`    |
-| `hostsPreview.paperbackWriter`   | Paperback Writer application host value, as defined by 'service/serviceAccount:port'                                                               | `paperback-writer:8080`  |
-| `hostsPreview.aiSparqlBuilder`   | Ai Sparql Builder application host value, as defined by 'service/serviceAccount:port'                                                              | `ai-sparql-builder:8080` |
+| Name                             | Description                                                                                                                                        | Value                   |
+| -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------- |
+| `hostsPreview.enableAutoCorrect` | Prefix 'global.releaseNameTelicentPreview' value to each host value. Alternatively, the host value will be used as it is, without any modification | `true`                  |
+| `hostsPreview.dataCatalogUi`     | Data Catalog UI application default host value, as defined by 'service/serviceAccount:port'                                                        | `data-catalog-ui:8080`  |
+| `hostsPreview.userPortalUi`      | User Portal UI application default host value, as defined by 'service/serviceAccount:port'                                                         | `user-portal-ui:8080`   |
+| `hostsPreview.paperbackWriter`   | Paperback Writer application host value, as defined by 'service/serviceAccount:port'                                                               | `paperback-writer:8080` |
 
 ## License
 
