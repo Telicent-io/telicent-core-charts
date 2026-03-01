@@ -1,4 +1,3 @@
-
 # Declare routers / services / middlewares
 http:
   routers:
@@ -11,7 +10,6 @@ http:
         - oauth2
         - path-ai-sparql-builder
         - host-ai-sparql-builder
-      priority: 20
 
     ai-sparql-builder:
       rule: {{ printf "Host(`%s`) && PathPrefix(`/ai-sparql-builder-poc`)" .Values.global.appHostDomain }}
@@ -21,7 +19,6 @@ http:
       middleWares:
         - path-ai-sparql-builder
         - host-ai-sparql-builder
-      priority: 10
 
   services:
     ai-sparql-builder:
