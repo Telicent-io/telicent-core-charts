@@ -38,6 +38,7 @@ providers:
   file:
     directory: "/app/config/routes"
     watch: false
+    followSymlinks: false
 
 {{- if .Values.logs.access.enabled }}
 accessLog:
