@@ -12,5 +12,6 @@ metadata:
     {{- include "data-preparation.labels" . | nindent 4 }}
 
 data:
+  CLIENT_PROPERTIES: /app/config/startup/client.properties
 
   {{- end }}
