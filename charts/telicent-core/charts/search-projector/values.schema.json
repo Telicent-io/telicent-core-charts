@@ -103,8 +103,8 @@
                 },
                 "labelsIndex": {
                     "type": "string",
-                    "description": "Elastic/OpenSearch index to store security labels",
-                    "default": "labels"
+                    "description": "Elastic/OpenSearch index to store security labels.  Not currently usable due to API compatibility issues with RDF-ABAC.",
+                    "default": ""
                 },
                 "topic": {
                     "type": "string",

@@ -17,7 +17,9 @@ data:
   ELASTIC_PORT: {{ .Values.elastic.port | quote }}
   OPENSEARCH_COMPATIBILITY: {{ .Values.elastic.opensearchCompatibility | quote }}
   ELASTIC_INDEX: {{ .Values.elastic.index | quote }}
-  ELASTIC_LABELS_INDEX: {{ .Values.elastic.labelsIndex | quote }}
+
+  # CORE-1123 - Not currently usable due to API compatibility issues with RDF-ABAC
+  #ELASTIC_LABELS_INDEX: {{ .Values.elastic.labelsIndex | quote }}
 
   # Projector Configuration
   INDEX_BATCH_SIZE: {{ .Values.elastic.indexBatchSize | quote }}
