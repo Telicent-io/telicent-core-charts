@@ -1,5 +1,5 @@
 {{- /*
-Copyright (C) 2025 Telicent Limited
+Copyright (C) Telicent Limited
 */}}
 {{- if and (.Values.enabled) (not .Values.existingConfigMapName) -}}
 apiVersion: v1
@@ -12,5 +12,6 @@ metadata:
     {{- include "grpc-client.labels" . | nindent 4 }}
 
 data:
+  CLIENT_PROPERTIES: /app/config/client.properties
 
   {{- end }}

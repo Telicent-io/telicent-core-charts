@@ -1,5 +1,5 @@
 {{/*
-Copyright (C) 2025 Telicent Limited
+Copyright (C) Telicent Limited
 */}}
 
 {{/*
