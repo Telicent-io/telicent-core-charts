@@ -54,6 +54,18 @@ dependencies:
     version: "^0.1.0"
     repository: file://./charts/notifications-projector
     condition: global.enterprise
+  - name: data-preparation
+    version: "^0.1.0"
+    repository: file://./charts/data-preparation
+    condition: global.enterprise
+  - name: grpc-server
+    version: "^0.1.0"
+    repository: file://./charts/grpc-server
+    condition: global.enterprise
+  - name: grpc-client
+    version: "^0.1.0"
+    repository: file://./charts/grpc-client
+    condition: global.enterprise
 icon: "https://avatars.githubusercontent.com/u/65304240?s=200&v=4"
 
 # The name of the chart's maintainers.
