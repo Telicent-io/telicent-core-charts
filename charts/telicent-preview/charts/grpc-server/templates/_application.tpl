@@ -65,7 +65,7 @@ kafka.auth.filepath=
 # ── Authorization / Storage ─────────────────────────────────────────────
 
 # Path to the storage configuration properties file (data sharing agreement store)
-ds.authz.config.filepath=/config/storage.properties
+ds.authz.config.filepath=/app/config/storage.properties
 
 # Cache TTL in seconds for authorization lookups (default: 5)
 data.sharing.authz.expiry=5

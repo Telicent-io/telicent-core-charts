@@ -76,4 +76,4 @@ kafka.auth.filepath=
 # ── Authorization Storage ───────────────────────────────────────────────
 
 # Path to the storage configuration properties file (message consumption offset store)
-ds.authz.config.filepath=/config/storage.properties
+ds.authz.config.filepath=/app/config/storage.properties
