@@ -1,0 +1,27 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+{{- if and (.Values.enabled) (not .Values.existingConfigMapName) -}}
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: {{ include "grpc-client.configMapName" . }}
+  namespace: {{ include "grpc-client.namespace" . | quote }}
+  labels:
+    {{- include "grpc-client.labels" . | nindent 4 }}
+
+data:
+  SPARQL_DEFAULT_LABEL: {{ .Values.sparql.defaultLabel | default "!" |  quote }}
+  # point to internal graph service
+  SPARQL_URL:  {{ printf "http://%s" (include "grpc-client.hostGraph" . )  | quote }}
+
+  JWT_HEADER: "Authorization"
+  JWT_USER_ID_ATTR: "preferred_name"
+  JWT_ISSUER: {{ printf "https://%s" .Values.global.authHostDomain | quote }}
+  # point to the internal auth service only!
+  AUTH_SERVER_ALLOW_HTTP: "true"
+  AUTH_SERVER_BASE_URL: {{ printf "http://%s" (include "grpc-client.hostAuth" . )  | quote }}
+
+
+  {{- end }}
