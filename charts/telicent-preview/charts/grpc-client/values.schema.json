@@ -1,0 +1,369 @@
+{
+    "title": "Chart Values",
+    "type": "object",
+    "properties": {
+        "global": {
+            "type": "object",
+            "properties": {
+                "imageRegistry": {
+                    "type": "string",
+                    "description": "Global image registry",
+                    "default": ""
+                },
+                "imagePullSecrets": {
+                    "type": "array",
+                    "description": "Global registry secret names as an array",
+                    "default": [],
+                    "items": {}
+                },
+                "enabled": {
+                    "type": "boolean",
+                    "description": "enabled Enable *GRPC Client* deployment",
+                    "default": false
+                },
+                "kafka": {
+                    "type": "object",
+                    "properties": {
+                        "bootstrapServers": {
+                            "type": "string",
+                            "description": "Comma separated list containing Kafka bootstrap servers",
+                            "default": "kafka-bootstrap.kafka.svc.cluster.local:9092"
+                        },
+                        "existingConfigSecretName": {
+                            "type": "string",
+                            "description": "Name of an existing secret containing Kafka configuration",
+                            "default": ""
+                        },
+                        "username": {
+                            "type": "string",
+                            "description": "Username for Kafka authentication",
+                            "default": "your.kafka.username.here"
+                        },
+                        "password": {
+                            "type": "string",
+                            "description": "Password for Kafka authentication",
+                            "default": "your.kafka.password.here"
+                        },
+                        "protocol": {
+                            "type": "string",
+                            "description": "Protocol used for Kafka communication",
+                            "default": "SASL_SSL"
+                        },
+                        "mechanism": {
+                            "type": "string",
+                            "description": "SASL mechanism used for Kafka authentication",
+                            "default": "SCRAM-SHA-512"
+                        }
+                    }
+                }
+            }
+        },
+        "postgres": {
+            "type": "object",
+            "properties": {
+                "host": {
+                    "type": "string",
+                    "description": "PostgreSQL connection hostname",
+                    "default": "postgres"
+                },
+                "port": {
+                    "type": "number",
+                    "description": "PostgreSQL connection port",
+                    "default": 5432
+                },
+                "name": {
+                    "type": "string",
+                    "description": "PostgreSQL Database name",
+                    "default": ""
+                },
+                "jdbcUrl": {
+                    "type": "string",
+                    "description": "PostgreSQL connection URI. If specified the postgres.host, postgres.port and postgres.name will be ignored",
+                    "default": ""
+                },
+                "existingSecret": {
+                    "type": "string",
+                    "description": "Name of an existing secret. The secret must contain 2 keys: 'username', 'password'",
+                    "default": ""
+                },
+                "username": {
+                    "type": "string",
+                    "description": "PostgreSQL username",
+                    "default": ""
+                },
+                "password": {
+                    "type": "string",
+                    "description": "PostgreSQL password",
+                    "default": ""
+                }
+            }
+        },
+        "configMap": {
+            "type": "object",
+            "properties": {
+                "existingEnvConfigMap": {
+                    "type": "string",
+                    "description": "Name of existing configmap containing *GRPC Client* Environment Configuration",
+                    "default": ""
+                }
+            }
+        },
+        "nameOverride": {
+            "type": "string",
+            "description": "String to partially override fullname (will maintain the release name)",
+            "default": ""
+        },
+        "fullnameOverride": {
+            "type": "string",
+            "description": "String to fully override the generated release name",
+            "default": ""
+        },
+        "namespaceOverride": {
+            "type": "string",
+            "description": "String to fully override all deployed resources namespace",
+            "default": ""
+        },
+        "commonLabels": {
+            "type": "object",
+            "description": "Add labels to all the deployed resources",
+            "default": {}
+        },
+        "replicas": {
+            "type": "number",
+            "description": "Number of *GRPC Client* replicas to deploy",
+            "default": 1
+        },
+        "revisionHistoryLimit": {
+            "type": "number",
+            "description": "Number of controller revisions to keep",
+            "default": 5
+        },
+        "annotations": {
+            "type": "object",
+            "description": "Add extra annotations to the deployment object",
+            "default": {}
+        },
+        "podLabels": {
+            "type": "object",
+            "description": "Add extra labels to the *GRPC Client* pod",
+            "default": {}
+        },
+        "podAnnotations": {
+            "type": "object",
+            "description": "Add extra annotations to the *GRPC Client* pod",
+            "default": {}
+        },
+        "extraEnvVars": {
+            "type": "array",
+            "description": "Array with extra environment variables to add to *GRPC Client* pod",
+            "default": [],
+            "items": {}
+        },
+        "extraVolumes": {
+            "type": "array",
+            "description": "Optionally specify extra list of additional volumes",
+            "default": [],
+            "items": {}
+        },
+        "extraVolumeMounts": {
+            "type": "array",
+            "description": "Optionally specify extra list of additional volumeMounts",
+            "default": [],
+            "items": {}
+        },
+        "initContainers": {
+            "type": "array",
+            "description": "Add init containers to the pod",
+            "default": [],
+            "items": {}
+        },
+        "sidecars": {
+            "type": "array",
+            "description": "Add sidecars to the pod",
+            "default": [],
+            "items": {}
+        },
+        "image": {
+            "type": "object",
+            "properties": {
+                "registry": {
+                    "type": "string",
+                    "description": "*GRPC Client* image registry",
+                    "default": "quay.io"
+                },
+                "repository": {
+                    "type": "string",
+                    "description": "*GRPC Client* image name",
+                    "default": "telicent/grpc-client"
+                },
+                "tag": {
+                    "type": "string",
+                    "description": "*GRPC Client* image tag. If not set, a tag is generated using the appVersion",
+                    "default": ""
+                },
+                "pullPolicy": {
+                    "type": "string",
+                    "description": "*GRPC Client* image pull policy",
+                    "default": "IfNotPresent"
+                },
+                "pullSecrets": {
+                    "type": "array",
+                    "description": "Specify registry secret names as an array",
+                    "default": [],
+                    "items": {}
+                }
+            }
+        },
+        "resources": {
+            "type": "object",
+            "description": "Resources for *GRPC Client* containers",
+            "default": {}
+        },
+        "podSecurityContext": {
+            "type": "object",
+            "properties": {
+                "runAsUser": {
+                    "type": "number",
+                    "description": "Set the provisioning pod's Security Context runAsUser User ID",
+                    "default": 185
+                },
+                "runAsGroup": {
+                    "type": "number",
+                    "description": "Set the provisioning pod's Security Context runAsGroup Group ID",
+                    "default": 185
+                },
+                "runAsNonRoot": {
+                    "type": "boolean",
+                    "description": "Set the provisioning pod's Security Context runAsNonRoot",
+                    "default": true
+                },
+                "fsGroup": {
+                    "type": "number",
+                    "description": "Set the provisioning pod's Group ID for the mounted volumes' filesystem",
+                    "default": 185
+                },
+                "seccompProfile": {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "description": "Set the provisioning pod's Security Context seccomp profile",
+                            "default": "RuntimeDefault"
+                        }
+                    }
+                }
+            }
+        },
+        "containerSecurityContext": {
+            "type": "object",
+            "properties": {
+                "runAsUser": {
+                    "type": "number",
+                    "description": "Set containers' Security Context runAsUser User ID",
+                    "default": 185
+                },
+                "runAsGroup": {
+                    "type": "number",
+                    "description": "Set containers' Security Context runAsGroup Group ID",
+                    "default": 185
+                },
+                "runAsNonRoot": {
+                    "type": "boolean",
+                    "description": "Set container's Security Context runAsNonRoot",
+                    "default": true
+                },
+                "allowPrivilegeEscalation": {
+                    "type": "boolean",
+                    "description": "Set container's Security Context allowPrivilegeEscalation",
+                    "default": false
+                },
+                "capabilities": {
+                    "type": "object",
+                    "properties": {
+                        "drop": {
+                            "type": "array",
+                            "description": "List of capabilities to be dropped",
+                            "default": [
+                                "ALL"
+                            ],
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "seccompProfile": {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "description": "Set container's Security Context seccomp profile",
+                            "default": "RuntimeDefault"
+                        }
+                    }
+                }
+            }
+        },
+        "affinity": {
+            "type": "object",
+            "description": "Affinity for pod assignment",
+            "default": {}
+        },
+        "nodeSelector": {
+            "type": "object",
+            "description": "Node labels for pod assignment",
+            "default": {}
+        },
+        "tolerations": {
+            "type": "array",
+            "description": "Tolerations for pod assignment",
+            "default": [],
+            "items": {}
+        },
+        "serviceAccount": {
+            "type": "object",
+            "properties": {
+                "create": {
+                    "type": "boolean",
+                    "description": "Specifies whether a service account should be created",
+                    "default": true
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the ServiceAccount to use. If not set, a name is generated using the fullname",
+                    "default": ""
+                },
+                "annotations": {
+                    "type": "object",
+                    "description": "Additional custom annotations for the ServiceAccount",
+                    "default": {}
+                },
+                "automount": {
+                    "type": "boolean",
+                    "description": "Automatically mount a ServiceAccount's API credentials",
+                    "default": true
+                }
+            }
+        },
+        "service": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "*GRPC Client* service name. If not set, a name is generated using the fullname",
+                    "default": ""
+                },
+                "port": {
+                    "type": "number",
+                    "description": "*GRPC Client* service port",
+                    "default": 8080
+                },
+                "type": {
+                    "type": "string",
+                    "description": "*GRPC Client* service type",
+                    "default": "ClusterIP"
+                }
+            }
+        }
+    }
+}
