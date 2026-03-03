@@ -398,3 +398,5 @@ hostsPreview:
   spatial: "spatial:8080"
   # @key hostsPreview.aiSparqlBuilder AI SPARQL Builder application host value, as defined by 'service/serviceAccount:port'
   aiSparqlBuilder: "ai-sparql-builder:8080"
+  # @key hostsPreview.notifications Notifications application host value, as defined by 'service/serviceAccount:port'
+  notifications: "notifications:8080"

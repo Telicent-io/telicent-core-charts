@@ -61,3 +61,11 @@ Returns the principal used for ai-sparql-builder traffic by the Istio Authorizat
 {{- end -}}
 {{- end -}}
 
+{{/*
+Returns the principal used for Notifications traffic by the Istio AuthorizationPolicy
+*/}}
+{{- define "auth.notificationsPrincipal" -}}
+{{- if .Values.global.enterprise -}}
+{{- printf "- cluster.local/ns/%s/sa/%s" .Release.Namespace ( include "auth.serviceAccountNotifications" .) -}}
+{{- end -}}
+{{- end -}}
