@@ -105,15 +105,12 @@ The following contains connection details to a PostgreSQL instance, on which the
 It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
 For Quick Start purposes, a secret named `tc-auth-usr-psql-data-preparation` will be created if one is not set.
 
-| Name                      | Description                                                                                                | Value      |
-| ------------------------- | ---------------------------------------------------------------------------------------------------------- | ---------- |
-| `postgres.host`           | PostgreSQL connection hostname                                                                             | `postgres` |
-| `postgres.port`           | PostgreSQL connection port                                                                                 | `5432`     |
-| `postgres.name`           | PostgreSQL Database name                                                                                   | `""`       |
-| `postgres.jdbcUrl`        | PostgreSQL connection URI. If specified the postgres.host, postgres.port and postgres.name will be ignored | `""`       |
-| `postgres.existingSecret` | Name of an existing secret. The secret must contain 2 keys: 'username', 'password'                         | `""`       |
-| `postgres.username`       | PostgreSQL username                                                                                        | `""`       |
-| `postgres.password`       | PostgreSQL password                                                                                        | `""`       |
+| Name                      | Description                                                                        | Value |
+| ------------------------- | ---------------------------------------------------------------------------------- | ----- |
+| `postgres.uri`            | PostgreSQL connection URI.                                                         | `""`  |
+| `postgres.existingSecret` | Name of an existing secret. The secret must contain 2 keys: 'username', 'password' | `""`  |
+| `postgres.username`       | PostgreSQL username                                                                | `""`  |
+| `postgres.password`       | PostgreSQL password                                                                | `""`  |
 
 ### ConfigMap Parameters
 
