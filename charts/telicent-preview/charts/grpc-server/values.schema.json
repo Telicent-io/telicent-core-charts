@@ -61,24 +61,9 @@
         "postgres": {
             "type": "object",
             "properties": {
-                "host": {
+                "uri": {
                     "type": "string",
-                    "description": "PostgreSQL connection hostname",
-                    "default": "postgres"
-                },
-                "port": {
-                    "type": "number",
-                    "description": "PostgreSQL connection port",
-                    "default": 5432
-                },
-                "name": {
-                    "type": "string",
-                    "description": "PostgreSQL Database name",
-                    "default": ""
-                },
-                "jdbcUrl": {
-                    "type": "string",
-                    "description": "PostgreSQL connection URI. If specified the postgres.host, postgres.port and postgres.name will be ignored",
+                    "description": "PostgreSQL connection URI.",
                     "default": ""
                 },
                 "existingSecret": {
