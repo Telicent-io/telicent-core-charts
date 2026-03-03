@@ -17,3 +17,12 @@ Returns the principal used for Paperback Writer traffic by the Istio Authorizati
 {{- printf "- cluster.local/ns/%s/sa/%s" .Release.Namespace ( include "graph.serviceAccountPaperbackWriter" .) -}}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Returns the principal used for AI Sparql Builder traffic by the Istio AuthorizationPolicy
+*/}}
+{{- define "graph.aiSparqlBuilderPrincipal" -}}
+{{- if .Values.global.enterprise -}}
+{{- printf "- cluster.local/ns/%s/sa/%s" .Release.Namespace ( include "graph.serviceAccountAISparqlBuilder" .) -}}
+{{- end -}}
+{{- end -}}

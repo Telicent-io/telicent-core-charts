@@ -21,6 +21,7 @@ spec:
     - source:
         principals:
           {{- include "graph.paperbackWriterPrincipal" . | nindent 8 }}
+          {{- include "graph.aiSparqlBuilderPrincipal" . | nindent 8 }}
     to:
     - operation:
         paths:
