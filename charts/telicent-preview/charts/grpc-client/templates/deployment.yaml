@@ -138,7 +138,7 @@ spec:
           name: {{ include "grpc-client.clientConfigMapName" . }}
       - name: storage-config-volume
         configMap:
-          name: {{ include "grpc-client.clientConfigMapName" . }}
+          name: {{ include "grpc-client.storageConfigMapName" . }}
       {{- with .Values.extraVolumes }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
