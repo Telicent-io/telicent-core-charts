@@ -96,7 +96,11 @@ spec:
           timeoutSeconds: 5
 
           {{- if .Values.extraVolumeMounts }}
-          volumeMounts:
+          volumeMounts
+          - name: application-config-volume
+          mountPath: /app/config/startup/server.properties
+          subPath: server.properties
+          readOnly: true
           {{- with .Values.extraVolumeMounts }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
