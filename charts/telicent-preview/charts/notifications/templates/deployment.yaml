@@ -1,0 +1,119 @@
+{{- /*
+Copyright (C) 2026 Telicent Limited
+*/}}
+
+{{- if .Values.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: {{ include "notifications.fullname" . }}
+  labels:
+    {{- include "notifications.labels" . | nindent 4 }}
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "notifications.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "notifications.labels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      serviceAccountName: {{ include "notifications.serviceAccountName" . }}
+      {{- with .Values.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- $pullSecret := .Values.global.imagePullSecrets | default .Values.imagePullSecrets }}
+      {{- with $pullSecret }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+
+
+      containers:
+        - name: {{ .Chart.Name }}
+          {{- with .Values.containerSecurityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          env:
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "notifications.postgresSecretName" . }}
+                  key: password
+            - name: DATABASE_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "notifications.postgresSecretName" . }}
+                  key: username
+          envFrom:
+            - configMapRef:
+                name: {{ include "notifications.fullname" . }}-config
+          image: "{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 22222
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 22222
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 60
+            timeoutSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /version-info
+              port: 22222
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 60
+            timeoutSeconds: 5
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          volumeMounts:
+            - mountPath: /app/config/kafka-auth/
+              name: kafka-auth-config
+          {{- with .Values.volumeMounts }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      volumes:
+      {{- with .Values.volumes }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      - name: kafka-auth-config
+        secret:
+        {{- if .Values.global.kafka.existingConfigSecretName }}
+          secretName: {{ .Values.global.kafka.existingConfigSecretName }}
+        {{- else }}
+          secretName: {{ include "notifications.fullname" . }}-kafka-config
+        {{- end }}
+     
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}

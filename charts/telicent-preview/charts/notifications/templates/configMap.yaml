@@ -1,0 +1,35 @@
+{{- /*
+Copyright (C) 2026 Telicent Limited
+*/}}
+{{- if .Values.enabled -}}
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: {{ include "notifications.fullname" . }}-config
+  labels:
+    {{- include "notifications.labels" . | nindent 4 }}
+data:
+  FEATURE_FLAG_AUTHZ: "true"
+
+  BOOTSTRAP_SERVERS: {{ .Values.global.kafka.bootstrapServers | quote }}
+  KAFKA_CONFIG_FILE_PATH: /app/config/kafka-auth/kafka-config.properties
+  INPUT_TOPIC: {{ .Values.notifications.topics.inputTopic | quote }}
+  DLQ_TOPIC: {{ .Values.notifications.topics.dlqTopic | quote }}
+
+  DATABASE_JDBC_URL: {{ .Values.postgres.jdbcUrl | quote }}
+
+  JWKS_URL: {{ printf "https://%s%s" .Values.global.authHostDomain "/oauth2/jwks" | quote }}
+  USERINFO_URL: {{ printf "https://%s%s" .Values.global.authHostDomain "/userinfo" | quote }}
+
+  {{- if .Values.validation.enabled }}
+  ENABLE_VALIDATION: {{ .Values.validation.enabled | quote }}
+  REGISTRY_HOSTNAME: {{ .Values.validation.registry.hostname | quote }}
+  REGISTRY_PORT: {{ .Values.validation.registry.port | quote }}
+  {{- end }}
+
+  {{- if .Values.metrics.enabled }}
+  OTEL_METRICS_EXPORTER: "prometheus"
+  OTEL_TRACES_EXPORTER: "none"
+  {{- end }}
+{{- end }}

@@ -1,0 +1,23 @@
+{{- /*
+Copyright (C) 2026 Telicent Limited
+*/}}
+
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: {{ include "notifications-projector.serviceName" . }}
+  namespace: {{ include "notifications-projector.namespace" . | quote }}
+  labels:
+    {{- include "notifications-projector.labels" . | nindent 4 }}
+
+spec:
+  type: {{ .Values.service.type }}
+  selector:
+    {{- include "notifications-projector.selectorLabels" . | nindent 4 }}
+  ports:
+  - name: metrics
+    appProtocol: http
+    protocol: TCP
+    targetPort: metrics
+    port: {{ .Values.metrics.service.port }}

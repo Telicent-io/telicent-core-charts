@@ -1,21 +1,11 @@
 # Declare routers / services / middlewares
 http:
   routers:
-    ai-sparql-builder-api:
-      rule: {{ printf "Host(`%s`) && PathPrefix(`/ai-sparql-builder-poc/api`)" .Values.global.appHostDomain }}
-      service: ai-sparql-builder
-      entryPoints:
-        - web-app
-      middleWares:
-        - oauth2
-        - path-ai-sparql-builder
-        - host-ai-sparql-builder
-
     ai-sparql-builder:
-      rule: {{ printf "Host(`%s`) && PathPrefix(`/ai-sparql-builder-poc`)" .Values.global.appHostDomain }}
+      rule: {{ printf "Host(`%s`) && PathPrefix(`/ai-sparql-builder-poc`)" .Values.global.apiHostDomain }}
       service: ai-sparql-builder
       entryPoints:
-        - web-app
+        - web-api
       middleWares:
         - path-ai-sparql-builder
         - host-ai-sparql-builder
@@ -30,7 +20,7 @@ http:
     path-ai-sparql-builder:
       replacePathRegex:
         regex: "^/ai-sparql-builder-poc/(.*)"
-        replacement: "/$1"
+        replacement: "/api/$1"
 
     host-ai-sparql-builder:
       headers:

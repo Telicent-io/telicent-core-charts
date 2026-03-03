@@ -46,6 +46,14 @@ dependencies:
     version: "^0.1.0"
     repository: file://./charts/spatial-projector
     condition: global.enterprise
+  - name: notifications
+    version: "^0.1.0"
+    repository: file://./charts/notifications
+    condition: global.enterprise
+  - name: notifications-projector
+    version: "^0.1.0"
+    repository: file://./charts/notifications-projector
+    condition: global.enterprise
 icon: "https://avatars.githubusercontent.com/u/65304240?s=200&v=4"
 
 # The name of the chart's maintainers.
