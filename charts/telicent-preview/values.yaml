@@ -95,3 +95,26 @@ notifications:
 notifications-projector:
   # @key notifications-projector.enabled Enable or disable the notifications-projector component.
   enabled: false
+
+#
+# @section Data Preparation Parameters
+#
+data-preparation:
+  enabled: false
+# if true, one or more instances need to be defined
+  instances:
+
+# example
+#   gbr-secret:
+#     applicationId: streams-data-prep-gbr
+#     topicInput: streams-input
+#     topicOutput: streams-output-gbr
+#     topicDeadLetter: streams-dlq-gbr
+#     filterType: idh
+#     clientVersion: "1.0"
+#     clientNationality: GBR
+#     clientClassification: S
+#     clientOrganisation: ""
+#     clientGroup: ""
+#     transformerType: distribution-id
+#     distributionId: ABC-DEF-GHI

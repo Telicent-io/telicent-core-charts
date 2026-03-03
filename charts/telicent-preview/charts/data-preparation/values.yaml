@@ -57,12 +57,43 @@ postgres:
   password: ""
 
 #
-# @section ConfigMap Parameters
+# @section Instance Parameters
 #
-configMap:
-  # @key configMap.existingEnvConfigMap Name of existing configmap containing *Data Preparation* Environment Configuration
-  # Note: When it's set it will disable configmap creation.
-  existingEnvConfigMap: ""
+# @descStart
+# Each key under `instances` creates its own Deployment, ConfigMap, and Service.
+# Instance-level values configure the application.properties file.
+# Shared settings (image, resources, security, etc.) come from top-level values.
+# @descEnd
+#
+# Example:
+# instances:
+#   gbr-secret:
+#     applicationId: streams-data-prep-gbr
+#     topicInput: streams-input
+#     topicOutput: streams-output-gbr
+#     topicDeadLetter: streams-dlq-gbr
+#     filterType: idh
+#     clientVersion: "1.0"
+#     clientNationality: GBR
+#     clientClassification: S
+#     clientOrganisation: ""
+#     clientGroup: ""
+#     transformerType: distribution-id
+#     distributionId: ABC-DEF-GHI
+#   usa-unclassified:
+#     applicationId: streams-data-prep-usa
+#     topicInput: streams-input
+#     topicOutput: streams-output-usa
+#     topicDeadLetter: streams-dlq-usa
+#     filterType: header
+#     headerFilters:
+#       include:
+#         Content-Type: application/json
+#       exclude:
+#         Event-Type: audit
+#     transformerType: distribution-id
+#     distributionId: XYZ-123-456
+instances: {}
 
 #
 # @section Common Parameters

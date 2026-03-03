@@ -1,61 +1,86 @@
+{{/*
+Copyright (C) 2025 Telicent Limited
+*/}}
+
+{{/*
+Renders application.properties content for a data-preparation instance.
+
+Usage: include "data-preparation.application-properties" (dict "instance" $instanceConfig "global" $.Values.global)
+*/}}
+{{- define "data-preparation.application-properties" -}}
 #
 # Data Preparation Engine - Configuration
 #
 # ── Core ────────────────────────────────────────────────────────────────
 
-# Kafka Streams application ID (env: APPLICATION_ID)
-application.id=streams-data-prep
+# Kafka Streams application ID
+application.id={{ required "instance.applicationId is required" .instance.applicationId }}
 
-# Kafka bootstrap servers (env: BOOTSTRAP_SERVERS)
-bootstrap.servers=localhost:9092
+# Kafka bootstrap servers
+bootstrap.servers={{ .global.kafka.bootstrapServers }}
 
-# Input topic to consume from (env: TOPIC_INPUT)
-topic.input=streams-input
+# Input topic to consume from
+topic.input={{ required "instance.topicInput is required" .instance.topicInput }}
 
-# Output topic to produce to (env: TOPIC_OUTPUT)
-topic.output=streams-output
+# Output topic to produce to
+topic.output={{ required "instance.topicOutput is required" .instance.topicOutput }}
 
-# Dead letter queue topic for failed messages (env: TOPIC_DEAD_LETTER)
-topic.deadletter=streams-dlq
+# Dead letter queue topic for failed messages
+topic.deadletter={{ required "instance.topicDeadLetter is required" .instance.topicDeadLetter }}
 
-# Path to Kafka SASL/SSL auth properties file; key must exist, value can be empty (env: KAFKA_AUTH_FILEPATH)
-kafka.auth.filepath=
+# Path to Kafka SASL/SSL auth properties file
+kafka.auth.filepath={{ .instance.kafkaAuthFilepath | default "" }}
 
 # ── Filter ──────────────────────────────────────────────────────────────
 
-# Filter type: "idh" or "header" (env: FILTER_TYPE)
-filter.type=idh
+# Filter type: "idh" or "header"
+{{- if .instance.filterType }}
+filter.type={{ .instance.filterType }}
+{{- end }}
+
+{{- if contains .instance.filterType "idh" }}
 
 # ── IDH Filter Properties (filter.type=idh) ────────────────────────────
 
-# IDH specification version (env: CLIENT_VERSION)
-client.version=1.0
+# IDH specification version
+client.version={{ .instance.clientVersion | default "1.0" }}
 
-# Space-separated nationality codes; empty = no restriction (env: CLIENT_NATIONALITY)
-client.nationality=GBR
+# Space-separated nationality codes; empty = no restriction
+client.nationality={{ .instance.clientNationality | default "" }}
 
-# Security classification level (env: CLIENT_CLASSIFICATION)
-client.classification=S
+# Security classification level
+client.classification={{ required "instance.clientClassification is required" .instance.clientClassification }}
 
-# Space-separated organisation codes; empty = no restriction (env: CLIENT_ORG)
-client.organisation=
+# Space-separated organisation codes; empty = no restriction
+client.organisation={{ .instance.clientOrganisation | default "" }}
 
-# Space-separated group names; empty = no restriction (env: CLIENT_GROUP)
-client.group=
+# Space-separated group names; empty = no restriction
+client.group={{ .instance.clientGroup | default "" }}
+{{- end }}
 
+{{- if contains .instance.filterType "headers" }}
 # ── Header Filter Properties (filter.type=header) ──────────────────────
-# Define include/exclude rules using prefix conventions.
-# Header names are CASE-SENSITIVE in line with the Kafka header specification.
-#   header.filter.include.{header-name}=value  (env: HEADER_FILTER_INCLUDE_{HEADER_NAME})
-#   header.filter.exclude.{header-name}=value  (env: HEADER_FILTER_EXCLUDE_{HEADER_NAME})
-# Example:
-# header.filter.include.Content-Type=application/json
-# header.filter.exclude.Event-Type=audit
+{{- if .instance.headerFilters }}
+{{- if .instance.headerFilters.include }}
+{{- range $header, $value := .instance.headerFilters.include }}
+header.filter.include.{{ $header }}={{ $value }}
+{{- end }}
+{{- end }}
+{{- if .instance.headerFilters.exclude }}
+{{- range $header, $value := .instance.headerFilters.exclude }}
+header.filter.exclude.{{ $header }}={{ $value }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end }}
 
+{{- if eq .instance.transformerType "distribution-id" }}
 # ── Transformer ─────────────────────────────────────────────────────────
 
-# Transformer type: "distribution-id" (env: TRANSFORMER_TYPE)
-transformer.type=distribution-id
+# Transformer type
+transformer.type={{ .instance.transformerType | default "distribution-id" }}
 
-# Distribution ID injected as a "Distribution-Id" Kafka header (env: DISTRIBUTION_ID)
-distribution.id=ABC-DEF-GHI
+# Distribution ID injected as a "Distribution-Id" Kafka header
+distribution.id={{ required "instance.distributionId is required"  .instance.distributionId }}
+{{- end }}
+{{- end -}}

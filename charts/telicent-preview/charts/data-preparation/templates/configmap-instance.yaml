@@ -6,7 +6,7 @@ Copyright (C) 2025 Telicent Limited
 {{- range $instanceName, $instanceConfig := .Values.instances }}
 ---
 apiVersion: v1
-kind: Service
+kind: ConfigMap
 
 metadata:
   name: {{ include "data-preparation.fullname" $root }}-{{ $instanceName }}
@@ -14,15 +14,8 @@ metadata:
   labels:
     {{- include "data-preparation.instanceLabels" (dict "root" $root "instanceName" $instanceName) | nindent 4 }}
 
-spec:
-  type: {{ $root.Values.service.type }}
-  selector:
-    {{- include "data-preparation.instanceSelectorLabels" (dict "root" $root "instanceName" $instanceName) | nindent 4 }}
-  ports:
-    - name: http
-      appProtocol: http
-      protocol: TCP
-      targetPort: http
-      port: {{ $root.Values.service.port }}
+data:
+  application.properties: |
+    {{- include "data-preparation.application-properties" (dict "instance" $instanceConfig "global" $root.Values.global) | nindent 4 }}
 {{- end }}
 {{- end }}

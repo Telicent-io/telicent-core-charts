@@ -89,3 +89,21 @@ Create the name of the service to use (based on the fullname).
 {{- include "data-preparation.fullname" . }}
 {{- end }}
 {{- end }}
+
+{{/*
+Instance-scoped selector labels.
+Usage: include "data-preparation.instanceSelectorLabels" (dict "root" . "instanceName" $instanceName)
+*/}}
+{{- define "data-preparation.instanceSelectorLabels" -}}
+{{ include "data-preparation.selectorLabels" .root }}
+app.kubernetes.io/component: {{ .instanceName }}
+{{- end }}
+
+{{/*
+Instance-scoped labels (common labels + instance name).
+Usage: include "data-preparation.instanceLabels" (dict "root" . "instanceName" $instanceName)
+*/}}
+{{- define "data-preparation.instanceLabels" -}}
+{{ include "data-preparation.labels" .root }}
+app.kubernetes.io/component: {{ .instanceName }}
+{{- end }}
