@@ -12,5 +12,5 @@ metadata:
     {{- include "grpc-server.labels" . | nindent 4 }}
 
 data:
-  SERVER_PROPERTIES: /app/config/startup/server.properties
+  SERVER_PROPERTIES: /app/config/server.properties
   {{- end }}
