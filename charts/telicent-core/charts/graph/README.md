@@ -234,10 +234,11 @@ If either of those details changes, you can use this section to correctly refer 
 *Graph* interacts with applications deployed via *telicent-preview* using their default service/serviceAccount and port.
 If either of those details changes, you can use this section to correctly refer to those applications.
 
-| Name                             | Description                                                                                                                                        | Value                   |
-| -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------- |
-| `hostsPreview.enableAutoCorrect` | Prefix 'global.releaseNameTelicentPreview' value to each host value. Alternatively, the host value will be used as it is, without any modification | `true`                  |
-| `hostsPreview.paperbackWriter`   | Paperback Writer application host value, as defined by 'service/serviceAccount:port'                                                               | `paperback-writer:8080` |
+| Name                             | Description                                                                                                                                        | Value                    |
+| -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ |
+| `hostsPreview.enableAutoCorrect` | Prefix 'global.releaseNameTelicentPreview' value to each host value. Alternatively, the host value will be used as it is, without any modification | `true`                   |
+| `hostsPreview.paperbackWriter`   | Paperback Writer application host value, as defined by 'service/serviceAccount:port'                                                               | `paperback-writer:8080`  |
+| `hostsPreview.aiSparqlBuilder`   | AI SPARQL Builder application host value, as defined by 'service/serviceAccount:port'                                                              | `ai-sparql-builder:8080` |
 
 ## License
 

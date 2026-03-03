@@ -39,3 +39,11 @@ application relies on. For a full explanation please view '_hosts.tlp' file in t
 {{- define "graph.serviceAccountPaperbackWriter" -}}
 {{- printf "%s" (include "common.discoverServiceAccountPreview" (list . .Values.hostsPreview.paperbackWriter )) -}}
 {{- end -}}
+
+{{/* ai-sparql-builder | preview - returns host ('service:port') and serviceAccount */}}
+{{- define "graph.hostAISparqlBuilder" -}}
+{{- printf "%s" (include "common.discoverHostPreview" (list . .Values.hostsPreview.aiSparqlBuilder )) -}}
+{{- end -}}
+{{- define "graph.serviceAccountAISparqlBuilder" -}}
+{{- printf "%s" (include "common.discoverServiceAccountPreview" (list . .Values.hostsPreview.aiSparqlBuilder )) -}}
+{{- end -}}
