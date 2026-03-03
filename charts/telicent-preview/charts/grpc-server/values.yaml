@@ -209,3 +209,15 @@ service:
   # @key service.type *GRPC Server* service type
   type: ClusterIP
 
+#
+# @section Host(s) Parameters - Contains host information for applications deployed via *telicent-preview* chart.
+#
+# @descStart
+# *GRPC Server* interacts directly with other Telicent Applications using their default service/serviceAccount and port.
+# If either of those details changes, you can use this section to correctly refer to those applications.
+# @descEnd
+hosts:
+  # @key hosts.enableAutoCorrect Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as is, without any modification.
+  enableAutoCorrect: true
+  # @key hosts.auth Auth application default host value, as defined by 'service/serviceAccount:port'
+  grpcClient: "grpc-client:8080"

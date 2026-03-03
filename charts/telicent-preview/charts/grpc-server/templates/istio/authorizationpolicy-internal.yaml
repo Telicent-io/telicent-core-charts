@@ -1,0 +1,36 @@
+{{- /*
+Copyright (C) 2025 Telicent Limited
+*/}}
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+
+metadata:
+  name: {{ include "grpc-server.fullname" . }}-internal-ingress
+  namespace: {{ include "grpc-server.namespace" . | quote }}
+  labels:
+    {{- include "grpc-server.labels" . | nindent 4 }}
+
+spec:
+  selector:
+    matchLabels:
+      {{- include "grpc-server.selectorLabels" . | nindent 6 }}
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        principals:
+          {{- include "grpc-server.paperbackWriterPrincipal" . | nindent 8 }}
+    to:
+    - operation:
+        paths:
+        - /knowledge/update
+        - /knowledge/update/*
+        - /ontology/update
+        - /ontology/update/*
+        - /catalog/query
+        - /catalog/query/*
+        - /catalog/update
+        - /catalog/update/*
+        - /$/labels/catalog
+        - /$/labels/catalog/*
+        methods: ["GET", "POST"]
