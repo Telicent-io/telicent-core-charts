@@ -35,6 +35,9 @@ spec:
         {{- end }}
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap-env.yaml") . | sha256sum }}
+        checksum/storage: {{ include (print $.Template.BasePath "/configmap-storage.yaml") . | sha256sum }}
+        checksum/client: {{ include (print $.Template.BasePath "/configmap-client.yaml") . | sha256sum }}
+
       {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
@@ -104,20 +107,20 @@ spec:
           periodSeconds: 60
           timeoutSeconds: 5
 
-          volumeMounts:
-          - name: kafka-auth-config
-            mountPath: /app/config/kafka-auth/
-          - name: client-config-volume
-            mountPath: /app/config/client.properties
-            subPath: client.properties
-            readOnly: true
-          - name: storage-config-volume
-            mountPath: /app/config/storage.properties
-            subPath: storage.properties
-            readOnly: true
-          {{- with .Values.extraVolumeMounts }}
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
+        volumeMounts:
+        - name: kafka-auth-config
+          mountPath: /app/config/kafka-auth/
+        - name: client-config-volume
+          mountPath: /app/config/client.properties
+          subPath: client.properties
+          readOnly: true
+        - name: storage-config-volume
+          mountPath: /app/config/storage.properties
+          subPath: storage.properties
+          readOnly: true
+        {{- with .Values.extraVolumeMounts }}
+          {{- toYaml . | nindent 12 }}
+        {{- end }}
 
       {{- with .Values.sidecars }}
         {{- toYaml . | nindent 8 }}
