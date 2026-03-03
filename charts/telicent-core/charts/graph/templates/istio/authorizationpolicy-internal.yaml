@@ -27,6 +27,8 @@ spec:
         paths:
         - /knowledge/update
         - /knowledge/update/*
+        - /knowledge/query
+        - /knowledge/query/*
         - /ontology/update
         - /ontology/update/*
         - /catalog/query
