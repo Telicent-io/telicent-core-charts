@@ -42,19 +42,13 @@ global:
 # @descStart
 # The following contains connection details to a PostgreSQL instance, on which the application relies.
 # It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
-# For Quick Start purposes, a secret named `tc-auth-usr-psql-data-preparation` will be created if one is not set.
+# For Quick Start purposes, a secret named `tc-auth-usr-psql-grpc-client` will be created if one is not set.
 # @descEnd
 postgres:
-  # @key postgres.host PostgreSQL connection hostname
-  host: postgres
-  # @key postgres.port PostgreSQL connection port
-  port: 5432
-  # @key postgres.name PostgreSQL Database name
-  name: ""
-  # @key postgres.jdbcUrl PostgreSQL connection URI. If specified the postgres.host, postgres.port and postgres.name will be ignored
-  jdbcUrl: ""
+  # @key postgres.uri PostgreSQL connection URI.
+  uri: ""
   # @key postgres.existingSecret Name of an existing secret. The secret must contain 2 keys: 'username', 'password'
-  # Note: Left unset, it will create a secret named: tc-auth-usr-data-preparation
+  # Note: Left unset, it will create a secret named: tc-auth-usr-psql-grpc-client
   existingSecret: ""
   # @key postgres.username PostgreSQL username
   # Note: For additional security, the username is read from the secret, as defined by 'existingSecret' and not from this value!
@@ -214,5 +208,4 @@ service:
   port: 8080
   # @key service.type *GRPC Client* service type
   type: ClusterIP
-
 
