@@ -29,6 +29,21 @@ global:
   # @key global.authHostDomain Domain associated with Telicent authentication services, including OIDC providers. This value cannot be changed after it is set
   authHostDomain: ""
 
+
+  kafka:
+    # @key global.kafka.bootstrapServers Comma separated list containing Kafka bootstrap servers
+    bootstrapServers: "kafka-bootstrap.kafka.svc.cluster.local:9092"
+    # @key global.kafka.existingConfigSecretName Name of an existing secret containing Kafka configuration
+    existingConfigSecretName: ""
+    # @key global.kafka.username Username for Kafka authentication
+    username: "your.kafka.username.here"
+    # @key global.kafka.password Password for Kafka authentication
+    password: "your.kafka.password.here"
+    # @key global.kafka.protocol Protocol used for Kafka communication
+    protocol: "SASL_SSL"
+    # @key global.kafka.mechanism SASL mechanism used for Kafka authentication
+    mechanism: "SCRAM-SHA-512"
+
   truststore:
     # @key global.truststore.existingSecret Name of an existing secret containing the truststore
     existingSecret: ""
@@ -68,6 +83,8 @@ elastic:
   searchFieldOptions: "primaryName^2,*"
   # @key elastic.indexBatchSize Number of documents to index in a single batch operation
   indexBatchSize: "100"
+  # @key elastic.actionsTopic Topic used to synchronise actions between the *Search Projector* and the *Search API* applications.
+  actionsTopic: actions
 
   # @key elastic.existingSecret Name of an existing secret. The secret must contain 2 keys: 'username', 'password'
   # Note: Left unset, it will create a secret named: tc-auth-usr-elastic-search

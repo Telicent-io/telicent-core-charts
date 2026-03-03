@@ -86,16 +86,22 @@ the [kubernetes documentation](https://kubernetes.io/docs/concepts/configuration
 Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart
 Note: Only global parameters used within this chart will be listed below
 
-| Name                               | Description                                                                                                                     | Value                    |
-| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | ------------------------ |
-| `global.imageRegistry`             | Global image registry                                                                                                           | `""`                     |
-| `global.imagePullSecrets`          | Global registry secret names as an array                                                                                        | `[]`                     |
-| `global.enterprise`                | Enable enterprise mode, adding additional features and configurations                                                           | `false`                  |
-| `global.appHostDomain`             | Domain associated with Telicent application/ui services. This value cannot be changed after it is set                           | `""`                     |
-| `global.apiHostDomain`             | Domain associated with Telicent Api services. This value cannot be changed after it is set                                      | `""`                     |
-| `global.authHostDomain`            | Domain associated with Telicent authentication services, including OIDC providers. This value cannot be changed after it is set | `""`                     |
-| `global.truststore.existingSecret` | Name of an existing secret containing the truststore                                                                            | `""`                     |
-| `global.truststore.mountPath`      | The mount path for the truststore in the container                                                                              | `/app/config/truststore` |
+| Name                                    | Description                                                                                                                     | Value                                          |
+| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| `global.imageRegistry`                  | Global image registry                                                                                                           | `""`                                           |
+| `global.imagePullSecrets`               | Global registry secret names as an array                                                                                        | `[]`                                           |
+| `global.enterprise`                     | Enable enterprise mode, adding additional features and configurations                                                           | `false`                                        |
+| `global.appHostDomain`                  | Domain associated with Telicent application/ui services. This value cannot be changed after it is set                           | `""`                                           |
+| `global.apiHostDomain`                  | Domain associated with Telicent Api services. This value cannot be changed after it is set                                      | `""`                                           |
+| `global.authHostDomain`                 | Domain associated with Telicent authentication services, including OIDC providers. This value cannot be changed after it is set | `""`                                           |
+| `global.kafka.bootstrapServers`         | Comma separated list containing Kafka bootstrap servers                                                                         | `kafka-bootstrap.kafka.svc.cluster.local:9092` |
+| `global.kafka.existingConfigSecretName` | Name of an existing secret containing Kafka configuration                                                                       | `""`                                           |
+| `global.kafka.username`                 | Username for Kafka authentication                                                                                               | `your.kafka.username.here`                     |
+| `global.kafka.password`                 | Password for Kafka authentication                                                                                               | `your.kafka.password.here`                     |
+| `global.kafka.protocol`                 | Protocol used for Kafka communication                                                                                           | `SASL_SSL`                                     |
+| `global.kafka.mechanism`                | SASL mechanism used for Kafka authentication                                                                                    | `SCRAM-SHA-512`                                |
+| `global.truststore.existingSecret`      | Name of an existing secret containing the truststore                                                                            | `""`                                           |
+| `global.truststore.mountPath`           | The mount path for the truststore in the container                                                                              | `/app/config/truststore`                       |
 
 ### Application Parameters - Java
 
@@ -111,17 +117,18 @@ The following contains connection details to an Elastic/OpenSearch service, on w
 It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
 For Quick Start purposes, a secret named `tc-auth-usr-elastic-search` will be created if one is not set.
 
-| Name                              | Description                                                                        | Value                          |
-| --------------------------------- | ---------------------------------------------------------------------------------- | ------------------------------ |
-| `elastic.host`                    | Elastic/OpenSearch host                                                            | `https://your.opensearch.host` |
-| `elastic.port`                    | Elastic/OpenSearch port number                                                     | `443`                          |
-| `elastic.opensearchCompatibility` | Enable OpenSearch compatibility                                                    | `true`                         |
-| `elastic.index`                   | Elastic/OpenSearch index to be used                                                | `search,doc-content`           |
-| `elastic.searchFieldOptions`      | Field options for search                                                           | `primaryName^2,*`              |
-| `elastic.indexBatchSize`          | Number of documents to index in a single batch operation                           | `100`                          |
-| `elastic.existingSecret`          | Name of an existing secret. The secret must contain 2 keys: 'username', 'password' | `""`                           |
-| `elastic.username`                | OpenSearch/Elastic username                                                        | `""`                           |
-| `elastic.password`                | OpenSearch/Elastic user password                                                   | `""`                           |
+| Name                              | Description                                                                                         | Value                          |
+| --------------------------------- | --------------------------------------------------------------------------------------------------- | ------------------------------ |
+| `elastic.host`                    | Elastic/OpenSearch host                                                                             | `https://your.opensearch.host` |
+| `elastic.port`                    | Elastic/OpenSearch port number                                                                      | `443`                          |
+| `elastic.opensearchCompatibility` | Enable OpenSearch compatibility                                                                     | `true`                         |
+| `elastic.index`                   | Elastic/OpenSearch index to be used                                                                 | `search,doc-content`           |
+| `elastic.searchFieldOptions`      | Field options for search                                                                            | `primaryName^2,*`              |
+| `elastic.indexBatchSize`          | Number of documents to index in a single batch operation                                            | `100`                          |
+| `elastic.actionsTopic`            | Topic used to synchronise actions between the *Search Projector* and the *Search API* applications. | `actions`                      |
+| `elastic.existingSecret`          | Name of an existing secret. The secret must contain 2 keys: 'username', 'password'                  | `""`                           |
+| `elastic.username`                | OpenSearch/Elastic username                                                                         | `""`                           |
+| `elastic.password`                | OpenSearch/Elastic user password                                                                    | `""`                           |
 
 ### ConfigMap Parameters
 

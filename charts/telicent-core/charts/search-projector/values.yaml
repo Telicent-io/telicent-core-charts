@@ -67,12 +67,18 @@ elastic:
   opensearchCompatibility: true
   # @key elastic.index Elastic/OpenSearch index to be used
   index: search
+  # @key elastic.labelsIndex Elastic/OpenSearch index to store security labels.  Not currently usable due to API compatibility issues with RDF-ABAC.
+  labelsIndex: ""
   # @key elastic.topic Topic to consume messages from
   topic: knowledge
   # @key elastic.dlqTopic Dead-letter topic for failed messages
   dlqTopic: knowledge.dlq
+  # @key elastic.actionsTopic Topic used to synchronise actions between the *Search Projector* and the *Search API* applications.
+  actionsTopic: actions
   # @key elastic.indexBatchSize Number of documents to index in a single batch operation
   indexBatchSize: "500"
+  # @key elastic.entityProjection Name of the entity projection to be used, leave blank for default which is suitable for most use cases.
+  entityProjection: ""
 
   # @key elastic.existingSecret Name of an existing secret. The secret must contain 2 keys: 'username', 'password'
   # Note: Left unset, it will create a secret named: tc-auth-usr-elastic-search-projector

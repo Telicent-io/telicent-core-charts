@@ -113,6 +113,8 @@ spec:
           timeoutSeconds: 5
 
         volumeMounts:
+        - name: kafka-auth-config
+          mountPath: /app/config/kafka-auth/
         {{- if .Values.global.truststore.existingSecret }}
         - name: java-truststore
           mountPath: {{ .Values.global.truststore.mountPath | default "/app/config/truststore" }}
@@ -126,6 +128,13 @@ spec:
       {{- end }}
      
       volumes:
+      - name: kafka-auth-config
+        secret:
+        {{- if .Values.global.kafka.existingConfigSecretName }}
+          secretName: {{ .Values.global.kafka.existingConfigSecretName }}
+        {{- else }}
+          secretName: {{ include "search-projector.fullname" . }}-kafka-config
+        {{- end }}
       {{- if .Values.global.truststore.existingSecret }}
       - name: java-truststore
         secret:

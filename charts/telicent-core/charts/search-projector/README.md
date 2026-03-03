@@ -113,18 +113,21 @@ The following contains connection details to an Elastic/OpenSearch service, on w
 It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
 For Quick Start purposes, a secret named `tc-auth-usr-elastic-search-projector` will be created if one is not set.
 
-| Name                              | Description                                                                        | Value                          |
-| --------------------------------- | ---------------------------------------------------------------------------------- | ------------------------------ |
-| `elastic.host`                    | Elastic/OpenSearch host                                                            | `https://your.opensearch.host` |
-| `elastic.port`                    | Elastic/OpenSearch cluster port                                                    | `443`                          |
-| `elastic.opensearchCompatibility` | Enable OpenSearch compatibility                                                    | `true`                         |
-| `elastic.index`                   | Elastic/OpenSearch index to be used                                                | `search`                       |
-| `elastic.topic`                   | Topic to consume messages from                                                     | `knowledge`                    |
-| `elastic.dlqTopic`                | Dead-letter topic for failed messages                                              | `knowledge.dlq`                |
-| `elastic.indexBatchSize`          | Number of documents to index in a single batch operation                           | `500`                          |
-| `elastic.existingSecret`          | Name of an existing secret. The secret must contain 2 keys: 'username', 'password' | `""`                           |
-| `elastic.username`                | OpenSearch/Elastic username                                                        | `""`                           |
-| `elastic.password`                | OpenSearch/Elastic user password                                                   | `""`                           |
+| Name                              | Description                                                                                                             | Value                          |
+| --------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------ |
+| `elastic.host`                    | Elastic/OpenSearch host                                                                                                 | `https://your.opensearch.host` |
+| `elastic.port`                    | Elastic/OpenSearch cluster port                                                                                         | `443`                          |
+| `elastic.opensearchCompatibility` | Enable OpenSearch compatibility                                                                                         | `true`                         |
+| `elastic.index`                   | Elastic/OpenSearch index to be used                                                                                     | `search`                       |
+| `elastic.labelsIndex`             | Elastic/OpenSearch index to store security labels.  Not currently usable due to API compatibility issues with RDF-ABAC. | `""`                           |
+| `elastic.topic`                   | Topic to consume messages from                                                                                          | `knowledge`                    |
+| `elastic.dlqTopic`                | Dead-letter topic for failed messages                                                                                   | `knowledge.dlq`                |
+| `elastic.actionsTopic`            | Topic used to synchronise actions between the *Search Projector* and the *Search API* applications.                     | `actions`                      |
+| `elastic.indexBatchSize`          | Number of documents to index in a single batch operation                                                                | `500`                          |
+| `elastic.entityProjection`        | Name of the entity projection to be used, leave blank for default which is suitable for most use cases.                 | `""`                           |
+| `elastic.existingSecret`          | Name of an existing secret. The secret must contain 2 keys: 'username', 'password'                                      | `""`                           |
+| `elastic.username`                | OpenSearch/Elastic username                                                                                             | `""`                           |
+| `elastic.password`                | OpenSearch/Elastic user password                                                                                        | `""`                           |
 
 ### ConfigMap Parameters
 

@@ -101,6 +101,11 @@
                     "description": "Elastic/OpenSearch index to be used",
                     "default": "search"
                 },
+                "labelsIndex": {
+                    "type": "string",
+                    "description": "Elastic/OpenSearch index to store security labels.  Not currently usable due to API compatibility issues with RDF-ABAC.",
+                    "default": ""
+                },
                 "topic": {
                     "type": "string",
                     "description": "Topic to consume messages from",
@@ -111,10 +116,20 @@
                     "description": "Dead-letter topic for failed messages",
                     "default": "knowledge.dlq"
                 },
+                "actionsTopic": {
+                    "type": "string",
+                    "description": "Topic used to synchronise actions between the *Search Projector* and the *Search API* applications.",
+                    "default": "actions"
+                },
                 "indexBatchSize": {
                     "type": "string",
                     "description": "Number of documents to index in a single batch operation",
                     "default": "500"
+                },
+                "entityProjection": {
+                    "type": "string",
+                    "description": "Name of the entity projection to be used, leave blank for default which is suitable for most use cases.",
+                    "default": ""
                 },
                 "existingSecret": {
                     "type": "string",
