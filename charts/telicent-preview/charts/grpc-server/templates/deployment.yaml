@@ -88,16 +88,16 @@ spec:
 
         readinessProbe:
           httpGet:
-            path: /readiness
-            port: 8080
+            path: /healthz/ready
+            port: 15021
             scheme: HTTP
           initialDelaySeconds: 30
           periodSeconds: 60
           timeoutSeconds: 10
         livenessProbe:
           httpGet:
-            path: /readiness
-            port: 8080
+            path: /healthz/ready
+            port: 15021
             scheme: HTTP
           initialDelaySeconds: 30
           periodSeconds: 60
