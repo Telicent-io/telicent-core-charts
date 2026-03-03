@@ -115,16 +115,13 @@ spec:
             mountPath: /app/config/storage.properties
             subPath: storage.properties
             readOnly: true
-
           {{- with .Values.extraVolumeMounts }}
             {{- toYaml . | nindent 12 }}
-          {{- end }}
           {{- end }}
 
       {{- with .Values.sidecars }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- if .Values.extraVolumes }}
       volumes:
       - name: kafka-auth-config
         secret:
@@ -139,7 +136,6 @@ spec:
       - name: storage-config-volume
         configMap:
           name: {{ include "grpc-client.clientConfigMapName" . }}
-
       {{- with .Values.extraVolumes }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
