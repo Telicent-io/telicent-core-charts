@@ -84,12 +84,12 @@ spec:
         ports:
         - name: http
           protocol: TCP
-          containerPort: 8000
+          containerPort: 8080
 
         readinessProbe:
           httpGet:
             path: /readiness
-            port: 8000
+            port: 8080
             scheme: HTTP
           initialDelaySeconds: 30
           periodSeconds: 60
@@ -97,13 +97,15 @@ spec:
         livenessProbe:
           httpGet:
             path: /readiness
-            port: 8000
+            port: 8080
             scheme: HTTP
           initialDelaySeconds: 30
           periodSeconds: 60
           timeoutSeconds: 5
 
         volumeMounts:
+        - name: kafka-auth-config
+          mountPath: /app/config/kafka-auth/
         - name: server-config-volume
           mountPath: /app/config/server.properties
           subPath: server.properties
@@ -121,6 +123,13 @@ spec:
       {{- end }}
 
       volumes:
+      - name: kafka-auth-config
+        secret:
+        {{- if .Values.global.kafka.existingConfigSecretName }}
+          secretName: {{ .Values.global.kafka.existingConfigSecretName }}
+        {{- else }}
+          secretName: {{ include "grpc-server.fullname" . }}-kafka-config
+        {{- end }}
       - name: server-config-volume
         configMap:
           name: {{ include "grpc-server.serverConfigMapName" . }}
