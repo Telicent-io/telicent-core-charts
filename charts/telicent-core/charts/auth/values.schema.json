@@ -640,6 +640,11 @@
                     "type": "string",
                     "description": "",
                     "default": "spatial:8080"
+                },
+                "aiSparqlBuilder": {
+                    "type": "string",
+                    "description": "AI SPARQL Builder application host value, as defined by 'service/serviceAccount:port'",
+                    "default": "ai-sparql-builder:8080"
                 }
             }
         }

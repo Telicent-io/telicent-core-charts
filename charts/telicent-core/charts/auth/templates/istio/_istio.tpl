@@ -51,3 +51,13 @@ Returns the principal used for Spatial traffic by the Istio AuthorizationPolicy
 {{- printf "- cluster.local/ns/%s/sa/%s" .Release.Namespace ( include "auth.serviceAccountSpatial" .) -}}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Returns the principal used for ai-sparql-builder traffic by the Istio AuthorizationPolicy
+*/}}
+{{- define "auth.aiSparqlBuilderPrincipal" -}}
+{{- if .Values.global.enterprise -}}
+{{- printf "- cluster.local/ns/%s/sa/%s" .Release.Namespace ( include "auth.serviceAccountAISparqlBuilder" .) -}}
+{{- end -}}
+{{- end -}}
+

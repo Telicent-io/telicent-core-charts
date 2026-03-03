@@ -14,7 +14,7 @@ http:
     ai-sparql-builder:
       loadBalancer:
         servers:
-          - url: "{{ printf "http://%s"  (include "traefik-proxy.hostAISparqlBuilder" .) }}"
+          - url: {{ printf "http://%s"  (include "traefik-proxy.hostAISparqlBuilder" .) }}
 
   middlewares:
     path-ai-sparql-builder:
@@ -25,4 +25,4 @@ http:
     host-ai-sparql-builder:
       headers:
         customRequestHeaders:
-          host: "{{ include "traefik-proxy.hostAISparqlBuilder" . }}"
+          host: {{ include "traefik-proxy.hostAISparqlBuilder" . }}
