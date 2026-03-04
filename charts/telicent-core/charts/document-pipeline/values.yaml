@@ -619,7 +619,7 @@ contentTagger:
     # @key contentTagger.image.repository The container image repository for the *Content Tagger*
     repository: telicent/telicent-rdf-document-tagger-dc
     # @key contentTagger.image.tag The image tag for the *Content Tagger*
-    tag: "3.0.0"
+    tag: "3.0.1"
     # @key contentTagger.image.pullPolicy The image pull policy for the *Content Tagger*
     pullPolicy: IfNotPresent
     # @key contentTagger.image.pullSecrets Secrets for pulling an image from a private repository
