@@ -7,30 +7,28 @@ kind: AuthorizationPolicy
 
 metadata:
   name: {{ include "notifications.fullname" . }}-ingress
-  labels:
-  {{- include "notifications.labels" . | nindent 4 }}
-
+  namespace: {{ include "notifications.namespace" . | quote }}
 spec:
   selector:
     matchLabels:
-      {{- include "notifications.selectorLabels" . | nindent 6 }}
+    {{- include "notifications.selectorLabels" . | nindent 6 }}
   action: ALLOW
   rules:
-    - from:
-        - source:
-            principals:
-              - {{ include "notifications.ingressPrincipal" . }}
-      to:
-        - operation:
-            paths:
-              - /notifications
-              - /notifications/*
-            methods: ["GET","POST","PATCH"]
-        - operation:
-            paths:
-              - /healthz
-              - /healthz/*
-              - /version-info
-              - /version-info/*
-            methods: ["GET"]
+  - from:
+    - source:
+        principals:
+        {{- include "notifications.ingressPrincipal" . | nindent 8 }}
+    to:
+    - operation:
+        paths:
+        - /notifications
+        - /notifications/*
+        methods: ["GET","POST","PATCH"]
+    - operation:
+        paths:
+        - /healthz
+        - /healthz/*
+        - /version-info
+        - /version-info/*
+        methods: ["GET"]
 {{- end }}

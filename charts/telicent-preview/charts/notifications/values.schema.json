@@ -16,14 +16,19 @@
                     "default": [],
                     "items": {}
                 },
-                "enterprise": {
+                "enabled": {
                     "type": "boolean",
-                    "description": "Enable enterprise mode, adding additional features and configurations",
+                    "description": "enabled Enable *Notifications* deployment",
                     "default": false
+                },
+                "releaseNameTelicentCore": {
+                    "type": "string",
+                    "description": "Release name used during the Telicent Core chart installation. Note: ensure the value is correct, otherwise there will be no access to auth & graph",
+                    "default": ""
                 },
                 "appHostDomain": {
                     "type": "string",
-                    "description": "Domain associated with Telicent application services. This value cannot be changed after it is set",
+                    "description": "Domain associated with Telicent application/ui services. This value cannot be changed after it is set",
                     "default": ""
                 },
                 "apiHostDomain": {
@@ -85,36 +90,6 @@
                             "default": "/app/config/truststore"
                         }
                     }
-                },
-                "groupsClaim": {
-                    "type": "string",
-                    "description": "Key used to retrieve groups from the OIDC provider",
-                    "default": "groups"
-                },
-                "jwksUrl": {
-                    "type": "string",
-                    "description": "Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)",
-                    "default": "https://{yourAuthdomain}/.well-known/jwks.json"
-                },
-                "istioNamespace": {
-                    "type": "string",
-                    "description": "Namespace in which Istio is deployed",
-                    "default": "istio-system"
-                },
-                "istioServiceAccountName": {
-                    "type": "string",
-                    "description": "Name of the Istio service account",
-                    "default": "istio-ingress"
-                },
-                "istioGatewayName": {
-                    "type": "string",
-                    "description": "Name of the Istio Gateway Resource (LB operating at the edge of the mesh)",
-                    "default": "ingress-gateway"
-                },
-                "istioVirtualServiceEnabled": {
-                    "type": "boolean",
-                    "description": "Enable Istio traffic routing to a named destination service",
-                    "default": true
                 }
             }
         },
@@ -138,27 +113,42 @@
                 }
             }
         },
+        "validation": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable JSON Schema validation",
+                    "default": false
+                },
+                "registry": {
+                    "type": "object",
+                    "properties": {
+                        "hostname": {
+                            "type": "string",
+                            "description": "Name for the Apicurio schema registry",
+                            "default": "http://apicurio"
+                        },
+                        "port": {
+                            "type": "number",
+                            "description": "Port for the Apicurio schema registry",
+                            "default": 8080
+                        }
+                    }
+                }
+            }
+        },
         "postgres": {
             "type": "object",
             "properties": {
-                "host": {
-                    "type": "string",
-                    "description": "PostgreSQL connection hostname",
-                    "default": "postgres"
-                },
-                "port": {
-                    "type": "number",
-                    "description": "PostgreSQL connection port",
-                    "default": 5432
-                },
-                "name": {
-                    "type": "string",
-                    "description": "PostgreSQL Database name",
-                    "default": "notifications"
-                },
                 "jdbcUrl": {
                     "type": "string",
-                    "description": "PostgreSQL connection URI. If specified the postgres.host, postgres.port and postgres.name will be ignored",
+                    "description": "PostgreSQL connection URL format: \"jdbc:postgresql://{host}:{port}/{database}\"",
+                    "default": ""
+                },
+                "existingSecret": {
+                    "type": "string",
+                    "description": "Name of an existing secret. The secret must contain 2 keys: 'username', 'password'",
                     "default": ""
                 },
                 "username": {
@@ -170,13 +160,93 @@
                     "type": "string",
                     "description": "PostgreSQL password",
                     "default": ""
-                },
-                "existingSecret": {
+                }
+            }
+        },
+        "configMap": {
+            "type": "object",
+            "properties": {
+                "existingEnvConfigMap": {
                     "type": "string",
-                    "description": "Name of an existing secret resource containing the PostgreSQL credentials. If specified, the values for postgres.username and postgres.password will be ignored",
+                    "description": "Name of existing configmap containing *Notifications* Environment Configuration",
                     "default": ""
                 }
             }
+        },
+        "nameOverride": {
+            "type": "string",
+            "description": "String to partially override fullname (will maintain the release name)",
+            "default": ""
+        },
+        "fullnameOverride": {
+            "type": "string",
+            "description": "String to fully override the generated release name",
+            "default": ""
+        },
+        "namespaceOverride": {
+            "type": "string",
+            "description": "String to fully override all deployed resources namespace",
+            "default": ""
+        },
+        "commonLabels": {
+            "type": "object",
+            "description": "Add labels to all the deployed resources",
+            "default": {}
+        },
+        "replicas": {
+            "type": "number",
+            "description": "Number of *Notifications* replicas to deploy",
+            "default": 1
+        },
+        "revisionHistoryLimit": {
+            "type": "number",
+            "description": "Number of controller revisions to keep",
+            "default": 5
+        },
+        "annotations": {
+            "type": "object",
+            "description": "Add extra annotations to the deployment object",
+            "default": {}
+        },
+        "podLabels": {
+            "type": "object",
+            "description": "Add extra labels to the *Notifications* pod",
+            "default": {}
+        },
+        "podAnnotations": {
+            "type": "object",
+            "description": "Add extra annotations to the *Notifications* pod",
+            "default": {}
+        },
+        "extraEnvVars": {
+            "type": "array",
+            "description": "Array with extra environment variables to add to *Notifications* pod",
+            "default": [],
+            "items": {}
+        },
+        "extraVolumes": {
+            "type": "array",
+            "description": "Optionally specify extra list of additional volumes",
+            "default": [],
+            "items": {}
+        },
+        "extraVolumeMounts": {
+            "type": "array",
+            "description": "Optionally specify extra list of additional volumeMounts",
+            "default": [],
+            "items": {}
+        },
+        "initContainers": {
+            "type": "array",
+            "description": "Add init containers to the pod",
+            "default": [],
+            "items": {}
+        },
+        "sidecars": {
+            "type": "array",
+            "description": "Add sidecars to the pod",
+            "default": [],
+            "items": {}
         },
         "image": {
             "type": "object",
@@ -208,17 +278,6 @@
                     "items": {}
                 }
             }
-        },
-        "podAnnotations": {
-            "type": "object",
-            "description": "Add extra annotations to the Deployment object",
-            "default": {}
-        },
-        "extraEnvs": {
-            "type": "array",
-            "description": "List of additional environment variables to set in the pod",
-            "default": [],
-            "items": {}
         },
         "resources": {
             "type": "object",
@@ -396,7 +455,7 @@
                 }
             }
         },
-        "hosts": {
+        "hostsCore": {
             "type": "object",
             "properties": {
                 "enableAutoCorrect": {
@@ -404,40 +463,15 @@
                     "description": "Prefix 'global.releaseNameTelicentCore' value to each host value. Alternatively, the host value will be used as it is, without any modification",
                     "default": true
                 },
-                "auth": {
-                    "type": "string",
-                    "description": "Auth application default host value, as defined by 'service/serviceAccount:port'",
-                    "default": "auth:8080"
-                },
                 "traefikProxy": {
                     "type": "string",
                     "description": "Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'",
                     "default": "traefik-proxy:8080"
-                }
-            }
-        },
-        "validation": {
-            "type": "object",
-            "properties": {
-                "enabled": {
-                    "type": "boolean",
-                    "description": "Enable JSON Schema validation",
-                    "default": false
                 },
-                "registry": {
-                    "type": "object",
-                    "properties": {
-                        "hostname": {
-                            "type": "string",
-                            "description": "Name for the Apicurio schema registry",
-                            "default": "http://apicurio"
-                        },
-                        "port": {
-                            "type": "number",
-                            "description": "Port for the Apicurio schema registry",
-                            "default": 8080
-                        }
-                    }
+                "auth": {
+                    "type": "string",
+                    "description": "Auth application default host value, as defined by 'service/serviceAccount:port'",
+                    "default": "auth:8080"
                 }
             }
         }

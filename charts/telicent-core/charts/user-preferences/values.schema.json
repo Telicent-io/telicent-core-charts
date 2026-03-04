@@ -68,7 +68,7 @@
             "properties": {
                 "url": {
                     "type": "string",
-                    "description": "MongoDB connection URL (database value can be omitted in favour of populating 'database' property) format: \"mongodb://<host1>:<port1>,<host2>:<port2>,<host3>:<port3>/?retryWrites=false\"",
+                    "description": "MongoDB connection URL (database value can be omitted in favour of populating 'database' property) format: \"mongodb://{host1}:{port1},{host2}:{port2},{host3}:{port3}/?retryWrites=false\"",
                     "default": ""
                 },
                 "database": {
@@ -108,12 +108,12 @@
                 }
             }
         },
-        "postgresSql": {
+        "postgres": {
             "type": "object",
             "properties": {
-                "url": {
+                "jdbcUrl": {
                     "type": "string",
-                    "description": "PostgreSQL connection URL format: \"jdbc:postgresql://<host>:<port>/<database>\"",
+                    "description": "PostgreSQL connection URL format: \"jdbc:postgresql://{host}:{port}/{database}\"",
                     "default": ""
                 },
                 "existingSecret": {

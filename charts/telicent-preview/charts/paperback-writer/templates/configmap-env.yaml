@@ -6,7 +6,7 @@ apiVersion: v1
 kind: ConfigMap
 
 metadata:
-  name: {{ include "paperback-writer.configMapName" . }}
+  name: {{ include "paperback-writer.envConfigMapName" . }}
   namespace: {{ include "paperback-writer.namespace" . | quote }}
   labels:
     {{- include "paperback-writer.labels" . | nindent 4 }}
@@ -22,6 +22,5 @@ data:
   # point to the internal auth service only!
   AUTH_SERVER_ALLOW_HTTP: "true"
   AUTH_SERVER_BASE_URL: {{ printf "http://%s" (include "paperback-writer.hostAuth" . )  | quote }}
-
 
   {{- end }}

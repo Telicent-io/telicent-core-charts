@@ -52,24 +52,24 @@ Define your container according to the Kubernetes container spec.
 
 ```yaml
 sidecars:
-- name: your-image-name
-  image: your-image
-  imagePullPolicy: Always
-  ports:
-  - name: portname
-    containerPort: 1234
+  - name: your-image-name
+    image: your-image
+    imagePullPolicy: Always
+    ports:
+      - name: portname
+        containerPort: 1234
 ```
 
 Similarly, you can add extra init containers using the `initContainers` parameter.
 
 ```yaml
 initContainers:
-- name: your-image-name
-  image: your-image
-  imagePullPolicy: Always
-  ports:
-  - name: portname
-    containerPort: 1234
+  - name: your-image-name
+    image: your-image
+    imagePullPolicy: Always
+    ports:
+      - name: portname
+        containerPort: 1234
 ```
 
 ### Setting Pod's affinity
@@ -82,31 +82,26 @@ the [kubernetes documentation](https://kubernetes.io/docs/concepts/configuration
 
 ### Global Parameters
 
-Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart
-Note: Only global parameters used within this chart will be listed below
+Contains global parameters; these parameters are mirrored within the Telicent preview umbrella chart.
+Note: Only global parameters used within this chart will be listed below.
 
-| Name                                    | Description                                                                                                                     | Value                                            |
-| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
-| `global.imageRegistry`                  | Global image registry                                                                                                           | `""`                                             |
-| `global.imagePullSecrets`               | Global registry secret names as an array                                                                                        | `[]`                                             |
-| `global.enterprise`                     | Enable enterprise mode, adding additional features and configurations                                                           | `false`                                          |
-| `global.appHostDomain`                  | Domain associated with Telicent application services. This value cannot be changed after it is set                              | `""`                                             |
-| `global.apiHostDomain`                  | Domain associated with Telicent Api services. This value cannot be changed after it is set                                      | `""`                                             |
-| `global.authHostDomain`                 | Domain associated with Telicent authentication services, including OIDC providers. This value cannot be changed after it is set | `""`                                             |
-| `global.kafka.bootstrapServers`         | Comma separated list containing Kafka bootstrap servers                                                                         | `kafka-bootstrap.kafka.svc.cluster.local:9092`   |
-| `global.kafka.existingConfigSecretName` | Name of an existing secret containing Kafka configuration (preferred over individual settings below for security)               | `""`                                             |
-| `global.kafka.username`                 | Username for Kafka authentication                                                                                               | `your.kafka.username.here`                       |
-| `global.kafka.password`                 | Password for Kafka authentication                                                                                               | `your.kafka.password.here`                       |
-| `global.kafka.protocol`                 | Protocol used for Kafka communication                                                                                           | `SASL_SSL`                                       |
-| `global.kafka.mechanism`                | SASL mechanism used for Kafka authentication                                                                                    | `SCRAM-SHA-512`                                  |
-| `global.truststore.existingSecret`      | Name of an existing secret containing the truststore                                                                            | `""`                                             |
-| `global.truststore.mountPath`           | The mount path for the truststore in the container                                                                              | `/app/config/truststore`                         |
-| `global.groupsClaim`                    | Key used to retrieve groups from the OIDC provider                                                                              | `groups`                                         |
-| `global.jwksUrl`                        | Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)                                                   | `https://{yourAuthdomain}/.well-known/jwks.json` |
-| `global.istioNamespace`                 | Namespace in which Istio is deployed                                                                                            | `istio-system`                                   |
-| `global.istioServiceAccountName`        | Name of the Istio service account                                                                                               | `istio-ingress`                                  |
-| `global.istioGatewayName`               | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)                                                       | `ingress-gateway`                                |
-| `global.istioVirtualServiceEnabled`     | Enable Istio traffic routing to a named destination service                                                                     | `true`                                           |
+| Name                                    | Description                                                                                                                                         | Value                                          |
+| --------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| `global.imageRegistry`                  | Global image registry                                                                                                                               | `""`                                           |
+| `global.imagePullSecrets`               | Global registry secret names as an array                                                                                                            | `[]`                                           |
+| `global.enabled`                        | enabled Enable *Notifications* deployment                                                                                                           | `false`                                        |
+| `global.releaseNameTelicentCore`        | Release name used during the Telicent Core chart installation. Note: ensure the value is correct, otherwise there will be no access to auth & graph | `""`                                           |
+| `global.appHostDomain`                  | Domain associated with Telicent application/ui services. This value cannot be changed after it is set                                               | `""`                                           |
+| `global.apiHostDomain`                  | Domain associated with Telicent Api services. This value cannot be changed after it is set                                                          | `""`                                           |
+| `global.authHostDomain`                 | Domain associated with Telicent authentication services, including OIDC providers. This value cannot be changed after it is set                     | `""`                                           |
+| `global.kafka.bootstrapServers`         | Comma separated list containing Kafka bootstrap servers                                                                                             | `kafka-bootstrap.kafka.svc.cluster.local:9092` |
+| `global.kafka.existingConfigSecretName` | Name of an existing secret containing Kafka configuration (preferred over individual settings below for security)                                   | `""`                                           |
+| `global.kafka.username`                 | Username for Kafka authentication                                                                                                                   | `your.kafka.username.here`                     |
+| `global.kafka.password`                 | Password for Kafka authentication                                                                                                                   | `your.kafka.password.here`                     |
+| `global.kafka.protocol`                 | Protocol used for Kafka communication                                                                                                               | `SASL_SSL`                                     |
+| `global.kafka.mechanism`                | SASL mechanism used for Kafka authentication                                                                                                        | `SCRAM-SHA-512`                                |
+| `global.truststore.existingSecret`      | Name of an existing secret containing the truststore                                                                                                | `""`                                           |
+| `global.truststore.mountPath`           | The mount path for the truststore in the container                                                                                                  | `/app/config/truststore`                       |
 
 ### Application Parameters - Kafka
 
@@ -117,21 +112,60 @@ Contains Kafka topic configuration for the *Notifications* application
 | `notifications.topics.inputTopic` | Topic to consume messages from        | `notifications`     |
 | `notifications.topics.dlqTopic`   | Dead-letter topic for failed messages | `notifications.dlq` |
 
-### PostgreSQL
+### Application Parameters - Validation (Apicurio schema registry)
 
-Note: It is recommended to use a Kubernetes secret for sensitive information like passwords
+| Name                           | Description                           | Value             |
+| ------------------------------ | ------------------------------------- | ----------------- |
+| `validation.enabled`           | Enable JSON Schema validation         | `false`           |
+| `validation.registry.hostname` | Name for the Apicurio schema registry | `http://apicurio` |
+| `validation.registry.port`     | Port for the Apicurio schema registry | `8080`            |
 
-| Name                      | Description                                                                                                                                                     | Value           |
-| ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- |
-| `postgres.host`           | PostgreSQL connection hostname                                                                                                                                  | `postgres`      |
-| `postgres.port`           | PostgreSQL connection port                                                                                                                                      | `5432`          |
-| `postgres.name`           | PostgreSQL Database name                                                                                                                                        | `notifications` |
-| `postgres.jdbcUrl`        | PostgreSQL connection URI. If specified the postgres.host, postgres.port and postgres.name will be ignored                                                      | `""`            |
-| `postgres.username`       | PostgreSQL username                                                                                                                                             | `""`            |
-| `postgres.password`       | PostgreSQL password                                                                                                                                             | `""`            |
-| `postgres.existingSecret` | Name of an existing secret resource containing the PostgreSQL credentials. If specified, the values for postgres.username and postgres.password will be ignored | `""`            |
+### Application Parameters - PostgreSQL and Secret
 
-### image This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
+The following contains connection details to a PostgreSQL instance, on which the application relies.
+It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
+For Quick Start purposes, a secret named `tc-auth-usr-psql-notifications` will be created if one is not set.
+
+| Name                      | Description                                                                        | Value |
+| ------------------------- | ---------------------------------------------------------------------------------- | ----- |
+| `postgres.jdbcUrl`        | PostgreSQL connection URL format: "jdbc:postgresql://{host}:{port}/{database}"     | `""`  |
+| `postgres.existingSecret` | Name of an existing secret. The secret must contain 2 keys: 'username', 'password' | `""`  |
+| `postgres.username`       | PostgreSQL username                                                                | `""`  |
+| `postgres.password`       | PostgreSQL password                                                                | `""`  |
+
+### ConfigMap Parameters
+
+Contains configuration parameters specific to the *Notifications* application
+
+| Name                             | Description                                                                     | Value |
+| -------------------------------- | ------------------------------------------------------------------------------- | ----- |
+| `configMap.existingEnvConfigMap` | Name of existing configmap containing *Notifications* Environment Configuration | `""`  |
+
+### Common Parameters
+
+| Name                | Description                                                            | Value |
+| ------------------- | ---------------------------------------------------------------------- | ----- |
+| `nameOverride`      | String to partially override fullname (will maintain the release name) | `""`  |
+| `fullnameOverride`  | String to fully override the generated release name                    | `""`  |
+| `namespaceOverride` | String to fully override all deployed resources namespace              | `""`  |
+| `commonLabels`      | Add labels to all the deployed resources                               | `{}`  |
+
+### Deployment Parameters
+
+| Name                   | Description                                                          | Value |
+| ---------------------- | -------------------------------------------------------------------- | ----- |
+| `replicas`             | Number of *Notifications* replicas to deploy                         | `1`   |
+| `revisionHistoryLimit` | Number of controller revisions to keep                               | `5`   |
+| `annotations`          | Add extra annotations to the deployment object                       | `{}`  |
+| `podLabels`            | Add extra labels to the *Notifications* pod                          | `{}`  |
+| `podAnnotations`       | Add extra annotations to the *Notifications* pod                     | `{}`  |
+| `extraEnvVars`         | Array with extra environment variables to add to *Notifications* pod | `[]`  |
+| `extraVolumes`         | Optionally specify extra list of additional volumes                  | `[]`  |
+| `extraVolumeMounts`    | Optionally specify extra list of additional volumeMounts             | `[]`  |
+| `initContainers`       | Add init containers to the pod                                       | `[]`  |
+| `sidecars`             | Add sidecars to the pod                                              | `[]`  |
+
+### Deployment Image Parameters
 
 | Name                | Description                                                                    | Value                                        |
 | ------------------- | ------------------------------------------------------------------------------ | -------------------------------------------- |
@@ -140,13 +174,6 @@ Note: It is recommended to use a Kubernetes secret for sensitive information lik
 | `image.tag`         | *Notifications* image tag. If not set, a tag is generated using the appVersion | `""`                                         |
 | `image.pullPolicy`  | *Notifications* image pull policy                                              | `IfNotPresent`                               |
 | `image.pullSecrets` | Specify registry secret names as an array                                      | `[]`                                         |
-
-### Deployment Parameters For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
-
-| Name             | Description                                                | Value |
-| ---------------- | ---------------------------------------------------------- | ----- |
-| `podAnnotations` | Add extra annotations to the Deployment object             | `{}`  |
-| `extraEnvs`      | List of additional environment variables to set in the pod | `[]`  |
 
 ### Deployment Resources Parameters - Requests and Limits
 
@@ -203,25 +230,17 @@ Note: It is recommended to use a Kubernetes secret for sensitive information lik
 | `metrics.service.name` | Name for the Prometheus service | `metrics` |
 | `metrics.service.port` | Port for the Prometheus service | `9464`    |
 
-### Host(s) Parameters - Contains host information for applications deployed via *telicent-core* chart.
+### Host(s) Core Parameters - Contains host information for applications deployed via *telicent-core* chart
 
 *Notifications* interacts with applications deployed via *telicent-core* using their default service/serviceAccount and port.
 If either of those details changes, you can use this section to correctly refer to those applications.
 
-| Name                      | Description                                                                                                                                     | Value                |
-| ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
-| `hosts.enableAutoCorrect` | Prefix 'global.releaseNameTelicentCore' value to each host value. Alternatively, the host value will be used as it is, without any modification | `true`               |
-| `hosts.auth`              | Auth application default host value, as defined by 'service/serviceAccount:port'                                                                | `auth:8080`          |
-| `hosts.traefikProxy`      | Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'                                                       | `traefik-proxy:8080` |
-
-### Validation (Apicurio schema registry) Exposure Parameters
-
-| Name                           | Description                           | Value             |
-| ------------------------------ | ------------------------------------- | ----------------- |
-| `validation.enabled`           | Enable JSON Schema validation         | `false`           |
-| `validation.registry.hostname` | Name for the Apicurio schema registry | `http://apicurio` |
-| `validation.registry.port`     | Port for the Apicurio schema registry | `8080`            |
+| Name                          | Description                                                                                                                                     | Value                |
+| ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
+| `hostsCore.enableAutoCorrect` | Prefix 'global.releaseNameTelicentCore' value to each host value. Alternatively, the host value will be used as it is, without any modification | `true`               |
+| `hostsCore.traefikProxy`      | Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'                                                       | `traefik-proxy:8080` |
+| `hostsCore.auth`              | Auth application default host value, as defined by 'service/serviceAccount:port'                                                                | `auth:8080`          |
 
 ## License
 
-Copyright &copy; 2025 Telicent Limited
+Copyright &copy; 2026 Telicent Limited

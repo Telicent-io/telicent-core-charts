@@ -1,14 +1,16 @@
 {{- /*
 Copyright (C) 2026 Telicent Limited
 */}}
-{{- if .Values.enabled -}}
+{{- if and .Values.enabled (not .Values.existingConfigMapName) -}}
 apiVersion: v1
 kind: ConfigMap
 
 metadata:
-  name: {{ include "notifications.fullname" . }}-config
+  name: {{ include "notifications.envConfigMapName" . }}
+  namespace: {{ include "notifications.namespace" . | quote }}
   labels:
     {{- include "notifications.labels" . | nindent 4 }}
+
 data:
   FEATURE_FLAG_AUTHZ: "true"
 

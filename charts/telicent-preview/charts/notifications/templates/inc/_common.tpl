@@ -2,6 +2,7 @@
 Copyright (C) 2026 Telicent Limited
 */}}
 
+{{/* Contains common logic shared by the apps, do not modify this file */}}
 {{/* ----------------------------------------------------------------- */}}
 {{/* Returns the service/serviceAccount with or without a release name */}}
 {{- define "common.discoverService" -}}
@@ -38,24 +39,24 @@ Copyright (C) 2026 Telicent Limited
 {{- end -}}
 
 {{/* -------------------------------------------------------------- */}}
-{{/* Returns the *preview host* ('service:port') and serviceAccount */}}
-{{- define "common.discoverHostPreview" -}}
+{{/* Returns the *core host* ('service:port') and serviceAccount */}}
+{{- define "common.discoverHostCore" -}}
 {{- $envVal := index . 0 -}}
 {{- $hostVal := index . 1 -}}
 {{- $name := (index (splitList ":" $hostVal) 0 ) -}}
 {{- $port := (index (splitList ":" $hostVal) 1 ) -}}
-{{- if and $envVal.Values.hostsPreview.enableAutoCorrect $envVal.Values.global.releaseNameTelicentPreview -}}
-{{- printf "%s-%s.%s:%s" $envVal.Values.global.releaseNameTelicentPreview $name $envVal.Release.Namespace $port -}}
+{{- if and $envVal.Values.hostsCore.enableAutoCorrect $envVal.Values.global.releaseNameTelicentCore -}}
+{{- printf "%s-%s.%s:%s" $envVal.Values.global.releaseNameTelicentCore $name $envVal.Release.Namespace $port -}}
 {{- else -}}
 {{- printf "%s.%s:%s" $name $envVal.Release.Namespace $port -}}
 {{- end -}}
 {{- end -}}
-{{- define "common.discoverServiceAccountPreview" -}}
+{{- define "common.discoverServiceAccountCore" -}}
 {{- $envVal := index . 0 -}}
 {{- $hostVal := index . 1 -}}
 {{- $name := (index (splitList ":" $hostVal) 0 ) -}}
-{{- if and $envVal.Values.hostsPreview.enableAutoCorrect $envVal.Values.global.releaseNameTelicentPreview -}}
-{{- printf "%s-%s" $envVal.Values.global.releaseNameTelicentPreview $name -}}
+{{- if and $envVal.Values.hostsCore.enableAutoCorrect $envVal.Values.global.releaseNameTelicentCore -}}
+{{- printf "%s-%s" $envVal.Values.global.releaseNameTelicentCore $name -}}
 {{- else -}}
 {{- printf "%s" $name -}}
 {{- end -}}

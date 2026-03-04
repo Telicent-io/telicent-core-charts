@@ -1,7 +1,8 @@
 {{/*
-Copyright (C) 2025 Telicent Limited
+Copyright (C) 2026 Telicent Limited
 */}}
 
+{{/* Contains common logic shared by the apps, do not modify this file */}}
 {{/* ----------------------------------------------------------------- */}}
 {{/* Returns the service/serviceAccount with or without a release name */}}
 {{- define "common.discoverService" -}}
@@ -60,4 +61,3 @@ Copyright (C) 2025 Telicent Limited
 {{- printf "%s" $name -}}
 {{- end -}}
 {{- end -}}
-

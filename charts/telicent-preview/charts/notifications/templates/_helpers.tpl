@@ -10,6 +10,17 @@ Expand the name of the chart.
 {{- end }}
 
 {{/*
+Allow the release namespace to be overridden.
+*/}}
+{{- define "notifications.namespace" -}}
+{{- if .Values.namespaceOverride -}}
+{{- .Values.namespaceOverride -}}
+{{- else -}}
+{{- .Release.Namespace -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
 Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
@@ -35,18 +46,6 @@ Create chart name and version as used by the chart label.
 {{- end }}
 
 {{/*
-Common labels
-*/}}
-{{- define "notifications.labels" -}}
-helm.sh/chart: {{ include "notifications.chart" . }}
-{{ include "notifications.selectorLabels" . }}
-{{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
-{{- end }}
-app.kubernetes.io/managed-by: {{ .Release.Service }}
-{{- end }}
-
-{{/*
 Selector labels
 */}}
 {{- define "notifications.selectorLabels" -}}
@@ -55,16 +54,38 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
-Create the name of the service account to use
+Common labels
+*/}}
+{{- define "notifications.labels" -}}
+helm.sh/chart: {{ include "notifications.chart" . }}
+{{ include "notifications.selectorLabels" . }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+app.kubernetes.io/version: {{ include "notifications.version" . | quote }}
+app: {{ include "notifications.name" . }}
+telicent.io/resource: "true"
+{{- range $key, $value := .Values.commonLabels }}
+{{ $key }}: {{ $value | quote }}
+{{- end }}
+{{- end }}
+
+{{/*
+Create the name of the service account to use (based on the fullname).
 */}}
 {{- define "notifications.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
 {{- default (include "notifications.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
-{{- default "default" .Values.serviceAccount.name }}
+{{- .Values.serviceAccount.name | default "default" }}
 {{- end }}
 {{- end }}
 
-{{- define "notifications.postgresSecretName" -}}
-{{- default (printf "%s-postgresql" (include "notifications.fullname" .)) .Values.postgres.existingSecret }}
+{{/*
+Create the name of the service to use (based on the fullname).
+*/}}
+{{- define "notifications.serviceName" -}}
+{{- if .Values.service.name }}
+{{- .Values.service.name -}}
+{{- else }}
+{{- include "notifications.fullname" . }}
+{{- end }}
 {{- end }}
