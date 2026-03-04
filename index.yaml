@@ -40,7 +40,7 @@ entries:
     version: 0.1.0
   demo-prereqs-gateways:
   - apiVersion: v2
-    created: "2026-03-04T20:49:58.409155173Z"
+    created: "2026-03-04T20:50:33.512409363Z"
     dependencies:
     - condition: gateway-apps.enabled
       name: gateway-apps
@@ -51,7 +51,7 @@ entries:
       repository: file://./charts/gateway-authn
       version: ^0.1.0
     description: Create Istio gateways and authn configuration for Telicent CORE demo
-    digest: 7172b8343f88b83229137ef72671fd73aab415758049a5303162ea72751f79c6
+    digest: f4a3407d4c82b128a3574f584b65874688e41d1809e3716158ae74ac47c17198
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -111,9 +111,9 @@ entries:
     version: 0.1.0
   demo-prereqs-kafka:
   - apiVersion: v2
-    created: "2026-03-04T20:49:58.409694032Z"
+    created: "2026-03-04T20:50:33.512692898Z"
     description: Create a kafka cluster and associated configuration
-    digest: 01841d138274e164ef622ae9ae8964c27d406b49381e4875e024b759715ebb05
+    digest: e991b376e2b5ab7c355f22759cc67ba5b1a6c43a028c601981b72e86295fe0bd
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -178,9 +178,9 @@ entries:
   demo-prereqs-keycloak:
   - apiVersion: v2
     appVersion: 26.3.0
-    created: "2026-03-04T20:49:58.410380519Z"
+    created: "2026-03-04T20:50:33.513079446Z"
     description: Provisions a dev mode instance of keycloak
-    digest: f98cdff1232d827537fcc3546c563a29f41c783a03d28aa4379d6009017b0139
+    digest: ea1c6fc3a64e3d92fd72644ad0d41326ffc86ea1527e1200772fa5c15f7f0663
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -220,9 +220,9 @@ entries:
     version: 0.1.0
   demo-prereqs-mongodb:
   - apiVersion: v2
-    created: "2026-03-04T20:49:58.410698367Z"
+    created: "2026-03-04T20:50:33.513340879Z"
     description: Create a mongodb instance and associated configuration
-    digest: 55bea9713c130809c3cdaa7616d873c4a25259ed3da70ba6cd736496fb6aa5df
+    digest: 2437ade7413dac7d36e6108ff5345172f5f22b076fea4fae5e1061f98a12be85
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -250,9 +250,9 @@ entries:
   demo-prereqs-postgres:
   - apiVersion: v2
     appVersion: "16"
-    created: "2026-03-04T20:49:58.411141967Z"
+    created: "2026-03-04T20:50:33.513868683Z"
     description: A simple PostgreSQL deployment for demo/development purposes
-    digest: 6ec9780286f916411b6d7ed947303db67549626156757af41ecfea3911345681
+    digest: d8331528896b74d2256fe4f8e0ece827190df9cddcd39b3a015d6c1632143afc
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -456,7 +456,7 @@ entries:
   telicent-core:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2026-03-04T20:49:58.431876743Z"
+    created: "2026-03-04T20:50:33.533655897Z"
     dependencies:
     - condition: global.enterprise
       name: admin-ui
@@ -500,7 +500,7 @@ entries:
       version: ^0.1.0
     description: 'Telicent CORE Platform, for all essential services and applications
       for our secure data integration and knowledge graph platform. '
-    digest: 52bdff5798a6bb9ccb9d944187fa6e9ee2331db49840a01bd4c9087611f9f587
+    digest: 9c2707da219d77ef9256fe172068581eef5c07752dfe8351ad9b9ddcb7938410
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -1953,6 +1953,70 @@ entries:
   telicent-data:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2026-03-04T20:50:33.548037704Z"
+    dependencies:
+    - name: ies-ontology-producer
+      repository: file://./charts/ies-ontology-producer
+      version: ^0.2.0
+    - name: ies-regions-ontology-adapter
+      repository: file://./charts/ies-regions-ontology-adapter
+      version: ^0.1.0
+    - name: ies-regions-producer
+      repository: file://./charts/ies-regions-producer
+      version: ^0.1.0
+    - name: ontologies-rdf-rdfs-owl-producer
+      repository: file://./charts/ontologies-rdf-rdfs-owl-producer
+      version: ^0.1.0
+    - condition: global.enterprise
+      name: producer-acled-ontology
+      repository: file://./charts/producer-acled-ontology
+      version: ^0.1.0
+    - condition: global.enterprise
+      name: canonicals-event-validation-mapper
+      repository: file://./charts/canonicals-event-validation-mapper
+      version: ^0.1.0
+    - condition: global.enterprise
+      name: canonicals-event-geo-mapper
+      repository: file://./charts/canonicals-event-geo-mapper
+      version: ^0.1.0
+    - condition: global.enterprise
+      name: canonicals-event-knowledge-mapper
+      repository: file://./charts/canonicals-event-knowledge-mapper
+      version: ^0.1.0
+    - condition: global.enterprise
+      name: acled-locations-mapper
+      repository: file://./charts/acled-locations-mapper
+      version: ^0.1.0
+    - condition: global.enterprise
+      name: acled-participants-mapper
+      repository: file://./charts/acled-participants-mapper
+      version: ^0.1.0
+    - condition: global.enterprise
+      name: acled-validation-mapper
+      repository: file://./charts/acled-validation-mapper
+      version: ^0.1.0
+    - condition: global.enterprise
+      name: canonicals-event-document-mapper
+      repository: file://./charts/canonicals-event-document-mapper
+      version: ^0.1.0
+    - condition: global.enterprise
+      name: canonicals-ontology
+      repository: file://./charts/canonicals-ontology
+      version: ^0.1.0
+    description: 'Supplementary chart containing adapters and mappers for specific
+      datasets and ontologies. '
+    digest: 34be8959ff6536f63658030ac7d7350b8f79e548cc3dc02da65e74ec6bd2b7b5
+    icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
+    maintainers:
+    - name: telicent
+      url: https://github.com/Telicent-IO
+    name: telicent-data
+    type: application
+    urls:
+    - telicent-data-0.3.5.tgz
+    version: 0.3.5
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2026-03-04T20:49:58.44678095Z"
     dependencies:
     - name: ies-ontology-producer
@@ -2389,7 +2453,7 @@ entries:
   telicent-preview:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2026-03-04T20:49:58.456673256Z"
+    created: "2026-03-04T20:50:33.557568979Z"
     dependencies:
     - condition: user-portal-ui.enabled
       name: user-portal-ui
@@ -2422,7 +2486,7 @@ entries:
     description: 'Secondary chart containing products that are still under active
       development, and not yet part of CORE. Can be used to try new or preview features
       early. '
-    digest: 73af7c897cb0d2afb2d4cdb0692a41ebb7581d7231e31bce99dd096ab144cfc0
+    digest: e633fff075a233e8d0fdb689f9887f6415267d8c1afdba9a2fc632a769fc47aa
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -2558,4 +2622,4 @@ entries:
     urls:
     - telicent-preview-0.2.0.tgz
     version: 0.2.0
-generated: "2026-03-04T20:49:58.407782673Z"
+generated: "2026-03-04T20:50:33.510524677Z"
