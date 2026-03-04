@@ -23,7 +23,7 @@
                 },
                 "releaseNameTelicentCore": {
                     "type": "string",
-                    "description": "Release name used during the Telicent Core chart installation. Note: ensure the value is correct, otherwise there will be no access to auth & graph",
+                    "description": "Release name used during the Telicent Core chart installation. Note: ensure the value is correct, otherwise there will be no access to auth",
                     "default": ""
                 },
                 "appHostDomain": {

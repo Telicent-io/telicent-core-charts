@@ -22,7 +22,7 @@ global:
   # @key global.enabled enabled Enable *Notifications* deployment
   enabled: false
 
-  # @key global.releaseNameTelicentCore Release name used during the Telicent Core chart installation. Note: ensure the value is correct, otherwise there will be no access to auth & graph
+  # @key global.releaseNameTelicentCore Release name used during the Telicent Core chart installation. Note: ensure the value is correct, otherwise there will be no access to auth
   # If installed through the parent-chart this value needs to reflect the name of the release name used when 'telicent-core' chart was installed.
   # If all applications were installed through sub-charts, leaving this value empty will provide the correct behavior.
   releaseNameTelicentCore: ""
