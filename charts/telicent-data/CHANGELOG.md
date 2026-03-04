@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.5](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-data-v0.3.4...telicent-data-v0.3.5) (2026-03-04)
+
+
+### Bug Fixes
+
+* add enableSourceRefMode to mapper ([e439d94](https://github.com/Telicent-io/telicent-core-charts/commit/e439d940eb7cb9cd2a21a4fc7c581c09f034ddc4))
+* add enableSourceRefMode to mapper ([3b77660](https://github.com/Telicent-io/telicent-core-charts/commit/3b77660721cd02ba9c71c49116d6528c5b48d0a4))
+
 ## [0.3.4](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-data-v0.3.3...telicent-data-v0.3.4) (2026-02-04)
 
 
