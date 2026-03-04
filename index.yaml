@@ -40,7 +40,7 @@ entries:
     version: 0.1.0
   demo-prereqs-gateways:
   - apiVersion: v2
-    created: "2026-02-17T11:41:31.174763352Z"
+    created: "2026-03-04T20:49:58.409155173Z"
     dependencies:
     - condition: gateway-apps.enabled
       name: gateway-apps
@@ -51,7 +51,7 @@ entries:
       repository: file://./charts/gateway-authn
       version: ^0.1.0
     description: Create Istio gateways and authn configuration for Telicent CORE demo
-    digest: 2e4fe2ec05a3b24b49b235b271c555aa35e99bdfd43a220813cc05bcb2bda391
+    digest: 7172b8343f88b83229137ef72671fd73aab415758049a5303162ea72751f79c6
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -111,9 +111,9 @@ entries:
     version: 0.1.0
   demo-prereqs-kafka:
   - apiVersion: v2
-    created: "2026-02-17T11:41:31.175256323Z"
+    created: "2026-03-04T20:49:58.409694032Z"
     description: Create a kafka cluster and associated configuration
-    digest: 95fed40c56db7e5b6c481a0e3873c87ff51aa54798e321c3009e719c2b6269fc
+    digest: 01841d138274e164ef622ae9ae8964c27d406b49381e4875e024b759715ebb05
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -178,9 +178,9 @@ entries:
   demo-prereqs-keycloak:
   - apiVersion: v2
     appVersion: 26.3.0
-    created: "2026-02-17T11:41:31.175697989Z"
+    created: "2026-03-04T20:49:58.410380519Z"
     description: Provisions a dev mode instance of keycloak
-    digest: 7df9359b0725908ab63ac8a689767727a036b84be08b5cc64fcfa07a5a67b5de
+    digest: f98cdff1232d827537fcc3546c563a29f41c783a03d28aa4379d6009017b0139
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -220,9 +220,9 @@ entries:
     version: 0.1.0
   demo-prereqs-mongodb:
   - apiVersion: v2
-    created: "2026-02-17T11:41:31.17601422Z"
+    created: "2026-03-04T20:49:58.410698367Z"
     description: Create a mongodb instance and associated configuration
-    digest: 6461036f4205ce6aaee784627cbda03646310ffc03e5646640e8fd5993035332
+    digest: 55bea9713c130809c3cdaa7616d873c4a25259ed3da70ba6cd736496fb6aa5df
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -250,9 +250,9 @@ entries:
   demo-prereqs-postgres:
   - apiVersion: v2
     appVersion: "16"
-    created: "2026-02-17T11:41:31.176455906Z"
+    created: "2026-03-04T20:49:58.411141967Z"
     description: A simple PostgreSQL deployment for demo/development purposes
-    digest: 97b56c3dbe065d7bb0d9fe71cf85b98d16be83714c75612452a186e6bef17f03
+    digest: 6ec9780286f916411b6d7ed947303db67549626156757af41ecfea3911345681
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -454,6 +454,62 @@ entries:
     - smart-cache-search-0.1.1.tgz
     version: 0.1.1
   telicent-core:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2026-03-04T20:49:58.431876743Z"
+    dependencies:
+    - condition: global.enterprise
+      name: admin-ui
+      repository: file://./charts/admin-ui
+      version: ^0.1.0
+    - name: auth
+      repository: file://./charts/auth
+      version: ^0.1.0
+    - condition: global.enterprise
+      name: graph-ui
+      repository: file://./charts/graph-ui
+      version: ^0.1.0
+    - name: query-ui
+      repository: file://./charts/query-ui
+      version: ^0.1.0
+    - condition: global.enterprise
+      name: search-ui
+      repository: file://./charts/search-ui
+      version: ^0.1.0
+    - name: graph
+      repository: file://./charts/graph
+      version: ^0.1.0
+    - condition: global.enterprise
+      name: search
+      repository: file://./charts/search
+      version: ^0.2.0
+    - condition: global.enterprise
+      name: search-projector
+      repository: file://./charts/search-projector
+      version: ^0.2.0
+    - condition: global.enterprise
+      name: user-preferences
+      repository: file://./charts/user-preferences
+      version: ^0.2.0
+    - name: traefik-proxy
+      repository: file://./charts/traefik-proxy
+      version: ^0.1.0
+    - condition: global.enterprise, document-pipeline.enabled
+      name: document-pipeline
+      repository: file://./charts/document-pipeline
+      version: ^0.1.0
+    description: 'Telicent CORE Platform, for all essential services and applications
+      for our secure data integration and knowledge graph platform. '
+    digest: 52bdff5798a6bb9ccb9d944187fa6e9ee2331db49840a01bd4c9087611f9f587
+    icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
+    maintainers:
+    - name: telicent
+      url: https://github.com/Telicent-IO
+    name: telicent-core
+    type: application
+    urls:
+    - telicent-core-1.2.0.tgz
+    version: 1.2.0
   - apiVersion: v2
     appVersion: 1.16.0
     created: "2026-02-17T11:41:31.196600443Z"
@@ -1897,11 +1953,11 @@ entries:
   telicent-data:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2026-02-17T11:41:31.210634605Z"
+    created: "2026-03-04T20:49:58.44678095Z"
     dependencies:
     - name: ies-ontology-producer
       repository: file://./charts/ies-ontology-producer
-      version: ^0.1.0
+      version: ^0.2.0
     - name: ies-regions-ontology-adapter
       repository: file://./charts/ies-regions-ontology-adapter
       version: ^0.1.0
@@ -1949,7 +2005,7 @@ entries:
       version: ^0.1.0
     description: 'Supplementary chart containing adapters and mappers for specific
       datasets and ontologies. '
-    digest: d6d4fd35f41ea55fbc3277a5f0c670114e3c7ac24a3d98b4b2af21eabb3c242a
+    digest: 3e1fc2aa818053774ccf5cddc03539eefda54120b871b10231ecb7d67aa19674
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -2333,7 +2389,7 @@ entries:
   telicent-preview:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2026-02-17T11:41:31.217620828Z"
+    created: "2026-03-04T20:49:58.456673256Z"
     dependencies:
     - condition: user-portal-ui.enabled
       name: user-portal-ui
@@ -2355,10 +2411,18 @@ entries:
       name: spatial-projector
       repository: file://./charts/spatial-projector
       version: ^0.1.0
+    - condition: global.enterprise
+      name: notifications
+      repository: file://./charts/notifications
+      version: ^0.1.0
+    - condition: global.enterprise
+      name: notifications-projector
+      repository: file://./charts/notifications-projector
+      version: ^0.1.0
     description: 'Secondary chart containing products that are still under active
       development, and not yet part of CORE. Can be used to try new or preview features
       early. '
-    digest: c8ebfef5c060ab723954435a22130203c9646dec20dd79cd4c22326eb8ad7559
+    digest: 73af7c897cb0d2afb2d4cdb0692a41ebb7581d7231e31bce99dd096ab144cfc0
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -2494,4 +2558,4 @@ entries:
     urls:
     - telicent-preview-0.2.0.tgz
     version: 0.2.0
-generated: "2026-02-17T11:41:31.173067201Z"
+generated: "2026-03-04T20:49:58.407782673Z"
