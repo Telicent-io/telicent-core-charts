@@ -1,5 +1,5 @@
 {{/*
-Copyright (C) 2025 Telicent Limited
+Copyright (C) Telicent Limited
 */}}
 
 {{/*
@@ -7,26 +7,10 @@ This file contains the names of other host/service name(s) and service account n
 application relies on. For a full explanation please view '_hosts.tlp' file in the 'auth' sub-chart.
 */}}
 
-{{/* traefik-proxy | core - returns host ('service:port') and serviceAccount */}}
-{{- define "paperback-writer.hostTraefikProxy" -}}
-{{- printf "%s" (include "common.discoverHostCore" (list . .Values.hostsCore.traefikProxy )) -}}
+{{/* grpc-client | preview - returns host ('service:port') and serviceAccount */}}
+{{- define "grpc-server.grpcClienttAuth" -}}
+{{- printf "%s" (include "common.discoverHostPreview" (list . .Values.hosts.grpcClient )) -}}
 {{- end -}}
-{{- define "paperback-writer.serviceAccountTraefikProxy" -}}
-{{- printf "%s" (include "common.discoverServiceAccountCore" (list . .Values.hostsCore.traefikProxy )) -}}
-{{- end -}}
-
-{{/* auth | core - returns host ('service:port') and serviceAccount */}}
-{{- define "paperback-writer.hostAuth" -}}
-{{- printf "%s" (include "common.discoverHostCore" (list . .Values.hostsCore.auth )) -}}
-{{- end -}}
-{{- define "paperback-writer.serviceAccountAuth" -}}
-{{- printf "%s" (include "common.discoverServiceAccountCore" (list . .Values.hostsCore.auth )) -}}
-{{- end -}}
-
-{{/* graph | core - returns host ('service:port') and serviceAccount */}}
-{{- define "paperback-writer.hostGraph" -}}
-{{- printf "%s" (include "common.discoverHostCore" (list . .Values.hostsCore.graph )) -}}
-{{- end -}}
-{{- define "paperback-writer.serviceAccountGraph" -}}
-{{- printf "%s" (include "common.discoverServiceAccountCore" (list . .Values.hostsCore.graph )) -}}
+{{- define "grpc-server.serviceAccountGrpcClient" -}}
+{{- printf "%s" (include "common.discoverServiceAccount" (list . .Values.hosts.grpcClient )) -}}
 {{- end -}}

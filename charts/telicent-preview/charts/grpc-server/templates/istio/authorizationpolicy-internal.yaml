@@ -19,18 +19,7 @@ spec:
   - from:
     - source:
         principals:
-          {{- include "grpc-server.paperbackWriterPrincipal" . | nindent 8 }}
+          {{- include "grpc-server.grpcClientPrincipal" . | nindent 8 }}
     to:
     - operation:
-        paths:
-        - /knowledge/update
-        - /knowledge/update/*
-        - /ontology/update
-        - /ontology/update/*
-        - /catalog/query
-        - /catalog/query/*
-        - /catalog/update
-        - /catalog/update/*
-        - /$/labels/catalog
-        - /$/labels/catalog/*
-        methods: ["GET", "POST"]
+        methods: ["GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS"]
