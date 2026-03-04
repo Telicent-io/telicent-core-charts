@@ -22,15 +22,5 @@ spec:
               - {{ include "notifications.ingressPrincipal" . }}
       to:
         - operation:
-            paths:
-              - /notifications
-              - /notifications/*
             methods: ["GET","POST","PATCH"]
-        - operation:
-            paths:
-              - /healthz
-              - /healthz/*
-              - /version-info
-              - /version-info/*
-            methods: ["GET"]
 {{- end }}
