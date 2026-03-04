@@ -645,6 +645,11 @@
                     "type": "string",
                     "description": "AI SPARQL Builder application host value, as defined by 'service/serviceAccount:port'",
                     "default": "ai-sparql-builder:8080"
+                },
+                "notifications": {
+                    "type": "string",
+                    "description": "Notifications application host value, as defined by 'service/serviceAccount:port'",
+                    "default": "notifications:8080"
                 }
             }
         }

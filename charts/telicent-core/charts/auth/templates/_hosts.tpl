@@ -49,14 +49,6 @@ Detailed description of 'discoverHost' & 'discoverServiceAccount' function
 {{- printf "%s" (include "common.discoverServiceAccount" (list . .Values.hosts.search )) -}}
 {{- end -}}
 
-{{/* search - returns host ('service:port') and serviceAccount */}}
-{{- define "auth.hostNotifications" -}}
-{{- printf "%s" (include "common.discoverHost" (list . .Values.hosts.notifications )) -}}
-{{- end -}}
-{{- define "auth.serviceAccountNotifications" -}}
-{{- printf "%s" (include "common.discoverServiceAccount" (list . .Values.hosts.notifications )) -}}
-{{- end -}}
-
 {{/* graph - returns host ('service:port') and serviceAccount */}}
 {{- define "auth.hostGraph" -}}
 {{- printf "%s" (include "common.discoverHost" (list . .Values.hosts.graph )) -}}
@@ -80,5 +72,13 @@ Detailed description of 'discoverHost' & 'discoverServiceAccount' function
 {{/* ai-sparql-builder | preview - returns host ('service:port') and serviceAccount */}}
 {{- define "auth.serviceAccountAISparqlBuilder" -}}
 {{- printf "%s" (include "common.discoverServiceAccountPreview" (list . .Values.hostsPreview.aiSparqlBuilder )) -}}
+{{- end -}}
+
+{{/* notifications | preview - returns host ('service:port') and serviceAccount */}}
+{{- define "auth.hostNotifications" -}}
+{{- printf "%s" (include "common.discoverHost" (list . .Values.hosts.notifications )) -}}
+{{- end -}}
+{{- define "auth.serviceAccountNotifications" -}}
+{{- printf "%s" (include "common.discoverServiceAccountPrveiew" (list . .Values.hostsPreview.notifications )) -}}
 {{- end -}}
 
