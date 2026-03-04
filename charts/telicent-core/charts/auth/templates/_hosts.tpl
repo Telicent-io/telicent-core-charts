@@ -79,6 +79,6 @@ Detailed description of 'discoverHost' & 'discoverServiceAccount' function
 {{- printf "%s" (include "common.discoverHost" (list . .Values.hosts.notifications )) -}}
 {{- end -}}
 {{- define "auth.serviceAccountNotifications" -}}
-{{- printf "%s" (include "common.discoverServiceAccountPrveiew" (list . .Values.hostsPreview.notifications )) -}}
+{{- printf "%s" (include "common.discoverServiceAccountPreview" (list . .Values.hostsPreview.notifications )) -}}
 {{- end -}}
 

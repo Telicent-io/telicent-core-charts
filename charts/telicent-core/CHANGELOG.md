@@ -1,5 +1,28 @@
 # Changelog
 
+## [1.2.0](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v1.1.5...telicent-core-v1.2.0) (2026-03-04)
+
+
+### Features
+
+* **user-preferences:** Postgres storage ([6441171](https://github.com/Telicent-io/telicent-core-charts/commit/64411718738aa095d30f0cc117234834be260148))
+
+
+### Bug Fixes
+
+* auth policy ([7e220e7](https://github.com/Telicent-io/telicent-core-charts/commit/7e220e7a68fa81083f7e6c71b2346fd730b1aa4c))
+* **chart:** Fix missing configuration ([3b069a7](https://github.com/Telicent-io/telicent-core-charts/commit/3b069a71ad1c32fa91305e84e5a092e9b1bd1d05))
+* **chart:** Fix missing configuration ([7dabd73](https://github.com/Telicent-io/telicent-core-charts/commit/7dabd738851d66425003403c962676aa7b0b94af))
+* failed checks ([4f17673](https://github.com/Telicent-io/telicent-core-charts/commit/4f176737d0140b7658ab0312ff34a8b06fef71d2))
+* invalid field ([f76966b](https://github.com/Telicent-io/telicent-core-charts/commit/f76966b942c40405ed527a0cb047a805abe82a6e))
+* invalid field ([d8c44c9](https://github.com/Telicent-io/telicent-core-charts/commit/d8c44c9787a417b12c4d14fb7d7519f51c7fe0a7))
+* **notifications:** typo in config ([5a258f2](https://github.com/Telicent-io/telicent-core-charts/commit/5a258f26b96caa9cc9dab292c039f3e3e98e1456))
+* **notifications:** typo in config ([8b29568](https://github.com/Telicent-io/telicent-core-charts/commit/8b295685a74354391eef692346fa1444d8c0d682))
+* **search:** Bump minimum Search chart versions ([6f4a1aa](https://github.com/Telicent-io/telicent-core-charts/commit/6f4a1aa65e3ee6879c747b2f47890dbabc116eed))
+* **search:** Correct env var names ([0f5d5f6](https://github.com/Telicent-io/telicent-core-charts/commit/0f5d5f672c86ba7626035e6e30ecdd8e4fb28b7d))
+* **search:** Disable ELASTIC_LABELS_INDEX (CORE-1123) ([2707401](https://github.com/Telicent-io/telicent-core-charts/commit/2707401e15d59a7e295a3ba58a3b34853022aeb1))
+* **search:** Use SC-Search 2.0.0 ([59f455f](https://github.com/Telicent-io/telicent-core-charts/commit/59f455f613d9ec950c4a3dc69fa52541d476fd65))
+
 ## [1.1.5](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v1.1.4...telicent-core-v1.1.5) (2026-02-17)
 
 
