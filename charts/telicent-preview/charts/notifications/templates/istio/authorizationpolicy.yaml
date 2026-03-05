@@ -21,14 +21,11 @@ spec:
     to:
     - operation:
         paths:
+        - /notifications/read
+        - /notifications/read/*
+        - /notifications/unread
+        - /notifications/unread/*
         - /notifications
         - /notifications/*
         methods: ["GET","POST","PATCH"]
-    - operation:
-        paths:
-        - /healthz
-        - /healthz/*
-        - /version-info
-        - /version-info/*
-        methods: ["GET"]
 {{- end }}
