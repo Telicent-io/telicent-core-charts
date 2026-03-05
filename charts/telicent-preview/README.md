@@ -70,30 +70,11 @@ Contains global parameters, these parameters are mirrored across all Telicent Pr
 | `global.truststore.existingSecret`      | Name of an existing secret containing the truststore                                                                            | `""`                                             |
 | `global.truststore.mountPath`           | The mount path for the truststore in the container                                                                              | `/app/config/truststore`                         |
 
-### paperback-writer Parameters
-
-| Name                       | Description                                      | Value  |
-| -------------------------- | ------------------------------------------------ | ------ |
-| `paperback-writer.enabled` | Enable or disable the paperback-writer component | `true` |
-
 ### data-catalog-ui Parameters
 
 | Name                      | Description                                     | Value  |
 | ------------------------- | ----------------------------------------------- | ------ |
 | `data-catalog-ui.enabled` | Enable or disable the data-catalog-ui component | `true` |
-
-### Spatial Parameters
-
-| Name                        | Description                                         | Value   |
-| --------------------------- | --------------------------------------------------- | ------- |
-| `spatial.enabled`           | Enable or disable the spatial components.           | `false` |
-| `spatial-projector.enabled` | Enable or disable the spatial-projector components. | `false` |
-
-### ai-model-provider Parameters
-
-| Name                        | Description                                       | Value   |
-| --------------------------- | ------------------------------------------------- | ------- |
-| `ai-model-provider.enabled` | Enable or disable the ai-model-provider component | `false` |
 
 ### Notifications Parameters
 
@@ -101,6 +82,12 @@ Contains global parameters, these parameters are mirrored across all Telicent Pr
 | --------------------------------- | -------------------------------------------------------- | ------- |
 | `notifications.enabled`           | Enable or disable the notifications component.           | `false` |
 | `notifications-projector.enabled` | Enable or disable the notifications-projector component. | `false` |
+
+### paperback-writer Parameters
+
+| Name                       | Description                                      | Value  |
+| -------------------------- | ------------------------------------------------ | ------ |
+| `paperback-writer.enabled` | Enable or disable the paperback-writer component | `true` |
 
 ## Subchart configurations
 

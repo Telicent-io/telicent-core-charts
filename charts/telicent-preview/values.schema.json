@@ -113,16 +113,6 @@
                 }
             }
         },
-        "paperback-writer": {
-            "type": "object",
-            "properties": {
-                "enabled": {
-                    "type": "boolean",
-                    "description": "Enable or disable the paperback-writer component",
-                    "default": true
-                }
-            }
-        },
         "data-catalog-ui": {
             "type": "object",
             "properties": {
@@ -130,36 +120,6 @@
                     "type": "boolean",
                     "description": "Enable or disable the data-catalog-ui component",
                     "default": true
-                }
-            }
-        },
-        "spatial": {
-            "type": "object",
-            "properties": {
-                "enabled": {
-                    "type": "boolean",
-                    "description": "Enable or disable the spatial components.",
-                    "default": false
-                }
-            }
-        },
-        "spatial-projector": {
-            "type": "object",
-            "properties": {
-                "enabled": {
-                    "type": "boolean",
-                    "description": "Enable or disable the spatial-projector components.",
-                    "default": false
-                }
-            }
-        },
-        "ai-model-provider": {
-            "type": "object",
-            "properties": {
-                "enabled": {
-                    "type": "boolean",
-                    "description": "Enable or disable the ai-model-provider component",
-                    "default": false
                 }
             }
         },
@@ -180,6 +140,16 @@
                     "type": "boolean",
                     "description": "Enable or disable the notifications-projector component.",
                     "default": false
+                }
+            }
+        },
+        "paperback-writer": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable or disable the paperback-writer component",
+                    "default": true
                 }
             }
         }

@@ -59,31 +59,10 @@ global:
     # @key global.truststore.mountPath The mount path for the truststore in the container
     mountPath: /app/config/truststore
 
-# @section paperback-writer Parameters
-paperback-writer:
-  # @key paperback-writer.enabled Enable or disable the paperback-writer component
-  enabled: true
-
 # @section data-catalog-ui Parameters
 data-catalog-ui:
   # @key data-catalog-ui.enabled Enable or disable the data-catalog-ui component
   enabled: true
-
-#
-# @section Spatial Parameters
-#
-spatial:
-  # @key spatial.enabled Enable or disable the spatial components.
-  enabled: false
-
-spatial-projector:
-  # @key spatial-projector.enabled Enable or disable the spatial-projector components.
-  enabled: false
-
-# @section ai-model-provider Parameters
-ai-model-provider:
-  # @key ai-model-provider.enabled Enable or disable the ai-model-provider component
-  enabled: false
 
 #
 # @section Notifications Parameters
@@ -95,3 +74,8 @@ notifications:
 notifications-projector:
   # @key notifications-projector.enabled Enable or disable the notifications-projector component.
   enabled: false
+
+# @section paperback-writer Parameters
+paperback-writer:
+  # @key paperback-writer.enabled Enable or disable the paperback-writer component
+  enabled: true
