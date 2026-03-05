@@ -133,26 +133,6 @@
                 }
             }
         },
-        "spatial": {
-            "type": "object",
-            "properties": {
-                "enabled": {
-                    "type": "boolean",
-                    "description": "Enable or disable the spatial components.",
-                    "default": false
-                }
-            }
-        },
-        "spatial-projector": {
-            "type": "object",
-            "properties": {
-                "enabled": {
-                    "type": "boolean",
-                    "description": "Enable or disable the spatial-projector components.",
-                    "default": false
-                }
-            }
-        },
         "ai-model-provider": {
             "type": "object",
             "properties": {
