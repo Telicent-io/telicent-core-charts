@@ -1,4 +1,5 @@
 # Declare routers / services / middlewares
+# note: requests to /notifications/ will have the whole path forwarded to the host
 http:
   routers:
     notifications:
@@ -7,7 +8,6 @@ http:
       entryPoints:
         - web-api
       middleWares:
-        - path-notifications
         - host-notifications
 
   services:
@@ -17,11 +17,6 @@ http:
           - url: {{ printf "http://%s"  (include "traefik-proxy.hostNotifications" .) }}
 
   middlewares:
-    path-notifications:
-      replacePathRegex:
-        regex: "^/notifications/(.*)"
-        replacement: "/$1"
-
     host-notifications:
       headers:
         customRequestHeaders:
