@@ -18,7 +18,7 @@
                 },
                 "enabled": {
                     "type": "boolean",
-                    "description": "enabled Enable *Notifications* deployment",
+                    "description": "enabled Enable *Notifications Projector* deployment",
                     "default": false
                 },
                 "releaseNameTelicentCore": {

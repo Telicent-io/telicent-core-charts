@@ -3,7 +3,7 @@ Copyright (C) 2026 Telicent Limited
 */}}
 
 {{/*
-Create the name of the config map
+Create the name of the environment variables config map
 */}}
 {{- define "notifications-projector.envConfigMapName" -}}
 {{- if .Values.configMap.existingEnvConfigMap }}

@@ -19,7 +19,7 @@ global:
   # @key global.imagePullSecrets Global registry secret names as an array
   imagePullSecrets: []
 
-  # @key global.enabled enabled Enable *Notifications* deployment
+  # @key global.enabled enabled Enable *Notifications Projector* deployment
   enabled: false
 
   # @key global.releaseNameTelicentCore Release name used during the Telicent Core chart installation. Note: ensure the value is correct, otherwise there will be no access to auth
@@ -54,6 +54,7 @@ global:
     # @key global.truststore.mountPath The mount path for the truststore in the container
     mountPath: /app/config/truststore
 
+#
 # @section Application Parameters - Kafka
 #
 # @descStart

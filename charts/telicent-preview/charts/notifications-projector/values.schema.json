@@ -16,6 +16,11 @@
                     "default": [],
                     "items": {}
                 },
+                "enabled": {
+                    "type": "boolean",
+                    "description": "enabled Enable *Notifications* deployment",
+                    "default": false
+                },
                 "kafka": {
                     "type": "object",
                     "properties": {
@@ -26,7 +31,7 @@
                         },
                         "existingConfigSecretName": {
                             "type": "string",
-                            "description": "Name of an existing secret containing Kafka configuration",
+                            "description": "Name of an existing secret containing Kafka configuration (preferred over individual settings below for security)",
                             "default": ""
                         },
                         "username": {
@@ -88,27 +93,42 @@
                 }
             }
         },
+        "validation": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable JSON Schema validation",
+                    "default": false
+                },
+                "registry": {
+                    "type": "object",
+                    "properties": {
+                        "hostname": {
+                            "type": "string",
+                            "description": "Name for the Apicurio schema registry",
+                            "default": "http://apicurio"
+                        },
+                        "port": {
+                            "type": "number",
+                            "description": "Port for the Apicurio schema registry",
+                            "default": 8080
+                        }
+                    }
+                }
+            }
+        },
         "postgres": {
             "type": "object",
             "properties": {
-                "host": {
-                    "type": "string",
-                    "description": "PostgreSQL connection hostname",
-                    "default": "postgres"
-                },
-                "port": {
-                    "type": "number",
-                    "description": "PostgreSQL connection port",
-                    "default": 5432
-                },
-                "name": {
-                    "type": "string",
-                    "description": "PostgreSQL Database name",
-                    "default": "notifications"
-                },
                 "jdbcUrl": {
                     "type": "string",
-                    "description": "PostgreSQL connection URI. If specified the postgres.host, postgres.port and postgres.name will be ignored",
+                    "description": "PostgreSQL connection URL format: \"jdbc:postgresql://{host}:{port}/{database}\"",
+                    "default": ""
+                },
+                "existingSecret": {
+                    "type": "string",
+                    "description": "Name of an existing secret. The secret must contain 2 keys: 'username', 'password'",
                     "default": ""
                 },
                 "username": {
@@ -119,11 +139,6 @@
                 "password": {
                     "type": "string",
                     "description": "PostgreSQL password",
-                    "default": ""
-                },
-                "existingSecret": {
-                    "type": "string",
-                    "description": "Name of an existing secret resource containing the PostgreSQL credentials. If specified, the values for postgres.username and postgres.password will be ignored",
                     "default": ""
                 }
             }
@@ -410,31 +425,6 @@
                             "type": "number",
                             "description": "Port for the Prometheus service",
                             "default": 9464
-                        }
-                    }
-                }
-            }
-        },
-        "validation": {
-            "type": "object",
-            "properties": {
-                "enabled": {
-                    "type": "boolean",
-                    "description": "Enable JSON Schema validation",
-                    "default": false
-                },
-                "registry": {
-                    "type": "object",
-                    "properties": {
-                        "hostname": {
-                            "type": "string",
-                            "description": "Name for the Apicurio schema registry",
-                            "default": "http://apicurio"
-                        },
-                        "port": {
-                            "type": "number",
-                            "description": "Port for the Apicurio schema registry",
-                            "default": 8080
                         }
                     }
                 }

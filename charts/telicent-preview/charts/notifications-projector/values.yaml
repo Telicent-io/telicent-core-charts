@@ -5,7 +5,7 @@
 # @section Global Parameters
 #
 # @descStart
-# Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart.
+# Contains global parameters; these parameters are mirrored within the Telicent preview umbrella chart.
 # Note: Only global parameters used within this chart will be listed below.
 # @descEnd
 global:
@@ -19,10 +19,13 @@ global:
   # @key global.imagePullSecrets Global registry secret names as an array
   imagePullSecrets: []
 
+  # @key global.enabled enabled Enable *Notifications* deployment
+  enabled: false
+
   kafka:
     # @key global.kafka.bootstrapServers Comma separated list containing Kafka bootstrap servers
     bootstrapServers: "kafka-bootstrap.kafka.svc.cluster.local:9092"
-    # @key global.kafka.existingConfigSecretName Name of an existing secret containing Kafka configuration
+    # @key global.kafka.existingConfigSecretName Name of an existing secret containing Kafka configuration (preferred over individual settings below for security)
     existingConfigSecretName: ""
     # @key global.kafka.username Username for Kafka authentication
     username: "your.kafka.username.here"
@@ -53,26 +56,36 @@ notificationsProjector:
     dlqTopic: notifications.dlq
 
 #
-# @section PostgreSQL
+# @section Application Parameters - Validation (Apicurio schema registry)
+#
+validation:
+  # @key validation.enabled Enable JSON Schema validation
+  enabled: false
+  registry:
+    # @key validation.registry.hostname Name for the Apicurio schema registry
+    hostname: http://apicurio
+    # @key validation.registry.port Port for the Apicurio schema registry
+    port: 8080
+
+#
+# @section Application Parameters - PostgreSQL and Secret
 #
 # @descStart
-# Note: It is recommended to use a Kubernetes secret for sensitive information like passwords
+# The following contains connection details to a PostgreSQL instance, on which the application relies.
+# It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
+# For Quick Start purposes, a secret named `tc-auth-usr-psql-notifications-projector` will be created if one is not set.
 # @descEnd
 postgres:
-  # @key postgres.host PostgreSQL connection hostname
-  host: postgres
-  # @key postgres.port PostgreSQL connection port
-  port: 5432
-  # @key postgres.name PostgreSQL Database name
-  name: notifications
-  # @key postgres.jdbcUrl PostgreSQL connection URI. If specified the postgres.host, postgres.port and postgres.name will be ignored
+  # @key postgres.jdbcUrl PostgreSQL connection URL format: "jdbc:postgresql://{host}:{port}/{database}"
   jdbcUrl: ""
+  # @key postgres.existingSecret Name of an existing secret. The secret must contain 2 keys: 'username', 'password'
+  # Note: Left unset, it will create a secret named: tc-auth-usr-psql-notifications-projector
+  existingSecret: ""
   # @key postgres.username PostgreSQL username
+  # Note: For additional security, the username is read from the secret, as defined by 'existingSecret' and not from this value!
   username: ""
   # @key postgres.password PostgreSQL password
   password: ""
-  # @key postgres.existingSecret Name of an existing secret resource containing the PostgreSQL credentials. If specified, the values for postgres.username and postgres.password will be ignored
-  existingSecret: ""
 
 #
 # @section ConfigMap Parameters
@@ -242,15 +255,3 @@ metrics:
     name: metrics
     # @key metrics.service.port Port for the Prometheus service
     port: 9464
-
-#
-# @section Validation (Apicurio schema registry) Exposure Parameters
-#
-validation:
-  # @key validation.enabled Enable JSON Schema validation
-  enabled: false
-  registry:
-    # @key validation.registry.hostname Name for the Apicurio schema registry
-    hostname: http://apicurio
-    # @key validation.registry.port Port for the Apicurio schema registry
-    port: 8080

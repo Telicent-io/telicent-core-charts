@@ -17,7 +17,7 @@ the [Helm](https://helm.sh) package manager.
 To install the chart with the release name `my-release`:
 
 ```console
-helm install my-release ./charts/telicent-core/charts/paperback-writer
+helm install my-release ./charts/telicent-preview/charts/paperback-writer
 ```
 
 ## Uninstalling the Chart
@@ -33,9 +33,9 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ```bash
 .dev/readme-generator-for-helm --config=charts/telicent-core/readme.config \
- --values=charts/telicent-core/charts/paperback-writer/values.yaml \
- --readme=charts/telicent-core/charts/paperback-writer/README.md \
- --schema=charts/telicent-core/charts/paperback-writer/values.schema.json
+ --values=charts/telicent-preview/charts/paperback-writer/values.yaml \
+ --readme=charts/telicent-preview/charts/paperback-writer/README.md \
+ --schema=charts/telicent-preview/charts/paperback-writer/values.schema.json
 ```
 
 ## Configuration and installation details
@@ -78,7 +78,6 @@ initContainers:
 This chart allows you to set your custom affinity using the `affinity` parameter.
 Find more information about Pod's affinity in
 the [kubernetes documentation](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity).
-
 
 ## Parameters
 
