@@ -24,13 +24,9 @@ spec:
         - operation:
             paths:
               - /notifications
-              - /notifications/*
+              - /notifications/read
+              - /notifications/read/*
+              - /notifications/unread
+              - /notifications/unread/*
             methods: ["GET","POST","PATCH"]
-        - operation:
-            paths:
-              - /healthz
-              - /healthz/*
-              - /version-info
-              - /version-info/*
-            methods: ["GET"]
 {{- end }}
