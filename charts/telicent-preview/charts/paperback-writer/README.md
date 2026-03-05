@@ -149,7 +149,7 @@ Note: Only global parameters used within this chart will be listed below.
 | ----------- | ------------------------------------------- | ----- |
 | `resources` | Resources for *Paperback Writer* containers | `{}`  |
 
-### Statefulset Security Context Parameters - Default Security Context
+### Deployment Security Context Parameters - Default Security Context
 
 | Name                                                | Description                                                             | Value            |
 | --------------------------------------------------- | ----------------------------------------------------------------------- | ---------------- |
@@ -164,9 +164,14 @@ Note: Only global parameters used within this chart will be listed below.
 | `containerSecurityContext.allowPrivilegeEscalation` | Set container's Security Context allowPrivilegeEscalation               | `false`          |
 | `containerSecurityContext.capabilities.drop`        | List of capabilities to be dropped                                      | `["ALL"]`        |
 | `containerSecurityContext.seccompProfile.type`      | Set container's Security Context seccomp profile                        | `RuntimeDefault` |
-| `affinity`                                          | Affinity for pod assignment                                             | `{}`             |
-| `nodeSelector`                                      | Node labels for pod assignment                                          | `{}`             |
-| `tolerations`                                       | Tolerations for pod assignment                                          | `[]`             |
+
+### Deployment Affinity Parameters
+
+| Name           | Description                    | Value |
+| -------------- | ------------------------------ | ----- |
+| `affinity`     | Affinity for pod assignment    | `{}`  |
+| `nodeSelector` | Node labels for pod assignment | `{}`  |
+| `tolerations`  | Tolerations for pod assignment | `[]`  |
 
 ### Service Account Parameters
 

@@ -1,11 +1,11 @@
 {{/*
-Copyright (C) 2025 Telicent Limited
+Copyright (C) 2026 Telicent Limited
 */}}
 
 {{/*
 Create the name of the environment variables config map
 */}}
-{{- define "paperback-writer.envConfigMapName" -}}
+{{- define "notifications.envConfigMapName" -}}
 {{- if .Values.configMap.existingConfigMapName }}
 {{- .Values.configMap.existingEnvConfigMap }}
 {{- else }}

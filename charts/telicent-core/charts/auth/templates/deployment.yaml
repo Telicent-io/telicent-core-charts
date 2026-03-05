@@ -11,7 +11,7 @@ metadata:
   labels:
     {{- include "auth.labels" . | nindent 4 }}
   {{- with .Values.annotations }}
-  annotations: 
+  annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 

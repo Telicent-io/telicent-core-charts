@@ -76,12 +76,12 @@ spec:
           valueFrom:
             secretKeyRef:
               key: username
-              name: {{ include "user-preferences.postgresSqlSecretName" . }}
+              name: {{ include "user-preferences.postgresSecretName" . }}
         - name: DATABASE_PASSWORD
           valueFrom:
             secretKeyRef:
               key: password
-              name: {{ include "user-preferences.postgresSqlSecretName" . }}
+              name: {{ include "user-preferences.postgresSecretName" . }}
 
 
         {{- range .Values.extraEnvVars }}

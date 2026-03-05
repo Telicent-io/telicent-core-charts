@@ -56,7 +56,7 @@ java:
 # For Quick Start purposes, a secret named `tc-auth-usr-mongo-user-preferences` will be created if one is not set.
 # @descEnd
 mongo:
-  # @key mongo.url MongoDB connection URL (database value can be omitted in favour of populating 'database' property) format: "mongodb://<host1>:<port1>,<host2>:<port2>,<host3>:<port3>/?retryWrites=false"
+  # @key mongo.url MongoDB connection URL (database value can be omitted in favour of populating 'database' property) format: "mongodb://{host1}:{port1},{host2}:{port2},{host3}:{port3}/?retryWrites=false"
   url: ""
   # @key mongo.database MongoDB database
   database: "user-preferences"
@@ -88,16 +88,16 @@ mongo:
 # If both MongoDB and PostgreSQL are configured, PostgreSQL will be used as the primary database, and any existing
 # MongoDB data will be automatically migrated.
 # @descEnd
-postgresSql:
-  # @key postgresSql.url PostgreSQL connection URL format: "jdbc:postgresql://<host>:<port>/<database>"
-  url: ""
-  # @key postgresSql.existingSecret Name of an existing secret. The secret must contain 2 keys: 'username', 'password'
+postgres:
+  # @key postgres.jdbcUrl PostgreSQL connection URL format: "jdbc:postgresql://{host}:{port}/{database}"
+  jdbcUrl: ""
+  # @key postgres.existingSecret Name of an existing secret. The secret must contain 2 keys: 'username', 'password'
   # Note: Left unset, it will create a secret named: tc-auth-usr-psql-user-preferences
   existingSecret: ""
-  # @key postgresSql.username PostgreSQL username
+  # @key postgres.username PostgreSQL username
   # Note: For additional security, the username is read from the secret, as defined by 'existingSecret' and not from this value!
   username: ""
-  # @key postgresSql.password PostgreSQL password
+  # @key postgres.password PostgreSQL password
   password: ""
 
 #

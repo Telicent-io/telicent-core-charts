@@ -20,7 +20,7 @@ data:
   MONGO_AUTH_DATABASE : {{ .Values.mongo.authDatabase | quote }}
 
   # Postgres Settings
-  DATABASE_JDBC_URL: {{ .Values.postgresSql.url | quote }}
+  DATABASE_JDBC_URL: {{ .Values.postgres.jdbcUrl | quote }}
   
   # Application Settings
   JAVA_OPTIONS: {{ .Values.java.jvmOptions | quote }}
