@@ -12,10 +12,3 @@ Create the name of the PostgreSQL secret
 {{- printf "%s-postgresql" (include "notifications-projector.fullname" .) }}
 {{- end }}
 {{- end -}}
-
-{{/*
-Create the name of environment variable secrets
-*/}}
-{{- define "notifications-projector.EnvSecretName" -}}
-{{ include "notifications-projector.fullname" . }}
-{{- end }}

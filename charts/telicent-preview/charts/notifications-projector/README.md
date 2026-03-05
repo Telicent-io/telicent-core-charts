@@ -83,21 +83,22 @@ the [kubernetes documentation](https://kubernetes.io/docs/concepts/configuration
 
 ### Global Parameters
 
-Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart.
+Contains global parameters; these parameters are mirrored within the Telicent preview umbrella chart.
 Note: Only global parameters used within this chart will be listed below.
 
-| Name                                    | Description                                               | Value                                          |
-| --------------------------------------- | --------------------------------------------------------- | ---------------------------------------------- |
-| `global.imageRegistry`                  | Global image registry                                     | `""`                                           |
-| `global.imagePullSecrets`               | Global registry secret names as an array                  | `[]`                                           |
-| `global.kafka.bootstrapServers`         | Comma separated list containing Kafka bootstrap servers   | `kafka-bootstrap.kafka.svc.cluster.local:9092` |
-| `global.kafka.existingConfigSecretName` | Name of an existing secret containing Kafka configuration | `""`                                           |
-| `global.kafka.username`                 | Username for Kafka authentication                         | `your.kafka.username.here`                     |
-| `global.kafka.password`                 | Password for Kafka authentication                         | `your.kafka.password.here`                     |
-| `global.kafka.protocol`                 | Protocol used for Kafka communication                     | `SASL_SSL`                                     |
-| `global.kafka.mechanism`                | SASL mechanism used for Kafka authentication              | `SCRAM-SHA-512`                                |
-| `global.truststore.existingSecret`      | Name of an existing secret containing the truststore      | `""`                                           |
-| `global.truststore.mountPath`           | The mount path for the truststore in the container        | `/app/config/truststore`                       |
+| Name                                    | Description                                                                                                       | Value                                          |
+| --------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| `global.imageRegistry`                  | Global image registry                                                                                             | `""`                                           |
+| `global.imagePullSecrets`               | Global registry secret names as an array                                                                          | `[]`                                           |
+| `global.enabled`                        | enabled Enable *Notifications* deployment                                                                         | `false`                                        |
+| `global.kafka.bootstrapServers`         | Comma separated list containing Kafka bootstrap servers                                                           | `kafka-bootstrap.kafka.svc.cluster.local:9092` |
+| `global.kafka.existingConfigSecretName` | Name of an existing secret containing Kafka configuration (preferred over individual settings below for security) | `""`                                           |
+| `global.kafka.username`                 | Username for Kafka authentication                                                                                 | `your.kafka.username.here`                     |
+| `global.kafka.password`                 | Password for Kafka authentication                                                                                 | `your.kafka.password.here`                     |
+| `global.kafka.protocol`                 | Protocol used for Kafka communication                                                                             | `SASL_SSL`                                     |
+| `global.kafka.mechanism`                | SASL mechanism used for Kafka authentication                                                                      | `SCRAM-SHA-512`                                |
+| `global.truststore.existingSecret`      | Name of an existing secret containing the truststore                                                              | `""`                                           |
+| `global.truststore.mountPath`           | The mount path for the truststore in the container                                                                | `/app/config/truststore`                       |
 
 ### Application Parameters - Kafka
 
@@ -108,19 +109,26 @@ Contains Kafka topic configuration for the *Notifications Projector* application
 | `notificationsProjector.topics.inputTopic` | Topic to consume messages from        | `notifications`     |
 | `notificationsProjector.topics.dlqTopic`   | Dead-letter topic for failed messages | `notifications.dlq` |
 
-### PostgreSQL
+### Application Parameters - Validation (Apicurio schema registry)
 
-Note: It is recommended to use a Kubernetes secret for sensitive information like passwords
+| Name                           | Description                           | Value             |
+| ------------------------------ | ------------------------------------- | ----------------- |
+| `validation.enabled`           | Enable JSON Schema validation         | `false`           |
+| `validation.registry.hostname` | Name for the Apicurio schema registry | `http://apicurio` |
+| `validation.registry.port`     | Port for the Apicurio schema registry | `8080`            |
 
-| Name                      | Description                                                                                                                                                     | Value           |
-| ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- |
-| `postgres.host`           | PostgreSQL connection hostname                                                                                                                                  | `postgres`      |
-| `postgres.port`           | PostgreSQL connection port                                                                                                                                      | `5432`          |
-| `postgres.name`           | PostgreSQL Database name                                                                                                                                        | `notifications` |
-| `postgres.jdbcUrl`        | PostgreSQL connection URI. If specified the postgres.host, postgres.port and postgres.name will be ignored                                                      | `""`            |
-| `postgres.username`       | PostgreSQL username                                                                                                                                             | `""`            |
-| `postgres.password`       | PostgreSQL password                                                                                                                                             | `""`            |
-| `postgres.existingSecret` | Name of an existing secret resource containing the PostgreSQL credentials. If specified, the values for postgres.username and postgres.password will be ignored | `""`            |
+### Application Parameters - PostgreSQL and Secret
+
+The following contains connection details to a PostgreSQL instance, on which the application relies.
+It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
+For Quick Start purposes, a secret named `tc-auth-usr-psql-notifications-projector` will be created if one is not set.
+
+| Name                      | Description                                                                        | Value |
+| ------------------------- | ---------------------------------------------------------------------------------- | ----- |
+| `postgres.jdbcUrl`        | PostgreSQL connection URL format: "jdbc:postgresql://{host}:{port}/{database}"     | `""`  |
+| `postgres.existingSecret` | Name of an existing secret. The secret must contain 2 keys: 'username', 'password' | `""`  |
+| `postgres.username`       | PostgreSQL username                                                                | `""`  |
+| `postgres.password`       | PostgreSQL password                                                                | `""`  |
 
 ### ConfigMap Parameters
 
@@ -217,14 +225,6 @@ Contains configuration parameters specific to the *Notifications Projector* appl
 | `metrics.enabled`      | Enable Prometheus metrics       | `true`    |
 | `metrics.service.name` | Name for the Prometheus service | `metrics` |
 | `metrics.service.port` | Port for the Prometheus service | `9464`    |
-
-### Validation (Apicurio schema registry) Exposure Parameters
-
-| Name                           | Description                           | Value             |
-| ------------------------------ | ------------------------------------- | ----------------- |
-| `validation.enabled`           | Enable JSON Schema validation         | `false`           |
-| `validation.registry.hostname` | Name for the Apicurio schema registry | `http://apicurio` |
-| `validation.registry.port`     | Port for the Apicurio schema registry | `8080`            |
 
 ## License
 
