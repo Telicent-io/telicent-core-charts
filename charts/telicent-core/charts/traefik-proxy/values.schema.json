@@ -564,11 +564,6 @@
                     "description": "Graph application default host value, as defined by 'service/serviceAccount:port'",
                     "default": "graph:8080"
                 },
-                "spatial": {
-                    "type": "string",
-                    "description": "Spatial application default host value, as defined by 'service/serviceAccount:port'",
-                    "default": "spatial:8080"
-                },
                 "notifications": {
                     "type": "string",
                     "description": "Notifications application default host value, as defined by 'service/serviceAccount:port'",

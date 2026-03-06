@@ -11,8 +11,6 @@ Note: lookup returns empty if the resource doesn't exist or if running in --dry-
 {{- $userPref := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "user-preferences") }}
 {{- $search := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "search") }}
 {{- $searchProjector := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "search-projector") }}
-{{- $spatial := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "spatial") }}
-{{- $spatialProjector := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "spatial-projector") }}
 {{- $adminUi := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "admin-ui") }}
 {{- $graphUi := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "graph-ui") }}
 {{- $queryUi := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "query-ui") }}
@@ -45,8 +43,6 @@ Namespace:            {{ .Release.Namespace }}
 {{- if $graph }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
 {{- if $search }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
 {{- if $searchProjector }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
-{{- if $spatial }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
-{{- if $spatialProjector }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
 {{- if $adminUi }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
 {{- if $graphUi }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
 {{- if $queryUi }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}

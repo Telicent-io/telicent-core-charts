@@ -65,10 +65,6 @@ Detailed description of 'discoverHost' & 'discoverServiceAccount' function
 {{- printf "%s" (include "common.discoverServiceAccountPreview" (list . .Values.hostsPreview.paperbackWriter )) -}}
 {{- end -}}
 
-{{- define "auth.serviceAccountSpatial" -}}
-{{- printf "%s" (include "common.discoverServiceAccountPreview" (list . .Values.hostsPreview.spatial )) -}}
-{{- end -}}
-
 {{/* ai-sparql-builder | preview - returns host ('service:port') and serviceAccount */}}
 {{- define "auth.serviceAccountAISparqlBuilder" -}}
 {{- printf "%s" (include "common.discoverServiceAccountPreview" (list . .Values.hostsPreview.aiSparqlBuilder )) -}}

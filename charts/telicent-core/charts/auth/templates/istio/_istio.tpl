@@ -44,15 +44,6 @@ Returns the principal used for Paperback Writer traffic by the Istio Authorizati
 {{- end -}}
 
 {{/*
-Returns the principal used for Spatial traffic by the Istio AuthorizationPolicy
-*/}}
-{{- define "auth.spatialPrincipal" -}}
-{{- if .Values.global.enterprise -}}
-{{- printf "- cluster.local/ns/%s/sa/%s" .Release.Namespace ( include "auth.serviceAccountSpatial" .) -}}
-{{- end -}}
-{{- end -}}
-
-{{/*
 Returns the principal used for ai-sparql-builder traffic by the Istio AuthorizationPolicy
 */}}
 {{- define "auth.aiSparqlBuilderPrincipal" -}}
