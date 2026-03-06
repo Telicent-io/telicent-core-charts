@@ -636,11 +636,6 @@
                     "description": "Paperback Writer application host value, as defined by 'service/serviceAccount:port'",
                     "default": "paperback-writer:8080"
                 },
-                "spatial": {
-                    "type": "string",
-                    "description": "",
-                    "default": "spatial:8080"
-                },
                 "aiSparqlBuilder": {
                     "type": "string",
                     "description": "AI SPARQL Builder application host value, as defined by 'service/serviceAccount:port'",

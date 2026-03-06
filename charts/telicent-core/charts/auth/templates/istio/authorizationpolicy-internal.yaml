@@ -24,7 +24,6 @@ spec:
          {{- include "auth.userPreferencesPrincipal" . | nindent 8 }}
          {{- include "auth.searchPrincipal" . | nindent 8 }}
          {{- include "auth.paperbackWriterPrincipal" . | nindent 8 }}
-         {{- include "auth.spatialPrincipal" . | nindent 8 }}
          {{- include "auth.aiSparqlBuilderPrincipal" . | nindent 8 }}
          {{- include "auth.notificationsPrincipal" . | nindent 8 }}
     to:

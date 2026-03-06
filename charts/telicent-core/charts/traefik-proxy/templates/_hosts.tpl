@@ -47,14 +47,6 @@ application relies on. For a full explanation please view '_hosts.tlp' file in t
 {{- printf "%s" (include "common.discoverServiceAccount" (list . .Values.hosts.graph )) -}}
 {{- end -}}
 
-{{/* spatial - returns host ('service:port') and serviceAccount */}}
-{{- define "traefik-proxy.hostSpatial" -}}
-{{- printf "%s" (include "common.discoverHost" (list . .Values.hosts.spatial )) -}}
-{{- end -}}
-{{- define "traefik-proxy.serviceAccountSpatial" -}}
-{{- printf "%s" (include "common.discoverServiceAccount" (list . .Values.hosts.spatial )) -}}
-{{- end -}}
-
 {{/* admin-ui - returns host ('service:port') and serviceAccount */}}
 {{- define "traefik-proxy.hostAdminUi" -}}
 {{- printf "%s" (include "common.discoverHost" (list . .Values.hosts.adminUi )) -}}
