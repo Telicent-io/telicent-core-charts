@@ -97,4 +97,4 @@ They are addressed by their names, and each subchart has its own set of configur
 
 ## License
 
-Copyright &copy; 2025 Telicent Limited
+Copyright &copy; 2026 Telicent Limited
