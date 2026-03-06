@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.6.0](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-preview-v0.5.1...telicent-preview-v0.6.0) (2026-03-06)
+
+
+### Features
+
+* Adds AI model provider Chart ([4884f24](https://github.com/Telicent-io/telicent-core-charts/commit/4884f24b8259d2dd388a0107a38166b8cb96c79e))
+* adds sparql AI builder ([27fcf7b](https://github.com/Telicent-io/telicent-core-charts/commit/27fcf7b8c996d6ed0622292e426d9e8fa1ab0617))
+* archive ai-model-provider ([3e11d4d](https://github.com/Telicent-io/telicent-core-charts/commit/3e11d4dd200cf1a9caf3703eeee00dc9a9fccb42))
+* upversion paperback writer to 0.8.2 ([bef401f](https://github.com/Telicent-io/telicent-core-charts/commit/bef401f4cd03fceb74bc3e51d92477d7e2f85cd9))
+* upversion paperback writer to 0.8.2 ([4be76bc](https://github.com/Telicent-io/telicent-core-charts/commit/4be76bc26ce1370c9bcb20a82e928a5702af2f05))
+
+
+### Bug Fixes
+
+* **chart:** Fix missing configuration ([3b069a7](https://github.com/Telicent-io/telicent-core-charts/commit/3b069a71ad1c32fa91305e84e5a092e9b1bd1d05))
+* **chart:** Fix missing configuration ([7dabd73](https://github.com/Telicent-io/telicent-core-charts/commit/7dabd738851d66425003403c962676aa7b0b94af))
+* postgres config + tidy ([4e2f502](https://github.com/Telicent-io/telicent-core-charts/commit/4e2f5024c324ad5ec3a386e1a8ad1144627c11fe))
+* postgres config + tidy ([5cc33ee](https://github.com/Telicent-io/telicent-core-charts/commit/5cc33ee0982126497d70064d31af54a864dc4b45))
+
 ## [0.6.0](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-preview-v0.5.1...telicent-preview-v0.6.0) (2026-03-04)
 
 
