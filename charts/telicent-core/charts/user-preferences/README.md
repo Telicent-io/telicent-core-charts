@@ -1,4 +1,4 @@
-# Copyright (C) 2025 Telicent Limited
+# Copyright (C) 2026 Telicent Limited
 # Telicent Package for User Preferences API
 
 Telicent User Preferences API enables sharing of user preferences and data across Telicent Applications.
@@ -272,4 +272,4 @@ If either of those details changes, you can use this section to correctly refer 
 
 ## License
 
-Copyright &copy; 2025 Telicent Limited
+Copyright &copy; 2026 Telicent Limited

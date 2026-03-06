@@ -513,4 +513,4 @@ The application settings are defined within the 'topics' key
 
 ## License
 
-Copyright &copy; 2025 Telicent Limited
+Copyright &copy; 2026 Telicent Limited

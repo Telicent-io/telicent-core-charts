@@ -1,5 +1,5 @@
 ## Telicent CORE Platform Helm Charts License
-Copyright (c) 2025 Telicent Limited. All rights reserved.
+Copyright (c) 2026 Telicent Limited. All rights reserved.
 
 ### Grant of License
 Subject to the terms and conditions of this License and your compliance with the Telicent General License

@@ -228,4 +228,4 @@ Contains configuration parameters specific to the *Notifications Projector* appl
 
 ## License
 
-Copyright &copy; 2025 Telicent Limited
+Copyright &copy; 2026 Telicent Limited

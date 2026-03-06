@@ -227,4 +227,4 @@ Contains configuration parameters specific to the *Search Projector* application
 
 ## License
 
-Copyright &copy; 2025 Telicent Limited
+Copyright &copy; 2026 Telicent Limited
