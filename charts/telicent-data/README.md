@@ -136,7 +136,6 @@ These parameters can be referenced in sub-charts as `.Values.global.<parameter-n
 | `kafkaTopics.enabled` | Enable or disable the creation of Kafka topics during installation | `false` |
 | `kafkaTopics.topics`  | List of Kafka topics to be created                                 | `[]`    |
 
-
 ## License
 
 Copyright &copy; 2026 Telicent Limited
