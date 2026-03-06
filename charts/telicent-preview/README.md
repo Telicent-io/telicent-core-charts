@@ -1,6 +1,6 @@
 # Helm Chart for Telicent Preview
 
-Telicent Preview is the umbrella chart under which all the preview subcharts are configured and released. This
+Telicent Preview is the umbrella chart under which all the preview sub-charts are configured and released. This
 repository contains products that are still under development and in preview mode.
 
 ## Introduction
