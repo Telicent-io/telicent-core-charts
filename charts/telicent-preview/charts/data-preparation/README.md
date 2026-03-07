@@ -107,7 +107,7 @@ For Quick Start purposes, a secret named `tc-auth-usr-psql-data-preparation` wil
 
 | Name                      | Description                                                                        | Value |
 | ------------------------- | ---------------------------------------------------------------------------------- | ----- |
-| `postgres.uri`            | PostgreSQL connection URI.                                                         | `""`  |
+| `postgres.jdbcUrl`        | PostgreSQL connection URL format: "jdbc:postgresql://{host}:{port}/{database}"     | `""`  |
 | `postgres.existingSecret` | Name of an existing secret. The secret must contain 2 keys: 'username', 'password' | `""`  |
 | `postgres.username`       | PostgreSQL username                                                                | `""`  |
 | `postgres.password`       | PostgreSQL password                                                                | `""`  |

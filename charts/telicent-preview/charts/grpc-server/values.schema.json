@@ -21,6 +21,11 @@
                     "description": "enabled Enable *GRPC Server* deployment",
                     "default": false
                 },
+                "sinkHostDomain": {
+                    "type": "string",
+                    "description": "Domain associated with Telicent data-sharing services. This value cannot be changed after it is set",
+                    "default": ""
+                },
                 "kafka": {
                     "type": "object",
                     "properties": {
@@ -55,13 +60,33 @@
                             "default": "SCRAM-SHA-512"
                         }
                     }
+                },
+                "istioIngressNamespace": {
+                    "type": "string",
+                    "description": "Namespace in which the Istio Ingress resource is deployed; overrides 'istio.ingress.namespace'",
+                    "default": "istio-system"
+                },
+                "istioIngressServiceAccount": {
+                    "type": "string",
+                    "description": "ServiceAccount associated with Istio ingress deployment; overrides 'istio.ingress.serviceAccount'",
+                    "default": "istio-ingress"
+                },
+                "istioGatewayNamespace": {
+                    "type": "string",
+                    "description": "Namespace in which the Istio Gateway resource is deployed; overrides 'istio.gateway.namespace'",
+                    "default": "istio-system"
+                },
+                "istioGatewayName": {
+                    "type": "string",
+                    "description": "Name of the Istio Gateway resource; overrides 'istio.gateway.namespace'",
+                    "default": "ingress-gateway"
                 }
             }
         },
         "postgres": {
             "type": "object",
             "properties": {
-                "uri": {
+                "jdbcUrl": {
                     "type": "string",
                     "description": "PostgreSQL connection URI.",
                     "default": ""
@@ -347,6 +372,57 @@
                     "type": "string",
                     "description": "*GRPC Server* service type",
                     "default": "ClusterIP"
+                }
+            }
+        },
+        "istio": {
+            "type": "object",
+            "properties": {
+                "ingress": {
+                    "type": "object",
+                    "properties": {
+                        "namespace": {
+                            "type": "string",
+                            "description": "Namespace in which the Istio Ingress resource is deployed",
+                            "default": "istio-system"
+                        },
+                        "serviceAccount": {
+                            "type": "string",
+                            "description": "ServiceAccount associated with Istio ingress deployment",
+                            "default": "istio-ingress"
+                        }
+                    }
+                },
+                "gateway": {
+                    "type": "object",
+                    "properties": {
+                        "namespace": {
+                            "type": "string",
+                            "description": "Namespace in which the Istio Gateway resource is deployed",
+                            "default": "istio-system"
+                        },
+                        "name": {
+                            "type": "string",
+                            "description": "Name of the Istio Gateway resource",
+                            "default": "ingress-gateway"
+                        }
+                    }
+                },
+                "virtualService": {
+                    "type": "object",
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean",
+                            "description": "Enable Istio traffic into *Traefik Proxy*",
+                            "default": true
+                        },
+                        "extraHosts": {
+                            "type": "array",
+                            "description": "Additional hosts (excluding appHostDomain) to be managed by *Traefik Proxy*",
+                            "default": [],
+                            "items": {}
+                        }
+                    }
                 }
             }
         }

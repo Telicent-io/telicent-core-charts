@@ -61,9 +61,9 @@
         "postgres": {
             "type": "object",
             "properties": {
-                "uri": {
+                "jdbcUrl": {
                     "type": "string",
-                    "description": "PostgreSQL connection URI.",
+                    "description": "PostgreSQL connection URL format: \"jdbc:postgresql://{host}:{port}/{database}\"",
                     "default": ""
                 },
                 "existingSecret": {
