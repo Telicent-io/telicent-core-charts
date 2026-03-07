@@ -21,6 +21,6 @@ spec:
       - destination:
           host: {{ include "grpc-server.serviceName" . }}
           port:
-            number: {{ .Values.service.api.port }}
+            number: {{ .Values.service.port }}
 
 {{- end }}
