@@ -87,17 +87,22 @@ the [kubernetes documentation](https://kubernetes.io/docs/concepts/configuration
 Contains global parameters; these parameters are mirrored within the Telicent preview umbrella chart.
 Note: Only global parameters used within this chart will be listed below.
 
-| Name                                    | Description                                               | Value                                          |
-| --------------------------------------- | --------------------------------------------------------- | ---------------------------------------------- |
-| `global.imageRegistry`                  | Global image registry                                     | `""`                                           |
-| `global.imagePullSecrets`               | Global registry secret names as an array                  | `[]`                                           |
-| `global.enabled`                        | enabled Enable *GRPC Server* deployment                   | `false`                                        |
-| `global.kafka.bootstrapServers`         | Comma separated list containing Kafka bootstrap servers   | `kafka-bootstrap.kafka.svc.cluster.local:9092` |
-| `global.kafka.existingConfigSecretName` | Name of an existing secret containing Kafka configuration | `""`                                           |
-| `global.kafka.username`                 | Username for Kafka authentication                         | `your.kafka.username.here`                     |
-| `global.kafka.password`                 | Password for Kafka authentication                         | `your.kafka.password.here`                     |
-| `global.kafka.protocol`                 | Protocol used for Kafka communication                     | `SASL_SSL`                                     |
-| `global.kafka.mechanism`                | SASL mechanism used for Kafka authentication              | `SCRAM-SHA-512`                                |
+| Name                                    | Description                                                                                         | Value                                          |
+| --------------------------------------- | --------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| `global.imageRegistry`                  | Global image registry                                                                               | `""`                                           |
+| `global.imagePullSecrets`               | Global registry secret names as an array                                                            | `[]`                                           |
+| `global.enabled`                        | enabled Enable *GRPC Server* deployment                                                             | `false`                                        |
+| `global.sinkHostDomain`                 | Domain associated with Telicent data-sharing services. This value cannot be changed after it is set | `""`                                           |
+| `global.kafka.bootstrapServers`         | Comma separated list containing Kafka bootstrap servers                                             | `kafka-bootstrap.kafka.svc.cluster.local:9092` |
+| `global.kafka.existingConfigSecretName` | Name of an existing secret containing Kafka configuration                                           | `""`                                           |
+| `global.kafka.username`                 | Username for Kafka authentication                                                                   | `your.kafka.username.here`                     |
+| `global.kafka.password`                 | Password for Kafka authentication                                                                   | `your.kafka.password.here`                     |
+| `global.kafka.protocol`                 | Protocol used for Kafka communication                                                               | `SASL_SSL`                                     |
+| `global.kafka.mechanism`                | SASL mechanism used for Kafka authentication                                                        | `SCRAM-SHA-512`                                |
+| `global.istioIngressNamespace`          | Namespace in which the Istio Ingress resource is deployed; overrides 'istio.ingress.namespace'      | `istio-system`                                 |
+| `global.istioIngressServiceAccount`     | ServiceAccount associated with Istio ingress deployment; overrides 'istio.ingress.serviceAccount'   | `istio-ingress`                                |
+| `global.istioGatewayNamespace`          | Namespace in which the Istio Gateway resource is deployed; overrides 'istio.gateway.namespace'      | `istio-system`                                 |
+| `global.istioGatewayName`               | Name of the Istio Gateway resource; overrides 'istio.gateway.namespace'                             | `ingress-gateway`                              |
 
 ### Application Parameters - PostgreSQL and Secret
 
@@ -107,7 +112,7 @@ For Quick Start purposes, a secret named `tc-auth-usr-psql-grpc-server` will be 
 
 | Name                      | Description                                                                        | Value |
 | ------------------------- | ---------------------------------------------------------------------------------- | ----- |
-| `postgres.uri`            | PostgreSQL connection URI.                                                         | `""`  |
+| `postgres.jdbcUrl`        | PostgreSQL connection URI.                                                         | `""`  |
 | `postgres.existingSecret` | Name of an existing secret. The secret must contain 2 keys: 'username', 'password' | `""`  |
 | `postgres.username`       | PostgreSQL username                                                                | `""`  |
 | `postgres.password`       | PostgreSQL password                                                                | `""`  |
@@ -193,6 +198,17 @@ For Quick Start purposes, a secret named `tc-auth-usr-psql-grpc-server` will be 
 | `service.name` | *GRPC Server* service name. If not set, a name is generated using the fullname | `""`        |
 | `service.port` | *GRPC Server* service port                                                     | `8080`      |
 | `service.type` | *GRPC Server* service type                                                     | `ClusterIP` |
+
+### Istio Parameters
+
+| Name                              | Description                                                                 | Value             |
+| --------------------------------- | --------------------------------------------------------------------------- | ----------------- |
+| `istio.ingress.namespace`         | Namespace in which the Istio Ingress resource is deployed                   | `istio-system`    |
+| `istio.ingress.serviceAccount`    | ServiceAccount associated with Istio ingress deployment                     | `istio-ingress`   |
+| `istio.gateway.namespace`         | Namespace in which the Istio Gateway resource is deployed                   | `istio-system`    |
+| `istio.gateway.name`              | Name of the Istio Gateway resource                                          | `ingress-gateway` |
+| `istio.virtualService.enabled`    | Enable Istio traffic into *Traefik Proxy*                                   | `true`            |
+| `istio.virtualService.extraHosts` | Additional hosts (excluding appHostDomain) to be managed by *Traefik Proxy* | `[]`              |
 
 
 ## License

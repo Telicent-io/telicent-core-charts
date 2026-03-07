@@ -45,8 +45,8 @@ global:
 # For Quick Start purposes, a secret named `tc-auth-usr-psql-grpc-client` will be created if one is not set.
 # @descEnd
 postgres:
-  # @key postgres.uri PostgreSQL connection URI.
-  uri: ""
+ # @key postgres.jdbcUrl PostgreSQL connection URL format: "jdbc:postgresql://{host}:{port}/{database}"
+  jdbcUrl: ""
   # @key postgres.existingSecret Name of an existing secret. The secret must contain 2 keys: 'username', 'password'
   # Note: Left unset, it will create a secret named: tc-auth-usr-psql-grpc-client
   existingSecret: ""

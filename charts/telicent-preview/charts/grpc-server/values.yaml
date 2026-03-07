@@ -22,7 +22,7 @@ global:
   # @key global.enabled enabled Enable *GRPC Server* deployment
   enabled: false
 
-  # @key global.appHostDomain Domain associated with Telicent data-sharing services. This value cannot be changed after it is set
+  # @key global.sinkHostDomain Domain associated with Telicent data-sharing services. This value cannot be changed after it is set
   sinkHostDomain: ""
 
   kafka:
@@ -57,8 +57,8 @@ global:
 # For Quick Start purposes, a secret named `tc-auth-usr-psql-grpc-server` will be created if one is not set.
 # @descEnd
 postgres:
-  # @key postgres.uri PostgreSQL connection URI.
-  uri: ""
+  # @key postgres.jdbcUrl PostgreSQL connection URI.
+  jdbcUrl: ""
   # @key postgres.existingSecret Name of an existing secret. The secret must contain 2 keys: 'username', 'password'
   # Note: Left unset, it will create a secret named: tc-auth-usr-psql-grpc-server
   existingSecret: ""
