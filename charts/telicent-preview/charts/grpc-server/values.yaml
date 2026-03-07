@@ -22,6 +22,9 @@ global:
   # @key global.enabled enabled Enable *GRPC Server* deployment
   enabled: false
 
+  # @key global.appHostDomain Domain associated with Telicent data-sharing services. This value cannot be changed after it is set
+  sinkHostDomain: ""
+
   kafka:
     # @key global.kafka.bootstrapServers Comma separated list containing Kafka bootstrap servers
     bootstrapServers: "kafka-bootstrap.kafka.svc.cluster.local:9092"
@@ -35,6 +38,15 @@ global:
     protocol: "SASL_SSL"
     # @key global.kafka.mechanism SASL mechanism used for Kafka authentication
     mechanism: "SCRAM-SHA-512"
+
+  # @key global.istioIngressNamespace Namespace in which the Istio Ingress resource is deployed; overrides 'istio.ingress.namespace'
+  istioIngressNamespace: istio-system
+  # @key global.istioIngressServiceAccount ServiceAccount associated with Istio ingress deployment; overrides 'istio.ingress.serviceAccount'
+  istioIngressServiceAccount: istio-ingress
+  # @key global.istioGatewayNamespace Namespace in which the Istio Gateway resource is deployed; overrides 'istio.gateway.namespace'
+  istioGatewayNamespace: istio-system
+  # @key global.istioGatewayName Name of the Istio Gateway resource; overrides 'istio.gateway.namespace'
+  istioGatewayName: ingress-gateway
 
 #
 # @section Application Parameters - PostgreSQL and Secret
@@ -210,14 +222,24 @@ service:
   type: ClusterIP
 
 #
-# @section Host(s) Parameters - Contains host information for applications deployed via *telicent-preview* chart.
+# @section Istio Parameters
 #
-# @descStart
-# *GRPC Server* interacts directly with other Telicent Applications using their default service/serviceAccount and port.
-# If either of those details changes, you can use this section to correctly refer to those applications.
-# @descEnd
-hosts:
-  # @key hosts.enableAutoCorrect Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as is, without any modification.
-  enableAutoCorrect: true
-  # @key hosts.auth Auth application default host value, as defined by 'service/serviceAccount:port'
-  grpcClient: "grpc-client:8080"
+istio:
+  # istio Ingress resource (lookup: 'kubectl get deployment -l istio=ingress -n <ns>').
+  ingress:
+    # @key istio.ingress.namespace Namespace in which the Istio Ingress resource is deployed
+    namespace: istio-system
+    # @key istio.ingress.serviceAccount ServiceAccount associated with Istio ingress deployment
+    serviceAccount: istio-ingress
+  # istio Gateway resource (lookup: 'kubectl get gateway/<name> -n <ns>')
+  gateway:
+    # @key istio.gateway.namespace Namespace in which the Istio Gateway resource is deployed
+    namespace: istio-system
+    # @key istio.gateway.name Name of the Istio Gateway resource
+    name: ingress-gateway
+  virtualService:
+    # @key istio.virtualService.enabled Enable Istio traffic into *Traefik Proxy*
+    enabled: true
+    # @key istio.virtualService.extraHosts Additional hosts (excluding appHostDomain) to be managed by *Traefik Proxy*
+    extraHosts: []
+

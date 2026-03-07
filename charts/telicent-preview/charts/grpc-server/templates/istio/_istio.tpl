@@ -1,17 +1,10 @@
 {{/*
-Copyright (C) Telicent Limited
+Copyright (C) 2026 Telicent Limited
 */}}
 
 {{/*
-Returns the principal used for GRPC Client traffic by the Istio AuthorizationPolicy
+Returns the principal used for istio traffic by the Istio AuthorizationPolicy
 */}}
-{{- define "grpc-server.grpcClientPrincipal" -}}
-{{- printf "- cluster.local/ns/%s/sa/%s" .Release.Namespace ( include "grpc-server.ser" .) -}}
-{{- end -}}
-
-{{/*
-Returns the principal used for User Preferences traffic by the Istio AuthorizationPolicy
-*/}}
-{{- define "auth.userPreferencesPrincipal" -}}
-{{- printf "- cluster.local/ns/%s/sa/%s" .Release.Namespace ( include "grpc-server.serviceAccountGrpcClient" .) -}}
-{{- end -}}
+{{- define "grpc-server.istioPrincipal" -}}
+{{- printf "- cluster.local/ns/%s/sa/%s" (include "istio.ingressNamespace" .) (include "istio.ingressServiceAccount" .) }}
+{{- end }}
