@@ -108,6 +108,41 @@
                 }
             }
         },
+        "logs": {
+            "type": "object",
+            "properties": {
+                "root": {
+                    "type": "object",
+                    "properties": {
+                        "level": {
+                            "type": "string",
+                            "description": "Sets the baseline log level. Only warnings and errors from third-party libraries (gRPC, Netty, Flyway, etc.) are logged by default. Values include: ERROR, WARN, INFO, DEBUG, TRACE",
+                            "default": "INFO"
+                        }
+                    }
+                },
+                "app": {
+                    "type": "object",
+                    "properties": {
+                        "level": {
+                            "type": "string",
+                            "description": "Controls log verbosity for all application code. Set to DEBUG for detailed troubleshooting. Values include: ERROR, WARN, INFO, DEBUG, TRACE",
+                            "default": "INFO"
+                        }
+                    }
+                },
+                "kafka": {
+                    "type": "object",
+                    "properties": {
+                        "level": {
+                            "type": "string",
+                            "description": "Repo package Logging Level. ontrols Kafka client logging independently. Kafka clients are particularly verbose at INFO, so this defaults to WARN. Set to INFO or DEBUG to diagnose connectivity or consumer group issues. Values include: ERROR, WARN, INFO, DEBUG, TRACE",
+                            "default": "INFO"
+                        }
+                    }
+                }
+            }
+        },
         "configMap": {
             "type": "object",
             "properties": {
