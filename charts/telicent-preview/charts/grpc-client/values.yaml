@@ -57,6 +57,52 @@ postgres:
   password: ""
 
 #
+# @section Application Parameters - Client
+#
+# @descStart
+# Contains parameters specific to the *GRPC Client* application
+# @descEnd
+client:
+  # @key client.id Unique client identifier. Used for offset tracking, gRPC request identification, and server-side logging. Must be unique when multiple clients share a storage backend.
+  id: "org1"
+  server:
+    # @key client.server.host Hostname of the gRPC data sharing server
+    host: ""
+    # @key client.server.port Port of the gRPC data sharing server
+    port: 80
+  tls:
+    # @key client.tls.enabled Enable TLS for the gRPC channel
+    enabled: false
+    mTLS:
+      # @key client.tls.mTLS.enabled IF TLS support is enabled, require clients to provide certificates
+      enabled: false
+  grpc:
+   # @key client.grpc.keepAliveTimeSecs Interval in seconds between gRPC keep-alive pings sent to the server
+   keepAliveTimeSecs: 30
+   # @key client.grpc.keepAliveTimeoutSecs Time in seconds to wait for a keep-alive ping response before considering the connection dead
+   keepAliveTimeoutSecs: 10
+   # @key client.grpc.idleTimeoutSecs Time in seconds after which an idle gRPC channel is closed
+   idleTimeoutSecs: 10
+  retry:
+    # @key client.retry.maxAttempts Maximum number of retry attempts before giving up. Set to 0 for unlimited retries
+    maxAttempts: 200
+    # @key client.retry.initialBackoffMillis Initial backoff period in milliseconds. Doubles after each retry up to 'maxBackoffMilliSecs'
+    initialBackoffMillis: 500
+    # @key client.retry.maxBackoffMillis Maximum backoff period in milliseconds (ceiling for exponential backoff)
+    maxBackoffMillis: 60000
+    # @key client.retry.forever When true, the client loops continuously after processing completes, polling for new data. When false, exits after one successful cycle
+    forever: true
+  kafka:
+    # @key client.kafka.consumerGroup Kafka consumer group ID, Left unset defaults to: {client-id}-cg
+    consumerGroup: ""
+    # @key client.kafka.topicSuffix Suffix appended to each topic name when producing to local Kafka. Final topic name is {remote-topic}-{client-id}{suffix}
+    topicSuffix: "-staging"
+    # @key client.kafka.keySerializerClass Fully qualified class name for the Kafka key serializer
+    keySerializerClass: "org.apache.kafka.common.serialization.BytesSerializer"
+     # @key client.kafka.valueSerializerClass Fully qualified class name for the Kafka value serializer
+    valueSerializerClass: "org.apache.kafka.common.serialization.BytesSerializer"
+
+#
 # @section ConfigMap Parameters
 #
 configMap:
