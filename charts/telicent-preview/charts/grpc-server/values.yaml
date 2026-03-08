@@ -69,6 +69,20 @@ postgres:
   password: ""
 
 #
+# @section Application Parameters - Logs
+#
+logs:
+  root:
+    # @key logs.root.level Sets the baseline log level. Only warnings and errors from third-party libraries (gRPC, Netty, Flyway, etc.) are logged by default. Values include: ERROR, WARN, INFO, DEBUG, TRACE
+    level: "INFO"
+  app:
+    # @key logs.app.level Controls log verbosity for all application code. Set to DEBUG for detailed troubleshooting. Values include: ERROR, WARN, INFO, DEBUG, TRACE
+    level: "INFO"
+  kafka:
+    # @key logs.kafka.level Repo package Logging Level. ontrols Kafka client logging independently. Kafka clients are particularly verbose at INFO, so this defaults to WARN. Set to INFO or DEBUG to diagnose connectivity or consumer group issues. Values include: ERROR, WARN, INFO, DEBUG, TRACE
+    level: "INFO"
+
+#
 # @section ConfigMap Parameters
 #
 configMap:

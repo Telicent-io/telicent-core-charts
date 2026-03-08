@@ -13,5 +13,8 @@ metadata:
 
 data:
   CLIENT_PROPERTIES: /app/config/startup/client.properties
+  LOG_LEVEL_ROOT: {{ .Values.logs.root.level | quote  }}
+  LOG_LEVEL_APP: {{ .Values.logs.app.level | quote  }}
+  LOG_LEVEL_KAFKA: {{ .Values.logs.kafka.level | quote  }}
 
   {{- end }}

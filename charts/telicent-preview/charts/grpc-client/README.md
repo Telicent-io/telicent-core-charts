@@ -130,10 +130,18 @@ Contains parameters specific to the *GRPC Client* application
 | `client.retry.initialBackoffMillis` | Initial backoff period in milliseconds. Doubles after each retry up to 'maxBackoffMilliSecs'                                                                            | `500`                                                   |
 | `client.retry.maxBackoffMillis`     | Maximum backoff period in milliseconds (ceiling for exponential backoff)                                                                                                | `60000`                                                 |
 | `client.retry.forever`              | When true, the client loops continuously after processing completes, polling for new data. When false, exits after one successful cycle                                 | `true`                                                  |
-| `client.kafka.consumerGroup`        | Kafka consumer group ID : suggested format: {clientId}-cg                                                                                                               | `org1-cg`                                               |
+| `client.kafka.consumerGroup`        | Kafka consumer group ID, Left unset defaults to: {client-id}-cg                                                                                                         | `""`                                                    |
 | `client.kafka.topicSuffix`          | Suffix appended to each topic name when producing to local Kafka. Final topic name is {remote-topic}-{client-id}{suffix}                                                | `-staging`                                              |
 | `client.kafka.keySerializerClass`   | Fully qualified class name for the Kafka key serializer                                                                                                                 | `org.apache.kafka.common.serialization.BytesSerializer` |
 | `client.kafka.valueSerializerClass` | Fully qualified class name for the Kafka value serializer                                                                                                               | `org.apache.kafka.common.serialization.BytesSerializer` |
+
+### Application Parameters - Logs
+
+| Name               | Description                                                                                                                                                                                                                                                               | Value  |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ |
+| `logs.root.level`  | Sets the baseline log level. Only warnings and errors from third-party libraries (gRPC, Netty, Flyway, etc.) are logged by default. Values include: ERROR, WARN, INFO, DEBUG, TRACE                                                                                       | `INFO` |
+| `logs.app.level`   | Controls log verbosity for all application code. Set to DEBUG for detailed troubleshooting. Values include: ERROR, WARN, INFO, DEBUG, TRACE                                                                                                                               | `INFO` |
+| `logs.kafka.level` | Repo package Logging Level. ontrols Kafka client logging independently. Kafka clients are particularly verbose at INFO, so this defaults to WARN. Set to INFO or DEBUG to diagnose connectivity or consumer group issues. Values include: ERROR, WARN, INFO, DEBUG, TRACE | `INFO` |
 
 ### ConfigMap Parameters
 
