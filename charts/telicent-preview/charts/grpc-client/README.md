@@ -112,6 +112,29 @@ For Quick Start purposes, a secret named `tc-auth-usr-psql-grpc-client` will be 
 | `postgres.username`       | PostgreSQL username                                                                | `""`  |
 | `postgres.password`       | PostgreSQL password                                                                | `""`  |
 
+### Application Parameters - Client
+
+Contains parameters specific to the *GRPC Client* application
+
+| Name                                | Description                                                                                                                                                             | Value                                                   |
+| ----------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- |
+| `client.id`                         | Unique client identifier. Used for offset tracking, gRPC request identification, and server-side logging. Must be unique when multiple clients share a storage backend. | `org1`                                                  |
+| `client.server.host`                | Hostname of the gRPC data sharing server                                                                                                                                | `""`                                                    |
+| `client.server.port`                | Port of the gRPC data sharing server                                                                                                                                    | `80`                                                    |
+| `client.tls.enabled`                | Enable TLS for the gRPC channel                                                                                                                                         | `false`                                                 |
+| `client.tls.mTLS.enabled`           | IF TLS support is enabled, require clients to provide certificates                                                                                                      | `false`                                                 |
+| `client.grpc.keepAliveTimeSecs`     | Interval in seconds between gRPC keep-alive pings sent to the server                                                                                                    | `30`                                                    |
+| `client.grpc.keepAliveTimeoutSecs`  | Time in seconds to wait for a keep-alive ping response before considering the connection dead                                                                           | `10`                                                    |
+| `client.grpc.idleTimeoutSecs`       | Time in seconds after which an idle gRPC channel is closed                                                                                                              | `10`                                                    |
+| `client.retry.maxAttempts`          | Maximum number of retry attempts before giving up. Set to 0 for unlimited retries                                                                                       | `200`                                                   |
+| `client.retry.initialBackoffMillis` | Initial backoff period in milliseconds. Doubles after each retry up to 'maxBackoffMilliSecs'                                                                            | `500`                                                   |
+| `client.retry.maxBackoffMillis`     | Maximum backoff period in milliseconds (ceiling for exponential backoff)                                                                                                | `60000`                                                 |
+| `client.retry.forever`              | When true, the client loops continuously after processing completes, polling for new data. When false, exits after one successful cycle                                 | `true`                                                  |
+| `client.kafka.consumerGroup`        | Kafka consumer group ID : suggested format: {clientId}-cg                                                                                                               | `org1-cg`                                               |
+| `client.kafka.topicSuffix`          | Suffix appended to each topic name when producing to local Kafka. Final topic name is {remote-topic}-{client-id}{suffix}                                                | `-staging`                                              |
+| `client.kafka.keySerializerClass`   | Fully qualified class name for the Kafka key serializer                                                                                                                 | `org.apache.kafka.common.serialization.BytesSerializer` |
+| `client.kafka.valueSerializerClass` | Fully qualified class name for the Kafka value serializer                                                                                                               | `org.apache.kafka.common.serialization.BytesSerializer` |
+
 ### ConfigMap Parameters
 
 | Name                             | Description                                                                   | Value |
