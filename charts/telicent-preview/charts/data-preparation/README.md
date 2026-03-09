@@ -112,6 +112,14 @@ For Quick Start purposes, a secret named `tc-auth-usr-psql-data-preparation` wil
 | `postgres.username`       | PostgreSQL username                                                                | `""`  |
 | `postgres.password`       | PostgreSQL password                                                                | `""`  |
 
+### Application Parameters - Java
+
+Contains Java parameters to be used by the *Data Preparation* application
+
+| Name              | Description                     | Value                       |
+| ----------------- | ------------------------------- | --------------------------- |
+| `java.jvmOptions` | JVM options for the application | `-XX:MaxRAMPercentage=80.0` |
+
 ### ConfigMap Parameters
 
 | Name                             | Description                                                                        | Value |

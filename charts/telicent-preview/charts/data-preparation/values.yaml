@@ -57,6 +57,16 @@ postgres:
   password: ""
 
 #
+# @section Application Parameters - Java
+#
+# @descStart
+# Contains Java parameters to be used by the *Data Preparation* application
+# @descEnd
+java:
+  # @key java.jvmOptions JVM options for the application
+  jvmOptions: "-XX:MaxRAMPercentage=80.0"
+
+#
 # @section ConfigMap Parameters
 #
 configMap:

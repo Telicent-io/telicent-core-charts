@@ -117,6 +117,14 @@ For Quick Start purposes, a secret named `tc-auth-usr-psql-grpc-server` will be 
 | `postgres.username`       | PostgreSQL username                                                                | `""`  |
 | `postgres.password`       | PostgreSQL password                                                                | `""`  |
 
+### Application Parameters - Java
+
+Contains Java parameters to be used by the *GRPC Server* application
+
+| Name              | Description                     | Value                       |
+| ----------------- | ------------------------------- | --------------------------- |
+| `java.jvmOptions` | JVM options for the application | `-XX:MaxRAMPercentage=80.0` |
+
 ### Application Parameters - Logs
 
 | Name               | Description                                                                                                                                                                                                                                                               | Value  |

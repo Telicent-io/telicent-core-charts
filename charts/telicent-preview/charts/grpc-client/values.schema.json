@@ -55,6 +55,21 @@
                             "default": "SCRAM-SHA-512"
                         }
                     }
+                },
+                "truststore": {
+                    "type": "object",
+                    "properties": {
+                        "existingSecret": {
+                            "type": "string",
+                            "description": "Name of an existing secret containing the truststore",
+                            "default": ""
+                        },
+                        "mountPath": {
+                            "type": "string",
+                            "description": "The mount path for the truststore in the container",
+                            "default": "/app/config/truststore/"
+                        }
+                    }
                 }
             }
         },
@@ -195,6 +210,16 @@
                             "default": "org.apache.kafka.common.serialization.BytesSerializer"
                         }
                     }
+                }
+            }
+        },
+        "java": {
+            "type": "object",
+            "properties": {
+                "jvmOptions": {
+                    "type": "string",
+                    "description": "JVM options for the application",
+                    "default": "-XX:MaxRAMPercentage=80.0"
                 }
             }
         },

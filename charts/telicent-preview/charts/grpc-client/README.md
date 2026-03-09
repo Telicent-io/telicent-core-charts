@@ -98,6 +98,8 @@ Note: Only global parameters used within this chart will be listed below.
 | `global.kafka.password`                 | Password for Kafka authentication                         | `your.kafka.password.here`                     |
 | `global.kafka.protocol`                 | Protocol used for Kafka communication                     | `SASL_SSL`                                     |
 | `global.kafka.mechanism`                | SASL mechanism used for Kafka authentication              | `SCRAM-SHA-512`                                |
+| `global.truststore.existingSecret`      | Name of an existing secret containing the truststore      | `""`                                           |
+| `global.truststore.mountPath`           | The mount path for the truststore in the container        | `/app/config/truststore/`                      |
 
 ### Application Parameters - PostgreSQL and Secret
 
@@ -134,6 +136,14 @@ Contains parameters specific to the *GRPC Client* application
 | `client.kafka.topicSuffix`          | Suffix appended to each topic name when producing to local Kafka. Final topic name is {remote-topic}-{client-id}{suffix}                                                | `-staging`                                              |
 | `client.kafka.keySerializerClass`   | Fully qualified class name for the Kafka key serializer                                                                                                                 | `org.apache.kafka.common.serialization.BytesSerializer` |
 | `client.kafka.valueSerializerClass` | Fully qualified class name for the Kafka value serializer                                                                                                               | `org.apache.kafka.common.serialization.BytesSerializer` |
+
+### Application Parameters - Java
+
+Contains Java parameters to be used by the *GRPC Client* application
+
+| Name              | Description                     | Value                       |
+| ----------------- | ------------------------------- | --------------------------- |
+| `java.jvmOptions` | JVM options for the application | `-XX:MaxRAMPercentage=80.0` |
 
 ### Application Parameters - Logs
 
