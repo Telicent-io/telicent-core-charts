@@ -40,7 +40,7 @@ entries:
     version: 0.1.0
   demo-prereqs-gateways:
   - apiVersion: v2
-    created: "2026-03-04T20:51:32.017768104Z"
+    created: "2026-03-09T17:07:56.534957669Z"
     dependencies:
     - condition: gateway-apps.enabled
       name: gateway-apps
@@ -51,7 +51,7 @@ entries:
       repository: file://./charts/gateway-authn
       version: ^0.1.0
     description: Create Istio gateways and authn configuration for Telicent CORE demo
-    digest: a7a0198d31c2541eb15fe7e865c6099aa174b53fa39e1de183670c945f1606ef
+    digest: 417a62b32c0d29a7beec22eabdbcca7ec3f199765775657e766fa6b8c9838d00
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -111,9 +111,9 @@ entries:
     version: 0.1.0
   demo-prereqs-kafka:
   - apiVersion: v2
-    created: "2026-03-04T20:51:32.018020845Z"
+    created: "2026-03-09T17:07:56.535230642Z"
     description: Create a kafka cluster and associated configuration
-    digest: 1725044e5190057fcfd59a34f9f561521d4f0d3710e7276ffd86707185afda32
+    digest: 253dbe164a50c19d838c5b1941caa845b430a08aaea80742ab936c8d3627c0a9
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -178,9 +178,9 @@ entries:
   demo-prereqs-keycloak:
   - apiVersion: v2
     appVersion: 26.3.0
-    created: "2026-03-04T20:51:32.018318102Z"
+    created: "2026-03-09T17:07:56.53555267Z"
     description: Provisions a dev mode instance of keycloak
-    digest: 2837fe8b90192bca1fcf6d21573a0d5fa253cc5c29170a9dd472b467c1f7278a
+    digest: 93f457630eeafec8e810c99f184e011d715c870bd5bf764fc3fa409815b7f324
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -220,9 +220,9 @@ entries:
     version: 0.1.0
   demo-prereqs-mongodb:
   - apiVersion: v2
-    created: "2026-03-04T20:51:32.018522119Z"
+    created: "2026-03-09T17:07:56.535762715Z"
     description: Create a mongodb instance and associated configuration
-    digest: a1d453f83c7214e753fca8bd90796d9e5192343a02cb1fb433675bd36b88da24
+    digest: e90d675548f178bd40605942c17d9f042dff375d98008a0bb98ce7024d8acdcf
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -248,6 +248,20 @@ entries:
     - demo-prereqs-oauth2-proxy-0.2.0.tgz
     version: 0.2.0
   demo-prereqs-postgres:
+  - apiVersion: v2
+    appVersion: "16"
+    created: "2026-03-09T17:07:56.536216277Z"
+    description: A simple PostgreSQL deployment for demo/development purposes
+    digest: d203b4ed29b2e1393346a1c675d0f1b9ac6c12994c3fd547b41221eadec0ee82
+    icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
+    maintainers:
+    - name: telicent
+      url: https://github.com/Telicent-IO
+    name: demo-prereqs-postgres
+    type: application
+    urls:
+    - demo-prereqs-postgres-0.3.0.tgz
+    version: 0.3.0
   - apiVersion: v2
     appVersion: "16"
     created: "2026-03-04T20:51:32.01893612Z"
@@ -456,7 +470,7 @@ entries:
   telicent-core:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2026-03-04T20:51:32.03919259Z"
+    created: "2026-03-09T17:07:56.556853757Z"
     dependencies:
     - condition: global.enterprise
       name: admin-ui
@@ -500,7 +514,7 @@ entries:
       version: ^0.1.0
     description: 'Telicent CORE Platform, for all essential services and applications
       for our secure data integration and knowledge graph platform. '
-    digest: f756acef981438ec1d672c3eb4bca54c2925f833bf5e8c30d7c9a6c0be110c1e
+    digest: 7b0fd9d0656d2f4b9386498036fc5ff98b8b917b7bec9fba81d0692d4d1c66ca
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -1953,7 +1967,7 @@ entries:
   telicent-data:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2026-03-04T20:51:32.053264965Z"
+    created: "2026-03-09T17:07:56.570638114Z"
     dependencies:
     - name: ies-ontology-producer
       repository: file://./charts/ies-ontology-producer
@@ -2005,7 +2019,7 @@ entries:
       version: ^0.1.0
     description: 'Supplementary chart containing adapters and mappers for specific
       datasets and ontologies. '
-    digest: 8d5861bc08cd2177b47cae746bf55c9f671d1eb2926e11ba5dabd3871a1ece84
+    digest: 5e257ce377354d6c1d8b25aaa294aec9a960482bbee96962645f15d321029778
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -2453,27 +2467,11 @@ entries:
   telicent-preview:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2026-03-04T20:51:32.062687512Z"
+    created: "2026-03-09T17:07:56.577922598Z"
     dependencies:
-    - condition: user-portal-ui.enabled
-      name: user-portal-ui
-      repository: file://./charts/user-portal-ui
-      version: ^0.1.0
-    - condition: global.enterprise, paperback-writer.enabled
-      name: paperback-writer
-      repository: file://./charts/paperback-writer
-      version: ^0.1.0
     - condition: data-catalog-ui.enabled
       name: data-catalog-ui
       repository: file://./charts/data-catalog-ui
-      version: ^0.1.0
-    - condition: global.enterprise
-      name: spatial
-      repository: file://./charts/spatial
-      version: ^0.1.0
-    - condition: global.enterprise
-      name: spatial-projector
-      repository: file://./charts/spatial-projector
       version: ^0.1.0
     - condition: global.enterprise
       name: notifications
@@ -2483,10 +2481,18 @@ entries:
       name: notifications-projector
       repository: file://./charts/notifications-projector
       version: ^0.1.0
+    - condition: global.enterprise, paperback-writer.enabled
+      name: paperback-writer
+      repository: file://./charts/paperback-writer
+      version: ^0.1.0
+    - condition: user-portal-ui.enabled
+      name: user-portal-ui
+      repository: file://./charts/user-portal-ui
+      version: ^0.1.0
     description: 'Secondary chart containing products that are still under active
       development, and not yet part of CORE. Can be used to try new or preview features
       early. '
-    digest: bd919cd5199cbde3646218680b0feff414d1d4be4e2e98a7f894ff30e2cbc7bf
+    digest: 8a15dab2687db407f15b8cae29a30cb0e2fa215ff4166a3f6eacb35bb9bd5765
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -2667,4 +2673,4 @@ entries:
     urls:
     - telicent-preview-0.2.0.tgz
     version: 0.2.0
-generated: "2026-03-04T20:51:32.016816445Z"
+generated: "2026-03-09T17:07:56.534035319Z"
