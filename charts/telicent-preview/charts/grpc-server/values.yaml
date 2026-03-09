@@ -69,6 +69,24 @@ postgres:
   password: ""
 
 #
+# @section Application Parameters - Server
+#
+# @descStart
+# Contains parameters specific to the *GRPC Server* application
+# @descEnd
+server:
+  # @key server.port Port of the gRPC data sharing server
+  port: 8080
+  tls:
+    # @key server.tls.enabled Enable TLS for the gRPC channel
+    enabled: false
+    mTLS:
+      # @key server.tls.mTLS.enabled IF TLS support is enabled, require clients to provide certificates
+      enabled: false
+      # @key server.tls.mTLS.existingSecret Name of an existing secret containing the secret
+      existingSecret: ""
+
+#
 # @section Application Parameters - Java
 #
 # @descStart

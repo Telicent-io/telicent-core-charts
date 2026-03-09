@@ -118,9 +118,9 @@ spec:
           mountPath: /app/config/storage.properties
           subPath: storage.properties
           readOnly: true
-        {{- if .Values.global.truststore.existingSecret }}
-        - name: java-truststore
-          mountPath: {{ .Values.global.truststore.mountPath | default "/app/config/truststore" }}
+        {{- if .Values.client.tls.mTLS.existingSecret }}
+        - name: client-tls
+          mountPath: {{ "/app/config/tls/" }}
         {{- end }}
         {{- with .Values.extraVolumeMounts }}
           {{- toYaml . | nindent 12 }}
@@ -143,10 +143,10 @@ spec:
       - name: storage-config-volume
         configMap:
           name: {{ include "grpc-client.storageConfigMapName" . }}
-      {{- if .Values.global.truststore.existingSecret }}
-      - name: java-truststore
+      {{- if .Values.client.tls.mTLS.existingSecret }}
+      - name: client-tls
         secret:
-          secretName: {{ .Values.global.truststore.existingSecret }}
+          secretName: {{ .Values.client.tls.mTLS.existingSecret }}
       {{- end }}
       {{- with .Values.extraVolumes }}
         {{- toYaml . | nindent 8 }}

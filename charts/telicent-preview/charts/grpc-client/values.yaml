@@ -82,6 +82,9 @@ client:
     mTLS:
       # @key client.tls.mTLS.enabled IF TLS support is enabled, require clients to provide certificates
       enabled: false
+      # @key client.tls.mTLS.existingSecret Name of an existing secret containing the secret
+      existingSecret: ""
+
   grpc:
    # @key client.grpc.keepAliveTimeSecs Interval in seconds between gRPC keep-alive pings sent to the server
    keepAliveTimeSecs: 30
