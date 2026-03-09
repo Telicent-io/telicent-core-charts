@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.0](https://github.com/Telicent-io/telicent-core-charts/compare/demo-prereqs-postgres-v0.2.5...demo-prereqs-postgres-v0.3.0) (2026-03-09)
+
+
+### Features
+
+* Adds existing secret for Postgres ([7814bc1](https://github.com/Telicent-io/telicent-core-charts/commit/7814bc1963c9da4846065fbbbc594b617ca4f3c8))
+* Adds existing secret for Postgres ([b71ff12](https://github.com/Telicent-io/telicent-core-charts/commit/b71ff129c264efd1b1dc1511e6413045d508451f))
+
 ## [0.2.5](https://github.com/Telicent-io/telicent-core-charts/compare/demo-prereqs-postgres-v0.2.4...demo-prereqs-postgres-v0.2.5) (2026-02-16)
 
 
