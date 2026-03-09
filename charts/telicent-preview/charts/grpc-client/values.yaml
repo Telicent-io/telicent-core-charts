@@ -36,6 +36,12 @@ global:
     # @key global.kafka.mechanism SASL mechanism used for Kafka authentication
     mechanism: "SCRAM-SHA-512"
 
+  truststore:
+    # @key global.truststore.existingSecret Name of an existing secret containing the truststore
+    existingSecret: ""
+    # @key global.truststore.mountPath The mount path for the truststore in the container
+    mountPath: /app/config/truststore/
+
 #
 # @section Application Parameters - PostgreSQL and Secret
 #
@@ -101,6 +107,16 @@ client:
     keySerializerClass: "org.apache.kafka.common.serialization.BytesSerializer"
      # @key client.kafka.valueSerializerClass Fully qualified class name for the Kafka value serializer
     valueSerializerClass: "org.apache.kafka.common.serialization.BytesSerializer"
+
+#
+# @section Application Parameters - Java
+#
+# @descStart
+# Contains Java parameters to be used by the *GRPC Client* application
+# @descEnd
+java:
+  # @key java.jvmOptions JVM options for the application
+  jvmOptions: "-XX:MaxRAMPercentage=80.0"
 
 #
 # @section Application Parameters - Logs

@@ -108,6 +108,16 @@
                 }
             }
         },
+        "java": {
+            "type": "object",
+            "properties": {
+                "jvmOptions": {
+                    "type": "string",
+                    "description": "JVM options for the application",
+                    "default": "-XX:MaxRAMPercentage=80.0"
+                }
+            }
+        },
         "logs": {
             "type": "object",
             "properties": {
