@@ -14,8 +14,8 @@ spec:
         - name: PGPASSWORD
           valueFrom:
             secretKeyRef:
-              name: {{ include "demo-prereqs-postgres.fullname" . }}
-              key: postgres-password
+              name: {{ include "demo-prereqs-postgres.secretName" . }}
+              key: {{ include "demo-prereqs-postgres.secretPasswordKey" . }}
       command:
         - pg_isready
         - -h

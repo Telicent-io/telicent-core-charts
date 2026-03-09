@@ -69,8 +69,28 @@ Create the name of the service account to use
 {{- end }}
 
 {{/*
-Create the name of the initdbconfig map
+Resolve the name of the secret containing the postgres password.
+Uses existingSecret if provided, otherwise the chart-managed secret.
 */}}
+{{- define "demo-prereqs-postgres.secretName" -}}
+{{- if .Values.postgres.existingSecret }}
+{{- .Values.postgres.existingSecret }}
+{{- else }}
+{{- include "demo-prereqs-postgres.fullname" . }}
+{{- end }}
+{{- end }}
+
+{{/*
+Resolve the key in the secret containing the postgres password.
+*/}}
+{{- define "demo-prereqs-postgres.secretPasswordKey" -}}
+{{- if .Values.postgres.existingSecret }}
+{{- default "postgres-password" .Values.postgres.existingSecretPasswordKey }}
+{{- else }}
+{{- "postgres-password" }}
+{{- end }}
+{{- end }}
+
 {{- define "demo-prereqs-postgres.initDbConfigMapName" -}}
 {{- printf "tc-%s-%s" .Chart.Name "initdb" }}
 {{- end }}

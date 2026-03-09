@@ -59,12 +59,14 @@ PostgreSQL image configuration
 
 PostgreSQL configuration
 
-| Name                | Description                                    | Value      |
-| ------------------- | ---------------------------------------------- | ---------- |
-| `postgres.database` | Database name to create                        | `postgres` |
-| `postgres.user`     | Username (superuser)                           | `postgres` |
-| `postgres.password` | Password for the user (required)               | `postgres` |
-| `postgres.extraEnv` | Additional PostgreSQL configuration parameters | `[]`       |
+| Name                                 | Description                                                                                                   | Value               |
+| ------------------------------------ | ------------------------------------------------------------------------------------------------------------- | ------------------- |
+| `postgres.database`                  | Database name to create                                                                                       | `postgres`          |
+| `postgres.user`                      | Username (superuser)                                                                                          | `postgres`          |
+| `postgres.password`                  | Password for the user (required, ignored if existingSecret is set)                                            | `postgres`          |
+| `postgres.existingSecret`            | Name of an existing secret containing the postgres password. If set, no secret will be created by this chart. | `""`                |
+| `postgres.existingSecretPasswordKey` | Key in the existing secret that contains the postgres password                                                | `postgres-password` |
+| `postgres.extraEnv`                  | Additional PostgreSQL configuration parameters                                                                | `[]`                |
 
 ### Persistence
 

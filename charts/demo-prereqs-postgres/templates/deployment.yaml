@@ -54,8 +54,8 @@ spec:
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "demo-prereqs-postgres.fullname" . }}
-                  key: postgres-password
+                  name: {{ include "demo-prereqs-postgres.secretName" . }}
+                  key: {{ include "demo-prereqs-postgres.secretPasswordKey" . }}
             - name: PGDATA
               value: /var/lib/postgresql/data/pgdata
             {{- with .Values.postgres.extraEnv }}

@@ -29,8 +29,12 @@ postgres:
   database: postgres
   # @key postgres.user Username (superuser)
   user: postgres
-  # @key postgres.password Password for the user (required)
+  # @key postgres.password Password for the user (required, ignored if existingSecret is set)
   password: postgres
+  # @key postgres.existingSecret Name of an existing secret containing the postgres password. If set, no secret will be created by this chart.
+  existingSecret: ""
+  # @key postgres.existingSecretPasswordKey Key in the existing secret that contains the postgres password
+  existingSecretPasswordKey: postgres-password
   # @key postgres.extraEnv Additional PostgreSQL configuration parameters
   # These are passed as environment variables
   extraEnv: []
