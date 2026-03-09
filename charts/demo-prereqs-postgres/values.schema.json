@@ -53,8 +53,18 @@
                 },
                 "password": {
                     "type": "string",
-                    "description": "Password for the user (required)",
+                    "description": "Password for the user (required, ignored if existingSecret is set)",
                     "default": "postgres"
+                },
+                "existingSecret": {
+                    "type": "string",
+                    "description": "Name of an existing secret containing the postgres password. If set, no secret will be created by this chart.",
+                    "default": ""
+                },
+                "existingSecretPasswordKey": {
+                    "type": "string",
+                    "description": "Key in the existing secret that contains the postgres password",
+                    "default": "postgres-password"
                 },
                 "extraEnv": {
                     "type": "array",
