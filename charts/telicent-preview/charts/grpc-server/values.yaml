@@ -75,7 +75,7 @@ server:
       enabled: false
   kafka:
     # @key server.kafka.sharedHeaders Kafka headers to include in gRPC messages; '^' separated
-    sharedHeaders: "Content-Type"
+    sharedHeaders: "Content-Type^Security-Label^Request-Id^policyInformation"
     # @key server.kafka.consumerGroup Kafka consumer group ID, Left unset defaults to: server-cg
     consumerGroup: ""
     # @key server.kafka.offset Starting offset; 0 = from beginning
