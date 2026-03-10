@@ -116,7 +116,7 @@ spec:
           mountPath: /app/config/storage.properties
           subPath: storage.properties
           readOnly: true
-        {{- if .Values.server.tls.mTLS.existingSecret }}
+        {{- if .Values.server.tls.existingSecret }}
         - name: server-tls
           mountPath: {{ "/app/config/tls/" }}
         {{- end }}
