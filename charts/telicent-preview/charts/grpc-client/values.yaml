@@ -79,11 +79,13 @@ client:
   tls:
     # @key client.tls.enabled Enable TLS for the gRPC channel
     enabled: false
+    # @key client.tls.caIncluded Flag to denote that the Certificate Authority (CA) has been provided
+    caIncluded: false
+    # @key client.tls.existingSecret Existing secret with TLS certificates (`tls.key`, `tls.crt`) or (`tls.key`, `tls.crt`, `ca.crt`) with tls.caIncluded set as true.
+    existingSecret: ""
     mTLS:
       # @key client.tls.mTLS.enabled IF TLS support is enabled, require clients to provide certificates
       enabled: false
-      # @key client.tls.mTLS.existingSecret Name of an existing secret containing the secret
-      existingSecret: ""
 
   grpc:
    # @key client.grpc.keepAliveTimeSecs Interval in seconds between gRPC keep-alive pings sent to the server
