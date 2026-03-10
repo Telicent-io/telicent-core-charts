@@ -36,32 +36,6 @@ global:
     # @key global.kafka.mechanism SASL mechanism used for Kafka authentication
     mechanism: "SCRAM-SHA-512"
 
-  truststore:
-    # @key global.truststore.existingSecret Name of an existing secret containing the truststore
-    existingSecret: ""
-    # @key global.truststore.mountPath The mount path for the truststore in the container
-    mountPath: /app/config/truststore/
-
-#
-# @section Application Parameters - PostgreSQL and Secret
-#
-# @descStart
-# The following contains connection details to a PostgreSQL instance, on which the application relies.
-# It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
-# For Quick Start purposes, a secret named `tc-auth-usr-psql-grpc-client` will be created if one is not set.
-# @descEnd
-postgres:
- # @key postgres.jdbcUrl PostgreSQL connection URL format: "jdbc:postgresql://{host}:{port}/{database}"
-  jdbcUrl: ""
-  # @key postgres.existingSecret Name of an existing secret. The secret must contain 2 keys: 'username', 'password'
-  # Note: Left unset, it will create a secret named: tc-auth-usr-psql-grpc-client
-  existingSecret: ""
-  # @key postgres.username PostgreSQL username
-  # Note: For additional security, the username is read from the secret, as defined by 'existingSecret' and not from this value!
-  username: ""
-  # @key postgres.password PostgreSQL password
-  password: ""
-
 #
 # @section Application Parameters - Client
 #
@@ -104,7 +78,7 @@ client:
     # @key client.retry.forever When true, the client loops continuously after processing completes, polling for new data. When false, exits after one successful cycle
     forever: true
   kafka:
-    # @key client.kafka.consumerGroup Kafka consumer group ID, Left unset defaults to: {client-id}-cg
+    # @key client.kafka.consumerGroup Kafka consumer group ID, Left unset defaults to: client-{client-id}-cg
     consumerGroup: ""
     # @key client.kafka.topicSuffix Suffix appended to each topic name when producing to local Kafka. Final topic name is {remote-topic}-{client-id}{suffix}
     topicSuffix: "-staging"
@@ -136,6 +110,26 @@ logs:
   kafka:
     # @key logs.kafka.level Repo package Logging Level. ontrols Kafka client logging independently. Kafka clients are particularly verbose at INFO, so this defaults to WARN. Set to INFO or DEBUG to diagnose connectivity or consumer group issues. Values include: ERROR, WARN, INFO, DEBUG, TRACE
     level: "WARN"
+
+#
+# @section Application Parameters - PostgreSQL and Secret
+#
+# @descStart
+# The following contains connection details to a PostgreSQL instance, on which the application relies.
+# It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
+# For Quick Start purposes, a secret named `tc-auth-usr-psql-grpc-client` will be created if one is not set.
+# @descEnd
+postgres:
+ # @key postgres.jdbcUrl PostgreSQL connection URL format: "jdbc:postgresql://{host}:{port}/{database}"
+  jdbcUrl: ""
+  # @key postgres.existingSecret Name of an existing secret. The secret must contain 2 keys: 'username', 'password'
+  # Note: Left unset, it will create a secret named: tc-auth-usr-psql-grpc-client
+  existingSecret: ""
+  # @key postgres.username PostgreSQL username
+  # Note: For additional security, the username is read from the secret, as defined by 'existingSecret' and not from this value!
+  username: ""
+  # @key postgres.password PostgreSQL password
+  password: ""
 
 #
 # @section ConfigMap Parameters

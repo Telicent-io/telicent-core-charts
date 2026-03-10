@@ -83,31 +83,6 @@
                 }
             }
         },
-        "postgres": {
-            "type": "object",
-            "properties": {
-                "jdbcUrl": {
-                    "type": "string",
-                    "description": "PostgreSQL connection URI.",
-                    "default": ""
-                },
-                "existingSecret": {
-                    "type": "string",
-                    "description": "Name of an existing secret. The secret must contain 2 keys: 'username', 'password'",
-                    "default": ""
-                },
-                "username": {
-                    "type": "string",
-                    "description": "PostgreSQL username",
-                    "default": ""
-                },
-                "password": {
-                    "type": "string",
-                    "description": "PostgreSQL password",
-                    "default": ""
-                }
-            }
-        },
         "server": {
             "type": "object",
             "properties": {
@@ -115,6 +90,21 @@
                     "type": "number",
                     "description": "Port of the gRPC data sharing server",
                     "default": 8080
+                },
+                "keepAliveTimeSecs": {
+                    "type": "number",
+                    "description": "Keep-alive ping interval in seconds",
+                    "default": 5
+                },
+                "keepAliveTimeoutSecs": {
+                    "type": "number",
+                    "description": "Keep-alive ping timeout in seconds",
+                    "default": 1
+                },
+                "authzExpirySecs": {
+                    "type": "number",
+                    "description": "Cache TTL in seconds for authorization lookups",
+                    "default": 5
                 },
                 "tls": {
                     "type": "object",
@@ -143,6 +133,46 @@
                                     "default": false
                                 }
                             }
+                        }
+                    }
+                },
+                "kafka": {
+                    "type": "object",
+                    "properties": {
+                        "sharedHeaders": {
+                            "type": "string",
+                            "description": "Kafka headers to include in gRPC messages; '^' separated",
+                            "default": "Content-Type"
+                        },
+                        "consumerGroup": {
+                            "type": "string",
+                            "description": "Kafka consumer group ID, Left unset defaults to: server-cg",
+                            "default": ""
+                        },
+                        "offset": {
+                            "type": "number",
+                            "description": "Starting offset; 0 = from beginning",
+                            "default": 0
+                        },
+                        "pollRecords": {
+                            "type": "number",
+                            "description": "Maximum records per Kafka poll",
+                            "default": 100
+                        },
+                        "pollDuration": {
+                            "type": "string",
+                            "description": "Kafka poll timeout in ISO-8601 duration format",
+                            "default": "PT2S"
+                        },
+                        "keyDeserializerClass": {
+                            "type": "string",
+                            "description": "Key deserializer class for the Kafka consumer",
+                            "default": "org.apache.kafka.common.serialization.StringDeserializer"
+                        },
+                        "valueDeserializerClass": {
+                            "type": "string",
+                            "description": "Value deserializer class for the Kafka consume",
+                            "default": "org.apache.kafka.common.serialization.StringDeserializer"
                         }
                     }
                 }
@@ -190,6 +220,31 @@
                             "default": "INFO"
                         }
                     }
+                }
+            }
+        },
+        "postgres": {
+            "type": "object",
+            "properties": {
+                "jdbcUrl": {
+                    "type": "string",
+                    "description": "PostgreSQL connection URI.",
+                    "default": ""
+                },
+                "existingSecret": {
+                    "type": "string",
+                    "description": "Name of an existing secret. The secret must contain 2 keys: 'username', 'password'",
+                    "default": ""
+                },
+                "username": {
+                    "type": "string",
+                    "description": "PostgreSQL username",
+                    "default": ""
+                },
+                "password": {
+                    "type": "string",
+                    "description": "PostgreSQL password",
+                    "default": ""
                 }
             }
         },

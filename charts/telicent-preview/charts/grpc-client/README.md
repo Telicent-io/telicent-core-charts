@@ -98,21 +98,6 @@ Note: Only global parameters used within this chart will be listed below.
 | `global.kafka.password`                 | Password for Kafka authentication                         | `your.kafka.password.here`                     |
 | `global.kafka.protocol`                 | Protocol used for Kafka communication                     | `SASL_SSL`                                     |
 | `global.kafka.mechanism`                | SASL mechanism used for Kafka authentication              | `SCRAM-SHA-512`                                |
-| `global.truststore.existingSecret`      | Name of an existing secret containing the truststore      | `""`                                           |
-| `global.truststore.mountPath`           | The mount path for the truststore in the container        | `/app/config/truststore/`                      |
-
-### Application Parameters - PostgreSQL and Secret
-
-The following contains connection details to a PostgreSQL instance, on which the application relies.
-It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
-For Quick Start purposes, a secret named `tc-auth-usr-psql-grpc-client` will be created if one is not set.
-
-| Name                      | Description                                                                        | Value |
-| ------------------------- | ---------------------------------------------------------------------------------- | ----- |
-| `postgres.jdbcUrl`        | PostgreSQL connection URL format: "jdbc:postgresql://{host}:{port}/{database}"     | `""`  |
-| `postgres.existingSecret` | Name of an existing secret. The secret must contain 2 keys: 'username', 'password' | `""`  |
-| `postgres.username`       | PostgreSQL username                                                                | `""`  |
-| `postgres.password`       | PostgreSQL password                                                                | `""`  |
 
 ### Application Parameters - Client
 
@@ -134,7 +119,7 @@ Contains parameters specific to the *GRPC Client* application
 | `client.retry.initialBackoffMillis` | Initial backoff period in milliseconds. Doubles after each retry up to 'maxBackoffMilliSecs'                                                                            | `500`                                                   |
 | `client.retry.maxBackoffMillis`     | Maximum backoff period in milliseconds (ceiling for exponential backoff)                                                                                                | `60000`                                                 |
 | `client.retry.forever`              | When true, the client loops continuously after processing completes, polling for new data. When false, exits after one successful cycle                                 | `true`                                                  |
-| `client.kafka.consumerGroup`        | Kafka consumer group ID, Left unset defaults to: {client-id}-cg                                                                                                         | `""`                                                    |
+| `client.kafka.consumerGroup`        | Kafka consumer group ID, Left unset defaults to: client-{client-id}-cg                                                                                                  | `""`                                                    |
 | `client.kafka.topicSuffix`          | Suffix appended to each topic name when producing to local Kafka. Final topic name is {remote-topic}-{client-id}{suffix}                                                | `-staging`                                              |
 | `client.kafka.keySerializerClass`   | Fully qualified class name for the Kafka key serializer                                                                                                                 | `org.apache.kafka.common.serialization.BytesSerializer` |
 | `client.kafka.valueSerializerClass` | Fully qualified class name for the Kafka value serializer                                                                                                               | `org.apache.kafka.common.serialization.BytesSerializer` |
@@ -154,6 +139,19 @@ Contains Java parameters to be used by the *GRPC Client* application
 | `logs.root.level`  | Sets the baseline log level. Only warnings and errors from third-party libraries (gRPC, Netty, Flyway, etc.) are logged by default. Values include: ERROR, WARN, INFO, DEBUG, TRACE                                                                                       | `WARN` |
 | `logs.app.level`   | Controls log verbosity for all application code. Set to DEBUG for detailed troubleshooting. Values include: ERROR, WARN, INFO, DEBUG, TRACE                                                                                                                               | `INFO` |
 | `logs.kafka.level` | Repo package Logging Level. ontrols Kafka client logging independently. Kafka clients are particularly verbose at INFO, so this defaults to WARN. Set to INFO or DEBUG to diagnose connectivity or consumer group issues. Values include: ERROR, WARN, INFO, DEBUG, TRACE | `WARN` |
+
+### Application Parameters - PostgreSQL and Secret
+
+The following contains connection details to a PostgreSQL instance, on which the application relies.
+It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
+For Quick Start purposes, a secret named `tc-auth-usr-psql-grpc-client` will be created if one is not set.
+
+| Name                      | Description                                                                        | Value |
+| ------------------------- | ---------------------------------------------------------------------------------- | ----- |
+| `postgres.jdbcUrl`        | PostgreSQL connection URL format: "jdbc:postgresql://{host}:{port}/{database}"     | `""`  |
+| `postgres.existingSecret` | Name of an existing secret. The secret must contain 2 keys: 'username', 'password' | `""`  |
+| `postgres.username`       | PostgreSQL username                                                                | `""`  |
+| `postgres.password`       | PostgreSQL password                                                                | `""`  |
 
 ### ConfigMap Parameters
 
