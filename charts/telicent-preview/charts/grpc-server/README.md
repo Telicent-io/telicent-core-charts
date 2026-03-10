@@ -104,30 +104,27 @@ Note: Only global parameters used within this chart will be listed below.
 | `global.istioGatewayNamespace`          | Namespace in which the Istio Gateway resource is deployed; overrides 'istio.gateway.namespace'      | `istio-system`                                 |
 | `global.istioGatewayName`               | Name of the Istio Gateway resource; overrides 'istio.gateway.namespace'                             | `ingress-gateway`                              |
 
-### Application Parameters - PostgreSQL and Secret
-
-The following contains connection details to a PostgreSQL instance, on which the application relies.
-It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
-For Quick Start purposes, a secret named `tc-auth-usr-psql-grpc-server` will be created if one is not set.
-
-| Name                      | Description                                                                        | Value |
-| ------------------------- | ---------------------------------------------------------------------------------- | ----- |
-| `postgres.jdbcUrl`        | PostgreSQL connection URI.                                                         | `""`  |
-| `postgres.existingSecret` | Name of an existing secret. The secret must contain 2 keys: 'username', 'password' | `""`  |
-| `postgres.username`       | PostgreSQL username                                                                | `""`  |
-| `postgres.password`       | PostgreSQL password                                                                | `""`  |
-
 ### Application Parameters - Server
 
 Contains parameters specific to the *GRPC Server* application
 
-| Name                        | Description                                                                                                                       | Value   |
-| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| `server.port`               | Port of the gRPC data sharing server                                                                                              | `8080`  |
-| `server.tls.enabled`        | Enable TLS for the gRPC channel                                                                                                   | `false` |
-| `server.tls.caIncluded`     | Flag to denote that the Certificate Authority (CA) has been provided                                                              | `false` |
-| `server.tls.existingSecret` | Existing secret with TLS certificates (`tls.key`, `tls.crt`) or (`tls.key`, `tls.crt`, `ca.crt`) with tls.caIncluded set as true. | `""`    |
-| `server.tls.mTLS.enabled`   | IF TLS support is enabled, require clients to provide certificates                                                                | `false` |
+| Name                                  | Description                                                                                                                       | Value                                                      |
+| ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| `server.port`                         | Port of the gRPC data sharing server                                                                                              | `8080`                                                     |
+| `server.keepAliveTimeSecs`            | Keep-alive ping interval in seconds                                                                                               | `5`                                                        |
+| `server.keepAliveTimeoutSecs`         | Keep-alive ping timeout in seconds                                                                                                | `1`                                                        |
+| `server.authzExpirySecs`              | Cache TTL in seconds for authorization lookups                                                                                    | `5`                                                        |
+| `server.tls.enabled`                  | Enable TLS for the gRPC channel                                                                                                   | `false`                                                    |
+| `server.tls.caIncluded`               | Flag to denote that the Certificate Authority (CA) has been provided                                                              | `false`                                                    |
+| `server.tls.existingSecret`           | Existing secret with TLS certificates (`tls.key`, `tls.crt`) or (`tls.key`, `tls.crt`, `ca.crt`) with tls.caIncluded set as true. | `""`                                                       |
+| `server.tls.mTLS.enabled`             | IF TLS support is enabled, require clients to provide certificates                                                                | `false`                                                    |
+| `server.kafka.sharedHeaders`          | Kafka headers to include in gRPC messages; '^' separated                                                                          | `Content-Type`                                             |
+| `server.kafka.consumerGroup`          | Kafka consumer group ID, Left unset defaults to: server-cg                                                                        | `""`                                                       |
+| `server.kafka.offset`                 | Starting offset; 0 = from beginning                                                                                               | `0`                                                        |
+| `server.kafka.pollRecords`            | Maximum records per Kafka poll                                                                                                    | `100`                                                      |
+| `server.kafka.pollDuration`           | Kafka poll timeout in ISO-8601 duration format                                                                                    | `PT2S`                                                     |
+| `server.kafka.keyDeserializerClass`   | Key deserializer class for the Kafka consumer                                                                                     | `org.apache.kafka.common.serialization.StringDeserializer` |
+| `server.kafka.valueDeserializerClass` | Value deserializer class for the Kafka consume                                                                                    | `org.apache.kafka.common.serialization.StringDeserializer` |
 
 ### Application Parameters - Java
 
@@ -144,6 +141,19 @@ Contains Java parameters to be used by the *GRPC Server* application
 | `logs.root.level`  | Sets the baseline log level. Only warnings and errors from third-party libraries (gRPC, Netty, Flyway, etc.) are logged by default. Values include: ERROR, WARN, INFO, DEBUG, TRACE                                                                                       | `INFO` |
 | `logs.app.level`   | Controls log verbosity for all application code. Set to DEBUG for detailed troubleshooting. Values include: ERROR, WARN, INFO, DEBUG, TRACE                                                                                                                               | `INFO` |
 | `logs.kafka.level` | Repo package Logging Level. ontrols Kafka client logging independently. Kafka clients are particularly verbose at INFO, so this defaults to WARN. Set to INFO or DEBUG to diagnose connectivity or consumer group issues. Values include: ERROR, WARN, INFO, DEBUG, TRACE | `INFO` |
+
+### Application Parameters - PostgreSQL and Secret
+
+The following contains connection details to a PostgreSQL instance, on which the application relies.
+It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
+For Quick Start purposes, a secret named `tc-auth-usr-psql-grpc-server` will be created if one is not set.
+
+| Name                      | Description                                                                        | Value |
+| ------------------------- | ---------------------------------------------------------------------------------- | ----- |
+| `postgres.jdbcUrl`        | PostgreSQL connection URI.                                                         | `""`  |
+| `postgres.existingSecret` | Name of an existing secret. The secret must contain 2 keys: 'username', 'password' | `""`  |
+| `postgres.username`       | PostgreSQL username                                                                | `""`  |
+| `postgres.password`       | PostgreSQL password                                                                | `""`  |
 
 ### ConfigMap Parameters
 

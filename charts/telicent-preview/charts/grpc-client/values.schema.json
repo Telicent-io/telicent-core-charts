@@ -55,46 +55,6 @@
                             "default": "SCRAM-SHA-512"
                         }
                     }
-                },
-                "truststore": {
-                    "type": "object",
-                    "properties": {
-                        "existingSecret": {
-                            "type": "string",
-                            "description": "Name of an existing secret containing the truststore",
-                            "default": ""
-                        },
-                        "mountPath": {
-                            "type": "string",
-                            "description": "The mount path for the truststore in the container",
-                            "default": "/app/config/truststore/"
-                        }
-                    }
-                }
-            }
-        },
-        "postgres": {
-            "type": "object",
-            "properties": {
-                "jdbcUrl": {
-                    "type": "string",
-                    "description": "PostgreSQL connection URL format: \"jdbc:postgresql://{host}:{port}/{database}\"",
-                    "default": ""
-                },
-                "existingSecret": {
-                    "type": "string",
-                    "description": "Name of an existing secret. The secret must contain 2 keys: 'username', 'password'",
-                    "default": ""
-                },
-                "username": {
-                    "type": "string",
-                    "description": "PostgreSQL username",
-                    "default": ""
-                },
-                "password": {
-                    "type": "string",
-                    "description": "PostgreSQL password",
-                    "default": ""
                 }
             }
         },
@@ -201,7 +161,7 @@
                     "properties": {
                         "consumerGroup": {
                             "type": "string",
-                            "description": "Kafka consumer group ID, Left unset defaults to: {client-id}-cg",
+                            "description": "Kafka consumer group ID, Left unset defaults to: client-{client-id}-cg",
                             "default": ""
                         },
                         "topicSuffix": {
@@ -265,6 +225,31 @@
                             "default": "WARN"
                         }
                     }
+                }
+            }
+        },
+        "postgres": {
+            "type": "object",
+            "properties": {
+                "jdbcUrl": {
+                    "type": "string",
+                    "description": "PostgreSQL connection URL format: \"jdbc:postgresql://{host}:{port}/{database}\"",
+                    "default": ""
+                },
+                "existingSecret": {
+                    "type": "string",
+                    "description": "Name of an existing secret. The secret must contain 2 keys: 'username', 'password'",
+                    "default": ""
+                },
+                "username": {
+                    "type": "string",
+                    "description": "PostgreSQL username",
+                    "default": ""
+                },
+                "password": {
+                    "type": "string",
+                    "description": "PostgreSQL password",
+                    "default": ""
                 }
             }
         },

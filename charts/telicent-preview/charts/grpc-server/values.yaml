@@ -49,26 +49,6 @@ global:
   istioGatewayName: ingress-gateway
 
 #
-# @section Application Parameters - PostgreSQL and Secret
-#
-# @descStart
-# The following contains connection details to a PostgreSQL instance, on which the application relies.
-# It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
-# For Quick Start purposes, a secret named `tc-auth-usr-psql-grpc-server` will be created if one is not set.
-# @descEnd
-postgres:
-  # @key postgres.jdbcUrl PostgreSQL connection URI.
-  jdbcUrl: ""
-  # @key postgres.existingSecret Name of an existing secret. The secret must contain 2 keys: 'username', 'password'
-  # Note: Left unset, it will create a secret named: tc-auth-usr-psql-grpc-server
-  existingSecret: ""
-  # @key postgres.username PostgreSQL username
-  # Note: For additional security, the username is read from the secret, as defined by 'existingSecret' and not from this value!
-  username: ""
-  # @key postgres.password PostgreSQL password
-  password: ""
-
-#
 # @section Application Parameters - Server
 #
 # @descStart
@@ -77,6 +57,12 @@ postgres:
 server:
   # @key server.port Port of the gRPC data sharing server
   port: 8080
+  # @key server.keepAliveTimeSecs Keep-alive ping interval in seconds
+  keepAliveTimeSecs: 5
+  # @key server.keepAliveTimeoutSecs Keep-alive ping timeout in seconds
+  keepAliveTimeoutSecs: 1
+  # @key server.authzExpirySecs Cache TTL in seconds for authorization lookups
+  authzExpirySecs: 5
   tls:
     # @key server.tls.enabled Enable TLS for the gRPC channel
     enabled: false
@@ -87,6 +73,21 @@ server:
     mTLS:
       # @key server.tls.mTLS.enabled IF TLS support is enabled, require clients to provide certificates
       enabled: false
+  kafka:
+    # @key server.kafka.sharedHeaders Kafka headers to include in gRPC messages; '^' separated
+    sharedHeaders: "Content-Type"
+    # @key server.kafka.consumerGroup Kafka consumer group ID, Left unset defaults to: server-cg
+    consumerGroup: ""
+    # @key server.kafka.offset Starting offset; 0 = from beginning
+    offset: 0
+    # @key server.kafka.pollRecords Maximum records per Kafka poll
+    pollRecords: 100
+    # @key server.kafka.pollDuration Kafka poll timeout in ISO-8601 duration format
+    pollDuration: "PT2S"
+    # @key server.kafka.keyDeserializerClass Key deserializer class for the Kafka consumer
+    keyDeserializerClass: "org.apache.kafka.common.serialization.StringDeserializer"
+    # @key server.kafka.valueDeserializerClass Value deserializer class for the Kafka consume
+    valueDeserializerClass: "org.apache.kafka.common.serialization.StringDeserializer"
 
 #
 # @section Application Parameters - Java
@@ -111,6 +112,26 @@ logs:
   kafka:
     # @key logs.kafka.level Repo package Logging Level. ontrols Kafka client logging independently. Kafka clients are particularly verbose at INFO, so this defaults to WARN. Set to INFO or DEBUG to diagnose connectivity or consumer group issues. Values include: ERROR, WARN, INFO, DEBUG, TRACE
     level: "INFO"
+
+#
+# @section Application Parameters - PostgreSQL and Secret
+#
+# @descStart
+# The following contains connection details to a PostgreSQL instance, on which the application relies.
+# It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
+# For Quick Start purposes, a secret named `tc-auth-usr-psql-grpc-server` will be created if one is not set.
+# @descEnd
+postgres:
+  # @key postgres.jdbcUrl PostgreSQL connection URI.
+  jdbcUrl: ""
+  # @key postgres.existingSecret Name of an existing secret. The secret must contain 2 keys: 'username', 'password'
+  # Note: Left unset, it will create a secret named: tc-auth-usr-psql-grpc-server
+  existingSecret: ""
+  # @key postgres.username PostgreSQL username
+  # Note: For additional security, the username is read from the secret, as defined by 'existingSecret' and not from this value!
+  username: ""
+  # @key postgres.password PostgreSQL password
+  password: ""
 
 #
 # @section ConfigMap Parameters
