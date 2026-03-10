@@ -99,18 +99,25 @@ Note: Only global parameters used within this chart will be listed below.
 | `global.kafka.protocol`                 | Protocol used for Kafka communication                     | `SASL_SSL`                                     |
 | `global.kafka.mechanism`                | SASL mechanism used for Kafka authentication              | `SCRAM-SHA-512`                                |
 
-### Application Parameters - PostgreSQL and Secret
+### Application Parameters - Engine
 
-The following contains connection details to a PostgreSQL instance, on which the application relies.
-It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
-For Quick Start purposes, a secret named `tc-auth-usr-psql-data-preparation` will be created if one is not set.
+Contains parameters specific to the *Data Preparation* application
 
-| Name                      | Description                                                                        | Value |
-| ------------------------- | ---------------------------------------------------------------------------------- | ----- |
-| `postgres.jdbcUrl`        | PostgreSQL connection URL format: "jdbc:postgresql://{host}:{port}/{database}"     | `""`  |
-| `postgres.existingSecret` | Name of an existing secret. The secret must contain 2 keys: 'username', 'password' | `""`  |
-| `postgres.username`       | PostgreSQL username                                                                | `""`  |
-| `postgres.password`       | PostgreSQL password                                                                | `""`  |
+| Name                                | Description                                                  | Value               |
+| ----------------------------------- | ------------------------------------------------------------ | ------------------- |
+| `engine.passthroughEnabled`         | Allow passthrough with no filter or transformer              | `false`             |
+| `engine.kafka.applicationId`        | Kafka Streams application ID                                 | `streams-data-prep` |
+| `engine.kafka.inputTopic`           | Input topic to consume from                                  | `streams-input`     |
+| `engine.kafka.outputTopic`          | Output topic to produce to                                   | `streams-output`    |
+| `engine.kafka.dlqTopic`             | Dead letter queue topic for failed messages                  | `streams-dlq`       |
+| `engine.client.version`             | IDH specification version                                    | `1.0`               |
+| `engine.client.nationality`         | Space-separated nationality codes; empty = no restriction    | `GBR`               |
+| `engine.client.classification`      | Security classification level                                | `S`                 |
+| `engine.client.organisation`        | Space-separated organisation codes; empty = no restriction   | `""`                |
+| `engine.client.group`               | Space-separated group names; empty = no restriction          | `""`                |
+| `engine.filter.type`                | "idh" or "header"                                            | `idh`               |
+| `engine.transformer.type`           | "distribution-id"                                            | `distribution-id`   |
+| `engine.transformer.distributionId` | Distribution ID injected as a "Distribution-Id" Kafka header | `ABC-DEF`           |
 
 ### Application Parameters - Java
 
@@ -119,6 +126,14 @@ Contains Java parameters to be used by the *Data Preparation* application
 | Name              | Description                     | Value                       |
 | ----------------- | ------------------------------- | --------------------------- |
 | `java.jvmOptions` | JVM options for the application | `-XX:MaxRAMPercentage=80.0` |
+
+### Application Parameters - Logs
+
+| Name               | Description                                                                                                                                                                                                                                                               | Value  |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ |
+| `logs.root.level`  | Sets the baseline log level. Only warnings and errors from third-party libraries (gRPC, Netty, Flyway, etc.) are logged by default. Values include: ERROR, WARN, INFO, DEBUG, TRACE                                                                                       | `WARN` |
+| `logs.app.level`   | Controls log verbosity for all application code. Set to DEBUG for detailed troubleshooting. Values include: ERROR, WARN, INFO, DEBUG, TRACE                                                                                                                               | `INFO` |
+| `logs.kafka.level` | Repo package Logging Level. ontrols Kafka client logging independently. Kafka clients are particularly verbose at INFO, so this defaults to WARN. Set to INFO or DEBUG to diagnose connectivity or consumer group issues. Values include: ERROR, WARN, INFO, DEBUG, TRACE | `WARN` |
 
 ### ConfigMap Parameters
 
