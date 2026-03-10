@@ -3,10 +3,10 @@ Copyright (C) Telicent Limited
 */}}
 
 {{/*
-Create the name of the config map
+Create the name of the enviromnet variables config map
 */}}
-{{- define "grpc-client.configMapName" -}}
-{{- if .Values.configMap.existingConfigMapName }}
+{{- define "grpc-client.envConfigMapName" -}}
+{{- if .Values.configMap.existingEnvConfigMapName }}
 {{- .Values.configMap.existingEnvConfigMap }}
 {{- else }}
 {{- printf "tc-%s-%s" .Chart.Name "env" }}

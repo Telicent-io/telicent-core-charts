@@ -227,14 +227,6 @@ For Quick Start purposes, a secret named `tc-auth-usr-psql-grpc-client` will be 
 | `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                  | `{}`   |
 | `serviceAccount.automount`   | Automatically mount a ServiceAccount's API credentials                                | `true` |
 
-### Traffic Exposure Parameters
-
-| Name           | Description                                                                    | Value       |
-| -------------- | ------------------------------------------------------------------------------ | ----------- |
-| `service.name` | *GRPC Client* service name. If not set, a name is generated using the fullname | `""`        |
-| `service.port` | *GRPC Client* service port                                                     | `8080`      |
-| `service.type` | *GRPC Client* service type                                                     | `ClusterIP` |
-
 
 ## License
 

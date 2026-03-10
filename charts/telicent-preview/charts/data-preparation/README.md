@@ -103,21 +103,21 @@ Note: Only global parameters used within this chart will be listed below.
 
 Contains parameters specific to the *Data Preparation* application
 
-| Name                                | Description                                                  | Value               |
-| ----------------------------------- | ------------------------------------------------------------ | ------------------- |
-| `engine.passthroughEnabled`         | Allow passthrough with no filter or transformer              | `false`             |
-| `engine.kafka.applicationId`        | Kafka Streams application ID                                 | `streams-data-prep` |
-| `engine.kafka.inputTopic`           | Input topic to consume from                                  | `streams-input`     |
-| `engine.kafka.outputTopic`          | Output topic to produce to                                   | `streams-output`    |
-| `engine.kafka.dlqTopic`             | Dead letter queue topic for failed messages                  | `streams-dlq`       |
-| `engine.client.version`             | IDH specification version                                    | `1.0`               |
-| `engine.client.nationality`         | Space-separated nationality codes; empty = no restriction    | `GBR`               |
-| `engine.client.classification`      | Security classification level                                | `S`                 |
-| `engine.client.organisation`        | Space-separated organisation codes; empty = no restriction   | `""`                |
-| `engine.client.group`               | Space-separated group names; empty = no restriction          | `""`                |
-| `engine.filter.type`                | "idh" or "header"                                            | `idh`               |
-| `engine.transformer.type`           | "distribution-id"                                            | `distribution-id`   |
-| `engine.transformer.distributionId` | Distribution ID injected as a "Distribution-Id" Kafka header | `ABC-DEF`           |
+| Name                                | Description                                                  | Value   |
+| ----------------------------------- | ------------------------------------------------------------ | ------- |
+| `engine.applicationId`              | Kafka Streams application ID                                 | `""`    |
+| `engine.passthroughEnabled`         | Allow passthrough with no filter or transformer              | `false` |
+| `engine.kafka.inputTopic`           | Input topic to consume from                                  | `""`    |
+| `engine.kafka.outputTopic`          | Output topic to produce to                                   | `""`    |
+| `engine.kafka.dlqTopic`             | Dead letter queue topic for failed messages                  | `""`    |
+| `engine.client.version`             | IDH specification version                                    | `""`    |
+| `engine.client.nationality`         | Space-separated nationality codes; empty = no restriction    | `""`    |
+| `engine.client.classification`      | Security classification level                                | `""`    |
+| `engine.client.organisation`        | Space-separated organisation codes; empty = no restriction   | `""`    |
+| `engine.client.group`               | Space-separated group names; empty = no restriction          | `""`    |
+| `engine.filter.type`                | "idh" or "header"                                            | `""`    |
+| `engine.transformer.type`           | "distribution-id"                                            | `""`    |
+| `engine.transformer.distributionId` | Distribution ID injected as a "Distribution-Id" Kafka header | `""`    |
 
 ### Application Parameters - Java
 
@@ -208,14 +208,6 @@ Contains Java parameters to be used by the *Data Preparation* application
 | `serviceAccount.name`        | Name of the ServiceAccount to use. If not set, a name is generated using the fullname | `""`   |
 | `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                  | `{}`   |
 | `serviceAccount.automount`   | Automatically mount a ServiceAccount's API credentials                                | `true` |
-
-### Traffic Exposure Parameters
-
-| Name           | Description                                                                         | Value       |
-| -------------- | ----------------------------------------------------------------------------------- | ----------- |
-| `service.name` | *Data Preparation* service name. If not set, a name is generated using the fullname | `""`        |
-| `service.port` | *Data Preparation* service port                                                     | `8080`      |
-| `service.type` | *Data Preparation* service type                                                     | `ClusterIP` |
 
 
 ## License

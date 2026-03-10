@@ -61,6 +61,11 @@
         "engine": {
             "type": "object",
             "properties": {
+                "applicationId": {
+                    "type": "string",
+                    "description": "Kafka Streams application ID",
+                    "default": ""
+                },
                 "passthroughEnabled": {
                     "type": "boolean",
                     "description": "Allow passthrough with no filter or transformer",
@@ -69,25 +74,20 @@
                 "kafka": {
                     "type": "object",
                     "properties": {
-                        "applicationId": {
-                            "type": "string",
-                            "description": "Kafka Streams application ID",
-                            "default": "streams-data-prep"
-                        },
                         "inputTopic": {
                             "type": "string",
                             "description": "Input topic to consume from",
-                            "default": "streams-input"
+                            "default": ""
                         },
                         "outputTopic": {
                             "type": "string",
                             "description": "Output topic to produce to",
-                            "default": "streams-output"
+                            "default": ""
                         },
                         "dlqTopic": {
                             "type": "string",
                             "description": "Dead letter queue topic for failed messages",
-                            "default": "streams-dlq"
+                            "default": ""
                         }
                     }
                 },
@@ -97,17 +97,17 @@
                         "version": {
                             "type": "string",
                             "description": "IDH specification version",
-                            "default": "1.0"
+                            "default": ""
                         },
                         "nationality": {
                             "type": "string",
                             "description": "Space-separated nationality codes; empty = no restriction",
-                            "default": "GBR"
+                            "default": ""
                         },
                         "classification": {
                             "type": "string",
                             "description": "Security classification level",
-                            "default": "S"
+                            "default": ""
                         },
                         "organisation": {
                             "type": "string",
@@ -127,7 +127,7 @@
                         "type": {
                             "type": "string",
                             "description": "\"idh\" or \"header\"",
-                            "default": "idh"
+                            "default": ""
                         }
                     }
                 },
@@ -137,12 +137,12 @@
                         "type": {
                             "type": "string",
                             "description": "\"distribution-id\"",
-                            "default": "distribution-id"
+                            "default": ""
                         },
                         "distributionId": {
                             "type": "string",
                             "description": "Distribution ID injected as a \"Distribution-Id\" Kafka header",
-                            "default": "ABC-DEF"
+                            "default": ""
                         }
                     }
                 }
@@ -437,26 +437,6 @@
                     "type": "boolean",
                     "description": "Automatically mount a ServiceAccount's API credentials",
                     "default": true
-                }
-            }
-        },
-        "service": {
-            "type": "object",
-            "properties": {
-                "name": {
-                    "type": "string",
-                    "description": "*Data Preparation* service name. If not set, a name is generated using the fullname",
-                    "default": ""
-                },
-                "port": {
-                    "type": "number",
-                    "description": "*Data Preparation* service port",
-                    "default": 8080
-                },
-                "type": {
-                    "type": "string",
-                    "description": "*Data Preparation* service type",
-                    "default": "ClusterIP"
                 }
             }
         }

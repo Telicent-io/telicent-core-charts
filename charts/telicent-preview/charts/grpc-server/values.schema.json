@@ -142,7 +142,7 @@
                         "sharedHeaders": {
                             "type": "string",
                             "description": "Kafka headers to include in gRPC messages; '^' separated",
-                            "default": "Content-Type"
+                            "default": "Content-Type^Security-Label^Request-Id^policyInformation"
                         },
                         "consumerGroup": {
                             "type": "string",

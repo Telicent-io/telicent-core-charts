@@ -83,7 +83,7 @@ spec:
 
         envFrom:
         - configMapRef:
-            name: {{ include "grpc-client.configMapName" . }}
+            name: {{ include "grpc-client.envConfigMapName" . }}
 
         ports:
         - name: http

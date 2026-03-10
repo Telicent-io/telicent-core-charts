@@ -11,7 +11,7 @@ metadata:
   labels:
     {{- include "data-preparation.labels" . | nindent 4 }}
   {{- with .Values.annotations }}
-  annotations: 
+  annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 
@@ -32,13 +32,13 @@ spec:
         {{- include "data-preparation.labels" . | nindent 8 }}
         {{- with .Values.podLabels }}
           {{- toYaml . | nindent 8 }}
-        {{- end }}     
+        {{- end }}
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap-env.yaml") . | sha256sum }}
       {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
-    
+
     spec:
       serviceAccountName: {{ include "data-preparation.serviceAccountName" . }}
       securityContext: {{- toYaml .Values.podSecurityContext | nindent 8 }}
@@ -71,13 +71,13 @@ spec:
 
         envFrom:
         - configMapRef:
-            name: {{ include "data-preparation.configMapName" . }}
+            name: {{ include "data-preparation.envConfigMapName" . }}
 
         ports:
         - name: http
           protocol: TCP
           containerPort: 8000
-    
+
         readinessProbe:
           httpGet:
             path: /readiness
@@ -101,7 +101,7 @@ spec:
             {{- toYaml . | nindent 12 }}
           {{- end }}
           {{- end }}
-       
+
       {{- with .Values.sidecars }}
         {{- toYaml . | nindent 8 }}
       {{- end }}

@@ -44,7 +44,7 @@ global:
 # @descEnd
 engine:
 
-  # @key engine.kafka.applicationId Kafka Streams application ID
+  # @key engine.applicationId Kafka Streams application ID
   applicationId: ""
   # @key engine.passthroughEnabled Allow passthrough with no filter or transformer
   passthroughEnabled: false
@@ -242,15 +242,4 @@ serviceAccount:
   annotations: {}
   # @key serviceAccount.automount Automatically mount a ServiceAccount's API credentials
   automount: true
-
-#
-# @section Traffic Exposure Parameters
-#
-service:
-  # @key service.name *Data Preparation* service name. If not set, a name is generated using the fullname
-  name: ""
-  # @key service.port *Data Preparation* service port
-  port: 8080
-  # @key service.type *Data Preparation* service type
-  type: ClusterIP
 

@@ -499,26 +499,6 @@
                     "default": true
                 }
             }
-        },
-        "service": {
-            "type": "object",
-            "properties": {
-                "name": {
-                    "type": "string",
-                    "description": "*GRPC Client* service name. If not set, a name is generated using the fullname",
-                    "default": ""
-                },
-                "port": {
-                    "type": "number",
-                    "description": "*GRPC Client* service port",
-                    "default": 8080
-                },
-                "type": {
-                    "type": "string",
-                    "description": "*GRPC Client* service type",
-                    "default": "ClusterIP"
-                }
-            }
         }
     }
 }

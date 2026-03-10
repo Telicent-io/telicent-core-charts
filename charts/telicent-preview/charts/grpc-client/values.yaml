@@ -273,14 +273,3 @@ serviceAccount:
   # @key serviceAccount.automount Automatically mount a ServiceAccount's API credentials
   automount: true
 
-#
-# @section Traffic Exposure Parameters
-#
-service:
-  # @key service.name *GRPC Client* service name. If not set, a name is generated using the fullname
-  name: ""
-  # @key service.port *GRPC Client* service port
-  port: 8080
-  # @key service.type *GRPC Client* service type
-  type: ClusterIP
-
