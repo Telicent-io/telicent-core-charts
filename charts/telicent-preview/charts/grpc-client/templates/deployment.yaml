@@ -143,10 +143,10 @@ spec:
       - name: storage-config-volume
         configMap:
           name: {{ include "grpc-client.storageConfigMapName" . }}
-      {{- if .Values.client.tls.mTLS.existingSecret }}
+      {{- if .Values.client.tls.existingSecret }}
       - name: client-tls
         secret:
-          secretName: {{ .Values.client.tls.mTLS.existingSecret }}
+          secretName: {{ .Values.client.tls.existingSecret }}
       {{- end }}
       {{- with .Values.extraVolumes }}
         {{- toYaml . | nindent 8 }}
