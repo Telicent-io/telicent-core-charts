@@ -44,38 +44,38 @@ global:
 # @descEnd
 engine:
 
+  # @key engine.kafka.applicationId Kafka Streams application ID
+  applicationId: ""
   # @key engine.passthroughEnabled Allow passthrough with no filter or transformer
   passthroughEnabled: false
 
   kafka:
-    # @key engine.kafka.applicationId Kafka Streams application ID
-    applicationId: "streams-data-prep"
     # @key engine.kafka.inputTopic Input topic to consume from
-    inputTopic: "streams-input"
+    inputTopic: ""
     # @key engine.kafka.outputTopic Output topic to produce to
-    outputTopic: "streams-output"
+    outputTopic: ""
      # @key engine.kafka.dlqTopic Dead letter queue topic for failed messages
-    dlqTopic: "streams-dlq"
+    dlqTopic: ""
 
   client:
     # @key engine.client.version IDH specification version
-    version: "1.0"
+    version: ""
     # @key engine.client.nationality Space-separated nationality codes; empty = no restriction
-    nationality: "GBR"
+    nationality: ""
     # @key engine.client.classification Security classification level
-    classification: "S"
+    classification: ""
     # @key engine.client.organisation Space-separated organisation codes; empty = no restriction
     organisation: ""
     # @key engine.client.group Space-separated group names; empty = no restriction
     group: ""
   filter:
     # @key engine.filter.type "idh" or "header"
-    type: "idh"
+    type: ""
   transformer:
     # @key engine.transformer.type  "distribution-id"
-    type: "distribution-id"
+    type: ""
     # @key engine.transformer.distributionId  Distribution ID injected as a "Distribution-Id" Kafka header
-    distributionId: "ABC-DEF"
+    distributionId: ""
 
 #
 # @section Application Parameters - Java
