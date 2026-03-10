@@ -80,11 +80,13 @@ server:
   tls:
     # @key server.tls.enabled Enable TLS for the gRPC channel
     enabled: false
+    # @key server.tls.caIncluded Flag to denote that the Certificate Authority (CA) has been provided
+    caIncluded: false
+    # @key server.tls.existingSecret Existing secret with TLS certificates (`tls.key`, `tls.crt`) or (`tls.key`, `tls.crt`, `ca.crt`) with tls.caIncluded set as true.
+    existingSecret: ""
     mTLS:
       # @key server.tls.mTLS.enabled IF TLS support is enabled, require clients to provide certificates
       enabled: false
-      # @key server.tls.mTLS.existingSecret Name of an existing secret containing the secret
-      existingSecret: ""
 
 #
 # @section Application Parameters - Java

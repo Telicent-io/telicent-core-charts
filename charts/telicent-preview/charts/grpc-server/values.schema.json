@@ -108,6 +108,46 @@
                 }
             }
         },
+        "server": {
+            "type": "object",
+            "properties": {
+                "port": {
+                    "type": "number",
+                    "description": "Port of the gRPC data sharing server",
+                    "default": 8080
+                },
+                "tls": {
+                    "type": "object",
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean",
+                            "description": "Enable TLS for the gRPC channel",
+                            "default": false
+                        },
+                        "caIncluded": {
+                            "type": "boolean",
+                            "description": "Flag to denote that the Certificate Authority (CA) has been provided",
+                            "default": false
+                        },
+                        "existingSecret": {
+                            "type": "string",
+                            "description": "Existing secret with TLS certificates (`tls.key`, `tls.crt`) or (`tls.key`, `tls.crt`, `ca.crt`) with tls.caIncluded set as true.",
+                            "default": ""
+                        },
+                        "mTLS": {
+                            "type": "object",
+                            "properties": {
+                                "enabled": {
+                                    "type": "boolean",
+                                    "description": "IF TLS support is enabled, require clients to provide certificates",
+                                    "default": false
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "java": {
             "type": "object",
             "properties": {

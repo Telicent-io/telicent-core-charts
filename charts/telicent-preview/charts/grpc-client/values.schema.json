@@ -129,6 +129,16 @@
                             "description": "Enable TLS for the gRPC channel",
                             "default": false
                         },
+                        "caIncluded": {
+                            "type": "boolean",
+                            "description": "Flag to denote that the Certificate Authority (CA) has been provided",
+                            "default": false
+                        },
+                        "existingSecret": {
+                            "type": "string",
+                            "description": "Existing secret with TLS certificates (`tls.key`, `tls.crt`) or (`tls.key`, `tls.crt`, `ca.crt`) with tls.caIncluded set as true.",
+                            "default": ""
+                        },
                         "mTLS": {
                             "type": "object",
                             "properties": {

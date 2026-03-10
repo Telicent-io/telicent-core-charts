@@ -117,6 +117,18 @@ For Quick Start purposes, a secret named `tc-auth-usr-psql-grpc-server` will be 
 | `postgres.username`       | PostgreSQL username                                                                | `""`  |
 | `postgres.password`       | PostgreSQL password                                                                | `""`  |
 
+### Application Parameters - Server
+
+Contains parameters specific to the *GRPC Server* application
+
+| Name                        | Description                                                                                                                       | Value   |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `server.port`               | Port of the gRPC data sharing server                                                                                              | `8080`  |
+| `server.tls.enabled`        | Enable TLS for the gRPC channel                                                                                                   | `false` |
+| `server.tls.caIncluded`     | Flag to denote that the Certificate Authority (CA) has been provided                                                              | `false` |
+| `server.tls.existingSecret` | Existing secret with TLS certificates (`tls.key`, `tls.crt`) or (`tls.key`, `tls.crt`, `ca.crt`) with tls.caIncluded set as true. | `""`    |
+| `server.tls.mTLS.enabled`   | IF TLS support is enabled, require clients to provide certificates                                                                | `false` |
+
 ### Application Parameters - Java
 
 Contains Java parameters to be used by the *GRPC Server* application
