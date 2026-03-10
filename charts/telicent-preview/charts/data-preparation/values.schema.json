@@ -58,28 +58,93 @@
                 }
             }
         },
-        "postgres": {
+        "engine": {
             "type": "object",
             "properties": {
-                "jdbcUrl": {
-                    "type": "string",
-                    "description": "PostgreSQL connection URL format: \"jdbc:postgresql://{host}:{port}/{database}\"",
-                    "default": ""
+                "passthroughEnabled": {
+                    "type": "boolean",
+                    "description": "Allow passthrough with no filter or transformer",
+                    "default": false
                 },
-                "existingSecret": {
-                    "type": "string",
-                    "description": "Name of an existing secret. The secret must contain 2 keys: 'username', 'password'",
-                    "default": ""
+                "kafka": {
+                    "type": "object",
+                    "properties": {
+                        "applicationId": {
+                            "type": "string",
+                            "description": "Kafka Streams application ID",
+                            "default": "streams-data-prep"
+                        },
+                        "inputTopic": {
+                            "type": "string",
+                            "description": "Input topic to consume from",
+                            "default": "streams-input"
+                        },
+                        "outputTopic": {
+                            "type": "string",
+                            "description": "Output topic to produce to",
+                            "default": "streams-output"
+                        },
+                        "dlqTopic": {
+                            "type": "string",
+                            "description": "Dead letter queue topic for failed messages",
+                            "default": "streams-dlq"
+                        }
+                    }
                 },
-                "username": {
-                    "type": "string",
-                    "description": "PostgreSQL username",
-                    "default": ""
+                "client": {
+                    "type": "object",
+                    "properties": {
+                        "version": {
+                            "type": "string",
+                            "description": "IDH specification version",
+                            "default": "1.0"
+                        },
+                        "nationality": {
+                            "type": "string",
+                            "description": "Space-separated nationality codes; empty = no restriction",
+                            "default": "GBR"
+                        },
+                        "classification": {
+                            "type": "string",
+                            "description": "Security classification level",
+                            "default": "S"
+                        },
+                        "organisation": {
+                            "type": "string",
+                            "description": "Space-separated organisation codes; empty = no restriction",
+                            "default": ""
+                        },
+                        "group": {
+                            "type": "string",
+                            "description": "Space-separated group names; empty = no restriction",
+                            "default": ""
+                        }
+                    }
                 },
-                "password": {
-                    "type": "string",
-                    "description": "PostgreSQL password",
-                    "default": ""
+                "filter": {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "description": "\"idh\" or \"header\"",
+                            "default": "idh"
+                        }
+                    }
+                },
+                "transformer": {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "description": "\"distribution-id\"",
+                            "default": "distribution-id"
+                        },
+                        "distributionId": {
+                            "type": "string",
+                            "description": "Distribution ID injected as a \"Distribution-Id\" Kafka header",
+                            "default": "ABC-DEF"
+                        }
+                    }
                 }
             }
         },
@@ -90,6 +155,41 @@
                     "type": "string",
                     "description": "JVM options for the application",
                     "default": "-XX:MaxRAMPercentage=80.0"
+                }
+            }
+        },
+        "logs": {
+            "type": "object",
+            "properties": {
+                "root": {
+                    "type": "object",
+                    "properties": {
+                        "level": {
+                            "type": "string",
+                            "description": "Sets the baseline log level. Only warnings and errors from third-party libraries (gRPC, Netty, Flyway, etc.) are logged by default. Values include: ERROR, WARN, INFO, DEBUG, TRACE",
+                            "default": "WARN"
+                        }
+                    }
+                },
+                "app": {
+                    "type": "object",
+                    "properties": {
+                        "level": {
+                            "type": "string",
+                            "description": "Controls log verbosity for all application code. Set to DEBUG for detailed troubleshooting. Values include: ERROR, WARN, INFO, DEBUG, TRACE",
+                            "default": "INFO"
+                        }
+                    }
+                },
+                "kafka": {
+                    "type": "object",
+                    "properties": {
+                        "level": {
+                            "type": "string",
+                            "description": "Repo package Logging Level. ontrols Kafka client logging independently. Kafka clients are particularly verbose at INFO, so this defaults to WARN. Set to INFO or DEBUG to diagnose connectivity or consumer group issues. Values include: ERROR, WARN, INFO, DEBUG, TRACE",
+                            "default": "WARN"
+                        }
+                    }
                 }
             }
         },

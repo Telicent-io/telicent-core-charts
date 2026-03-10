@@ -37,24 +37,45 @@ global:
     mechanism: "SCRAM-SHA-512"
 
 #
-# @section Application Parameters - PostgreSQL and Secret
+# @section Application Parameters - Engine
 #
 # @descStart
-# The following contains connection details to a PostgreSQL instance, on which the application relies.
-# It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
-# For Quick Start purposes, a secret named `tc-auth-usr-psql-data-preparation` will be created if one is not set.
+# Contains parameters specific to the *Data Preparation* application
 # @descEnd
-postgres:
-   # @key postgres.jdbcUrl PostgreSQL connection URL format: "jdbc:postgresql://{host}:{port}/{database}"
-  jdbcUrl: ""
-  # @key postgres.existingSecret Name of an existing secret. The secret must contain 2 keys: 'username', 'password'
-  # Note: Left unset, it will create a secret named: tc-auth-usr-psql-data-preparation
-  existingSecret: ""
-  # @key postgres.username PostgreSQL username
-  # Note: For additional security, the username is read from the secret, as defined by 'existingSecret' and not from this value!
-  username: ""
-  # @key postgres.password PostgreSQL password
-  password: ""
+engine:
+
+  # @key engine.passthroughEnabled Allow passthrough with no filter or transformer
+  passthroughEnabled: false
+
+  kafka:
+    # @key engine.kafka.applicationId Kafka Streams application ID
+    applicationId: "streams-data-prep"
+    # @key engine.kafka.inputTopic Input topic to consume from
+    inputTopic: "streams-input"
+    # @key engine.kafka.outputTopic Output topic to produce to
+    outputTopic: "streams-output"
+     # @key engine.kafka.dlqTopic Dead letter queue topic for failed messages
+    dlqTopic: "streams-dlq"
+
+  client:
+    # @key engine.client.version IDH specification version
+    version: "1.0"
+    # @key engine.client.nationality Space-separated nationality codes; empty = no restriction
+    nationality: "GBR"
+    # @key engine.client.classification Security classification level
+    classification: "S"
+    # @key engine.client.organisation Space-separated organisation codes; empty = no restriction
+    organisation: ""
+    # @key engine.client.group Space-separated group names; empty = no restriction
+    group: ""
+  filter:
+    # @key engine.filter.type "idh" or "header"
+    type: "idh"
+  transformer:
+    # @key engine.transformer.type  "distribution-id"
+    type: "distribution-id"
+    # @key engine.transformer.distributionId  Distribution ID injected as a "Distribution-Id" Kafka header
+    distributionId: "ABC-DEF"
 
 #
 # @section Application Parameters - Java
@@ -65,6 +86,20 @@ postgres:
 java:
   # @key java.jvmOptions JVM options for the application
   jvmOptions: "-XX:MaxRAMPercentage=80.0"
+
+#
+# @section Application Parameters - Logs
+#
+logs:
+  root:
+    # @key logs.root.level Sets the baseline log level. Only warnings and errors from third-party libraries (gRPC, Netty, Flyway, etc.) are logged by default. Values include: ERROR, WARN, INFO, DEBUG, TRACE
+    level: "WARN"
+  app:
+    # @key logs.app.level Controls log verbosity for all application code. Set to DEBUG for detailed troubleshooting. Values include: ERROR, WARN, INFO, DEBUG, TRACE
+    level: "INFO"
+  kafka:
+    # @key logs.kafka.level Repo package Logging Level. ontrols Kafka client logging independently. Kafka clients are particularly verbose at INFO, so this defaults to WARN. Set to INFO or DEBUG to diagnose connectivity or consumer group issues. Values include: ERROR, WARN, INFO, DEBUG, TRACE
+    level: "WARN"
 
 #
 # @section ConfigMap Parameters
