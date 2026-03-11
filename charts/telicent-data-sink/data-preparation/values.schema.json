@@ -63,7 +63,7 @@
             "properties": {
                 "applicationId": {
                     "type": "string",
-                    "description": "Kafka Streams application ID",
+                    "description": "Kafka Streams application ID (required)",
                     "default": ""
                 },
                 "kafka": {
@@ -71,17 +71,17 @@
                     "properties": {
                         "inputTopic": {
                             "type": "string",
-                            "description": "Input topic to consume from",
+                            "description": "Input topic to consume from (required)",
                             "default": ""
                         },
                         "outputTopic": {
                             "type": "string",
-                            "description": "Output topic to produce to",
+                            "description": "Output topic to produce to (required)",
                             "default": ""
                         },
                         "dlqTopic": {
                             "type": "string",
-                            "description": "Dead letter queue topic for failed messages",
+                            "description": "Dead letter queue topic for failed messages (required)",
                             "default": ""
                         }
                     }
@@ -92,34 +92,34 @@
                         "enableIDH": {
                             "type": "boolean",
                             "description": "Enable filtering messages using Identity-Derived Header (IDH) security labels",
-                            "default": true
+                            "default": false
                         },
                         "client": {
                             "type": "object",
                             "properties": {
                                 "version": {
                                     "type": "string",
-                                    "description": "IDH specification version (required when enableIdh)",
-                                    "default": "1.0"
+                                    "description": "IDH specification version (required when enableIDH)",
+                                    "default": ""
                                 },
                                 "classification": {
                                     "type": "string",
-                                    "description": "Security classification level required when enableIdh)",
-                                    "default": "S"
+                                    "description": "Security classification level required when enableIDH)",
+                                    "default": ""
                                 },
                                 "nationality": {
                                     "type": "string",
-                                    "description": "Space-separated nationality codes; empty = no restriction (optional when enableIdh)",
-                                    "default": "GBR FRA"
+                                    "description": "Space-separated nationality codes; empty = no restriction (optional when enableIDH)",
+                                    "default": ""
                                 },
                                 "organisation": {
                                     "type": "string",
-                                    "description": "Space-separated organisation codes; empty = no restriction (optional when enableIdh)",
-                                    "default": "Telicent"
+                                    "description": "Space-separated organisation codes; empty = no restriction (optional when enableIDH)",
+                                    "default": ""
                                 },
                                 "group": {
                                     "type": "string",
-                                    "description": "Space-separated group names; empty = no restriction (optional when enableIdh)",
+                                    "description": "Space-separated group names; empty = no restriction (optional when enableIDH)",
                                     "default": ""
                                 }
                             }
@@ -127,7 +127,7 @@
                         "enableHeaders": {
                             "type": "boolean",
                             "description": "Enable filtering messages by header values",
-                            "default": true
+                            "default": false
                         },
                         "headers": {
                             "type": "object",
@@ -157,12 +157,12 @@
                                 "enabled": {
                                     "type": "boolean",
                                     "description": "Enable to add a Distribution-Id header to every message.",
-                                    "default": true
+                                    "default": false
                                 },
                                 "id": {
                                     "type": "string",
                                     "description": "The id value to add to every message header",
-                                    "default": "ABC-DEF-123"
+                                    "default": ""
                                 }
                             }
                         }
