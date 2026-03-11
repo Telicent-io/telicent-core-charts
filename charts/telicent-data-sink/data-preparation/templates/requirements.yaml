@@ -6,7 +6,7 @@
 
 {{- if .Values.engine.filter.enableIDH }}
   {{- $_ := required "enabling IDH filtering requires 'engine.filter.client.version' to be set" .Values.engine.filter.client.version }}
-  {{- $_ := required "enabling IDH filtering requires 'engine.filter.client.version' to be set" .Values.engine.filter.client.classification }}
+  {{- $_ := required "enabling IDH filtering requires 'engine.filter.client.classification' to be set" .Values.engine.filter.client.classification }}
 {{- end }}
 
 {{- if .Values.engine.transformer.distributionId.enabled }}

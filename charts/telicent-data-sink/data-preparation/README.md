@@ -120,7 +120,7 @@ Contains parameters specific to the *Data Preparation* application
 | `engine.filter.headers.exclude`             |                                                                                      | `[]`    |
 | `engine.transformer.distributionId.enabled` | Enable to add a Distribution-Id header to every message.                             | `false` |
 | `engine.transformer.distributionId.id`      | The id value to add to every message header                                          | `""`    |
-| `engine.enabledPassthrough`                 | Allow passthrough with no filter or transformer                                      | `false` |
+| `engine.enablePassthrough`                  | Allow passthrough with no filter or transformer                                      | `false` |
 
 ### Application Parameters - Java
 

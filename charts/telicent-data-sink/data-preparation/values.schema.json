@@ -168,7 +168,7 @@
                         }
                     }
                 },
-                "enabledPassthrough": {
+                "enablePassthrough": {
                     "type": "boolean",
                     "description": "Allow passthrough with no filter or transformer",
                     "default": false

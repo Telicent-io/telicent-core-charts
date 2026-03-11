@@ -104,8 +104,8 @@ engine:
   # -----------------------------------
   # All messages can pass straight from the input topic to the output topic without any filtering or transformation.
   # By setting 'enabledPassthrough=true' 'enableIDH=false' and 'enableHeaders=false'
-  # @key engine.enabledPassthrough Allow passthrough with no filter or transformer
-  enabledPassthrough: false
+  # @key engine.enablePassthrough Allow passthrough with no filter or transformer
+  enablePassthrough: false
 
 #
 # @section Application Parameters - Java
