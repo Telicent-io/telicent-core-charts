@@ -17,7 +17,7 @@ the [Helm](https://helm.sh) package manager.
 To install the chart with the release name `my-release`:
 
 ```console
-helm install my-release ./charts/telicent-preview/charts/grpc-server
+helm install my-release ./charts/telicent-data-sink/grpc-server
 ```
 
 ## Uninstalling the Chart
@@ -84,7 +84,7 @@ the [kubernetes documentation](https://kubernetes.io/docs/concepts/configuration
 
 ### Global Parameters
 
-Contains global parameters; these parameters are mirrored within the Telicent preview umbrella chart.
+Contains global parameters; these parameters are mirrored within the Telicent umbrella charts.
 Note: Only global parameters used within this chart will be listed below.
 
 | Name                                    | Description                                                                                         | Value                                          |
