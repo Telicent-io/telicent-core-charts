@@ -36,6 +36,8 @@ spec:
         - /catalog/sparql/*
         - /catalog/query
         - /catalog/query/*
+        - /inferred/query
+        - /inferred/query/*
         - /$/backups/create
         - /$/backups/create/*
         - /$/backups/restore/*

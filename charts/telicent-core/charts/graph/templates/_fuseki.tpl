@@ -22,6 +22,7 @@ Copyright (C) 2026 Telicent Limited
             :knowledgeService
             :ontologyService
             :catalogService
+            :inferredService
         ) .
     ## --------
     :knowledgeService rdf:type fuseki:Service ;
@@ -319,6 +320,49 @@ Copyright (C) 2026 Telicent Limited
         tdb2:location "/fuseki/databases/catalog";
         .
     ## --------
+
+    :inferredService
+        rdf:type        fuseki:Service ;
+        fuseki:name     "/inferred" ;
+        fuseki:endpoint [ fuseki:operation fuseki:query ;
+                          fuseki:name      "query" ] ;
+        fuseki:dataset  :inferredDatasetAuth ;
+    .
+
+    :inferredDatasetAuth
+        rdf:type                  authz:DatasetAuthz ;
+        ## Shares the same labels store as the knowledge dataset so inferred triples
+        ## inherit their security labels from the underlying base data.
+        authz:labelsStore         [ authz:labelsStorePath "/fuseki/databases/knowledgeLabels.db" ] ;
+        authz:dataset             :inferredDataset ;
+        authz:tripleDefaultLabels "*" ;
+        authz:authServer true;
+    .
+
+    :inferredDataset
+        rdf:type        ja:RDFDataset ;
+        ja:defaultGraph :inferredModel ;
+    .
+
+    :tdbAuthGraph
+        rdf:type     tdb2:GraphTDB2 ;
+        tdb2:dataset :datasetAuthBase
+    .
+
+    :tdbOntoGraph
+        rdf:type     tdb2:GraphTDB2 ;
+        tdb2:dataset :datasetOntoBase
+    .
+
+    ## An inference model that combines both knowledge and ontology datasets and applies RDFS reasoning.
+    :inferredModel
+        rdf:type     ja:InfModel ;
+        ja:baseModel :tdbAuthGraph ;
+        ja:reasoner  [ ja:reasonerURL <http://jena.hpl.hp.com/2003/RDFSExptRuleReasoner> ;
+                       ja:schema      :tdbOntoGraph ] .
+
+    ## --------
+
     <#connector> rdf:type fk:Connector ;
         fk:bootstrapServers    {{ .Values.global.kafka.bootstrapServers | quote }};
         fk:topic               "knowledge";

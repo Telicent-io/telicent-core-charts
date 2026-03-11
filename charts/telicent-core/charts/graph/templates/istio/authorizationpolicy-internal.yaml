@@ -35,6 +35,8 @@ spec:
         - /catalog/query/*
         - /catalog/update
         - /catalog/update/*
+        - /inferred/query
+        - /inferred/query/*
         - /$/labels/catalog
         - /$/labels/catalog/*
         methods: ["GET", "POST"]
