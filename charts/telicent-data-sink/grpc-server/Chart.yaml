@@ -2,7 +2,7 @@
 
 apiVersion: v2
 name: grpc-server
-description: Telicent GRPC Server
+description: Telicent GRPC Server reads from Kafka and streams messages to authorised remote clients over gRPC
 
 # A chart can be either an 'application' or a 'library' chart.
 #

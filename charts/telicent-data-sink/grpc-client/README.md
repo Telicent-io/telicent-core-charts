@@ -1,6 +1,6 @@
 # Telicent GRPC Client
 
-Telicent GRPC Client
+Telicent GRPC Client consumes messages from a remote gRPC server and republishes them to a local Kafka cluster.
 
 ## Introduction
 
@@ -17,7 +17,7 @@ the [Helm](https://helm.sh) package manager.
 To install the chart with the release name `my-release`:
 
 ```console
-helm install my-release ./charts/telicent-core/charts/grpc-client
+helm install my-release ./charts/telicent-data-sink/grpc-client
 ```
 
 ## Uninstalling the Chart

@@ -1,6 +1,6 @@
 # Telicent GRPC Server
 
-Telicent Paperback Writer is a starter application for querying data in Telicent CORE.
+The GRPC Server reads from Kafka and streams messages to authorised remote clients over gRPC.
 
 ## Introduction
 

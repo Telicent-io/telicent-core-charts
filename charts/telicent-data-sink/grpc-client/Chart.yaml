@@ -2,7 +2,7 @@
 
 apiVersion: v2
 name: grpc-client
-description: Telicent GRPC Client
+description: Telicent GRPC Client consumes messages from a remote gRPC server and republishes them to a local Kafka cluster.
 
 # A chart can be either an 'application' or a 'library' chart.
 #

@@ -1,10 +1,10 @@
 # Telicent GRPC Client
 
-Telicent Data Preparation
+Telicent Data Preparation is a Kafka Streams application that filters and transforms messages before they enter the data sharing pipeline.
 
 ## Introduction
 
-This chart bootstraps Telicent GRPC Client deployment on a [Kubernetes](https://kubernetes.io) cluster using
+This chart bootstraps Telicent Data Preparation deployment on a [Kubernetes](https://kubernetes.io) cluster using
 the [Helm](https://helm.sh) package manager.
 
 ## Prerequisites
@@ -17,7 +17,7 @@ the [Helm](https://helm.sh) package manager.
 To install the chart with the release name `my-release`:
 
 ```console
-helm install my-release ./charts/telicent-core/charts/data-preparation
+helm install my-release ./charts/telicent-data-sink/data-preparation
 ```
 
 ## Uninstalling the Chart

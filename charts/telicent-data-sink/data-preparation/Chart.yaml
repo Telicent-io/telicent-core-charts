@@ -2,7 +2,8 @@
 
 apiVersion: v2
 name: data-preparation
-description: Telicent Data Preparation
+description: Telicent Data Preparation is a Kafka Streams application that filters and transforms messages before they enter the data sharing pipeline.
+
 
 # A chart can be either an 'application' or a 'library' chart.
 #
