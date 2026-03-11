@@ -33,9 +33,9 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ```bash
 .dev/readme-generator-for-helm --config=charts/telicent-core/readme.config \
- --values=charts/telicent-preview/charts/grpc-client/values.yaml \
- --readme=charts/telicent-preview/charts/grpc-client/README.md \
- --schema=charts/telicent-preview/charts/grpc-client/values.schema.json
+ --values=charts/telicent-data-sink/grpc-client/values.yaml \
+ --readme=charts/telicent-data-sink/grpc-client/README.md \
+ --schema=charts/telicent-data-sink/grpc-client/values.schema.json
 ```
 
 ## Configuration and installation details
