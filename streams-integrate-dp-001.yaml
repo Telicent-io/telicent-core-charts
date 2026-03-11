@@ -1,0 +1,239 @@
+---
+# Source: data-preparation/templates/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+
+metadata:
+  name: streams-integrate-dp-001-data-preparation
+  namespace: "tc-sink"
+  labels:
+    helm.sh/chart: data-preparation-0.1.0
+    app.kubernetes.io/name: data-preparation
+    app.kubernetes.io/instance: streams-integrate-dp-001
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/version: "0.0.7-SNAPSHOT"
+    app: data-preparation
+    telicent.io/resource: "true"
+automountServiceAccountToken: true
+---
+# Source: data-preparation/templates/configmap-engine.yaml
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: tc-streams-integrate-dp-001-data-preparation-engine
+  namespace: "tc-sink"
+  labels:
+    helm.sh/chart: data-preparation-0.1.0
+    app.kubernetes.io/name: data-preparation
+    app.kubernetes.io/instance: streams-integrate-dp-001
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/version: "0.0.7-SNAPSHOT"
+    app: data-preparation
+    telicent.io/resource: "true"
+
+data:
+  engine.properties: |-
+    #
+    # Data Preparation Engine - Configuration
+    #
+    
+    # ── Core ─────────────────────────────
+    # Kafka bootstrap servers (env: BOOTSTRAP_SERVERS)
+    bootstrap.servers=b-3.systemintegrationmskcl.7nvqus.c2.kafka.eu-west-2.amazonaws.com:9096,b-1.systemintegrationmskcl.7nvqus.c2.kafka.eu-west-2.amazonaws.com:9096,b-2.systemintegrationmskcl.7nvqus.c2.kafka.eu-west-2.amazonaws.com:9096
+    
+    # Kafka Streams application ID (env: APPLICATION_ID)
+    application.id=streams-integrate-dp-001
+    
+    # Input topic to consume from (env: TOPIC_INPUT)
+    topic.input=knowledge-dp-001-sink.devops.telicent-sandbox.telicent.live-staging
+    
+    # Output topic to produce to (env: TOPIC_OUTPUT)
+    topic.output=knowledge
+    
+    # Dead letter queue topic for failed messages (env: TOPIC_DEAD_LETTER)
+    topic.deadletter=knowledge-dp-001-sink.devops.telicent-sandbox.telicent.live-staging-dlq
+    
+    # Path to Kafka SASL/SSL auth properties file; key must exist, value can be empty (env: KAFKA_AUTH_FILEPATH)
+    kafka.auth.filepath=/app/config/kafka-auth/kafka-config.properties
+    
+    # ── Filter ───────────────────────────
+    
+    # Filter type: "idh" and/or "headers" (env: FILTER_TYPE)
+    
+    filter.type=
+    
+    
+    # ── IDH Filter Properties (filter.type=idh) ────
+    
+    # IDH specification version (env: CLIENT_VERSION)
+    client.version=
+    
+    # Space-separated nationality codes; empty = no restriction (env: CLIENT_NATIONALITY)
+    client.nationality=
+    
+    # Security classification level (env: CLIENT_CLASSIFICATION)
+    client.classification=
+    
+    # Space-separated organisation codes; empty = no restriction (env: CLIENT_ORG)
+    client.organisation=
+    
+    # Space-separated group names; empty = no restriction (env: CLIENT_GROUP)
+    client.group=
+    
+    # ── Header Filter Properties (filter.type=header)
+    # Define include/exclude rules using prefix conventions.
+    # Header names are CASE-SENSITIVE in line with the Kafka header specification.
+    #   header.filter.include.{header-name}=value  (env: HEADER_FILTER_INCLUDE_{HEADER_NAME})
+    #   header.filter.exclude.{header-name}=value  (env: HEADER_FILTER_EXCLUDE_{HEADER_NAME})
+    # Example:
+    # header.filter.include.Content-Type=application/json
+    # header.filter.exclude.Event-Type=audit
+    
+    # ── Transformer ────────────────────────────────
+    # Transformer type: "distribution-id" (env: TRANSFORMER_TYPE)
+    transformer.type="distribution-id"
+    # Distribution ID injected as a "Distribution-Id" Kafka header (env: DISTRIBUTION_ID)
+    distribution.id=devops-distribution
+    
+    # Allow passthrough with no filter or transformer (env: PASSTHROUGH_ENABLED, default: false)
+    passthrough.enabled=false
+---
+# Source: data-preparation/templates/configmap-env.yaml
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: tc-streams-integrate-dp-001-data-preparation-env
+  namespace: "tc-sink"
+  labels:
+    helm.sh/chart: data-preparation-0.1.0
+    app.kubernetes.io/name: data-preparation
+    app.kubernetes.io/instance: streams-integrate-dp-001
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/version: "0.0.7-SNAPSHOT"
+    app: data-preparation
+    telicent.io/resource: "true"
+
+data:
+  DATA_PREPARATION_PROPERTIES: /app/config/engine.properties
+
+  JAVA_OPTIONS: "-XX:MaxRAMPercentage=80.0"
+
+  LOG_LEVEL_ROOT: "WARN"
+  LOG_LEVEL_APP: "INFO"
+  LOG_LEVEL_KAFKA: "WARN"
+---
+# Source: data-preparation/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: streams-integrate-dp-001-data-preparation
+  namespace: "tc-sink"
+  labels:
+    helm.sh/chart: data-preparation-0.1.0
+    app.kubernetes.io/name: data-preparation
+    app.kubernetes.io/instance: streams-integrate-dp-001
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/version: "0.0.7-SNAPSHOT"
+    app: data-preparation
+    telicent.io/resource: "true"
+
+spec:
+  replicas: 1
+  revisionHistoryLimit: 5
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: data-preparation
+      app.kubernetes.io/instance: streams-integrate-dp-001
+  template:
+    metadata:
+      labels:
+        helm.sh/chart: data-preparation-0.1.0
+        app.kubernetes.io/name: data-preparation
+        app.kubernetes.io/instance: streams-integrate-dp-001
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/version: "0.0.7-SNAPSHOT"
+        app: data-preparation
+        telicent.io/resource: "true"
+      annotations:
+        checksum/configEnv: a04ac3b709ac8c79a06c4feb0367689e9424838233e3ee0205bba2fce6fefda2
+        checksum/configEngine: ce85d58a5ca8dbebbfd89febb6958cfa8680740f9e1360a7dd2dd6367202bf62
+        sidecar.istio.io/logLevel: rbac:debug
+
+    spec:
+      serviceAccountName: streams-integrate-dp-001-data-preparation
+      securityContext:
+        fsGroup: 185
+        runAsGroup: 185
+        runAsNonRoot: true
+        runAsUser: 185
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+      - name: data-preparation
+        image: 098669589541.dkr.ecr.eu-west-2.amazonaws.com/data-preparation-engine:0.0.7-SNAPSHOT
+        imagePullPolicy: Always
+        resources:
+          limits:
+            memory: 512Mi
+          requests:
+            cpu: 250m
+            memory: 512Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          runAsGroup: 185
+          runAsNonRoot: true
+          runAsUser: 185
+          seccompProfile:
+            type: RuntimeDefault
+
+        envFrom:
+        - configMapRef:
+            name: tc-streams-integrate-dp-001-data-preparation-env
+
+        ports:
+        - name: http
+          protocol: TCP
+          containerPort: 8000
+
+        readinessProbe:
+          httpGet:
+            path: /readiness
+            port: 8000
+            scheme: HTTP
+          initialDelaySeconds: 30
+          periodSeconds: 60
+          timeoutSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /readiness
+            port: 8000
+            scheme: HTTP
+          initialDelaySeconds: 30
+          periodSeconds: 60
+          timeoutSeconds: 5
+
+        volumeMounts:
+        - name: kafka-auth-config
+          mountPath: /app/config/kafka-auth/
+        - name: engine-config-volume
+          mountPath: /app/config/engine.properties
+          subPath: engine.properties
+          readOnly: true
+      volumes:
+      - name: kafka-auth-config
+        secret:
+          secretName: kafka-auth-config
+      - name: engine-config-volume
+        configMap:
+          name: tc-streams-integrate-dp-001-data-preparation-engine
