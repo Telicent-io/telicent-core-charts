@@ -1,0 +1,22 @@
+{{- /*
+Copyright (C) Telicent Limited
+*/}}
+{{- if and (.Values.enabled) (not .Values.existingConfigMapName) -}}
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: {{ include "grpc-client.envConfigMapName" . }}
+  namespace: {{ include "grpc-client.namespace" . | quote }}
+  labels:
+    {{- include "grpc-client.labels" . | nindent 4 }}
+
+data:
+  CLIENT_PROPERTIES: /app/config/client.properties
+
+  JAVA_OPTIONS: {{ .Values.java.jvmOptions | quote }}
+
+  LOG_LEVEL_ROOT: {{ .Values.logs.root.level | quote  }}
+  LOG_LEVEL_APP: {{ .Values.logs.app.level | quote  }}
+  LOG_LEVEL_KAFKA: {{ .Values.logs.kafka.level | quote  }}
+  {{- end }}

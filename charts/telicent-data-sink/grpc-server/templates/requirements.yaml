@@ -1,0 +1,1 @@
+{{- $_ := required ".Values.global.sinkHostDomain is required" .Values.global.sinkHostDomain }}

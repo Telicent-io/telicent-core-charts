@@ -1,0 +1,17 @@
+{{- /*
+Copyright (C) 2026 Telicent Limited
+*/}}
+
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: {{ include "grpc-client.storageConfigMapName" . }}
+  namespace: {{ include "grpc-client.namespace" . | quote }}
+  labels:
+    {{- include "grpc-client.labels" . | nindent 4 }}
+
+data:
+  storage.properties: |-
+  {{- tpl ($.Files.Get "configs/storage.properties") . | nindent 4 }}
+

@@ -1,0 +1,23 @@
+{{- /*
+Copyright (C) 2026 Telicent Limited
+*/}}
+{{- if and (.Values.enabled) (not .Values.existingConfigMapName) -}}
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: {{ include "data-preparation.envConfigMapName" . }}
+  namespace: {{ include "data-preparation.namespace" . | quote }}
+  labels:
+    {{- include "data-preparation.labels" . | nindent 4 }}
+
+data:
+  DATA_PREPARATION_PROPERTIES: /app/config/engine.properties
+
+  JAVA_OPTIONS: {{ .Values.java.jvmOptions | quote }}
+
+  LOG_LEVEL_ROOT: {{ .Values.logs.root.level | quote  }}
+  LOG_LEVEL_APP: {{ .Values.logs.app.level | quote  }}
+  LOG_LEVEL_KAFKA: {{ .Values.logs.kafka.level | quote  }}
+
+  {{- end }}

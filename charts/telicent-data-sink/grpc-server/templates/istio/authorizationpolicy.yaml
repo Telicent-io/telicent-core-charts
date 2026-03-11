@@ -1,0 +1,26 @@
+{{- /*
+Copyright (C) 2026 Telicent Limited
+*/}}
+
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+
+metadata:
+  name: {{ include "grpc-server.fullname" . }}-ingress
+  namespace: {{ include "grpc-server.namespace" . | quote }}
+  labels:
+    {{- include "grpc-server.labels" . | nindent 4 }}
+
+spec:
+  selector:
+    matchLabels:
+      {{- include "grpc-server.selectorLabels" . | nindent 6 }}
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        principals:
+          {{- include "grpc-server.istioPrincipal" . | nindent 8 }}
+    to:
+    - operation:
+        methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"]
