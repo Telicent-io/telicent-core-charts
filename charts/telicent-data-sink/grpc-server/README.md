@@ -251,4 +251,4 @@ For Quick Start purposes, a secret named `tc-auth-usr-psql-grpc-server` will be 
 
 ## License
 
-Copyright &copy; 2025 Telicent Limited
+Copyright &copy; 2026 Telicent Limited
