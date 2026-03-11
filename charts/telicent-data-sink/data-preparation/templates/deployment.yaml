@@ -75,23 +75,18 @@ spec:
         - configMapRef:
             name: {{ include "data-preparation.envConfigMapName" . }}
 
-        ports:
-        - name: http
-          protocol: TCP
-          containerPort: 8000
-
         readinessProbe:
           httpGet:
-            path: /readiness
-            port: 8000
+            path: /healthz/ready
+            port: 15021
             scheme: HTTP
           initialDelaySeconds: 30
           periodSeconds: 60
           timeoutSeconds: 10
         livenessProbe:
           httpGet:
-            path: /readiness
-            port: 8000
+            path: /healthz/ready
+            port: 15021
             scheme: HTTP
           initialDelaySeconds: 30
           periodSeconds: 60
