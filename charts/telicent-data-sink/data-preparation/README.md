@@ -103,21 +103,24 @@ Note: Only global parameters used within this chart will be listed below.
 
 Contains parameters specific to the *Data Preparation* application
 
-| Name                                | Description                                                  | Value   |
-| ----------------------------------- | ------------------------------------------------------------ | ------- |
-| `engine.applicationId`              | Kafka Streams application ID                                 | `""`    |
-| `engine.passthroughEnabled`         | Allow passthrough with no filter or transformer              | `false` |
-| `engine.kafka.inputTopic`           | Input topic to consume from                                  | `""`    |
-| `engine.kafka.outputTopic`          | Output topic to produce to                                   | `""`    |
-| `engine.kafka.dlqTopic`             | Dead letter queue topic for failed messages                  | `""`    |
-| `engine.client.version`             | IDH specification version                                    | `""`    |
-| `engine.client.nationality`         | Space-separated nationality codes; empty = no restriction    | `""`    |
-| `engine.client.classification`      | Security classification level                                | `""`    |
-| `engine.client.organisation`        | Space-separated organisation codes; empty = no restriction   | `""`    |
-| `engine.client.group`               | Space-separated group names; empty = no restriction          | `""`    |
-| `engine.filter.type`                | "idh" or "header"                                            | `""`    |
-| `engine.transformer.type`           | "distribution-id"                                            | `""`    |
-| `engine.transformer.distributionId` | Distribution ID injected as a "Distribution-Id" Kafka header | `""`    |
+| Name                                        | Description                                                                          | Value         |
+| ------------------------------------------- | ------------------------------------------------------------------------------------ | ------------- |
+| `engine.applicationId`                      | Kafka Streams application ID                                                         | `""`          |
+| `engine.kafka.inputTopic`                   | Input topic to consume from                                                          | `""`          |
+| `engine.kafka.outputTopic`                  | Output topic to produce to                                                           | `""`          |
+| `engine.kafka.dlqTopic`                     | Dead letter queue topic for failed messages                                          | `""`          |
+| `engine.filter.enableIDH`                   | Enable filtering messages using Identity-Derived Header (IDH) security labels        | `true`        |
+| `engine.filter.client.version`              | IDH specification version (required when enableIdh)                                  | `1.0`         |
+| `engine.filter.client.classification`       | Security classification level required when enableIdh)                               | `S`           |
+| `engine.filter.client.nationality`          | Space-separated nationality codes; empty = no restriction (optional when enableIdh)  | `GBR FRA`     |
+| `engine.filter.client.organisation`         | Space-separated organisation codes; empty = no restriction (optional when enableIdh) | `Telicent`    |
+| `engine.filter.client.group`                | Space-separated group names; empty = no restriction (optional when enableIdh)        | `""`          |
+| `engine.filter.enableHeaders`               | Enable filtering messages by header values                                           | `true`        |
+| `engine.filter.headers.include`             |                                                                                      | `[]`          |
+| `engine.filter.headers.exclude`             |                                                                                      | `[]`          |
+| `engine.transformer.distributionId.enabled` | Enable to add a Distribution-Id header to every message.                             | `true`        |
+| `engine.transformer.distributionId.id`      | The id value to add to every message header                                          | `ABC-DEF-123` |
+| `engine.enabledPassthrough`                 | Allow passthrough with no filter or transformer                                      | `false`       |
 
 ### Application Parameters - Java
 

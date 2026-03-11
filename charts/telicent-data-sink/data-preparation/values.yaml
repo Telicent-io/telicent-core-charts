@@ -44,38 +44,68 @@ global:
 # @descEnd
 engine:
 
-  # @key engine.applicationId Kafka Streams application ID
+  # @key engine.applicationId Kafka Streams application ID (required)
   applicationId: ""
-  # @key engine.passthroughEnabled Allow passthrough with no filter or transformer
-  passthroughEnabled: false
 
   kafka:
-    # @key engine.kafka.inputTopic Input topic to consume from
+    # @key engine.kafka.inputTopic Input topic to consume from (required)
     inputTopic: ""
-    # @key engine.kafka.outputTopic Output topic to produce to
+    # @key engine.kafka.outputTopic Output topic to produce to (required)
     outputTopic: ""
-     # @key engine.kafka.dlqTopic Dead letter queue topic for failed messages
+     # @key engine.kafka.dlqTopic Dead letter queue topic for failed messages (required)
     dlqTopic: ""
 
-  client:
-    # @key engine.client.version IDH specification version
-    version: ""
-    # @key engine.client.nationality Space-separated nationality codes; empty = no restriction
-    nationality: ""
-    # @key engine.client.classification Security classification level
-    classification: ""
-    # @key engine.client.organisation Space-separated organisation codes; empty = no restriction
-    organisation: ""
-    # @key engine.client.group Space-separated group names; empty = no restriction
-    group: ""
+  #-----------------------------------
   filter:
-    # @key engine.filter.type "idh" or "header"
-    type: ""
+    # -----------------------------------
+    # @key engine.filter.enableIDH Enable filtering messages using Identity-Derived Header (IDH) security labels
+    enableIDH: false
+    client:
+      # @key engine.filter.client.version IDH specification version (required when enableIDH)
+      version: ""
+      # @key engine.filter.client.classification Security classification level required when enableIDH)
+      classification: ""
+      # @key engine.filter.client.nationality Space-separated nationality codes; empty = no restriction (optional when enableIDH)
+      nationality: ""
+      # @key engine.filter.client.organisation Space-separated organisation codes; empty = no restriction (optional when enableIDH)
+      organisation: ""
+      # @key engine.filter.client.group Space-separated group names; empty = no restriction (optional when enableIDH)
+      group: ""
+    # -----------------------------------
+    # @key engine.filter.enableHeaders Enable filtering messages by header values
+    enableHeaders: false
+    #
+    # Multiple include rules are ANDed together — a message must satisfy all include conditions.
+    # Multiple exclude rules are also ANDed — a message is dropped if any exclude condition matches.
+    # Include and exclude rules can be combined freely.
+    #
+    headers:
+      # Example:
+      # include:
+      # - header: "Distribution-Id"
+      #   values: "acled-csv"
+      # - header: "event-type"
+      #   values: "CREATE UPDATE UPSERT"
+      # @key engine.filter.headers.include
+      include: [ ]
+      # Example:
+      # exclude:
+      # - header: "source"
+      #   values: "staging test"
+      # @key engine.filter.headers.exclude
+      exclude: [ ]
+  # -----------------------------------
   transformer:
-    # @key engine.transformer.type  "distribution-id"
-    type: ""
-    # @key engine.transformer.distributionId  Distribution ID injected as a "Distribution-Id" Kafka header
-    distributionId: ""
+    distributionId:
+      # @key engine.transformer.distributionId.enabled Enable to add a Distribution-Id header to every message.
+      enabled: false
+      # @key engine.transformer.distributionId.id The id value to add to every message header
+      id: ""
+  # -----------------------------------
+  # All messages can pass straight from the input topic to the output topic without any filtering or transformation.
+  # By setting 'enabledPassthrough=true' 'enableIDH=false' and 'enableHeaders=false'
+  # @key engine.enabledPassthrough Allow passthrough with no filter or transformer
+  enabledPassthrough: false
 
 #
 # @section Application Parameters - Java

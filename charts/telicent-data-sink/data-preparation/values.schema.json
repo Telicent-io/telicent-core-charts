@@ -66,11 +66,6 @@
                     "description": "Kafka Streams application ID",
                     "default": ""
                 },
-                "passthroughEnabled": {
-                    "type": "boolean",
-                    "description": "Allow passthrough with no filter or transformer",
-                    "default": false
-                },
                 "kafka": {
                     "type": "object",
                     "properties": {
@@ -91,60 +86,92 @@
                         }
                     }
                 },
-                "client": {
-                    "type": "object",
-                    "properties": {
-                        "version": {
-                            "type": "string",
-                            "description": "IDH specification version",
-                            "default": ""
-                        },
-                        "nationality": {
-                            "type": "string",
-                            "description": "Space-separated nationality codes; empty = no restriction",
-                            "default": ""
-                        },
-                        "classification": {
-                            "type": "string",
-                            "description": "Security classification level",
-                            "default": ""
-                        },
-                        "organisation": {
-                            "type": "string",
-                            "description": "Space-separated organisation codes; empty = no restriction",
-                            "default": ""
-                        },
-                        "group": {
-                            "type": "string",
-                            "description": "Space-separated group names; empty = no restriction",
-                            "default": ""
-                        }
-                    }
-                },
                 "filter": {
                     "type": "object",
                     "properties": {
-                        "type": {
-                            "type": "string",
-                            "description": "\"idh\" or \"header\"",
-                            "default": ""
+                        "enableIDH": {
+                            "type": "boolean",
+                            "description": "Enable filtering messages using Identity-Derived Header (IDH) security labels",
+                            "default": true
+                        },
+                        "client": {
+                            "type": "object",
+                            "properties": {
+                                "version": {
+                                    "type": "string",
+                                    "description": "IDH specification version (required when enableIdh)",
+                                    "default": "1.0"
+                                },
+                                "classification": {
+                                    "type": "string",
+                                    "description": "Security classification level required when enableIdh)",
+                                    "default": "S"
+                                },
+                                "nationality": {
+                                    "type": "string",
+                                    "description": "Space-separated nationality codes; empty = no restriction (optional when enableIdh)",
+                                    "default": "GBR FRA"
+                                },
+                                "organisation": {
+                                    "type": "string",
+                                    "description": "Space-separated organisation codes; empty = no restriction (optional when enableIdh)",
+                                    "default": "Telicent"
+                                },
+                                "group": {
+                                    "type": "string",
+                                    "description": "Space-separated group names; empty = no restriction (optional when enableIdh)",
+                                    "default": ""
+                                }
+                            }
+                        },
+                        "enableHeaders": {
+                            "type": "boolean",
+                            "description": "Enable filtering messages by header values",
+                            "default": true
+                        },
+                        "headers": {
+                            "type": "object",
+                            "properties": {
+                                "include": {
+                                    "type": "array",
+                                    "description": "",
+                                    "default": [],
+                                    "items": {}
+                                },
+                                "exclude": {
+                                    "type": "array",
+                                    "description": "",
+                                    "default": [],
+                                    "items": {}
+                                }
+                            }
                         }
                     }
                 },
                 "transformer": {
                     "type": "object",
                     "properties": {
-                        "type": {
-                            "type": "string",
-                            "description": "\"distribution-id\"",
-                            "default": ""
-                        },
                         "distributionId": {
-                            "type": "string",
-                            "description": "Distribution ID injected as a \"Distribution-Id\" Kafka header",
-                            "default": ""
+                            "type": "object",
+                            "properties": {
+                                "enabled": {
+                                    "type": "boolean",
+                                    "description": "Enable to add a Distribution-Id header to every message.",
+                                    "default": true
+                                },
+                                "id": {
+                                    "type": "string",
+                                    "description": "The id value to add to every message header",
+                                    "default": "ABC-DEF-123"
+                                }
+                            }
                         }
                     }
+                },
+                "enabledPassthrough": {
+                    "type": "boolean",
+                    "description": "Allow passthrough with no filter or transformer",
+                    "default": false
                 }
             }
         },
