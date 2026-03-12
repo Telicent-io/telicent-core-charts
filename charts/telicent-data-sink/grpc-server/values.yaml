@@ -22,9 +22,6 @@ global:
   # @key global.enabled enabled Enable *GRPC Server* deployment
   enabled: false
 
-  # @key global.sinkHostDomain Domain associated with Telicent data-sharing services. This value cannot be changed after it is set
-  sinkHostDomain: ""
-
   kafka:
     # @key global.kafka.bootstrapServers Comma separated list containing Kafka bootstrap servers
     bootstrapServers: "kafka-bootstrap.kafka.svc.cluster.local:9092"
@@ -55,8 +52,8 @@ global:
 # Contains parameters specific to the *GRPC Server* application
 # @descEnd
 server:
-  # @key server.port Port of the gRPC data sharing server
-  port: 8080
+# @key server.hostDomain Host Domain associated with the Telicent data-sharing GRPC Server, example:'sink.telicent.io' (required)
+  hostDomain: ""
   # @key server.keepAliveTimeSecs Keep-alive ping interval in seconds
   keepAliveTimeSecs: 5
   # @key server.keepAliveTimeoutSecs Keep-alive ping timeout in seconds

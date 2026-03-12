@@ -43,12 +43,12 @@ global:
 # Contains parameters specific to the *GRPC Client* application
 # @descEnd
 client:
-  # @key client.id Unique client identifier. Used for offset tracking, gRPC request identification, and server-side logging. Must be unique when multiple clients share a storage backend.
-  id: "org1"
+  # @key client.id Unique client identifier. Used for offset tracking, gRPC request identification, and server-side logging. Must be unique when multiple clients share a storage backend. Example: 'org1' (required)
+  id: ""
   server:
-    # @key client.server.host Hostname of the gRPC data sharing server
+    # @key client.server.host Hostname of the gRPC data sharing server, example: 'sink.telicent.io' (required)
     host: ""
-    # @key client.server.port Port of the gRPC data sharing server
+    # @key client.server.port Port of the gRPC data sharing server (required)
     port: 443
   tls:
     # @key client.tls.enabled Enable TLS for the gRPC channel
