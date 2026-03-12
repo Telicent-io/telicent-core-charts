@@ -15,7 +15,7 @@ spec:
   gateways:
   - {{ include "istio.gatewayNamespace" . }}/{{ include "istio.gatewayName" . }}
   hosts:
-  - {{ .Values.global.sinkHostDomain }}
+  - {{ .Values.server.hostDomain }}
   http:
     - route:
       - destination:

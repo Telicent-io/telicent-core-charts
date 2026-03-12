@@ -63,20 +63,20 @@
             "properties": {
                 "id": {
                     "type": "string",
-                    "description": "Unique client identifier. Used for offset tracking, gRPC request identification, and server-side logging. Must be unique when multiple clients share a storage backend.",
-                    "default": "org1"
+                    "description": "Unique client identifier. Used for offset tracking, gRPC request identification, and server-side logging. Must be unique when multiple clients share a storage backend. Example: 'org1' (required)",
+                    "default": ""
                 },
                 "server": {
                     "type": "object",
                     "properties": {
                         "host": {
                             "type": "string",
-                            "description": "Hostname of the gRPC data sharing server",
+                            "description": "Hostname of the gRPC data sharing server, example: 'sink.telicent.io' (required)",
                             "default": ""
                         },
                         "port": {
                             "type": "number",
-                            "description": "Port of the gRPC data sharing server",
+                            "description": "Port of the gRPC data sharing server (required)",
                             "default": 443
                         }
                     }

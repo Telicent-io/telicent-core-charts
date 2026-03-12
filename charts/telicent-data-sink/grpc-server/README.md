@@ -87,22 +87,21 @@ the [kubernetes documentation](https://kubernetes.io/docs/concepts/configuration
 Contains global parameters; these parameters are mirrored within the Telicent umbrella charts.
 Note: Only global parameters used within this chart will be listed below.
 
-| Name                                    | Description                                                                                         | Value                                          |
-| --------------------------------------- | --------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
-| `global.imageRegistry`                  | Global image registry                                                                               | `""`                                           |
-| `global.imagePullSecrets`               | Global registry secret names as an array                                                            | `[]`                                           |
-| `global.enabled`                        | enabled Enable *GRPC Server* deployment                                                             | `false`                                        |
-| `global.sinkHostDomain`                 | Domain associated with Telicent data-sharing services. This value cannot be changed after it is set | `""`                                           |
-| `global.kafka.bootstrapServers`         | Comma separated list containing Kafka bootstrap servers                                             | `kafka-bootstrap.kafka.svc.cluster.local:9092` |
-| `global.kafka.existingConfigSecretName` | Name of an existing secret containing Kafka configuration                                           | `""`                                           |
-| `global.kafka.username`                 | Username for Kafka authentication                                                                   | `your.kafka.username.here`                     |
-| `global.kafka.password`                 | Password for Kafka authentication                                                                   | `your.kafka.password.here`                     |
-| `global.kafka.protocol`                 | Protocol used for Kafka communication                                                               | `SASL_SSL`                                     |
-| `global.kafka.mechanism`                | SASL mechanism used for Kafka authentication                                                        | `SCRAM-SHA-512`                                |
-| `global.istioIngressNamespace`          | Namespace in which the Istio Ingress resource is deployed; overrides 'istio.ingress.namespace'      | `istio-system`                                 |
-| `global.istioIngressServiceAccount`     | ServiceAccount associated with Istio ingress deployment; overrides 'istio.ingress.serviceAccount'   | `istio-ingress`                                |
-| `global.istioGatewayNamespace`          | Namespace in which the Istio Gateway resource is deployed; overrides 'istio.gateway.namespace'      | `istio-system`                                 |
-| `global.istioGatewayName`               | Name of the Istio Gateway resource; overrides 'istio.gateway.namespace'                             | `ingress-gateway`                              |
+| Name                                    | Description                                                                                       | Value                                          |
+| --------------------------------------- | ------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| `global.imageRegistry`                  | Global image registry                                                                             | `""`                                           |
+| `global.imagePullSecrets`               | Global registry secret names as an array                                                          | `[]`                                           |
+| `global.enabled`                        | enabled Enable *GRPC Server* deployment                                                           | `false`                                        |
+| `global.kafka.bootstrapServers`         | Comma separated list containing Kafka bootstrap servers                                           | `kafka-bootstrap.kafka.svc.cluster.local:9092` |
+| `global.kafka.existingConfigSecretName` | Name of an existing secret containing Kafka configuration                                         | `""`                                           |
+| `global.kafka.username`                 | Username for Kafka authentication                                                                 | `your.kafka.username.here`                     |
+| `global.kafka.password`                 | Password for Kafka authentication                                                                 | `your.kafka.password.here`                     |
+| `global.kafka.protocol`                 | Protocol used for Kafka communication                                                             | `SASL_SSL`                                     |
+| `global.kafka.mechanism`                | SASL mechanism used for Kafka authentication                                                      | `SCRAM-SHA-512`                                |
+| `global.istioIngressNamespace`          | Namespace in which the Istio Ingress resource is deployed; overrides 'istio.ingress.namespace'    | `istio-system`                                 |
+| `global.istioIngressServiceAccount`     | ServiceAccount associated with Istio ingress deployment; overrides 'istio.ingress.serviceAccount' | `istio-ingress`                                |
+| `global.istioGatewayNamespace`          | Namespace in which the Istio Gateway resource is deployed; overrides 'istio.gateway.namespace'    | `istio-system`                                 |
+| `global.istioGatewayName`               | Name of the Istio Gateway resource; overrides 'istio.gateway.namespace'                           | `ingress-gateway`                              |
 
 ### Application Parameters - Server
 
@@ -110,7 +109,7 @@ Contains parameters specific to the *GRPC Server* application
 
 | Name                                  | Description                                                                                                                       | Value                                                      |
 | ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
-| `server.port`                         | Port of the gRPC data sharing server                                                                                              | `8080`                                                     |
+| `server.hostDomain`                   | Host Domain associated with the Telicent data-sharing GRPC Server, example:'sink.telicent.io' (required)                          | `""`                                                       |
 | `server.keepAliveTimeSecs`            | Keep-alive ping interval in seconds                                                                                               | `5`                                                        |
 | `server.keepAliveTimeoutSecs`         | Keep-alive ping timeout in seconds                                                                                                | `1`                                                        |
 | `server.authzExpirySecs`              | Cache TTL in seconds for authorization lookups                                                                                    | `5`                                                        |
