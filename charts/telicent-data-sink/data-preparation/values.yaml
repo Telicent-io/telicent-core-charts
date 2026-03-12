@@ -194,7 +194,7 @@ image:
   # @key image.registry *Data Preparation* image registry
   registry: quay.io
   # @key image.repository *Data Preparation* image name
-  repository: telicent/data-preparation
+  repository: telicent/data-preparation-engine
   # @key image.tag *Data Preparation* image tag. If not set, a tag is generated using the appVersion
   tag: ""
   # @key image.pullPolicy *Data Preparation* image pull policy

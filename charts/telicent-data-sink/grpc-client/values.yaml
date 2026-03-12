@@ -49,17 +49,17 @@ client:
     # @key client.server.host Hostname of the gRPC data sharing server
     host: ""
     # @key client.server.port Port of the gRPC data sharing server
-    port: 80
+    port: 443
   tls:
     # @key client.tls.enabled Enable TLS for the gRPC channel
-    enabled: false
+    enabled: true
     # @key client.tls.caIncluded Flag to denote that the Certificate Authority (CA) has been provided
-    caIncluded: false
+    caIncluded: true
     # @key client.tls.existingSecret Existing secret with TLS certificates (`tls.key`, `tls.crt`) or (`tls.key`, `tls.crt`, `ca.crt`) with tls.caIncluded set as true.
     existingSecret: ""
     mTLS:
       # @key client.tls.mTLS.enabled IF TLS support is enabled, require clients to provide certificates
-      enabled: false
+      enabled: true
 
   grpc:
    # @key client.grpc.keepAliveTimeSecs Interval in seconds between gRPC keep-alive pings sent to the server
@@ -194,7 +194,7 @@ image:
   # @key image.registry *GRPC Client* image registry
   registry: quay.io
   # @key image.repository *GRPC Client* image name
-  repository: telicent/grpc-client
+  repository: telicent/data-sharing-transport-grpc-client
   # @key image.tag *GRPC Client* image tag. If not set, a tag is generated using the appVersion
   tag: ""
   # @key image.pullPolicy *GRPC Client* image pull policy

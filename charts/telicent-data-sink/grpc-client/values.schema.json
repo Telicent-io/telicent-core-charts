@@ -77,7 +77,7 @@
                         "port": {
                             "type": "number",
                             "description": "Port of the gRPC data sharing server",
-                            "default": 80
+                            "default": 443
                         }
                     }
                 },
@@ -87,12 +87,12 @@
                         "enabled": {
                             "type": "boolean",
                             "description": "Enable TLS for the gRPC channel",
-                            "default": false
+                            "default": true
                         },
                         "caIncluded": {
                             "type": "boolean",
                             "description": "Flag to denote that the Certificate Authority (CA) has been provided",
-                            "default": false
+                            "default": true
                         },
                         "existingSecret": {
                             "type": "string",
@@ -105,7 +105,7 @@
                                 "enabled": {
                                     "type": "boolean",
                                     "description": "IF TLS support is enabled, require clients to provide certificates",
-                                    "default": false
+                                    "default": true
                                 }
                             }
                         }
@@ -349,7 +349,7 @@
                 "repository": {
                     "type": "string",
                     "description": "*GRPC Client* image name",
-                    "default": "telicent/grpc-client"
+                    "default": "telicent/data-sharing-transport-grpc-client"
                 },
                 "tag": {
                     "type": "string",

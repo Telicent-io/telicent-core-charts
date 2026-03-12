@@ -85,11 +85,6 @@ spec:
         - configMapRef:
             name: {{ include "grpc-client.envConfigMapName" . }}
 
-        ports:
-        - name: http
-          protocol: TCP
-          containerPort: 8000
-
         readinessProbe:
           httpGet:
             path: /healthz/ready
