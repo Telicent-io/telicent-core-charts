@@ -107,11 +107,11 @@ Contains parameters specific to the *GRPC Client* application
 | ----------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- |
 | `client.id`                         | Unique client identifier. Used for offset tracking, gRPC request identification, and server-side logging. Must be unique when multiple clients share a storage backend. | `org1`                                                  |
 | `client.server.host`                | Hostname of the gRPC data sharing server                                                                                                                                | `""`                                                    |
-| `client.server.port`                | Port of the gRPC data sharing server                                                                                                                                    | `80`                                                    |
-| `client.tls.enabled`                | Enable TLS for the gRPC channel                                                                                                                                         | `false`                                                 |
-| `client.tls.caIncluded`             | Flag to denote that the Certificate Authority (CA) has been provided                                                                                                    | `false`                                                 |
+| `client.server.port`                | Port of the gRPC data sharing server                                                                                                                                    | `443`                                                   |
+| `client.tls.enabled`                | Enable TLS for the gRPC channel                                                                                                                                         | `true`                                                  |
+| `client.tls.caIncluded`             | Flag to denote that the Certificate Authority (CA) has been provided                                                                                                    | `true`                                                  |
 | `client.tls.existingSecret`         | Existing secret with TLS certificates (`tls.key`, `tls.crt`) or (`tls.key`, `tls.crt`, `ca.crt`) with tls.caIncluded set as true.                                       | `""`                                                    |
-| `client.tls.mTLS.enabled`           | IF TLS support is enabled, require clients to provide certificates                                                                                                      | `false`                                                 |
+| `client.tls.mTLS.enabled`           | IF TLS support is enabled, require clients to provide certificates                                                                                                      | `true`                                                  |
 | `client.grpc.keepAliveTimeSecs`     | Interval in seconds between gRPC keep-alive pings sent to the server                                                                                                    | `30`                                                    |
 | `client.grpc.keepAliveTimeoutSecs`  | Time in seconds to wait for a keep-alive ping response before considering the connection dead                                                                           | `10`                                                    |
 | `client.grpc.idleTimeoutSecs`       | Time in seconds after which an idle gRPC channel is closed                                                                                                              | `10`                                                    |
@@ -185,13 +185,13 @@ For Quick Start purposes, a secret named `tc-auth-usr-psql-grpc-client` will be 
 
 ### Deployment Image Parameters
 
-| Name                | Description                                                                  | Value                  |
-| ------------------- | ---------------------------------------------------------------------------- | ---------------------- |
-| `image.registry`    | *GRPC Client* image registry                                                 | `quay.io`              |
-| `image.repository`  | *GRPC Client* image name                                                     | `telicent/grpc-client` |
-| `image.tag`         | *GRPC Client* image tag. If not set, a tag is generated using the appVersion | `""`                   |
-| `image.pullPolicy`  | *GRPC Client* image pull policy                                              | `IfNotPresent`         |
-| `image.pullSecrets` | Specify registry secret names as an array                                    | `[]`                   |
+| Name                | Description                                                                  | Value                                         |
+| ------------------- | ---------------------------------------------------------------------------- | --------------------------------------------- |
+| `image.registry`    | *GRPC Client* image registry                                                 | `quay.io`                                     |
+| `image.repository`  | *GRPC Client* image name                                                     | `telicent/data-sharing-transport-grpc-client` |
+| `image.tag`         | *GRPC Client* image tag. If not set, a tag is generated using the appVersion | `""`                                          |
+| `image.pullPolicy`  | *GRPC Client* image pull policy                                              | `IfNotPresent`                                |
+| `image.pullSecrets` | Specify registry secret names as an array                                    | `[]`                                          |
 
 ### Deployment Resources Parameters - Requests and Limits
 

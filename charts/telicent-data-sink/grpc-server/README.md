@@ -114,10 +114,10 @@ Contains parameters specific to the *GRPC Server* application
 | `server.keepAliveTimeSecs`            | Keep-alive ping interval in seconds                                                                                               | `5`                                                        |
 | `server.keepAliveTimeoutSecs`         | Keep-alive ping timeout in seconds                                                                                                | `1`                                                        |
 | `server.authzExpirySecs`              | Cache TTL in seconds for authorization lookups                                                                                    | `5`                                                        |
-| `server.tls.enabled`                  | Enable TLS for the gRPC channel                                                                                                   | `false`                                                    |
-| `server.tls.caIncluded`               | Flag to denote that the Certificate Authority (CA) has been provided                                                              | `false`                                                    |
+| `server.tls.enabled`                  | Enable TLS for the gRPC channel                                                                                                   | `true`                                                     |
+| `server.tls.caIncluded`               | Flag to denote that the Certificate Authority (CA) has been provided                                                              | `true`                                                     |
 | `server.tls.existingSecret`           | Existing secret with TLS certificates (`tls.key`, `tls.crt`) or (`tls.key`, `tls.crt`, `ca.crt`) with tls.caIncluded set as true. | `""`                                                       |
-| `server.tls.mTLS.enabled`             | IF TLS support is enabled, require clients to provide certificates                                                                | `false`                                                    |
+| `server.tls.mTLS.enabled`             | IF TLS support is enabled, require clients to provide certificates                                                                | `true`                                                     |
 | `server.kafka.sharedHeaders`          | Kafka headers to include in gRPC messages; '^' separated                                                                          | `Content-Type^Security-Label^Request-Id^policyInformation` |
 | `server.kafka.consumerGroup`          | Kafka consumer group ID, Left unset defaults to: server-cg                                                                        | `""`                                                       |
 | `server.kafka.offset`                 | Starting offset; 0 = from beginning                                                                                               | `0`                                                        |
@@ -138,9 +138,9 @@ Contains Java parameters to be used by the *GRPC Server* application
 
 | Name               | Description                                                                                                                                                                                                                                                               | Value  |
 | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ |
-| `logs.root.level`  | Sets the baseline log level. Only warnings and errors from third-party libraries (gRPC, Netty, Flyway, etc.) are logged by default. Values include: ERROR, WARN, INFO, DEBUG, TRACE                                                                                       | `INFO` |
+| `logs.root.level`  | Sets the baseline log level. Only warnings and errors from third-party libraries (gRPC, Netty, Flyway, etc.) are logged by default. Values include: ERROR, WARN, INFO, DEBUG, TRACE                                                                                       | `WARN` |
 | `logs.app.level`   | Controls log verbosity for all application code. Set to DEBUG for detailed troubleshooting. Values include: ERROR, WARN, INFO, DEBUG, TRACE                                                                                                                               | `INFO` |
-| `logs.kafka.level` | Repo package Logging Level. ontrols Kafka client logging independently. Kafka clients are particularly verbose at INFO, so this defaults to WARN. Set to INFO or DEBUG to diagnose connectivity or consumer group issues. Values include: ERROR, WARN, INFO, DEBUG, TRACE | `INFO` |
+| `logs.kafka.level` | Repo package Logging Level. ontrols Kafka client logging independently. Kafka clients are particularly verbose at INFO, so this defaults to WARN. Set to INFO or DEBUG to diagnose connectivity or consumer group issues. Values include: ERROR, WARN, INFO, DEBUG, TRACE | `WARN` |
 
 ### Application Parameters - PostgreSQL and Secret
 
@@ -187,13 +187,13 @@ For Quick Start purposes, a secret named `tc-auth-usr-psql-grpc-server` will be 
 
 ### Deployment Image Parameters
 
-| Name                | Description                                                                  | Value                  |
-| ------------------- | ---------------------------------------------------------------------------- | ---------------------- |
-| `image.registry`    | *GRPC Server* image registry                                                 | `quay.io`              |
-| `image.repository`  | *GRPC Server* image name                                                     | `telicent/grpc-server` |
-| `image.tag`         | *GRPC Server* image tag. If not set, a tag is generated using the appVersion | `""`                   |
-| `image.pullPolicy`  | *GRPC Server* image pull policy                                              | `IfNotPresent`         |
-| `image.pullSecrets` | Specify registry secret names as an array                                    | `[]`                   |
+| Name                | Description                                                                  | Value                                         |
+| ------------------- | ---------------------------------------------------------------------------- | --------------------------------------------- |
+| `image.registry`    | *GRPC Server* image registry                                                 | `quay.io`                                     |
+| `image.repository`  | *GRPC Server* image name                                                     | `telicent/data-sharing-transport-grpc-server` |
+| `image.tag`         | *GRPC Server* image tag. If not set, a tag is generated using the appVersion | `""`                                          |
+| `image.pullPolicy`  | *GRPC Server* image pull policy                                              | `IfNotPresent`                                |
+| `image.pullSecrets` | Specify registry secret names as an array                                    | `[]`                                          |
 
 ### Deployment Resources Parameters - Requests and Limits
 

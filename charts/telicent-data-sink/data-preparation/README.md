@@ -170,13 +170,13 @@ Contains Java parameters to be used by the *Data Preparation* application
 
 ### Deployment Image Parameters
 
-| Name                | Description                                                                       | Value                       |
-| ------------------- | --------------------------------------------------------------------------------- | --------------------------- |
-| `image.registry`    | *Data Preparation* image registry                                                 | `quay.io`                   |
-| `image.repository`  | *Data Preparation* image name                                                     | `telicent/data-preparation` |
-| `image.tag`         | *Data Preparation* image tag. If not set, a tag is generated using the appVersion | `""`                        |
-| `image.pullPolicy`  | *Data Preparation* image pull policy                                              | `IfNotPresent`              |
-| `image.pullSecrets` | Specify registry secret names as an array                                         | `[]`                        |
+| Name                | Description                                                                       | Value                              |
+| ------------------- | --------------------------------------------------------------------------------- | ---------------------------------- |
+| `image.registry`    | *Data Preparation* image registry                                                 | `quay.io`                          |
+| `image.repository`  | *Data Preparation* image name                                                     | `telicent/data-preparation-engine` |
+| `image.tag`         | *Data Preparation* image tag. If not set, a tag is generated using the appVersion | `""`                               |
+| `image.pullPolicy`  | *Data Preparation* image pull policy                                              | `IfNotPresent`                     |
+| `image.pullSecrets` | Specify registry secret names as an array                                         | `[]`                               |
 
 ### Deployment Resources Parameters - Requests and Limits
 

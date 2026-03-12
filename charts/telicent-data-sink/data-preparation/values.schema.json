@@ -316,7 +316,7 @@
                 "repository": {
                     "type": "string",
                     "description": "*Data Preparation* image name",
-                    "default": "telicent/data-preparation"
+                    "default": "telicent/data-preparation-engine"
                 },
                 "tag": {
                     "type": "string",

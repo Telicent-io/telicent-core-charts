@@ -3,7 +3,7 @@ Copyright (C) Telicent Limited
 */}}
 
 {{/*
-Create the name of the enviromnet variables config map
+Create the name of the environment  config map
 */}}
 {{- define "grpc-server.envConfigMapName" -}}
 {{- if .Values.configMap.existingEnvConfigMapName }}

@@ -112,12 +112,12 @@
                         "enabled": {
                             "type": "boolean",
                             "description": "Enable TLS for the gRPC channel",
-                            "default": false
+                            "default": true
                         },
                         "caIncluded": {
                             "type": "boolean",
                             "description": "Flag to denote that the Certificate Authority (CA) has been provided",
-                            "default": false
+                            "default": true
                         },
                         "existingSecret": {
                             "type": "string",
@@ -130,7 +130,7 @@
                                 "enabled": {
                                     "type": "boolean",
                                     "description": "IF TLS support is enabled, require clients to provide certificates",
-                                    "default": false
+                                    "default": true
                                 }
                             }
                         }
@@ -197,7 +197,7 @@
                         "level": {
                             "type": "string",
                             "description": "Sets the baseline log level. Only warnings and errors from third-party libraries (gRPC, Netty, Flyway, etc.) are logged by default. Values include: ERROR, WARN, INFO, DEBUG, TRACE",
-                            "default": "INFO"
+                            "default": "WARN"
                         }
                     }
                 },
@@ -217,7 +217,7 @@
                         "level": {
                             "type": "string",
                             "description": "Repo package Logging Level. ontrols Kafka client logging independently. Kafka clients are particularly verbose at INFO, so this defaults to WARN. Set to INFO or DEBUG to diagnose connectivity or consumer group issues. Values include: ERROR, WARN, INFO, DEBUG, TRACE",
-                            "default": "INFO"
+                            "default": "WARN"
                         }
                     }
                 }
@@ -344,7 +344,7 @@
                 "repository": {
                     "type": "string",
                     "description": "*GRPC Server* image name",
-                    "default": "telicent/grpc-server"
+                    "default": "telicent/data-sharing-transport-grpc-server"
                 },
                 "tag": {
                     "type": "string",
