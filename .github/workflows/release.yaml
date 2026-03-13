@@ -61,7 +61,7 @@ jobs:
         run: |
           helm repo add telicent-core-charts 'https://charts.telicent.io'
           helm dependency update ./charts/telicent-core
-          for chart in $(find ./charts -maxdepth 1 -mindepth 1 -type d); do echo "packaging chart - $chart" && helm package -u -d .cr-release-packages $chart; done
+          for chart in $(find . -type f -name 'Chart.yaml' -print0 -maxdepth 3 | xargs -0 -n1 dirname | sort -u); do echo "packaging chart - $chart" && helm package -u -d .cr-release-packages $chart; done
 
       - name: Log in to Quay.io
         run: helm registry login quay.io --username "${{ secrets.QUAY_USERNAME }}" --password "${{ secrets.QUAY_PASSWORD }}"
