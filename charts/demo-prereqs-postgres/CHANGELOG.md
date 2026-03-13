@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.1](https://github.com/Telicent-io/telicent-core-charts/compare/demo-prereqs-postgres-v0.3.0...demo-prereqs-postgres-v0.3.1) (2026-03-13)
+
+
+### Bug Fixes
+
+* auth now included in initdb. defualt kept as postgres ([958f040](https://github.com/Telicent-io/telicent-core-charts/commit/958f0406adb835ce413506ae495aa3e6ea6ba696))
+* auth now included in initdb. defualt kept as postgres ([920f5cc](https://github.com/Telicent-io/telicent-core-charts/commit/920f5cc56e638efe4cdd752152aeb37831b4b3a5))
+
 ## [0.3.0](https://github.com/Telicent-io/telicent-core-charts/compare/demo-prereqs-postgres-v0.2.5...demo-prereqs-postgres-v0.3.0) (2026-03-09)
 
 
