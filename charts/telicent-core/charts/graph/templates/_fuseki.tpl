@@ -1,5 +1,5 @@
 {{/*
-Copyright (C) 2025 Telicent Limited
+Copyright (C) 2026 Telicent Limited
 */}}
 
 {{- define "graph.fuseki" -}}
@@ -110,8 +110,10 @@ Copyright (C) 2025 Telicent Limited
         ## Local attribute store for dev use only
         # authz:attributes <file:attribute-store.ttl>;
         # ABAC endpoint for user attributes
-        authz:attributesURL <env:USER_ATTRIBUTES_URL>;
-        authz:hierarchiesURL <env:ATTRIBUTE_HIERARCHY_URL>;
+        ## OLD AUTH APPROACH
+        # authz:attributesURL <env:USER_ATTRIBUTES_URL>;
+        # authz:hierarchiesURL <env:ATTRIBUTE_HIERARCHY_URL>;
+        authz:authServer true;
         .
     ## Storage of data in memory.
     #:datasetAuthBase rdf:type ja:MemoryDataset .
@@ -206,8 +208,10 @@ Copyright (C) 2025 Telicent Limited
         # Local attribute store for dev
         # authz:attributes <file:attribute-store.ttl>;
         # ABAC endpoint for user attributes
-        authz:attributesURL <env:USER_ATTRIBUTES_URL>;
-        authz:hierarchiesURL <env:ATTRIBUTE_HIERARCHY_URL>;
+        ## OLD AUTH APPROACH
+        # authz:attributesURL <env:USER_ATTRIBUTES_URL>;
+        # authz:hierarchiesURL <env:ATTRIBUTE_HIERARCHY_URL>;
+        authz:authServer true;
         .
     ## Storage of data in memory.
     #:datasetOntoBase rdf:type ja:MemoryDataset .
@@ -303,8 +307,10 @@ Copyright (C) 2025 Telicent Limited
         # Local attribute store for dev
         # authz:attributes <file:attribute-store.ttl>;
         # ABAC endpoint for user attributes
-        authz:attributesURL <env:USER_ATTRIBUTES_URL>;
-        authz:hierarchiesURL <env:ATTRIBUTE_HIERARCHY_URL>;
+        ## OLD AUTH APPROACH
+        # authz:attributesURL <env:USER_ATTRIBUTES_URL>;
+        # authz:hierarchiesURL <env:ATTRIBUTE_HIERARCHY_URL>;
+        authz:authServer true;
         .
     ## Storage of data in memory.
     #:datasetCatBase rdf:type ja:MemoryDataset .
@@ -314,7 +320,7 @@ Copyright (C) 2025 Telicent Limited
         .
     ## --------
     <#connector> rdf:type fk:Connector ;
-        fk:bootstrapServers    {{ .Values.global.kafkaBootstrapUrls | quote }};
+        fk:bootstrapServers    {{ .Values.global.kafka.bootstrapServers | quote }};
         fk:topic               "knowledge";
         fk:dlqTopic            "knowledge.dlq";
         ## This should refer to an authz:upload endpoint
@@ -332,7 +338,7 @@ Copyright (C) 2025 Telicent Limited
         fk:configFile       "env:{KAFKA_CONFIG_FILE_PATH:}"
         .
     <#ontologyConnector> rdf:type fk:Connector ;
-        fk:bootstrapServers    {{ .Values.global.kafkaBootstrapUrls | quote }};
+        fk:bootstrapServers    {{ .Values.global.kafka.bootstrapServers | quote }};
         fk:topic               "ontology";
         fk:dlqTopic            "ontology.dlq";
         ## This should refer to the target dataset
@@ -350,7 +356,7 @@ Copyright (C) 2025 Telicent Limited
         fk:configFile       "env:{KAFKA_CONFIG_FILE_PATH:}"
         .
     <#catalogConnector> rdf:type fk:Connector ;
-        fk:bootstrapServers    {{ .Values.global.kafkaBootstrapUrls | quote }};
+        fk:bootstrapServers    {{ .Values.global.kafka.bootstrapServers | quote }};
         fk:topic               "catalog";
         fk:dlqTopic            "catalog.dlq";
         ## This should refer to the target dataset

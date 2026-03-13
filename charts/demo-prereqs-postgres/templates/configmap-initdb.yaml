@@ -1,0 +1,14 @@
+{{- /*
+Copyright (C) 2025-2026 Telicent Limited
+*/}}
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: {{ include "demo-prereqs-postgres.initDbConfigMapName" . }}
+  namespace: {{ include "demo-prereqs-postgres.namespace" . | quote }}
+  labels:
+    {{- include "demo-prereqs-postgres.labels" . | nindent 4 }}
+
+data:
+{{ (.Files.Glob "scripts/*").AsConfig | indent 2 }}

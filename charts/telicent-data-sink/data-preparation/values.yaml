@@ -1,0 +1,275 @@
+# Copyright (C) 2026 Telicent Limited
+# Telicent *Data Preparation* stand-alone chart
+
+#
+# @section Global Parameters
+#
+# @descStart
+# Contains global parameters; these parameters are mirrored within the Telicent umbrella charts.
+# Note: Only global parameters used within this chart will be listed below.
+# @descEnd
+global:
+  ## Current available global image parameters: imageRegistry and imagePullSecrets
+  ## Please, note that this will override the image parameters
+  # @key global.imageRegistry Global image registry
+  imageRegistry: ""
+  # E.g.
+  # imagePullSecrets:
+  #   - myRegistryKeySecretName
+  # @key global.imagePullSecrets Global registry secret names as an array
+  imagePullSecrets: []
+
+  # @key global.enabled enabled Enable *Data Preparation* deployment
+  enabled: false
+
+  kafka:
+    # @key global.kafka.bootstrapServers Comma separated list containing Kafka bootstrap servers
+    bootstrapServers: "kafka-bootstrap.kafka.svc.cluster.local:9092"
+    # @key global.kafka.existingConfigSecretName Name of an existing secret containing Kafka configuration
+    existingConfigSecretName: ""
+    # @key global.kafka.username Username for Kafka authentication
+    username: "your.kafka.username.here"
+    # @key global.kafka.password Password for Kafka authentication
+    password: "your.kafka.password.here"
+    # @key global.kafka.protocol Protocol used for Kafka communication
+    protocol: "SASL_SSL"
+    # @key global.kafka.mechanism SASL mechanism used for Kafka authentication
+    mechanism: "SCRAM-SHA-512"
+
+#
+# @section Application Parameters - Engine
+#
+# @descStart
+# Contains parameters specific to the *Data Preparation* application
+# @descEnd
+engine:
+
+  # @key engine.applicationId Kafka Streams application ID (required)
+  applicationId: ""
+
+  kafka:
+    # @key engine.kafka.inputTopic Input topic to consume from (required)
+    inputTopic: ""
+    # @key engine.kafka.outputTopic Output topic to produce to (required)
+    outputTopic: ""
+     # @key engine.kafka.dlqTopic Dead letter queue topic for failed messages (required)
+    dlqTopic: ""
+
+  #-----------------------------------
+  filter:
+    # -----------------------------------
+    # @key engine.filter.enableIDH Enable filtering messages using Identity-Derived Header (IDH) security labels
+    enableIDH: false
+    client:
+      # @key engine.filter.client.version IDH specification version (required when enableIDH)
+      version: ""
+      # @key engine.filter.client.classification Security classification level required when enableIDH)
+      classification: ""
+      # @key engine.filter.client.nationality Space-separated nationality codes; empty = no restriction (optional when enableIDH)
+      nationality: ""
+      # @key engine.filter.client.organisation Space-separated organisation codes; empty = no restriction (optional when enableIDH)
+      organisation: ""
+      # @key engine.filter.client.group Space-separated group names; empty = no restriction (optional when enableIDH)
+      group: ""
+    # -----------------------------------
+    # @key engine.filter.enableHeaders Enable filtering messages by header values
+    enableHeaders: false
+    #
+    # Multiple include rules are ANDed together — a message must satisfy all include conditions.
+    # Multiple exclude rules are also ANDed — a message is dropped if any exclude condition matches.
+    # Include and exclude rules can be combined freely.
+    #
+    headers:
+      # Example:
+      # include:
+      # - header: "Distribution-Id"
+      #   values: "acled-csv"
+      # - header: "event-type"
+      #   values: "CREATE UPDATE UPSERT"
+      # @key engine.filter.headers.include
+      include: [ ]
+      # Example:
+      # exclude:
+      # - header: "source"
+      #   values: "staging test"
+      # @key engine.filter.headers.exclude
+      exclude: [ ]
+  # -----------------------------------
+  transformer:
+    distributionId:
+      # @key engine.transformer.distributionId.enabled Enable to add a Distribution-Id header to every message.
+      enabled: false
+      # @key engine.transformer.distributionId.id The id value to add to every message header
+      id: ""
+  # -----------------------------------
+  # All messages can pass straight from the input topic to the output topic without any filtering or transformation.
+  # By setting 'enabledPassthrough=true' 'enableIDH=false' and 'enableHeaders=false'
+  # @key engine.enablePassthrough Allow passthrough with no filter or transformer
+  enablePassthrough: false
+
+#
+# @section Application Parameters - Java
+#
+# @descStart
+# Contains Java parameters to be used by the *Data Preparation* application
+# @descEnd
+java:
+  # @key java.jvmOptions JVM options for the application
+  jvmOptions: "-XX:MaxRAMPercentage=80.0"
+
+#
+# @section Application Parameters - Logs
+#
+logs:
+  root:
+    # @key logs.root.level Sets the baseline log level. Only warnings and errors from third-party libraries (gRPC, Netty, Flyway, etc.) are logged by default. Values include: ERROR, WARN, INFO, DEBUG, TRACE
+    level: "WARN"
+  app:
+    # @key logs.app.level Controls log verbosity for all application code. Set to DEBUG for detailed troubleshooting. Values include: ERROR, WARN, INFO, DEBUG, TRACE
+    level: "INFO"
+  kafka:
+    # @key logs.kafka.level Repo package Logging Level. ontrols Kafka client logging independently. Kafka clients are particularly verbose at INFO, so this defaults to WARN. Set to INFO or DEBUG to diagnose connectivity or consumer group issues. Values include: ERROR, WARN, INFO, DEBUG, TRACE
+    level: "WARN"
+
+#
+# @section ConfigMap Parameters
+#
+configMap:
+  # @key configMap.existingEnvConfigMap Name of existing configmap containing *Data Preparation* Environment Configuration
+  # Note: When it's set it will disable configmap creation.
+  existingEnvConfigMap: ""
+
+#
+# @section Common Parameters
+#
+# @key nameOverride String to partially override fullname (will maintain the release name)
+nameOverride: ""
+# @key fullnameOverride String to fully override the generated release name
+fullnameOverride: ""
+# @key namespaceOverride String to fully override all deployed resources namespace
+namespaceOverride: ""
+# @key commonLabels Add labels to all the deployed resources
+commonLabels: {}
+
+#
+# @section Deployment Parameters
+#
+# @key replicas Number of *Data Preparation* replicas to deploy
+replicas: 1
+# @key revisionHistoryLimit Number of controller revisions to keep
+revisionHistoryLimit: 5
+
+# @key annotations Add extra annotations to the deployment object
+annotations: {}
+# @key podLabels Add extra labels to the *Data Preparation* pod
+podLabels: {}
+# @key podAnnotations Add extra annotations to the *Data Preparation* pod
+podAnnotations: {}
+# @key extraEnvVars Array with extra environment variables to add to *Data Preparation* pod
+# Example:
+# extraEnvVars:
+# - name: FOO
+#   value: instance
+extraEnvVars: []
+# @key extraVolumes Optionally specify extra list of additional volumes
+extraVolumes: []
+# @key extraVolumeMounts Optionally specify extra list of additional volumeMounts
+extraVolumeMounts: []
+# @key initContainers Add init containers to the pod
+initContainers: []
+# Example:
+# sidecars:
+# - name: your-image-name
+#   image: your-image
+#   ports:
+#   - name: portname
+#     containerPort: 1234
+# @key sidecars Add sidecars to the pod
+sidecars: []
+
+#
+# @section Deployment Image Parameters
+#
+image:
+  # @key image.registry *Data Preparation* image registry
+  registry: quay.io
+  # @key image.repository *Data Preparation* image name
+  repository: telicent/data-preparation-engine
+  # @key image.tag *Data Preparation* image tag. If not set, a tag is generated using the appVersion
+  tag: ""
+  # @key image.pullPolicy *Data Preparation* image pull policy
+  pullPolicy: IfNotPresent
+  # @key image.pullSecrets Specify registry secret names as an array
+  pullSecrets: []
+
+#
+# @section Deployment Resources Parameters - Requests and Limits
+#
+# @key resources Resources for *Data Preparation* containers
+resources: {}
+#  requests:
+#    # @key resources.requests.cpu Set containers' CPU request
+#    cpu: "250m"
+#    # @key resources.requests.memory Set containers' memory request
+#    memory: "1000Mi"
+#  limits:
+#    # @key resources.limits.cpu Set containers' CPU limit
+#    cpu: "500m"
+#    # @key resources.limits.memory Set containers' memory limit
+#    memory: "2000Mi"
+
+#
+# @section Statefulset Security Context Parameters - Default Security Context
+#
+podSecurityContext:
+  # @key podSecurityContext.runAsUser Set the provisioning pod's Security Context runAsUser User ID
+  runAsUser: 185
+  # @key podSecurityContext.runAsGroup Set the provisioning pod's Security Context runAsGroup Group ID
+  runAsGroup: 185
+  # @key podSecurityContext.runAsNonRoot Set the provisioning pod's Security Context runAsNonRoot
+  runAsNonRoot: true
+  # @key podSecurityContext.fsGroup Set the provisioning pod's Group ID for the mounted volumes' filesystem
+  fsGroup: 185
+  seccompProfile:
+    # @key podSecurityContext.seccompProfile.type Set the provisioning pod's Security Context seccomp profile
+    type: RuntimeDefault
+containerSecurityContext:
+  # @key containerSecurityContext.runAsUser Set containers' Security Context runAsUser User ID
+  runAsUser: 185
+  # @key containerSecurityContext.runAsGroup Set containers' Security Context runAsGroup Group ID
+  runAsGroup: 185
+  # @key containerSecurityContext.runAsNonRoot Set container's Security Context runAsNonRoot
+  runAsNonRoot: true
+  # @key containerSecurityContext.allowPrivilegeEscalation Set container's Security Context allowPrivilegeEscalation
+  allowPrivilegeEscalation: false
+  capabilities:
+    # @key containerSecurityContext.capabilities.drop List of capabilities to be dropped
+    drop:
+      - ALL
+  seccompProfile:
+    # @key containerSecurityContext.seccompProfile.type Set container's Security Context seccomp profile
+    type: RuntimeDefault
+
+# @key affinity Affinity for pod assignment
+# Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+affinity: {}
+# @key nodeSelector Node labels for pod assignment
+# Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
+nodeSelector: {}
+# @key tolerations Tolerations for pod assignment
+# Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+tolerations: []
+
+#
+# @section Service Account Parameters
+#
+serviceAccount:
+  # @key serviceAccount.create Specifies whether a service account should be created
+  create: true
+  # @key serviceAccount.name Name of the ServiceAccount to use. If not set, a name is generated using the fullname
+  name: ""
+  # @key serviceAccount.annotations Additional custom annotations for the ServiceAccount
+  annotations: {}
+  # @key serviceAccount.automount Automatically mount a ServiceAccount's API credentials
+  automount: true
+

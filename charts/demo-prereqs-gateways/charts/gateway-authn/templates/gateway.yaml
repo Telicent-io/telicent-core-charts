@@ -1,0 +1,27 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: {{ include "gateway-authn.fullname" . }}
+  labels:
+  {{- include "gateway-authn.labels" . | nindent 4 }}
+spec:
+  selector:
+  {{- .Values.ingressSelectors | toYaml | nindent 4 }}
+  servers:
+  - hosts:
+    - {{ .Values.global.idpHost }}
+    port:
+      name: http
+      number: 80
+      protocol: HTTP
+    tls:
+      httpsRedirect: true
+  - hosts:
+    - {{ .Values.global.idpHost }}
+    port:
+      name: https
+      number: 443
+      protocol: HTTPS
+    tls:
+      credentialName: {{ include "gateway-authn.tlsCredentialName" . }}
+      mode: SIMPLE

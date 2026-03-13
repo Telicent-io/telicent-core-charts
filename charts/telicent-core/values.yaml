@@ -1,7 +1,7 @@
-# Copyright (C) 2025 Telicent Limited
+# Copyright (C) 2026 Telicent Limited
 # Telicent Core umbrella chart
 
-# @section Global Parameters
+# @section Global Parameters - Common
 # @descStart
 # Contains global parameters, these parameters are mirrored across all Telicent Core sub charts, these values will be authoritative.
 # @descEnd
@@ -19,52 +19,87 @@ global:
   # @key global.enterprise Enable enterprise mode, adding additional features and configurations
   enterprise: false
 
-  # @key global.appHostDomain Domain associated with Telicent application services
-  appHostDomain: "apps.telicent.io"
-  # @key global.authHostDomain Domain associated with Telicent authentication services, including OIDC providers
-  authHostDomain: "auth.telicent.io"
-  # @key global.groupsClaim Key used to retrieve groups from the OIDC provider
-  groupsClaim: "groups"
-  # @key global.jwksUrl Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)
-  # NOTE: For Dex the endpoint would be https://{yourDexDomain}/keys
-  jwksUrl: "https://{yourAuthdomain}/.well-known/jwks.json"
+  #
+  # @section Global Parameters - Domains
+  #
+  # @key global.appHostDomain Domain associated with Telicent application/ui services. This value cannot be changed after it is set
+  appHostDomain: ""
+  # @key global.apiHostDomain Domain associated with Telicent Api services. This value cannot be changed after it is set
+  apiHostDomain: ""
+  # @key global.authHostDomain Domain associated with Telicent authentication services, including OIDC providers. This value cannot be changed after it is set
+  authHostDomain: ""
 
-  # @key global.istioNamespace Namespace in which Istio is deployed
-  # NOTE: Istio, by default, is deployed within the 'istio-system' namespace
-  istioNamespace: istio-system
-  # @key global.istioServiceAccountName Name of the Istio service account
-  istioServiceAccountName: istio-ingress
-  # @key global.istioGatewayName Name of the Istio Gateway Resource (LB operating at the edge of the mesh)
+  #
+  # @section Global Parameters - Istio
+  #
+  # @descStart
+  # These settings will be used by all Telicent Core components using Istio resources.
+  # @descEnd
+  # @key global.istioIngressNamespace Namespace in which the Istio Ingress resource is deployed
+  istioIngressNamespace: istio-system
+  # @key global.istioIngressServiceAccount ServiceAccount associated with Istio ingress deployment
+  istioIngressServiceAccount: istio-ingress
+  # @key global.istioGatewayNamespace Namespace in which the Istio Gateway resource is deployed
+  istioGatewayNamespace: istio-system
+  # @key global.istioGatewayName Name of the Istio Gateway resource
   istioGatewayName: ingress-gateway
 
+  #
+  # @section Global Parameters - Kafka
+  #
+  # @descStart
+  # Kafka configuration parameters. These settings will be used by all Telicent Core components that interact
+  # with Kafka, ensuring consistent connectivity and authentication across the platform.
+  # @descEnd
+  kafka:
+    # @key global.kafka.bootstrapServers Comma separated list containing Kafka bootstrap servers
+    bootstrapServers: "kafka-bootstrap.kafka.svc.cluster.local:9092"
+    # @key global.kafka.existingConfigSecretName Name of an existing secret containing Kafka configuration
+    existingConfigSecretName: ""
+    # @key global.kafka.username Username for Kafka authentication
+    username: "your.kafka.username.here"
+    # @key global.kafka.password Password for Kafka authentication
+    password: "your.kafka.password.here"
+    # @key global.kafka.protocol Protocol used for Kafka communication
+    protocol: "SASL_SSL"
+    # @key global.kafka.mechanism SASL mechanism used for Kafka authentication
+    mechanism: "SCRAM-SHA-512"
 
-  # @key global.kafkaBootstrapUrls Comma separated list containing Kafka bootstrap URLs
-  kafkaBootstrapUrls: "kafka-bootstrap.kafka.svc.cluster.local:9092"
-  # @key global.existingKafkaConfigSecretName Name of an existing secret containing Kafka configuration
-  existingKafkaConfigSecretName: ""
-
-  # @key global.kafkaConfigUsername Username for Kafka authentication
-  kafkaConfigUsername: "your.kafka.username.here"
-  # @key global.kafkaConfigPassword Password for Kafka authentication
-  kafkaConfigPassword: "your.kafka.password.here"
-  # @key global.kafkaConfigProtocol Protocol used for Kafka communication
-  kafkaConfigProtocol: "SASL_SSL"
-  # @key global.kafkaConfigMechanism SASL mechanism used for Kafka authentication
-  kafkaConfigMechanism: "SCRAM-SHA-512"
-
-
-  # @key global.existingTruststoreSecretName Name of an existing secret containing the truststore
-  existingTruststoreSecretName: ""
+  #
+  # @section Global Parameters - Truststore
+  #
+  # @descStart
+  # Contains global truststore parameters, these parameters are mirrored across Telicent Core sub charts.
+  # @descEnd
   truststore:
+    # @key global.truststore.existingSecret Name of an existing secret containing the truststore
+    existingSecret: ""
     # @key global.truststore.mountPath The mount path for the truststore in the container
     mountPath: /app/config/truststore
 
-# @key jobServiceAccountName Service account used for running jobs in Kubernetes.
-jobServiceAccountName: producers
-
+#
 # @section Service Account Parameters
+#
 serviceAccount:
   # @key serviceAccount.name Name of the ServiceAccount to use. If not set, a name is generated using the fullname
   name: ""
   # @key serviceAccount.annotations Additional custom annotations for the ServiceAccount
   annotations: {}
+
+#
+# @section Jobs Parameters
+#
+# @key jobServiceAccountName Service account used for running jobs in Kubernetes.
+jobServiceAccountName: producers
+
+#
+# @section Kafka Topics Parameters
+#
+kafkaTopics:
+  # @key kafkaTopics.enabled Enable or disable the creation of Kafka topics during installation
+  enabled: false
+  # @key kafkaTopics.topics List of Kafka topics to be created
+  topics: []
+
+# @key istioInjectionLabelJobEnabled Enable automatically labelling a namespace for Istio injection via a job. Useful when namespace is created via Helm
+istioInjectionLabelJobEnabled: true

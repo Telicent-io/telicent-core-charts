@@ -1,0 +1,26 @@
+{{- /*
+Copyright (C) 2026 Telicent Limited
+*/}}
+{{- if .Values.istio.virtualService.enabled  }}
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+
+metadata:
+  name: {{ include "grpc-server.fullname" . }}
+  namespace: {{ include "grpc-server.namespace" . | quote }}
+  labels:
+    {{- include "grpc-server.labels" . | nindent 4 }}
+
+spec:
+  gateways:
+  - {{ include "istio.gatewayNamespace" . }}/{{ include "istio.gatewayName" . }}
+  hosts:
+  - {{ .Values.server.hostDomain }}
+  http:
+    - route:
+      - destination:
+          host: {{ include "grpc-server.serviceName" . }}
+          port:
+            number: {{ .Values.service.port }}
+
+{{- end }}

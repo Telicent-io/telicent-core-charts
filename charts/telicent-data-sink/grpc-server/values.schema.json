@@ -1,0 +1,565 @@
+{
+    "title": "Chart Values",
+    "type": "object",
+    "properties": {
+        "global": {
+            "type": "object",
+            "properties": {
+                "imageRegistry": {
+                    "type": "string",
+                    "description": "Global image registry",
+                    "default": ""
+                },
+                "imagePullSecrets": {
+                    "type": "array",
+                    "description": "Global registry secret names as an array",
+                    "default": [],
+                    "items": {}
+                },
+                "enabled": {
+                    "type": "boolean",
+                    "description": "enabled Enable *GRPC Server* deployment",
+                    "default": false
+                },
+                "kafka": {
+                    "type": "object",
+                    "properties": {
+                        "bootstrapServers": {
+                            "type": "string",
+                            "description": "Comma separated list containing Kafka bootstrap servers",
+                            "default": "kafka-bootstrap.kafka.svc.cluster.local:9092"
+                        },
+                        "existingConfigSecretName": {
+                            "type": "string",
+                            "description": "Name of an existing secret containing Kafka configuration",
+                            "default": ""
+                        },
+                        "username": {
+                            "type": "string",
+                            "description": "Username for Kafka authentication",
+                            "default": "your.kafka.username.here"
+                        },
+                        "password": {
+                            "type": "string",
+                            "description": "Password for Kafka authentication",
+                            "default": "your.kafka.password.here"
+                        },
+                        "protocol": {
+                            "type": "string",
+                            "description": "Protocol used for Kafka communication",
+                            "default": "SASL_SSL"
+                        },
+                        "mechanism": {
+                            "type": "string",
+                            "description": "SASL mechanism used for Kafka authentication",
+                            "default": "SCRAM-SHA-512"
+                        }
+                    }
+                },
+                "istioIngressNamespace": {
+                    "type": "string",
+                    "description": "Namespace in which the Istio Ingress resource is deployed; overrides 'istio.ingress.namespace'",
+                    "default": "istio-system"
+                },
+                "istioIngressServiceAccount": {
+                    "type": "string",
+                    "description": "ServiceAccount associated with Istio ingress deployment; overrides 'istio.ingress.serviceAccount'",
+                    "default": "istio-ingress"
+                },
+                "istioGatewayNamespace": {
+                    "type": "string",
+                    "description": "Namespace in which the Istio Gateway resource is deployed; overrides 'istio.gateway.namespace'",
+                    "default": "istio-system"
+                },
+                "istioGatewayName": {
+                    "type": "string",
+                    "description": "Name of the Istio Gateway resource; overrides 'istio.gateway.namespace'",
+                    "default": "ingress-gateway"
+                }
+            }
+        },
+        "server": {
+            "type": "object",
+            "properties": {
+                "hostDomain": {
+                    "type": "string",
+                    "description": "Host Domain associated with the Telicent data-sharing GRPC Server, example:'sink.telicent.io' (required)",
+                    "default": ""
+                },
+                "keepAliveTimeSecs": {
+                    "type": "number",
+                    "description": "Keep-alive ping interval in seconds",
+                    "default": 5
+                },
+                "keepAliveTimeoutSecs": {
+                    "type": "number",
+                    "description": "Keep-alive ping timeout in seconds",
+                    "default": 1
+                },
+                "authzExpirySecs": {
+                    "type": "number",
+                    "description": "Cache TTL in seconds for authorization lookups",
+                    "default": 5
+                },
+                "tls": {
+                    "type": "object",
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean",
+                            "description": "Enable TLS for the gRPC channel",
+                            "default": true
+                        },
+                        "caIncluded": {
+                            "type": "boolean",
+                            "description": "Flag to denote that the Certificate Authority (CA) has been provided",
+                            "default": true
+                        },
+                        "existingSecret": {
+                            "type": "string",
+                            "description": "Existing secret with TLS certificates (`tls.key`, `tls.crt`) or (`tls.key`, `tls.crt`, `ca.crt`) with tls.caIncluded set as true.",
+                            "default": ""
+                        },
+                        "mTLS": {
+                            "type": "object",
+                            "properties": {
+                                "enabled": {
+                                    "type": "boolean",
+                                    "description": "IF TLS support is enabled, require clients to provide certificates",
+                                    "default": true
+                                }
+                            }
+                        }
+                    }
+                },
+                "kafka": {
+                    "type": "object",
+                    "properties": {
+                        "sharedHeaders": {
+                            "type": "string",
+                            "description": "Kafka headers to include in gRPC messages; '^' separated",
+                            "default": "Content-Type^Security-Label^Request-Id^policyInformation"
+                        },
+                        "consumerGroup": {
+                            "type": "string",
+                            "description": "Kafka consumer group ID, Left unset defaults to: server-cg",
+                            "default": ""
+                        },
+                        "offset": {
+                            "type": "number",
+                            "description": "Starting offset; 0 = from beginning",
+                            "default": 0
+                        },
+                        "pollRecords": {
+                            "type": "number",
+                            "description": "Maximum records per Kafka poll",
+                            "default": 100
+                        },
+                        "pollDuration": {
+                            "type": "string",
+                            "description": "Kafka poll timeout in ISO-8601 duration format",
+                            "default": "PT2S"
+                        },
+                        "keyDeserializerClass": {
+                            "type": "string",
+                            "description": "Key deserializer class for the Kafka consumer",
+                            "default": "org.apache.kafka.common.serialization.StringDeserializer"
+                        },
+                        "valueDeserializerClass": {
+                            "type": "string",
+                            "description": "Value deserializer class for the Kafka consume",
+                            "default": "org.apache.kafka.common.serialization.StringDeserializer"
+                        }
+                    }
+                }
+            }
+        },
+        "java": {
+            "type": "object",
+            "properties": {
+                "jvmOptions": {
+                    "type": "string",
+                    "description": "JVM options for the application",
+                    "default": "-XX:MaxRAMPercentage=80.0"
+                }
+            }
+        },
+        "logs": {
+            "type": "object",
+            "properties": {
+                "root": {
+                    "type": "object",
+                    "properties": {
+                        "level": {
+                            "type": "string",
+                            "description": "Sets the baseline log level. Only warnings and errors from third-party libraries (gRPC, Netty, Flyway, etc.) are logged by default. Values include: ERROR, WARN, INFO, DEBUG, TRACE",
+                            "default": "WARN"
+                        }
+                    }
+                },
+                "app": {
+                    "type": "object",
+                    "properties": {
+                        "level": {
+                            "type": "string",
+                            "description": "Controls log verbosity for all application code. Set to DEBUG for detailed troubleshooting. Values include: ERROR, WARN, INFO, DEBUG, TRACE",
+                            "default": "INFO"
+                        }
+                    }
+                },
+                "kafka": {
+                    "type": "object",
+                    "properties": {
+                        "level": {
+                            "type": "string",
+                            "description": "Repo package Logging Level. ontrols Kafka client logging independently. Kafka clients are particularly verbose at INFO, so this defaults to WARN. Set to INFO or DEBUG to diagnose connectivity or consumer group issues. Values include: ERROR, WARN, INFO, DEBUG, TRACE",
+                            "default": "WARN"
+                        }
+                    }
+                }
+            }
+        },
+        "postgres": {
+            "type": "object",
+            "properties": {
+                "jdbcUrl": {
+                    "type": "string",
+                    "description": "PostgreSQL connection URI.",
+                    "default": ""
+                },
+                "existingSecret": {
+                    "type": "string",
+                    "description": "Name of an existing secret. The secret must contain 2 keys: 'username', 'password'",
+                    "default": ""
+                },
+                "username": {
+                    "type": "string",
+                    "description": "PostgreSQL username",
+                    "default": ""
+                },
+                "password": {
+                    "type": "string",
+                    "description": "PostgreSQL password",
+                    "default": ""
+                }
+            }
+        },
+        "configMap": {
+            "type": "object",
+            "properties": {
+                "existingEnvConfigMap": {
+                    "type": "string",
+                    "description": "Name of existing configmap containing *GRPC Server* Environment Configuration",
+                    "default": ""
+                }
+            }
+        },
+        "nameOverride": {
+            "type": "string",
+            "description": "String to partially override fullname (will maintain the release name)",
+            "default": ""
+        },
+        "fullnameOverride": {
+            "type": "string",
+            "description": "String to fully override the generated release name",
+            "default": ""
+        },
+        "namespaceOverride": {
+            "type": "string",
+            "description": "String to fully override all deployed resources namespace",
+            "default": ""
+        },
+        "commonLabels": {
+            "type": "object",
+            "description": "Add labels to all the deployed resources",
+            "default": {}
+        },
+        "replicas": {
+            "type": "number",
+            "description": "Number of *GRPC Server* replicas to deploy",
+            "default": 1
+        },
+        "revisionHistoryLimit": {
+            "type": "number",
+            "description": "Number of controller revisions to keep",
+            "default": 5
+        },
+        "annotations": {
+            "type": "object",
+            "description": "Add extra annotations to the deployment object",
+            "default": {}
+        },
+        "podLabels": {
+            "type": "object",
+            "description": "Add extra labels to the *GRPC Server* pod",
+            "default": {}
+        },
+        "podAnnotations": {
+            "type": "object",
+            "description": "Add extra annotations to the *GRPC Server* pod",
+            "default": {}
+        },
+        "extraEnvVars": {
+            "type": "array",
+            "description": "Array with extra environment variables to add to *GRPC Server* pod",
+            "default": [],
+            "items": {}
+        },
+        "extraVolumes": {
+            "type": "array",
+            "description": "Optionally specify extra list of additional volumes",
+            "default": [],
+            "items": {}
+        },
+        "extraVolumeMounts": {
+            "type": "array",
+            "description": "Optionally specify extra list of additional volumeMounts",
+            "default": [],
+            "items": {}
+        },
+        "initContainers": {
+            "type": "array",
+            "description": "Add init containers to the pod",
+            "default": [],
+            "items": {}
+        },
+        "sidecars": {
+            "type": "array",
+            "description": "Add sidecars to the pod",
+            "default": [],
+            "items": {}
+        },
+        "image": {
+            "type": "object",
+            "properties": {
+                "registry": {
+                    "type": "string",
+                    "description": "*GRPC Server* image registry",
+                    "default": "quay.io"
+                },
+                "repository": {
+                    "type": "string",
+                    "description": "*GRPC Server* image name",
+                    "default": "telicent/data-sharing-transport-grpc-server"
+                },
+                "tag": {
+                    "type": "string",
+                    "description": "*GRPC Server* image tag. If not set, a tag is generated using the appVersion",
+                    "default": ""
+                },
+                "pullPolicy": {
+                    "type": "string",
+                    "description": "*GRPC Server* image pull policy",
+                    "default": "IfNotPresent"
+                },
+                "pullSecrets": {
+                    "type": "array",
+                    "description": "Specify registry secret names as an array",
+                    "default": [],
+                    "items": {}
+                }
+            }
+        },
+        "resources": {
+            "type": "object",
+            "description": "Resources for *GRPC Server* containers",
+            "default": {}
+        },
+        "podSecurityContext": {
+            "type": "object",
+            "properties": {
+                "runAsUser": {
+                    "type": "number",
+                    "description": "Set the provisioning pod's Security Context runAsUser User ID",
+                    "default": 185
+                },
+                "runAsGroup": {
+                    "type": "number",
+                    "description": "Set the provisioning pod's Security Context runAsGroup Group ID",
+                    "default": 185
+                },
+                "runAsNonRoot": {
+                    "type": "boolean",
+                    "description": "Set the provisioning pod's Security Context runAsNonRoot",
+                    "default": true
+                },
+                "fsGroup": {
+                    "type": "number",
+                    "description": "Set the provisioning pod's Group ID for the mounted volumes' filesystem",
+                    "default": 185
+                },
+                "seccompProfile": {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "description": "Set the provisioning pod's Security Context seccomp profile",
+                            "default": "RuntimeDefault"
+                        }
+                    }
+                }
+            }
+        },
+        "containerSecurityContext": {
+            "type": "object",
+            "properties": {
+                "runAsUser": {
+                    "type": "number",
+                    "description": "Set containers' Security Context runAsUser User ID",
+                    "default": 185
+                },
+                "runAsGroup": {
+                    "type": "number",
+                    "description": "Set containers' Security Context runAsGroup Group ID",
+                    "default": 185
+                },
+                "runAsNonRoot": {
+                    "type": "boolean",
+                    "description": "Set container's Security Context runAsNonRoot",
+                    "default": true
+                },
+                "allowPrivilegeEscalation": {
+                    "type": "boolean",
+                    "description": "Set container's Security Context allowPrivilegeEscalation",
+                    "default": false
+                },
+                "capabilities": {
+                    "type": "object",
+                    "properties": {
+                        "drop": {
+                            "type": "array",
+                            "description": "List of capabilities to be dropped",
+                            "default": [
+                                "ALL"
+                            ],
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "seccompProfile": {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "description": "Set container's Security Context seccomp profile",
+                            "default": "RuntimeDefault"
+                        }
+                    }
+                }
+            }
+        },
+        "affinity": {
+            "type": "object",
+            "description": "Affinity for pod assignment",
+            "default": {}
+        },
+        "nodeSelector": {
+            "type": "object",
+            "description": "Node labels for pod assignment",
+            "default": {}
+        },
+        "tolerations": {
+            "type": "array",
+            "description": "Tolerations for pod assignment",
+            "default": [],
+            "items": {}
+        },
+        "serviceAccount": {
+            "type": "object",
+            "properties": {
+                "create": {
+                    "type": "boolean",
+                    "description": "Specifies whether a service account should be created",
+                    "default": true
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the ServiceAccount to use. If not set, a name is generated using the fullname",
+                    "default": ""
+                },
+                "annotations": {
+                    "type": "object",
+                    "description": "Additional custom annotations for the ServiceAccount",
+                    "default": {}
+                },
+                "automount": {
+                    "type": "boolean",
+                    "description": "Automatically mount a ServiceAccount's API credentials",
+                    "default": true
+                }
+            }
+        },
+        "service": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "*GRPC Server* service name. If not set, a name is generated using the fullname",
+                    "default": ""
+                },
+                "port": {
+                    "type": "number",
+                    "description": "*GRPC Server* service port",
+                    "default": 8080
+                },
+                "type": {
+                    "type": "string",
+                    "description": "*GRPC Server* service type",
+                    "default": "ClusterIP"
+                }
+            }
+        },
+        "istio": {
+            "type": "object",
+            "properties": {
+                "ingress": {
+                    "type": "object",
+                    "properties": {
+                        "namespace": {
+                            "type": "string",
+                            "description": "Namespace in which the Istio Ingress resource is deployed",
+                            "default": "istio-system"
+                        },
+                        "serviceAccount": {
+                            "type": "string",
+                            "description": "ServiceAccount associated with Istio ingress deployment",
+                            "default": "istio-ingress"
+                        }
+                    }
+                },
+                "gateway": {
+                    "type": "object",
+                    "properties": {
+                        "namespace": {
+                            "type": "string",
+                            "description": "Namespace in which the Istio Gateway resource is deployed",
+                            "default": "istio-system"
+                        },
+                        "name": {
+                            "type": "string",
+                            "description": "Name of the Istio Gateway resource",
+                            "default": "ingress-gateway"
+                        }
+                    }
+                },
+                "virtualService": {
+                    "type": "object",
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean",
+                            "description": "Enable Istio traffic into *Traefik Proxy*",
+                            "default": true
+                        },
+                        "extraHosts": {
+                            "type": "array",
+                            "description": "Additional hosts (excluding appHostDomain) to be managed by *Traefik Proxy*",
+                            "default": [],
+                            "items": {}
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

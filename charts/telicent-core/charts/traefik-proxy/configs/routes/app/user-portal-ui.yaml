@@ -1,0 +1,26 @@
+# Declare routers / services / middlewares
+http:
+  routers:
+    user-portal-ui:
+      rule: {{ printf "Host(`%s`) && PathPrefix(`/user-portal`)" .Values.global.appHostDomain }}
+      service: user-portal-ui
+      entryPoints:
+        - web-app
+      middleWares:
+        - path-user-portal-ui
+        - host-user-portal-ui
+
+  services:
+    user-portal-ui:
+      loadBalancer:
+        servers:
+          - url: {{ printf "http://%s"  (include "traefik-proxy.hostUserPortalUi" .) }}
+  middlewares:
+    path-user-portal-ui:
+      replacePathRegex:
+        regex: "^/user-portal(.*)"
+        replacement: "/user-portal/$1"
+    host-user-portal-ui:
+      headers:
+        customRequestHeaders:
+          host: {{ include "traefik-proxy.hostUserPortalUi" . }}

@@ -1,0 +1,25 @@
+{{- /*
+Copyright (C) 2026 Telicent Limited
+*/}}
+
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+
+metadata:
+  name: {{ include "user-portal-ui.fullname" .}}-ingress
+  namespace: {{ include "user-portal-ui.namespace" . | quote }}
+  labels:
+    {{- include "user-portal-ui.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "user-portal-ui.selectorLabels" . | nindent 6 }}
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        principals:
+          {{- include "user-portal-ui.ingressPrincipal" .| nindent 8 }}
+    to:
+    - operation:
+        methods: ["GET"]

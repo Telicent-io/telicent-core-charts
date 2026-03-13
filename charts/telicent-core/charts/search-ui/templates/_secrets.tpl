@@ -1,0 +1,14 @@
+{{/*
+Copyright (C) 2026 Telicent Limited
+*/}}
+
+{{/*
+Create the name of the map config secret
+*/}}
+{{- define "search-ui.mapSecretName" -}}
+{{- if .Values.ui.existingMapConfigSecret }}
+{{- .Values.ui.existingMapConfigSecret }}
+{{- else }}
+{{- printf "tc-auth-gen-%s-%s" "mapjs" .Chart.Name }}
+{{- end }}
+{{- end -}}

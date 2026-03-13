@@ -23,52 +23,62 @@
                 },
                 "appHostDomain": {
                     "type": "string",
-                    "description": "Domain associated with Telicent application services",
-                    "default": "apps.telicent.io"
+                    "description": "Domain associated with Telicent application/ui services. This value cannot be changed after it is set",
+                    "default": ""
+                },
+                "apiHostDomain": {
+                    "type": "string",
+                    "description": "Domain associated with Telicent Api services. This value cannot be changed after it is set",
+                    "default": ""
                 },
                 "authHostDomain": {
                     "type": "string",
-                    "description": "Domain associated with Telicent authentication services, including OIDC providers",
-                    "default": "auth.telicent.io"
-                },
-                "jwksUrl": {
-                    "type": "string",
-                    "description": "Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)",
-                    "default": "https://{yourAuthdomain}/.well-known/jwks.json"
-                },
-                "istioNamespace": {
-                    "type": "string",
-                    "description": "Namespace in which Istio is deployed",
-                    "default": "istio-system"
-                },
-                "istioServiceAccountName": {
-                    "type": "string",
-                    "description": "Name of the Istio service account",
-                    "default": "istio-ingress"
-                },
-                "istioGatewayName": {
-                    "type": "string",
-                    "description": "Name of the Istio Gateway Resource (LB operating at the edge of the mesh)",
-                    "default": "ingress-gateway"
-                },
-                "kafkaBootstrapUrls": {
-                    "type": "string",
-                    "description": "Comma separated list containing Kafka bootstrap URLs",
-                    "default": "kafka-bootstrap.kafka.svc.cluster.local:9092"
-                },
-                "existingKafkaConfigSecretName": {
-                    "type": "string",
-                    "description": "Name of an existing secret containing Kafka configuration",
+                    "description": "Domain associated with Telicent authentication services, including OIDC providers. This value cannot be changed after it is set",
                     "default": ""
                 },
-                "existingTruststoreSecretName": {
-                    "type": "string",
-                    "description": "Name of an existing secret containing the truststore",
-                    "default": ""
+                "kafka": {
+                    "type": "object",
+                    "properties": {
+                        "bootstrapServers": {
+                            "type": "string",
+                            "description": "Comma separated list containing Kafka bootstrap servers",
+                            "default": "kafka-bootstrap.kafka.svc.cluster.local:9092"
+                        },
+                        "existingConfigSecretName": {
+                            "type": "string",
+                            "description": "Name of an existing secret containing Kafka configuration",
+                            "default": ""
+                        },
+                        "username": {
+                            "type": "string",
+                            "description": "Username for Kafka authentication",
+                            "default": "your.kafka.username.here"
+                        },
+                        "password": {
+                            "type": "string",
+                            "description": "Password for Kafka authentication",
+                            "default": "your.kafka.password.here"
+                        },
+                        "protocol": {
+                            "type": "string",
+                            "description": "Protocol used for Kafka communication",
+                            "default": "SASL_SSL"
+                        },
+                        "mechanism": {
+                            "type": "string",
+                            "description": "SASL mechanism used for Kafka authentication",
+                            "default": "SCRAM-SHA-512"
+                        }
+                    }
                 },
                 "truststore": {
                     "type": "object",
                     "properties": {
+                        "existingSecret": {
+                            "type": "string",
+                            "description": "Name of an existing secret containing the truststore",
+                            "default": ""
+                        },
                         "mountPath": {
                             "type": "string",
                             "description": "The mount path for the truststore in the container",
@@ -78,104 +88,104 @@
                 }
             }
         },
-        "configuration": {
+        "java": {
             "type": "object",
             "properties": {
-                "userAttributesUrl": {
-                    "type": "string",
-                    "description": "URL for the user details endpoint",
-                    "default": "http://access.tc-system.svc.cluster.local:8080/users/lookup/{user}"
-                },
-                "attributeHierarchyUrl": {
-                    "type": "string",
-                    "description": "URL for the user hierarchy endpoint",
-                    "default": "http://access.tc-system.svc.cluster.local:8080/hierarchies/lookup/{name}"
-                },
-                "javaOptions": {
+                "jvmOptions": {
                     "type": "string",
                     "description": "JVM options for the application",
-                    "default": "-XX:MaxRAMPercentage=70.0 -Djavax.net.ssl.trustStore=/app/config/truststore/truststore.jks"
-                },
-                "otelMetricsExporter": {
+                    "default": "-XX:MaxRAMPercentage=80.0"
+                }
+            }
+        },
+        "elastic": {
+            "type": "object",
+            "properties": {
+                "host": {
                     "type": "string",
-                    "description": "OpenTelemetry metrics exporter",
-                    "default": "prometheus"
+                    "description": "Elastic/OpenSearch host",
+                    "default": "https://your.opensearch.host"
                 },
-                "otelTracesExporter": {
+                "port": {
                     "type": "string",
-                    "description": "OpenTelemetry traces exporter",
-                    "default": "none"
-                },
-                "elasticHost": {
-                    "type": "string",
-                    "description": "OpenSearch host",
-                    "default": "https://your.opensearch.host.here:443"
-                },
-                "elasticPort": {
-                    "type": "string",
-                    "description": "OpenSearch port number",
+                    "description": "Elastic/OpenSearch port number",
                     "default": "443"
                 },
-                "elasticClusterPort": {
-                    "type": "string",
-                    "description": "OpenSearch cluster port",
-                    "default": "9200"
-                },
                 "opensearchCompatibility": {
-                    "type": "string",
+                    "type": "boolean",
                     "description": "Enable OpenSearch compatibility",
-                    "default": "true"
+                    "default": true
                 },
-                "elasticIndexNames": {
+                "index": {
                     "type": "string",
-                    "description": "OpenSearch index name(s)",
+                    "description": "Elastic/OpenSearch index to be used",
                     "default": "search,doc-content"
                 },
                 "searchFieldOptions": {
                     "type": "string",
                     "description": "Field options for search",
                     "default": "primaryName^2,*"
+                },
+                "indexBatchSize": {
+                    "type": "string",
+                    "description": "Number of documents to index in a single batch operation",
+                    "default": "100"
+                },
+                "actionsTopic": {
+                    "type": "string",
+                    "description": "Topic used to synchronise actions between the *Search Projector* and the *Search API* applications.",
+                    "default": "actions"
+                },
+                "existingSecret": {
+                    "type": "string",
+                    "description": "Name of an existing secret. The secret must contain 2 keys: 'username', 'password'",
+                    "default": ""
+                },
+                "username": {
+                    "type": "string",
+                    "description": "OpenSearch/Elastic username",
+                    "default": ""
+                },
+                "password": {
+                    "type": "string",
+                    "description": "OpenSearch/Elastic user password",
+                    "default": ""
                 }
             }
         },
-        "elasticSecrets": {
+        "configMap": {
             "type": "object",
             "properties": {
-                "elasticUser": {
+                "existingEnvConfigMap": {
                     "type": "string",
-                    "description": "OpenSearch username",
-                    "default": ""
-                },
-                "elasticPassword": {
-                    "type": "string",
-                    "description": "OpenSearch user password",
-                    "default": ""
-                },
-                "truststorePass": {
-                    "type": "string",
-                    "description": "Password for the truststore",
-                    "default": ""
-                },
-                "existingEnvironmentSecretName": {
-                    "type": "string",
-                    "description": "Name of an existing environment secret",
+                    "description": "Name of existing configmap containing *Search* Environment Configuration",
                     "default": ""
                 }
             }
-        },
-        "fullnameOverride": {
-            "type": "string",
-            "description": "String to fully override the generated release name",
-            "default": ""
         },
         "nameOverride": {
             "type": "string",
             "description": "String to partially override fullname (will maintain the release name)",
             "default": ""
         },
+        "fullnameOverride": {
+            "type": "string",
+            "description": "String to fully override the generated release name",
+            "default": ""
+        },
+        "namespaceOverride": {
+            "type": "string",
+            "description": "String to fully override all deployed resources namespace",
+            "default": ""
+        },
+        "commonLabels": {
+            "type": "object",
+            "description": "Add labels to all the deployed resources",
+            "default": {}
+        },
         "replicas": {
             "type": "number",
-            "description": "Number of Search replicas to deploy",
+            "description": "Number of *Search* replicas to deploy",
             "default": 1
         },
         "revisionHistoryLimit": {
@@ -185,12 +195,46 @@
         },
         "annotations": {
             "type": "object",
-            "description": "Add extra annotations to the Deployment object",
+            "description": "Add extra annotations to the deployment object",
             "default": {}
         },
-        "extraEnvs": {
+        "podLabels": {
+            "type": "object",
+            "description": "Add extra labels to the *Search* pod",
+            "default": {}
+        },
+        "podAnnotations": {
+            "type": "object",
+            "description": "Add extra annotations to the *Search* pod",
+            "default": {}
+        },
+        "extraEnvVars": {
             "type": "array",
-            "description": "List of additional environment variables to set in the pod",
+            "description": "Array with extra environment variables to add to *Search* pod",
+            "default": [],
+            "items": {}
+        },
+        "extraVolumes": {
+            "type": "array",
+            "description": "Additional containers to be added to the *Search* pod",
+            "default": [],
+            "items": {}
+        },
+        "extraVolumeMounts": {
+            "type": "array",
+            "description": "Optionally specify extra list of additional volumeMounts",
+            "default": [],
+            "items": {}
+        },
+        "initContainers": {
+            "type": "array",
+            "description": "Add init containers to the pod",
+            "default": [],
+            "items": {}
+        },
+        "sidecars": {
+            "type": "array",
+            "description": "Add sidecars to the pod",
             "default": [],
             "items": {}
         },
@@ -199,22 +243,22 @@
             "properties": {
                 "registry": {
                     "type": "string",
-                    "description": "Search image registry",
-                    "default": "REGISTRY_NAME"
+                    "description": "*Search* image registry",
+                    "default": "quay.io"
                 },
                 "repository": {
                     "type": "string",
-                    "description": "Search image name",
-                    "default": "REPOSITORY_NAME/search-api-server"
+                    "description": "*Search* image name",
+                    "default": "telicent/search-api-server"
                 },
                 "tag": {
                     "type": "string",
-                    "description": "Search image tag. If not set, a tag is generated using the appVersion",
+                    "description": "*Search* image tag. If not set, a tag is generated using the appVersion",
                     "default": ""
                 },
                 "pullPolicy": {
                     "type": "string",
-                    "description": "Search image pull policy",
+                    "description": "*Search* image pull policy",
                     "default": "IfNotPresent"
                 },
                 "pullSecrets": {
@@ -227,34 +271,39 @@
         },
         "resources": {
             "type": "object",
+            "description": "Resources for *Search* containers",
+            "default": {}
+        },
+        "podSecurityContext": {
+            "type": "object",
             "properties": {
-                "requests": {
-                    "type": "object",
-                    "properties": {
-                        "cpu": {
-                            "type": "string",
-                            "description": "Set containers' CPU request",
-                            "default": "500m"
-                        },
-                        "memory": {
-                            "type": "string",
-                            "description": "Set containers' memory request",
-                            "default": "4000Mi"
-                        }
-                    }
+                "runAsUser": {
+                    "type": "number",
+                    "description": "Set the provisioning pod's Security Context runAsUser User ID",
+                    "default": 185
                 },
-                "limits": {
+                "runAsGroup": {
+                    "type": "number",
+                    "description": "Set the provisioning pod's Security Context runAsGroup Group ID",
+                    "default": 185
+                },
+                "runAsNonRoot": {
+                    "type": "boolean",
+                    "description": "Set the provisioning pod's Security Context runAsNonRoot",
+                    "default": true
+                },
+                "fsGroup": {
+                    "type": "number",
+                    "description": "Set the provisioning pod's Group ID for the mounted volumes' filesystem",
+                    "default": 185
+                },
+                "seccompProfile": {
                     "type": "object",
                     "properties": {
-                        "cpu": {
+                        "type": {
                             "type": "string",
-                            "description": "Set containers' CPU limit",
-                            "default": "1000m"
-                        },
-                        "memory": {
-                            "type": "string",
-                            "description": "Set containers' memory limit",
-                            "default": "8000Mi"
+                            "description": "Set the provisioning pod's Security Context seccomp profile",
+                            "default": "RuntimeDefault"
                         }
                     }
                 }
@@ -310,44 +359,75 @@
                 }
             }
         },
-        "podSecurityContext": {
+        "affinity": {
+            "type": "object",
+            "description": "Affinity for pod assignment",
+            "default": {}
+        },
+        "nodeSelector": {
+            "type": "object",
+            "description": "Node labels for pod assignment",
+            "default": {}
+        },
+        "tolerations": {
+            "type": "array",
+            "description": "Tolerations for pod assignment",
+            "default": [],
+            "items": {}
+        },
+        "serviceAccount": {
             "type": "object",
             "properties": {
-                "runAsUser": {
-                    "type": "number",
-                    "description": "Set the provisioning pod's Security Context runAsUser User ID",
-                    "default": 185
-                },
-                "runAsGroup": {
-                    "type": "number",
-                    "description": "Set the provisioning pod's Security Context runAsGroup Group ID",
-                    "default": 185
-                },
-                "runAsNonRoot": {
+                "create": {
                     "type": "boolean",
-                    "description": "Set the provisioning pod's Security Context runAsNonRoot",
+                    "description": "Specifies whether a service account should be created",
                     "default": true
                 },
-                "fsGroup": {
-                    "type": "number",
-                    "description": "Set the provisioning pod's Group ID for the mounted volumes' filesystem",
-                    "default": 185
+                "name": {
+                    "type": "string",
+                    "description": "Name of the ServiceAccount to use. If not set, a name is generated using the fullname",
+                    "default": ""
                 },
-                "seccompProfile": {
+                "annotations": {
                     "type": "object",
-                    "properties": {
-                        "type": {
-                            "type": "string",
-                            "description": "Set the provisioning pod's Security Context seccomp profile",
-                            "default": "RuntimeDefault"
-                        }
-                    }
+                    "description": "Additional custom annotations for the ServiceAccount",
+                    "default": {}
+                },
+                "automount": {
+                    "type": "boolean",
+                    "description": "Automatically mount a ServiceAccount's API credentials",
+                    "default": true
+                }
+            }
+        },
+        "service": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "*Search* service name. If not set, a name is generated using the fullname",
+                    "default": ""
+                },
+                "port": {
+                    "type": "number",
+                    "description": "*Search* service port",
+                    "default": 8080
+                },
+                "type": {
+                    "type": "string",
+                    "description": "*Search* service port",
+                    "default": "ClusterIP"
                 }
             }
         },
         "metrics": {
             "type": "object",
             "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable Prometheus metrics",
+                    "default": true
+                },
                 "service": {
                     "type": "object",
                     "properties": {
@@ -365,63 +445,28 @@
                 }
             }
         },
-        "service": {
+        "hosts": {
             "type": "object",
             "properties": {
-                "port": {
-                    "type": "number",
-                    "description": "Search service port",
-                    "default": 8181
+                "enableAutoCorrect": {
+                    "type": "boolean",
+                    "description": "Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as it is, without any modification",
+                    "default": true
                 },
-                "type": {
+                "auth": {
                     "type": "string",
-                    "description": "Search service port",
-                    "default": "ClusterIP"
-                }
-            }
-        },
-        "istio": {
-            "type": "object",
-            "properties": {
-                "ingress": {
-                    "type": "object",
-                    "properties": {
-                        "principal": {
-                            "type": "string",
-                            "description": "Principal used for ingress traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'global.istioNamespace' and 'global.istioServiceAccountName'",
-                            "default": ""
-                        }
-                    }
+                    "description": "Auth application default host value, as defined by 'service/serviceAccount:port'",
+                    "default": "auth:8080"
+                },
+                "traefikProxy": {
+                    "type": "string",
+                    "description": "Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'",
+                    "default": "traefik-proxy:8080"
                 },
                 "graph": {
-                    "type": "object",
-                    "properties": {
-                        "principal": {
-                            "type": "string",
-                            "description": "Principal used for Graph traffic by the Istio AuthorizationPolicy. If not set, a principal is generated using 'serviceAccountName' and the current namespace",
-                            "default": ""
-                        },
-                        "serviceAccountName": {
-                            "type": "string",
-                            "description": "Name of the Graph service account",
-                            "default": "graph"
-                        }
-                    }
-                }
-            }
-        },
-        "serviceAccount": {
-            "type": "object",
-            "properties": {
-                "name": {
                     "type": "string",
-                    "description": "Name of the created ServiceAccount. If not set, a name is generated using the fullname template",
-                    "default": ""
-                },
-                "annotations": {
-                    "type": "object",
-                    "description": "Additional custom annotations for the ServiceAccount",
-                    "default": {}
+                    "description": "Graph application default host value, as defined by 'service/serviceAccount:port'",
+                    "default": "graph:8080"
                 }
             }
         }

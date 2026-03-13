@@ -1,0 +1,29 @@
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: {{ include "gateway-apps.fullname" . }}
+  labels:
+  {{- include "gateway-apps.labels" . | nindent 4 }}
+spec:
+  action: ALLOW
+  provider:
+    name: {{ include "gateway-apps.customAuthzProviderName" . }}
+  rules:
+  - to:
+    - operation:
+        hosts:
+        - {{ .Values.global.appsHost }}
+        - {{ .Values.global.appsHost }}:*
+        - {{ .Values.global.apiHost }}
+        - {{ .Values.global.apiHost }}:*
+        - {{ .Values.global.authHost }}
+        - {{ .Values.global.authHost }}:*
+        - {{ .Values.global.idpHost }}
+        - {{ .Values.global.idpHost }}:*
+        paths:
+        - /*
+        - /
+  selector:
+    matchLabels:
+      {{- .Values.ingressSelectors | toYaml | nindent 6 }}

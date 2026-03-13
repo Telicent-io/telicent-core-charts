@@ -1,0 +1,1 @@
+{{- $_ := required ".Values.server.hostDomain is required" .Values.server.hostDomain }}

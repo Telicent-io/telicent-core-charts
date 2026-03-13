@@ -1,8 +1,10 @@
-# Copyright (C) 2025 Telicent Limited
+# Copyright (C) 2026 Telicent Limited
 
 apiVersion: v2
 name: telicent-core
-description: A Helm chart for Kubernetes
+description: |
+  Telicent CORE Platform, for all essential services and applications for our
+  secure data integration and knowledge graph platform.
 
 # A chart can be either an 'application' or a 'library' chart.
 #
@@ -17,7 +19,7 @@ type: application
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 0.4.1
+version: 1.2.0
 
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application. Versions are not expected to
@@ -26,15 +28,15 @@ version: 0.4.1
 appVersion: "1.16.0"
 
 #  The chart's dependencies. These are other charts that this chart depends on
-# TODO: Use a remote repository for dependencies? Will require a change to the CI/CD pipeline.
 # The dependencies will be fetched and installed when the chart is installed.
 dependencies:
-  - name: access
+  - name: admin-ui
     version: "^0.1.0"
-    repository: file://./charts/access
-  - name: access-ui
+    repository: file://./charts/admin-ui
+    condition: global.enterprise
+  - name: auth
     version: "^0.1.0"
-    repository: file://./charts/access-ui
+    repository: file://./charts/auth
   - name: graph-ui
     version: "^0.1.0"
     repository: file://./charts/graph-ui
@@ -50,20 +52,24 @@ dependencies:
     version: "^0.1.0"
     repository: file://./charts/graph
   - name: search
-    version: "^0.1.1"
+    version: "^0.2.0"
     repository: file://./charts/search
     condition: global.enterprise
   - name: search-projector
-    version: "^0.1.1"
+    version: "^0.2.0"
     repository: file://./charts/search-projector
     condition: global.enterprise
   - name: user-preferences
-    version: "^0.1.0"
+    version: "^0.2.0"
     repository: file://./charts/user-preferences
     condition: global.enterprise
-  - name: oauth2-proxy
+  - name: traefik-proxy
     version: "^0.1.0"
-    repository: file://./charts/oauth2-proxy
+    repository: file://./charts/traefik-proxy
+  - name: document-pipeline
+    version: "^0.1.0"
+    repository: file://./charts/document-pipeline
+    condition: global.enterprise, document-pipeline.enabled
 
 icon: "https://avatars.githubusercontent.com/u/65304240?s=200&v=4"
 

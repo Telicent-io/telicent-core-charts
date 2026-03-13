@@ -1,0 +1,8 @@
+# Declare routers / services / middlewares
+http:
+  middlewares:
+    rate-limit-app:
+      rateLimit:
+        period: 1s
+        average: {{ .Values.rateLimit.app.average  }}
+        burst: {{ .Values.rateLimit.app.burst  }}

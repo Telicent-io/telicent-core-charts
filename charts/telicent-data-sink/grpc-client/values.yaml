@@ -1,0 +1,275 @@
+# Copyright (C) 2026 Telicent Limited
+# Telicent *GRPC Client* stand-alone chart
+
+#
+# @section Global Parameters
+#
+# @descStart
+# Contains global parameters; these parameters are mirrored within the Telicent umbrella charts.
+# Note: Only global parameters used within this chart will be listed below.
+# @descEnd
+global:
+  ## Current available global image parameters: imageRegistry and imagePullSecrets
+  ## Please, note that this will override the image parameters
+  # @key global.imageRegistry Global image registry
+  imageRegistry: ""
+  # E.g.
+  # imagePullSecrets:
+  #   - myRegistryKeySecretName
+  # @key global.imagePullSecrets Global registry secret names as an array
+  imagePullSecrets: []
+
+  # @key global.enabled enabled Enable *GRPC Client* deployment
+  enabled: false
+
+  kafka:
+    # @key global.kafka.bootstrapServers Comma separated list containing Kafka bootstrap servers
+    bootstrapServers: "kafka-bootstrap.kafka.svc.cluster.local:9092"
+    # @key global.kafka.existingConfigSecretName Name of an existing secret containing Kafka configuration
+    existingConfigSecretName: ""
+    # @key global.kafka.username Username for Kafka authentication
+    username: "your.kafka.username.here"
+    # @key global.kafka.password Password for Kafka authentication
+    password: "your.kafka.password.here"
+    # @key global.kafka.protocol Protocol used for Kafka communication
+    protocol: "SASL_SSL"
+    # @key global.kafka.mechanism SASL mechanism used for Kafka authentication
+    mechanism: "SCRAM-SHA-512"
+
+#
+# @section Application Parameters - Client
+#
+# @descStart
+# Contains parameters specific to the *GRPC Client* application
+# @descEnd
+client:
+  # @key client.id Unique client identifier. Used for offset tracking, gRPC request identification, and server-side logging. Must be unique when multiple clients share a storage backend. Example: 'org1' (required)
+  id: ""
+  server:
+    # @key client.server.host Hostname of the gRPC data sharing server, example: 'sink.telicent.io' (required)
+    host: ""
+    # @key client.server.port Port of the gRPC data sharing server (required)
+    port: 443
+  tls:
+    # @key client.tls.enabled Enable TLS for the gRPC channel
+    enabled: true
+    # @key client.tls.caIncluded Flag to denote that the Certificate Authority (CA) has been provided
+    caIncluded: true
+    # @key client.tls.existingSecret Existing secret with TLS certificates (`tls.key`, `tls.crt`) or (`tls.key`, `tls.crt`, `ca.crt`) with tls.caIncluded set as true.
+    existingSecret: ""
+    mTLS:
+      # @key client.tls.mTLS.enabled IF TLS support is enabled, require clients to provide certificates
+      enabled: true
+
+  grpc:
+   # @key client.grpc.keepAliveTimeSecs Interval in seconds between gRPC keep-alive pings sent to the server
+   keepAliveTimeSecs: 30
+   # @key client.grpc.keepAliveTimeoutSecs Time in seconds to wait for a keep-alive ping response before considering the connection dead
+   keepAliveTimeoutSecs: 10
+   # @key client.grpc.idleTimeoutSecs Time in seconds after which an idle gRPC channel is closed
+   idleTimeoutSecs: 10
+  retry:
+    # @key client.retry.maxAttempts Maximum number of retry attempts before giving up. Set to 0 for unlimited retries
+    maxAttempts: 200
+    # @key client.retry.initialBackoffMillis Initial backoff period in milliseconds. Doubles after each retry up to 'maxBackoffMilliSecs'
+    initialBackoffMillis: 500
+    # @key client.retry.maxBackoffMillis Maximum backoff period in milliseconds (ceiling for exponential backoff)
+    maxBackoffMillis: 60000
+    # @key client.retry.forever When true, the client loops continuously after processing completes, polling for new data. When false, exits after one successful cycle
+    forever: true
+  kafka:
+    # @key client.kafka.consumerGroup Kafka consumer group ID, Left unset defaults to: client-{client-id}-cg
+    consumerGroup: ""
+    # @key client.kafka.topicSuffix Suffix appended to each topic name when producing to local Kafka. Final topic name is {remote-topic}-{client-id}{suffix}
+    topicSuffix: "-staging"
+    # @key client.kafka.keySerializerClass Fully qualified class name for the Kafka key serializer
+    keySerializerClass: "org.apache.kafka.common.serialization.BytesSerializer"
+     # @key client.kafka.valueSerializerClass Fully qualified class name for the Kafka value serializer
+    valueSerializerClass: "org.apache.kafka.common.serialization.BytesSerializer"
+
+#
+# @section Application Parameters - Java
+#
+# @descStart
+# Contains Java parameters to be used by the *GRPC Client* application
+# @descEnd
+java:
+  # @key java.jvmOptions JVM options for the application
+  jvmOptions: "-XX:MaxRAMPercentage=80.0"
+
+#
+# @section Application Parameters - Logs
+#
+logs:
+  root:
+    # @key logs.root.level Sets the baseline log level. Only warnings and errors from third-party libraries (gRPC, Netty, Flyway, etc.) are logged by default. Values include: ERROR, WARN, INFO, DEBUG, TRACE
+    level: "WARN"
+  app:
+    # @key logs.app.level Controls log verbosity for all application code. Set to DEBUG for detailed troubleshooting. Values include: ERROR, WARN, INFO, DEBUG, TRACE
+    level: "INFO"
+  kafka:
+    # @key logs.kafka.level Repo package Logging Level. ontrols Kafka client logging independently. Kafka clients are particularly verbose at INFO, so this defaults to WARN. Set to INFO or DEBUG to diagnose connectivity or consumer group issues. Values include: ERROR, WARN, INFO, DEBUG, TRACE
+    level: "WARN"
+
+#
+# @section Application Parameters - PostgreSQL and Secret
+#
+# @descStart
+# The following contains connection details to a PostgreSQL instance, on which the application relies.
+# It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
+# For Quick Start purposes, a secret named `tc-auth-usr-psql-grpc-client` will be created if one is not set.
+# @descEnd
+postgres:
+ # @key postgres.jdbcUrl PostgreSQL connection URL format: "jdbc:postgresql://{host}:{port}/{database}"
+  jdbcUrl: ""
+  # @key postgres.existingSecret Name of an existing secret. The secret must contain 2 keys: 'username', 'password'
+  # Note: Left unset, it will create a secret named: tc-auth-usr-psql-grpc-client
+  existingSecret: ""
+  # @key postgres.username PostgreSQL username
+  # Note: For additional security, the username is read from the secret, as defined by 'existingSecret' and not from this value!
+  username: ""
+  # @key postgres.password PostgreSQL password
+  password: ""
+
+#
+# @section ConfigMap Parameters
+#
+configMap:
+  # @key configMap.existingEnvConfigMap Name of existing configmap containing *GRPC Client* Environment Configuration
+  # Note: When it's set it will disable configmap creation.
+  existingEnvConfigMap: ""
+
+#
+# @section Common Parameters
+#
+# @key nameOverride String to partially override fullname (will maintain the release name)
+nameOverride: ""
+# @key fullnameOverride String to fully override the generated release name
+fullnameOverride: ""
+# @key namespaceOverride String to fully override all deployed resources namespace
+namespaceOverride: ""
+# @key commonLabels Add labels to all the deployed resources
+commonLabels: {}
+
+#
+# @section Deployment Parameters
+#
+# @key replicas Number of *GRPC Client* replicas to deploy
+replicas: 1
+# @key revisionHistoryLimit Number of controller revisions to keep
+revisionHistoryLimit: 5
+
+# @key annotations Add extra annotations to the deployment object
+annotations: {}
+# @key podLabels Add extra labels to the *GRPC Client* pod
+podLabels: {}
+# @key podAnnotations Add extra annotations to the *GRPC Client* pod
+podAnnotations: {}
+# @key extraEnvVars Array with extra environment variables to add to *GRPC Client* pod
+# Example:
+# extraEnvVars:
+# - name: FOO
+#   value: instance
+extraEnvVars: []
+# @key extraVolumes Optionally specify extra list of additional volumes
+extraVolumes: []
+# @key extraVolumeMounts Optionally specify extra list of additional volumeMounts
+extraVolumeMounts: []
+# @key initContainers Add init containers to the pod
+initContainers: []
+# Example:
+# sidecars:
+# - name: your-image-name
+#   image: your-image
+#   ports:
+#   - name: portname
+#     containerPort: 1234
+# @key sidecars Add sidecars to the pod
+sidecars: []
+
+#
+# @section Deployment Image Parameters
+#
+image:
+  # @key image.registry *GRPC Client* image registry
+  registry: quay.io
+  # @key image.repository *GRPC Client* image name
+  repository: telicent/data-sharing-transport-grpc-client
+  # @key image.tag *GRPC Client* image tag. If not set, a tag is generated using the appVersion
+  tag: ""
+  # @key image.pullPolicy *GRPC Client* image pull policy
+  pullPolicy: IfNotPresent
+  # @key image.pullSecrets Specify registry secret names as an array
+  pullSecrets: []
+
+#
+# @section Deployment Resources Parameters - Requests and Limits
+#
+# @key resources Resources for *GRPC Client* containers
+resources: {}
+#  requests:
+#    # @key resources.requests.cpu Set containers' CPU request
+#    cpu: "250m"
+#    # @key resources.requests.memory Set containers' memory request
+#    memory: "1000Mi"
+#  limits:
+#    # @key resources.limits.cpu Set containers' CPU limit
+#    cpu: "500m"
+#    # @key resources.limits.memory Set containers' memory limit
+#    memory: "2000Mi"
+
+#
+# @section Statefulset Security Context Parameters - Default Security Context
+#
+podSecurityContext:
+  # @key podSecurityContext.runAsUser Set the provisioning pod's Security Context runAsUser User ID
+  runAsUser: 185
+  # @key podSecurityContext.runAsGroup Set the provisioning pod's Security Context runAsGroup Group ID
+  runAsGroup: 185
+  # @key podSecurityContext.runAsNonRoot Set the provisioning pod's Security Context runAsNonRoot
+  runAsNonRoot: true
+  # @key podSecurityContext.fsGroup Set the provisioning pod's Group ID for the mounted volumes' filesystem
+  fsGroup: 185
+  seccompProfile:
+    # @key podSecurityContext.seccompProfile.type Set the provisioning pod's Security Context seccomp profile
+    type: RuntimeDefault
+containerSecurityContext:
+  # @key containerSecurityContext.runAsUser Set containers' Security Context runAsUser User ID
+  runAsUser: 185
+  # @key containerSecurityContext.runAsGroup Set containers' Security Context runAsGroup Group ID
+  runAsGroup: 185
+  # @key containerSecurityContext.runAsNonRoot Set container's Security Context runAsNonRoot
+  runAsNonRoot: true
+  # @key containerSecurityContext.allowPrivilegeEscalation Set container's Security Context allowPrivilegeEscalation
+  allowPrivilegeEscalation: false
+  capabilities:
+    # @key containerSecurityContext.capabilities.drop List of capabilities to be dropped
+    drop:
+      - ALL
+  seccompProfile:
+    # @key containerSecurityContext.seccompProfile.type Set container's Security Context seccomp profile
+    type: RuntimeDefault
+
+# @key affinity Affinity for pod assignment
+# Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+affinity: {}
+# @key nodeSelector Node labels for pod assignment
+# Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
+nodeSelector: {}
+# @key tolerations Tolerations for pod assignment
+# Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+tolerations: []
+
+#
+# @section Service Account Parameters
+#
+serviceAccount:
+  # @key serviceAccount.create Specifies whether a service account should be created
+  create: true
+  # @key serviceAccount.name Name of the ServiceAccount to use. If not set, a name is generated using the fullname
+  name: ""
+  # @key serviceAccount.annotations Additional custom annotations for the ServiceAccount
+  annotations: {}
+  # @key serviceAccount.automount Automatically mount a ServiceAccount's API credentials
+  automount: true
+

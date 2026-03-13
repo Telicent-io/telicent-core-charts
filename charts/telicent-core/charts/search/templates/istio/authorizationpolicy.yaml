@@ -1,0 +1,47 @@
+{{- /*
+Copyright (C) 2026 Telicent Limited
+*/}}
+{{- if .Values.global.enterprise }}
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+
+metadata:
+  name: {{ include "search.fullname" . }}-ingress
+  namespace: {{ include "search.namespace" . | quote }}
+  labels:
+    {{- include "search.labels" . | nindent 4 }}
+
+spec:
+  selector:
+    matchLabels:
+      {{- include "search.selectorLabels" . | nindent 6 }}
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        principals:
+          {{- include "search.ingressPrincipal" . | nindent 8 }}
+    to:
+    - operation:
+        paths:
+        - /documents
+        - /documents/*
+        - /facets
+        - /facets/*
+        - /list
+        - /list/*
+        - /states
+        - /states/*
+        - /typeahead
+        - /typeahead/*
+        - /healthz
+        - /healthz/*
+        - /version-info
+        - /version-info/*
+        - /backups/create
+        - /backups/delete
+        - /backups/list
+        - /backups/list/*
+        - /backups/restore
+        methods: ["GET", "POST"]
+{{- end }}

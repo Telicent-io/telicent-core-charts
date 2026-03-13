@@ -1,20 +1,23 @@
 {{- /*
-Copyright (C) 2025 Telicent Limited
+Copyright (C) 2026 Telicent Limited
 */}}
 
 apiVersion: v1
 kind: Service
+
 metadata:
   name: {{ include "graph-ui.serviceName" . }}
+  namespace: {{ include "graph-ui.namespace" . | quote }}
   labels:
     {{- include "graph-ui.labels" . | nindent 4 }}
+
 spec:
   type: {{ .Values.service.type }}
   selector:
     {{- include "graph-ui.selectorLabels" . | nindent 4 }}
   ports:
-    - name: http
-      port: {{ .Values.service.port }}
-      appProtocol: http
-      protocol: TCP
-      targetPort: 8080
+  - name: http
+    appProtocol: http
+    protocol: TCP
+    targetPort: http
+    port: {{ .Values.service.port }}

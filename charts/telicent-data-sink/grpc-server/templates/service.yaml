@@ -1,0 +1,24 @@
+{{- /*
+Copyright (C) Telicent Limited
+*/}}
+{{- if .Values.enabled -}}
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: {{ include "grpc-server.serviceName" . }}
+  namespace: {{ include "grpc-server.namespace" . | quote }}
+  labels:
+    {{- include "grpc-server.labels" . | nindent 4 }}
+
+spec:
+  type: {{ .Values.service.type }}
+  selector:
+    {{- include "grpc-server.selectorLabels" . | nindent 4 }}
+  ports:
+    - name: grpc
+      appProtocol: grpc
+      protocol: TCP
+      targetPort: grpc
+      port: {{ .Values.service.port }}
+{{- end }}

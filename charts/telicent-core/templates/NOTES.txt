@@ -1,0 +1,250 @@
+{{/*
+Dynamic Component Detection using Helm Lookup
+The following variables use helm's lookup function to check what components are actually deployed
+in the cluster, rather than relying on static configuration values.
+This provides an accurate view of the current deployment state.
+
+Note: lookup returns empty if the resource doesn't exist or if running in --dry-run mode
+*/}}
+{{- $auth := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "auth") }}
+{{- $graph := lookup "apps/v1" "StatefulSet" .Release.Namespace (printf "%s-%s" .Release.Name "graph") }}
+{{- $userPref := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "user-preferences") }}
+{{- $search := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "search") }}
+{{- $searchProjector := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "search-projector") }}
+{{- $adminUi := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "admin-ui") }}
+{{- $graphUi := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "graph-ui") }}
+{{- $queryUi := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "query-ui") }}
+{{- $searchUi := lookup "apps/v1" "Deployment" .Release.Namespace (printf "%s-%s" .Release.Name "search-ui") }}
+
+{{/*
+Check if we're in dry-run mode or if lookup is unavailable
+*/}}
+{{- $isDryRun := or (not $auth) (not $adminUi) -}}
+{{- if and (not .Values.global.appHostDomain) $isDryRun -}}
+{{- $isDryRun = true -}}
+{{- end }}
+
+🎉 Telicent Core has been successfully deployed!
+
+█████████████████████████████████████████████████████████
+███████████████████ TELICENT CORE ███████████████████████
+█████████████████████████████████████████████████████████
+
+📋 DEPLOYMENT SUMMARY:
+======================
+Chart Version:        {{ .Chart.Version }}
+App Version:          {{ .Chart.AppVersion }}
+Release Name:         {{ .Release.Name }}
+Namespace:            {{ .Release.Namespace }}
+
+{{- $deployedCount := 0 }}
+{{- if $auth }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
+{{- if $userPref }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
+{{- if $graph }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
+{{- if $search }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
+{{- if $searchProjector }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
+{{- if $adminUi }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
+{{- if $graphUi }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
+{{- if $queryUi }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
+{{- if $searchUi }}{{ $deployedCount = add $deployedCount 1 }}{{- end }}
+
+{{- if .Values.global.enterprise }}
+🚀 Enterprise Mode:   ENABLED
+{{- else }}
+🏠 Community Mode:    ENABLED
+{{- end }}
+📊 Components:        {{ $deployedCount }} deployed
+{{- if $isDryRun }}
+
+⚠️  Note: Running in dry-run/template mode - component status reflects configuration, not actual deployment
+{{- end }}
+
+📦 DEPLOYED COMPONENTS:
+========================
+{{- if $isDryRun }}
+{{/* Show configuration-based status when lookup is not available */}}
+📋 Auth Service       - Authentication Brokering
+📋 Graph Service      - Graph Data Management
+📋 Query UI           - Data Query Interface
+{{- if .Values.global.enterprise }}
+📋 Admin UI           - Administration Interface
+📋 Graph UI           - Graph Data Visualization
+📋 Search UI          - Search Interface  
+📋 User Preferences   - User Settings Management
+📋 Search Service     - Search Backend
+📋 Search Projector   - Search Data Indexing
+{{- end }}
+
+{{- else }}
+{{/* Show actual deployment status using lookup */}}
+
+{{- if $auth }}
+✅ Auth              - Authentication Brokering
+{{- else }}
+❌ Auth              - Authentication Brokering (not deployed)
+{{- end }}
+
+{{- if $userPref }}
+✅ User Preferences   - User Settings Management
+{{- end }}
+
+{{- if $graph }}
+✅ Graph Service      - Graph Data Management
+{{- else }}
+❌ Graph Service      - Graph Data Management (not deployed)
+{{- end }}
+
+{{- if $search }}
+✅ Search Service     - Search Backend
+{{- end }}
+
+{{- if $searchProjector }}
+✅ Search Projector   - Search Data Indexing
+{{- end }}
+
+{{- if $adminUi }}
+✅ Admin UI          - Administration Interface
+{{- else }}
+❌ Admin UI          - Administration Interface (not deployed)
+{{- end }}
+
+{{- if $graphUi }}
+✅ Graph UI           - Graph Data Visualization
+{{- end }}
+
+{{- if $queryUi }}
+✅ Query UI           - Data Query Interface
+{{- end }}
+
+{{- if $searchUi }}
+✅ Search UI          - Search Interface
+{{- end }}
+
+
+🌐 ACCESS INFORMATION:
+======================
+{{- if .Values.global.appHostDomain }}
+Application Domain:    {{ .Values.global.appHostDomain }}
+API Domain:            {{ .Values.global.apiHostDomain }}
+Authentication Domain: {{ .Values.global.authHostDomain }}
+
+🔗 Access your applications at:
+{{- if $adminUi }}
+- Admin UI:         https://{{ .Values.global.appHostDomain }}/admin
+{{- end }}
+{{- if $graphUi }}
+- Graph UI:          https://{{ .Values.global.appHostDomain }}/graph
+{{- end }}
+{{- if $queryUi }}
+- Query UI:          https://{{ .Values.global.appHostDomain }}/query
+{{- end }}
+{{- if $searchUi }}
+- Search UI:         https://{{ .Values.global.appHostDomain }}/search
+{{- end }}
+{{- else }}
+⚠️  No appHostDomain configured. Access via port-forward or configure ingress manually.
+{{- end }}
+
+⚙️  CONFIGURATION:
+===================
+{{- if .Values.global.kafka.bootstrapServers }}
+Kafka Bootstrap:     {{ .Values.global.kafka.bootstrapServers }}
+{{- end }}
+
+{{- if .Values.global.istioIngressNamespace }}
+Istio Ingress Namespace:      {{ .Values.global.istioIngressNamespace}}
+Istio Ingress ServiceAccount: {{ .Values.global.istioIngressServiceAccount}}
+Istio Gateway Namespace:      {{ .Values.global.istioGatewayNamespace}}
+Istio Gateway Names:          {{ .Values.global.istioGatewayName}}
+{{- end }}
+
+🛠️  HELPFUL COMMANDS:
+======================
+# View all pods
+kubectl get pods -n {{ .Release.Namespace }}
+
+# Check deployment status
+helm status {{ .Release.Name }} -n {{ .Release.Namespace }}
+
+# View service endpoints
+kubectl get svc -n {{ .Release.Namespace }}
+
+# Port-forward to access services locally (examples):
+{{- if $adminUi }}
+kubectl port-forward svc/{{ .Release.Name }}-admin-ui 8080:8080 -n {{ .Release.Namespace }}
+{{- end }}
+{{- if $graphUi }}
+kubectl port-forward svc/{{ .Release.Name }}-graph-ui 8080:8080 -n {{ .Release.Namespace }}
+{{- end }}
+{{- if $queryUi }}
+kubectl port-forward svc/{{ .Release.Name }}-query-ui 8080:8080 -n {{ .Release.Namespace }}
+{{- end }}
+{{- if $searchUi }}
+kubectl port-forward svc/{{ .Release.Name }}-search-ui 8080:8080 -n {{ .Release.Namespace }}
+{{- end }}
+
+
+# View logs for specific components (examples):
+{{- if $auth }}
+kubectl logs -l app=auth -n {{ .Release.Namespace }}
+{{- end }}
+{{- if $graph }}
+kubectl logs -l app=graph -n {{ .Release.Namespace }}
+{{- end }}
+{{- if $search }}
+kubectl logs -l app=search -n {{ .Release.Namespace }}
+{{- end }}
+
+🔧 CONFIGURATION UPDATES:
+==========================
+# Upgrade the release with new values:
+helm upgrade {{ .Release.Name }} ./charts/telicent-core -n {{ .Release.Namespace }} -f your-values.yaml
+
+# View current configuration:
+helm get values {{ .Release.Name }} -n {{ .Release.Namespace }}
+
+{{- $enterpriseFeatures := false }}
+{{- if or $adminUi $graphUi $searchUi $search $searchProjector $userPref }}
+{{- $enterpriseFeatures = true }}
+{{- end }}
+
+{{- if not $enterpriseFeatures }}
+💡 ENTERPRISE FEATURES:
+========================
+{{- if not .Values.global.enterprise }}
+Enterprise mode is disabled. To enable enterprise features:
+  helm upgrade {{ .Release.Name }} ./charts/telicent-core -n {{ .Release.Namespace }} --set global.enterprise=true
+
+Available enterprise features include:
+- Admin UI (Administration Interface)
+- Graph UI (Graph Data Visualization)
+- Search UI (Search Interface) 
+- Search Service (Search Backend)
+- Search Projector (Search Data Indexing)
+- User Preferences (User Settings Management)
+
+🏢 Need an enterprise license? Contact us at: https://telicent.io/contact-2/
+{{- else }}
+Enterprise mode is enabled but some enterprise components may not be deployed.
+Check individual component configurations or dependencies.
+{{- end }}
+{{- end }}
+{{- end }}
+
+⚠️  IMPORTANT NOTES:
+====================
+
+{{- if contains "your.kafka" .Values.global.kafka.username }}
+📡 Configure Kafka: Update Kafka connection details in global.kafka.* values
+{{- end }}
+{{- if or (not .Values.global.appHostDomain) (eq .Values.global.appHostDomain "apps.telicent.io") }}
+🌍 Configure Domains: Set global.appHostDomain, global.apiHostDomain and global.authHostDomain for your environment
+{{- end }}
+
+📚 DOCUMENTATION:
+==================
+- Chart Documentation: https://github.com/Telicent-IO/telicent-core-charts
+- Telicent Documentation: https://docs.telicent.io
+- Support: https://github.com/Telicent-IO/telicent-core-charts/issues
+
+Thank you for using Telicent Core! 🚀

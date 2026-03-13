@@ -1,0 +1,14 @@
+{{- /*
+Copyright (C) 2026 Telicent Limited
+*/}}
+
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+
+metadata:
+  name: {{ include "auth.name" . }}-deny-all
+  namespace: {{ include "auth.namespace" . | quote }}
+  labels:
+    {{- include "auth.labels" . | nindent 4 }}
+
+spec: {}

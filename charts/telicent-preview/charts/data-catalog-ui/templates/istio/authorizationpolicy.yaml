@@ -1,0 +1,25 @@
+{{- /*
+Copyright (C) 2026 Telicent Limited
+*/}}
+
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+
+metadata:
+  name: {{ include "data-catalog-ui.fullname" . }}
+  namespace: {{ include "data-catalog-ui.namespace" . | quote }}
+  labels:
+    {{- include "data-catalog-ui.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "data-catalog-ui.selectorLabels" . | nindent 6 }}
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        principals:
+          {{- include "data-catalog-ui.ingressPrincipal" .| nindent 8 }}
+    to:
+    - operation:
+        methods: ["GET"]

@@ -39,6 +39,8 @@ jobs:
     needs: create-release-pr-or-tag-release
     permissions:
       contents: write
+      # Cosign keyless signing via Sigstore OIDC
+      id-token: write
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -52,11 +54,29 @@ jobs:
       - name: Set up chart-testing
         uses: helm/chart-testing-action@v2.7.0
 
+      - name: Install cosign
+        uses: sigstore/cosign-installer@v3
+
       - name: Package changed charts
         run: |
           helm repo add telicent-core-charts 'https://charts.telicent.io'
           helm dependency update ./charts/telicent-core
-          for chart in $(find ./charts -maxdepth 1 -mindepth 1 -type d); do echo "packaging chart - $chart" && helm package -u -d .cr-release-packages $chart; done
+          for chart in $(find . -type f -name 'Chart.yaml' -print0 -maxdepth 3 | xargs -0 -n1 dirname | sort -u); do echo "packaging chart - $chart" && helm package -u -d .cr-release-packages $chart; done
+
+      - name: Log in to Quay.io
+        run: helm registry login quay.io --username "${{ secrets.QUAY_USERNAME }}" --password "${{ secrets.QUAY_PASSWORD }}"
+
+      - name: Push and sign charts on Quay.io
+        run: |
+          for chart in .cr-release-packages/*.tgz; do
+            echo "pushing $chart to oci://quay.io/telicent/charts"
+            output=$(helm push "$chart" oci://quay.io/telicent/charts 2>&1)
+            echo "$output"
+            pushed=$(echo "$output" | grep "^Pushed:" | awk '{print $2}')
+            digest=$(echo "$output" | grep "^Digest:" | awk '{print $2}')
+            echo "signing ${pushed}@${digest}"
+            cosign sign --yes "${pushed}@${digest}"
+          done
 
       - name: checkout pages branch
         uses: actions/checkout@v4

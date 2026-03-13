@@ -1,0 +1,31 @@
+{{- /*
+Copyright (C) 2026 Telicent Limited
+*/}}
+{{- if .Values.enabled -}}
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+
+metadata:
+  name: {{ include "notifications.fullname" . }}-ingress
+  namespace: {{ include "notifications.namespace" . | quote }}
+spec:
+  selector:
+    matchLabels:
+    {{- include "notifications.selectorLabels" . | nindent 6 }}
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        principals:
+        {{- include "notifications.ingressPrincipal" . | nindent 8 }}
+    to:
+    - operation:
+        paths:
+        - /notifications/read
+        - /notifications/read/*
+        - /notifications/unread
+        - /notifications/unread/*
+        - /notifications
+        - /notifications/*
+        methods: ["GET","POST","PATCH"]
+{{- end }}

@@ -1,0 +1,27 @@
+{{- /*
+Copyright (C) 2026 Telicent Limited
+*/}}
+{{- if .Values.global.enterprise }}
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+
+metadata:
+  name: {{ include "search-ui.fullname" . }}-ingress
+  namespace: {{ include "search-ui.namespace" . | quote }}
+  labels: 
+    {{- include "search-ui.labels" . | nindent 4 }}
+
+spec:
+  selector:
+    matchLabels:
+      {{- include "search-ui.selectorLabels" . | nindent 6 }}
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        principals:
+          {{- include "search-ui.ingressPrincipal" .| nindent 8 }}
+    to:
+    - operation:
+        methods: ["GET"]
+{{- end }}

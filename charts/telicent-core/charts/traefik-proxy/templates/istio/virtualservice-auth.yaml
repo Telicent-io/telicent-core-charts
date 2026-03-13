@@ -1,0 +1,25 @@
+{{- /*
+Copyright (C) 2026 Telicent Limited
+*/}}
+{{- if .Values.istio.virtualService.enabled  }}
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+
+metadata:
+  name: {{ include "traefik-proxy.fullname" . }}-auth
+  namespace: {{ include "traefik-proxy.namespace" . | quote }}
+  labels:
+    {{- include "traefik-proxy.labels" . | nindent 4 }}
+
+spec:
+  gateways:
+  - {{ include "istio.gatewayNamespace" . }}/{{ include "istio.gatewayName" . }}
+  hosts:
+  - {{ .Values.global.authHostDomain }}
+  http:
+   - route:
+      - destination:
+          host: {{ include "traefik-proxy.serviceName" . }}
+          port:
+            number: {{ .Values.service.auth.port }}
+{{- end }}

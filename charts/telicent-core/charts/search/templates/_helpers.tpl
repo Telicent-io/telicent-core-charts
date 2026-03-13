@@ -1,5 +1,5 @@
 {{/*
-Copyright (C) 2025 Telicent Limited
+Copyright (C) 2026 Telicent Limited
 */}}
 
 {{/*
@@ -8,6 +8,17 @@ Expand the name of the chart.
 {{- define "search.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
+
+{{/*
+Allow the release namespace to be overridden.
+*/}}
+{{- define "search.namespace" -}}
+{{- if .Values.namespaceOverride -}}
+{{- .Values.namespaceOverride -}}
+{{- else -}}
+{{- .Release.Namespace -}}
+{{- end -}}
+{{- end -}}
 
 {{/*
 Create a default fully qualified app name.
@@ -35,17 +46,6 @@ Create chart name and version as used by the chart label.
 {{- end }}
 
 {{/*
-Common labels
-*/}}
-{{- define "search.labels" -}}
-helm.sh/chart: {{ include "search.chart" . }}
-{{ include "search.selectorLabels" . }}
-app.kubernetes.io/version: {{ include "search.version" . | quote }}
-app.kubernetes.io/managed-by: {{ .Release.Service }}
-telicent.io/resource: "true"
-{{- end }}
-
-{{/*
 Selector labels
 */}}
 {{- define "search.selectorLabels" -}}
@@ -54,41 +54,38 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
-Create the name of the service account to use
+Common labels
+*/}}
+{{- define "search.labels" -}}
+helm.sh/chart: {{ include "search.chart" . }}
+{{ include "search.selectorLabels" . }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+app.kubernetes.io/version: {{ include "search.version" . | quote }}
+app: {{ include "search.name" . }}
+telicent.io/resource: "true"
+{{- range $key, $value := .Values.commonLabels }}
+{{ $key }}: {{ $value | quote }}
+{{- end }}
+{{- end }}
+
+{{/*
+Create the name of the service account to use (based on the fullname).
 */}}
 {{- define "search.serviceAccountName" -}}
-{{- default (printf "%s" (include "search.fullname" .)) .Values.serviceAccount.name }}
+{{- if .Values.serviceAccount.create }}
+{{- default (include "search.fullname" .) .Values.serviceAccount.name }}
+{{- else }}
+{{- .Values.serviceAccount.name | default "default" }}
+{{- end }}
 {{- end }}
 
 {{/*
-Create the name of the service to use
+Create the name of the service to use (based on the fullname).
 */}}
 {{- define "search.serviceName" -}}
+{{- if .Values.service.name }}
+{{- .Values.service.name -}}
+{{- else }}
 {{- include "search.fullname" . }}
 {{- end }}
-
-{{/*
-Create the name of the config map
-*/}}
-{{- define "search.envConfigmapName" -}}
-{{- if .Values.existingConfigmap }}
-{{- .Values.existingConfigmap }}
-{{- else }}
-{{- printf "%s-%s" (include "search.fullname" .) "env" }}
-{{- end }}
-{{- end }}
-
-{{/*
-Create the name of environment variable secrets
-*/}}
-{{- define "search.envSecretName" -}}
-{{ include "search.fullname" . }}
-{{- end }}
-
-{{- define "search.ingressPrincipal" -}}
-{{- .Values.istio.ingress.principal | default (printf "cluster.local/ns/%s/sa/%s" .Values.global.istioNamespace .Values.global.istioServiceAccountName) | quote }}
-{{- end }}
-
-{{- define "search.graphPrincipal" -}}
-{{- .Values.istio.graph.principal | default (printf "cluster.local/ns/%s/sa/%s-%s" .Release.Namespace .Release.Name .Values.istio.graph.serviceAccountName ) | quote }}
 {{- end }}

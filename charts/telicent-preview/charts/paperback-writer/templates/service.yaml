@@ -1,0 +1,24 @@
+{{- /*
+Copyright (C) 2026 Telicent Limited
+*/}}
+{{- if .Values.enabled -}}
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: {{ include "paperback-writer.serviceName" . }}
+  namespace: {{ include "paperback-writer.namespace" . | quote }}
+  labels:
+    {{- include "paperback-writer.labels" . | nindent 4 }}
+
+spec:
+  type: {{ .Values.service.type }}
+  selector:
+    {{- include "paperback-writer.selectorLabels" . | nindent 4 }}
+  ports:
+    - name: http
+      appProtocol: http
+      protocol: TCP
+      targetPort: http
+      port: {{ .Values.service.port }}
+{{- end }}

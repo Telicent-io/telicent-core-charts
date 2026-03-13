@@ -23,72 +23,82 @@
                 },
                 "appHostDomain": {
                     "type": "string",
-                    "description": "Domain associated with Telicent application services",
-                    "default": "apps.telicent.io"
+                    "description": "Domain associated with Telicent application/ui services. This value cannot be changed after it is set",
+                    "default": ""
+                },
+                "apiHostDomain": {
+                    "type": "string",
+                    "description": "Domain associated with Telicent Api services. This value cannot be changed after it is set",
+                    "default": ""
                 },
                 "authHostDomain": {
                     "type": "string",
-                    "description": "Domain associated with Telicent authentication services, including OIDC providers",
-                    "default": "auth.telicent.io"
+                    "description": "Domain associated with Telicent authentication services, including OIDC providers. This value cannot be changed after it is set",
+                    "default": ""
                 },
-                "jwksUrl": {
+                "istioIngressNamespace": {
                     "type": "string",
-                    "description": "Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)",
-                    "default": "https://{yourAuthdomain}/.well-known/jwks.json"
-                },
-                "istioNamespace": {
-                    "type": "string",
-                    "description": "Namespace in which Istio is deployed",
+                    "description": "Namespace in which the Istio Ingress resource is deployed",
                     "default": "istio-system"
                 },
-                "istioServiceAccountName": {
+                "istioIngressServiceAccount": {
                     "type": "string",
-                    "description": "Name of the Istio service account",
+                    "description": "ServiceAccount associated with Istio ingress deployment",
                     "default": "istio-ingress"
+                },
+                "istioGatewayNamespace": {
+                    "type": "string",
+                    "description": "Namespace in which the Istio Gateway resource is deployed",
+                    "default": "istio-system"
                 },
                 "istioGatewayName": {
                     "type": "string",
-                    "description": "Name of the Istio Gateway Resource (LB operating at the edge of the mesh)",
+                    "description": "Name of the Istio Gateway resource",
                     "default": "ingress-gateway"
                 },
-                "kafkaBootstrapUrls": {
-                    "type": "string",
-                    "description": "Comma separated list containing Kafka bootstrap URLs",
-                    "default": "kafka-bootstrap.kafka.svc.cluster.local:9092"
-                },
-                "existingKafkaConfigSecretName": {
-                    "type": "string",
-                    "description": "Name of an existing secret containing Kafka configuration",
-                    "default": ""
-                },
-                "kafkaConfigUsername": {
-                    "type": "string",
-                    "description": "Username for Kafka authentication",
-                    "default": "your.kafka.username.here"
-                },
-                "kafkaConfigPassword": {
-                    "type": "string",
-                    "description": "Password for Kafka authentication",
-                    "default": "your.kafka.password.here"
-                },
-                "kafkaConfigProtocol": {
-                    "type": "string",
-                    "description": "Protocol used for Kafka communication",
-                    "default": "SASL_SSL"
-                },
-                "kafkaConfigMechanism": {
-                    "type": "string",
-                    "description": "SASL mechanism used for Kafka authentication",
-                    "default": "SCRAM-SHA-512"
-                },
-                "existingTruststoreSecretName": {
-                    "type": "string",
-                    "description": "Name of an existing secret containing the truststore",
-                    "default": ""
+                "kafka": {
+                    "type": "object",
+                    "properties": {
+                        "bootstrapServers": {
+                            "type": "string",
+                            "description": "Comma separated list containing Kafka bootstrap servers",
+                            "default": "kafka-bootstrap.kafka.svc.cluster.local:9092"
+                        },
+                        "existingConfigSecretName": {
+                            "type": "string",
+                            "description": "Name of an existing secret containing Kafka configuration",
+                            "default": ""
+                        },
+                        "username": {
+                            "type": "string",
+                            "description": "Username for Kafka authentication",
+                            "default": "your.kafka.username.here"
+                        },
+                        "password": {
+                            "type": "string",
+                            "description": "Password for Kafka authentication",
+                            "default": "your.kafka.password.here"
+                        },
+                        "protocol": {
+                            "type": "string",
+                            "description": "Protocol used for Kafka communication",
+                            "default": "SASL_SSL"
+                        },
+                        "mechanism": {
+                            "type": "string",
+                            "description": "SASL mechanism used for Kafka authentication",
+                            "default": "SCRAM-SHA-512"
+                        }
+                    }
                 },
                 "truststore": {
                     "type": "object",
                     "properties": {
+                        "existingSecret": {
+                            "type": "string",
+                            "description": "Name of an existing secret containing the truststore",
+                            "default": ""
+                        },
                         "mountPath": {
                             "type": "string",
                             "description": "The mount path for the truststore in the container",
@@ -97,11 +107,6 @@
                     }
                 }
             }
-        },
-        "jobServiceAccountName": {
-            "type": "string",
-            "description": "Service account used for running jobs in Kubernetes.",
-            "default": "producers"
         },
         "serviceAccount": {
             "type": "object",
@@ -117,6 +122,32 @@
                     "default": {}
                 }
             }
+        },
+        "jobServiceAccountName": {
+            "type": "string",
+            "description": "Service account used for running jobs in Kubernetes.",
+            "default": "producers"
+        },
+        "kafkaTopics": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable or disable the creation of Kafka topics during installation",
+                    "default": false
+                },
+                "topics": {
+                    "type": "array",
+                    "description": "List of Kafka topics to be created",
+                    "default": [],
+                    "items": {}
+                }
+            }
+        },
+        "istioInjectionLabelJobEnabled": {
+            "type": "boolean",
+            "description": "Enable automatically labelling a namespace for Istio injection via a job. Useful when namespace is created via Helm",
+            "default": true
         }
     }
 }

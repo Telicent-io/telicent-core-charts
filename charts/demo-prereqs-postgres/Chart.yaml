@@ -1,0 +1,17 @@
+apiVersion: v2
+name: demo-prereqs-postgres
+description: A simple PostgreSQL deployment for demo/development purposes
+
+type: application
+
+version: 0.3.2
+
+# PostgreSQL version
+appVersion: "16"
+
+icon: "https://avatars.githubusercontent.com/u/65304240?s=200&v=4"
+
+# The name of the chart's maintainers.
+maintainers:
+  - name: telicent
+    url: https://github.com/Telicent-IO

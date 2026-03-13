@@ -1,23 +1,23 @@
 {{/*
-Copyright (C) 2025 Telicent Limited
+Copyright (C) 2026 Telicent Limited
 */}}
 
 {{/*
-Returns the version of the search-projector
+Returns the version
 */}}
 {{- define "search-projector.version" -}}
 {{ .Values.image.tag | default .Chart.AppVersion }}
 {{- end -}}
 
 {{/*
-Returns the image registry of the search-projector
+Returns the image registry
 */}}
 {{- define "search-projector.imageRegistry" -}}
 {{- .Values.global.imageRegistry | default .Values.image.registry }}
 {{- end -}}
 
 {{/*
-Returns the image of the search projector
+Returns the image
 */}}
 {{- define "search-projector.image" -}}
 {{- printf "%s/%s:%s" (include "search-projector.imageRegistry" .) .Values.image.repository  (include "search-projector.version" .) }}

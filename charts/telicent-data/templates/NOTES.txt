@@ -1,0 +1,143 @@
+🚀 Telicent Data Pipeline has been successfully deployed!
+
+██████████████████████████████████████████████████████████
+███████████████████ TELICENT DATA ████████████████████████
+██████████████████████████████████████████████████████████
+
+📋 DEPLOYMENT SUMMARY:
+======================
+Chart Version:        {{ .Chart.Version }}
+App Version:          {{ .Chart.AppVersion }}
+Release Name:         {{ .Release.Name | default "telicent-data" }}
+Namespace:            {{ .Release.Namespace | default "default" }}
+Purpose:              Data ingestion pipeline for Telicent Core
+
+{{- $enabledProducers := 0 }}
+{{- range $producerName, $producer := .Values.producers }}
+{{- if $producer.enabled }}
+{{- $enabledProducers = add $enabledProducers 1 }}
+{{- end }}
+{{- end }}
+
+📊 Data Producers:    {{ $enabledProducers }} enabled
+
+📦 DATA INGESTION JOBS:
+========================
+{{- range $producerName, $producer := .Values.producers }}
+{{- if $producer.enabled }}
+📋 {{ $producerName | title | replace "-" " " }}
+   └── Status: Configured (ready to deploy)
+   └── Image:  {{ $producer.image.repository }}:{{ $producer.image.tag | default $.Chart.AppVersion }}
+{{- if $producer.env }}
+   └── Config: {{ len $producer.env }} environment variables
+{{- end }}
+{{- end }}
+{{- end }}
+
+🎯 DATA PIPELINE STATUS:
+=========================
+📋 Ready to deploy {{ $enabledProducers }} data producer(s)
+
+🔧 TARGET ENVIRONMENT:
+=======================
+{{- if .Values.global }}
+{{- if .Values.global.appHostDomain }}
+Core Application:    https://{{ .Values.global.appHostDomain }}/
+{{- else }}
+⚠️  Core application domain not configured
+{{- end }}
+{{- if .Values.global.kafka }}
+{{- if .Values.global.kafka.bootstrapServers }}
+Kafka Endpoint:      {{ .Values.global.kafka.bootstrapServers }}
+{{- end }}
+{{- end }}
+{{- end }}
+
+🛠️  MONITORING & MANAGEMENT:
+==============================
+# View all data ingestion jobs
+kubectl get jobs -l app.kubernetes.io/name={{ include "telicent-data.name" . }} -n <namespace>
+
+# Check job status and details
+kubectl describe jobs -l app.kubernetes.io/name={{ include "telicent-data.name" . }} -n <namespace>
+
+# View job logs for each producer:
+{{- range $producerName, $producer := .Values.producers }}
+{{- if $producer.enabled }}
+kubectl logs -l app.kubernetes.io/producer={{ $producerName }} -n <namespace>
+{{- end }}
+{{- end }}
+
+# Delete completed jobs (cleanup)
+kubectl delete jobs -l app.kubernetes.io/name={{ include "telicent-data.name" . }} -n <namespace> --field-selector status.successful=1
+
+# Delete failed jobs (for retry)
+kubectl delete jobs -l app.kubernetes.io/name={{ include "telicent-data.name" . }} -n <namespace> --field-selector status.failed=1
+
+⚙️  PRODUCER MANAGEMENT:
+=========================
+# Enable a data producer:
+helm upgrade <release-name> ./charts/telicent-data -n <namespace> --set producers.<producer-name>.enabled=true
+
+# Disable a data producer:
+helm upgrade <release-name> ./charts/telicent-data -n <namespace> --set producers.<producer-name>.enabled=false
+
+# Update producer configuration:
+helm upgrade <release-name> ./charts/telicent-data -n <namespace> -f custom-values.yaml
+
+Available producers:
+{{- range $producerName, $producer := .Values.producers }}
+- {{ $producerName }}{{ if $producer.enabled }} (enabled){{ else }} (disabled){{ end }}
+{{- end }}
+
+🔄 RE-RUN JOBS:
+================
+To re-run data ingestion jobs, delete the existing job and upgrade the release:
+
+# Delete specific job:
+kubectl delete job {{ include "telicent-data.fullname" . }}-<producer-name> -n <namespace>
+
+# Re-deploy (will create new job):
+helm upgrade <release-name> ./charts/telicent-data -n <namespace>
+
+{{- if .Values.global }}
+{{- if .Values.global.kafka }}
+{{- if or (not .Values.global.kafka.bootstrapServers) (contains "localhost" .Values.global.kafka.bootstrapServers) }}
+
+⚠️  CONFIGURATION NOTES:
+=========================
+🔧 Kafka Configuration: Update global.kafka.bootstrapServers with your Kafka cluster endpoint
+{{- end }}
+{{- end }}
+{{- if or (not .Values.global.appHostDomain) (eq .Values.global.appHostDomain "apps.telicent.io") }}
+🌍 Core Application: Configure global.appHostDomain to point to your Telicent Core deployment
+{{- end }}
+{{- end }}
+
+💡 TROUBLESHOOTING:
+====================
+Common issues and solutions:
+
+1. Job stuck in pending state:
+   - Check resource constraints: kubectl describe nodes
+   - Verify image pull secrets and registry access
+
+2. Job failing repeatedly:
+   - Check logs: kubectl logs -l app.kubernetes.io/producer=<name>
+   - Verify environment variables and configuration
+   - Check connectivity to data sources and Kafka
+
+3. Data not appearing in Core:
+   - Verify Kafka connectivity and topic configuration
+   - Check Core application logs for processing errors
+   - Validate data format and schema compatibility
+
+📚 DOCUMENTATION:
+==================
+- Chart Documentation: https://github.com/Telicent-IO/telicent-core-charts/tree/main/charts/telicent-data
+- Telicent Core Documentation: https://docs.telicent.io
+- Data Pipeline Guide: https://docs.telicent.io/data-pipeline
+- Support: https://github.com/Telicent-IO/telicent-core-charts/issues
+
+Thank you for using Telicent Data Pipeline! 🚀
+Data flows into knowledge. Knowledge flows into insight.

@@ -1,0 +1,29 @@
+{{- /*
+Copyright (C) 2026 Telicent Limited
+*/}}
+{{- if not .Values.configMap.existingEnvConfigMap -}}
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: {{ include "user-preferences.envConfigMapName" . }}
+  namespace: {{ include "user-preferences.namespace" . | quote }}
+  labels:
+    {{- include "user-preferences.labels" . | nindent 6 }}
+
+data:
+  FEATURE_FLAG_AUTHZ: "true"
+
+  # MongoDB Settings
+  MONGO_URL: {{ .Values.mongo.url | quote }}
+  MONGO_DATABASE: {{ .Values.mongo.database | quote }}
+  MONGO_AUTH_DATABASE : {{ .Values.mongo.authDatabase | quote }}
+
+  # Postgres Settings
+  DATABASE_JDBC_URL: {{ .Values.postgres.jdbcUrl | quote }}
+  
+  # Application Settings
+  JAVA_OPTIONS: {{ .Values.java.jvmOptions | quote }}
+  JWKS_URL: {{ printf "%s%s%s" "https://" .Values.global.authHostDomain "/oauth2/jwks" | quote }}
+  USERINFO_URL: {{ printf "http://%s%s" (include "user-preferences.hostAuth" . ) "/userinfo" | quote }}
+{{- end }}

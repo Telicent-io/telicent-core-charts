@@ -1,0 +1,26 @@
+{{- /*
+Copyright (C) 2026 Telicent Limited
+*/}}
+
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+
+metadata:
+  name: {{ include "traefik-proxy.fullname" . }}-ingress
+  namespace: {{ include "traefik-proxy.namespace" . | quote }}
+  labels:
+    {{- include "traefik-proxy.labels" . | nindent 4 }}
+
+spec:
+  selector:
+    matchLabels:
+      {{- include "traefik-proxy.selectorLabels" . | nindent 6 }}
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        principals:
+          {{- include "traefik-proxy.istioPrincipal" . | nindent 8 }}
+    to:
+    - operation:
+        methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"]

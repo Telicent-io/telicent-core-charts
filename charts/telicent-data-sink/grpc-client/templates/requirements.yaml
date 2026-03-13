@@ -1,0 +1,3 @@
+{{- $_ := required ".Values.client.id required" .Values.client.id }}
+{{- $_ := required ".Values.client.server.host required" .Values.client.server.host }}
+{{- $_ := required ".Values.client.server.port required" .Values.client.server.port }}

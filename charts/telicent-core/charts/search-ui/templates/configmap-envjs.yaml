@@ -1,0 +1,98 @@
+{{- /*
+Copyright (C) 2026 Telicent Limited
+*/}}
+
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: {{ include "search-ui.configMapName" . }}
+  namespace: {{ include "search-ui.namespace" . | quote }}
+  labels:
+    {{- include "search-ui.labels" . | nindent 4 }}
+
+data:
+  env-config.js: |
+    // UIs
+    {{ if .Values.ui.dataCatalogUiDeployed }}
+    window.CATALOG_APP_URL = "https://{{ .Values.global.appHostDomain }}/data-catalog";
+    {{ end }}
+    {{ if .Values.ui.graphUiDeployed }}
+    window.GRAPH_APP_URL = "https://{{ .Values.global.appHostDomain }}/graph";
+    {{ end }}
+    window.SEARCH_APP_URL = "https://{{ .Values.global.appHostDomain }}/search";
+    {{ if .Values.ui.userPortalUiDeployed }}
+    window.USER_PORTAL_URL = "https://{{ .Values.global.appHostDomain }}/user-portal/";
+    {{ end }}
+
+    // APIs
+    window.ACCESS_URL = "https://{{ .Values.global.apiHostDomain }}/access";
+    window.GRAPHQL_API_URL = "https://{{ .Values.global.apiHostDomain }}/graphql/knowledge";
+    window.ONTOLOGY_SERVICE_URL = "https://{{ .Values.global.apiHostDomain }}/sparql";
+    window.SEARCH_API_URL = "https://{{ .Values.global.apiHostDomain }}/search";
+    window.USER_PREF_API_URL = "https://{{ .Values.global.apiHostDomain }}/user-preferences";
+    
+    
+
+    // Signout
+    window.SIGN_OUT_URL = "https://{{ .Values.global.appHostDomain }}/oauth2/sign_out?rd=/oauth2/authorize";
+
+    // Additional apps not currently deployed
+    window.GEO_APP_URL;
+    window.LIVE_APP_URL;
+    window.PARALOG_APP_URL;
+    // Extra APIs - deprecated?
+    window.IMAGE_API_URL;
+    window.ENTITY_EXTRACTION_API_URL;
+
+    {{ if .Values.ui.textAiApiDeployed | default false }}
+    window.TEXT_AI_API_URL = "https://{{ .Values.global.apiHostDomain }}/barry";
+    {{ end }}
+
+    // `appList` configures the menu that allows users to switch between different apps
+    window.appList = [
+    {{ if .Values.ui.userPortalUiDeployed }}
+        {
+            id: "telicent-user-portal",
+            name: "user portal",
+            url: window.USER_PORTAL_URL,
+            icon: "/search/assets/icons/UserPortalDark.svg",
+        },
+    {{ end }}
+    {{ if .Values.ui.graphUiDeployed }}
+        {
+            id: "telicent-graph",
+            name: "graph",
+            url: window.GRAPH_APP_URL,
+            icon: "/search/assets/icons/GraphDark.svg",
+        },
+    {{ end }}
+    {{ if .Values.ui.dataCatalogUiDeployed }}
+        {
+            id: "telicent-catalog",
+            name: "catalog",
+            url: window.CATALOG_APP_URL,
+            icon: "/search/assets/icons/CatalogDark.svg",
+        },
+    {{ end }}
+    ];
+
+    window.feAppOptions = {
+      // 🚨 WARNING: ENCODE_SEARCH_PARAMS_MODE must be the same in search, graph, and user-portal 🚨
+      //ENCODE_SEARCH_PARAMS_MODE: "as uri component", // default if unset
+      ENCODE_SEARCH_PARAMS_MODE: 'as base64',
+    };
+
+    window.featureFlags = {
+      FF_AI_TRANSLATE: false,
+      FF_AUTH_V2: true,
+      FF_MAP_V2: {{ .Values.ui.mapV2Enabled }}
+    };
+    
+    window.AUTH_V2_CONFIG = {
+      authServerUrl: "https://{{ .Values.global.authHostDomain }}",
+      clientId: "{{ .Values.oauth.clientId }}",
+      scope: "{{ .Values.oauth.scopes }}",
+      redirectUri: "https://{{ .Values.global.appHostDomain }}/search/callback",
+      popupRedirectUri: "https://{{ .Values.global.appHostDomain }}/search/auth-redirect-uri",
+    };

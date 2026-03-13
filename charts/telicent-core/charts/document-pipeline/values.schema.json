@@ -1,0 +1,1265 @@
+{
+    "title": "Chart Values",
+    "type": "object",
+    "properties": {
+        "enabled": {
+            "type": "boolean",
+            "description": "Enable Document Pipeline chart",
+            "default": false
+        },
+        "global": {
+            "type": "object",
+            "properties": {
+                "imageRegistry": {
+                    "type": "string",
+                    "description": "Global image registry",
+                    "default": ""
+                },
+                "imagePullSecrets": {
+                    "type": "array",
+                    "description": "Global registry secret names as an array",
+                    "default": [],
+                    "items": {}
+                },
+                "appHostDomain": {
+                    "type": "string",
+                    "description": "Domain associated with Telicent application/ui services. This value cannot be changed after it is set",
+                    "default": ""
+                },
+                "apiHostDomain": {
+                    "type": "string",
+                    "description": "Domain associated with Telicent Api services. This value cannot be changed after it is set",
+                    "default": ""
+                },
+                "authHostDomain": {
+                    "type": "string",
+                    "description": "Domain associated with Telicent authentication services, including OIDC providers. This value cannot be changed after it is set",
+                    "default": ""
+                },
+                "kafka": {
+                    "type": "object",
+                    "properties": {
+                        "bootstrapServers": {
+                            "type": "string",
+                            "description": "Comma separated list containing Kafka bootstrap servers",
+                            "default": "kafka-bootstrap.kafka.svc.cluster.local:9092"
+                        },
+                        "existingConfigSecretName": {
+                            "type": "string",
+                            "description": "Name of an existing secret containing Kafka configuration (preferred over individual settings below for security)",
+                            "default": ""
+                        },
+                        "username": {
+                            "type": "string",
+                            "description": "Username for Kafka authentication",
+                            "default": "your.kafka.username.here"
+                        },
+                        "password": {
+                            "type": "string",
+                            "description": "Password for Kafka authentication",
+                            "default": "your.kafka.password.here"
+                        },
+                        "protocol": {
+                            "type": "string",
+                            "description": "Protocol used for Kafka communication",
+                            "default": "SASL_SSL"
+                        },
+                        "mechanism": {
+                            "type": "string",
+                            "description": "SASL mechanism used for Kafka authentication",
+                            "default": "SCRAM-SHA-512"
+                        }
+                    }
+                },
+                "truststore": {
+                    "type": "object",
+                    "properties": {
+                        "existingSecret": {
+                            "type": "string",
+                            "description": "Name of an existing secret containing the truststore",
+                            "default": ""
+                        },
+                        "mountPath": {
+                            "type": "string",
+                            "description": "The mount path for the truststore in the container",
+                            "default": "/app/config/truststore"
+                        }
+                    }
+                }
+            }
+        },
+        "resources": {
+            "type": "object",
+            "description": "Resources for *Document Pipeline* containers",
+            "default": {}
+        },
+        "podSecurityContext": {
+            "type": "object",
+            "properties": {
+                "runAsUser": {
+                    "type": "number",
+                    "description": "Set the provisioning pod's Security Context runAsUser User ID",
+                    "default": 185
+                },
+                "runAsGroup": {
+                    "type": "number",
+                    "description": "Set the provisioning pod's Security Context runAsGroup Group ID",
+                    "default": 185
+                },
+                "runAsNonRoot": {
+                    "type": "boolean",
+                    "description": "Set the provisioning pod's Security Context runAsNonRoot",
+                    "default": true
+                },
+                "fsGroup": {
+                    "type": "number",
+                    "description": "Set the provisioning pod's Group ID for the mounted volumes' filesystem",
+                    "default": 185
+                },
+                "seccompProfile": {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "description": "Set the provisioning pod's Security Context seccomp profile",
+                            "default": "RuntimeDefault"
+                        }
+                    }
+                }
+            }
+        },
+        "containerSecurityContext": {
+            "type": "object",
+            "properties": {
+                "runAsUser": {
+                    "type": "number",
+                    "description": "Set containers' Security Context runAsUser User ID",
+                    "default": 185
+                },
+                "runAsGroup": {
+                    "type": "number",
+                    "description": "Set containers' Security Context runAsGroup Group ID",
+                    "default": 185
+                },
+                "runAsNonRoot": {
+                    "type": "boolean",
+                    "description": "Set container's Security Context runAsNonRoot",
+                    "default": true
+                },
+                "allowPrivilegeEscalation": {
+                    "type": "boolean",
+                    "description": "Set container's Security Context allowPrivilegeEscalation",
+                    "default": false
+                },
+                "capabilities": {
+                    "type": "object",
+                    "properties": {
+                        "drop": {
+                            "type": "array",
+                            "description": "List of capabilities to be dropped",
+                            "default": [
+                                "ALL"
+                            ],
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "seccompProfile": {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "description": "Set container's Security Context seccomp profile",
+                            "default": "RuntimeDefault"
+                        }
+                    }
+                }
+            }
+        },
+        "serviceAccount": {
+            "type": "object",
+            "properties": {
+                "create": {
+                    "type": "boolean",
+                    "description": "Specifies whether a service account should be created",
+                    "default": true
+                },
+                "automount": {
+                    "type": "boolean",
+                    "description": "Automatically mount a ServiceAccount's API credentials",
+                    "default": true
+                },
+                "annotations": {
+                    "type": "object",
+                    "description": "Annotations to add to the service account",
+                    "default": {}
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The name of the service account to use. If not set and create is true, a name is generated using the fullname template",
+                    "default": ""
+                }
+            }
+        },
+        "hosts": {
+            "type": "object",
+            "properties": {
+                "enableAutoCorrect": {
+                    "type": "boolean",
+                    "description": "Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as it is, without any modification",
+                    "default": true
+                },
+                "auth": {
+                    "type": "string",
+                    "description": "Auth application default host value, as defined by 'service/serviceAccount:port'",
+                    "default": "auth:8080"
+                },
+                "traefikProxy": {
+                    "type": "string",
+                    "description": "Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'",
+                    "default": "traefik-proxy:8080"
+                }
+            }
+        },
+        "httpIngester": {
+            "type": "object",
+            "properties": {
+                "java": {
+                    "type": "object",
+                    "properties": {
+                        "jvmOptions": {
+                            "type": "string",
+                            "description": "Java options to pass to the JVM",
+                            "default": "-XX:MaxRAMPercentage=80.0"
+                        }
+                    }
+                },
+                "routes": {
+                    "type": "array",
+                    "description": "A unique name for the route",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string",
+                                "description": "A unique name for the route"
+                            },
+                            "topic": {
+                                "type": "string",
+                                "description": "The destination Kafka topic for the route"
+                            },
+                            "securityLabel": {
+                                "type": "string",
+                                "description": "In this test configuration the label is simply test=true"
+                            },
+                            "namespace": {
+                                "type": "string",
+                                "description": "The Namespace URI that will be used to assign a unique URI to a document URIs are generated deterministically based on this and the ingested document content"
+                            },
+                            "headers": {
+                                "type": "array",
+                                "description": "The Owner header, configured such that even if the header is present in the request then the defaultValue here takes precedence",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "string",
+                                            "description": "The EDH/IDH policy information header"
+                                        },
+                                        "defaultValue": {
+                                            "type": "string",
+                                            "description": "The default value for the EDH/IDH policy information header"
+                                        },
+                                        "priority": {
+                                            "type": "string",
+                                            "description": "The priority for the EDH/IDH policy information header"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "configMap": {
+                    "type": "object",
+                    "properties": {
+                        "existingEnvConfigMap": {
+                            "type": "string",
+                            "description": "Name of existing configmap containing *HTTP Ingester* Environment Configuration",
+                            "default": ""
+                        },
+                        "existingRoutesConfigMap": {
+                            "type": "string",
+                            "description": "Name of existing configmap containing Routes Configuration",
+                            "default": ""
+                        }
+                    }
+                },
+                "nameOverride": {
+                    "type": "string",
+                    "description": "Override the chart name for the *HTTP Ingester*",
+                    "default": ""
+                },
+                "fullnameOverride": {
+                    "type": "string",
+                    "description": "Override the full name for the *HTTP Ingester*",
+                    "default": ""
+                },
+                "replicas": {
+                    "type": "number",
+                    "description": "Number of replicas to deploy",
+                    "default": 1
+                },
+                "annotations": {
+                    "type": "object",
+                    "description": "Add extra annotations to the deployment object",
+                    "default": {}
+                },
+                "podLabels": {
+                    "type": "object",
+                    "description": "Labels to add to the *HTTP Ingester* pods",
+                    "default": {}
+                },
+                "podAnnotations": {
+                    "type": "object",
+                    "description": "Annotations to add to the *HTTP Ingester* pods",
+                    "default": {}
+                },
+                "extraEnvVars": {
+                    "type": "array",
+                    "description": "Array with extra environment variables to add",
+                    "default": [],
+                    "items": {}
+                },
+                "extraVolumes": {
+                    "type": "array",
+                    "description": "Additional volumes on the output Deployment definition",
+                    "default": [],
+                    "items": {}
+                },
+                "extraVolumeMounts": {
+                    "type": "array",
+                    "description": "Additional volumeMounts on the output Deployment definition",
+                    "default": [],
+                    "items": {}
+                },
+                "initContainers": {
+                    "type": "array",
+                    "description": "Add init containers to the pod",
+                    "default": [],
+                    "items": {}
+                },
+                "sidecars": {
+                    "type": "array",
+                    "description": "Add sidecars to the pod.",
+                    "default": [],
+                    "items": {}
+                },
+                "image": {
+                    "type": "object",
+                    "properties": {
+                        "registry": {
+                            "type": "string",
+                            "description": "*HTTP Ingester* image registry",
+                            "default": "quay.io"
+                        },
+                        "repository": {
+                            "type": "string",
+                            "description": "The container image repository for the *HTTP Ingester*",
+                            "default": "telicent/telicent-document-http-ingester"
+                        },
+                        "tag": {
+                            "type": "string",
+                            "description": "The image tag for the *HTTP Ingester*",
+                            "default": "3.3.4"
+                        },
+                        "pullPolicy": {
+                            "type": "string",
+                            "description": "The image pull policy for the *HTTP Ingester*",
+                            "default": "IfNotPresent"
+                        },
+                        "pullSecrets": {
+                            "type": "array",
+                            "description": "Specify registry secret names as an array",
+                            "default": [],
+                            "items": {}
+                        }
+                    }
+                },
+                "resources": {
+                    "type": "object",
+                    "description": "Resources for *HTTP Ingester* containers",
+                    "default": {}
+                },
+                "affinity": {
+                    "type": "object",
+                    "description": "Affinity for pod assignment",
+                    "default": {}
+                },
+                "nodeSelector": {
+                    "type": "object",
+                    "description": "Node labels for pod assignment",
+                    "default": {}
+                },
+                "tolerations": {
+                    "type": "array",
+                    "description": "Tolerations for pod assignment",
+                    "default": [],
+                    "items": {}
+                },
+                "podSecurityContext": {
+                    "type": "object",
+                    "description": "Security context for the pod(s). Optional override, otherwise inherited from the root security context definition",
+                    "default": {}
+                },
+                "containerSecurityContext": {
+                    "type": "object",
+                    "description": "Security context for the container(s). Optional override, otherwise inherited from the root security context definition",
+                    "default": {}
+                },
+                "service": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string",
+                            "description": "*HTTP Ingester* service name. If not set, a name is generated using the fullname",
+                            "default": ""
+                        },
+                        "port": {
+                            "type": "number",
+                            "description": "*HTTP Ingester* service port",
+                            "default": 8080
+                        },
+                        "type": {
+                            "type": "string",
+                            "description": "*HTTP Ingester* service port",
+                            "default": "ClusterIP"
+                        }
+                    }
+                }
+            }
+        },
+        "contentExtractor": {
+            "type": "object",
+            "properties": {
+                "topics": {
+                    "type": "object",
+                    "properties": {
+                        "inputTopic": {
+                            "type": "string",
+                            "description": "The Kafka topic from which the *Content Extractor* will consume messages",
+                            "default": "document.extractrequest"
+                        },
+                        "outputTopic": {
+                            "type": "string",
+                            "description": "The Kafka topic to which the *Content Extractor* will produce messages",
+                            "default": "document.textandmetadata"
+                        },
+                        "dlqTopic": {
+                            "type": "string",
+                            "description": "The Kafka topic to which the *Content Extractor* will produce dead-lettered messages",
+                            "default": "document.extractrequest.dlq"
+                        }
+                    }
+                },
+                "nameOverride": {
+                    "type": "string",
+                    "description": "Override the chart name for the *Content Extractor*",
+                    "default": ""
+                },
+                "fullnameOverride": {
+                    "type": "string",
+                    "description": "Override the full name for the *Content Extractor*",
+                    "default": ""
+                },
+                "replicas": {
+                    "type": "number",
+                    "description": "The number of replicas for the *Content Extractor*",
+                    "default": 1
+                },
+                "annotations": {
+                    "type": "object",
+                    "description": "Add extra annotations to the deployment object",
+                    "default": {}
+                },
+                "podLabels": {
+                    "type": "object",
+                    "description": "Labels to add to the *Content Extractor* pods",
+                    "default": {}
+                },
+                "podAnnotations": {
+                    "type": "object",
+                    "description": "Annotations to add to the *Content Extractor* pods",
+                    "default": {}
+                },
+                "extraEnvVars": {
+                    "type": "array",
+                    "description": "Array with extra environment variables to add",
+                    "default": [],
+                    "items": {}
+                },
+                "extraVolumes": {
+                    "type": "array",
+                    "description": "Additional volumes for the *Content Extractor*",
+                    "default": [],
+                    "items": {}
+                },
+                "extraVolumeMounts": {
+                    "type": "array",
+                    "description": "Additional volume mounts for the *Content Extractor*",
+                    "default": [],
+                    "items": {}
+                },
+                "initContainers": {
+                    "type": "array",
+                    "description": "Add init containers to the pod",
+                    "default": [],
+                    "items": {}
+                },
+                "sidecars": {
+                    "type": "array",
+                    "description": "Add sidecars to the pod.",
+                    "default": [],
+                    "items": {}
+                },
+                "image": {
+                    "type": "object",
+                    "properties": {
+                        "registry": {
+                            "type": "string",
+                            "description": "*Content Extractor* image registry",
+                            "default": "quay.io"
+                        },
+                        "repository": {
+                            "type": "string",
+                            "description": "The container image repository for the *Content Extractor*",
+                            "default": "telicent/telicent-document-content-extractor"
+                        },
+                        "tag": {
+                            "type": "string",
+                            "description": "The image tag for the *Content Extractor*",
+                            "default": "3.3.4"
+                        },
+                        "pullPolicy": {
+                            "type": "string",
+                            "description": "The image pull policy for the *Content Extractor*",
+                            "default": "IfNotPresent"
+                        },
+                        "pullSecrets": {
+                            "type": "array",
+                            "description": "Secrets for pulling an image from a private repository",
+                            "default": [],
+                            "items": {}
+                        }
+                    }
+                },
+                "affinity": {
+                    "type": "object",
+                    "description": "Affinity rules for the *Content Extractor* pods",
+                    "default": {}
+                },
+                "nodeSelector": {
+                    "type": "object",
+                    "description": "Node selector for the *Content Extractor* pods",
+                    "default": {}
+                },
+                "tolerations": {
+                    "type": "array",
+                    "description": "Tolerations for the *Content Extractor* pods",
+                    "default": [],
+                    "items": {}
+                },
+                "resources": {
+                    "type": "object",
+                    "description": "Resource requests and limits for the *Content Extractor*. Optional override, otherwise inherited from the root resource definition",
+                    "default": {}
+                },
+                "podSecurityContext": {
+                    "type": "object",
+                    "description": "Security context for the pod(s). Optional override, otherwise inherited from the root security context definition",
+                    "default": {}
+                },
+                "containerSecurityContext": {
+                    "type": "object",
+                    "description": "Security context for the container(s). Optional override, otherwise inherited from the root security context definition",
+                    "default": {}
+                }
+            }
+        },
+        "contentIndexer": {
+            "type": "object",
+            "properties": {
+                "java": {
+                    "type": "object",
+                    "properties": {
+                        "jvmOptions": {
+                            "type": "string",
+                            "description": "JVM options for the application",
+                            "default": "-XX:MaxRAMPercentage=80.0"
+                        }
+                    }
+                },
+                "elastic": {
+                    "type": "object",
+                    "properties": {
+                        "host": {
+                            "type": "string",
+                            "description": "Elastic/OpenSearch host",
+                            "default": "https://your.opensearch.host"
+                        },
+                        "port": {
+                            "type": "string",
+                            "description": "Elastic/OpenSearch port number",
+                            "default": "443"
+                        },
+                        "opensearchCompatibility": {
+                            "type": "boolean",
+                            "description": "Enable OpenSearch compatibility",
+                            "default": true
+                        },
+                        "index": {
+                            "type": "string",
+                            "description": "Elastic/OpenSearch index to be used",
+                            "default": "doc-content"
+                        },
+                        "topic": {
+                            "type": "string",
+                            "description": "The Kafka topic from which the content indexer will consume messages",
+                            "default": "document.textandmetadata,document.entities"
+                        },
+                        "dlqTopic": {
+                            "type": "string",
+                            "description": "The Kafka topic to which the content indexer will produce dead-lettered messages",
+                            "default": "document.textandmetadata.dlq"
+                        },
+                        "existingSecret": {
+                            "type": "string",
+                            "description": "Name of an existing secret. The secret must contain 2 keys: 'username', 'password'",
+                            "default": ""
+                        },
+                        "username": {
+                            "type": "string",
+                            "description": "OpenSearch/Elastic username",
+                            "default": ""
+                        },
+                        "password": {
+                            "type": "string",
+                            "description": "OpenSearch/Elastic user password",
+                            "default": ""
+                        }
+                    }
+                },
+                "nameOverride": {
+                    "type": "string",
+                    "description": "Override the chart name for the *Content Indexer*",
+                    "default": ""
+                },
+                "fullnameOverride": {
+                    "type": "string",
+                    "description": "Override the full name for the *Content Indexer*",
+                    "default": ""
+                },
+                "replicas": {
+                    "type": "number",
+                    "description": "Number of replicas to deploy",
+                    "default": 1
+                },
+                "annotations": {
+                    "type": "object",
+                    "description": "Add extra annotations to the deployment object",
+                    "default": {}
+                },
+                "podLabels": {
+                    "type": "object",
+                    "description": "Labels to add to the *Content Indexer* pods",
+                    "default": {}
+                },
+                "podAnnotations": {
+                    "type": "object",
+                    "description": "Annotations to add to the *Content Indexer* pods",
+                    "default": {}
+                },
+                "extraEnvVars": {
+                    "type": "array",
+                    "description": "Array with extra environment variables to add",
+                    "default": [],
+                    "items": {}
+                },
+                "extraVolumes": {
+                    "type": "array",
+                    "description": "Additional volumes for the *Content Indexer*",
+                    "default": [],
+                    "items": {}
+                },
+                "extraVolumeMounts": {
+                    "type": "array",
+                    "description": "Additional volume mounts for the *Content Indexer*",
+                    "default": [],
+                    "items": {}
+                },
+                "initContainers": {
+                    "type": "array",
+                    "description": "Add init containers to the pod",
+                    "default": [],
+                    "items": {}
+                },
+                "sidecars": {
+                    "type": "array",
+                    "description": "Add sidecars to the pod.",
+                    "default": [],
+                    "items": {}
+                },
+                "image": {
+                    "type": "object",
+                    "properties": {
+                        "registry": {
+                            "type": "string",
+                            "description": "*Content Indexer* image registry",
+                            "default": "quay.io"
+                        },
+                        "repository": {
+                            "type": "string",
+                            "description": "The container image repository for the *Content Indexer*",
+                            "default": "telicent/telicent-document-content-indexer"
+                        },
+                        "pullPolicy": {
+                            "type": "string",
+                            "description": "The image pull policy for the *Content Indexer*",
+                            "default": "IfNotPresent"
+                        },
+                        "tag": {
+                            "type": "string",
+                            "description": "The image tag for the *Content Indexer*",
+                            "default": "3.3.4"
+                        },
+                        "pullSecrets": {
+                            "type": "array",
+                            "description": "Secrets for pulling an image from a private repository",
+                            "default": [],
+                            "items": {}
+                        }
+                    }
+                },
+                "affinity": {
+                    "type": "object",
+                    "description": "Affinity rules for the *Content Indexer* pods",
+                    "default": {}
+                },
+                "nodeSelector": {
+                    "type": "object",
+                    "description": "Node selector for the *Content Indexer* pods",
+                    "default": {}
+                },
+                "tolerations": {
+                    "type": "array",
+                    "description": "Tolerations for the *Content Indexer* pods",
+                    "default": [],
+                    "items": {}
+                },
+                "resources": {
+                    "type": "object",
+                    "description": "Resource requests and limits for the *Content Indexer*. Optional override, otherwise inherited from the root resource definition",
+                    "default": {}
+                },
+                "podSecurityContext": {
+                    "type": "object",
+                    "description": "Security context for the pod(s). Optional override, otherwise inherited from the root security context definition",
+                    "default": {}
+                },
+                "containerSecurityContext": {
+                    "type": "object",
+                    "description": "Security context for the container(s). Optional override, otherwise inherited from the root security context definition",
+                    "default": {}
+                }
+            }
+        },
+        "catalogueUpdater": {
+            "type": "object",
+            "properties": {
+                "topics": {
+                    "type": "object",
+                    "properties": {
+                        "inputTopic": {
+                            "type": "string",
+                            "description": "The Kafka topic from which the *Catalogue Updater* will consume messages",
+                            "default": "document.textandmetadata"
+                        },
+                        "outputTopic": {
+                            "type": "string",
+                            "description": "The Kafka topic to which the *Catalogue Updater* will produce",
+                            "default": "catalog"
+                        },
+                        "debounceWindowMs": {
+                            "type": "number",
+                            "description": "The debounce window in milliseconds",
+                            "default": 30000
+                        },
+                        "flushIntervalMs": {
+                            "type": "number",
+                            "description": "The flush interval in milliseconds",
+                            "default": 60000
+                        },
+                        "maxBufferSize": {
+                            "type": "number",
+                            "description": "The maximum buffer size",
+                            "default": 100
+                        },
+                        "dlqTopic": {
+                            "type": "string",
+                            "description": "The Kafka topic to which the *Catalogue Updater* will produce dead-lettered messages",
+                            "default": "document.extractrequest.dlq"
+                        }
+                    }
+                },
+                "nameOverride": {
+                    "type": "string",
+                    "description": "Override the chart name for the *Catalogue Updater*",
+                    "default": ""
+                },
+                "fullnameOverride": {
+                    "type": "string",
+                    "description": "Override the full name for the *Catalogue Updater*",
+                    "default": ""
+                },
+                "replicas": {
+                    "type": "number",
+                    "description": "The number of replicas for the *Catalogue Updater*",
+                    "default": 1
+                },
+                "annotations": {
+                    "type": "object",
+                    "description": "Add extra annotations to the deployment object",
+                    "default": {}
+                },
+                "podAnnotations": {
+                    "type": "object",
+                    "description": "Annotations to add to the *Catalogue Updater* pods",
+                    "default": {}
+                },
+                "podLabels": {
+                    "type": "object",
+                    "description": "Labels to add to the *Catalogue Updater* pods",
+                    "default": {}
+                },
+                "extraEnvVars": {
+                    "type": "array",
+                    "description": "Array with extra environment variables to add",
+                    "default": [],
+                    "items": {}
+                },
+                "extraVolumes": {
+                    "type": "array",
+                    "description": "Additional volumes for the *Catalogue Updater*",
+                    "default": [],
+                    "items": {}
+                },
+                "extraVolumeMounts": {
+                    "type": "array",
+                    "description": "Additional volume mounts for the *Catalogue Updater*",
+                    "default": [],
+                    "items": {}
+                },
+                "initContainers": {
+                    "type": "array",
+                    "description": "Add init containers to the pod",
+                    "default": [],
+                    "items": {}
+                },
+                "sidecars": {
+                    "type": "array",
+                    "description": "Add sidecars to the pod.",
+                    "default": [],
+                    "items": {}
+                },
+                "image": {
+                    "type": "object",
+                    "properties": {
+                        "registry": {
+                            "type": "string",
+                            "description": "*Catalogue Updater* image registry",
+                            "default": "quay.io"
+                        },
+                        "repository": {
+                            "type": "string",
+                            "description": "The container image repository for the *Catalogue Updater*",
+                            "default": "telicent/telicent-document-catalogue-updater"
+                        },
+                        "tag": {
+                            "type": "string",
+                            "description": "The image tag for the *Catalogue Updater*",
+                            "default": "3.3.4"
+                        },
+                        "pullPolicy": {
+                            "type": "string",
+                            "description": "The image pull policy for the *Catalogue Updater*",
+                            "default": "IfNotPresent"
+                        },
+                        "pullSecrets": {
+                            "type": "array",
+                            "description": "Secrets for pulling an image from a private repository",
+                            "default": [],
+                            "items": {}
+                        }
+                    }
+                },
+                "affinity": {
+                    "type": "object",
+                    "description": "Affinity rules for the *Catalogue Updater* pods",
+                    "default": {}
+                },
+                "nodeSelector": {
+                    "type": "object",
+                    "description": "Node selector for the *Catalogue Updater* pods",
+                    "default": {}
+                },
+                "tolerations": {
+                    "type": "array",
+                    "description": "Tolerations for the *Catalogue Updater* pods",
+                    "default": [],
+                    "items": {}
+                },
+                "resources": {
+                    "type": "object",
+                    "description": "Resource requests and limits for the *Catalogue Updater*. Optional override, otherwise inherited from the root resource definition",
+                    "default": {}
+                },
+                "podSecurityContext": {
+                    "type": "object",
+                    "description": "Security context for the pod(s). Optional override, otherwise inherited from the root security context definition",
+                    "default": {}
+                },
+                "containerSecurityContext": {
+                    "type": "object",
+                    "description": "Security context for the container(s). Optional override, otherwise inherited from the root security context definition",
+                    "default": {}
+                }
+            }
+        },
+        "contentTagger": {
+            "type": "object",
+            "properties": {
+                "topics": {
+                    "type": "object",
+                    "properties": {
+                        "inputTopic": {
+                            "type": "string",
+                            "description": "The Kafka topic from which the *Content Tagger* will consume messages",
+                            "default": "document.textandmetadata"
+                        },
+                        "outputTopic": {
+                            "type": "string",
+                            "description": "The Kafka topic to which the *Content Tagger* will produce",
+                            "default": "knowledge"
+                        },
+                        "rdfTaggerDataUriStub": {
+                            "type": "string",
+                            "description": "The URI for the RDF Tagger service",
+                            "default": "http://telicent.io/data#"
+                        },
+                        "dctUri": {
+                            "type": "string",
+                            "description": "The URI for Dublin Core Terms",
+                            "default": "http://purl.org/dc/terms/"
+                        },
+                        "iesUri": {
+                            "type": "string",
+                            "description": "The URI for the IES Ontology",
+                            "default": "http://ies.data.gov.uk/ontology/ies4#"
+                        },
+                        "tontUri": {
+                            "type": "string",
+                            "description": "The URI for the Telicent Ontology",
+                            "default": "http://telicent.io/ontology/"
+                        },
+                        "iso3166Uri": {
+                            "type": "string",
+                            "description": "The URI for the ISO 3166 standard",
+                            "default": "http://iso.org/iso3166/country#"
+                        },
+                        "loggingLevel": {
+                            "type": "string",
+                            "description": "The logging level for the *Content Tagger*, e.g., DEBUG, INFO, WARN, ERROR",
+                            "default": "INFO"
+                        },
+                        "kafkaConfigMode": {
+                            "type": "string",
+                            "description": "The configuration mode for Kafka, either 'basic' or 'toml'",
+                            "default": "toml"
+                        }
+                    }
+                },
+                "nameOverride": {
+                    "type": "string",
+                    "description": "Override the chart name for the *Content Tagger*",
+                    "default": ""
+                },
+                "fullnameOverride": {
+                    "type": "string",
+                    "description": "Override the full name for the *Content Tagger*",
+                    "default": ""
+                },
+                "replicas": {
+                    "type": "number",
+                    "description": "The number of replicas for the *Content Tagger*",
+                    "default": 1
+                },
+                "annotations": {
+                    "type": "object",
+                    "description": "Add extra annotations to the deployment object",
+                    "default": {}
+                },
+                "podLabels": {
+                    "type": "object",
+                    "description": "Labels to add to the *Content Tagger* pods",
+                    "default": {}
+                },
+                "podAnnotations": {
+                    "type": "object",
+                    "description": "Annotations to add to the *Content Tagger* pods",
+                    "default": {}
+                },
+                "extraEnvVars": {
+                    "type": "array",
+                    "description": "Array with extra environment variables to add",
+                    "default": [],
+                    "items": {}
+                },
+                "extraVolumes": {
+                    "type": "array",
+                    "description": "Additional volumes for the *Content Tagger*",
+                    "default": [],
+                    "items": {}
+                },
+                "extraVolumeMounts": {
+                    "type": "array",
+                    "description": "Additional volume mounts for the *Content Tagger*",
+                    "default": [],
+                    "items": {}
+                },
+                "initContainers": {
+                    "type": "array",
+                    "description": "Add init containers to the pod",
+                    "default": [],
+                    "items": {}
+                },
+                "sidecars": {
+                    "type": "array",
+                    "description": "Add sidecars to the pod",
+                    "default": [],
+                    "items": {}
+                },
+                "image": {
+                    "type": "object",
+                    "properties": {
+                        "registry": {
+                            "type": "string",
+                            "description": "*Content Tagger* image registry",
+                            "default": "quay.io"
+                        },
+                        "repository": {
+                            "type": "string",
+                            "description": "The container image repository for the *Content Tagger*",
+                            "default": "telicent/telicent-rdf-document-tagger-dc"
+                        },
+                        "tag": {
+                            "type": "string",
+                            "description": "The image tag for the *Content Tagger*",
+                            "default": "3.0.1"
+                        },
+                        "pullPolicy": {
+                            "type": "string",
+                            "description": "The image pull policy for the *Content Tagger*",
+                            "default": "IfNotPresent"
+                        },
+                        "pullSecrets": {
+                            "type": "array",
+                            "description": "Secrets for pulling an image from a private repository",
+                            "default": [],
+                            "items": {}
+                        }
+                    }
+                },
+                "affinity": {
+                    "type": "object",
+                    "description": "Affinity rules for the *Content Tagger* pods",
+                    "default": {}
+                },
+                "nodeSelector": {
+                    "type": "object",
+                    "description": "Node selector for the *Content Tagger* pods",
+                    "default": {}
+                },
+                "tolerations": {
+                    "type": "array",
+                    "description": "Tolerations for the *Content Tagger* pods",
+                    "default": [],
+                    "items": {}
+                },
+                "resources": {
+                    "type": "object",
+                    "description": "Resource requests and limits for the *Content Tagger*",
+                    "default": {}
+                },
+                "podSecurityContext": {
+                    "type": "object",
+                    "description": "Security context for the pod(s). Optional override, otherwise inherited from the root security context definition",
+                    "default": {}
+                },
+                "containerSecurityContext": {
+                    "type": "object",
+                    "description": "Security context for the container(s). Optional override, otherwise inherited from the root security context definition",
+                    "default": {}
+                }
+            }
+        },
+        "entityExtractor": {
+            "type": "object",
+            "properties": {
+                "topics": {
+                    "type": "object",
+                    "properties": {
+                        "inputTopic": {
+                            "type": "string",
+                            "description": "The Kafka topic from which the content tagger will consume messages",
+                            "default": "document.textandmetadata"
+                        },
+                        "outputTopic": {
+                            "type": "string",
+                            "description": "The Kafka topic to which the content tagger will produce",
+                            "default": "document.entities"
+                        },
+                        "kafkaConfigMode": {
+                            "type": "string",
+                            "description": "The configuration mode for Kafka, either 'basic' or 'toml'",
+                            "default": "toml"
+                        }
+                    }
+                },
+                "nameOverride": {
+                    "type": "string",
+                    "description": "Override the chart name for the *Entity Extractor*",
+                    "default": ""
+                },
+                "fullnameOverride": {
+                    "type": "string",
+                    "description": "Override the full name for the *Entity Extractor*",
+                    "default": ""
+                },
+                "replicas": {
+                    "type": "number",
+                    "description": "Number of replicas to deploy",
+                    "default": 1
+                },
+                "annotations": {
+                    "type": "object",
+                    "description": "Add extra annotations to the deployment object",
+                    "default": {}
+                },
+                "podLabels": {
+                    "type": "object",
+                    "description": "Labels to add to the *Entity Extractor* pods",
+                    "default": {}
+                },
+                "podAnnotations": {
+                    "type": "object",
+                    "description": "Annotations to add to the *Entity Extractor* pods",
+                    "default": {}
+                },
+                "extraEnvVars": {
+                    "type": "array",
+                    "description": "Array with extra environment variables to add",
+                    "default": [],
+                    "items": {}
+                },
+                "extraVolumes": {
+                    "type": "array",
+                    "description": "Additional volumes for the *Entity Extractor*",
+                    "default": [],
+                    "items": {}
+                },
+                "extraVolumeMounts": {
+                    "type": "array",
+                    "description": "Additional volume mounts for the *Entity Extractor*",
+                    "default": [],
+                    "items": {}
+                },
+                "initContainers": {
+                    "type": "array",
+                    "description": "Add init containers to the pod",
+                    "default": [],
+                    "items": {}
+                },
+                "sidecars": {
+                    "type": "array",
+                    "description": "Add sidecars to the pod.",
+                    "default": [],
+                    "items": {}
+                },
+                "image": {
+                    "type": "object",
+                    "properties": {
+                        "registry": {
+                            "type": "string",
+                            "description": "*Entity Extractor* image registry",
+                            "default": "quay.io"
+                        },
+                        "repository": {
+                            "type": "string",
+                            "description": "The container image repository for the *Entity Extractor*",
+                            "default": "telicent/telicent-pipeline-entity-extraction"
+                        },
+                        "tag": {
+                            "type": "string",
+                            "description": "The image tag for the *Entity Extractor*",
+                            "default": "3.0.2"
+                        },
+                        "pullPolicy": {
+                            "type": "string",
+                            "description": "The image pull policy for the *Entity Extractor*",
+                            "default": "IfNotPresent"
+                        },
+                        "pullSecrets": {
+                            "type": "array",
+                            "description": "Secrets for pulling an image from a private repository",
+                            "default": [],
+                            "items": {}
+                        }
+                    }
+                },
+                "affinity": {
+                    "type": "object",
+                    "description": "Affinity rules for the *Entity Extractor* pods",
+                    "default": {}
+                },
+                "nodeSelector": {
+                    "type": "object",
+                    "description": "Node selector for the *Entity Extractor* pods",
+                    "default": {}
+                },
+                "tolerations": {
+                    "type": "array",
+                    "description": "Tolerations for the *Entity Extractor* pods",
+                    "default": [],
+                    "items": {}
+                },
+                "resources": {
+                    "type": "object",
+                    "description": "Resources for *Entity Extractor* containers",
+                    "default": {}
+                },
+                "podSecurityContext": {
+                    "type": "object",
+                    "description": "Security context for the pod(s). Optional override, otherwise inherited from the root security context definition",
+                    "default": {}
+                },
+                "containerSecurityContext": {
+                    "type": "object",
+                    "description": "Security context for the container(s). Optional override, otherwise inherited from root security context definition",
+                    "default": {}
+                }
+            }
+        }
+    }
+}

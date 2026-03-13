@@ -1,0 +1,652 @@
+{
+    "title": "Chart Values",
+    "type": "object",
+    "properties": {
+        "global": {
+            "type": "object",
+            "properties": {
+                "imageRegistry": {
+                    "type": "string",
+                    "description": "Global image registry",
+                    "default": ""
+                },
+                "imagePullSecrets": {
+                    "type": "array",
+                    "description": "Global registry secret names as an array",
+                    "default": [],
+                    "items": {}
+                },
+                "releaseNameTelicentPreview": {
+                    "type": "string",
+                    "description": "Release name used during the Telicent Preview chart installation. Note: ensure the value is correct, otherwise there will be no access to data-catalog, user-portal & paperback-writer",
+                    "default": ""
+                },
+                "enterprise": {
+                    "type": "boolean",
+                    "description": "Enable enterprise mode, adding additional features and configurations",
+                    "default": false
+                },
+                "appHostDomain": {
+                    "type": "string",
+                    "description": "Domain associated with Telicent application/ui services. This value cannot be changed after it is set",
+                    "default": ""
+                },
+                "apiHostDomain": {
+                    "type": "string",
+                    "description": "Domain associated with Telicent Api services. This value cannot be changed after it is set",
+                    "default": ""
+                },
+                "authHostDomain": {
+                    "type": "string",
+                    "description": "Domain associated with Telicent authentication services, including OIDC providers. This value cannot be changed after it is set",
+                    "default": ""
+                },
+                "truststore": {
+                    "type": "object",
+                    "properties": {
+                        "existingSecret": {
+                            "type": "string",
+                            "description": "Name of an existing secret containing the truststore",
+                            "default": ""
+                        },
+                        "mountPath": {
+                            "type": "string",
+                            "description": "The mount path for the truststore in the container",
+                            "default": "/app/config/truststore"
+                        }
+                    }
+                }
+            }
+        },
+        "idp": {
+            "type": "object",
+            "properties": {
+                "issuerUrl": {
+                    "type": "string",
+                    "description": "The OpenID Connect issuer URL",
+                    "default": ""
+                },
+                "authorizationPath": {
+                    "type": "string",
+                    "description": "The path to use in combination with the issuer URL for authorization",
+                    "default": "/auth"
+                },
+                "jwksPath": {
+                    "type": "string",
+                    "description": "The path to use in combination with the issuer URL for JWKS",
+                    "default": "/keys"
+                },
+                "tokenPath": {
+                    "type": "string",
+                    "description": "The path to use in combination with the issuer URL for generating tokens",
+                    "default": "/token"
+                },
+                "userinfoPath": {
+                    "type": "string",
+                    "description": "The path to use in combination with the issuer URL for userinfo",
+                    "default": "/userinfo"
+                },
+                "cookieParentDomain": {
+                    "type": "string",
+                    "description": "Cookie domain scope",
+                    "default": ".telicent.io"
+                },
+                "cookieSecure": {
+                    "type": "boolean",
+                    "description": "Enable secure cookies",
+                    "default": true
+                },
+                "superUserIdentifier": {
+                    "type": "string",
+                    "description": "Super user identification, set to 'ALL' to allow for everyone to be a superuser",
+                    "default": "ALL"
+                },
+                "clientName": {
+                    "type": "string",
+                    "description": "The OAuth Client Name (used for display)",
+                    "default": ""
+                },
+                "usernameClaim": {
+                    "type": "string",
+                    "description": "The OIDC claim containing the attribute to be used as the username",
+                    "default": "sub"
+                },
+                "existingSecret": {
+                    "type": "string",
+                    "description": "Name of an existing secret. The secret must contain 2 keys: 'clientid', 'clientsecret'",
+                    "default": ""
+                },
+                "clientId": {
+                    "type": "string",
+                    "description": "The OAuth Client ID",
+                    "default": ""
+                },
+                "clientSecret": {
+                    "type": "string",
+                    "description": "The OAuth Client Secret",
+                    "default": ""
+                },
+                "sessionTtl": {
+                    "type": "string",
+                    "description": "Default session time-to-live duration (in hours)",
+                    "default": "PT2H"
+                },
+                "sessionIdleTtl": {
+                    "type": "string",
+                    "description": "Default session idle time-to-live duration (in minutes)",
+                    "default": "PT30M"
+                },
+                "clientRefreshTokenTtl": {
+                    "type": "string",
+                    "description": "Client refresh token time-to-live duration (in hours). Total time will not exceed idp.sessionTtl even if this value is higher",
+                    "default": "PT2H"
+                },
+                "clientAccessTokenTtl": {
+                    "type": "string",
+                    "description": "Client access token time-to-live duration (in minutes)",
+                    "default": "PT15M"
+                }
+            }
+        },
+        "forwardAuth": {
+            "type": "object",
+            "properties": {
+                "existingSecret": {
+                    "type": "string",
+                    "description": "Name of an existing secret. The secret must contain 1 key: 'header'",
+                    "default": ""
+                },
+                "header": {
+                    "type": "string",
+                    "description": "The header value to be associated with the `X-ForwardAuth-Secret`",
+                    "default": ""
+                }
+            }
+        },
+        "java": {
+            "type": "object",
+            "properties": {
+                "jvmOptions": {
+                    "type": "string",
+                    "description": "JVM options for the application",
+                    "default": "-XX:MaxRAMPercentage=80.0"
+                },
+                "spring": {
+                    "type": "object",
+                    "properties": {
+                        "profile": {
+                            "type": "string",
+                            "description": "Sets the Spring profile to be used. Options are: default, docker, test, and production",
+                            "default": "production"
+                        }
+                    }
+                }
+            }
+        },
+        "logs": {
+            "type": "object",
+            "properties": {
+                "api": {
+                    "type": "object",
+                    "properties": {
+                        "level": {
+                            "type": "string",
+                            "description": "Api package Logging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE",
+                            "default": "INFO"
+                        }
+                    }
+                },
+                "service": {
+                    "type": "object",
+                    "properties": {
+                        "level": {
+                            "type": "string",
+                            "description": "Service package Logging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE",
+                            "default": "INFO"
+                        }
+                    }
+                },
+                "repo": {
+                    "type": "object",
+                    "properties": {
+                        "level": {
+                            "type": "string",
+                            "description": "Repo package Logging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE",
+                            "default": "WARN"
+                        }
+                    }
+                },
+                "security": {
+                    "type": "object",
+                    "properties": {
+                        "level": {
+                            "type": "string",
+                            "description": "Security packageLogging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE",
+                            "default": "WARN"
+                        }
+                    }
+                },
+                "oauth2": {
+                    "type": "object",
+                    "properties": {
+                        "level": {
+                            "type": "string",
+                            "description": "Oauth2 package Logging Level. Values include: ERROR, WARN, INFO, DEBUG, TRACE",
+                            "default": "WARN"
+                        }
+                    }
+                },
+                "general": {
+                    "type": "object",
+                    "properties": {
+                        "level": {
+                            "type": "string",
+                            "description": "Logging Level for 'io.telicent.auth'. Values include: ERROR, WARN, INFO, DEBUG, TRACE",
+                            "default": "INFO"
+                        }
+                    }
+                },
+                "trace": {
+                    "type": "object",
+                    "properties": {
+                        "level": {
+                            "type": "string",
+                            "description": "Logging Level for 'Spring RestTemplate'. Values include: ERROR, WARN, INFO, DEBUG, TRACE",
+                            "default": "ERROR"
+                        }
+                    }
+                }
+            }
+        },
+        "postgresSql": {
+            "type": "object",
+            "properties": {
+                "uri": {
+                    "type": "string",
+                    "description": "PostgreSQL connection URI",
+                    "default": ""
+                },
+                "existingSecret": {
+                    "type": "string",
+                    "description": "Name of an existing secret. The secret must contain 2 keys: 'username', 'password'",
+                    "default": ""
+                },
+                "username": {
+                    "type": "string",
+                    "description": "PostgreSQL username",
+                    "default": ""
+                },
+                "password": {
+                    "type": "string",
+                    "description": "PostgreSQL password",
+                    "default": ""
+                }
+            }
+        },
+        "bootstrap": {
+            "type": "object",
+            "properties": {
+                "clients": {
+                    "type": "object",
+                    "properties": {
+                        "existingConfigMap": {
+                            "type": "string",
+                            "description": "Name of an existing config map resource containing all required public and confidential clients. If specified, the values for clients.public and clients.confidential will be ignored",
+                            "default": ""
+                        },
+                        "public": {
+                            "type": "array",
+                            "description": "A list of public client objects",
+                            "default": [],
+                            "items": {}
+                        },
+                        "confidential": {
+                            "type": "array",
+                            "description": "A list of confidential client objects",
+                            "default": [],
+                            "items": {}
+                        }
+                    }
+                },
+                "groups": {
+                    "type": "object",
+                    "properties": {
+                        "existingConfigMap": {
+                            "type": "string",
+                            "description": "Name of an existing config map containing a list of group objects",
+                            "default": ""
+                        },
+                        "list": {
+                            "type": "array",
+                            "description": "A list containing group objects",
+                            "default": [],
+                            "items": {}
+                        }
+                    }
+                }
+            }
+        },
+        "configMap": {
+            "type": "object",
+            "properties": {
+                "existingEnvConfigMap": {
+                    "type": "string",
+                    "description": "Name of existing configmap containing *Auth* Environment Configuration",
+                    "default": ""
+                }
+            }
+        },
+        "nameOverride": {
+            "type": "string",
+            "description": "String to partially override fullname (will maintain the release name)",
+            "default": ""
+        },
+        "fullnameOverride": {
+            "type": "string",
+            "description": "String to fully override the generated release name",
+            "default": ""
+        },
+        "namespaceOverride": {
+            "type": "string",
+            "description": "String to fully override all deployed resources namespace",
+            "default": ""
+        },
+        "commonLabels": {
+            "type": "object",
+            "description": "Add labels to all the deployed resources",
+            "default": {}
+        },
+        "replicas": {
+            "type": "number",
+            "description": "Number of *Auth* replicas to deploy",
+            "default": 1
+        },
+        "revisionHistoryLimit": {
+            "type": "number",
+            "description": "Number of controller revisions to keep",
+            "default": 5
+        },
+        "annotations": {
+            "type": "object",
+            "description": "Add extra annotations to the deployment object",
+            "default": {}
+        },
+        "podLabels": {
+            "type": "object",
+            "description": "Add extra labels to the *Auth* pod",
+            "default": {}
+        },
+        "podAnnotations": {
+            "type": "object",
+            "description": "Add extra annotations to the *Auth* pod",
+            "default": {}
+        },
+        "extraEnvVars": {
+            "type": "array",
+            "description": "Array with extra environment variables to add to *Auth* pod",
+            "default": [],
+            "items": {}
+        },
+        "extraVolumes": {
+            "type": "array",
+            "description": "Optionally specify extra list of additional volumes",
+            "default": [],
+            "items": {}
+        },
+        "extraVolumeMounts": {
+            "type": "array",
+            "description": "Optionally specify extra list of additional volumeMounts",
+            "default": [],
+            "items": {}
+        },
+        "initContainers": {
+            "type": "array",
+            "description": "Add init containers to the pod",
+            "default": [],
+            "items": {}
+        },
+        "sidecars": {
+            "type": "array",
+            "description": "Add sidecars to the pod",
+            "default": [],
+            "items": {}
+        },
+        "image": {
+            "type": "object",
+            "properties": {
+                "registry": {
+                    "type": "string",
+                    "description": "*Auth* image registry",
+                    "default": "quay.io"
+                },
+                "repository": {
+                    "type": "string",
+                    "description": "*Auth* image name",
+                    "default": "telicent/telicent-auth-server"
+                },
+                "tag": {
+                    "type": "string",
+                    "description": "*Auth* image tag. If not set, a tag is generated using the appVersion",
+                    "default": ""
+                },
+                "pullPolicy": {
+                    "type": "string",
+                    "description": "*Auth* image pull policy",
+                    "default": "IfNotPresent"
+                },
+                "pullSecrets": {
+                    "type": "array",
+                    "description": "Specify registry secret names as an array",
+                    "default": [],
+                    "items": {}
+                }
+            }
+        },
+        "resources": {
+            "type": "object",
+            "description": "Resources for *Auth* containers",
+            "default": {}
+        },
+        "podSecurityContext": {
+            "type": "object",
+            "properties": {
+                "runAsUser": {
+                    "type": "number",
+                    "description": "Set the provisioning pod's Security Context runAsUser User ID",
+                    "default": 185
+                },
+                "runAsGroup": {
+                    "type": "number",
+                    "description": "Set the provisioning pod's Security Context runAsGroup Group ID",
+                    "default": 185
+                },
+                "runAsNonRoot": {
+                    "type": "boolean",
+                    "description": "Set the provisioning pod's Security Context runAsNonRoot",
+                    "default": true
+                },
+                "fsGroup": {
+                    "type": "number",
+                    "description": "Set the provisioning pod's Group ID for the mounted volumes' filesystem",
+                    "default": 185
+                },
+                "seccompProfile": {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "description": "Set the provisioning pod's Security Context seccomp profile",
+                            "default": "RuntimeDefault"
+                        }
+                    }
+                }
+            }
+        },
+        "containerSecurityContext": {
+            "type": "object",
+            "properties": {
+                "runAsUser": {
+                    "type": "number",
+                    "description": "Set containers' Security Context runAsUser User ID",
+                    "default": 185
+                },
+                "runAsGroup": {
+                    "type": "number",
+                    "description": "Set containers' Security Context runAsGroup Group ID",
+                    "default": 185
+                },
+                "runAsNonRoot": {
+                    "type": "boolean",
+                    "description": "Set container's Security Context runAsNonRoot",
+                    "default": true
+                },
+                "allowPrivilegeEscalation": {
+                    "type": "boolean",
+                    "description": "Set container's Security Context allowPrivilegeEscalation",
+                    "default": false
+                },
+                "capabilities": {
+                    "type": "object",
+                    "properties": {
+                        "drop": {
+                            "type": "array",
+                            "description": "List of capabilities to be dropped",
+                            "default": [
+                                "ALL"
+                            ],
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "seccompProfile": {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "description": "Set container's Security Context seccomp profile",
+                            "default": "RuntimeDefault"
+                        }
+                    }
+                }
+            }
+        },
+        "affinity": {
+            "type": "object",
+            "description": "Affinity for pod assignment",
+            "default": {}
+        },
+        "nodeSelector": {
+            "type": "object",
+            "description": "Node labels for pod assignment",
+            "default": {}
+        },
+        "tolerations": {
+            "type": "array",
+            "description": "Tolerations for pod assignment",
+            "default": [],
+            "items": {}
+        },
+        "serviceAccount": {
+            "type": "object",
+            "properties": {
+                "create": {
+                    "type": "boolean",
+                    "description": "Specifies whether a service account should be created",
+                    "default": true
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the ServiceAccount to use. If not set, a name is generated using the fullname",
+                    "default": ""
+                },
+                "annotations": {
+                    "type": "object",
+                    "description": "Additional custom annotations for the ServiceAccount",
+                    "default": {}
+                },
+                "automount": {
+                    "type": "boolean",
+                    "description": "Automatically mount a ServiceAccount's API credentials",
+                    "default": true
+                }
+            }
+        },
+        "service": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "*Auth* service name. If not set, a name is generated using the fullname",
+                    "default": ""
+                },
+                "port": {
+                    "type": "number",
+                    "description": "*Auth* service port",
+                    "default": 8080
+                },
+                "type": {
+                    "type": "string",
+                    "description": "*Auth* service port",
+                    "default": "ClusterIP"
+                }
+            }
+        },
+        "hosts": {
+            "type": "object",
+            "properties": {
+                "enableAutoCorrect": {
+                    "type": "boolean",
+                    "description": "Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as it is, without any modification",
+                    "default": true
+                },
+                "traefikProxy": {
+                    "type": "string",
+                    "description": "Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'",
+                    "default": "traefik-proxy:8080"
+                },
+                "userPreferences": {
+                    "type": "string",
+                    "description": "User Preferences host value, If not set a host is generated using service:'user-preferences',port:'8080' and Release namespace & name",
+                    "default": "user-preferences:8080"
+                },
+                "search": {
+                    "type": "string",
+                    "description": "Search application default host value, as defined by 'service/serviceAccount:port'",
+                    "default": "search:8080"
+                },
+                "graph": {
+                    "type": "string",
+                    "description": "Graph application default host value, as defined by 'service/serviceAccount:port'",
+                    "default": "graph:8080"
+                }
+            }
+        },
+        "hostsPreview": {
+            "type": "object",
+            "properties": {
+                "enableAutoCorrect": {
+                    "type": "boolean",
+                    "description": "Prefix 'global.releaseNameTelicentPreview' value to each host value. Alternatively, the host value will be used as it is, without any modification",
+                    "default": true
+                },
+                "paperbackWriter": {
+                    "type": "string",
+                    "description": "Paperback Writer application host value, as defined by 'service/serviceAccount:port'",
+                    "default": "paperback-writer:8080"
+                },
+                "aiSparqlBuilder": {
+                    "type": "string",
+                    "description": "AI SPARQL Builder application host value, as defined by 'service/serviceAccount:port'",
+                    "default": "ai-sparql-builder:8080"
+                },
+                "notifications": {
+                    "type": "string",
+                    "description": "Notifications application host value, as defined by 'service/serviceAccount:port'",
+                    "default": "notifications:8080"
+                }
+            }
+        }
+    }
+}
