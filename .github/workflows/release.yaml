@@ -62,21 +62,50 @@ jobs:
           helm repo add telicent-core-charts 'https://charts.telicent.io'
           helm dependency update ./charts/telicent-core
           for chart in $(find . -type f -name 'Chart.yaml' -print0 -maxdepth 3 | xargs -0 -n1 dirname | sort -u); do echo "packaging chart - $chart" && helm package -u -d .cr-release-packages $chart; done
-
       - name: Log in to Quay.io
-        run: helm registry login quay.io --username "${{ secrets.QUAY_USERNAME }}" --password "${{ secrets.QUAY_PASSWORD }}"
+        uses: docker/login-action@v3
+        with:
+          registry: quay.io
+          username: ${{ secrets.QUAY_USERNAME }}
+          password: ${{ secrets.QUAY_PASSWORD }}
 
-      - name: Push and sign charts on Quay.io
+      - name: Push charts on Quay.io
         run: |
+          registry_config="${HOME}/.docker/config.json"
+          if [ ! -f "$registry_config" ]; then
+            echo "docker registry config not found at $registry_config"
+            exit 1
+          fi
+          refs_file="$RUNNER_TEMP/quay-chart-refs.txt"
+          : > "$refs_file"
           for chart in .cr-release-packages/*.tgz; do
-            echo "pushing $chart to oci://quay.io/telicent/charts"
-            output=$(helm push "$chart" oci://quay.io/telicent/charts 2>&1)
+            echo "pushing $chart to oci://quay.io/telicent/charts/test"
+            if ! output=$(helm push --registry-config "$registry_config" "$chart" oci://quay.io/telicent/charts/test 2>&1); then
+              echo "$output"
+              exit 1
+            fi
             echo "$output"
             pushed=$(echo "$output" | grep "^Pushed:" | awk '{print $2}')
             digest=$(echo "$output" | grep "^Digest:" | awk '{print $2}')
-            echo "signing ${pushed}@${digest}"
-            cosign sign --yes "${pushed}@${digest}"
+            if [ -z "$pushed" ] || [ -z "$digest" ]; then
+              echo "failed to parse pushed reference or digest from helm output"
+              exit 1
+            fi
+            printf '%s@%s\n' "$pushed" "$digest" >> "$refs_file"
           done
+
+      - name: Sign charts on Quay.io
+        run: |
+          refs_file="$RUNNER_TEMP/quay-chart-refs.txt"
+          if [ ! -s "$refs_file" ]; then
+            echo "no pushed chart references found to sign"
+            exit 1
+          fi
+          while IFS= read -r ref; do
+            [ -n "$ref" ] || continue
+            echo "signing $ref"
+            cosign sign --yes "$ref"
+          done < "$refs_file"
 
       - name: checkout pages branch
         uses: actions/checkout@v4
