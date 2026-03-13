@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.2](https://github.com/Telicent-io/telicent-core-charts/compare/demo-prereqs-postgres-v0.3.1...demo-prereqs-postgres-v0.3.2) (2026-03-13)
+
+
+### Bug Fixes
+
+* mock PR to trigger RP ([b4379f8](https://github.com/Telicent-io/telicent-core-charts/commit/b4379f8451f5b1f4196e3b4afb9f2f2c49424bf9))
+* mock PR to trigger RP ([35db90f](https://github.com/Telicent-io/telicent-core-charts/commit/35db90f23300655ceff161c50239f8c268befaf7))
+
 ## [0.3.1](https://github.com/Telicent-io/telicent-core-charts/compare/demo-prereqs-postgres-v0.3.0...demo-prereqs-postgres-v0.3.1) (2026-03-13)
 
 
