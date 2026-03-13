@@ -70,10 +70,17 @@ jobs:
         run: |
           for chart in .cr-release-packages/*.tgz; do
             echo "pushing $chart to oci://quay.io/telicent/charts"
-            output=$(helm push "$chart" oci://quay.io/telicent/charts 2>&1)
+            if ! output=$(helm push "$chart" oci://quay.io/telicent/charts 2>&1); then
+              echo "$output"
+              exit 1
+            fi
             echo "$output"
             pushed=$(echo "$output" | grep "^Pushed:" | awk '{print $2}')
             digest=$(echo "$output" | grep "^Digest:" | awk '{print $2}')
+            if [ -z "$pushed" ] || [ -z "$digest" ]; then
+              echo "failed to parse pushed reference or digest from helm output"
+              exit 1
+            fi
             echo "signing ${pushed}@${digest}"
             cosign sign --yes "${pushed}@${digest}"
           done
