@@ -20,6 +20,7 @@ To connect using port-forward:
   Then connect using:
   psql -h 127.0.0.1 -U {{ .Values.postgres.user }} -d {{ .Values.postgres.database }}
 
+
 {{- if .Values.persistence.enabled }}
 
 Persistence is enabled with a {{ .Values.persistence.size }} volume.
