@@ -38,5 +38,10 @@ spec:
         - /healthz/*
         - /version-info
         - /version-info/*
+        - /backups/create
+        - /backups/delete
+        - /backups/list
+        - /backups/list/*
+        - /backups/restore
         methods: ["GET", "POST"]
 {{- end }}
