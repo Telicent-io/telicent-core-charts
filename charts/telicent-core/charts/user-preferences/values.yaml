@@ -56,6 +56,8 @@ java:
 # For Quick Start purposes, a secret named `tc-auth-usr-mongo-user-preferences` will be created if one is not set.
 # @descEnd
 mongo:
+  # @key mongo.enabled Whether MongoDB is enabled.
+  enabled: false
   # @key mongo.url MongoDB connection URL (database value can be omitted in favour of populating 'database' property) format: "mongodb://{host1}:{port1},{host2}:{port2},{host3}:{port3}/?retryWrites=false"
   url: ""
   # @key mongo.database MongoDB database
@@ -89,6 +91,8 @@ mongo:
 # MongoDB data will be automatically migrated.
 # @descEnd
 postgres:
+  # @key postgres.enabled Whether PostgreSQL is enabled.
+  enabled: true
   # @key postgres.jdbcUrl PostgreSQL connection URL format: "jdbc:postgresql://{host}:{port}/{database}"
   jdbcUrl: ""
   # @key postgres.existingSecret Name of an existing secret. The secret must contain 2 keys: 'username', 'password'

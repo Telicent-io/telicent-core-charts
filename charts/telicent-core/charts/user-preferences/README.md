@@ -137,6 +137,7 @@ For Quick Start purposes, a secret named `tc-auth-usr-mongo-user-preferences` wi
 
 | Name                     | Description                                                                                                                                                                               | Value              |
 | ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
+| `mongo.enabled`          | Whether MongoDB is enabled.                                                                                                                                                               | `false`            |
 | `mongo.url`              | MongoDB connection URL (database value can be omitted in favour of populating 'database' property) format: "mongodb://{host1}:{port1},{host2}:{port2},{host3}:{port3}/?retryWrites=false" | `""`               |
 | `mongo.database`         | MongoDB database                                                                                                                                                                          | `user-preferences` |
 | `mongo.authDatabase`     | The authentication database to use for the given user                                                                                                                                     | `admin`            |
@@ -156,12 +157,13 @@ For Quick Start purposes, a secret named `tc-auth-usr-psql-user-preferences` wil
 If both MongoDB and PostgreSQL are configured, PostgreSQL will be used as the primary database, and any existing
 MongoDB data will be automatically migrated.
 
-| Name                      | Description                                                                        | Value |
-| ------------------------- | ---------------------------------------------------------------------------------- | ----- |
-| `postgres.jdbcUrl`        | PostgreSQL connection URL format: "jdbc:postgresql://{host}:{port}/{database}"     | `""`  |
-| `postgres.existingSecret` | Name of an existing secret. The secret must contain 2 keys: 'username', 'password' | `""`  |
-| `postgres.username`       | PostgreSQL username                                                                | `""`  |
-| `postgres.password`       | PostgreSQL password                                                                | `""`  |
+| Name                      | Description                                                                        | Value  |
+| ------------------------- | ---------------------------------------------------------------------------------- | ------ |
+| `postgres.enabled`        | Whether PostgreSQL is enabled.                                                     | `true` |
+| `postgres.jdbcUrl`        | PostgreSQL connection URL format: "jdbc:postgresql://{host}:{port}/{database}"     | `""`   |
+| `postgres.existingSecret` | Name of an existing secret. The secret must contain 2 keys: 'username', 'password' | `""`   |
+| `postgres.username`       | PostgreSQL username                                                                | `""`   |
+| `postgres.password`       | PostgreSQL password                                                                | `""`   |
 
 ### ConfigMap Parameters
 
