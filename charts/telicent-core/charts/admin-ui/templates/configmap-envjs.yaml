@@ -62,6 +62,20 @@ data:
       },
     };
 
+    window._env_.BACKUP_APIS = {
+        "smart-cache-graph": {
+            url: "https://api.system-integration.telicent-sandbox.telicent.live/graphql/$/backups",
+            type: "SCG_LIST",
+        },
+        "smart-cache-search": {
+            url: "https://api.system-integration.telicent-sandbox.telicent.live/search/backups",
+            type: "SNAPSHOT_LIST",
+            metadata: {
+                repository: "scs-snapshots-repo", // The adapter will grab this
+            },
+        },
+    };
+
     window.featureFlags = {
       FF_SKIP_AUTH: true,
       FF_AUTH_V2: true,
