@@ -1,0 +1,27 @@
+# Declare routers / services / middlewares
+http:
+  routers:
+    showcase-ui:
+      rule: {{ printf "Host(`%s`) && PathPrefix(`/showcase`)" .Values.global.appHostDomain }}
+      service: showcase-ui
+      entryPoints:
+        - web-app
+      middleWares:
+        - path-showcase-ui
+        - host-showcase-ui
+
+  services:
+    showcase-ui:
+      loadBalancer:
+        servers:
+          - url: {{ printf "http://%s"  (include "traefik-proxy.hostshowcaseUi" .) }}
+
+  middlewares:
+    path-showcase-ui:
+      replacePathRegex:
+        regex: "^/showcase(.*)"
+        replacement: "/showcase/$1"
+    host-showcase-ui:
+      headers:
+        customRequestHeaders:
+          host: {{ include "traefik-proxy.hostshowcaseUi" . }}

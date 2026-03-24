@@ -1,0 +1,63 @@
+{{- /*
+Copyright (C) 2026 Telicent Limited
+*/}}
+
+{{- if not .Values.existingShowcaseUIConfigName }}
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: {{ include "showcase-ui.configMapName" . }}
+  namespace: {{ include "showcase-ui.namespace" . }}
+  labels:
+    {{- include "showcase-ui.labels" . | nindent 4 }}
+
+data:
+  env-config.js: |
+    window._env_ = window._env_ || {};
+
+    const APP_DOMAIN = "https://{{ .Values.global.appHostDomain }}";
+    const API_DOMAIN = "https://{{ .Values.global.apiHostDomain }}";
+
+    // Auth
+    window._env_.AUTH_V2_CONFIG = {
+      authServerUrl: "https://{{ .Values.global.authHostDomain }}",
+      clientId: "{{ .Values.oauth.clientId }}",
+      scope: "{{ .Values.oauth.scopes }}",
+      redirectUri: `${APP_DOMAIN}/showcase/callback`,
+      popupRedirectUri: `${APP_DOMAIN}/showcase/auth-redirect-uri`,
+    };
+
+    // APIs
+    window._env_.SPARQL_KNOWLEDGE_API_URL = `${API_DOMAIN}/sparql/knowledge`;
+    window._env_.GRAPHQL_URI = `${API_DOMAIN}/sparql/knowledge/graphql`;
+
+    // App switcher
+    window._env_.APP_SWITCH_LIBRARY = [
+    {{ if .Values.ui.graphUiDeployed }}
+      {
+        id: "telicent-graph",
+        name: "graph",
+        url: `${APP_DOMAIN}/graph`,
+        icon: "./data-catalog/assets/icons/graph.svg",
+      },
+    {{ end }}
+    {{ if .Values.ui.searchUiDeployed }}
+      {
+        id: "telicent-search",
+        name: "search",
+        url: `${APP_DOMAIN}/search`,
+        icon: "./data-catalog/assets/icons/search.svg",
+      },
+    {{ end }}
+    {{ if .Values.ui.userPortalUiDeployed }}
+      {
+        id: "telicent-user-portal",
+        name: "user portal",
+        url: `${APP_DOMAIN}/user-portal/`,
+        icon: "./data-catalog/assets/icons/user-portal-light.svg",
+      },
+    {{ end }}
+    ];
+
+{{- end }}
