@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.6](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-data-v0.3.5...telicent-data-v0.3.6) (2026-03-24)
+
+
+### Miscellaneous Chores
+
+* relase 0.3.6 ([#538](https://github.com/Telicent-io/telicent-core-charts/issues/538)) ([434d75c](https://github.com/Telicent-io/telicent-core-charts/commit/434d75c915cae340e0296e8ccac60b69a5adcf77))
+
 ## [0.3.5](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-data-v0.3.4...telicent-data-v0.3.5) (2026-03-04)
 
 
