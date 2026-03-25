@@ -96,7 +96,7 @@ spec:
           mountPath: /usr/local/nginx/html/env-config.js
           subPath: env-config.js
         {{- with .Values.extraVolumeMounts }}
-          {{- toYaml . | nindent 12 }}
+        {{- toYaml . | nindent 8 }}
         {{- end }}
 
       {{- with .Values.sidecars }}
@@ -107,7 +107,7 @@ spec:
         configMap:
           name: {{ include "query-ui.configMapName" . }}
       {{- with .Values.extraVolumes }}
-        {{- toYaml . | nindent 8 }}
+      {{- toYaml . | nindent 6 }}
       {{- end }}
 
       {{- with .Values.affinity }}

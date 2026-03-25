@@ -120,7 +120,7 @@ spec:
           mountPath: {{ .Values.global.truststore.mountPath | default "/app/config/truststore" }}
         {{- end }}
         {{- with .Values.extraVolumeMounts }}
-          {{- toYaml . | nindent 12 }}
+        {{- toYaml . | nindent 8 }}
         {{- end }}
 
       {{- with .Values.sidecars }}
@@ -141,7 +141,7 @@ spec:
           secretName: {{ .Values.global.truststore.existingSecret }}
       {{- end }}
       {{- with .Values.extraVolumes }}
-        {{- toYaml . | nindent 8 }}
+      {{- toYaml . | nindent 6 }}
       {{- end }}
      
       {{- with .Values.affinity }}
