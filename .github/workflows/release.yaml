@@ -69,19 +69,6 @@ jobs:
           username: ${{ secrets.QUAY_USERNAME }}
           password: ${{ secrets.QUAY_PASSWORD }}
 
-      - name: Sign charts on Quay.io
-        run: |
-          refs_file="$RUNNER_TEMP/quay-chart-refs.txt"
-          if [ ! -s "$refs_file" ]; then
-            echo "no pushed chart references found to sign"
-            exit 1
-          fi
-          while IFS= read -r ref; do
-            [ -n "$ref" ] || continue
-            echo "signing $ref"
-            cosign sign --yes "$ref"
-          done < "$refs_file"
-
       - name: checkout pages branch
         uses: actions/checkout@v4
         with:
@@ -137,3 +124,16 @@ jobs:
             fi
             printf '%s@%s\n' "$pushed" "$digest" >> "$refs_file"
           done
+
+      - name: Sign charts on Quay.io
+        run: |
+          refs_file="$RUNNER_TEMP/quay-chart-refs.txt"
+          if [ ! -s "$refs_file" ]; then
+            echo "no pushed chart references found to sign"
+            exit 1
+          fi
+          while IFS= read -r ref; do
+            [ -n "$ref" ] || continue
+            echo "signing $ref"
+            cosign sign --yes "$ref"
+          done < "$refs_file"
