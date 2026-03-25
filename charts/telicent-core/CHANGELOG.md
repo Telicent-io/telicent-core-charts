@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.2.1](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v1.2.0...telicent-core-v1.2.1) (2026-03-25)
+
+
+### Bug Fixes
+
+* add backup envs ([#564](https://github.com/Telicent-io/telicent-core-charts/issues/564)) ([63c0f9d](https://github.com/Telicent-io/telicent-core-charts/commit/63c0f9d209cc8642502b9bc5ee1f051079cf7c4a))
+* allows the backup endpoint to be hit for SCS ([630dd7b](https://github.com/Telicent-io/telicent-core-charts/commit/630dd7b14c0a36ccfac15816d4d250e0e0afd2a1))
+* allows the backup endpoint to be hit for SCS ([63b8c4e](https://github.com/Telicent-io/telicent-core-charts/commit/63b8c4e939143526d79309e5c7ed8b96050c23e2))
+* postgres config + tidy ([4e2f502](https://github.com/Telicent-io/telicent-core-charts/commit/4e2f5024c324ad5ec3a386e1a8ad1144627c11fe))
+* postgres config + tidy ([5cc33ee](https://github.com/Telicent-io/telicent-core-charts/commit/5cc33ee0982126497d70064d31af54a864dc4b45))
+* remove ref to spatial ([74c4ed5](https://github.com/Telicent-io/telicent-core-charts/commit/74c4ed5a8fe824c2299088026eba5426324e7a10))
+* remove ref to spatial ([2f9d119](https://github.com/Telicent-io/telicent-core-charts/commit/2f9d119619a8f65b1ded71f0e7fb2003a8f521a7))
+* seccomp + volumes mounts now works ([#568](https://github.com/Telicent-io/telicent-core-charts/issues/568)) ([b10a626](https://github.com/Telicent-io/telicent-core-charts/commit/b10a62652459fda0dc3066f5fded9c88f0e13e9a))
+
 ## [1.2.0](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v1.1.5...telicent-core-v1.2.0) (2026-03-04)
 
 
