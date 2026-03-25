@@ -110,8 +110,8 @@ jobs:
           refs_file="$RUNNER_TEMP/quay-chart-refs.txt"
           : > "$refs_file"
           for chart in .cr-release-packages/*.tgz; do
-            echo "pushing $chart to oci://quay.io/telicent/charts/$chart"
-            if ! output=$(helm push --registry-config "$registry_config" "$chart" oci://quay.io/telicent/charts/$chart 2>&1); then
+            echo "pushing $chart to oci://quay.io/telicent/charts/"
+            if ! output=$(helm push --registry-config "$registry_config" "$chart" oci://quay.io/telicent/charts/ 2>&1); then
               echo "$output"
               exit 1
             fi
