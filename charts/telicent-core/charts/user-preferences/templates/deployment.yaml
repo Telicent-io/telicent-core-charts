@@ -134,7 +134,7 @@ spec:
           readOnly: true
         {{- end }}
         {{- with .Values.extraVolumeMounts }}
-          {{- toYaml . | nindent 12 }}
+        {{- toYaml . | nindent 8 }}
         {{- end }}
 
       {{- with .Values.sidecars }}
@@ -152,7 +152,7 @@ spec:
           secretName: {{ .Values.mongo.existingCaSecret }}
       {{- end }}
       {{- with .Values.extraVolumes }}
-        {{- toYaml . | nindent 8 }}
+      {{- toYaml . | nindent 6 }}
       {{- end }}
 
       {{- with .Values.affinity }}

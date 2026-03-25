@@ -99,7 +99,7 @@ spec:
           mountPath: /usr/local/nginx/html/secret-config.js
           subPath: secret-config.js
         {{- with .Values.extraVolumeMounts }}
-          {{- toYaml . | nindent 12 }}
+        {{- toYaml . | nindent 8 }}
         {{- end }}
 
       {{- with .Values.sidecars }}
@@ -113,7 +113,7 @@ spec:
         secret:
           secretName: {{ include "search-ui.mapSecretName" . }}
       {{- with .Values.extraVolumes }}
-        {{- toYaml . | nindent 8 }}
+      {{- toYaml . | nindent 6 }}
       {{- end }}
 
       {{- with .Values.affinity }}
