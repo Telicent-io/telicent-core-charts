@@ -1,0 +1,45 @@
+{{- /*
+Copyright (C) 2026 Telicent Limited
+*/}}
+{{- if .Values.enabled -}}
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+
+metadata:
+  name: {{ include "apicurio.fullname" . }}-ingress
+  namespace: {{ include "apicurio.namespace" . | quote }}
+spec:
+  selector:
+    matchLabels:
+    {{- include "apicurio.selectorLabels" . | nindent 6 }}
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        principals:
+        {{- include "apicurio.ingressPrincipal" . | nindent 8 }}
+    to:
+    - operation:
+        paths:
+        - /apis/registry/v3/groups/*/artifacts
+        methods: ["GET", "POST", "DELETE"]
+    - operation:
+        paths:
+        - /apis/registry/v3/groups/*/artifacts/*/versions*
+        - /apis/registry/v3/groups/*/artifacts/*/versions/*/content
+        methods: ["GET"]
+    - operation:
+        paths:
+          - /apis/registry/v3/groups/*/artifacts/*/versions
+        methods: ["POST"]
+    - operation:
+        paths:
+          - /apis/registry/v3/admin/config/properties/*
+        methods: ["PUT"]
+  - to:
+    - operation:
+        paths:
+        - /q/health/ready
+        - /q/health/live
+        methods: ["GET"]
+{{- end }}

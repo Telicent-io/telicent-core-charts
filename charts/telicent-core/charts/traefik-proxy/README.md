@@ -55,24 +55,24 @@ Define your container according to the Kubernetes container spec.
 
 ```yaml
 sidecars:
-- name: your-image-name
-  image: your-image
-  imagePullPolicy: Always
-  ports:
-  - name: portname
-    containerPort: 1234
+  - name: your-image-name
+    image: your-image
+    imagePullPolicy: Always
+    ports:
+      - name: portname
+        containerPort: 1234
 ```
 
 Similarly, you can add extra init containers using the `initContainers` parameter.
 
 ```yaml
 initContainers:
-- name: your-image-name
-  image: your-image
-  imagePullPolicy: Always
-  ports:
-  - name: portname
-    containerPort: 1234
+  - name: your-image-name
+    image: your-image
+    imagePullPolicy: Always
+    ports:
+      - name: portname
+        containerPort: 1234
 ```
 
 ### Setting Pod's affinity
@@ -260,6 +260,7 @@ If either of those details changes, you can use this section to correctly refer 
 | `hosts.search`            | Search application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                                 | `search:8080`           |
 | `hosts.graph`             | Graph application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                                  | `graph:8080`            |
 | `hosts.notifications`     | Notifications application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                          | `notifications:8080`    |
+| `hosts.apicurio`          | Apicurio Registry application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                      | `apicurio:8080`         |
 
 ### Host(s) Preview Parameters - Contains host information for applications deployed via *telicent-preview* chart
 

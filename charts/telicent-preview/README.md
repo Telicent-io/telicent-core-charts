@@ -83,6 +83,12 @@ Contains global parameters, these parameters are mirrored across all Telicent Pr
 | `notifications.enabled`           | Enable or disable the notifications component.           | `false` |
 | `notifications-projector.enabled` | Enable or disable the notifications-projector component. | `false` |
 
+### Apicurio Parameters
+
+| Name               | Description                               | Value   |
+| ------------------ | ----------------------------------------- | ------- |
+| `apicurio.enabled` | Enable or disable the apicurio component. | `false` |
+
 ### paperback-writer Parameters
 
 | Name                       | Description                                      | Value  |

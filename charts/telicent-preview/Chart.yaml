@@ -46,6 +46,10 @@ dependencies:
     version: "^0.1.0"
     repository: file://./charts/user-portal-ui
     condition: user-portal-ui.enabled
+  - name: apicurio
+    version: "^0.1.0"
+    repository: file://./charts/apicurio
+    condition: apicurio.enabled
 icon: "https://avatars.githubusercontent.com/u/65304240?s=200&v=4"
 
 # The name of the chart's maintainers.

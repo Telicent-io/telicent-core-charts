@@ -14,5 +14,8 @@ dependencies:
 - name: user-portal-ui
   repository: file://./charts/user-portal-ui
   version: 0.1.9
-digest: sha256:4045bf5736598da4e5f208f390e0ff13f07978bababf2d3dea55e6479a1d21e0
-generated: "2026-03-05T13:44:11.370216Z"
+- name: apicurio
+  repository: file://./charts/apicurio
+  version: 0.1.0
+digest: sha256:fbc2f0950e260091aa9c905c7a563dd2a06d55a53d85ca8e8489bd6dff6b79e2
+generated: "2026-04-02T18:06:59.81216+01:00"

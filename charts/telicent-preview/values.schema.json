@@ -143,6 +143,16 @@
                 }
             }
         },
+        "apicurio": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable or disable the apicurio component.",
+                    "default": false
+                }
+            }
+        },
         "paperback-writer": {
             "type": "object",
             "properties": {
