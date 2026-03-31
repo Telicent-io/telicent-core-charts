@@ -5,7 +5,7 @@ on:
   # See 'env' below for the vales that will be used for push triggered workflow runs.
   push:
     branches:
-      - 'main'
+      - "main"
   workflow_dispatch:
     inputs:
       cluster:
@@ -26,7 +26,7 @@ on:
         description: The S3 bucket to copy SBOMs to.
         required: true
         type: string
-        default: aws-transfer-20240617162907559800000001
+        default: telicent-deliverables
       customer:
         description: The customer to copy SBOM's and vulnerability reports for
         required: false
@@ -45,8 +45,8 @@ env:
   AWS_ROLE: ${{ github.event.inputs.role-override || 'auto-select' }}
   CLUSTER: ${{ github.event.inputs.cluster || 'system-release-cluster' }}
   CUSTOMER: ${{ github.event.inputs.customer || 'ody' }}
-  S3_BUCKET: ${{ github.event.inputs.s3-bucket || 'aws-transfer-20240617162907559800000001' }}
-  RELEASE_PREFIX: 'chore(main): release telicent-core'
+  S3_BUCKET: ${{ github.event.inputs.s3-bucket || 'telicent-deliverables' }}
+  RELEASE_PREFIX: "chore(main): release telicent-core"
 
 permissions:
   contents: read
