@@ -568,6 +568,11 @@
                     "type": "string",
                     "description": "Notifications application default host value, as defined by 'service/serviceAccount:port'",
                     "default": "notifications:8080"
+                },
+                "apicurio": {
+                    "type": "string",
+                    "description": "Apicurio Registry application default host value, as defined by 'service/serviceAccount:port'",
+                    "default": "apicurio:8080"
                 }
             }
         },

@@ -78,3 +78,10 @@ Detailed description of 'discoverHost' & 'discoverServiceAccount' function
 {{- printf "%s" (include "common.discoverServiceAccountPreview" (list . .Values.hostsPreview.notifications )) -}}
 {{- end -}}
 
+{{/* apicurio | preview - returns host ('service:port') and serviceAccount */}}
+{{- define "auth.hostApicurio" -}}
+{{- printf "%s" (include "common.discoverHost" (list . .Values.hosts.apicurio )) -}}
+{{- end -}}
+{{- define "auth.serviceAccountApicurio" -}}
+{{- printf "%s" (include "common.discoverServiceAccountPreview" (list . .Values.hostsPreview.apicurio )) -}}
+{{- end -}}

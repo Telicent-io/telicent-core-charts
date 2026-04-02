@@ -39,6 +39,14 @@ application relies on. For a full explanation please view '_hosts.tlp' file in t
 {{- printf "%s" (include "common.discoverServiceAccount" (list . .Values.hosts.notifications )) -}}
 {{- end -}}
 
+{{/* search - returns host ('service:port') and serviceAccount */}}
+{{- define "traefik-proxy.hostApicurio" -}}
+{{- printf "%s" (include "common.discoverHost" (list . .Values.hosts.apicurio )) -}}
+{{- end -}}
+{{- define "traefik-proxy.serviceAccountApicurio" -}}
+{{- printf "%s" (include "common.discoverServiceAccount" (list . .Values.hosts.apicurio )) -}}
+{{- end -}}
+
 {{/* graph - returns host ('service:port') and serviceAccount */}}
 {{- define "traefik-proxy.hostGraph" -}}
 {{- printf "%s" (include "common.discoverHost" (list . .Values.hosts.graph )) -}}
