@@ -39,7 +39,7 @@ global:
 #
 sparql:
   # @key sparql.defaultLabel Default label for SPARQL queries
-  defaultLabel: "*"
+  defaultLabel: "!"
 
 #
 # @section ConfigMap Parameters
