@@ -38,6 +38,47 @@ entries:
     urls:
     - core-mesh-0.1.0.tgz
     version: 0.1.0
+  demo-prereqs:
+  - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2026-04-15T14:06:55.115211327Z"
+    dependencies:
+    - condition: gateways.enabled
+      name: gateways
+      repository: file://./charts/gateways
+      version: ^0.x
+    - condition: kafka.enabled
+      name: kafka
+      repository: file://./charts/kafka
+      version: ^0.x
+    - condition: kafka-ui.enabled
+      name: kafka-ui
+      repository: file://./charts/kafka-ui
+      version: ^0.x
+    - condition: keycloak.enabled
+      name: keycloak
+      repository: file://./charts/keycloak
+      version: ^0.x
+    - condition: opensearch.enabled
+      name: opensearch
+      repository: file://./charts/opensearch
+      version: ^0.x
+    - condition: postgres.enabled
+      name: postgres
+      repository: file://./charts/postgres
+      version: ^0.x
+    description: 'Telicent demo cluster prerequisites. This chart is used to install
+      all of the required dependencies for the Telicent demo cluster. '
+    digest: 6a1a2bf21a6f2be28041ab46f8a96480603d84881764ede0231da50d6b3f9ffa
+    icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
+    maintainers:
+    - name: Telicent
+      url: https://github.com/Telicent-IO
+    name: demo-prereqs
+    type: application
+    urls:
+    - demo-prereqs-0.1.1.tgz
+    version: 0.1.1
   demo-prereqs-gateways:
   - apiVersion: v2
     created: "2026-03-25T10:51:29.285720566Z"
@@ -484,7 +525,7 @@ entries:
   telicent-core:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2026-03-25T10:51:29.306795956Z"
+    created: "2026-04-15T14:06:55.135545483Z"
     dependencies:
     - condition: global.enterprise
       name: admin-ui
@@ -528,7 +569,7 @@ entries:
       version: ^0.1.0
     description: 'Telicent CORE Platform, for all essential services and applications
       for our secure data integration and knowledge graph platform. '
-    digest: b9592e0111ec29a461dc424f2a062f7b4b70fde4e8faaa290ae14c159c8e8cc2
+    digest: a60edaafcfb9fefb1ea588de667d11683b3d607dec09c79310264f9151ce366b
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -2037,7 +2078,7 @@ entries:
   telicent-data:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2026-03-25T10:51:29.3202947Z"
+    created: "2026-04-15T14:06:55.148997395Z"
     dependencies:
     - name: ies-ontology-producer
       repository: file://./charts/ies-ontology-producer
@@ -2089,7 +2130,7 @@ entries:
       version: ^0.1.0
     description: 'Supplementary chart containing adapters and mappers for specific
       datasets and ontologies. '
-    digest: 2d2ea358b9447350a03c95061681bdccdc23eac49565706d947e72ac24bd7adf
+    digest: a6bd8930c0685657a4f5904b5a5a6822a714c5bcdffaa8ada9fa3de689b9c931
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -2601,7 +2642,7 @@ entries:
   telicent-preview:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2026-03-25T10:51:29.327443037Z"
+    created: "2026-04-15T14:06:55.156432973Z"
     dependencies:
     - condition: data-catalog-ui.enabled
       name: data-catalog-ui
@@ -2626,7 +2667,7 @@ entries:
     description: 'Secondary chart containing products that are still under active
       development, and not yet part of CORE. Can be used to try new or preview features
       early. '
-    digest: 292e6d0ec875714f87caf342b42c8eddd9354d85e9da948d857e068038e283af
+    digest: 134b03cd040fc8dd709a75eaf33c7f8669fc11f52eb7394527bf81992dce3e3b
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -2807,4 +2848,4 @@ entries:
     urls:
     - telicent-preview-0.2.0.tgz
     version: 0.2.0
-generated: "2026-03-25T10:51:29.284760775Z"
+generated: "2026-04-15T14:06:55.105213397Z"
