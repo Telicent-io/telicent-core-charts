@@ -1,9 +1,0 @@
-dependencies:
-- name: gateway-apps
-  repository: file://./charts/gateway-apps
-  version: 0.1.0
-- name: gateway-authn
-  repository: file://./charts/gateway-authn
-  version: 0.1.0
-digest: sha256:148904eeaa11cfb7db612494664b429c6914d1d462e029018479865e51ffd489
-generated: "2025-09-18T09:56:15.969546+01:00"
