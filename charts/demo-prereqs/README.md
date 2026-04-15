@@ -15,7 +15,7 @@ This chart bootstraps the Telicent CORE deployment on a [Kubernetes](https://kub
 
 To install the chart with the release name `my-release`:
 
-```console
+```shell
 helm install my-release ./charts/demo-cluster
 ```
 
@@ -23,7 +23,7 @@ helm install my-release ./charts/demo-cluster
 
 To uninstall/delete the `my-release` deployment:
 
-```console
+```shell
 helm delete my-release
 ```
 
