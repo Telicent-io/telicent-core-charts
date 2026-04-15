@@ -1,0 +1,10 @@
+apiVersion: v2
+appVersion: 3.9.0
+description: Create a kafka cluster and associated configuration
+icon: "https://avatars.githubusercontent.com/u/65304240?s=200&v=4"
+maintainers:
+  - name: telicent
+    url: https://github.com/Telicent-IO
+name: kafka
+type: application
+version: 0.3.2

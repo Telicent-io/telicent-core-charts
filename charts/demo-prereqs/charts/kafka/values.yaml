@@ -1,0 +1,46 @@
+# @section Kafka Configuration
+# @key enabled Whether the Kafka prerequisite should be installed.
+enabled: true
+# @key nameOverride String to partially override fullname (will maintain the release name).
+nameOverride: ""
+# @key fullnameOverride String to fully override the generated release name.
+fullnameOverride: ""
+# @key namespace The namespace in which to deploy OpenSearch. If not set, defaults to the release namespace.
+namespace: ""
+# @key topics Kafka topics to create on the cluster.
+topics: []
+# topics:
+#   - name: my-topic
+#     partitions: 1 # (optional, default is 1)
+#     replicas: 1 # (optional, default is 1)
+#     retentionMs: -1 # (optional, default is -1)
+#     retentionBytes: -1 # (optional, default is -1)
+
+# @section Storage Configuration
+# @key storageCapacity The storage capacity to apply to the PVC that will be created for the Kafka cluster.
+storageCapacity: "10G"
+
+# @section Credentials Configuration
+# @key existingUserPwdSecretName The name of an existing secret containing the Kafka pipeline, smart-cache and (if enabled) external passwords.
+existingUserPwdSecretName: ""
+# @key pipelinePassword The `pipeline` user password to apply to the Kafka cluster.
+pipelinePassword: ""
+# @key smartCachePassword The `smart-cache` user password to apply to the Kafka cluster.
+smartCachePassword: ""
+# @key externalPassword The `external` user password to apply to the Kafka cluster.
+externalPassword: ""
+
+# @section External Access Configuration
+externalAccess:
+  # @key externalAccess.enabled Whether external access to Kafka is enabled.
+  enabled: false
+  # @key externalAccess.bootstrapHost The external bootstrap hostname/IP. Required if `externalAccess.enabled` is `true`.
+  bootstrapHost: ""
+  # @key externalAccess.bootstrapNodePort The bootstrap NodePort. Must be in range 30000-32767.
+  bootstrapNodePort: 30092
+  # @key externalAccess.brokerNodePort The broker NodePort. Must be different from bootstrap nodeport, range 30000-32767.
+  brokerNodePort: 30093
+  # @key externalAccess.tls Whether TLS is enabled for the external listener.
+  tls: false
+
+

@@ -1,0 +1,30 @@
+# @section Kafka UI Configuration
+# @key enabled Whether the Kafka UI prerequisite should be installed.
+enabled: true
+# @key nameOverride String to partially override fullname (will maintain the release name)
+nameOverride: ""
+# @key fullnameOverride String to fully override the generated release name
+fullnameOverride: ""
+# @key host The hostname for the Kafka UI (required)
+host: ""
+# @key istioNamespace The namespace in which to deploy the Kafka UI Istio dependencies
+istioNamespace: istio-system
+
+# @section Ingress Configuration
+ingress:
+  # @key ingress.name The name of the Istio Gateway resource. If left empty, a gateway called `gateways-<kafka-ui.fullname>` will be created
+  name: ""
+  # @key ingress.certificateName The name of the secret containing the Kafka UI TLS certificate. If left empty, it will default to `<kafka-ui.fullname>-tls`
+  certificateName: ""
+  # @key ingress.port The port on which the Kafka UI service is exposed
+  port: 80
+  selectors:
+    # @key ingress.selectors.istio The label selector for the Istio ingress gateway
+    istio: ingress
+
+# @section IDP Configuration
+idp:
+  # @key idp.host The hostname of the OIDC identity provider (required)
+  host: ""
+  # @key idp.jwksEndpoint The name of the endpoint to use for JWKS retrieval (required)
+  jwksEndpoint: ""

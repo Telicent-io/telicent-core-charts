@@ -1,0 +1,35 @@
+{{/*
+Copyright (C) 2025-2026 Telicent Limited
+*/}}
+
+PostgreSQL has been deployed successfully!
+
+Database: {{ .Values.postgres.database }}
+Username: {{ .Values.postgres.user }}
+Port: {{ .Values.service.port }}
+
+To connect to your PostgreSQL database from within the cluster:
+
+  Host: {{ include "demo-prereqs-postgres.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
+  Port: {{ .Values.service.port }}
+
+To get the password:
+
+  kubectl get secret --namespace {{ .Release.Namespace }} {{ include "demo-prereqs-postgres.fullname" . }} -o jsonpath="{.data.postgres-password}" | base64 -d
+
+To connect using port-forward:
+
+  kubectl port-forward --namespace {{ .Release.Namespace }} svc/{{ include "demo-prereqs-postgres.fullname" . }} 5432:{{ .Values.service.port }}
+
+  Then connect using:
+  psql -h 127.0.0.1 -U {{ .Values.postgres.user }} -d {{ .Values.postgres.database }}
+
+
+{{- if .Values.persistence.enabled }}
+
+Persistence is enabled with a {{ .Values.persistence.size }} volume.
+{{- else }}
+
+WARNING: Persistence is disabled. Data will be lost when the pod is restarted!
+{{- end }}
+

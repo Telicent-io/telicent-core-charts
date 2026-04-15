@@ -1,0 +1,56 @@
+{
+    "title": "Chart Values",
+    "type": "object",
+    "properties": {
+        "enabled": {
+            "type": "boolean",
+            "description": "Whether the OpenSearch prerequisite should be installed.",
+            "default": true
+        },
+        "nameOverride": {
+            "type": "string",
+            "description": "String to partially override fullname (will maintain the release name).",
+            "default": ""
+        },
+        "fullnameOverride": {
+            "type": "string",
+            "description": "String to fully override the generated release name.",
+            "default": ""
+        },
+        "namespace": {
+            "type": "string",
+            "description": "The namespace in which to deploy OpenSearch. If not set, defaults to the release namespace.",
+            "default": ""
+        },
+        "secret": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "The name to use when creating the Kubernetes secret containing the OpenSearch credentials. If not set, defaults to `<fullname>`.",
+                    "default": ""
+                },
+                "adminUserName": {
+                    "type": "string",
+                    "description": "The name of the admin user to create in the OpenSearch cluster.",
+                    "default": "admin"
+                },
+                "adminUserPassword": {
+                    "type": "string",
+                    "description": "The password for the admin OpenSearch user.",
+                    "default": ""
+                },
+                "userName": {
+                    "type": "string",
+                    "description": "The name of the non-admin user to create in the OpenSearch cluster.",
+                    "default": "telicent-search"
+                },
+                "userPassword": {
+                    "type": "string",
+                    "description": "The password for the non-admin OpenSearch user.",
+                    "default": ""
+                }
+            }
+        }
+    }
+}

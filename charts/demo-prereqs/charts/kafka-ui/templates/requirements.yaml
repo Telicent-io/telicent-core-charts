@@ -1,0 +1,7 @@
+{{/*
+Copyright (C) 2025-2026 Telicent Limited
+*/}}
+
+{{- $_ := required ".Values.host is required" .Values.host }}
+{{- $_ := required ".Values.idp.host is required" .Values.idp.host }}
+{{- $_ := required ".Values.idp.jwksEndpoint is required" .Values.idp.jwksEndpoint }}

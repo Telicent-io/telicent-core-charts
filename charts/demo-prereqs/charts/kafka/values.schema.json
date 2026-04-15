@@ -1,0 +1,87 @@
+{
+    "title": "Chart Values",
+    "type": "object",
+    "properties": {
+        "enabled": {
+            "type": "boolean",
+            "description": "Whether the Kafka prerequisite should be installed.",
+            "default": true
+        },
+        "nameOverride": {
+            "type": "string",
+            "description": "String to partially override fullname (will maintain the release name).",
+            "default": ""
+        },
+        "fullnameOverride": {
+            "type": "string",
+            "description": "String to fully override the generated release name.",
+            "default": ""
+        },
+        "namespace": {
+            "type": "string",
+            "description": "The namespace in which to deploy OpenSearch. If not set, defaults to the release namespace.",
+            "default": ""
+        },
+        "topics": {
+            "type": "array",
+            "description": "Kafka topics to create on the cluster.",
+            "default": [],
+            "items": {}
+        },
+        "storageCapacity": {
+            "type": "string",
+            "description": "The storage capacity to apply to the PVC that will be created for the Kafka cluster.",
+            "default": "10G"
+        },
+        "existingUserPwdSecretName": {
+            "type": "string",
+            "description": "The name of an existing secret containing the Kafka pipeline, smart-cache and (if enabled) external passwords.",
+            "default": ""
+        },
+        "pipelinePassword": {
+            "type": "string",
+            "description": "The `pipeline` user password to apply to the Kafka cluster.",
+            "default": ""
+        },
+        "smartCachePassword": {
+            "type": "string",
+            "description": "The `smart-cache` user password to apply to the Kafka cluster.",
+            "default": ""
+        },
+        "externalPassword": {
+            "type": "string",
+            "description": "The `external` user password to apply to the Kafka cluster.",
+            "default": ""
+        },
+        "externalAccess": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Whether external access to Kafka is enabled.",
+                    "default": false
+                },
+                "bootstrapHost": {
+                    "type": "string",
+                    "description": "The external bootstrap hostname/IP. Required if `externalAccess.enabled` is `true`.",
+                    "default": ""
+                },
+                "bootstrapNodePort": {
+                    "type": "number",
+                    "description": "The bootstrap NodePort. Must be in range 30000-32767.",
+                    "default": 30092
+                },
+                "brokerNodePort": {
+                    "type": "number",
+                    "description": "The broker NodePort. Must be different from bootstrap nodeport, range 30000-32767.",
+                    "default": 30093
+                },
+                "tls": {
+                    "type": "boolean",
+                    "description": "Whether TLS is enabled for the external listener.",
+                    "default": false
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,44 @@
+# @section Global Configuration
+global:
+  # @key global.namespace The namespace in which the should be created.
+  namespace: istio-system
+  # @key global.tenantName The tenant name to apply to the gateway.
+  tenantName: ""
+  # @key global.appsHost The CORE applications hostname to use in the gateway.
+  appsHost: ""
+  # @key global.apiHost The CORE API hostname to use in the gateway.
+  apiHost: ""
+  # @key global.authHost The CORE authentication hostname to use in the gateway.
+  authHost: ""
+  # @key global.idpHost The CORE IDP hostname to use in the auto-generated `jwksUri` and `jwtIssuer`.
+  idpHost: ""
+
+# @section Applications Gateway Configuration
+# @key enabled Whether the Applications Gateway prerequisite should be installed.
+enabled: true
+# @key nameOverride String to partially override fullname (will maintain the release name).
+nameOverride: ""
+# @key fullnameOverride String to fully override the generated release name.
+fullnameOverride: ""
+# @key namespace The namespace in which to deploy OpenSearch. If not set, defaults to the release namespace.
+namespace: ""
+# @key additionalHosts A list of additional hostnames to use in the apps gateway.
+additionalHosts: []
+# @key jwksUri The URI of the JWKS endpoint. Optional, only required if a IDP that differs from that one provided with the Telicent demo prerequisites Helm chart is used is used.
+jwksUri: ""
+# @key jwtIssuer The URI of the JWT issuer. Optional, only required if a IDP that differs from that one provided with the Telicent demo prerequisites Helm chart is used is used.
+jwtIssuer: ""
+
+# @section TLS Configuration
+tls:
+  # @key tls.existingCredentialName The name of an existing secret containing TLS credentials.
+  existingCredentialName: ""
+  # @key tls.key The TLS key to apply to a secret. Ignored when `tls.existingCredentialName` is set.
+  key: ""
+  # @key tls.crt The TLS crt to apply to a secret. Ignored when `tls.existingCredentialName` is set.
+  crt: ""
+
+# @section Ingress Configuration
+ingressSelectors:
+  # @key ingressSelectors.istio The Istio ingress selector label to target.
+  istio: ingress

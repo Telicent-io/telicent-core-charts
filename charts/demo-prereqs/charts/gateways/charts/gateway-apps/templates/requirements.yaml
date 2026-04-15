@@ -1,0 +1,10 @@
+{{/*
+Copyright (C) 2025-2026 Telicent Limited
+*/}}
+
+{{- $_ := required ".Values.global.tenantName is required" .Values.global.tenantName }}
+{{- $_ := required ".Values.global.appsHost is required" .Values.global.appsHost }}
+{{- $_ := required ".Values.global.apiHost is required" .Values.global.apiHost }}
+{{- $_ := required ".Values.global.authHost is required" .Values.global.authHost }}
+{{- $_ := required ".Values.global.idpHost is required" .Values.global.idpHost }}
+

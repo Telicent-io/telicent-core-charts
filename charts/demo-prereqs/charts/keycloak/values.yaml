@@ -1,0 +1,115 @@
+# @section Keycloak Configuration
+# @key enabled Whether the Keycloak prerequisite should be installed.
+enabled: true
+# @key nameOverride String to partially override fullname (will maintain the release name).
+nameOverride: ""
+# @key fullnameOverride String to fully override the generated release name.
+fullnameOverride: ""
+
+# @key existingEnvSecret The name of an existing secret containing the admin username and password to use when provisioning Keycloak.
+existingEnvSecret: ""
+# @key adminUsername The admin username to use when provisioning Keycloak. Ignored if `existingEnvSecret` is set.
+adminUsername: admin
+# @key adminPassword The admin password to use when provisioning Keycloak. Ignored if `existingEnvSecret` is set.
+adminPassword: "CHANGE-ADMIN-PASSWORD"
+
+# @key authGateway The Istio gateway through which ingress to Keycloak must flow.
+authGateway: istio-system/gateways-authn
+# @key authHost The Istio virtual service host for Keycloak.
+authHost: auth.127.0.0.1.nip.io
+
+# @key resources Set container requests and limits for different resources like CPU or memory.
+resources: {}
+
+# @key revisionHistoryLimit Number of controller revisions to keep
+revisionHistoryLimit: 3
+
+## @section Container Security Context Configuration
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+# @key containerSecurityContext Container security context settings to apply to Keycloak containers.
+# @optional containerSecurityContext.enabled Enabled containers' Security Context.
+# @optional containerSecurityContext.seLinuxOptions [object,nullable] Set SELinux options in container.
+# @optional containerSecurityContext.runAsUser Set containers' Security Context runAsUser.
+# @optional containerSecurityContext.runAsGroup Set containers' Security Context runAsGroup.
+# @optional containerSecurityContext.runAsNonRoot Set container's Security Context runAsNonRoot.
+# @optional containerSecurityContext.privileged Set container's Security Context privileged.
+# @optional containerSecurityContext.readOnlyRootFilesystem Set container's Security Context readOnlyRootFilesystem.
+# @optional containerSecurityContext.allowPrivilegeEscalation Set container's Security Context allowPrivilegeEscalation.
+# @optional containerSecurityContext.capabilities.drop List of capabilities to be dropped.
+# @optional containerSecurityContext.seccompProfile.type Set container's Security Context seccomp profile.
+containerSecurityContext: {}
+  # allowPrivilegeEscalation: false
+  # capabilities:
+  #   drop:
+  #     - ALL
+  # runAsGroup: 10101
+  # runAsNonRoot: true
+  # runAsUser: 10101
+  # seccompProfile:
+  #   type: RuntimeDefault
+
+# @section Database Volume Configuration
+dbVolume:
+  # @key dbVolume.size The size of the database Persistent Volume.
+  size: 1Gi
+  # @key dbVolume.storageClass The StorageClass for the database Persistent Volume.
+  storageClass: local-path
+
+# @section Ingress Configuration
+# ref: https://kubernetes.io/docs/concepts/services-networking/ingress/
+ingress:
+  # @key ingress.namespace The Istio ingress namespace.
+  namespace: istio-system
+  # @key ingress.serviceAccountName The Istio ingress service account.
+  serviceAccountName: istio-ingress
+
+# @section Image Configuration
+image:
+  # @key image.pullPolicy Keycloak image pull policy.
+  pullPolicy: Always
+  # @key image.repository Keycloak image repository.
+  repository: quay.io/keycloak/keycloak
+  # @skip image.tag Keycloak image tag.
+  tag: ""
+
+# @section Pod Security Context Configuration
+# ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+# @key podSecurityContext Pod security context settings to apply to Keycloak pods.
+# @optional podSecurityContext.enabled Enabled Keycloak pods' Security Context.
+# @optional podSecurityContext.fsGroupChangePolicy Set filesystem group change policy.
+# @optional podSecurityContext.sysctls Set kernel settings using the sysctl interface.
+# @optional podSecurityContext.supplementalGroups Set filesystem extra groups.
+# @optional podSecurityContext.fsGroup Set Keycloak pod's Security Context fsGroup.
+podSecurityContext: {}
+  # fsGroup: 10101
+  # runAsGroup: 10101
+  # runAsNonRoot: true
+  # runAsUser: 10101
+  # seccompProfile:
+  #   type: RuntimeDefault
+
+# @section Service Configuration
+service:
+  # @key service.type Kubernetes service port.
+  port: 8080
+  # @key service.port Kubernetes service type.
+  type: ClusterIP
+
+# @section Service Account Configuration
+# ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+serviceAccount:
+  # @key serviceAccount.name The name of the ServiceAccount to use. If not set, a name is generated using the `fullname` template.
+  name: ""
+  # @key serviceAccount.annotations Additional Service Account annotations.
+  annotations: {}
+
+# @section Update Strategy Configuration
+# ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies
+strategy:
+  # @key strategy.type Keycloak StatefulSet type
+  type: RollingUpdate
+  rollingUpdate:
+    # @key strategy.rollingUpdate.maxSurge Maximum number of Keycloak pods that can be created above the desired replica count during a rolling update.
+    maxSurge: 1
+    # @key strategy.rollingUpdate.maxUnavailable Maximum number of Keycloak pods that can be unavailable during a rolling update.
+    maxUnavailable: 0

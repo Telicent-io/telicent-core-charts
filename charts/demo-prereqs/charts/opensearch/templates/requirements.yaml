@@ -1,0 +1,6 @@
+{{/*
+Copyright (C) 2025-2026 Telicent Limited
+*/}}
+
+{{- $_ := required ".Values.secret.adminUserPassword is required" .Values.secret.adminUserPassword }}
+{{- $_ := required ".Values.secret.userPassword is required" .Values.secret.userPassword }}

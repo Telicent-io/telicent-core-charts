@@ -1,0 +1,3 @@
+# @section Demo Prerequisites Configuration
+# @key enabled Whether the demo prerequisite should be installed.
+enabled: true

@@ -1,0 +1,25 @@
+{{/*
+Copyright (C) 2025-2026 Telicent Limited
+*/}}
+
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: {{ include "gateway-authn.fullname" . }}
+  namespace: {{ .Values.global.namespace }}
+  labels:
+  {{- include "gateway-authn.labels" . | nindent 4 }}
+spec:
+  action: ALLOW
+  rules:
+  - to:
+    - operation:
+        hosts:
+        - {{ .Values.global.idpHost }}
+        - {{ .Values.global.idpHost }}:*
+        paths:
+        - /*
+        - /
+  selector:
+    matchLabels:
+      {{- .Values.ingressSelectors | toYaml | nindent 6 }}

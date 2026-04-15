@@ -1,0 +1,76 @@
+{
+    "title": "Chart Values",
+    "type": "object",
+    "properties": {
+        "enabled": {
+            "type": "boolean",
+            "description": "Whether the Kafka UI prerequisite should be installed.",
+            "default": true
+        },
+        "nameOverride": {
+            "type": "string",
+            "description": "String to partially override fullname (will maintain the release name)",
+            "default": ""
+        },
+        "fullnameOverride": {
+            "type": "string",
+            "description": "String to fully override the generated release name",
+            "default": ""
+        },
+        "host": {
+            "type": "string",
+            "description": "The hostname for the Kafka UI (required)",
+            "default": ""
+        },
+        "istioNamespace": {
+            "type": "string",
+            "description": "The namespace in which to deploy the Kafka UI Istio dependencies",
+            "default": "istio-system"
+        },
+        "ingress": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "The name of the Istio Gateway resource. If left empty, a gateway called `gateways-<kafka-ui.fullname>` will be created",
+                    "default": ""
+                },
+                "certificateName": {
+                    "type": "string",
+                    "description": "The name of the secret containing the Kafka UI TLS certificate. If left empty, it will default to `<kafka-ui.fullname>-tls`",
+                    "default": ""
+                },
+                "port": {
+                    "type": "number",
+                    "description": "The port on which the Kafka UI service is exposed",
+                    "default": 80
+                },
+                "selectors": {
+                    "type": "object",
+                    "properties": {
+                        "istio": {
+                            "type": "string",
+                            "description": "The label selector for the Istio ingress gateway",
+                            "default": "ingress"
+                        }
+                    }
+                }
+            }
+        },
+        "idp": {
+            "type": "object",
+            "properties": {
+                "host": {
+                    "type": "string",
+                    "description": "The hostname of the OIDC identity provider (required)",
+                    "default": ""
+                },
+                "jwksEndpoint": {
+                    "type": "string",
+                    "description": "The name of the endpoint to use for JWKS retrieval (required)",
+                    "default": ""
+                }
+            }
+        }
+    }
+}

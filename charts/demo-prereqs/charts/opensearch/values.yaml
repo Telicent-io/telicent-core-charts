@@ -1,0 +1,22 @@
+# @section OpenSearch Configuration
+# @key enabled Whether the OpenSearch prerequisite should be installed.
+enabled: true
+# @key nameOverride String to partially override fullname (will maintain the release name).
+nameOverride: ""
+# @key fullnameOverride String to fully override the generated release name.
+fullnameOverride: ""
+# @key namespace The namespace in which to deploy OpenSearch. If not set, defaults to the release namespace.
+namespace: ""
+
+# @section OpenSearch Users Secret Configuration
+secret:
+  # @key secret.name The name to use when creating the Kubernetes secret containing the OpenSearch credentials. If not set, defaults to `<fullname>`.
+  name: ""
+  # @key secret.adminUserName The name of the admin user to create in the OpenSearch cluster.
+  adminUserName: "admin"
+  # @key secret.adminUserPassword The password for the admin OpenSearch user.
+  adminUserPassword: ""
+  # @key secret.userName The name of the non-admin user to create in the OpenSearch cluster.
+  userName: "telicent-search"
+  # @key secret.userPassword The password for the non-admin OpenSearch user.
+  userPassword: ""
