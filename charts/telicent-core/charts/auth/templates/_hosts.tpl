@@ -72,7 +72,7 @@ Detailed description of 'discoverHost' & 'discoverServiceAccount' function
 
 {{/* notifications | preview - returns host ('service:port') and serviceAccount */}}
 {{- define "auth.hostNotifications" -}}
-{{- printf "%s" (include "common.discoverHost" (list . .Values.hosts.notifications )) -}}
+{{- printf "%s" (include "common.discoverHost" (list . .Values.hostsPreview.notifications )) -}}
 {{- end -}}
 {{- define "auth.serviceAccountNotifications" -}}
 {{- printf "%s" (include "common.discoverServiceAccountPreview" (list . .Values.hostsPreview.notifications )) -}}
