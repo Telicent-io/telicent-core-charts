@@ -126,14 +126,14 @@ spec:
       {{- with .Values.sidecars }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
-     
+
       volumes:
       - name: kafka-auth-config
         secret:
         {{- if .Values.global.kafka.existingConfigSecretName }}
           secretName: {{ .Values.global.kafka.existingConfigSecretName }}
         {{- else }}
-          secretName: {{ include "search-projector.fullname" . }}-kafka-config
+          secretName: {{ include "search.fullname" . }}-kafka-config
         {{- end }}
       {{- if .Values.global.truststore.existingSecret }}
       - name: java-truststore
@@ -143,7 +143,7 @@ spec:
       {{- with .Values.extraVolumes }}
       {{- toYaml . | nindent 6 }}
       {{- end }}
-     
+
       {{- with .Values.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
