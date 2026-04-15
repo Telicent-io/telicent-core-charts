@@ -1,10 +1,6 @@
 {
-  "charts/demo-prereqs-gateways": "0.3.1",
-  "charts/demo-prereqs-kafka": "0.3.2",
-  "charts/demo-prereqs-keycloak": "0.2.1",
-  "charts/demo-prereqs-mongodb": "0.1.0",
-  "charts/demo-prereqs-postgres": "0.3.2",
   "charts/telicent-core": "1.2.1",
   "charts/telicent-preview": "0.5.1",
-  "charts/telicent-data": "0.3.6"
+  "charts/telicent-data": "0.3.6",
+  "charts/demo-prereqs": "0.1.0"
 }
