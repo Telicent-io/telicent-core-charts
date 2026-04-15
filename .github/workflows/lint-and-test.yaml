@@ -49,8 +49,7 @@ jobs:
     needs: prepare
     strategy: 
       fail-fast: false
-      matrix:
-        chart: ${{ fromJson(needs.prepare.outputs.matrix ) }}
+      matrix: ${{ fromJson(needs.prepare.outputs.matrix ) }}
     steps:
       - name: Lint charts
         id: build-and-push-dev-image
