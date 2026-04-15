@@ -5,8 +5,8 @@ on:
   push:
     branches-ignore:
       - main
-    # paths:
-    #   - charts/**
+    paths:
+      - charts/**
 
 # Revoke almost all permissions by default and grant only those needed to each job.
 # https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax#permissions
