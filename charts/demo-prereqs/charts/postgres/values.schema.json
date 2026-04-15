@@ -1,0 +1,234 @@
+{
+    "title": "Chart Values",
+    "type": "object",
+    "properties": {
+        "enabled": {
+            "type": "boolean",
+            "description": "Whether the PostgreSQL prerequisite should be installed.",
+            "default": true
+        },
+        "image": {
+            "type": "object",
+            "properties": {
+                "repository": {
+                    "type": "string",
+                    "description": "PostgreSQL image repository",
+                    "default": "postgres"
+                },
+                "pullPolicy": {
+                    "type": "string",
+                    "description": "Image pull policy",
+                    "default": "IfNotPresent"
+                },
+                "tag": {
+                    "type": "string",
+                    "description": "Overrides the image tag whose default is the chart appVersion.",
+                    "default": ""
+                }
+            }
+        },
+        "imagePullSecrets": {
+            "type": "array",
+            "description": "Specify registry secret names as an array",
+            "default": [],
+            "items": {}
+        },
+        "nameOverride": {
+            "type": "string",
+            "description": "Override the name of the chart",
+            "default": ""
+        },
+        "fullnameOverride": {
+            "type": "string",
+            "description": "Override the full name of the chart",
+            "default": ""
+        },
+        "postgres": {
+            "type": "object",
+            "properties": {
+                "database": {
+                    "type": "string",
+                    "description": "Database name to create",
+                    "default": "postgres"
+                },
+                "user": {
+                    "type": "string",
+                    "description": "Username (superuser)",
+                    "default": "postgres"
+                },
+                "password": {
+                    "type": "string",
+                    "description": "Password for the user (required, ignored if existingSecret is set)",
+                    "default": "postgres"
+                },
+                "existingSecret": {
+                    "type": "string",
+                    "description": "Name of an existing secret containing the postgres password. If set, no secret will be created by this chart.",
+                    "default": ""
+                },
+                "existingSecretPasswordKey": {
+                    "type": "string",
+                    "description": "Key in the existing secret that contains the postgres password",
+                    "default": "postgres-password"
+                },
+                "extraEnv": {
+                    "type": "array",
+                    "description": "Additional PostgreSQL configuration parameters",
+                    "default": [],
+                    "items": {}
+                }
+            }
+        },
+        "persistence": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable persistence using Persistent Volume Claims",
+                    "default": true
+                },
+                "storageClass": {
+                    "type": "string",
+                    "description": "Storage class - leave empty for default",
+                    "default": ""
+                },
+                "accessMode": {
+                    "type": "string",
+                    "description": "Access mode",
+                    "default": "ReadWriteOnce"
+                },
+                "size": {
+                    "type": "string",
+                    "description": "Size of the persistent volume",
+                    "default": "1Gi"
+                },
+                "annotations": {
+                    "type": "object",
+                    "description": "Annotations for the PVC",
+                    "default": {}
+                }
+            }
+        },
+        "service": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "description": "Service type",
+                    "default": "ClusterIP"
+                },
+                "port": {
+                    "type": "number",
+                    "description": "Service port",
+                    "default": 5432
+                }
+            }
+        },
+        "serviceAccount": {
+            "type": "object",
+            "properties": {
+                "create": {
+                    "type": "boolean",
+                    "description": "Create a ServiceAccount",
+                    "default": false
+                },
+                "automount": {
+                    "type": "boolean",
+                    "description": "Automount service account token",
+                    "default": true
+                },
+                "annotations": {
+                    "type": "object",
+                    "description": "Annotations for the ServiceAccount",
+                    "default": {}
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the ServiceAccount",
+                    "default": ""
+                }
+            }
+        },
+        "podAnnotations": {
+            "type": "object",
+            "description": "Pod annotations and labels",
+            "default": {}
+        },
+        "podLabels": {
+            "type": "object",
+            "description": "Pod labels",
+            "default": {}
+        },
+        "podSecurityContext": {
+            "type": "object",
+            "description": "Security context for the pod",
+            "default": {}
+        },
+        "securityContext": {
+            "type": "object",
+            "description": "Security context for the container",
+            "default": {}
+        },
+        "resources": {
+            "type": "object",
+            "description": "Resource limits and requests",
+            "default": {}
+        },
+        "nodeSelector": {
+            "type": "object",
+            "description": "Node selector",
+            "default": {}
+        },
+        "tolerations": {
+            "type": "array",
+            "description": "Tolerations",
+            "default": [],
+            "items": {}
+        },
+        "affinity": {
+            "type": "object",
+            "description": "Affinity rules",
+            "default": {}
+        },
+        "auth": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable Istio AuthorizationPolicy for PostgreSQL connections",
+                    "default": true
+                },
+                "namespace": {
+                    "type": "string",
+                    "description": "Namespace of the service account allowed to connect",
+                    "default": "tc-core-dev"
+                },
+                "serviceAccountName": {
+                    "type": "string",
+                    "description": "Service account name allowed to connect to PostgreSQL",
+                    "default": "telicent-core-auth"
+                }
+            }
+        },
+        "userPreferences": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable Istio AuthorizationPolicy for PostgreSQL connections",
+                    "default": true
+                },
+                "namespace": {
+                    "type": "string",
+                    "description": "Namespace of the service account allowed to connect",
+                    "default": "tc-core-dev"
+                },
+                "serviceAccountName": {
+                    "type": "string",
+                    "description": "Service account name allowed to connect to PostgreSQL",
+                    "default": "telicent-core-user-preferences"
+                }
+            }
+        }
+    }
+}

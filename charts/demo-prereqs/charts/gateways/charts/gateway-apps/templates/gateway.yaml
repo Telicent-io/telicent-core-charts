@@ -1,0 +1,42 @@
+{{/*
+Copyright (C) 2025-2026 Telicent Limited
+*/}}
+
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: {{ include "gateway-apps.fullname" . }}
+  namespace: {{ .Values.global.namespace }}
+  labels:
+    {{- include "gateway-apps.labels" . | nindent 4 }}
+spec:
+  selector:
+    {{- .Values.ingressSelectors | toYaml | nindent 4 }}
+  servers:
+    - hosts:
+        - {{ .Values.global.appsHost }}
+        - {{ .Values.global.apiHost }}
+        - {{ .Values.global.authHost }}
+        {{- range .Values.global.additionalHosts }}
+        - {{ . }}
+        {{- end }}
+      port:
+        name: http
+        number: 80
+        protocol: HTTP
+      tls:
+        httpsRedirect: true
+    - hosts:
+        - {{ .Values.global.appsHost }}
+        - {{ .Values.global.apiHost }}
+        - {{ .Values.global.authHost }}
+        {{- range .Values.global.additionalHosts }}
+        - {{ . }}
+        {{- end }}
+      port:
+        name: https
+        number: 443
+        protocol: HTTPS
+      tls:
+        credentialName: {{ include "gateway-apps.tlsCredentialName" . }}
+        mode: SIMPLE

@@ -1,0 +1,21 @@
+dependencies:
+- name: gateways
+  repository: file://./charts/gateways
+  version: 0.3.1
+- name: kafka
+  repository: file://./charts/kafka
+  version: 0.3.2
+- name: kafka-ui
+  repository: file://./charts/kafka-ui
+  version: 0.0.1
+- name: keycloak
+  repository: file://./charts/keycloak
+  version: 0.2.1
+- name: opensearch
+  repository: file://./charts/opensearch
+  version: 0.0.1
+- name: postgres
+  repository: file://./charts/postgres
+  version: 0.3.2
+digest: sha256:4caee9f8b2a8917de9a942419e83165e547c93745ce8de3e16aeca17ff9d53ab
+generated: "2026-04-10T15:31:04.124521+01:00"

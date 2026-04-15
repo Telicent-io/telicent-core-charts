@@ -1,0 +1,31 @@
+{{/*
+Copyright (C) 2025-2026 Telicent Limited
+*/}}
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "demo-prereqs-postgres.fullname" . }}-test-connection"
+  labels:
+    {{- include "demo-prereqs-postgres.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: pg-test
+      image: postgres:{{ .Chart.AppVersion }}
+      env:
+        - name: PGPASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "demo-prereqs-postgres.secretName" . }}
+              key: {{ include "demo-prereqs-postgres.secretPasswordKey" . }}
+      command:
+        - pg_isready
+        - -h
+        - {{ include "demo-prereqs-postgres.fullname" . }}
+        - -p
+        - "{{ .Values.service.port }}"
+        - -U
+        - {{ .Values.postgres.user }}
+  restartPolicy: Never

@@ -1,0 +1,21 @@
+{{/*
+Copyright (C) 2025-2026 Telicent Limited
+*/}}
+
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  name: {{ include "kafka-ui-deps.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "kafka-ui-deps.labels" . | nindent 4 }}
+spec:
+  action: ALLOW
+  rules:
+    - from:
+        - source:
+            principals:
+              - "cluster.local/ns/{{ .Values.istioNamespace }}/sa/istio-ingress"
+  selector:
+    matchLabels:
+      {{- include "kafka-ui-deps.selectorLabels" . | nindent 6 }}

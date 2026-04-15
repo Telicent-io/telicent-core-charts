@@ -1,0 +1,107 @@
+{
+    "title": "Chart Values",
+    "type": "object",
+    "properties": {
+        "global": {
+            "type": "object",
+            "properties": {
+                "namespace": {
+                    "type": "string",
+                    "description": "The namespace in which the should be created.",
+                    "default": "istio-system"
+                },
+                "tenantName": {
+                    "type": "string",
+                    "description": "The tenant name to apply to the gateway.",
+                    "default": ""
+                },
+                "appsHost": {
+                    "type": "string",
+                    "description": "The CORE applications hostname to use in the gateway.",
+                    "default": ""
+                },
+                "apiHost": {
+                    "type": "string",
+                    "description": "The CORE API hostname to use in the gateway.",
+                    "default": ""
+                },
+                "authHost": {
+                    "type": "string",
+                    "description": "The CORE authentication hostname to use in the gateway.",
+                    "default": ""
+                },
+                "idpHost": {
+                    "type": "string",
+                    "description": "The CORE IDP hostname to use in the auto-generated `jwksUri` and `jwtIssuer`.",
+                    "default": ""
+                }
+            }
+        },
+        "enabled": {
+            "type": "boolean",
+            "description": "Whether the Applications Gateway prerequisite should be installed.",
+            "default": true
+        },
+        "nameOverride": {
+            "type": "string",
+            "description": "String to partially override fullname (will maintain the release name).",
+            "default": ""
+        },
+        "fullnameOverride": {
+            "type": "string",
+            "description": "String to fully override the generated release name.",
+            "default": ""
+        },
+        "namespace": {
+            "type": "string",
+            "description": "The namespace in which to deploy OpenSearch. If not set, defaults to the release namespace.",
+            "default": ""
+        },
+        "additionalHosts": {
+            "type": "array",
+            "description": "A list of additional hostnames to use in the apps gateway.",
+            "default": [],
+            "items": {}
+        },
+        "jwksUri": {
+            "type": "string",
+            "description": "The URI of the JWKS endpoint. Optional, only required if a IDP that differs from that one provided with the Telicent demo prerequisites Helm chart is used is used.",
+            "default": ""
+        },
+        "jwtIssuer": {
+            "type": "string",
+            "description": "The URI of the JWT issuer. Optional, only required if a IDP that differs from that one provided with the Telicent demo prerequisites Helm chart is used is used.",
+            "default": ""
+        },
+        "tls": {
+            "type": "object",
+            "properties": {
+                "existingCredentialName": {
+                    "type": "string",
+                    "description": "The name of an existing secret containing TLS credentials.",
+                    "default": ""
+                },
+                "key": {
+                    "type": "string",
+                    "description": "The TLS key to apply to a secret. Ignored when `tls.existingCredentialName` is set.",
+                    "default": ""
+                },
+                "crt": {
+                    "type": "string",
+                    "description": "The TLS crt to apply to a secret. Ignored when `tls.existingCredentialName` is set.",
+                    "default": ""
+                }
+            }
+        },
+        "ingressSelectors": {
+            "type": "object",
+            "properties": {
+                "istio": {
+                    "type": "string",
+                    "description": "The Istio ingress selector label to target.",
+                    "default": "ingress"
+                }
+            }
+        }
+    }
+}

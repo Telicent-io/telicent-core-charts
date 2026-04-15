@@ -1,0 +1,5 @@
+{{/*
+Copyright (C) 2025-2026 Telicent Limited
+*/}}
+
+{{- $_ := required ".Values.global.idpHost is required" .Values.global.idpHost }}

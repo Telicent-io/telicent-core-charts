@@ -1,0 +1,166 @@
+{
+    "title": "Chart Values",
+    "type": "object",
+    "properties": {
+        "enabled": {
+            "type": "boolean",
+            "description": "Whether the Keycloak prerequisite should be installed.",
+            "default": true
+        },
+        "nameOverride": {
+            "type": "string",
+            "description": "String to partially override fullname (will maintain the release name).",
+            "default": ""
+        },
+        "fullnameOverride": {
+            "type": "string",
+            "description": "String to fully override the generated release name.",
+            "default": ""
+        },
+        "existingEnvSecret": {
+            "type": "string",
+            "description": "The name of an existing secret containing the admin username and password to use when provisioning Keycloak.",
+            "default": ""
+        },
+        "adminUsername": {
+            "type": "string",
+            "description": "The admin username to use when provisioning Keycloak. Ignored if `existingEnvSecret` is set.",
+            "default": "admin"
+        },
+        "adminPassword": {
+            "type": "string",
+            "description": "The admin password to use when provisioning Keycloak. Ignored if `existingEnvSecret` is set.",
+            "default": "CHANGE-ADMIN-PASSWORD"
+        },
+        "authGateway": {
+            "type": "string",
+            "description": "The Istio gateway through which ingress to Keycloak must flow.",
+            "default": "istio-system/gateways-authn"
+        },
+        "authHost": {
+            "type": "string",
+            "description": "The Istio virtual service host for Keycloak.",
+            "default": "auth.127.0.0.1.nip.io"
+        },
+        "resources": {
+            "type": "object",
+            "description": "Set container requests and limits for different resources like CPU or memory.",
+            "default": {}
+        },
+        "revisionHistoryLimit": {
+            "type": "number",
+            "description": "Number of controller revisions to keep",
+            "default": 3
+        },
+        "containerSecurityContext": {
+            "type": "object",
+            "description": "Container security context settings to apply to Keycloak containers.",
+            "default": {}
+        },
+        "dbVolume": {
+            "type": "object",
+            "properties": {
+                "size": {
+                    "type": "string",
+                    "description": "The size of the database Persistent Volume.",
+                    "default": "1Gi"
+                },
+                "storageClass": {
+                    "type": "string",
+                    "description": "The StorageClass for the database Persistent Volume.",
+                    "default": "local-path"
+                }
+            }
+        },
+        "ingress": {
+            "type": "object",
+            "properties": {
+                "namespace": {
+                    "type": "string",
+                    "description": "The Istio ingress namespace.",
+                    "default": "istio-system"
+                },
+                "serviceAccountName": {
+                    "type": "string",
+                    "description": "The Istio ingress service account.",
+                    "default": "istio-ingress"
+                }
+            }
+        },
+        "image": {
+            "type": "object",
+            "properties": {
+                "pullPolicy": {
+                    "type": "string",
+                    "description": "Keycloak image pull policy.",
+                    "default": "Always"
+                },
+                "repository": {
+                    "type": "string",
+                    "description": "Keycloak image repository.",
+                    "default": "quay.io/keycloak/keycloak"
+                }
+            }
+        },
+        "podSecurityContext": {
+            "type": "object",
+            "description": "Pod security context settings to apply to Keycloak pods.",
+            "default": {}
+        },
+        "service": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "description": "Kubernetes service port.",
+                    "default": "ClusterIP"
+                },
+                "port": {
+                    "type": "number",
+                    "description": "Kubernetes service type.",
+                    "default": 8080
+                }
+            }
+        },
+        "serviceAccount": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "The name of the ServiceAccount to use. If not set, a name is generated using the `fullname` template.",
+                    "default": ""
+                },
+                "annotations": {
+                    "type": "object",
+                    "description": "Additional Service Account annotations.",
+                    "default": {}
+                }
+            }
+        },
+        "strategy": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "description": "Keycloak StatefulSet type",
+                    "default": "RollingUpdate"
+                },
+                "rollingUpdate": {
+                    "type": "object",
+                    "properties": {
+                        "maxSurge": {
+                            "type": "number",
+                            "description": "Maximum number of Keycloak pods that can be created above the desired replica count during a rolling update.",
+                            "default": 1
+                        },
+                        "maxUnavailable": {
+                            "type": "number",
+                            "description": "Maximum number of Keycloak pods that can be unavailable during a rolling update.",
+                            "default": 0
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

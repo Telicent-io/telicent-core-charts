@@ -1,89 +1,16 @@
 {
   "separate-pull-requests": true,
+  "bump-minor-pre-major": true,
+  "bump-patch-for-minor-pre-major": true,
+  "include-component-in-tag": true,
+  "initial-version": "0.1.0",
+  "manifest-file": ".github/release-please-manifest.json",
+  "prerelease": false,
+  "release-type": "helm",
   "packages": {
-    "charts/telicent-core": {
-      "labels": [
-        "autorelease: pending"
-      ],
-      "bumpPatchForMinorPreMajor": true,
-      "release-type": "helm",
-      "include-component-in-tag": true,
-      "prerelease": false,
-      "manifest-file": ".github/release-please-manifest.json",
-      "initial-version": "0.1.0",
-      "bump-minor-pre-major": false
-    },
-    "charts/telicent-preview": {
-      "labels": [
-        "autorelease: pending"
-      ],
-      "bumpPatchForMinorPreMajor": true,
-      "release-type": "helm",
-      "include-component-in-tag": true,
-      "prerelease": false,
-      "manifest-file": ".github/release-please-manifest.json",
-      "initial-version": "0.1.0",
-      "bump-minor-pre-major": true
-    },
-    "charts/telicent-data": {
-      "labels": [
-        "autorelease: pending"
-      ],
-      "bumpPatchForMinorPreMajor": true,
-      "release-type": "helm",
-      "include-component-in-tag": true,
-      "prerelease": false,
-      "manifest-file": ".github/release-please-manifest.json",
-      "initial-version": "0.1.0",
-      "bump-minor-pre-major": true
-    },
-    "charts/demo-prereqs-gateways": {
-      "labels": [
-        "autorelease: pending"
-      ],
-      "bumpPatchForMinorPreMajor": true,
-      "release-type": "helm",
-      "include-component-in-tag": true,
-      "prerelease": false,
-      "manifest-file": ".github/release-please-manifest.json",
-      "initial-version": "0.1.0",
-      "bump-minor-pre-major": true
-    },
-    "charts/demo-prereqs-kafka": {
-      "labels": [
-        "autorelease: pending"
-      ],
-      "bumpPatchForMinorPreMajor": true,
-      "release-type": "helm",
-      "include-component-in-tag": true,
-      "prerelease": false,
-      "manifest-file": ".github/release-please-manifest.json",
-      "initial-version": "0.1.0",
-      "bump-minor-pre-major": true
-    },
-    "charts/demo-prereqs-keycloak": {
-      "labels": [
-        "autorelease: pending"
-      ],
-      "bumpPatchForMinorPreMajor": true,
-      "release-type": "helm",
-      "include-component-in-tag": true,
-      "prerelease": false,
-      "manifest-file": ".github/release-please-manifest.json",
-      "initial-version": "0.1.0",
-      "bump-minor-pre-major": true
-    },
-    "charts/demo-prereqs-postgres": {
-      "labels": [
-        "autorelease: pending"
-      ],
-      "bumpPatchForMinorPreMajor": true,
-      "release-type": "helm",
-      "include-component-in-tag": true,
-      "prerelease": false,
-      "manifest-file": ".github/release-please-manifest.json",
-      "initial-version": "0.1.0",
-      "bump-minor-pre-major": true
-    }
+    "charts/telicent-core": {},
+    "charts/telicent-preview": {},
+    "charts/telicent-data": {},
+    "charts/demo-prereqs": {}
   }
 }

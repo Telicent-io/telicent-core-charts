@@ -1,0 +1,11 @@
+{
+    "title": "Chart Values",
+    "type": "object",
+    "properties": {
+        "enabled": {
+            "type": "boolean",
+            "description": "Whether the demo prerequisite should be installed.",
+            "default": true
+        }
+    }
+}

@@ -1,0 +1,34 @@
+{{/*
+Copyright (C) 2025-2026 Telicent Limited
+*/}}
+
+{{- if not .Values.ingress.gatewayName -}}
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: {{ include "kafka-ui-deps.gatewayName" . }}
+  namespace: {{ .Values.istioNamespace }}
+  labels:
+    {{- include "kafka-ui-deps.labels" . | nindent 4 }}
+spec:
+  selector:
+    {{- .Values.ingress.selectors | toYaml | nindent 4 }}
+  servers:
+    - hosts:
+        - {{ .Values.host }}
+      port:
+        name: http
+        number: 80
+        protocol: HTTP
+      tls:
+        httpsRedirect: true
+    - hosts:
+        - {{ .Values.host }}
+      port:
+        name: https
+        number: 443
+        protocol: HTTPS
+      tls:
+        credentialName: {{ include "kafka-ui-deps.tlsCredentialName" . }}
+        mode: SIMPLE
+{{- end -}}

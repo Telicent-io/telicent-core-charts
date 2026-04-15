@@ -1,72 +1,83 @@
-name: Lint and Test Charts
+name: Lint Helm Charts and Validate Metadata
+run-name: Lint Helm Charts and Validate Metadata
 
-on: pull_request
+on:
+  push:
+    branches-ignore:
+      - main
+    paths:
+      - charts/**
+
+# Revoke almost all permissions by default and grant only those needed to each job.
+# https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax#permissions
+permissions:
+  contents: read
 
 jobs:
-  lint-test:
+  prepare:
+    name: Prepare
     runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.setup-matrix.outputs.matrix }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v6
         with:
-          fetch-depth: 0
-
-      - name: Set up Helm
-        uses: azure/setup-helm@v4.2.0
-        with:
-          version: v3.17.0
-
-      - uses: actions/setup-python@v5.3.0
-        with:
-          python-version: "3.13"
-          check-latest: true
-
-      - name: Set up chart-testing
-        uses: helm/chart-testing-action@v2.7.0
-
-      - name: Run chart-testing (list-changed)
-        id: list-changed
+          sparse-checkout: charts
+      - name: Setup matrix
+        id: setup-matrix
+        shell: python
         run: |
-          changed=$(ct list-changed)
-          if [[ -n "$changed" ]]; then
-            echo "changed=true" >> "$GITHUB_OUTPUT"
-          fi
+          from pathlib import Path
+          import json
+          import os
 
-      - name: Run chart-testing (lint)
-        if: steps.list-changed.outputs.changed == 'true'
-        run: |
-          helm repo add  telicent-core-charts 'https://charts.telicent.io'
-          helm dependency update ./charts/telicent-core
-          helm dependency update ./charts/telicent-preview
-          helm dependency update ./charts/telicent-data
-          ct lint --config .github/ct.yaml
+          charts = []
+
+          p = Path('charts')
+          for file in p.rglob('Chart.yaml'):
+              charts.append(file.parent.as_posix())
+
+          matrix = { 'chart': charts }
+          print(json.dumps(matrix, indent=4))
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
+              f.write(f'matrix={json.dumps(matrix, separators=(',', ':'))}\n')
+
+  lint-helm-charts:
+    name: Lint Helm charts
+    runs-on: ubuntu-latest
+    needs: prepare
+    strategy: 
+      fail-fast: false
+      matrix: ${{ fromJson(needs.prepare.outputs.matrix ) }}
+    steps:
+      - name: Lint charts
+        id: build-and-push-dev-image
+        uses: telicent-oss/shared-workflows/.github/actions/lint-helm-charts@main
+        with:
+          chart: ${{ matrix.chart }}
 
   values-check:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+        uses: actions/checkout@v6
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
-      - name: Make metadataUpdater executable
-        run: chmod +x .dev/metadataUpdater.sh
-
-      - name: Install readme-generator-for-helm
-        run: npm install @bitnami/readme-generator-for-helm
-
+          node-version: "24"
       - name: Run metadata updater
-        run: .dev/metadataUpdater.sh --ci
+        id: metadata-updater
+        run: |
+          python .dev/metadata-updater.py --ci
       - name: Check for uncommitted changes
         run: |
-          if git diff --exit-code; then
+          has_diff=$(git diff || true)
+          if [[ -z "$has_diff" ]]; then
             echo "✓ All documentation is up to date"
           else
-            echo "✗ README files and schemas are out of sync with values.yaml"
-            echo "Please run '.dev/metadataUpdater.sh' locally and commit the changes"
+            echo "[ERROR] ✗ README files and schemas are out of sync with values.yaml"
+            echo "[ERROR] Please run '.dev/metadata-updater.sh' locally and commit the changes"
             git diff
             exit 1
           fi

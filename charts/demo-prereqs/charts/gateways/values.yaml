@@ -1,0 +1,3 @@
+# @section Gateways Configuration
+# @key enabled Whether the Gateways prerequisite should be installed.
+enabled: true
