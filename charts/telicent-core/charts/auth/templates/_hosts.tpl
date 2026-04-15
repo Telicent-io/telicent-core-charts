@@ -80,7 +80,7 @@ Detailed description of 'discoverHost' & 'discoverServiceAccount' function
 
 {{/* apicurio | preview - returns host ('service:port') and serviceAccount */}}
 {{- define "auth.hostApicurio" -}}
-{{- printf "%s" (include "common.discoverHost" (list . .Values.hosts.apicurio )) -}}
+{{- printf "%s" (include "common.discoverHost" (list . .Values.hostsPreview.apicurio )) -}}
 {{- end -}}
 {{- define "auth.serviceAccountApicurio" -}}
 {{- printf "%s" (include "common.discoverServiceAccountPreview" (list . .Values.hostsPreview.apicurio )) -}}
