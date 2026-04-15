@@ -113,7 +113,7 @@ application relies on. For a full explanation please view '_hosts.tlp' file in t
 
 {{/* apicurio - returns host ('service:port') and serviceAccount */}}
 {{- define "traefik-proxy.hostApicurio" -}}
-{{- printf "%s" (include "common.discoverHost" (list . .Values.hosts.apicurio )) -}}
+{{- printf "%s" (include "common.discoverHost" (list . .Values.hostsPreview.apicurio )) -}}
 {{- end -}}
 {{- define "traefik-proxy.serviceAccountApicurio" -}}
 {{- printf "%s" (include "common.discoverServiceAccount" (list . .Values.hosts.apicurio )) -}}
