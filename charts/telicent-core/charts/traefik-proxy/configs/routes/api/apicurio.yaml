@@ -3,7 +3,7 @@
 http:
   routers:
     apicurio:
-      rule: {{ printf "Host(`%s`) && PathPrefix(`/apis`)" .Values.global.apiHostDomain }}
+      rule: {{ printf "Host(`%s`) && PathPrefix(`/apicurio`)" .Values.global.apiHostDomain }}
       service: apicurio
       entryPoints:
         - web-api
@@ -17,6 +17,12 @@ http:
           - url: {{ printf "http://%s"  (include "traefik-proxy.hostApicurio" .) }}
 
   middlewares:
+
+    path-apicurio:
+      replacePathRegex:
+        regex: "^/apicurio/(.*)"
+        replacement: "/$1"
+
     host-apicurio:
       headers:
         customRequestHeaders:

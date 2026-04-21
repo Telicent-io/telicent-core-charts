@@ -29,7 +29,7 @@ global:
 # @section Common Parameters
 #
 # @key enabled Enable or disable the *Apicurio* chart
-enabled: true # TODO - this needs to go in k8s-manifests
+enabled: false
 # @key nameOverride String to partially override fullname (will maintain the release name)
 nameOverride: ""
 # @key fullnameOverride String to fully override the generated release name

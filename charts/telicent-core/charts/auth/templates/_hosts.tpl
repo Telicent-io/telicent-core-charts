@@ -70,18 +70,12 @@ Detailed description of 'discoverHost' & 'discoverServiceAccount' function
 {{- printf "%s" (include "common.discoverServiceAccountPreview" (list . .Values.hostsPreview.aiSparqlBuilder )) -}}
 {{- end -}}
 
-{{/* notifications | preview - returns host ('service:port') and serviceAccount */}}
-{{- define "auth.hostNotifications" -}}
-{{- printf "%s" (include "common.discoverHost" (list . .Values.hostsPreview.notifications )) -}}
-{{- end -}}
+{{/* notifications | preview - returns serviceAccount */}}
 {{- define "auth.serviceAccountNotifications" -}}
 {{- printf "%s" (include "common.discoverServiceAccountPreview" (list . .Values.hostsPreview.notifications )) -}}
 {{- end -}}
 
-{{/* apicurio | preview - returns host ('service:port') and serviceAccount */}}
-{{- define "auth.hostApicurio" -}}
-{{- printf "%s" (include "common.discoverHost" (list . .Values.hostsPreview.apicurio )) -}}
-{{- end -}}
+{{/* apicurio | preview - returns serviceAccount */}}
 {{- define "auth.serviceAccountApicurio" -}}
 {{- printf "%s" (include "common.discoverServiceAccountPreview" (list . .Values.hostsPreview.apicurio )) -}}
 {{- end -}}

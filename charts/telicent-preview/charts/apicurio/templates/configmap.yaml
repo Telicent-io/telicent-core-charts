@@ -13,7 +13,6 @@ metadata:
 
 data:
   QUARKUS_OIDC_TENANT_ENABLED: {{ .Values.config.oidcTenantEnabled | quote }}
-  #QUARKUS_OIDC_AUTH_SERVER_URL: {{ printf "http://%s" (include "apicurio.hostAuth" . ) | quote }}
   QUARKUS_OIDC_AUTH_SERVER_URL: {{ printf "https://%s" .Values.global.authHostDomain | quote }}
   QUARKUS_OIDC_CLIENT_ID: {{ .Values.config.oidcClientId | quote }}
   APICURIO_STORAGE_SQL_KIND: "postgresql"

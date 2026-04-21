@@ -60,3 +60,12 @@ Returns the principal used for Notifications traffic by the Istio AuthorizationP
 {{- printf "- cluster.local/ns/%s/sa/%s" .Release.Namespace ( include "auth.serviceAccountNotifications" .) -}}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Returns the principal used for Apicurio traffic by the Istio AuthorizationPolicy
+*/}}
+{{- define "auth.apicurioPrincipal" -}}
+{{- if .Values.global.enterprise -}}
+{{- printf "- cluster.local/ns/%s/sa/%s" .Release.Namespace ( include "auth.serviceAccountApicurio" .) -}}
+{{- end -}}
+{{- end -}}

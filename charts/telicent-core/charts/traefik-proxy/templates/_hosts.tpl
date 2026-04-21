@@ -103,7 +103,7 @@ application relies on. For a full explanation please view '_hosts.tlp' file in t
 {{- printf "%s" (include "common.discoverServiceAccountPreview" (list . .Values.hostsPreview.aiSparqlBuilder )) -}}
 {{- end -}}
 
-{{/* notifcations | preview - returns host ('service:port') and serviceAccount */}}
+{{/* notifications | preview - returns host ('service:port') and serviceAccount */}}
 {{- define "traefik-proxy.hostNotifications" -}}
 {{- printf "%s" (include "common.discoverHostPreview" (list . .Values.hostsPreview.notifications )) -}}
 {{- end -}}
