@@ -57,10 +57,14 @@ data:
           post_logout_redirect_uris:
             - https://{{.Values.global.appHostDomain}}/query
 
-      {{- if .Values.bootstrap.clients.confidential }}
       confidential:
-        {{- toYaml .Values.bootstrap.clients.confidential | nindent 6 }}
-      {{- else }}
-      confidential: []
-      {{- end }}
+        {{- if .Values.global.enterprise }}
+        - client_id: registry-api
+          client_name: "Apicurio Registry API"
+          client_secret: {{ .Values.bootstrap.clients.apicurioClientSecret | required "bootstrap.clients.apicurioClientSecret is required when global.enterprise is true" }}
+          client_authentication_method: client_secret_post
+        {{- end }}
+        {{- if .Values.bootstrap.clients.confidential }}
+        {{- toYaml .Values.bootstrap.clients.confidential | nindent 8 }}
+        {{- end }}
 {{- end }}
