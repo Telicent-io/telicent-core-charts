@@ -64,11 +64,11 @@ data:
 
     window._env_.BACKUP_APIS = {
         "smart-cache-graph": {
-            url: "https://api.system-integration.telicent-sandbox.telicent.live/graphql/$/backups",
+            url: "https://{{ .Values.global.apiHostDomain }}/graphql/$/backups",
             type: "SCG_LIST",
         },
         "smart-cache-search": {
-            url: "https://api.system-integration.telicent-sandbox.telicent.live/search/backups",
+            url: "https://{{ .Values.global.apiHostDomain }}/search/backups",
             type: "SNAPSHOT_LIST",
             metadata: {
                 repository: "scs-snapshots-repo", // The adapter will grab this
