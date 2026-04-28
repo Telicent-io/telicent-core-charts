@@ -25,6 +25,8 @@ spec:
     - operation:
         paths:
         - /documents
+        - /documents/graph-search
+        - /documents/text-lookup
         - /documents/*
         - /facets
         - /facets/*
