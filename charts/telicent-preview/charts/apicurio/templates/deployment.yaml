@@ -77,6 +77,17 @@ spec:
             secretKeyRef:
               name: {{ .Values.postgres.existingSecret }}
               key: password
+        {{- else }}
+        - name: APICURIO_DATASOURCE_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "apicurio.postgresSecretName" . }}
+              key: username
+        - name: APICURIO_DATASOURCE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "apicurio.postgresSecretName" . }}
+              key: password
         {{- end }}
         {{- range .Values.extraEnvVars }}
         - name: {{ .name }}

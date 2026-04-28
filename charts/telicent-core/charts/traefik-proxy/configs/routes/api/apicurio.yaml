@@ -8,6 +8,7 @@ http:
       entryPoints:
         - web-api
       middleWares:
+        - path-apicurio
         - host-apicurio
 
   services:
