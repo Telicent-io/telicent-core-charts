@@ -44,8 +44,14 @@ spec:
         - /$/backups/report/*
         - /$/backups/list
         - /$/backups/list/*
+        - /$/backups/jobs
+        - /$/backups/jobs/*
         - /$/compact/*
         - /$/compactall
+        - /$/compaction/jobs
+        - /$/compaction/jobs/*
+        - /$/compaction/jobs/all
+        - /$/compaction/jobs/all/*
         methods: ["GET", "POST"]
     - operation:
         paths:
