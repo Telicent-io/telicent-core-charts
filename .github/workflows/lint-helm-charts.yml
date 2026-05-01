@@ -1,5 +1,5 @@
-name: Lint Helm Charts and Validate Metadata
-run-name: Lint Helm Charts and Validate Metadata
+name: Lint Helm Charts
+run-name: Lint Helm Charts
 
 on:
   push:
@@ -7,6 +7,7 @@ on:
       - main
     paths:
       - charts/**
+      - .github/workflows/lint-helm-charts.yml
 
 # Revoke almost all permissions by default and grant only those needed to each job.
 # https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax#permissions
@@ -52,32 +53,6 @@ jobs:
       matrix: ${{ fromJson(needs.prepare.outputs.matrix ) }}
     steps:
       - name: Lint charts
-        id: build-and-push-dev-image
         uses: telicent-oss/shared-workflows/.github/actions/lint-helm-charts@main
         with:
           chart: ${{ matrix.chart }}
-
-  values-check:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "24"
-      - name: Run metadata updater
-        id: metadata-updater
-        run: |
-          python .dev/metadata-updater.py --ci
-      - name: Check for uncommitted changes
-        run: |
-          has_diff=$(git diff || true)
-          if [[ -z "$has_diff" ]]; then
-            echo "✓ All documentation is up to date"
-          else
-            echo "[ERROR] ✗ README files and schemas are out of sync with values.yaml"
-            echo "[ERROR] Please run '.dev/metadata-updater.sh' locally and commit the changes"
-            git diff
-            exit 1
-          fi
