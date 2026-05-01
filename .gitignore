@@ -24,3 +24,7 @@ _dev/
 **/charts/*.tgz
 **/charts/**/charts/*.tgz
 **/charts/**/charts/**/charts/*.tgz
+
+# Metadata updater python script
+.dev/metadata-updater.py
+.dev/readme-generator-for-helm
