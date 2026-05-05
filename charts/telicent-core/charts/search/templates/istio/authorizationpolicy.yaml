@@ -43,5 +43,7 @@ spec:
         - /backups/list
         - /backups/list/*
         - /backups/restore
+        - /backups/jobs
+        - /backups/jobs/*
         methods: ["GET", "POST"]
 {{- end }}
