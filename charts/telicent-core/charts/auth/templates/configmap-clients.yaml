@@ -60,5 +60,6 @@ data:
       confidential:
         {{- if .Values.bootstrap.clients.confidential }}
         {{- toYaml .Values.bootstrap.clients.confidential | nindent 8 }}
+        {{- else }} []
         {{- end }}
 {{- end }}
