@@ -294,6 +294,7 @@ Host values will be used as defined in this section, release name cannot be auto
 | `hostsPreview.paperbackWriter`   | Paperback Writer application host value, as defined by 'service/serviceAccount:port'                                                               | `paperback-writer:8080`  |
 | `hostsPreview.aiSparqlBuilder`   | AI SPARQL Builder application host value, as defined by 'service/serviceAccount:port'                                                              | `ai-sparql-builder:8080` |
 | `hostsPreview.notifications`     | Notifications application host value, as defined by 'service/serviceAccount:port'                                                                  | `notifications:8080`     |
+| `hostsPreview.apicurio`          | Apicurio application host value, as defined by 'service/serviceAccount:port'                                                                       | `apicurio:8080`          |
 
 ## License
 
