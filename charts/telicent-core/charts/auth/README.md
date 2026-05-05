@@ -175,14 +175,13 @@ For Quick Start purposes, a secret named `tc-auth-usr-psql-auth` will be created
 
 Contains configuration to be used to bootstrap a clean instance of the Auth application to a working state.
 
-| Name                                     | Description                                                                                                                                                                           | Value |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
-| `bootstrap.clients.existingConfigMap`    | Name of an existing config map resource containing all required public and confidential clients. If specified, the values for clients.public and clients.confidential will be ignored | `""`  |
-| `bootstrap.clients.public`               | A list of public client objects                                                                                                                                                       | `[]`  |
-| `bootstrap.clients.confidential`         | A list of confidential client objects                                                                                                                                                 | `[]`  |
-| `bootstrap.clients.apicurioClientSecret` | Secret for the Apicurio Registry API confidential client. Required when global.enterprise is true                                                                                     | `""`  |
-| `bootstrap.groups.existingConfigMap`     | Name of an existing config map containing a list of group objects                                                                                                                     | `""`  |
-| `bootstrap.groups.list`                  | A list containing group objects                                                                                                                                                       | `[]`  |
+| Name                                  | Description                                                                                                                                                                           | Value |
+| ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| `bootstrap.clients.existingConfigMap` | Name of an existing config map resource containing all required public and confidential clients. If specified, the values for clients.public and clients.confidential will be ignored | `""`  |
+| `bootstrap.clients.public`            | A list of public client objects                                                                                                                                                       | `[]`  |
+| `bootstrap.clients.confidential`      | A list of confidential client objects                                                                                                                                                 | `[]`  |
+| `bootstrap.groups.existingConfigMap`  | Name of an existing config map containing a list of group objects                                                                                                                     | `""`  |
+| `bootstrap.groups.list`               | A list containing group objects                                                                                                                                                       | `[]`  |
 
 ### ConfigMap Parameters
 
