@@ -98,13 +98,13 @@ Note: Only global parameters used within this chart will be listed below.
 
 ### Common Parameters
 
-| Name                | Description                                                            | Value  |
-| ------------------- | ---------------------------------------------------------------------- | ------ |
-| `enabled`           | Enable or disable the *Apicurio* chart                                 | `true` |
-| `nameOverride`      | String to partially override fullname (will maintain the release name) | `""`   |
-| `fullnameOverride`  | String to fully override the generated release name                    | `""`   |
-| `namespaceOverride` | String to fully override all deployed resources namespace              | `""`   |
-| `commonLabels`      | Add labels to all the deployed resources                               | `{}`   |
+| Name                | Description                                                            | Value   |
+| ------------------- | ---------------------------------------------------------------------- | ------- |
+| `enabled`           | Enable or disable the *Apicurio* chart                                 | `false` |
+| `nameOverride`      | String to partially override fullname (will maintain the release name) | `""`    |
+| `fullnameOverride`  | String to fully override the generated release name                    | `""`    |
+| `namespaceOverride` | String to fully override all deployed resources namespace              | `""`    |
+| `commonLabels`      | Add labels to all the deployed resources                               | `{}`    |
 
 ### Deployment Parameters
 
