@@ -49,9 +49,9 @@ dependencies:
     version: ^0.1.0
     repository: "file://./charts/producer-acled-ontology"
     condition: global.enterprise
-  - name: canonicals-event-validation-mapper
+  - name: telicent-json-validation-mapper
     version: ^0.1.0
-    repository: "file://./charts/canonicals-event-validation-mapper"
+    repository: "file://./charts/telicent-json-validation-mapper"
     condition: global.enterprise
   - name: canonicals-event-geo-mapper
     version: ^0.1.0
