@@ -31,14 +31,6 @@ application relies on. For a full explanation please view '_hosts.tlp' file in t
 {{- printf "%s" (include "common.discoverServiceAccount" (list . .Values.hosts.search )) -}}
 {{- end -}}
 
-{{/* search - returns host ('service:port') and serviceAccount */}}
-{{- define "traefik-proxy.hostNotifications" -}}
-{{- printf "%s" (include "common.discoverHost" (list . .Values.hosts.notifications )) -}}
-{{- end -}}
-{{- define "traefik-proxy.serviceAccountNotifications" -}}
-{{- printf "%s" (include "common.discoverServiceAccount" (list . .Values.hosts.notifications )) -}}
-{{- end -}}
-
 {{/* graph - returns host ('service:port') and serviceAccount */}}
 {{- define "traefik-proxy.hostGraph" -}}
 {{- printf "%s" (include "common.discoverHost" (list . .Values.hosts.graph )) -}}
@@ -109,4 +101,20 @@ application relies on. For a full explanation please view '_hosts.tlp' file in t
 {{- end -}}
 {{- define "traefik-proxy.serviceAccountAISparqlBuilder" -}}
 {{- printf "%s" (include "common.discoverServiceAccountPreview" (list . .Values.hostsPreview.aiSparqlBuilder )) -}}
+{{- end -}}
+
+{{/* notifications | preview - returns host ('service:port') and serviceAccount */}}
+{{- define "traefik-proxy.hostNotifications" -}}
+{{- printf "%s" (include "common.discoverHostPreview" (list . .Values.hostsPreview.notifications )) -}}
+{{- end -}}
+{{- define "traefik-proxy.serviceAccountNotifications" -}}
+{{- printf "%s" (include "common.discoverServiceAccountPreview" (list . .Values.hostsPreview.notifications )) -}}
+{{- end -}}
+
+{{/* apicurio | preview - returns host ('service:port') and serviceAccount */}}
+{{- define "traefik-proxy.hostApicurio" -}}
+{{- printf "%s" (include "common.discoverHostPreview" (list . .Values.hostsPreview.apicurio )) -}}
+{{- end -}}
+{{- define "traefik-proxy.serviceAccountApicurio" -}}
+{{- printf "%s" (include "common.discoverServiceAccountPreview" (list . .Values.hostsPreview.apicurio )) -}}
 {{- end -}}

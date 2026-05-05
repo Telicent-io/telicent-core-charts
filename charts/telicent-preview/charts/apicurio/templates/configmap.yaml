@@ -1,0 +1,20 @@
+{{- /*
+Copyright (C) 2026 Telicent Limited
+*/}}
+{{- if not .Values.config.existingConfigMap }}
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: {{ include "apicurio.fullname" . }}
+  namespace: {{ include "apicurio.namespace" . | quote }}
+  labels:
+    {{- include "apicurio.labels" . | nindent 4 }}
+
+data:
+  QUARKUS_OIDC_TENANT_ENABLED: {{ .Values.config.oidcTenantEnabled | quote }}
+  QUARKUS_OIDC_AUTH_SERVER_URL: {{ printf "https://%s" .Values.global.authHostDomain | quote }}
+  QUARKUS_OIDC_CLIENT_ID: {{ .Values.config.oidcClientId | quote }}
+  APICURIO_STORAGE_SQL_KIND: "postgresql"
+  APICURIO_DATASOURCE_URL: {{ .Values.postgres.jdbcUrl | quote }}
+{{- end }}

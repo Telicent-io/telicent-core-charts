@@ -75,6 +75,11 @@ notifications-projector:
   # @key notifications-projector.enabled Enable or disable the notifications-projector component.
   enabled: false
 
+# @section Apicurio Parameters
+apicurio:
+  # @key apicurio.enabled Enable or disable the apicurio component.
+  enabled: false
+
 # @section paperback-writer Parameters
 paperback-writer:
   # @key paperback-writer.enabled Enable or disable the paperback-writer component

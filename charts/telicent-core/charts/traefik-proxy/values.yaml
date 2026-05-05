@@ -312,8 +312,6 @@ hosts:
   search: "search:8080"
   # @key hosts.graph Graph application default host value, as defined by 'service/serviceAccount:port'
   graph: "graph:8080"
-  # @key hosts.notifications Notifications application default host value, as defined by 'service/serviceAccount:port'
-  notifications: "notifications:8080"
 
 #
 # @section Host(s) Preview Parameters - Contains host information for applications deployed via *telicent-preview* chart
@@ -333,3 +331,7 @@ hostsPreview:
   paperbackWriter: "paperback-writer:8080"
   # @key hostsPreview.aiSparqlBuilder AI SPARQL Builder application host value, as defined by 'service/serviceAccount:port'
   aiSparqlBuilder: "ai-sparql-builder:8080"
+  # @key hostsPreview.notifications Notifications application default host value, as defined by 'service/serviceAccount:port'
+  notifications: "notifications:8080"
+  # @key hostsPreview.apicurio Apicurio Registry application default host value, as defined by 'service/serviceAccount:port'
+  apicurio: "apicurio:8080"
