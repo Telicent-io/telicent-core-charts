@@ -1,0 +1,33 @@
+JSON Validation Mapper has been deployed.
+
+Configuration summary:
+
+  Source topic:  {{ if .Values.configuration.sourceTopic }}{{ .Values.configuration.sourceTopic }}{{ else }}** NOT SET **{{ end }}
+  Target topic:  {{ if .Values.configuration.targetTopic }}{{ .Values.configuration.targetTopic }}{{ else }}** NOT SET **{{ end }}
+  Schema file:   {{ if .Values.schema.name }}{{ .Values.schema.name }}{{ else }}** NOT SET **{{ end }}
+
+{{- if or (not .Values.configuration.sourceTopic) (not .Values.configuration.targetTopic) (not .Values.schema.name) }}
+
+WARNING: One or more required values are not set. The mapper will not function
+correctly until the following are configured in your values file:
+{{- if not .Values.configuration.sourceTopic }}
+  - configuration.sourceTopic   The Kafka topic to read raw messages from
+{{- end }}
+{{- if not .Values.configuration.targetTopic }}
+  - configuration.targetTopic   The Kafka topic to publish validated messages to
+{{- end }}
+{{- if not .Values.schema.name }}
+  - schema.name                 Filename of the JSON schema (must end in .schema.json)
+  - schema.content              Raw JSON schema content (use a YAML block scalar |-)
+{{- end }}
+
+Upgrade the release once configured:
+
+  helm upgrade {{ .Release.Name }} <chart> -n {{ .Release.Namespace }} -f your-values.yaml
+
+{{- else }}
+
+The mapper is configured and ready. Invalid messages will be routed to the DLQ.
+
+{{- end }}
+

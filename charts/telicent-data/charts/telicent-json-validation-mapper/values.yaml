@@ -1,0 +1,153 @@
+# Default values for json-validation-mapper.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+#
+# @section Image Parameters
+#
+# @key image.repository Container image repository
+# @key image.pullPolicy Container image pull policy
+# @key image.tag Container image tag, overrides the chart appVersion when set
+image:
+  repository: quay.io/telicent/json-validation-mapper
+  pullPolicy: IfNotPresent
+  tag: ""
+
+# @key imagePullSecrets Secrets for pulling images from a private registry
+imagePullSecrets: []
+# @key nameOverride Override for the chart name
+nameOverride: ""
+# @key fullnameOverride Full override for the chart name
+fullnameOverride: ""
+
+#
+# @section Service Account Parameters
+#
+# @key serviceAccount.create Specifies whether a service account should be created
+# @key serviceAccount.automount Automatically mount a ServiceAccount's API credentials
+# @key serviceAccount.annotations Additional annotations for the service account
+# @key serviceAccount.name Name of the service account to use. If not set and create is true, a name is generated using the fullname template
+serviceAccount:
+  create: true
+  automount: true
+  annotations: {}
+  name: ""
+
+#
+# @section Pod Parameters
+#
+# @key podAnnotations Additional annotations for the Pod
+podAnnotations: {}
+# @key podLabels Additional labels for the Pod
+podLabels: {}
+
+# @key podSecurityContext Security context for the Pod
+podSecurityContext: {}
+  # fsGroup: 2000
+
+# @key securityContext Security context for the container
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+#
+# @section Resource Parameters
+#
+# @key resources Resource requests and limits for the container
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+# @key livenessProbe Liveness probe configuration for the container
+livenessProbe: {}
+# @key readinessProbe Readiness probe configuration for the container
+readinessProbe: {}
+
+# @key volumes Additional volumes to add to the Deployment
+volumes: []
+# - name: foo
+#   secret:
+#     secretName: mysecret
+#     optional: false
+
+# @key volumeMounts Additional volume mounts to add to the container
+volumeMounts: []
+# - name: foo
+#   mountPath: "/etc/foo"
+#   readOnly: true
+
+# @key nodeSelector Node selector for pod assignment
+nodeSelector: {}
+
+# @key tolerations Tolerations for pod assignment
+tolerations: []
+
+# @key affinity Affinity rules for pod assignment
+affinity: {}
+
+#
+# @section Schema Parameters
+#
+# @descStart
+# The JSON schema used to validate incoming Kafka messages. Exactly one schema
+# file is supported. The file will be mounted at /app/schemas/<schema.name>.
+# Either provide an existing ConfigMap name via schema.existingConfigMapName,
+# or provide schema.name and schema.content to have the chart create one.
+# The ConfigMap must contain exactly one key whose name ends in .schema.json.
+# @descEnd
+# @key schema.existingConfigMapName Name of an existing ConfigMap containing the JSON schema (mutually exclusive with schema.name and schema.content)
+# @key schema.name Filename of the JSON schema file (must end in .schema.json, ignored if existingConfigMapName is set)
+# @key schema.content Raw content of the JSON schema file (ignored if existingConfigMapName is set)
+schema:
+  existingConfigMapName: ""
+  name: ""
+  content: |-
+    {}
+
+#
+# @section Configuration Parameters
+#
+# @descStart
+# General configuration options for the JSON Validation Mapper.
+# @descEnd
+# @key configuration.sourceTopic Topic to read raw Kafka messages from
+# @key configuration.targetTopic Topic to write validated Kafka messages to
+# @key configuration.defaultDataNamespace Default namespace for data
+# @key configuration.componentOf Used to classify what this instance of the validation mapper will be doing (canonical-events etc.)
+configuration:
+  sourceTopic: ""
+  targetTopic: ""
+  defaultDataNamespace: http://telicent.io/data#
+  componentOf: ""
+
+#
+# @section Kafka Parameters
+#
+# @descStart
+# Kafka configuration for connecting the JSON Validation Mapper to a Kafka cluster.
+# @descEnd
+# @key kafka.bootstrapServers Comma separated list containing Kafka bootstrap servers
+# @key kafka.existingConfigSecretName Name of an existing secret containing Kafka configuration (preferred over individual settings below for security)
+# @key kafka.username Username for Kafka authentication
+# @key kafka.password Password for Kafka authentication
+# @key kafka.protocol Protocol used for Kafka communication
+# @key kafka.mechanism SASL mechanism used for Kafka authentication
+kafka:
+  bootstrapServers: "kafka-bootstrap.kafka.svc.cluster.local:9092"
+  existingConfigSecretName: ""
+  username: "your.kafka.username.here"
+  password: "your.kafka.password.here"
+  protocol: "SASL_SSL"
+  mechanism: "SCRAM-SHA-512"

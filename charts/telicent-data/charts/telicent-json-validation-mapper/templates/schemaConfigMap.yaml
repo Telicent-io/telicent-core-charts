@@ -1,0 +1,12 @@
+{{- include "json-validation-mapper.validateSchema" . }}
+{{- if and (not .Values.schema.existingConfigMapName) (.Values.schema.name) }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "json-validation-mapper.fullname" . }}-schema
+  labels:
+    {{- include "json-validation-mapper.labels" . | nindent 4 }}
+data:
+  {{ .Values.schema.name }}: |
+    {{- .Values.schema.content | nindent 4 }}
+{{- end }}

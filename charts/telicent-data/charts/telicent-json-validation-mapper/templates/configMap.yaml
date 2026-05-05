@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "json-validation-mapper.fullname" . }}
+  labels:
+    {{- include "json-validation-mapper.labels" . | nindent 4 }}
+data:
+  SOURCE_TOPIC: {{ .Values.configuration.sourceTopic }}
+  TARGET_TOPIC: {{ .Values.configuration.targetTopic }}
+  DEFAULT_DATA_NAMESPACE: {{ .Values.configuration.defaultDataNamespace }}
+  SCHEMA_DIR: /app/schemas/
+  KAFKA_CONFIG_MODE: toml
+  KAFKA_CONFIG_FILE_PATH: /app/config/kafka-auth/kafka-config.toml

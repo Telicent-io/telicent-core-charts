@@ -1,0 +1,210 @@
+{
+    "title": "Chart Values",
+    "type": "object",
+    "properties": {
+        "image": {
+            "type": "object",
+            "properties": {
+                "repository": {
+                    "type": "string",
+                    "description": "Container image repository",
+                    "default": "quay.io/telicent/json-validation-mapper"
+                },
+                "pullPolicy": {
+                    "type": "string",
+                    "description": "Container image pull policy",
+                    "default": "IfNotPresent"
+                },
+                "tag": {
+                    "type": "string",
+                    "description": "Container image tag, overrides the chart appVersion when set",
+                    "default": ""
+                }
+            }
+        },
+        "imagePullSecrets": {
+            "type": "array",
+            "description": "Secrets for pulling images from a private registry",
+            "default": [],
+            "items": {}
+        },
+        "nameOverride": {
+            "type": "string",
+            "description": "Override for the chart name",
+            "default": ""
+        },
+        "fullnameOverride": {
+            "type": "string",
+            "description": "Full override for the chart name",
+            "default": ""
+        },
+        "serviceAccount": {
+            "type": "object",
+            "properties": {
+                "create": {
+                    "type": "boolean",
+                    "description": "Specifies whether a service account should be created",
+                    "default": true
+                },
+                "automount": {
+                    "type": "boolean",
+                    "description": "Automatically mount a ServiceAccount's API credentials",
+                    "default": true
+                },
+                "annotations": {
+                    "type": "object",
+                    "description": "Additional annotations for the service account",
+                    "default": {}
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the service account to use. If not set and create is true, a name is generated using the fullname template",
+                    "default": ""
+                }
+            }
+        },
+        "podAnnotations": {
+            "type": "object",
+            "description": "Additional annotations for the Pod",
+            "default": {}
+        },
+        "podLabels": {
+            "type": "object",
+            "description": "Additional labels for the Pod",
+            "default": {}
+        },
+        "podSecurityContext": {
+            "type": "object",
+            "description": "Security context for the Pod",
+            "default": {}
+        },
+        "securityContext": {
+            "type": "object",
+            "description": "Security context for the container",
+            "default": {}
+        },
+        "resources": {
+            "type": "object",
+            "description": "Resource requests and limits for the container",
+            "default": {}
+        },
+        "livenessProbe": {
+            "type": "object",
+            "description": "Liveness probe configuration for the container",
+            "default": {}
+        },
+        "readinessProbe": {
+            "type": "object",
+            "description": "Readiness probe configuration for the container",
+            "default": {}
+        },
+        "volumes": {
+            "type": "array",
+            "description": "Additional volumes to add to the Deployment",
+            "default": [],
+            "items": {}
+        },
+        "volumeMounts": {
+            "type": "array",
+            "description": "Additional volume mounts to add to the container",
+            "default": [],
+            "items": {}
+        },
+        "nodeSelector": {
+            "type": "object",
+            "description": "Node selector for pod assignment",
+            "default": {}
+        },
+        "tolerations": {
+            "type": "array",
+            "description": "Tolerations for pod assignment",
+            "default": [],
+            "items": {}
+        },
+        "affinity": {
+            "type": "object",
+            "description": "Affinity rules for pod assignment",
+            "default": {}
+        },
+        "schema": {
+            "type": "object",
+            "properties": {
+                "existingConfigMapName": {
+                    "type": "string",
+                    "description": "Name of an existing ConfigMap containing the JSON schema (mutually exclusive with schema.name and schema.content)",
+                    "default": ""
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Filename of the JSON schema file (must end in .schema.json, ignored if existingConfigMapName is set)",
+                    "default": ""
+                },
+                "content": {
+                    "type": "string",
+                    "description": "Raw content of the JSON schema file (ignored if existingConfigMapName is set)",
+                    "default": "{}"
+                }
+            }
+        },
+        "configuration": {
+            "type": "object",
+            "properties": {
+                "sourceTopic": {
+                    "type": "string",
+                    "description": "Topic to read raw Kafka messages from",
+                    "default": ""
+                },
+                "targetTopic": {
+                    "type": "string",
+                    "description": "Topic to write validated Kafka messages to",
+                    "default": ""
+                },
+                "defaultDataNamespace": {
+                    "type": "string",
+                    "description": "Default namespace for data",
+                    "default": "http://telicent.io/data#"
+                },
+                "componentOf": {
+                    "type": "string",
+                    "description": "Used to classify what this instance of the validation mapper will be doing (canonical-events etc.)",
+                    "default": ""
+                }
+            }
+        },
+        "kafka": {
+            "type": "object",
+            "properties": {
+                "bootstrapServers": {
+                    "type": "string",
+                    "description": "Comma separated list containing Kafka bootstrap servers",
+                    "default": "kafka-bootstrap.kafka.svc.cluster.local:9092"
+                },
+                "existingConfigSecretName": {
+                    "type": "string",
+                    "description": "Name of an existing secret containing Kafka configuration (preferred over individual settings below for security)",
+                    "default": ""
+                },
+                "username": {
+                    "type": "string",
+                    "description": "Username for Kafka authentication",
+                    "default": "your.kafka.username.here"
+                },
+                "password": {
+                    "type": "string",
+                    "description": "Password for Kafka authentication",
+                    "default": "your.kafka.password.here"
+                },
+                "protocol": {
+                    "type": "string",
+                    "description": "Protocol used for Kafka communication",
+                    "default": "SASL_SSL"
+                },
+                "mechanism": {
+                    "type": "string",
+                    "description": "SASL mechanism used for Kafka authentication",
+                    "default": "SCRAM-SHA-512"
+                }
+            }
+        }
+    }
+}
