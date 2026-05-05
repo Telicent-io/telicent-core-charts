@@ -192,8 +192,6 @@ bootstrap:
     #   client_secret: password-1
     #   client_authentication_method: client_secret_post
     #   scope: write
-    # @key bootstrap.clients.apicurioClientSecret Secret for the Apicurio Registry API confidential client. Required when global.enterprise is true
-    apicurioClientSecret: ""
 
   groups:
     # @key bootstrap.groups.existingConfigMap Name of an existing config map containing a list of group objects

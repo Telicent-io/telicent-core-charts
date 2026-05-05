@@ -305,11 +305,6 @@
                             "description": "A list of confidential client objects",
                             "default": [],
                             "items": {}
-                        },
-                        "apicurioClientSecret": {
-                            "type": "string",
-                            "description": "Secret for the Apicurio Registry API confidential client. Required when global.enterprise is true",
-                            "default": ""
                         }
                     }
                 },
