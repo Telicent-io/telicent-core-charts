@@ -125,10 +125,17 @@ podLabels: {}
 # @key podAnnotations Add extra annotations to the *Notifications Projector* pod
 podAnnotations: {}
 # @key extraEnvVars Array with extra environment variables to add to *Notifications Projector* pod
+# Supports both plain values and valueFrom (e.g. secretKeyRef) for injecting secret values.
+# Use valueFrom.secretKeyRef to supply a confidential client secret referenced by client_secret_env_var_name.
 # Example:
 # extraEnvVars:
 # - name: FOO
 #   value: instance
+# - name: CLIENT_1_SECRET
+#   valueFrom:
+#     secretKeyRef:
+#       name: my-k8s-secret
+#       key: client_secret
 extraEnvVars: []
 # @key extraVolumes Optionally specify extra list of additional volumes
 extraVolumes: []
@@ -255,3 +262,16 @@ metrics:
     name: metrics
     # @key metrics.service.port Port for the Prometheus service
     port: 9464
+
+#
+# @section Host(s) Core Parameters - Contains host information for applications deployed via *telicent-core* chart
+#
+# @descStart
+# *Notifications Projector* interacts with applications deployed via *telicent-core* using their default service/serviceAccount and port.
+# If either of those details changes, you can use this section to correctly refer to those applications.
+# @descEnd
+hostsCore:
+  # @key hostsCore.enableAutoCorrect Prefix 'global.releaseNameTelicentCore' value to each host value. Alternatively, the host value will be used as it is, without any modification
+  enableAutoCorrect: true
+  # @key hostsCore.auth Auth application default host value, as defined by 'service/serviceAccount:port'
+  auth: "auth:8080"

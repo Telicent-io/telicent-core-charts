@@ -22,12 +22,14 @@ data:
   DATABASE_JDBC_URL: {{ .Values.postgres.jdbcUrl | quote }}
 
   JWKS_URL: {{ printf "https://%s%s" .Values.global.authHostDomain "/oauth2/jwks" | quote }}
-  USERINFO_URL: {{ printf "http://%s%s" (include "notifications.hostAuth" . ) "/userinfo" | quote }}
+  USERINFO_URL: {{ printf "https://%s%s" .Values.global.authHostDomain "/userinfo" | quote }}
 
   {{- if .Values.validation.enabled }}
   ENABLE_VALIDATION: {{ .Values.validation.enabled | quote }}
   REGISTRY_HOSTNAME: {{ .Values.validation.registry.hostname | quote }}
   REGISTRY_PORT: {{ .Values.validation.registry.port | quote }}
+  AUTH_TOKEN_ENDPOINT: {{ printf "http://%s%s" (include "notifications.hostAuth" .) "/oauth2/token" | quote }}
+  FORWARD_AUTH_ENDPOINT: {{ printf "http://%s%s" (include "notifications.hostAuth" .) "/auth/forward" | quote }}
   {{- end }}
 
   {{- if .Values.metrics.enabled }}

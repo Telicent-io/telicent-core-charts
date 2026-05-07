@@ -54,10 +54,16 @@ podLabels: {}
 # @key podAnnotations Add extra annotations to the *Apicurio* pod
 podAnnotations: {}
 # @key extraEnvVars Array with extra environment variables to add to *Apicurio* pod
+# Supports both plain values and valueFrom (e.g. secretKeyRef) for injecting secret values.
 # Example:
 # extraEnvVars:
 # - name: FOO
 #   value: instance
+# - name: CLIENT_1_SECRET
+#   valueFrom:
+#     secretKeyRef:
+#       name: my-k8s-secret
+#       key: client_secret
 extraEnvVars: []
 # @key extraVolumes Optionally specify extra list of additional volumes
 extraVolumes: []
