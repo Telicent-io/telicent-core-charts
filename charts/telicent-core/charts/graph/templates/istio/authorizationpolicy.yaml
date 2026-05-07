@@ -39,6 +39,7 @@ spec:
         - /$/backups/create
         - /$/backups/create/*
         - /$/backups/restore/*
+        - /$/backups/restore
         - /$/backups/details/*
         - /$/backups/delete/*
         - /$/backups/validate/*
