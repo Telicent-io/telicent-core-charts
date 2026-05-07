@@ -192,6 +192,14 @@ bootstrap:
     #   client_secret: password-1
     #   client_authentication_method: client_secret_post
     #   scope: write
+    # To avoid embedding a secret in values, use client_secret_env_var_name instead of client_secret.
+    # The application will read the secret from the named environment variable at runtime.
+    # Supply the variable via extraEnvVars using a secretKeyRef (see extraEnvVars below).
+    # - client_id: client-1
+    #   client_name: 'Secret Client'
+    #   client_secret_env_var_name: CLIENT_1_SECRET
+    #   client_authentication_method: client_secret_post
+    #   scope: write
 
   groups:
     # @key bootstrap.groups.existingConfigMap Name of an existing config map containing a list of group objects
@@ -243,10 +251,17 @@ podLabels: {}
 # @key podAnnotations Add extra annotations to the *Auth* pod
 podAnnotations: {}
 # @key extraEnvVars Array with extra environment variables to add to *Auth* pod
+# Supports both plain values and valueFrom (e.g. secretKeyRef) for injecting secret values.
+# Use valueFrom.secretKeyRef to supply a confidential client secret referenced by client_secret_env_var_name.
 # Example:
 # extraEnvVars:
 # - name: FOO
 #   value: instance
+# - name: CLIENT_1_SECRET
+#   valueFrom:
+#     secretKeyRef:
+#       name: my-k8s-secret
+#       key: client_secret
 extraEnvVars: []
 # @key extraVolumes Optionally specify extra list of additional volumes
 extraVolumes: []
