@@ -45,12 +45,6 @@ Copyright (C) 2026 Telicent Limited
                 ja:cxtValue "120000,120000"
             ] ;
         ] ;
-    ## Direct access to out-of-the-box update endpoint not permitted in live environment, use cqrs endpoint
-    #    fuseki:endpoint [
-    #         # SPARQL update service on "/knowledge/update"
-    #        fuseki:operation fuseki:update ;
-    #        fuseki:name "update"
-    #    ] ;
         ## Updates will be generate an RDF patch which is sent to the Kafka topic.
         ## This exposes update to all users and should only be applied in development environments. Pending access admin/user pools solution.
         fuseki:endpoint [
@@ -77,46 +71,25 @@ Copyright (C) 2026 Telicent Limited
             fuseki:operation fuseki:gsp-r ;
             fuseki:name "get"
         ] ;
-    ## Direct access to out-of-the-box read/write endpoint not permitted in live environment
-    #    fuseki:endpoint [
-    #        # SPARQL Graph Store Protcol (read and write) on "/knowledge/data"
-    #        fuseki:operation fuseki:gsp-rw ;
-    #        fuseki:name "data"
-    #    ] ;
-        fuseki:endpoint [
-            # Authz upload operation on "/knowledge/upload"
-            fuseki:operation authz:upload ;
-            fuseki:name "upload"
-        ] ;
         # Knowledge dataset to use
         fuseki:dataset :datasetAuth ;
         .
-    ## Dataset without security labels.
-    ## Transactional in-memory dataset.
-    # :dataset rdf:type ja:MemoryDataset .
     ## Dataset with security labels / ABAC.
-    ## Transactional in-memory dataset.
     :datasetAuth rdf:type authz:DatasetAuthz ;
-        ## Config item where labels are stored (only define if not in memory)
-        authz:labelsStore [ authz:labelsStorePath "/fuseki/databases/knowledgeLabels.db" ] ;
+        ## Config item where labels are stored
+        authz:labelsStore [ 
+          authz:labelsStorePath "/fuseki/databases/knowledgeLabels.db" ;
+          authz:labelsStoreLegacy {{ .Values.graph.legacyLabels }} ;
+          {{- if not .Values.graph.legacyLabels }}
+          authz:labelsStoreByHash true ;
+          authz:labelsStoreByHashFunction "xx128" ;
+          {{- end }}
+        ] ;
         authz:dataset :datasetAuthBase;
         authz:tripleDefaultLabels "!";
-        ## This substitutes the value of the environment variable
-        ## or Java system property "USER_ATTRIBUTES_URL".
-        ##
-        ##   USER_ATTRIBUTES_URL="http://host:port/users/lookup/{user}"
-        ##
-        ## {user} is replaced with the URL-safe encoding of the user id.
-        ## Local attribute store for dev use only
-        # authz:attributes <file:attribute-store.ttl>;
-        # ABAC endpoint for user attributes
-        ## OLD AUTH APPROACH
-        # authz:attributesURL <env:USER_ATTRIBUTES_URL>;
-        # authz:hierarchiesURL <env:ATTRIBUTE_HIERARCHY_URL>;
+        ## Use Telicent Auth Server
         authz:authServer true;
         .
-    ## Storage of data in memory.
-    #:datasetAuthBase rdf:type ja:MemoryDataset .
     ## Storage of data on filesystem.
     :datasetAuthBase rdf:type      tdb2:DatasetTDB2 ;
         tdb2:location "/fuseki/databases/knowledge";
@@ -125,11 +98,6 @@ Copyright (C) 2026 Telicent Limited
     :ontologyService rdf:type fuseki:Service ;
         # http://host:port/ontology
         fuseki:name "/ontology" ;
-        fuseki:endpoint [
-            # SPARQL query service on ???
-            fuseki:operation
-            fuseki:query
-        ] ;
         fuseki:endpoint [
             # SPARQL query service on "/ontology/sparql"
             fuseki:operation fuseki:query ;
@@ -140,12 +108,6 @@ Copyright (C) 2026 Telicent Limited
             fuseki:operation fuseki:query ;
             fuseki:name "query"
         ] ;
-    ## Direct access to out-of-the-box update endpoint not permitted in live environment, use cqrs endpoint
-    #    fuseki:endpoint [
-    #         # SPARQL update service on "/ontology/update"
-    #        fuseki:operation fuseki:update ;
-    #        fuseki:name "update"
-    #    ] ;
         ## Updates will be generate an RDF patch which is sent to the Kafka topic.
         ## This exposes update to all users and should only be applied in development environments. Pending access admin/user pools solution.
         fuseki:endpoint [
@@ -171,64 +133,33 @@ Copyright (C) 2026 Telicent Limited
             fuseki:operation fuseki:gsp-r ;
             fuseki:name "get"
         ] ;
-    ## Direct access to out-of-the-box read/write endpoint not permitted in live environment
-    #    fuseki:endpoint [
-    #        # SPARQL Graph Store Protcol (read and write) on "/ontology/data"
-    #        fuseki:operation fuseki:gsp-rw ;
-    #        fuseki:name "data"
-    #    ] ;
-        fuseki:endpoint [
-            # Authz upload operation on "/ontology/upload"
-            fuseki:operation authz:upload ;
-            fuseki:name "upload"
-        ] ;
         # Ontology dataset to use
         fuseki:dataset :ontologyDataset ;
         .
-    ## No security labels.
-    ## Transactional in-memory dataset.
-    #:ontologyDataset rdf:type ja:MemoryDataset ;
-        # Optional load with data on start-up
-        # ja:data "data1.trig";
-        # ja:data "data2.trig";
-        #.
     ## With security labels.
     ## --- ABAC dataset
     :ontologyDataset rdf:type authz:DatasetAuthz ;
-        ## Config item where labels are stored (only define if not in memory)
-        authz:labelsStore [ authz:labelsStorePath "/fuseki/databases/ontologyLabels.db" ] ;
+        ## Config item where labels are stored
+        authz:labelsStore [ 
+          authz:labelsStorePath "/fuseki/databases/ontologyLabels.db" ;
+          authz:labelsStoreLegacy {{ .Values.graph.legacyLabels }} ;
+          {{- if not .Values.graph.legacyLabels }}
+          authz:labelsStoreByHash true ;
+          authz:labelsStoreByHashFunction "xx128" ;
+          {{- end }}
+        ] ;
         authz:dataset :datasetOntoBase;
         authz:tripleDefaultLabels "!";
-        ## This substitutes the value of the environment variable
-        ## or Java system property "USER_ATTRIBUTES_URL".
-        ##
-        ##   USER_ATTRIBUTES_URL="http://host:port/users/lookup/{user}"
-        ##
-        ## {user} is replaced with the URL-safe encoding of the user id.
-        # Local attribute store for dev
-        # authz:attributes <file:attribute-store.ttl>;
-        # ABAC endpoint for user attributes
-        ## OLD AUTH APPROACH
-        # authz:attributesURL <env:USER_ATTRIBUTES_URL>;
-        # authz:hierarchiesURL <env:ATTRIBUTE_HIERARCHY_URL>;
+        # Use Telicent Auth Server
         authz:authServer true;
         .
-    ## Storage of data in memory.
-    #:datasetOntoBase rdf:type ja:MemoryDataset .
     ## Storage of data on filesystem.
     :datasetOntoBase rdf:type tdb2:DatasetTDB2 ;
         tdb2:location "/fuseki/databases/ontology";
         .
     ## --------
-    ## 2024-08-21 AshC: Assume we'll need all of this later e.g. CQRS, GraphQL
     :catalogService rdf:type fuseki:Service ;
-        # http://host:port/catalog
         fuseki:name "/catalog" ;
-        fuseki:endpoint [
-            # SPARQL query service on ???
-            fuseki:operation
-            fuseki:query
-        ] ;
         fuseki:endpoint [
             # SPARQL query service on "/catalog/sparql"
             fuseki:operation fuseki:query ;
@@ -239,12 +170,6 @@ Copyright (C) 2026 Telicent Limited
             fuseki:operation fuseki:query ;
             fuseki:name "query"
         ] ;
-    ## Direct access to out-of-the-box update endpoint not permitted in live environment, use cqrs endpoint
-    #    fuseki:endpoint [
-    #         # SPARQL update service on "/catalog/update"
-    #        fuseki:operation fuseki:update ;
-    #        fuseki:name "update"
-    #    ] ;
         ## Updates will be generate an RDF patch which is sent to the Kafka topic.
         ## This exposes update to all users and should only be applied in development environments. Pending access admin/user pools solution.
         fuseki:endpoint [
@@ -270,50 +195,26 @@ Copyright (C) 2026 Telicent Limited
             fuseki:operation fuseki:gsp-r ;
             fuseki:name "get"
         ] ;
-    ## Direct access to out-of-the-box read/write endpoint not permitted in live environment
-    #    fuseki:endpoint [
-    #        # SPARQL Graph Store Protcol (read and write) on "/catalog/data"
-    #        fuseki:operation fuseki:gsp-rw ;
-    #        fuseki:name "data"
-    #    ] ;
-        fuseki:endpoint [
-            # Authz upload operation on "/catalog/upload"
-            fuseki:operation authz:upload ;
-            fuseki:name "upload"
-        ] ;
         # Catalog dataset to use
         fuseki:dataset :catalogDataset ;
         .
-    ## No security labels.
-    ## Transactional in-memory dataset.
-    #:catalogDataset rdf:type ja:MemoryDataset ;
-        # Optional load with data on start-up
-        # ja:data "data1.trig";
-        # ja:data "data2.trig";
-        #.
     ## With security labels.
     ## --- ABAC dataset
     :catalogDataset rdf:type authz:DatasetAuthz ;
         ## Config item where labels are stored (only define if not in memory)
-        authz:labelsStore [ authz:labelsStorePath "/fuseki/databases/catalogLabels.db" ] ;
+        authz:labelsStore [ 
+          authz:labelsStorePath "/fuseki/databases/catalogLabels.db" ;
+          authz:labelsStoreLegacy {{ .Values.graph.legacyLabels }} ;
+          {{- if not .Values.graph.legacyLabels }}
+          authz:labelsStoreByHash true ;
+          authz:labelsStoreByHashFunction "xx128" ;
+          {{- end }}
+        ] ;
         authz:dataset :datasetCatBase;
         authz:tripleDefaultLabels "!";
-        ## This substitutes the value of the environment variable
-        ## or Java system property "USER_ATTRIBUTES_URL".
-        ##
-        ##   USER_ATTRIBUTES_URL="http://host:port/users/lookup/{user}"
-        ##
-        ## {user} is replaced with the URL-safe encoding of the user id.
-        # Local attribute store for dev
-        # authz:attributes <file:attribute-store.ttl>;
-        # ABAC endpoint for user attributes
-        ## OLD AUTH APPROACH
-        # authz:attributesURL <env:USER_ATTRIBUTES_URL>;
-        # authz:hierarchiesURL <env:ATTRIBUTE_HIERARCHY_URL>;
+        ## Use Telicent Auth Server
         authz:authServer true;
         .
-    ## Storage of data in memory.
-    #:datasetCatBase rdf:type ja:MemoryDataset .
     ## Storage of data on filesystem.
     :datasetCatBase rdf:type tdb2:DatasetTDB2 ;
         tdb2:location "/fuseki/databases/catalog";
@@ -323,8 +224,7 @@ Copyright (C) 2026 Telicent Limited
         fk:bootstrapServers    {{ .Values.global.kafka.bootstrapServers | quote }};
         fk:topic               "knowledge";
         fk:dlqTopic            "knowledge.dlq";
-        ## This should refer to an authz:upload endpoint
-        fk:fusekiServiceName   "/knowledge/upload";
+        fk:fusekiServiceName   "/knowledge";
         ## From 0.90.0 onwards this is mandatory if defining more than one connector
         ## and each connector MUST have a unique Group ID
         fk:groupId "graph-knowledge";
@@ -342,7 +242,7 @@ Copyright (C) 2026 Telicent Limited
         fk:topic               "ontology";
         fk:dlqTopic            "ontology.dlq";
         ## This should refer to the target dataset
-        fk:fusekiServiceName   "/ontology/upload";
+        fk:fusekiServiceName   "/ontology";
         ## From 0.90.0 onwards this is mandatory if defining more than one connector
         ## and each connector MUST have a unique Group ID
         fk:groupId "graph-ontology";
@@ -360,7 +260,7 @@ Copyright (C) 2026 Telicent Limited
         fk:topic               "catalog";
         fk:dlqTopic            "catalog.dlq";
         ## This should refer to the target dataset
-        fk:fusekiServiceName   "/catalog/upload";
+        fk:fusekiServiceName   "/catalog";
         ## From 0.90.0 onwards this is mandatory if defining more than one connector
         ## and each connector MUST have a unique Group ID
         fk:groupId "graph-catalog";

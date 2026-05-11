@@ -103,6 +103,21 @@
                 }
             }
         },
+        "graph": {
+            "type": "object",
+            "properties": {
+                "routeToNamedGraphs": {
+                    "type": "boolean",
+                    "description": "Enable or disable routing to named graphs. When set to true, data will be routed into named graphs based on the Distribution-ID header set on the incoming Kafka events.",
+                    "default": false
+                },
+                "legacyLabels": {
+                    "type": "boolean",
+                    "description": "Enable or disable legacy label store format.  When set to false then the new label store format will be used, which allows for more efficient storage and querying of labels.  If a pre-existing store exists in the legacy format it will be automatically migrated forwards to the new format.",
+                    "default": true
+                }
+            }
+        },
         "configMap": {
             "type": "object",
             "properties": {

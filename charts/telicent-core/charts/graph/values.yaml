@@ -65,6 +65,18 @@ java:
   jvmOptions: "-XX:MaxRAMPercentage=80.0"
 
 #
+# @section Application Parameters - Graph
+#
+# @descStart
+# Contains configuration parameters that configure aspects of the *Graph* application behaviour.
+# @descEnd
+graph:
+  # @key graph.routeToNamedGraphs Enable or disable routing to named graphs. When set to true, data will be routed into named graphs based on the Distribution-ID header set on the incoming Kafka events.
+  routeToNamedGraphs: false
+  # @key graph.legacyLabels Enable or disable legacy label store format.  When set to false then the new label store format will be used, which allows for more efficient storage and querying of labels.  If a pre-existing store exists in the legacy format it will be automatically migrated forwards to the new format.
+  legacyLabels: true
+
+#
 # @section ConfigMap Parameters
 #
 configMap:
