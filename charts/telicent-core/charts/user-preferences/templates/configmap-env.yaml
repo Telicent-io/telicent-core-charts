@@ -27,10 +27,9 @@ data:
   JWKS_URL: {{ printf "%s%s%s" "https://" .Values.global.authHostDomain "/oauth2/jwks" | quote }}
   USERINFO_URL: {{ printf "http://%s%s" (include "user-preferences.hostAuth" . ) "/userinfo" | quote }}
 
-  { { - if .Values.metrics.enabled } }
+  {{ - if .Values.metrics.enabled }}
   OTEL_METRICS_EXPORTER: "prometheus"
   OTEL_TRACES_EXPORTER: "none"
   OTEL_LOGS_EXPORTER: "none"
-  { { - end } }
-
+  {{ - end }}
 {{- end }}
