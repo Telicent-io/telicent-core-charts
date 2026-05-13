@@ -12,6 +12,7 @@ metadata:
     {{- include "http-ingester.labels" . | nindent 6 }}
 
 data:
+  {{- $metrics := .Values.metrics | default dict }}
   KAFKA_CONFIG_FILE_PATH: "/app/config/kafka-auth/kafka-config.properties"
   BOOTSTRAP_SERVERS: {{ .Values.global.kafka.bootstrapServers | quote }}
 
@@ -20,7 +21,7 @@ data:
   JAVA_OPTIONS: {{ .Values.httpIngester.java.jvmOptions | quote }}
   JWKS_URL: {{ printf "%s%s%s" "https://" .Values.global.authHostDomain "/oauth2/jwks" | quote }}
   USERINFO_URL: {{ printf "http://%s%s" (include "document-pipeline.hostAuth" . ) "/userinfo" | quote }}
-  {{- if .Values.metrics.enabled }}
+  {{- if $metrics.enabled }}
   OTEL_METRICS_EXPORTER: "prometheus"
   OTEL_TRACES_EXPORTER: "none"
   OTEL_LOGS_EXPORTER: "none"

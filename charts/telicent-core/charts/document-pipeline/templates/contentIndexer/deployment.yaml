@@ -38,6 +38,7 @@ spec:
       {{- end }}
 
     spec:
+      {{- $metrics := .Values.metrics | default dict }}
       serviceAccountName: {{ include "document-pipeline.serviceAccountName" . }}
       securityContext: {{ .Values.contentIndexer.podSecurityContext | default .Values.podSecurityContext | toYaml | nindent 8 }}
 
@@ -78,7 +79,7 @@ spec:
           value: {{ .Values.contentIndexer.elastic.opensearchCompatibility | quote }}
         - name: DLQ_TOPIC
           value: {{ .Values.contentIndexer.elastic.dlqTopic | quote }}
-        {{- if .Values.metrics.enabled }}
+        {{- if $metrics.enabled }}
         - name: OTEL_METRICS_EXPORTER
           value: "prometheus"
         - name: OTEL_TRACES_EXPORTER
