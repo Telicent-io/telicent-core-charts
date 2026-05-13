@@ -38,6 +38,7 @@ spec:
       {{- end }}
     
     spec:
+      {{- $metrics := .Values.metrics | default dict }}
       serviceAccountName: {{ include "document-pipeline.serviceAccountName" . }}
       securityContext: {{ .Values.catalogueUpdater.podSecurityContext | default .Values.podSecurityContext | toYaml | nindent 8 }}
 
@@ -74,6 +75,14 @@ spec:
           value: {{ .Values.catalogueUpdater.topics.flushIntervalMs | quote }}
         - name: MAX_BUFFER_SIZE
           value: {{ .Values.catalogueUpdater.topics.maxBufferSize | quote }}
+        {{- if $metrics.enabled }}
+        - name: OTEL_METRICS_EXPORTER
+          value: "prometheus"
+        - name: OTEL_TRACES_EXPORTER
+          value: "none"
+        - name: OTEL_LOGS_EXPORTER
+          value: "none"
+        {{- end }}
        
         ports:
         - name: http
