@@ -239,6 +239,61 @@
                 }
             }
         },
+        "readinessProbe": {
+            "type": "object",
+            "properties": {
+                "initialDelaySeconds": {
+                    "type": "number",
+                    "description": "Number of seconds before readiness probe is initiated",
+                    "default": 120
+                },
+                "periodSeconds": {
+                    "type": "number",
+                    "description": "How often (in seconds) to perform the readiness probe",
+                    "default": 60
+                },
+                "timeoutSeconds": {
+                    "type": "number",
+                    "description": "Number of seconds after which the readiness probe times out",
+                    "default": 10
+                },
+                "failureThreshold": {
+                    "type": "number",
+                    "description": "Number of failures before the pod is marked unready",
+                    "default": 3
+                },
+                "successThreshold": {
+                    "type": "number",
+                    "description": "Minimum consecutive successes for the probe to be considered successful",
+                    "default": 1
+                }
+            }
+        },
+        "livenessProbe": {
+            "type": "object",
+            "properties": {
+                "initialDelaySeconds": {
+                    "type": "number",
+                    "description": "Number of seconds before liveness probe is initiated",
+                    "default": 120
+                },
+                "periodSeconds": {
+                    "type": "number",
+                    "description": "How often (in seconds) to perform the liveness probe",
+                    "default": 60
+                },
+                "timeoutSeconds": {
+                    "type": "number",
+                    "description": "Number of seconds after which the liveness probe times out",
+                    "default": 10
+                },
+                "failureThreshold": {
+                    "type": "number",
+                    "description": "Number of failures before the pod is restarted",
+                    "default": 3
+                }
+            }
+        },
         "resources": {
             "type": "object",
             "description": "Resources for *Graph* containers",

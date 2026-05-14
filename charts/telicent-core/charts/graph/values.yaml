@@ -151,6 +151,31 @@ image:
   pullSecrets: []
 
 #
+# @section Statefulset Probe Parameters
+#
+# @key readinessProbe.initialDelaySeconds Number of seconds before readiness probe is initiated
+# @key readinessProbe.periodSeconds How often (in seconds) to perform the readiness probe
+# @key readinessProbe.timeoutSeconds Number of seconds after which the readiness probe times out
+# @key readinessProbe.failureThreshold Number of failures before the pod is marked unready
+# @key readinessProbe.successThreshold Minimum consecutive successes for the probe to be considered successful
+readinessProbe:
+  initialDelaySeconds: 120
+  periodSeconds: 60
+  timeoutSeconds: 10
+  failureThreshold: 3
+  successThreshold: 1
+
+# @key livenessProbe.initialDelaySeconds Number of seconds before liveness probe is initiated
+# @key livenessProbe.periodSeconds How often (in seconds) to perform the liveness probe
+# @key livenessProbe.timeoutSeconds Number of seconds after which the liveness probe times out
+# @key livenessProbe.failureThreshold Number of failures before the pod is restarted
+livenessProbe:
+  initialDelaySeconds: 120
+  periodSeconds: 60
+  timeoutSeconds: 10
+  failureThreshold: 3
+
+#
 # @section Statefulset Resources Parameters - Requests and Limits
 #
 # @key resources Resources for *Graph* containers
