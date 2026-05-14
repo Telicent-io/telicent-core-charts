@@ -94,17 +94,20 @@ spec:
             path: /$/ping
             port: 3030
             scheme: HTTP
-          initialDelaySeconds: 120
-          periodSeconds: 60
-          timeoutSeconds: 10
+          initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+          timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
+          failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
+          successThreshold: {{ .Values.readinessProbe.successThreshold }}
         livenessProbe:
           httpGet:
             path: /$/ping
             port: 3030
             scheme: HTTP
-          initialDelaySeconds: 120
-          periodSeconds: 60
-          timeoutSeconds: 10
+          initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+          timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+          failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
 
         volumeMounts:
         - name: fuseki-config-volume
