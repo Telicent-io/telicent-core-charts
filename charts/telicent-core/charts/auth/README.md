@@ -175,13 +175,17 @@ For Quick Start purposes, a secret named `tc-auth-usr-psql-auth` will be created
 
 Contains configuration to be used to bootstrap a clean instance of the Auth application to a working state.
 
-| Name                                  | Description                                                                                                                                                                           | Value |
-| ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
-| `bootstrap.clients.existingConfigMap` | Name of an existing config map resource containing all required public and confidential clients. If specified, the values for clients.public and clients.confidential will be ignored | `""`  |
-| `bootstrap.clients.public`            | A list of public client objects                                                                                                                                                       | `[]`  |
-| `bootstrap.clients.confidential`      | A list of confidential client objects                                                                                                                                                 | `[]`  |
-| `bootstrap.groups.existingConfigMap`  | Name of an existing config map containing a list of group objects                                                                                                                     | `""`  |
-| `bootstrap.groups.list`               | A list containing group objects                                                                                                                                                       | `[]`  |
+| Name                                             | Description                                                                                                                                                                           | Value |
+| ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| `bootstrap.clients.existingConfigMap`            | Name of an existing config map resource containing all required public and confidential clients. If specified, the values for clients.public and clients.confidential will be ignored | `""`  |
+| `bootstrap.clients.public`                       | A list of public client objects                                                                                                                                                       | `[]`  |
+| `bootstrap.clients.confidential`                 | A list of confidential client objects                                                                                                                                                 | `[]`  |
+| `bootstrap.clients.notifications.existingSecret` | Name of an existing secret containing the notifications client secret. The secret must contain 1 key: 'client_secret'                                                                 | `""`  |
+| `bootstrap.clients.notifications.clientSecret`   | The notifications API client secret (NOTIFICATIONS_CLIENT_SECRET)                                                                                                                     | `""`  |
+| `bootstrap.clients.registry.existingSecret`      | Name of an existing secret containing the registry client secret. The secret must contain 1 key: 'client_secret'                                                                      | `""`  |
+| `bootstrap.clients.registry.clientSecret`        | The registry API client secret (REGISTRY_CLIENT_SECRET)                                                                                                                               | `""`  |
+| `bootstrap.groups.existingConfigMap`             | Name of an existing config map containing a list of group objects                                                                                                                     | `""`  |
+| `bootstrap.groups.list`                          | A list containing group objects                                                                                                                                                       | `[]`  |
 
 ### ConfigMap Parameters
 

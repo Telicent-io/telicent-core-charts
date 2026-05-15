@@ -40,6 +40,8 @@ spec:
         checksum/secretPsql: {{ include (print $.Template.BasePath "/secret-postgres.yaml") . | sha256sum }}
         checksum/configClients: {{ include (print $.Template.BasePath "/configmap-clients.yaml") . | sha256sum }}
         checksum/configGroups: {{ include (print $.Template.BasePath "/configmap-groups.yaml") . | sha256sum }}
+        checksum/secretNotificationsClient: {{ include (print $.Template.BasePath "/secret-notifications-client.yaml") . | sha256sum }}
+        checksum/secretRegistryClient: {{ include (print $.Template.BasePath "/secret-registry-client.yaml") . | sha256sum }}
         {{- with .Values.podAnnotations }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -92,6 +94,16 @@ spec:
             secretKeyRef:
               key: header
               name: {{ include "auth.forwardAuthSecretName" . }}
+        - name: NOTIFICATIONS_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              key: client_secret
+              name: {{ include "auth.notificationsClientSecretName" . }}
+        - name: REGISTRY_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              key: client_secret
+              name: {{ include "auth.registryClientSecretName" . }}
 
         {{- range .Values.extraEnvVars }}
         - name: {{ .name }}
