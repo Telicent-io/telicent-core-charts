@@ -429,6 +429,21 @@
                     }
                 }
             }
+        },
+        "hostsCore": {
+            "type": "object",
+            "properties": {
+                "enableAutoCorrect": {
+                    "type": "boolean",
+                    "description": "Prefix 'global.releaseNameTelicentCore' value to each host value. Alternatively, the host value will be used as it is, without any modification",
+                    "default": true
+                },
+                "auth": {
+                    "type": "string",
+                    "description": "Auth application default host value, as defined by 'service/serviceAccount:port'",
+                    "default": "auth:8080"
+                }
+            }
         }
     }
 }
