@@ -305,6 +305,36 @@
                             "description": "A list of confidential client objects",
                             "default": [],
                             "items": {}
+                        },
+                        "notifications": {
+                            "type": "object",
+                            "properties": {
+                                "existingSecret": {
+                                    "type": "string",
+                                    "description": "Name of an existing secret containing the notifications client secret. The secret must contain 1 key: 'client_secret'",
+                                    "default": ""
+                                },
+                                "clientSecret": {
+                                    "type": "string",
+                                    "description": "The notifications API client secret (NOTIFICATIONS_CLIENT_SECRET)",
+                                    "default": ""
+                                }
+                            }
+                        },
+                        "registry": {
+                            "type": "object",
+                            "properties": {
+                                "existingSecret": {
+                                    "type": "string",
+                                    "description": "Name of an existing secret containing the registry client secret. The secret must contain 1 key: 'client_secret'",
+                                    "default": ""
+                                },
+                                "clientSecret": {
+                                    "type": "string",
+                                    "description": "The registry API client secret (REGISTRY_CLIENT_SECRET)",
+                                    "default": ""
+                                }
+                            }
                         }
                     }
                 },
