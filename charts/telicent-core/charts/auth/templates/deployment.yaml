@@ -40,6 +40,7 @@ spec:
         checksum/secretPsql: {{ include (print $.Template.BasePath "/secret-postgres.yaml") . | sha256sum }}
         checksum/configClients: {{ include (print $.Template.BasePath "/configmap-clients.yaml") . | sha256sum }}
         checksum/configGroups: {{ include (print $.Template.BasePath "/configmap-groups.yaml") . | sha256sum }}
+        checksum/configServiceAccounts: {{ include (print $.Template.BasePath "/configmap-service-accounts.yaml") . | sha256sum }}
         checksum/secretNotificationsClient: {{ include (print $.Template.BasePath "/secret-notifications-client.yaml") . | sha256sum }}
         checksum/secretRegistryClient: {{ include (print $.Template.BasePath "/secret-registry-client.yaml") . | sha256sum }}
         {{- with .Values.podAnnotations }}
@@ -150,6 +151,10 @@ spec:
           mountPath: /app/config/startup/groups.yaml
           subPath: groups.yaml
           readOnly: true
+        - name: service-accounts-config-volume
+          mountPath: /app/config/startup/service-accounts.yaml
+          subPath: service-accounts.yaml
+          readOnly: true
         {{- if .Values.global.truststore.existingSecret }}
         - name: java-truststore
           mountPath: {{ .Values.global.truststore.mountPath | default "/app/config/truststore" }}
@@ -168,6 +173,9 @@ spec:
       - name: groups-config-volume
         configMap:
           name: {{ include "auth.groupsConfigMapName" . }}
+      - name: service-accounts-config-volume
+        configMap:
+          name: {{ include "auth.serviceAccountsConfigMapName" . }}
       {{- if .Values.global.truststore.existingSecret }}
       - name: java-truststore
         secret:

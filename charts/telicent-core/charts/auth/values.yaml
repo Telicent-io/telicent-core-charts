@@ -200,20 +200,30 @@ bootstrap:
     #   client_secret_env_var_name: CLIENT_1_SECRET
     #   client_authentication_method: client_secret_post
     #   scope: write
-
     notifications:
       # @key bootstrap.clients.notifications.existingSecret Name of an existing secret containing the notifications client secret. The secret must contain 1 key: 'client_secret'
       # Note: Left unset, it will create a secret named: tc-auth-gen-notifications-api
       existingSecret: ""
       # @key bootstrap.clients.notifications.clientSecret The notifications API client secret (NOTIFICATIONS_CLIENT_SECRET)
       clientSecret: ""
-
     registry:
       # @key bootstrap.clients.registry.existingSecret Name of an existing secret containing the registry client secret. The secret must contain 1 key: 'client_secret'
       # Note: Left unset, it will create a secret named: tc-auth-gen-apicurio-registry-api
       existingSecret: ""
       # @key bootstrap.clients.registry.clientSecret The registry API client secret (REGISTRY_CLIENT_SECRET)
       clientSecret: ""
+
+  # @key bootstrap.serviceAccounts A list of service account objects to seed on startup
+  serviceAccounts: []
+  # - id: svc-my-service
+  #   name: svc-my-service
+  #   description: Service account for my service
+  #   active: true
+  #   clientId: my-service
+  #   roles: ["USER"]
+  #   permissions: []
+  #   groups: []
+  #   attributes: {}
 
   groups:
     # @key bootstrap.groups.existingConfigMap Name of an existing config map containing a list of group objects
