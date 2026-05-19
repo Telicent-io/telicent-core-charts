@@ -12,3 +12,14 @@ Create the name of the PostgreSQL secret
 {{- printf "tc-auth-usr-%s-%s" "psql" .Chart.Name }}
 {{- end }}
 {{- end -}}
+
+{{/*
+Create the name of the OIDC client secret
+*/}}
+{{- define "apicurio.oidcClientSecretName" -}}
+{{- if .Values.config.oidcExistingSecret }}
+{{- .Values.config.oidcExistingSecret }}
+{{- else }}
+{{- printf "tc-auth-gen-apicurio-registry-api" }}
+{{- end }}
+{{- end -}}

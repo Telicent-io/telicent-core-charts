@@ -61,3 +61,16 @@ Copyright (C) 2026 Telicent Limited
 {{- end -}}
 {{- end -}}
 
+{{/* -------------------------------------------------------------- */}}
+{{/* Returns the *preview serviceAccount* with or without a release name prefix */}}
+{{- define "common.discoverServiceAccountPreview" -}}
+{{- $envVal := index . 0 -}}
+{{- $hostVal := index . 1 -}}
+{{- $name := (index (splitList ":" $hostVal) 0 ) -}}
+{{- if and $envVal.Values.hostsPreview.enableAutoCorrect $envVal.Values.global.releaseNameTelicentPreview -}}
+{{- printf "%s-%s" $envVal.Values.global.releaseNameTelicentPreview $name -}}
+{{- else -}}
+{{- printf "%s" $name -}}
+{{- end -}}
+{{- end -}}
+

@@ -18,20 +18,12 @@ spec:
     - source:
         principals:
         {{- include "apicurio.ingressPrincipal" . | nindent 8 }}
+        {{- include "apicurio.notificationsPrincipal" . | nindent 8 }}
     to:
     - operation:
         paths:
-        - /apis/registry/v3/groups/*/artifacts
+        - /apis/registry/v3/groups/*
         methods: ["GET", "POST", "DELETE"]
-    - operation:
-        paths:
-        - /apis/registry/v3/groups/*/artifacts/*/versions*
-        - /apis/registry/v3/groups/*/artifacts/*/versions/*/content
-        methods: ["GET"]
-    - operation:
-        paths:
-          - /apis/registry/v3/groups/*/artifacts/*/versions
-        methods: ["POST"]
     - operation:
         paths:
           - /apis/registry/v3/admin/config/properties/*

@@ -184,6 +184,7 @@ Contains configuration to be used to bootstrap a clean instance of the Auth appl
 | `bootstrap.clients.notifications.clientSecret`   | The notifications API client secret (NOTIFICATIONS_CLIENT_SECRET)                                                                                                                     | `""`  |
 | `bootstrap.clients.registry.existingSecret`      | Name of an existing secret containing the registry client secret. The secret must contain 1 key: 'client_secret'                                                                      | `""`  |
 | `bootstrap.clients.registry.clientSecret`        | The registry API client secret (REGISTRY_CLIENT_SECRET)                                                                                                                               | `""`  |
+| `bootstrap.serviceAccounts`                      | A list of service account objects to seed on startup                                                                                                                                  | `[]`  |
 | `bootstrap.groups.existingConfigMap`             | Name of an existing config map containing a list of group objects                                                                                                                     | `""`  |
 | `bootstrap.groups.list`                          | A list containing group objects                                                                                                                                                       | `[]`  |
 

@@ -338,6 +338,12 @@
                         }
                     }
                 },
+                "serviceAccounts": {
+                    "type": "array",
+                    "description": "A list of service account objects to seed on startup",
+                    "default": [],
+                    "items": {}
+                },
                 "groups": {
                     "type": "object",
                     "properties": {

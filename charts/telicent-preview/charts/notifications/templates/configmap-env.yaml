@@ -22,7 +22,7 @@ data:
   DATABASE_JDBC_URL: {{ .Values.postgres.jdbcUrl | quote }}
 
   JWKS_URL: {{ printf "https://%s%s" .Values.global.authHostDomain "/oauth2/jwks" | quote }}
-  USERINFO_URL: {{ printf "https://%s%s" .Values.global.authHostDomain "/userinfo" | quote }}
+  USERINFO_URL: {{ printf "http://%s%s" (include "notifications.hostAuth" .) "/userinfo" | quote }}
 
   {{- if .Values.validation.enabled }}
   ENABLE_VALIDATION: {{ .Values.validation.enabled | quote }}
