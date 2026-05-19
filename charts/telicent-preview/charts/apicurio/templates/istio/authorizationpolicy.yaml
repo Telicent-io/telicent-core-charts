@@ -19,6 +19,7 @@ spec:
         principals:
         {{- include "apicurio.ingressPrincipal" . | nindent 8 }}
         {{- include "apicurio.notificationsPrincipal" . | nindent 8 }}
+        {{- include "apicurio.notificationsProjectorPrincipal" . | nindent 8 }}
     to:
     - operation:
         paths:

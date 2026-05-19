@@ -12,3 +12,14 @@ Create the name of the PostgreSQL secret
 {{- printf "%s-postgresql" (include "notifications-projector.fullname" .) }}
 {{- end }}
 {{- end -}}
+
+{{/*
+Create the name of the forward auth secret
+*/}}
+{{- define "notifications-projector.forwardAuthSecretName" -}}
+{{- if .Values.forwardAuth.existingSecret }}
+{{- .Values.forwardAuth.existingSecret }}
+{{- else }}
+{{- printf "%s-forward-auth" (include "notifications-projector.fullname" .) }}
+{{- end }}
+{{- end -}}

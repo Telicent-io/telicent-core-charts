@@ -75,6 +75,11 @@ Detailed description of 'discoverHost' & 'discoverServiceAccount' function
 {{- printf "%s" (include "common.discoverServiceAccountPreview" (list . .Values.hostsPreview.notifications )) -}}
 {{- end -}}
 
+{{/* notifications-projector | preview - returns serviceAccount */}}
+{{- define "auth.serviceAccountNotificationsProjector" -}}
+{{- printf "%s" (include "common.discoverServiceAccountPreview" (list . .Values.hostsPreview.notificationsProjector )) -}}
+{{- end -}}
+
 {{/* apicurio | preview - returns serviceAccount */}}
 {{- define "auth.serviceAccountApicurio" -}}
 {{- printf "%s" (include "common.discoverServiceAccountPreview" (list . .Values.hostsPreview.apicurio )) -}}

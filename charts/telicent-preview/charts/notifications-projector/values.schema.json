@@ -143,6 +143,16 @@
                 }
             }
         },
+        "forwardAuth": {
+            "type": "object",
+            "properties": {
+                "existingSecret": {
+                    "type": "string",
+                    "description": "Name of an existing secret containing the forward auth header value. The secret must contain 1 key: 'header'",
+                    "default": ""
+                }
+            }
+        },
         "configMap": {
             "type": "object",
             "properties": {

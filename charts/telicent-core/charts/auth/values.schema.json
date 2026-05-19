@@ -682,6 +682,11 @@
                     "description": "Notifications application host value, as defined by 'service/serviceAccount:port'",
                     "default": "notifications:8080"
                 },
+                "notificationsProjector": {
+                    "type": "string",
+                    "description": "Notifications Projector application host value, as defined by 'service/serviceAccount:port'",
+                    "default": "notifications-projector:8080"
+                },
                 "apicurio": {
                     "type": "string",
                     "description": "Apicurio application host value, as defined by 'service/serviceAccount:port'",

@@ -437,5 +437,7 @@ hostsPreview:
   aiSparqlBuilder: "ai-sparql-builder:8080"
   # @key hostsPreview.notifications Notifications application host value, as defined by 'service/serviceAccount:port'
   notifications: "notifications:8080"
+  # @key hostsPreview.notificationsProjector Notifications Projector application host value, as defined by 'service/serviceAccount:port'
+  notificationsProjector: "notifications-projector:8080"
   # @key hostsPreview.apicurio Apicurio application host value, as defined by 'service/serviceAccount:port'
   apicurio: "apicurio:8080"

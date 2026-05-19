@@ -15,3 +15,10 @@ Returns the principal used for Notifications traffic by the Istio AuthorizationP
 {{- define "apicurio.notificationsPrincipal" -}}
 {{- printf "- cluster.local/ns/%s/sa/%s" .Release.Namespace ( include "apicurio.serviceAccountNotifications" .) -}}
 {{- end }}
+
+{{/*
+Returns the principal used for Notifications Projector traffic by the Istio AuthorizationPolicy
+*/}}
+{{- define "apicurio.notificationsProjectorPrincipal" -}}
+{{- printf "- cluster.local/ns/%s/sa/%s" .Release.Namespace ( include "apicurio.serviceAccountNotificationsProjector" .) -}}
+{{- end }}

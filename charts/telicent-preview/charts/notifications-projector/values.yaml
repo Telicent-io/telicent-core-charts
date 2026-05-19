@@ -88,6 +88,13 @@ postgres:
   password: ""
 
 #
+# @section Forward Auth Parameters
+#
+forwardAuth:
+  # @key forwardAuth.existingSecret Name of an existing secret containing the forward auth header value. The secret must contain 1 key: 'header'
+  existingSecret: ""
+
+#
 # @section ConfigMap Parameters
 #
 # @descStart

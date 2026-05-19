@@ -249,3 +249,5 @@ hostsPreview:
   enableAutoCorrect: true
   # @key hostsPreview.notifications Notifications application default host value, as defined by 'service/serviceAccount:port'
   notifications: "notifications:8080"
+  # @key hostsPreview.notificationsProjector Notifications Projector application default host value, as defined by 'service/serviceAccount:port'
+  notificationsProjector: "notifications-projector:8080"

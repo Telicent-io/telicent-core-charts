@@ -292,13 +292,14 @@ If either of those details changes, you can use this section to correctly refer 
 
 Host values will be used as defined in this section, release name cannot be autocorrected, as the release name is unknown.
 
-| Name                             | Description                                                                                                                                        | Value                    |
-| -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ |
-| `hostsPreview.enableAutoCorrect` | Prefix 'global.releaseNameTelicentPreview' value to each host value. Alternatively, the host value will be used as it is, without any modification | `true`                   |
-| `hostsPreview.paperbackWriter`   | Paperback Writer application host value, as defined by 'service/serviceAccount:port'                                                               | `paperback-writer:8080`  |
-| `hostsPreview.aiSparqlBuilder`   | AI SPARQL Builder application host value, as defined by 'service/serviceAccount:port'                                                              | `ai-sparql-builder:8080` |
-| `hostsPreview.notifications`     | Notifications application host value, as defined by 'service/serviceAccount:port'                                                                  | `notifications:8080`     |
-| `hostsPreview.apicurio`          | Apicurio application host value, as defined by 'service/serviceAccount:port'                                                                       | `apicurio:8080`          |
+| Name                                  | Description                                                                                                                                        | Value                          |
+| ------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------ |
+| `hostsPreview.enableAutoCorrect`      | Prefix 'global.releaseNameTelicentPreview' value to each host value. Alternatively, the host value will be used as it is, without any modification | `true`                         |
+| `hostsPreview.paperbackWriter`        | Paperback Writer application host value, as defined by 'service/serviceAccount:port'                                                               | `paperback-writer:8080`        |
+| `hostsPreview.aiSparqlBuilder`        | AI SPARQL Builder application host value, as defined by 'service/serviceAccount:port'                                                              | `ai-sparql-builder:8080`       |
+| `hostsPreview.notifications`          | Notifications application host value, as defined by 'service/serviceAccount:port'                                                                  | `notifications:8080`           |
+| `hostsPreview.notificationsProjector` | Notifications Projector application host value, as defined by 'service/serviceAccount:port'                                                        | `notifications-projector:8080` |
+| `hostsPreview.apicurio`               | Apicurio application host value, as defined by 'service/serviceAccount:port'                                                                       | `apicurio:8080`                |
 
 ## License
 
