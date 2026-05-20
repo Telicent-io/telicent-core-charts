@@ -71,6 +71,11 @@ Copyright (C) 2026 Telicent Limited
             fuseki:operation fuseki:gsp-r ;
             fuseki:name "get"
         ] ;
+        fuseki:endpoint [
+            # SHACL validation on "/knowledge/shacl"
+            fuseki:operation fuseki:shacl ;
+            fuseki:name "shacl"
+        ] ;
         # Knowledge dataset to use
         fuseki:dataset :datasetAuth ;
         .
@@ -133,6 +138,11 @@ Copyright (C) 2026 Telicent Limited
             fuseki:operation fuseki:gsp-r ;
             fuseki:name "get"
         ] ;
+        fuseki:endpoint [
+            # SHACL validation on "/ontology/shacl"
+            fuseki:operation fuseki:shacl ;
+            fuseki:name "shacl"
+        ] ;
         # Ontology dataset to use
         fuseki:dataset :ontologyDataset ;
         .
@@ -194,6 +204,11 @@ Copyright (C) 2026 Telicent Limited
             # SPARQL Graph Store Protocol (read) on "/catalog/get"
             fuseki:operation fuseki:gsp-r ;
             fuseki:name "get"
+        ] ;
+        fuseki:endpoint [
+            # SHACL validation on "/catalog/shacl"
+            fuseki:operation fuseki:shacl ;
+            fuseki:name "shacl"
         ] ;
         # Catalog dataset to use
         fuseki:dataset :catalogDataset ;

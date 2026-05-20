@@ -61,4 +61,8 @@ spec:
         - /knowledge/graphql/*
         - /knowledge/shacl
         - /knowledge/shacl/*
+        - /ontology/shacl
+        - /ontology/shacl/*
+        - /catalog/shacl
+        - /catalog/shacl/*
         methods: ["POST"]
