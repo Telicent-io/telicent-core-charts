@@ -31,7 +31,7 @@ appVersion: "1.16.0"
 # The dependencies will be fetched and installed when the chart is installed.
 dependencies:
   - name: admin-ui
-    version: "1.4.0"
+    version: "1.5.0"
     repository: oci://quay.io/telicent/charts/admin-ui
     condition: global.enterprise
   - name: auth
@@ -45,11 +45,11 @@ dependencies:
     version: "^0.1.0"
     repository: file://./charts/graph
   - name: graph-ui
-    version: "1.37.1"
+    version: "1.37.3"
     repository: oci://quay.io/telicent/charts/graph-ui
     condition: global.enterprise
   - name: query-ui
-    version: "1.5.3"
+    version: "1.5.4"
     repository: oci://quay.io/telicent/charts/query-ui
   - name: search
     version: "^0.2.0"

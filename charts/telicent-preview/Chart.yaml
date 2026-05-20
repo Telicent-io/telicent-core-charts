@@ -27,7 +27,7 @@ appVersion: "1.16.0"
 
 dependencies:
   - name: data-catalog-ui
-    version: "1.15.2"
+    version: "1.15.3"
     repository: oci://quay.io/telicent/charts/data-catalog-ui
     condition: data-catalog-ui.enabled
   - name: notifications
@@ -43,7 +43,7 @@ dependencies:
     repository: file://./charts/paperback-writer
     condition: global.enterprise, paperback-writer.enabled
   - name: user-portal-ui
-    version: "1.8.28"
+    version: "1.9.0"
     repository: oci://quay.io/telicent/charts/user-portal-ui
     condition: user-portal-ui.enabled
 icon: "https://avatars.githubusercontent.com/u/65304240?s=200&v=4"
