@@ -81,20 +81,21 @@ spec:
             timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
             failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
 
-        {{- if .Values.global.truststore.existingSecret }}
+
           volumeMounts:
+          {{- if .Values.global.truststore.existingSecret }}
             - name: java-truststore
               mountPath: {{ .Values.global.truststore.mountPath | default "/app/config/truststore" }}
-        {{- end }}
+          {{- end }}
             - name: kafka-auth-config
               mountPath: /app/config/kafka-auth/
 
       volumes:
-      {{- if .Values.global.truststore.existingSecret }}
+        {{- if .Values.global.truststore.existingSecret }}
         - name: java-truststore
           secret:
             secretName: {{ .Values.global.truststore.existingSecret }}
-      {{- end }}
+        {{- end }}
         - name: kafka-auth-config
           secret:
           {{- if .Values.global.kafka.existingConfigSecretName }}
