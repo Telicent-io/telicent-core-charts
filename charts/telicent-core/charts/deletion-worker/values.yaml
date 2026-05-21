@@ -303,6 +303,9 @@ service:
 #  traefikProxy: "traefik-proxy:8080"
 #  # @key hosts.search Search application default host value, as defined by 'service/serviceAccount:port'
 #  search: "search:8080"
+hosts:
+  enableAutoCorrect: true
+  traefikProxy: "traefik-proxy:8080"
 
 #
 # @section Host(s) Preview Parameters - Contains host information for applications deployed via *telicent-preview* chart

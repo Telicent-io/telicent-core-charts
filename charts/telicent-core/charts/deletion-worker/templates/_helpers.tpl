@@ -97,14 +97,6 @@ Create the name of the env configmap.
 {{- printf "%s-env" (include "deletion-worker.fullname" .) }}
 {{- end }}
 
-{{- define "deletion-worker.serviceAccountName" -}}
-{{- if .Values.serviceAccount.create }}
-{{- default (include "deletion-worker.fullname" .) .Values.serviceAccount.name }}
-{{- else }}
-{{- .Values.serviceAccount.name | default "default" }}
-{{- end }}
-{{- end }}
-
 {{/*
 Return the image to use.
 */}}
