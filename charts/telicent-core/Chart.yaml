@@ -60,7 +60,7 @@ dependencies:
     repository: file://./charts/search-projector
     condition: global.enterprise
   - name: search-ui
-    version: "4.19.7"
+    version: "4.19.8"
     repository: oci://quay.io/telicent/charts/search-ui
     condition: global.enterprise
   - name: traefik-proxy
