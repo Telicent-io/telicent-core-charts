@@ -130,12 +130,6 @@ For Quick Start purposes, a secret named `tc-auth-usr-psql-notifications-project
 | `postgres.username`       | PostgreSQL username                                                                | `""`  |
 | `postgres.password`       | PostgreSQL password                                                                | `""`  |
 
-### Forward Auth Parameters
-
-| Name                         | Description                                                                                                  | Value |
-| ---------------------------- | ------------------------------------------------------------------------------------------------------------ | ----- |
-| `forwardAuth.existingSecret` | Name of an existing secret containing the forward auth header value. The secret must contain 1 key: 'header' | `""`  |
-
 ### ConfigMap Parameters
 
 Contains configuration parameters specific to the *Notifications Projector* application

@@ -89,11 +89,13 @@ spec:
               name: {{ include "apicurio.postgresSecretName" . }}
               key: password
         {{- end }}
+        {{- if .Values.config.oidcTenantEnabled }}
         - name: QUARKUS_OIDC_CLIENT_SECRET
           valueFrom:
             secretKeyRef:
               name: {{ include "apicurio.oidcClientSecretName" . }}
               key: client_secret
+        {{- end }}
         {{- range .Values.extraEnvVars }}
         - name: {{ .name }}
           {{- if .value }}
