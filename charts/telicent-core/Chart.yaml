@@ -49,7 +49,7 @@ dependencies:
     repository: file://./charts/search-ui
     condition: global.enterprise
   - name: graph
-    version: "^0.1.0"
+    version: "^0.2.0"
     repository: file://./charts/graph
   - name: deletion-worker
     version: "^0.2.0"
