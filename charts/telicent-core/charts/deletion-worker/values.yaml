@@ -77,6 +77,7 @@ java:
 #  legacyLabels: true
 
 deletionWorker:
+  # @key deletionWorker.topic Kafka topic for deletion events
   topic: "knowledge"
 #
 # @section ConfigMap Parameters
@@ -306,7 +307,9 @@ service:
 #  # @key hosts.search Search application default host value, as defined by 'service/serviceAccount:port'
 #  search: "search:8080"
 hosts:
+  # @key hosts.enableAutoCorrect Allow for the release name to be automatically pre-fixed to each host value
   enableAutoCorrect: true
+  # @key hosts.traefikProxy Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'
   traefikProxy: "traefik-proxy:8080"
 
 #
