@@ -78,56 +78,55 @@ java:
 
 deletionWorker:
   topic: "knowledge"
-
 #
 # @section ConfigMap Parameters
 #
-  configMap:
+configMap:
   # @key configMap.existingEnvConfigMap Name of existing configmap containing *Graph* Environment Configuration
   # Note: When it's set it will disable configmap creation.
-    existingEnvConfigMap: ""
+  existingEnvConfigMap: ""
   # @key configMap.existingFusekiConfigMap Name of existing configmap containing Fuseki Configuration
   # Note: When it's set it will disable the fuseki configmap creation.
-    existingFusekiConfigMap: ""
+  existingFusekiConfigMap: ""
 
 #
 # @section Common Parameters
 #
 # @key nameOverride String to partially override fullname (will maintain the release name)
-  nameOverride: ""
+nameOverride: ""
 # @key fullnameOverride String to fully override the generated release name
-  fullnameOverride: ""
+fullnameOverride: ""
 # @key namespaceOverride String to fully override all deployed resources namespace
-  namespaceOverride: ""
+namespaceOverride: ""
 # @key commonLabels Add labels to all the deployed resources
-  commonLabels: {}
+commonLabels: {}
 
 #
 # @section Statefulset Parameters
 #
 # @key replicas Number of *Graph* replicas to deploy
-  replicas: 1
+replicas: 1
 # @key revisionHistoryLimit Number of controller revisions to keep
-  revisionHistoryLimit: 5
+revisionHistoryLimit: 5
 
 # @key annotations Add extra annotations to the Statefulset object
-  annotations: {}
+annotations: {}
 # @key podLabels Add extra labels to the *Graph* pod
-  podLabels: {}
+podLabels: {}
 # @key podAnnotations Add extra annotations to the *Graph* pod
-  podAnnotations: {}
+podAnnotations: {}
 # @key extraEnvVars Array with extra environment variables to add to *Graph* pod
 # Example:
 # extraEnvVars:
 # - name: FOO
 #   value: instance
-  extraEnvVars: []
+extraEnvVars: []
 # @key extraVolumes Optionally specify extra list of additional volumes
-  extraVolumes: []
+extraVolumes: []
 # @key extraVolumeMounts Optionally specify extra list of additional volumeMounts
-  extraVolumeMounts: []
+extraVolumeMounts: []
 # @key initContainers Add init containers to the pod
-  initContainers: []
+initContainers: []
 # Example:
 # sidecars:
 # - name: your-image-name
@@ -136,22 +135,22 @@ deletionWorker:
 #   - name: portname
 #     containerPort: 1234
 # @key sidecars Add sidecars to the pod
-  sidecars: []
+sidecars: []
 
 #
 # @section Statefulset Image Parameters
 #
-  image:
+image:
   # @key image.registry *Graph* image registry
-    registry: quay.io
+  registry: quay.io
   # @key image.repository *Graph* image name
-    repository: telicent/scg-deletion-worker
+  repository: telicent/scg-deletion-worker
   # @key image.tag *Graph* image tag. If not set, a tag is generated using the appVersion
-    tag: ""
+  tag: ""
   # @key image.pullPolicy *Graph* image pull policy
-    pullPolicy: IfNotPresent
+  pullPolicy: IfNotPresent
   # @key image.pullSecrets Specify registry secret names as an array
-    pullSecrets: []
+  pullSecrets: []
 
 #
 # @section Statefulset Probe Parameters
@@ -161,28 +160,28 @@ deletionWorker:
 # @key readinessProbe.timeoutSeconds Number of seconds after which the readiness probe times out
 # @key readinessProbe.failureThreshold Number of failures before the pod is marked unready
 # @key readinessProbe.successThreshold Minimum consecutive successes for the probe to be considered successful
-  readinessProbe:
-    initialDelaySeconds: 120
-    periodSeconds: 60
-    timeoutSeconds: 10
-    failureThreshold: 3
-    successThreshold: 1
+readinessProbe:
+  initialDelaySeconds: 120
+  periodSeconds: 60
+  timeoutSeconds: 10
+  failureThreshold: 3
+  successThreshold: 1
 
 # @key livenessProbe.initialDelaySeconds Number of seconds before liveness probe is initiated
 # @key livenessProbe.periodSeconds How often (in seconds) to perform the liveness probe
 # @key livenessProbe.timeoutSeconds Number of seconds after which the liveness probe times out
 # @key livenessProbe.failureThreshold Number of failures before the pod is restarted
-  livenessProbe:
-    initialDelaySeconds: 120
-    periodSeconds: 60
-    timeoutSeconds: 10
-    failureThreshold: 3
+livenessProbe:
+  initialDelaySeconds: 120
+  periodSeconds: 60
+  timeoutSeconds: 10
+  failureThreshold: 3
 
 #
 # @section Statefulset Resources Parameters - Requests and Limits
 #
 # @key resources Resources for *Graph* containers
-  resources: {}
+resources: {}
 #  requests:
 #    # @key resources.requests.cpu Set containers' CPU request
 #    cpu: "1200m"
@@ -197,47 +196,47 @@ deletionWorker:
 #
 # @section Statefulset Security Context Parameters - Default Security Context
 #
-  podSecurityContext:
+podSecurityContext:
   # @key podSecurityContext.runAsUser Set the provisioning pod's Security Context runAsUser User ID
-    runAsUser: 185
+  runAsUser: 185
   # @key podSecurityContext.runAsGroup Set the provisioning pod's Security Context runAsGroup Group ID
-    runAsGroup: 185
+  runAsGroup: 185
   # @key podSecurityContext.runAsNonRoot Set the provisioning pod's Security Context runAsNonRoot
-    runAsNonRoot: true
+  runAsNonRoot: true
   # @key podSecurityContext.fsGroup Set the provisioning pod's Group ID for the mounted volumes' filesystem
-    fsGroup: 185
-    seccompProfile:
+  fsGroup: 185
+  seccompProfile:
     # @key podSecurityContext.seccompProfile.type Set the provisioning pod's Security Context seccomp profile
-      type: RuntimeDefault
-  containerSecurityContext:
+    type: RuntimeDefault
+containerSecurityContext:
   # @key containerSecurityContext.runAsUser Set containers' Security Context runAsUser User ID
-    runAsUser: 185
+  runAsUser: 185
   # @key containerSecurityContext.runAsGroup Set containers' Security Context runAsGroup Group ID
-    runAsGroup: 185
+  runAsGroup: 185
   # @key containerSecurityContext.runAsNonRoot Set container's Security Context runAsNonRoot
-    runAsNonRoot: true
+  runAsNonRoot: true
   # @key containerSecurityContext.allowPrivilegeEscalation Set container's Security Context allowPrivilegeEscalation
-    allowPrivilegeEscalation: false
-    capabilities:
+  allowPrivilegeEscalation: false
+  capabilities:
     # @key containerSecurityContext.capabilities.drop List of capabilities to be dropped
-      drop:
-        - ALL
-    seccompProfile:
+    drop:
+      - ALL
+  seccompProfile:
     # @key containerSecurityContext.seccompProfile.type Set container's Security Context seccomp profile
-      type: RuntimeDefault
+    type: RuntimeDefault
 
 #
 # @section Statefulset Affinity Parameters
 #
 # @key affinity Affinity for pod assignment
 # Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
-  affinity: {}
+affinity: {}
 # @key nodeSelector Node labels for pod assignment
 # Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
-  nodeSelector: {}
+nodeSelector: {}
 # @key tolerations Tolerations for pod assignment
 # Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
-  tolerations: []
+tolerations: []
 
 #
 # @section Persistent Volume Claim Parameters
@@ -257,26 +256,26 @@ deletionWorker:
 #
 # @section Service Account Parameters
 #
-  serviceAccount:
+serviceAccount:
   # @key serviceAccount.create Specifies whether a service account should be created
-    create: true
+  create: true
   # @key serviceAccount.name Name of the ServiceAccount to use. If not set, a name is generated using the fullname
-    name: ""
+  name: ""
   # @key serviceAccount.annotations Additional custom annotations for the ServiceAccount
-    annotations: {}
+  annotations: {}
   # @key serviceAccount.automount Automatically mount a ServiceAccount's API credentials
-    automount: true
+  automount: true
 
 #
 # @section Traffic Exposure Parameters
 #
-  service:
+service:
   # @key service.name *Graph* service name. If not set, a name is generated using the fullname
-    name: ""
+  name: ""
   # @key service.port *Graph* service port
-    port: 8080
+  port: 8080
   # @key service.type *Graph* service type
-    type: ClusterIP
+  type: ClusterIP
 
 #
 # @section Metrics (Prometheus) Exposure Parameters
@@ -306,9 +305,9 @@ deletionWorker:
 #  traefikProxy: "traefik-proxy:8080"
 #  # @key hosts.search Search application default host value, as defined by 'service/serviceAccount:port'
 #  search: "search:8080"
-  hosts:
-    enableAutoCorrect: true
-    traefikProxy: "traefik-proxy:8080"
+hosts:
+  enableAutoCorrect: true
+  traefikProxy: "traefik-proxy:8080"
 
 #
 # @section Host(s) Preview Parameters - Contains host information for applications deployed via *telicent-preview* chart

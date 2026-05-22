@@ -51,6 +51,9 @@ dependencies:
   - name: graph
     version: "^0.1.0"
     repository: file://./charts/graph
+  - name: deletion-worker
+    version: "^0.2.0"
+    repository: file://./charts/deletion-worker
   - name: search
     version: "^0.2.0"
     repository: file://./charts/search
