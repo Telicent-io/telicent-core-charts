@@ -36,6 +36,9 @@ spec:
         - /states/*
         - /typeahead
         - /typeahead/*
+        - /indices
+        - /aggregation-strategies
+        - /aggregation-strategies/*
         - /healthz
         - /healthz/*
         - /version-info
