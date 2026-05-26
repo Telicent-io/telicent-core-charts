@@ -121,6 +121,11 @@
                     "description": "Elastic/OpenSearch index to be used",
                     "default": "search,doc-content"
                 },
+                "labelsIndex": {
+                    "type": "string",
+                    "description": "Elastic/OpenSearch index to store security labels.",
+                    "default": ""
+                },
                 "searchFieldOptions": {
                     "type": "string",
                     "description": "Field options for search",

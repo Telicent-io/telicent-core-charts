@@ -123,6 +123,7 @@ For Quick Start purposes, a secret named `tc-auth-usr-elastic-search` will be cr
 | `elastic.port`                    | Elastic/OpenSearch port number                                                                      | `443`                          |
 | `elastic.opensearchCompatibility` | Enable OpenSearch compatibility                                                                     | `true`                         |
 | `elastic.index`                   | Elastic/OpenSearch index to be used                                                                 | `search,doc-content`           |
+| `elastic.labelsIndex`             | Elastic/OpenSearch index to store security labels.                                                  | `""`                           |
 | `elastic.searchFieldOptions`      | Field options for search                                                                            | `primaryName^2,*`              |
 | `elastic.indexBatchSize`          | Number of documents to index in a single batch operation                                            | `100`                          |
 | `elastic.actionsTopic`            | Topic used to synchronise actions between the *Search Projector* and the *Search API* applications. | `actions`                      |

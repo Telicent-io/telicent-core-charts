@@ -52,11 +52,11 @@ dependencies:
     version: "1.5.4"
     repository: oci://quay.io/telicent/charts/query-ui
   - name: search
-    version: "^0.2.0"
+    version: "^0.2.2"
     repository: file://./charts/search
     condition: global.enterprise
   - name: search-projector
-    version: "^0.2.0"
+    version: "^0.2.2"
     repository: file://./charts/search-projector
     condition: global.enterprise
   - name: search-ui
