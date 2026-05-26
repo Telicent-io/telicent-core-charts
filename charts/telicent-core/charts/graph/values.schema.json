@@ -114,7 +114,7 @@
                 "legacyLabels": {
                     "type": "boolean",
                     "description": "Enable or disable legacy label store format.  When set to false then the new label store format will be used, which allows for more efficient storage and querying of labels.  If a pre-existing store exists in the legacy format it will be automatically migrated forwards to the new format.",
-                    "default": true
+                    "default": false
                 }
             }
         },
