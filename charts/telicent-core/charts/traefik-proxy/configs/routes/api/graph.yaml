@@ -17,6 +17,14 @@ http:
       middleWares:
         - path-graph-graphql
         - host-graph
+    graph-shacl:
+      rule: {{ printf "Host(`%s`) && PathPrefix(`/shacl`)" .Values.global.apiHostDomain }}
+      service: graph
+      entryPoints:
+        - web-api
+      middleWares:
+        - path-graph-shacl
+        - host-graph
   services:
     graph:
       loadBalancer:
@@ -31,6 +39,10 @@ http:
     path-graph-graphql:
       replacePathRegex:
         regex: "^/graphql/(.*)"
+        replacement: "/$1"
+    path-graph-shacl:
+      replacePathRegex:
+        regex: "^/shacl/(.*)"
         replacement: "/$1"
     host-graph:
       headers:
