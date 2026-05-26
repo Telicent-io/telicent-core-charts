@@ -42,7 +42,7 @@ dependencies:
     repository: file://./charts/document-pipeline
     condition: global.enterprise
   - name: graph
-    version: "^0.1.0"
+    version: "^0.2.2"
     repository: file://./charts/graph
   - name: graph-ui
     version: "1.37.3"
