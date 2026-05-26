@@ -305,8 +305,44 @@
                             "description": "A list of confidential client objects",
                             "default": [],
                             "items": {}
+                        },
+                        "notifications": {
+                            "type": "object",
+                            "properties": {
+                                "existingSecret": {
+                                    "type": "string",
+                                    "description": "Name of an existing secret containing the notifications client secret. The secret must contain 1 key: 'client_secret'",
+                                    "default": ""
+                                },
+                                "clientSecret": {
+                                    "type": "string",
+                                    "description": "The notifications API client secret (NOTIFICATIONS_CLIENT_SECRET)",
+                                    "default": ""
+                                }
+                            }
+                        },
+                        "registry": {
+                            "type": "object",
+                            "properties": {
+                                "existingSecret": {
+                                    "type": "string",
+                                    "description": "Name of an existing secret containing the registry client secret. The secret must contain 1 key: 'client_secret'",
+                                    "default": ""
+                                },
+                                "clientSecret": {
+                                    "type": "string",
+                                    "description": "The registry API client secret (REGISTRY_CLIENT_SECRET)",
+                                    "default": ""
+                                }
+                            }
                         }
                     }
+                },
+                "serviceAccounts": {
+                    "type": "array",
+                    "description": "A list of service account objects to seed on startup",
+                    "default": [],
+                    "items": {}
                 },
                 "groups": {
                     "type": "object",
@@ -645,6 +681,11 @@
                     "type": "string",
                     "description": "Notifications application host value, as defined by 'service/serviceAccount:port'",
                     "default": "notifications:8080"
+                },
+                "notificationsProjector": {
+                    "type": "string",
+                    "description": "Notifications Projector application host value, as defined by 'service/serviceAccount:port'",
+                    "default": "notifications-projector:8080"
                 },
                 "apicurio": {
                     "type": "string",

@@ -180,11 +180,15 @@ Note: Only global parameters used within this chart will be listed below.
 
 ### Application Configuration Parameters
 
-| Name                       | Description                                                       | Value   |
-| -------------------------- | ----------------------------------------------------------------- | ------- |
-| `config.oidcTenantEnabled` | Enables or disables Quarkus OIDC tenant authentication            | `false` |
-| `config.oidcClientId`      | is the client ID used to authenticate with the OIDC provider      | `""`    |
-| `config.existingConfigMap` | The name of an existing config map to use instead of creating one | `""`    |
+| Name                          | Description                                                                                                                                    | Value          |
+| ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | -------------- |
+| `config.oidcTenantEnabled`    | Enables or disables Quarkus OIDC tenant authentication                                                                                         | `false`        |
+| `config.oidcClientId`         | is the client ID used to authenticate with the OIDC provider                                                                                   | `""`           |
+| `config.oidcDiscoveryEnabled` | Enables or disables Quarkus OIDC discovery. Disabled by default as the Telicent auth server does not expose a standard OIDC discovery endpoint | `false`        |
+| `config.oidcJwksPath`         | Path to the JWKS endpoint on the auth server, used when oidcDiscoveryEnabled is false                                                          | `/oauth2/jwks` |
+| `config.oidcTokenIssuer`      | Expected issuer in the JWT. When unset, Quarkus defaults to the auth server URL. Set to 'any' to disable issuer validation                     | `""`           |
+| `config.oidcExistingSecret`   | Name of an existing secret containing the OIDC client secret. The secret must contain 1 key: 'client_secret'                                   | `""`           |
+| `config.existingConfigMap`    | The name of an existing config map to use instead of creating one                                                                              | `""`           |
 
 ### Application Parameters - PostgreSQL and Secret
 
@@ -209,6 +213,17 @@ If either of those details changes, you can use this section to correctly refer 
 | `hostsCore.enableAutoCorrect` | Prefix 'global.releaseNameTelicentCore' value to each host value. Alternatively, the host value will be used as it is, without any modification | `true`               |
 | `hostsCore.traefikProxy`      | Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'                                                       | `traefik-proxy:8080` |
 | `hostsCore.auth`              | Auth application default host value, as defined by 'service/serviceAccount:port'                                                                | `auth:8080`          |
+
+### Host(s) Preview Parameters - Contains host information for applications deployed via *telicent-preview* chart
+
+*Apicurio* interacts with applications deployed via *telicent-preview* using their default service/serviceAccount and port.
+If either of those details changes, you can use this section to correctly refer to those applications.
+
+| Name                                  | Description                                                                                                                                        | Value                          |
+| ------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------ |
+| `hostsPreview.enableAutoCorrect`      | Prefix 'global.releaseNameTelicentPreview' value to each host value. Alternatively, the host value will be used as it is, without any modification | `true`                         |
+| `hostsPreview.notifications`          | Notifications application default host value, as defined by 'service/serviceAccount:port'                                                          | `notifications:8080`           |
+| `hostsPreview.notificationsProjector` | Notifications Projector application default host value, as defined by 'service/serviceAccount:port'                                                | `notifications-projector:8080` |
 
 ## License
 

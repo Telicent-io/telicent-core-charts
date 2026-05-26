@@ -308,6 +308,26 @@
                     "description": "is the client ID used to authenticate with the OIDC provider",
                     "default": ""
                 },
+                "oidcDiscoveryEnabled": {
+                    "type": "boolean",
+                    "description": "Enables or disables Quarkus OIDC discovery. Disabled by default as the Telicent auth server does not expose a standard OIDC discovery endpoint",
+                    "default": false
+                },
+                "oidcJwksPath": {
+                    "type": "string",
+                    "description": "Path to the JWKS endpoint on the auth server, used when oidcDiscoveryEnabled is false",
+                    "default": "/oauth2/jwks"
+                },
+                "oidcTokenIssuer": {
+                    "type": "string",
+                    "description": "Expected issuer in the JWT. When unset, Quarkus defaults to the auth server URL. Set to 'any' to disable issuer validation",
+                    "default": ""
+                },
+                "oidcExistingSecret": {
+                    "type": "string",
+                    "description": "Name of an existing secret containing the OIDC client secret. The secret must contain 1 key: 'client_secret'",
+                    "default": ""
+                },
                 "existingConfigMap": {
                     "type": "string",
                     "description": "The name of an existing config map to use instead of creating one",
@@ -357,6 +377,26 @@
                     "type": "string",
                     "description": "Auth application default host value, as defined by 'service/serviceAccount:port'",
                     "default": "auth:8080"
+                }
+            }
+        },
+        "hostsPreview": {
+            "type": "object",
+            "properties": {
+                "enableAutoCorrect": {
+                    "type": "boolean",
+                    "description": "Prefix 'global.releaseNameTelicentPreview' value to each host value. Alternatively, the host value will be used as it is, without any modification",
+                    "default": true
+                },
+                "notifications": {
+                    "type": "string",
+                    "description": "Notifications application default host value, as defined by 'service/serviceAccount:port'",
+                    "default": "notifications:8080"
+                },
+                "notificationsProjector": {
+                    "type": "string",
+                    "description": "Notifications Projector application default host value, as defined by 'service/serviceAccount:port'",
+                    "default": "notifications-projector:8080"
                 }
             }
         }

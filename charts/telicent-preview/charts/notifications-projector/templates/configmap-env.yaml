@@ -23,6 +23,8 @@ data:
   ENABLE_VALIDATION: {{ .Values.validation.enabled | quote }}
   REGISTRY_HOSTNAME: {{ .Values.validation.registry.hostname | quote }}
   REGISTRY_PORT: {{ .Values.validation.registry.port | quote }}
+  AUTH_TOKEN_ENDPOINT: {{ printf "http://%s%s" (include "notifications-projector.hostAuth" .) "/oauth2/token" | quote }}
+  FORWARD_AUTH_ENDPOINT: {{ printf "http://%s%s" (include "notifications-projector.hostAuth" .) "/auth/forward" | quote }}
   {{- end }}
 
   {{- if .Values.metrics.enabled }}
