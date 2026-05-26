@@ -222,7 +222,7 @@ The application settings are defined within the 'java' & 'routes' keys
 | -------------------------------- | ------------------------------------------------------ | ------------------------------------------ |
 | `httpIngester.image.registry`    | *HTTP Ingester* image registry                         | `quay.io`                                  |
 | `httpIngester.image.repository`  | The container image repository for the *HTTP Ingester* | `telicent/telicent-document-http-ingester` |
-| `httpIngester.image.tag`         | The image tag for the *HTTP Ingester*                  | `3.3.4`                                    |
+| `httpIngester.image.tag`         | The image tag for the *HTTP Ingester*                  | `3.4.0`                                    |
 | `httpIngester.image.pullPolicy`  | The image pull policy for the *HTTP Ingester*          | `IfNotPresent`                             |
 | `httpIngester.image.pullSecrets` | Specify registry secret names as an array              | `[]`                                       |
 
@@ -291,7 +291,7 @@ The application settings are defined within the 'topics' key
 | `contentExtractor.sidecars`                 | Add sidecars to the pod.                                                                                                           | `[]`                                           |
 | `contentExtractor.image.registry`           | *Content Extractor* image registry                                                                                                 | `quay.io`                                      |
 | `contentExtractor.image.repository`         | The container image repository for the *Content Extractor*                                                                         | `telicent/telicent-document-content-extractor` |
-| `contentExtractor.image.tag`                | The image tag for the *Content Extractor*                                                                                          | `3.3.4`                                        |
+| `contentExtractor.image.tag`                | The image tag for the *Content Extractor*                                                                                          | `3.4.0`                                        |
 | `contentExtractor.image.pullPolicy`         | The image pull policy for the *Content Extractor*                                                                                  | `IfNotPresent`                                 |
 | `contentExtractor.image.pullSecrets`        | Secrets for pulling an image from a private repository                                                                             | `[]`                                           |
 | `contentExtractor.affinity`                 | Affinity rules for the *Content Extractor* pods                                                                                    | `{}`                                           |
@@ -354,7 +354,7 @@ For Quick Start purposes, a secret named `tc-auth-usr-elastic-document-pipeline-
 | `contentIndexer.image.registry`           | *Content Indexer* image registry                                                                                                 | `quay.io`                                    |
 | `contentIndexer.image.repository`         | The container image repository for the *Content Indexer*                                                                         | `telicent/telicent-document-content-indexer` |
 | `contentIndexer.image.pullPolicy`         | The image pull policy for the *Content Indexer*                                                                                  | `IfNotPresent`                               |
-| `contentIndexer.image.tag`                | The image tag for the *Content Indexer*                                                                                          | `3.3.4`                                      |
+| `contentIndexer.image.tag`                | The image tag for the *Content Indexer*                                                                                          | `3.4.0`                                      |
 | `contentIndexer.image.pullSecrets`        | Secrets for pulling an image from a private repository                                                                           | `[]`                                         |
 | `contentIndexer.affinity`                 | Affinity rules for the *Content Indexer* pods                                                                                    | `{}`                                         |
 | `contentIndexer.nodeSelector`             | Node selector for the *Content Indexer* pods                                                                                     | `{}`                                         |
@@ -402,7 +402,7 @@ The application settings are defined within the 'topics' key
 | `catalogueUpdater.sidecars`                 | Add sidecars to the pod.                                                                                                           | `[]`                                           |
 | `catalogueUpdater.image.registry`           | *Catalogue Updater* image registry                                                                                                 | `quay.io`                                      |
 | `catalogueUpdater.image.repository`         | The container image repository for the *Catalogue Updater*                                                                         | `telicent/telicent-document-catalogue-updater` |
-| `catalogueUpdater.image.tag`                | The image tag for the *Catalogue Updater*                                                                                          | `3.3.4`                                        |
+| `catalogueUpdater.image.tag`                | The image tag for the *Catalogue Updater*                                                                                          | `3.4.0`                                        |
 | `catalogueUpdater.image.pullPolicy`         | The image pull policy for the *Catalogue Updater*                                                                                  | `IfNotPresent`                                 |
 | `catalogueUpdater.image.pullSecrets`        | Secrets for pulling an image from a private repository                                                                             | `[]`                                           |
 | `catalogueUpdater.affinity`                 | Affinity rules for the *Catalogue Updater* pods                                                                                    | `{}`                                           |

@@ -373,7 +373,7 @@
                         "tag": {
                             "type": "string",
                             "description": "The image tag for the *HTTP Ingester*",
-                            "default": "3.3.4"
+                            "default": "3.4.0"
                         },
                         "pullPolicy": {
                             "type": "string",
@@ -540,7 +540,7 @@
                         "tag": {
                             "type": "string",
                             "description": "The image tag for the *Content Extractor*",
-                            "default": "3.3.4"
+                            "default": "3.4.0"
                         },
                         "pullPolicy": {
                             "type": "string",
@@ -732,7 +732,7 @@
                         "tag": {
                             "type": "string",
                             "description": "The image tag for the *Content Indexer*",
-                            "default": "3.3.4"
+                            "default": "3.4.0"
                         },
                         "pullSecrets": {
                             "type": "array",
@@ -889,7 +889,7 @@
                         "tag": {
                             "type": "string",
                             "description": "The image tag for the *Catalogue Updater*",
-                            "default": "3.3.4"
+                            "default": "3.4.0"
                         },
                         "pullPolicy": {
                             "type": "string",
