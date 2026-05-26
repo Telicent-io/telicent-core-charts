@@ -78,6 +78,8 @@ elastic:
   opensearchCompatibility: true
   # @key elastic.index Elastic/OpenSearch index to be used
   index: search,doc-content
+  # @key elastic.labelsIndex Elastic/OpenSearch index to store security labels.
+  labelsIndex: ""
   # @key elastic.searchFieldOptions Field options for search
   # This is a comma-separated list of fields to be used for search, with optional weights
   searchFieldOptions: "primaryName^2,*"

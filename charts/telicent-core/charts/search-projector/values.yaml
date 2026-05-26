@@ -67,7 +67,7 @@ elastic:
   opensearchCompatibility: true
   # @key elastic.index Elastic/OpenSearch index to be used
   index: search
-  # @key elastic.labelsIndex Elastic/OpenSearch index to store security labels.  Not currently usable due to API compatibility issues with RDF-ABAC.
+  # @key elastic.labelsIndex Elastic/OpenSearch index to store security labels.
   labelsIndex: ""
   # @key elastic.topic Topic to consume messages from
   topic: knowledge
