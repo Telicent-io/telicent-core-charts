@@ -117,19 +117,20 @@ The following contains connection details to an Elastic/OpenSearch service, on w
 It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
 For Quick Start purposes, a secret named `tc-auth-usr-elastic-search` will be created if one is not set.
 
-| Name                              | Description                                                                                         | Value                          |
-| --------------------------------- | --------------------------------------------------------------------------------------------------- | ------------------------------ |
-| `elastic.host`                    | Elastic/OpenSearch host                                                                             | `https://your.opensearch.host` |
-| `elastic.port`                    | Elastic/OpenSearch port number                                                                      | `443`                          |
-| `elastic.opensearchCompatibility` | Enable OpenSearch compatibility                                                                     | `true`                         |
-| `elastic.index`                   | Elastic/OpenSearch index to be used                                                                 | `search,doc-content`           |
-| `elastic.labelsIndex`             | Elastic/OpenSearch index to store security labels.                                                  | `""`                           |
-| `elastic.searchFieldOptions`      | Field options for search                                                                            | `primaryName^2,*`              |
-| `elastic.indexBatchSize`          | Number of documents to index in a single batch operation                                            | `100`                          |
-| `elastic.actionsTopic`            | Topic used to synchronise actions between the *Search Projector* and the *Search API* applications. | `actions`                      |
-| `elastic.existingSecret`          | Name of an existing secret. The secret must contain 2 keys: 'username', 'password'                  | `""`                           |
-| `elastic.username`                | OpenSearch/Elastic username                                                                         | `""`                           |
-| `elastic.password`                | OpenSearch/Elastic user password                                                                    | `""`                           |
+| Name                                   | Description                                                                                                                                                    | Value                          |
+| -------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------ |
+| `elastic.host`                         | Elastic/OpenSearch host                                                                                                                                        | `https://your.opensearch.host` |
+| `elastic.port`                         | Elastic/OpenSearch port number                                                                                                                                 | `443`                          |
+| `elastic.opensearchCompatibility`      | Enable OpenSearch compatibility                                                                                                                                | `true`                         |
+| `elastic.index`                        | Elastic/OpenSearch index to be used                                                                                                                            | `search,doc-content`           |
+| `elastic.labelsIndex`                  | Elastic/OpenSearch index to store security labels.                                                                                                             | `""`                           |
+| `elastic.searchFieldOptions`           | Field options for search                                                                                                                                       | `primaryName^2,*`              |
+| `elastic.indexBatchSize`               | Number of documents to index in a single batch operation                                                                                                       | `100`                          |
+| `elastic.actionsTopic`                 | Topic used to synchronise actions between the *Search Projector* and the *Search API* applications.                                                            | `actions`                      |
+| `elastic.writeBackAttributeExpression` | Attribute expression used to determine which attributes should be written back to the index after a search query. By default, all attributes are written back. | `*`                            |
+| `elastic.existingSecret`               | Name of an existing secret. The secret must contain 2 keys: 'username', 'password'                                                                             | `""`                           |
+| `elastic.username`                     | OpenSearch/Elastic username                                                                                                                                    | `""`                           |
+| `elastic.password`                     | OpenSearch/Elastic user password                                                                                                                               | `""`                           |
 
 ### ConfigMap Parameters
 
