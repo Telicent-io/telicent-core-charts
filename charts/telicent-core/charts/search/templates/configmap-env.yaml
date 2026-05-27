@@ -20,13 +20,13 @@ data:
   OPENSEARCH_COMPATIBILITY: {{ .Values.elastic.opensearchCompatibility | quote }}
   ELASTIC_INDEX: {{ .Values.elastic.index | quote }}
   ELASTIC_LABELS_INDEX: {{ .Values.elastic.labelsIndex | quote }}
-  WRITE_BACK_ATTRIBUTE_EXPRESSION: {{ .Values.elastic.writeBackAttributeExpression | quote }}
 
   # Search API Configuration
   FIELD_OPTIONS: {{ .Values.elastic.searchFieldOptions | quote }}
   INDEX_BATCH_SIZE: {{ .Values.elastic.indexBatchSize | quote }}
   JWKS_URL: {{ printf "%s%s%s" "https://" .Values.global.authHostDomain "/oauth2/jwks" | quote }}
   USERINFO_URL: {{ printf "http://%s%s" (include "search.hostAuth" . ) "/userinfo" | quote }}
+  WRITE_BACK_ATTRIBUTE_EXPRESSION: {{ .Values.elastic.writeBackAttributeExpression | quote }}
 
   # Kafka Connection Details
   BOOTSTRAP_SERVERS: {{ .Values.global.kafka.bootstrapServers | quote }}
