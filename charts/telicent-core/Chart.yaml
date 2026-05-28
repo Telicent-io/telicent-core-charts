@@ -32,7 +32,7 @@ appVersion: "1.16.0"
 dependencies:
   - name: admin-ui
     version: "1.5.0"
-    repository: oci://quay.io/telicent/charts/admin-ui
+    repository: oci://quay.io/telicent/charts
     condition: global.enterprise
   - name: auth
     version: "^0.1.0"
@@ -46,11 +46,11 @@ dependencies:
     repository: file://./charts/graph
   - name: graph-ui
     version: "1.37.3"
-    repository: oci://quay.io/telicent/charts/graph-ui
+    repository: oci://quay.io/telicent/charts
     condition: global.enterprise
   - name: query-ui
     version: "1.5.4"
-    repository: oci://quay.io/telicent/charts/query-ui
+    repository: oci://quay.io/telicent/charts
   - name: search
     version: "^0.2.2"
     repository: file://./charts/search
@@ -61,7 +61,7 @@ dependencies:
     condition: global.enterprise
   - name: search-ui
     version: "4.19.8"
-    repository: oci://quay.io/telicent/charts/search-ui
+    repository: oci://quay.io/telicent/charts
     condition: global.enterprise
   - name: traefik-proxy
     version: "^0.1.0"
