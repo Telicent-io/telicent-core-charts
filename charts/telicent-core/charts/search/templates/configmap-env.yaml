@@ -27,6 +27,7 @@ data:
   JWKS_URL: {{ printf "%s%s%s" "https://" .Values.global.authHostDomain "/oauth2/jwks" | quote }}
   USERINFO_URL: {{ printf "http://%s%s" (include "search.hostAuth" . ) "/userinfo" | quote }}
   WRITE_BACK_ATTRIBUTE_EXPRESSION: {{ .Values.elastic.writeBackAttributeExpression | quote }}
+  DEFAULT_REPOSITORY_NAME: {{ .Values.elastic.defaultRepositoryName | quote }}
 
   # Kafka Connection Details
   BOOTSTRAP_SERVERS: {{ .Values.global.kafka.bootstrapServers | quote }}
