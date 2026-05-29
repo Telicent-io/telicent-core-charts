@@ -89,7 +89,9 @@ elastic:
   actionsTopic: actions
   # @key elastic.writeBackAttributeExpression Attribute expression which is evaluated to ascertain access to write-back endpoints
   writeBackAttributeExpression: "!"
-
+  # @key elastic.defaultRepositoryName Proves a default repository which the smart cache search backups will be stored in
+  defaultRepositoryName: ""
+  
   # @key elastic.existingSecret Name of an existing secret. The secret must contain 2 keys: 'username', 'password'
   # Note: Left unset, it will create a secret named: tc-auth-usr-elastic-search
   existingSecret: ""
