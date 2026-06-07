@@ -244,6 +244,10 @@ If either of those details changes, you can use this section to correctly refer 
 If either of those details changes, you can use this section to correctly refer to those applications.
 
 
+*Graph* interacts with applications deployed via *telicent-preview* using their default service/serviceAccount and port.
+If either of those details changes, you can use this section to correctly refer to those applications.
+
+
 ## License
 
 Copyright &copy; 2026 Telicent Limited
