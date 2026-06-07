@@ -116,10 +116,9 @@ Contains Java configuration parameters to be used by the *Graph* application
 
 Contains configuration parameters that configure aspects of the *Graph* application behaviour.
 
-| Name                       | Description                                                                                                                                                                                                                                                                                      | Value   |
-| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------- |
-| `graph.routeToNamedGraphs` | Enable or disable routing to named graphs. When set to true, data will be routed into named graphs based on the Distribution-ID header set on the incoming Kafka events.                                                                                                                         | `false` |
-| `graph.legacyLabels`       | Enable or disable legacy label store format.  When set to false then the new label store format will be used, which allows for more efficient storage and querying of labels.  If a pre-existing store exists in the legacy format it will be automatically migrated forwards to the new format. | `true`  |
+| Name                   | Description                     | Value       |
+| ---------------------- | ------------------------------- | ----------- |
+| `deletionWorker.topic` | Kafka topic for deletion events | `knowledge` |
 
 ### ConfigMap Parameters
 
@@ -154,13 +153,13 @@ Contains configuration parameters that configure aspects of the *Graph* applicat
 
 ### Statefulset Image Parameters
 
-| Name                | Description                                                            | Value                        |
-| ------------------- | ---------------------------------------------------------------------- | ---------------------------- |
-| `image.registry`    | *Graph* image registry                                                 | `quay.io`                    |
-| `image.repository`  | *Graph* image name                                                     | `telicent/smart-cache-graph` |
-| `image.tag`         | *Graph* image tag. If not set, a tag is generated using the appVersion | `""`                         |
-| `image.pullPolicy`  | *Graph* image pull policy                                              | `IfNotPresent`               |
-| `image.pullSecrets` | Specify registry secret names as an array                              | `[]`                         |
+| Name                | Description                                                            | Value                          |
+| ------------------- | ---------------------------------------------------------------------- | ------------------------------ |
+| `image.registry`    | *Graph* image registry                                                 | `quay.io`                      |
+| `image.repository`  | *Graph* image name                                                     | `telicent/scg-deletion-worker` |
+| `image.tag`         | *Graph* image tag. If not set, a tag is generated using the appVersion | `""`                           |
+| `image.pullPolicy`  | *Graph* image pull policy                                              | `IfNotPresent`                 |
+| `image.pullSecrets` | Specify registry secret names as an array                              | `[]`                           |
 
 ### Statefulset Probe Parameters
 
@@ -208,12 +207,6 @@ Contains configuration parameters that configure aspects of the *Graph* applicat
 
 ### Persistent Volume Claim Parameters
 
-| Name                                                 | Description                                   | Value  |
-| ---------------------------------------------------- | --------------------------------------------- | ------ |
-| `persistentVolumeClaims.backupsVolume.size`          | PVC Storage Request for the Backup volume     | `25Gi` |
-| `persistentVolumeClaims.backupsVolume.storageClass`  | PVC Storage Class for the Backup data volume  | `gp3`  |
-| `persistentVolumeClaims.datasetsVolume.size`         | PVC Storage Request for the *Graph* volume    | `25Gi` |
-| `persistentVolumeClaims.datasetsVolume.storageClass` | PVC Storage Class for the *Graph* data volume | `gp3`  |
 
 ### Service Account Parameters
 
@@ -234,34 +227,22 @@ Contains configuration parameters that configure aspects of the *Graph* applicat
 
 ### Metrics (Prometheus) Exposure Parameters
 
-| Name                   | Description                     | Value     |
-| ---------------------- | ------------------------------- | --------- |
-| `metrics.enabled`      | Enable Prometheus metrics       | `true`    |
-| `metrics.service.name` | Name for the Prometheus service | `metrics` |
-| `metrics.service.port` | Port for the Prometheus service | `9464`    |
 
 ### Host(s) Parameters - Contains host information for applications deployed via *telicent-core* chart.
 
 *Graph* interacts directly with other Telicent Applications using their default service/serviceAccount and port.
 If either of those details changes, you can use this section to correctly refer to those applications.
 
-| Name                      | Description                                                                                                                                                                                                                        | Value                |
-| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
-| `hosts.enableAutoCorrect` | Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as is, without any modification. | `true`               |
-| `hosts.auth`              | Auth application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                                   | `auth:8080`          |
-| `hosts.traefikProxy`      | Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                          | `traefik-proxy:8080` |
-| `hosts.search`            | Search application default host value, as defined by 'service/serviceAccount:port'                                                                                                                                                 | `search:8080`        |
+| Name                      | Description                                                                               | Value                |
+| ------------------------- | ----------------------------------------------------------------------------------------- | -------------------- |
+| `hosts.enableAutoCorrect` | Allow for the release name to be automatically pre-fixed to each host value               | `true`               |
+| `hosts.traefikProxy`      | Traefik Proxy application default host value, as defined by 'service/serviceAccount:port' | `traefik-proxy:8080` |
 
 ### Host(s) Preview Parameters - Contains host information for applications deployed via *telicent-preview* chart
 
 *Graph* interacts with applications deployed via *telicent-preview* using their default service/serviceAccount and port.
 If either of those details changes, you can use this section to correctly refer to those applications.
 
-| Name                             | Description                                                                                                                                        | Value                    |
-| -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ |
-| `hostsPreview.enableAutoCorrect` | Prefix 'global.releaseNameTelicentPreview' value to each host value. Alternatively, the host value will be used as it is, without any modification | `true`                   |
-| `hostsPreview.paperbackWriter`   | Paperback Writer application host value, as defined by 'service/serviceAccount:port'                                                               | `paperback-writer:8080`  |
-| `hostsPreview.aiSparqlBuilder`   | AI SPARQL Builder application host value, as defined by 'service/serviceAccount:port'                                                              | `ai-sparql-builder:8080` |
 
 ## License
 

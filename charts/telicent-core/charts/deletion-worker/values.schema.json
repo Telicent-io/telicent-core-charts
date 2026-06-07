@@ -103,18 +103,13 @@
                 }
             }
         },
-        "graph": {
+        "deletionWorker": {
             "type": "object",
             "properties": {
-                "routeToNamedGraphs": {
-                    "type": "boolean",
-                    "description": "Enable or disable routing to named graphs. When set to true, data will be routed into named graphs based on the Distribution-ID header set on the incoming Kafka events.",
-                    "default": false
-                },
-                "legacyLabels": {
-                    "type": "boolean",
-                    "description": "Enable or disable legacy label store format.  When set to false then the new label store format will be used, which allows for more efficient storage and querying of labels.  If a pre-existing store exists in the legacy format it will be automatically migrated forwards to the new format.",
-                    "default": true
+                "topic": {
+                    "type": "string",
+                    "description": "Kafka topic for deletion events",
+                    "default": "knowledge"
                 }
             }
         },
@@ -219,7 +214,7 @@
                 "repository": {
                     "type": "string",
                     "description": "*Graph* image name",
-                    "default": "telicent/smart-cache-graph"
+                    "default": "telicent/scg-deletion-worker"
                 },
                 "tag": {
                     "type": "string",
@@ -400,41 +395,6 @@
             "default": [],
             "items": {}
         },
-        "persistentVolumeClaims": {
-            "type": "object",
-            "properties": {
-                "backupsVolume": {
-                    "type": "object",
-                    "properties": {
-                        "size": {
-                            "type": "string",
-                            "description": "PVC Storage Request for the Backup volume",
-                            "default": "25Gi"
-                        },
-                        "storageClass": {
-                            "type": "string",
-                            "description": "PVC Storage Class for the Backup data volume",
-                            "default": "gp3"
-                        }
-                    }
-                },
-                "datasetsVolume": {
-                    "type": "object",
-                    "properties": {
-                        "size": {
-                            "type": "string",
-                            "description": "PVC Storage Request for the *Graph* volume",
-                            "default": "25Gi"
-                        },
-                        "storageClass": {
-                            "type": "string",
-                            "description": "PVC Storage Class for the *Graph* data volume",
-                            "default": "gp3"
-                        }
-                    }
-                }
-            }
-        },
         "serviceAccount": {
             "type": "object",
             "properties": {
@@ -480,73 +440,18 @@
                 }
             }
         },
-        "metrics": {
-            "type": "object",
-            "properties": {
-                "enabled": {
-                    "type": "boolean",
-                    "description": "Enable Prometheus metrics",
-                    "default": true
-                },
-                "service": {
-                    "type": "object",
-                    "properties": {
-                        "name": {
-                            "type": "string",
-                            "description": "Name for the Prometheus service",
-                            "default": "metrics"
-                        },
-                        "port": {
-                            "type": "number",
-                            "description": "Port for the Prometheus service",
-                            "default": 9464
-                        }
-                    }
-                }
-            }
-        },
         "hosts": {
             "type": "object",
             "properties": {
                 "enableAutoCorrect": {
                     "type": "boolean",
-                    "description": "Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as is, without any modification.",
+                    "description": "Allow for the release name to be automatically pre-fixed to each host value",
                     "default": true
-                },
-                "auth": {
-                    "type": "string",
-                    "description": "Auth application default host value, as defined by 'service/serviceAccount:port'",
-                    "default": "auth:8080"
                 },
                 "traefikProxy": {
                     "type": "string",
                     "description": "Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'",
                     "default": "traefik-proxy:8080"
-                },
-                "search": {
-                    "type": "string",
-                    "description": "Search application default host value, as defined by 'service/serviceAccount:port'",
-                    "default": "search:8080"
-                }
-            }
-        },
-        "hostsPreview": {
-            "type": "object",
-            "properties": {
-                "enableAutoCorrect": {
-                    "type": "boolean",
-                    "description": "Prefix 'global.releaseNameTelicentPreview' value to each host value. Alternatively, the host value will be used as it is, without any modification",
-                    "default": true
-                },
-                "paperbackWriter": {
-                    "type": "string",
-                    "description": "Paperback Writer application host value, as defined by 'service/serviceAccount:port'",
-                    "default": "paperback-writer:8080"
-                },
-                "aiSparqlBuilder": {
-                    "type": "string",
-                    "description": "AI SPARQL Builder application host value, as defined by 'service/serviceAccount:port'",
-                    "default": "ai-sparql-builder:8080"
                 }
             }
         }
