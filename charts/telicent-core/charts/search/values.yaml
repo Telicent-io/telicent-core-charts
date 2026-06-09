@@ -88,7 +88,7 @@ elastic:
   # @key elastic.actionsTopic Topic used to synchronise actions between the *Search Projector* and the *Search API* applications
   actionsTopic: actions
   # @key elastic.writeBackAttributeExpression Attribute expression which is evaluated to ascertain access to write-back endpoints
-  writeBackAttributeExpression: "!"
+  writeBackAttributeExpression: "*"
 
   # @key elastic.existingSecret Name of an existing secret. The secret must contain 2 keys: 'username', 'password'
   # Note: Left unset, it will create a secret named: tc-auth-usr-elastic-search
