@@ -1,10 +1,10 @@
-# Telicent Package for Graph
+# Telicent Package for Deletion Worker
 
-Telicent Graph enables efficient storage, retrieval, and querying of complex relationships, making it ideal for applications that require rapid access to interconnected datasets.
+Telicent SCG Distribution Id Deletion Worker allows for deleting data distributions.
 
 ## Introduction
 
-This chart bootstraps Telicent Graph deployment on a [Kubernetes](https://kubernetes.io) cluster using
+This chart bootstraps Telicent Deletion Worker deployment on a [Kubernetes](https://kubernetes.io) cluster using
 the [Helm](https://helm.sh) package manager.
 
 ## Prerequisites
@@ -112,9 +112,9 @@ Contains Java configuration parameters to be used by the *Graph* application
 | ----------------- | ------------------------------- | --------------------------- |
 | `java.jvmOptions` | JVM options for the application | `-XX:MaxRAMPercentage=80.0` |
 
-### Application Parameters - Graph
+### Application Parameters - Deletion Worker
 
-Contains configuration parameters that configure aspects of the *Graph* application behaviour.
+Contains configuration parameters that configure aspects of the *Deletion Worker* application behaviour.
 
 | Name                   | Description                     | Value       |
 | ---------------------- | ------------------------------- | ----------- |
@@ -230,7 +230,7 @@ Contains configuration parameters that configure aspects of the *Graph* applicat
 
 ### Host(s) Parameters - Contains host information for applications deployed via *telicent-core* chart.
 
-*Graph* interacts directly with other Telicent Applications using their default service/serviceAccount and port.
+*Deletion Worker* interacts directly with other Telicent Applications using their default service/serviceAccount and port.
 If either of those details changes, you can use this section to correctly refer to those applications.
 
 | Name                      | Description                                                                               | Value                |
@@ -240,7 +240,7 @@ If either of those details changes, you can use this section to correctly refer 
 
 ### Host(s) Preview Parameters - Contains host information for applications deployed via *telicent-preview* chart
 
-*Graph* interacts with applications deployed via *telicent-preview* using their default service/serviceAccount and port.
+*Deletion Worker* interacts with applications deployed via *telicent-preview* using their default service/serviceAccount and port.
 If either of those details changes, you can use this section to correctly refer to those applications.
 
 

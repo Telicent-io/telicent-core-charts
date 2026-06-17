@@ -118,7 +118,7 @@
             "properties": {
                 "existingEnvConfigMap": {
                     "type": "string",
-                    "description": "Name of existing configmap containing *Graph* Environment Configuration",
+                    "description": "Name of existing configmap containing *Deletion Worker* Environment Configuration",
                     "default": ""
                 },
                 "existingFusekiConfigMap": {
@@ -150,7 +150,7 @@
         },
         "replicas": {
             "type": "number",
-            "description": "Number of *Graph* replicas to deploy",
+            "description": "Number of *Deletion Worker* replicas to deploy",
             "default": 1
         },
         "revisionHistoryLimit": {
@@ -165,17 +165,17 @@
         },
         "podLabels": {
             "type": "object",
-            "description": "Add extra labels to the *Graph* pod",
+            "description": "Add extra labels to the *Deletion Worker* pod",
             "default": {}
         },
         "podAnnotations": {
             "type": "object",
-            "description": "Add extra annotations to the *Graph* pod",
+            "description": "Add extra annotations to the *Deletion Worker* pod",
             "default": {}
         },
         "extraEnvVars": {
             "type": "array",
-            "description": "Array with extra environment variables to add to *Graph* pod",
+            "description": "Array with extra environment variables to add to *Deletion Worker* pod",
             "default": [],
             "items": {}
         },
@@ -208,22 +208,22 @@
             "properties": {
                 "registry": {
                     "type": "string",
-                    "description": "*Graph* image registry",
+                    "description": "*Deletion Worker* image registry",
                     "default": "quay.io"
                 },
                 "repository": {
                     "type": "string",
-                    "description": "*Graph* image name",
+                    "description": "*Deletion Worker* image name",
                     "default": "telicent/scg-deletion-worker"
                 },
                 "tag": {
                     "type": "string",
-                    "description": "*Graph* image tag. If not set, a tag is generated using the appVersion",
+                    "description": "*Deletion Worker* image tag. If not set, a tag is generated using the appVersion",
                     "default": ""
                 },
                 "pullPolicy": {
                     "type": "string",
-                    "description": "*Graph* image pull policy",
+                    "description": "*Deletion Worker* image pull policy",
                     "default": "IfNotPresent"
                 },
                 "pullSecrets": {
@@ -291,7 +291,7 @@
         },
         "resources": {
             "type": "object",
-            "description": "Resources for *Graph* containers",
+            "description": "Resources for *Deletion Worker* containers",
             "default": {}
         },
         "podSecurityContext": {
@@ -425,17 +425,17 @@
             "properties": {
                 "name": {
                     "type": "string",
-                    "description": "*Graph* service name. If not set, a name is generated using the fullname",
+                    "description": "*Deletion Worker* service name. If not set, a name is generated using the fullname",
                     "default": ""
                 },
                 "port": {
                     "type": "number",
-                    "description": "*Graph* service port",
+                    "description": "*Deletion Worker* service port",
                     "default": 8080
                 },
                 "type": {
                     "type": "string",
-                    "description": "*Graph* service type",
+                    "description": "*Deletion Worker* service type",
                     "default": "ClusterIP"
                 }
             }
