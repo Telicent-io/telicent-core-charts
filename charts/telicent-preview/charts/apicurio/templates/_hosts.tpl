@@ -19,3 +19,13 @@ application relies on. For a full explanation please view '_hosts.tlp' file in t
 {{- define "apicurio.serviceAccountTraefikProxy" -}}
 {{- printf "%s" (include "common.discoverServiceAccountCore" (list . .Values.hostsCore.traefikProxy )) -}}
 {{- end -}}
+
+{{/* notifications | preview - returns serviceAccount */}}
+{{- define "apicurio.serviceAccountNotifications" -}}
+{{- printf "%s" (include "common.discoverServiceAccountPreview" (list . .Values.hostsPreview.notifications )) -}}
+{{- end -}}
+
+{{/* notifications-projector | preview - returns serviceAccount */}}
+{{- define "apicurio.serviceAccountNotificationsProjector" -}}
+{{- printf "%s" (include "common.discoverServiceAccountPreview" (list . .Values.hostsPreview.notificationsProjector )) -}}
+{{- end -}}

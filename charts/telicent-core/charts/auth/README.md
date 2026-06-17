@@ -175,13 +175,18 @@ For Quick Start purposes, a secret named `tc-auth-usr-psql-auth` will be created
 
 Contains configuration to be used to bootstrap a clean instance of the Auth application to a working state.
 
-| Name                                  | Description                                                                                                                                                                           | Value |
-| ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
-| `bootstrap.clients.existingConfigMap` | Name of an existing config map resource containing all required public and confidential clients. If specified, the values for clients.public and clients.confidential will be ignored | `""`  |
-| `bootstrap.clients.public`            | A list of public client objects                                                                                                                                                       | `[]`  |
-| `bootstrap.clients.confidential`      | A list of confidential client objects                                                                                                                                                 | `[]`  |
-| `bootstrap.groups.existingConfigMap`  | Name of an existing config map containing a list of group objects                                                                                                                     | `""`  |
-| `bootstrap.groups.list`               | A list containing group objects                                                                                                                                                       | `[]`  |
+| Name                                             | Description                                                                                                                                                                           | Value |
+| ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| `bootstrap.clients.existingConfigMap`            | Name of an existing config map resource containing all required public and confidential clients. If specified, the values for clients.public and clients.confidential will be ignored | `""`  |
+| `bootstrap.clients.public`                       | A list of public client objects                                                                                                                                                       | `[]`  |
+| `bootstrap.clients.confidential`                 | A list of confidential client objects                                                                                                                                                 | `[]`  |
+| `bootstrap.clients.notifications.existingSecret` | Name of an existing secret containing the notifications client secret. The secret must contain 1 key: 'client_secret'                                                                 | `""`  |
+| `bootstrap.clients.notifications.clientSecret`   | The notifications API client secret (NOTIFICATIONS_CLIENT_SECRET)                                                                                                                     | `""`  |
+| `bootstrap.clients.registry.existingSecret`      | Name of an existing secret containing the registry client secret. The secret must contain 1 key: 'client_secret'                                                                      | `""`  |
+| `bootstrap.clients.registry.clientSecret`        | The registry API client secret (REGISTRY_CLIENT_SECRET)                                                                                                                               | `""`  |
+| `bootstrap.serviceAccounts`                      | A list of service account objects to seed on startup                                                                                                                                  | `[]`  |
+| `bootstrap.groups.existingConfigMap`             | Name of an existing config map containing a list of group objects                                                                                                                     | `""`  |
+| `bootstrap.groups.list`                          | A list containing group objects                                                                                                                                                       | `[]`  |
 
 ### ConfigMap Parameters
 
@@ -287,13 +292,14 @@ If either of those details changes, you can use this section to correctly refer 
 
 Host values will be used as defined in this section, release name cannot be autocorrected, as the release name is unknown.
 
-| Name                             | Description                                                                                                                                        | Value                    |
-| -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ |
-| `hostsPreview.enableAutoCorrect` | Prefix 'global.releaseNameTelicentPreview' value to each host value. Alternatively, the host value will be used as it is, without any modification | `true`                   |
-| `hostsPreview.paperbackWriter`   | Paperback Writer application host value, as defined by 'service/serviceAccount:port'                                                               | `paperback-writer:8080`  |
-| `hostsPreview.aiSparqlBuilder`   | AI SPARQL Builder application host value, as defined by 'service/serviceAccount:port'                                                              | `ai-sparql-builder:8080` |
-| `hostsPreview.notifications`     | Notifications application host value, as defined by 'service/serviceAccount:port'                                                                  | `notifications:8080`     |
-| `hostsPreview.apicurio`          | Apicurio application host value, as defined by 'service/serviceAccount:port'                                                                       | `apicurio:8080`          |
+| Name                                  | Description                                                                                                                                        | Value                          |
+| ------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------ |
+| `hostsPreview.enableAutoCorrect`      | Prefix 'global.releaseNameTelicentPreview' value to each host value. Alternatively, the host value will be used as it is, without any modification | `true`                         |
+| `hostsPreview.paperbackWriter`        | Paperback Writer application host value, as defined by 'service/serviceAccount:port'                                                               | `paperback-writer:8080`        |
+| `hostsPreview.aiSparqlBuilder`        | AI SPARQL Builder application host value, as defined by 'service/serviceAccount:port'                                                              | `ai-sparql-builder:8080`       |
+| `hostsPreview.notifications`          | Notifications application host value, as defined by 'service/serviceAccount:port'                                                                  | `notifications:8080`           |
+| `hostsPreview.notificationsProjector` | Notifications Projector application host value, as defined by 'service/serviceAccount:port'                                                        | `notifications-projector:8080` |
+| `hostsPreview.apicurio`               | Apicurio application host value, as defined by 'service/serviceAccount:port'                                                                       | `apicurio:8080`                |
 
 ## License
 

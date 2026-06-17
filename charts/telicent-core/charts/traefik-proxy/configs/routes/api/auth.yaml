@@ -2,7 +2,7 @@
 http:
   routers:
     auth-admin:
-      rule: {{ printf "Host(`%s`) && PathRegexp(`^/auth/(users|clients|groups|roles|permissions|sessions)`)" .Values.global.apiHostDomain }}
+      rule: {{ printf "Host(`%s`) && PathRegexp(`^/auth/(users|clients|groups|roles|permissions|sessions|service-accounts)`)" .Values.global.apiHostDomain }}
       service: auth
       entryPoints:
         - web-api

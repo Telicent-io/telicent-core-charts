@@ -34,3 +34,10 @@ Create the name of the startup/seed groups config map
 {{- printf "tc-%s-%s" .Chart.Name "groups" }}
 {{- end }}
 {{- end }}
+
+{{/*
+Create the name of the startup/seed service accounts config map
+*/}}
+{{- define "auth.serviceAccountsConfigMapName" -}}
+{{- printf "tc-%s-%s" .Chart.Name "service-accounts" }}
+{{- end }}

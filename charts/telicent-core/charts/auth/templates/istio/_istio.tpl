@@ -62,6 +62,15 @@ Returns the principal used for Notifications traffic by the Istio AuthorizationP
 {{- end -}}
 
 {{/*
+Returns the principal used for Notifications Projector traffic by the Istio AuthorizationPolicy
+*/}}
+{{- define "auth.notificationsProjectorPrincipal" -}}
+{{- if .Values.global.enterprise -}}
+{{- printf "- cluster.local/ns/%s/sa/%s" .Release.Namespace ( include "auth.serviceAccountNotificationsProjector" .) -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
 Returns the principal used for Apicurio traffic by the Istio AuthorizationPolicy
 */}}
 {{- define "auth.apicurioPrincipal" -}}

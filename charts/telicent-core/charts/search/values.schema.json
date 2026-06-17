@@ -121,6 +121,11 @@
                     "description": "Elastic/OpenSearch index to be used",
                     "default": "search,doc-content"
                 },
+                "labelsIndex": {
+                    "type": "string",
+                    "description": "Elastic/OpenSearch index to store security labels",
+                    "default": ""
+                },
                 "searchFieldOptions": {
                     "type": "string",
                     "description": "Field options for search",
@@ -133,8 +138,13 @@
                 },
                 "actionsTopic": {
                     "type": "string",
-                    "description": "Topic used to synchronise actions between the *Search Projector* and the *Search API* applications.",
+                    "description": "Topic used to synchronise actions between the *Search Projector* and the *Search API* applications",
                     "default": "actions"
+                },
+                "writeBackAttributeExpression": {
+                    "type": "string",
+                    "description": "Attribute expression which is evaluated to ascertain access to write-back endpoints",
+                    "default": "!"
                 },
                 "existingSecret": {
                     "type": "string",

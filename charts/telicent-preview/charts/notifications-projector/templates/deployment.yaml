@@ -78,9 +78,15 @@ spec:
               key: password
               name: {{ include "notifications-projector.postgresSecretName" . }}
 
+
         {{- range .Values.extraEnvVars }}
         - name: {{ .name }}
+          {{- if .valueFrom }}
+          valueFrom:
+            {{- toYaml .valueFrom | nindent 12 }}
+          {{- else }}
           value: {{ .value | quote }}
+          {{- end }}
         {{- end }}
         envFrom:
         - configMapRef:

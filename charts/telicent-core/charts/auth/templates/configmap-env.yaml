@@ -15,6 +15,7 @@ data:
   # Startup configuration to be loaded
   APP_SEED_REGISTERED_CLIENT_DATA: "/app/config/startup/clients.yaml"
   APP_SEED_GROUPS_DATA: "/app/config/startup/groups.yaml"
+  APP_SEED_SERVICE_ACCOUNTS_DATA: "/app/config/startup/service-accounts.yaml"
 
   # PostgreSQL
   POSTGRES_URI: {{ .Values.postgresSql.uri | quote }}

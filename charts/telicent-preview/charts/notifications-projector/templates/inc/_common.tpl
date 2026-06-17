@@ -2,13 +2,14 @@
 Copyright (C) 2026 Telicent Limited
 */}}
 
+{{/* Contains common logic shared by the apps, do not modify this file */}}
 {{/* ----------------------------------------------------------------- */}}
 {{/* Returns the service/serviceAccount with or without a release name */}}
 {{- define "common.discoverService" -}}
 {{- $envVal := index . 0 -}}
 {{- $serviceVal := index . 1 -}}
 {{- $name := default $envVal.Chart.Name $envVal.Values.nameOverride -}}
-{{- if or (contains $name $envVal.Release.Name) (eq ($envVal.Values.hostsCore.enableAutoConfigure) false) -}}
+{{- if or (contains $name $envVal.Release.Name) (eq ($envVal.Values.hosts.enableAutoConfigure) false) -}}
 {{- printf "%s" $serviceVal -}}
 {{- else -}}
 {{- printf "%s-%s" $envVal.Release.Name $serviceVal -}}
@@ -18,7 +19,7 @@ Copyright (C) 2026 Telicent Limited
 {{- define "common.discoverHost" -}}
 {{- $envVal := index . 0 -}}
 {{- $hostVal := index . 1 -}}
-{{- if $envVal.Values.hostsCore.enableAutoCorrect -}}
+{{- if $envVal.Values.hosts.enableAutoCorrect -}}
 {{- $name := (index (splitList ":" $hostVal) 0 ) -}}
 {{- $port := (index (splitList ":" $hostVal) 1 ) -}}
 {{- printf "%s.%s:%s" (include "common.discoverService" (list $envVal $name)) $envVal.Release.Namespace $port -}}
@@ -30,7 +31,7 @@ Copyright (C) 2026 Telicent Limited
 {{- $envVal := index . 0 -}}
 {{- $hostVal := index . 1 -}}
 {{- $name := (index (splitList ":" $hostVal) 0 ) -}}
-{{- if $envVal.Values.hostsCore.enableAutoCorrect -}}
+{{- if $envVal.Values.hosts.enableAutoCorrect -}}
 {{- printf "%s" (include "common.discoverService" (list $envVal $name)) -}}
 {{- else -}}
 {{- printf "%s" $name -}}
@@ -60,17 +61,3 @@ Copyright (C) 2026 Telicent Limited
 {{- printf "%s" $name -}}
 {{- end -}}
 {{- end -}}
-
-{{/* -------------------------------------------------------------- */}}
-{{/* Returns the *preview serviceAccount* with or without a release name prefix */}}
-{{- define "common.discoverServiceAccountPreview" -}}
-{{- $envVal := index . 0 -}}
-{{- $hostVal := index . 1 -}}
-{{- $name := (index (splitList ":" $hostVal) 0 ) -}}
-{{- if and $envVal.Values.hostsPreview.enableAutoCorrect $envVal.Values.global.releaseNameTelicentPreview -}}
-{{- printf "%s-%s" $envVal.Values.global.releaseNameTelicentPreview $name -}}
-{{- else -}}
-{{- printf "%s" $name -}}
-{{- end -}}
-{{- end -}}
-

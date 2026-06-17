@@ -137,10 +137,17 @@ podLabels: {}
 # @key podAnnotations Add extra annotations to the *Notifications* pod
 podAnnotations: {}
 # @key extraEnvVars Array with extra environment variables to add to *Notifications* pod
+# Supports both plain values and valueFrom (e.g. secretKeyRef) for injecting secret values.
+# Use valueFrom.secretKeyRef to supply a confidential client secret referenced by client_secret_env_var_name.
 # Example:
 # extraEnvVars:
 # - name: FOO
 #   value: instance
+# - name: CLIENT_1_SECRET
+#   valueFrom:
+#     secretKeyRef:
+#       name: my-k8s-secret
+#       key: client_secret
 extraEnvVars: []
 # @key extraVolumes Optionally specify extra list of additional volumes
 extraVolumes: []

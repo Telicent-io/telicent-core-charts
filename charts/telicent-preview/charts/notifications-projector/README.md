@@ -226,6 +226,16 @@ Contains configuration parameters specific to the *Notifications Projector* appl
 | `metrics.service.name` | Name for the Prometheus service | `metrics` |
 | `metrics.service.port` | Port for the Prometheus service | `9464`    |
 
+### Host(s) Core Parameters - Contains host information for applications deployed via *telicent-core* chart
+
+*Notifications Projector* interacts with applications deployed via *telicent-core* using their default service/serviceAccount and port.
+If either of those details changes, you can use this section to correctly refer to those applications.
+
+| Name                          | Description                                                                                                                                     | Value       |
+| ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `hostsCore.enableAutoCorrect` | Prefix 'global.releaseNameTelicentCore' value to each host value. Alternatively, the host value will be used as it is, without any modification | `true`      |
+| `hostsCore.auth`              | Auth application default host value, as defined by 'service/serviceAccount:port'                                                                | `auth:8080` |
+
 ## License
 
 Copyright &copy; 2026 Telicent Limited
