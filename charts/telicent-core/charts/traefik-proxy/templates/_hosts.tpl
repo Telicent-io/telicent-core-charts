@@ -118,3 +118,11 @@ application relies on. For a full explanation please view '_hosts.tlp' file in t
 {{- define "traefik-proxy.serviceAccountApicurio" -}}
 {{- printf "%s" (include "common.discoverServiceAccountPreview" (list . .Values.hostsPreview.apicurio )) -}}
 {{- end -}}
+
+{{/* deletion-worker - returns host ('service:port') and serviceAccount */}}
+{{- define "traefik-proxy.hostDeletionWorker" -}}
+{{- printf "%s" (include "common.discoverHost" (list . .Values.hosts.deletionWorker )) -}}
+{{- end -}}
+{{- define "traefik-proxy.serviceAccountDeletionWorker" -}}
+{{- printf "%s" (include "common.discoverServiceAccount" (list . .Values.hosts.deletionWorker )) -}}
+{{- end -}}
