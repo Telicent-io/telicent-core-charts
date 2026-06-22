@@ -17,4 +17,4 @@ if [[ "$@" != *"--ci"* ]]; then
 fi
 
 # Run the script, passing through any arguments.
-python "$SCRIPT_PATH" "$@"
+python3 "$SCRIPT_PATH" "$@"
