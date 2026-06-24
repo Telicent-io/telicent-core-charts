@@ -81,7 +81,7 @@ Returns the principal used for Apicurio traffic by the Istio AuthorizationPolicy
 
 
 {{/*
-Returns the principal used for Apicurio traffic by the Istio AuthorizationPolicy
+Returns the principal used for Catalogue API traffic by the Istio AuthorizationPolicy
 */}}
 {{- define "auth.cataloguePrincipal" -}}
 {{- if .Values.global.enterprise -}}

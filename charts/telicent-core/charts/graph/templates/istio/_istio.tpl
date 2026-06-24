@@ -28,7 +28,7 @@ Returns the principal used for AI Sparql Builder traffic by the Istio Authorizat
 {{- end -}}
 
 {{/*
-Returns the principal used for AI Sparql Builder traffic by the Istio AuthorizationPolicy
+Returns the principal used for Catalogue API traffic by the Istio AuthorizationPolicy
 */}}
 {{- define "graph.cataloguePrincipal" -}}
 {{- if .Values.global.enterprise -}}
