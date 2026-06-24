@@ -1,7 +1,7 @@
 # Declare routers / services / middlewares
 http:
   routers:
-    search:
+    catalogue:
       rule: {{ printf "Host(`%s`) && PathPrefix(`/catalogue`)" .Values.global.apiHostDomain }}
       service: catalogue
       entryPoints:
