@@ -274,7 +274,7 @@ If either of those details changes, you can use this section to correctly refer 
 | `hostsPreview.aiSparqlBuilder`   | AI SPARQL Builder application host value, as defined by 'service/serviceAccount:port'                                                              | `ai-sparql-builder:8080` |
 | `hostsPreview.notifications`     | Notifications application default host value, as defined by 'service/serviceAccount:port'                                                          | `notifications:8080`     |
 | `hostsPreview.apicurio`          | Apicurio Registry application default host value, as defined by 'service/serviceAccount:port'                                                      | `apicurio:8080`          |
-| `hostsPreview.catalogue`         | Catalogue API default host value, as defined by 'service/serviceAccount:port'                                                                      | `catalogue:8080`         |
+| `hostsPreview.catalogue`         | Catalogue API default host value, as defined by 'service/serviceAccount:port'                                                                      | `catalogue-api:8080`     |
 
 ## License
 
