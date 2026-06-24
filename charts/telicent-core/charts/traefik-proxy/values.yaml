@@ -337,4 +337,4 @@ hostsPreview:
   # @key hostsPreview.apicurio Apicurio Registry application default host value, as defined by 'service/serviceAccount:port'
   apicurio: "apicurio:8080"
   # @key hostsPreview.catalogue Catalogue API default host value, as defined by 'service/serviceAccount:port'
-  catalogue: "catalogue:8080"
+  catalogue: "catalogue-api:8080"
