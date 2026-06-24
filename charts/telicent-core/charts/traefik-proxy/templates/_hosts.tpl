@@ -87,6 +87,14 @@ application relies on. For a full explanation please view '_hosts.tlp' file in t
 {{- printf "%s" (include "common.discoverServiceAccountPreview" (list . .Values.hostsPreview.dataCatalogUi )) -}}
 {{- end -}}
 
+{{/* catalogue | preview - returns host ('service:port') and serviceAccount */}}
+{{- define "traefik-proxy.hostCatalogue" -}}
+{{- printf "%s" (include "common.discoverHostPreview" (list . .Values.hostsPreview.catalogue )) -}}
+{{- end -}}
+{{- define "traefik-proxy.serviceAccountCatalogue" -}}
+{{- printf "%s" (include "common.discoverServiceAccountPreview" (list . .Values.hostsPreview.catalogue )) -}}
+{{- end -}}
+
 {{/* paperback-writer | preview - returns host ('service:port') and serviceAccount */}}
 {{- define "traefik-proxy.hostPaperbackWriter" -}}
 {{- printf "%s" (include "common.discoverHostPreview" (list . .Values.hostsPreview.paperbackWriter )) -}}

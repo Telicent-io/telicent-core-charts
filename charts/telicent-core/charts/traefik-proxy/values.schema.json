@@ -603,6 +603,11 @@
                     "type": "string",
                     "description": "Apicurio Registry application default host value, as defined by 'service/serviceAccount:port'",
                     "default": "apicurio:8080"
+                },
+                "catalogue": {
+                    "type": "string",
+                    "description": "Catalogue API default host value, as defined by 'service/serviceAccount:port'",
+                    "default": "catalogue:8080"
                 }
             }
         }
