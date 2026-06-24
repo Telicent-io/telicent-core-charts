@@ -607,7 +607,7 @@
                 "catalogue": {
                     "type": "string",
                     "description": "Catalogue API default host value, as defined by 'service/serviceAccount:port'",
-                    "default": "catalogue:8080"
+                    "default": "catalogue-api:8080"
                 }
             }
         }
