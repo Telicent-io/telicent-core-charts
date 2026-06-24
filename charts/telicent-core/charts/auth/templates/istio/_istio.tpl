@@ -78,3 +78,13 @@ Returns the principal used for Apicurio traffic by the Istio AuthorizationPolicy
 {{- printf "- cluster.local/ns/%s/sa/%s" .Release.Namespace ( include "auth.serviceAccountApicurio" .) -}}
 {{- end -}}
 {{- end -}}
+
+
+{{/*
+Returns the principal used for Apicurio traffic by the Istio AuthorizationPolicy
+*/}}
+{{- define "auth.cataloguePrincipal" -}}
+{{- if .Values.global.enterprise -}}
+{{- printf "- cluster.local/ns/%s/sa/%s" .Release.Namespace ( include "auth.serviceAccountCatalogue" .) -}}
+{{- end -}}
+{{- end -}}

@@ -84,3 +84,8 @@ Detailed description of 'discoverHost' & 'discoverServiceAccount' function
 {{- define "auth.serviceAccountApicurio" -}}
 {{- printf "%s" (include "common.discoverServiceAccountPreview" (list . .Values.hostsPreview.apicurio )) -}}
 {{- end -}}
+
+{{/* catalogue | preview - returns serviceAccount */}}
+{{- define "auth.serviceAccountCatalogue" -}}
+{{- printf "%s" (include "common.discoverServiceAccountPreview" (list . .Values.hostsPreview.catalogue )) -}}
+{{- end -}}
