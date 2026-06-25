@@ -691,6 +691,11 @@
                     "type": "string",
                     "description": "Apicurio application host value, as defined by 'service/serviceAccount:port'",
                     "default": "apicurio:8080"
+                },
+                "catalogue": {
+                    "type": "string",
+                    "description": "Catalogue API host value, as defined by 'service/serviceAccount:port'",
+                    "default": "catalogue-api:8080"
                 }
             }
         }

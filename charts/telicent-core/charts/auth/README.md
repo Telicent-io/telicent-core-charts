@@ -300,6 +300,7 @@ Host values will be used as defined in this section, release name cannot be auto
 | `hostsPreview.notifications`          | Notifications application host value, as defined by 'service/serviceAccount:port'                                                                  | `notifications:8080`           |
 | `hostsPreview.notificationsProjector` | Notifications Projector application host value, as defined by 'service/serviceAccount:port'                                                        | `notifications-projector:8080` |
 | `hostsPreview.apicurio`               | Apicurio application host value, as defined by 'service/serviceAccount:port'                                                                       | `apicurio:8080`                |
+| `hostsPreview.catalogue`              | Catalogue API host value, as defined by 'service/serviceAccount:port'                                                                              | `catalogue-api:8080`           |
 
 ## License
 

@@ -441,3 +441,5 @@ hostsPreview:
   notificationsProjector: "notifications-projector:8080"
   # @key hostsPreview.apicurio Apicurio application host value, as defined by 'service/serviceAccount:port'
   apicurio: "apicurio:8080"
+  # @key hostsPreview.catalogue Catalogue API host value, as defined by 'service/serviceAccount:port'
+  catalogue: "catalogue-api:8080"
