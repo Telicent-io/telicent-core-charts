@@ -42,6 +42,22 @@
             "description": "The Istio virtual service host for Keycloak.",
             "default": "auth.127.0.0.1.nip.io"
         },
+        "args": {
+            "type": "array",
+            "description": "Extra arguments to pass to the Keycloak container.",
+            "default": [
+                "--proxy-headers=xforwarded"
+            ],
+            "items": {
+                "type": "string"
+            }
+        },
+        "extraEnvVars": {
+            "type": "array",
+            "description": "Array with extra environment variables to add to the Keycloak container.",
+            "default": [],
+            "items": {}
+        },
         "resources": {
             "type": "object",
             "description": "Set container requests and limits for different resources like CPU or memory.",

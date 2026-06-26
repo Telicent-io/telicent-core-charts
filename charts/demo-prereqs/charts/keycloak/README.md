@@ -12,19 +12,21 @@ This chart provisions a Keycloak instance in an instance of the Telicent demo cl
 
 ### Keycloak Configuration
 
-| Name                       | Description                                                                                                  | Value                         |
-| -------------------------- | ------------------------------------------------------------------------------------------------------------ | ----------------------------- |
-| `enabled`                  | Whether the Keycloak prerequisite should be installed.                                                       | `true`                        |
-| `nameOverride`             | String to partially override fullname (will maintain the release name).                                      | `""`                          |
-| `fullnameOverride`         | String to fully override the generated release name.                                                         | `""`                          |
-| `existingEnvSecret`        | The name of an existing secret containing the admin username and password to use when provisioning Keycloak. | `""`                          |
-| `adminUsername`            | The admin username to use when provisioning Keycloak. Ignored if `existingEnvSecret` is set.                 | `admin`                       |
-| `adminPassword`            | The admin password to use when provisioning Keycloak. Ignored if `existingEnvSecret` is set.                 | `CHANGE-ADMIN-PASSWORD`       |
-| `authGateway`              | The Istio gateway through which ingress to Keycloak must flow.                                               | `istio-system/gateways-authn` |
-| `authHost`                 | The Istio virtual service host for Keycloak.                                                                 | `auth.127.0.0.1.nip.io`       |
-| `resources`                | Set container requests and limits for different resources like CPU or memory.                                | `{}`                          |
-| `revisionHistoryLimit`     | Number of controller revisions to keep                                                                       | `3`                           |
-| `containerSecurityContext` | Container security context settings to apply to Keycloak containers.                                         | `{}`                          |
+| Name                       | Description                                                                                                  | Value                            |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------ | -------------------------------- |
+| `enabled`                  | Whether the Keycloak prerequisite should be installed.                                                       | `true`                           |
+| `nameOverride`             | String to partially override fullname (will maintain the release name).                                      | `""`                             |
+| `fullnameOverride`         | String to fully override the generated release name.                                                         | `""`                             |
+| `existingEnvSecret`        | The name of an existing secret containing the admin username and password to use when provisioning Keycloak. | `""`                             |
+| `adminUsername`            | The admin username to use when provisioning Keycloak. Ignored if `existingEnvSecret` is set.                 | `admin`                          |
+| `adminPassword`            | The admin password to use when provisioning Keycloak. Ignored if `existingEnvSecret` is set.                 | `CHANGE-ADMIN-PASSWORD`          |
+| `authGateway`              | The Istio gateway through which ingress to Keycloak must flow.                                               | `istio-system/gateways-authn`    |
+| `authHost`                 | The Istio virtual service host for Keycloak.                                                                 | `auth.127.0.0.1.nip.io`          |
+| `args`                     | Extra arguments to pass to the Keycloak container.                                                           | `["--proxy-headers=xforwarded"]` |
+| `extraEnvVars`             | Array with extra environment variables to add to the Keycloak container.                                     | `[]`                             |
+| `resources`                | Set container requests and limits for different resources like CPU or memory.                                | `{}`                             |
+| `revisionHistoryLimit`     | Number of controller revisions to keep                                                                       | `3`                              |
+| `containerSecurityContext` | Container security context settings to apply to Keycloak containers.                                         | `{}`                             |
 
 ### Database Volume Configuration
 
