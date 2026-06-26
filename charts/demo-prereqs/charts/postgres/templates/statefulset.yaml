@@ -10,8 +10,6 @@ metadata:
     {{- include "demo-prereqs-postgres.labels" . | nindent 4 }}
 spec:
   replicas: 1
-  strategy:
-    type: Recreate
   selector:
     matchLabels:
       {{- include "demo-prereqs-postgres.selectorLabels" . | nindent 6 }}
