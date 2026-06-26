@@ -126,6 +126,12 @@ auth:
   namespace: tc-core-dev
   # @key auth.serviceAccountName Service account name allowed to connect to PostgreSQL
   serviceAccountName: telicent-core-auth
+  # @key auth.dbUser Database role created for the auth database
+  dbUser: auth
+  # @key auth.dbPassword Password for the auth database role (ignored if existingSecret is set)
+  dbPassword: auth
+  # @key auth.existingSecretPasswordKey Key in the existing secret containing the auth db password
+  existingSecretPasswordKey: auth-db-password
 
 # @section User Preferences
 # @descStart
@@ -138,3 +144,9 @@ userPreferences:
   namespace: tc-core-dev
   # @key userPreferences.serviceAccountName Service account name allowed to connect to PostgreSQL
   serviceAccountName: telicent-core-user-preferences
+  # @key userPreferences.dbUser Database role created for the user_preferences database
+  dbUser: user_preferences
+  # @key userPreferences.dbPassword Password for the user_preferences database role (ignored if existingSecret is set)
+  dbPassword: user_preferences
+  # @key userPreferences.existingSecretPasswordKey Key in the existing secret containing the user_preferences db password
+  existingSecretPasswordKey: user-prefs-db-password

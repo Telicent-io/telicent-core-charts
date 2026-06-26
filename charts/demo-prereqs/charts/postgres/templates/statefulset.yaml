@@ -60,6 +60,20 @@ spec:
                   key: {{ include "demo-prereqs-postgres.secretPasswordKey" . }}
             - name: PGDATA
               value: /var/lib/postgresql/data/pgdata
+            - name: AUTH_DB_USER
+              value: {{ .Values.auth.dbUser | quote }}
+            - name: AUTH_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "demo-prereqs-postgres.secretName" . }}
+                  key: {{ include "demo-prereqs-postgres.authSecretPasswordKey" . }}
+            - name: USER_PREFS_DB_USER
+              value: {{ .Values.userPreferences.dbUser | quote }}
+            - name: USER_PREFS_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "demo-prereqs-postgres.secretName" . }}
+                  key: {{ include "demo-prereqs-postgres.userPreferencesSecretPasswordKey" . }}
             {{- with .Values.postgres.extraEnv }}
             {{- toYaml . | nindent 12 }}
             {{- end }}
