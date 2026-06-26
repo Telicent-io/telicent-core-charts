@@ -22,7 +22,7 @@ This chart provisions a Keycloak instance in an instance of the Telicent demo cl
 | `adminPassword`            | The admin password to use when provisioning Keycloak. Ignored if `existingEnvSecret` is set.                 | `CHANGE-ADMIN-PASSWORD`          |
 | `authGateway`              | The Istio gateway through which ingress to Keycloak must flow.                                               | `istio-system/gateways-authn`    |
 | `authHost`                 | The Istio virtual service host for Keycloak.                                                                 | `auth.127.0.0.1.nip.io`          |
-| `args`                     | Extra arguments to pass to the Keycloak container.                                                           | `["--proxy-headers=xforwarded"]` |
+| `extraArgs`                | Extra arguments to pass to the Keycloak container.                                                           | `["--proxy-headers=xforwarded"]` |
 | `extraEnvVars`             | Array with extra environment variables to add to the Keycloak container.                                     | `[]`                             |
 | `resources`                | Set container requests and limits for different resources like CPU or memory.                                | `{}`                             |
 | `revisionHistoryLimit`     | Number of controller revisions to keep                                                                       | `3`                              |

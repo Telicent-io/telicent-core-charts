@@ -30,7 +30,7 @@ spec:
         - --http-enabled=true
         - --hostname={{ .Values.authHost }}
         - --hostname-strict=false
-        {{- range .Values.args }}
+        {{- range .Values.extraArgs }}
         - {{ . | quote }}
         {{- end }}
         env:

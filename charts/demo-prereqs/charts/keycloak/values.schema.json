@@ -42,7 +42,7 @@
             "description": "The Istio virtual service host for Keycloak.",
             "default": "auth.127.0.0.1.nip.io"
         },
-        "args": {
+        "extraArgs": {
             "type": "array",
             "description": "Extra arguments to pass to the Keycloak container.",
             "default": [
