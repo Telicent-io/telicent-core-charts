@@ -1,0 +1,25 @@
+{{/*
+Copyright (C) 2025-2026 Telicent Limited
+*/}}
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "keycloak-realm.fullname" . }}-realms
+  labels:
+    {{- include "keycloak-realm.labels" . | nindent 4 }}
+  {{- if .Values.job.useHelmHooks }}
+  annotations:
+    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook-weight": "-5"
+    "helm.sh/hook-delete-policy": before-hook-creation
+  {{- end }}
+data:
+  {{- $files := .Files.Glob "realms/*.json" }}
+  {{- if not $files }}
+  {{- fail "No realm files found under realms/*.json" }}
+  {{- end }}
+  {{- range $path, $_ := $files }}
+  {{ base $path }}: |-
+{{ $.Files.Get $path | indent 4 }}
+  {{- end }}

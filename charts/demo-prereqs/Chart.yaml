@@ -29,6 +29,10 @@ dependencies:
     version: "^0.x"
     repository: file://./charts/keycloak
     condition: keycloak.enabled
+  - name: keycloak-realm
+    version: "^0.x"
+    repository: file://./charts/keycloak-realm
+    condition: keycloak-realm.enabled
   - name: opensearch
     version: "^0.x"
     repository: file://./charts/opensearch

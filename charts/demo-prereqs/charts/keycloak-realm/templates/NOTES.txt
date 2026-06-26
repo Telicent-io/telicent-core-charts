@@ -1,0 +1,24 @@
+{{ include "keycloak-realm.fullname" . }} has been deployed.
+
+A Job ({{ include "keycloak-realm.fullname" . }}) runs keycloak-config-cli to
+create or update the following realm(s) against Keycloak at:
+
+  {{ .Values.keycloak.url }}
+
+Realm files bundled in this release:
+{{- range $path, $_ := .Files.Glob "realms/*.json" }}
+  - {{ base $path }}
+{{- end }}
+
+Admin credentials are read from Secret "{{ .Values.keycloak.existingSecret }}"
+(keys: {{ .Values.keycloak.usernameKey }} / {{ .Values.keycloak.passwordKey }}) in
+namespace "{{ .Release.Namespace }}".
+
+Check progress with:
+
+  kubectl -n {{ .Release.Namespace }} logs job/{{ include "keycloak-realm.fullname" . }}
+{{- if .Values.job.useHelmHooks }}
+
+The Job runs as a post-install/post-upgrade Helm hook, so realms are reconciled
+on every `helm install` and `helm upgrade`.
+{{- end }}

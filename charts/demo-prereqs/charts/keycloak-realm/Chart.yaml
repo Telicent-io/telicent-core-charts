@@ -1,0 +1,11 @@
+apiVersion: v2
+name: keycloak-realm
+description: Creates or updates Keycloak realms via a keycloak-config-cli Job.
+type: application
+version: 0.1.0
+# appVersion tracks the keycloak-config-cli release used by the default image tag.
+appVersion: "6.5.1"
+icon: "https://avatars.githubusercontent.com/u/65304240?s=200&v=4"
+maintainers:
+  - name: telicent
+    url: https://github.com/Telicent-IO

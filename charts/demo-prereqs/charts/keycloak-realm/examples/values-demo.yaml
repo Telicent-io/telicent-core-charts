@@ -1,0 +1,34 @@
+# Example per-cluster values for the keycloak-realm chart.
+#
+# The bundled realms/core.json uses keycloak-config-cli variable substitution
+# ($(env:VAR)) for everything that differs between clusters: the dev-apps client
+# secret and the ingress hosts. varSubstitution is enabled by default, so every
+# referenced variable below MUST be provided or the import fails fast with
+# "Cannot resolve variable ...".
+#
+# Usage:
+#   helm upgrade --install keycloak-realm . -n tc-system-dev -f examples/values-demo.yaml
+
+configCli:
+  # Already true by default; shown here for clarity.
+  varSubstitution: true
+
+  extraEnv:
+    # --- Client secret (sensitive): sourced from an existing Secret -----------
+    # Container env name matches the $(env:...) placeholder in core.json; the
+    # Secret key happens to share the same name here, but they need not match.
+    - name: CORE_REALM_DEV_APPS_CLIENT_SECRET
+      valueFrom:
+        secretKeyRef:
+          name: keycloak-env
+          key: CORE_REALM_DEV_APPS_CLIENT_SECRET
+
+    # --- Ingress hosts (not sensitive): plain values --------------------------
+    - name: APPS_HOST
+      value: apps.13.41.28.169.nip.io
+    - name: AUTH_HOST
+      value: auth.13.41.28.169.nip.io
+    - name: KAFKA_UI_HOST
+      value: kafka-ui.13.41.28.169.nip.io
+    - name: IDP_HOST
+      value: idp.13.41.28.169.nip.io

@@ -1,0 +1,21 @@
+{
+  "realm": "analytics",
+  "enabled": true,
+  "clients": [
+    {
+      "clientId": "analytics-api",
+      "enabled": true,
+      "publicClient": false,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "$(env:ANALYTICS_REALM_API_CLIENT_SECRET)",
+      "standardFlowEnabled": true,
+      "directAccessGrantsEnabled": true,
+      "redirectUris": [
+        "https://$(env:ANALYTICS_HOST)/oauth2/callback"
+      ],
+      "webOrigins": [
+        "https://$(env:ANALYTICS_HOST)"
+      ]
+    }
+  ]
+}

@@ -11,11 +11,14 @@ dependencies:
 - name: keycloak
   repository: file://./charts/keycloak
   version: 0.2.1
+- name: keycloak-realm
+  repository: file://./charts/keycloak-realm
+  version: 0.1.0
 - name: opensearch
   repository: file://./charts/opensearch
   version: 0.0.1
 - name: postgres
   repository: file://./charts/postgres
   version: 0.3.2
-digest: sha256:4caee9f8b2a8917de9a942419e83165e547c93745ce8de3e16aeca17ff9d53ab
-generated: "2026-04-10T15:31:04.124521+01:00"
+digest: sha256:08d51f564935d28091764418d598e4d7a242a620082028012dc64e2c53df7a3f
+generated: "2026-06-26T16:29:02.496142+01:00"

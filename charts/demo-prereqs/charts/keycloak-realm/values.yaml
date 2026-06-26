@@ -1,0 +1,92 @@
+# @section Common
+# @key enabled Whether the Keycloak realm provisioning Job should be installed.
+enabled: true
+# @key nameOverride String to partially override the generated fullname.
+nameOverride: ""
+# @key fullnameOverride String to fully override the generated fullname.
+fullnameOverride: ""
+
+# @section Keycloak Connection
+keycloak:
+  # @key keycloak.url Base URL of the Keycloak instance to configure. Defaults to the in-cluster service.
+  url: "http://keycloak:8080"
+  # @key keycloak.loginRealm The realm to authenticate the admin user against.
+  loginRealm: master
+  # @key keycloak.existingSecret Name of an existing Secret (in this release's namespace) holding the admin credentials.
+  existingSecret: keycloak-env
+  # @key keycloak.usernameKey Key within the existing Secret that holds the admin username.
+  usernameKey: KC_BOOTSTRAP_ADMIN_USERNAME
+  # @key keycloak.passwordKey Key within the existing Secret that holds the admin password.
+  passwordKey: KC_BOOTSTRAP_ADMIN_PASSWORD
+
+# @section Image
+image:
+  # @key image.repository keycloak-config-cli image repository.
+  repository: adorsys/keycloak-config-cli
+  # @key image.tag Image tag. Adorsys publishes only Keycloak-suffixed tags (e.g. "6.5.1-26" or "6.5.1-26.1.0"); set to match the target Keycloak version.
+  tag: "6.5.1-26"
+  # @key image.pullPolicy Image pull policy.
+  pullPolicy: IfNotPresent
+# @key imagePullSecrets Secrets for pulling the image from a private registry.
+imagePullSecrets: []
+
+# @section keycloak-config-cli Behaviour
+configCli:
+  # @key configCli.varSubstitution Enable variable substitution (e.g. $(env:VAR)) within realm files. The bundled core.json relies on this; every referenced variable must be supplied via configCli.extraEnv.
+  varSubstitution: true
+  # @key configCli.importValidate Validate realm files before importing.
+  importValidate: true
+  availabilityCheck:
+    # @key configCli.availabilityCheck.enabled Wait for Keycloak to be reachable before importing.
+    enabled: true
+    # @key configCli.availabilityCheck.timeout How long to wait for Keycloak availability.
+    timeout: 120s
+  # @key configCli.logLevel Optional log level for keycloak-config-cli (e.g. info, debug). Empty uses the image default.
+  logLevel: ""
+  # @key configCli.extraEnv Additional environment variables to pass to the container.
+  extraEnv: []
+
+# @section Job
+job:
+  # @key job.useHelmHooks Run the Job as a post-install/post-upgrade Helm hook so realms are reconciled on every release.
+  useHelmHooks: true
+  # @key job.backoffLimit Number of retries before the Job is considered failed.
+  backoffLimit: 3
+  # @key job.activeDeadlineSeconds Maximum duration the Job may run before being terminated.
+  activeDeadlineSeconds: 600
+  # ttlSecondsAfterFinished is unset by default (completed Jobs are removed by the
+  # next hook run). Set it (e.g. --set job.ttlSecondsAfterFinished=600) to have the
+  # TTL controller auto-delete finished Jobs after the given number of seconds.
+  # @key job.restartPolicy Pod restart policy for the Job.
+  restartPolicy: Never
+  # @key job.annotations Additional annotations to add to the Job.
+  annotations: {}
+  # @key job.labels Additional labels to add to the Job.
+  labels: {}
+
+# @section Service Account
+serviceAccount:
+  # @key serviceAccount.create Whether to create a ServiceAccount for the Job.
+  create: true
+  # @key serviceAccount.name Name of the ServiceAccount to use. Generated from the fullname when empty.
+  name: ""
+  # @key serviceAccount.annotations Additional ServiceAccount annotations.
+  annotations: {}
+
+# @section Pod
+# @key podAnnotations Additional annotations for the Job pod.
+podAnnotations: {}
+# @key podLabels Additional labels for the Job pod.
+podLabels: {}
+# @key podSecurityContext Pod-level security context for the Job pod.
+podSecurityContext: {}
+# @key securityContext Container-level security context for the keycloak-config-cli container.
+securityContext: {}
+# @key resources Resource requests and limits for the container.
+resources: {}
+# @key nodeSelector Node selector for scheduling the Job pod.
+nodeSelector: {}
+# @key tolerations Tolerations for scheduling the Job pod.
+tolerations: []
+# @key affinity Affinity rules for scheduling the Job pod.
+affinity: {}

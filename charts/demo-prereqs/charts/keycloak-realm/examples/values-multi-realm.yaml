@@ -1,0 +1,44 @@
+# Example: managing more than one realm, each with its own client secret and host.
+#
+# To add the realm, copy the example realm file into the chart's realms/ directory
+# so it gets picked up by the glob:
+#   cp examples/realms/analytics.json realms/
+#
+# Then supply this realm's variables alongside the core realm's. extraEnv is a
+# single flat list covering every realm/client in realms/, so just append the new
+# entries. Every $(env:...) referenced by any realm file must resolve.
+#
+# Usage:
+#   helm upgrade --install keycloak-realm . -n tc-system-dev -f examples/values-multi-realm.yaml
+
+configCli:
+  varSubstitution: true
+
+  extraEnv:
+    # --- core realm (realms/core.json) ----------------------------------------
+    - name: CORE_REALM_DEV_APPS_CLIENT_SECRET
+      valueFrom:
+        secretKeyRef:
+          name: keycloak-env
+          key: CORE_REALM_DEV_APPS_CLIENT_SECRET
+    - name: APPS_HOST
+      value: apps.13.41.28.169.nip.io
+    - name: AUTH_HOST
+      value: auth.13.41.28.169.nip.io
+    - name: KAFKA_UI_HOST
+      value: kafka-ui.13.41.28.169.nip.io
+    - name: IDP_HOST
+      value: idp.13.41.28.169.nip.io
+
+    # --- analytics realm (realms/analytics.json) ------------------------------
+    # Each client gets its own secret env var (names are container-global, so keep
+    # them unique). Mirrors the core entry above: env var name == secretKeyRef.key.
+    # secretKeyRef.name is the Secret object holding the value (reuse keycloak-env,
+    # or point at a dedicated Secret per realm — your choice).
+    - name: ANALYTICS_REALM_API_CLIENT_SECRET
+      valueFrom:
+        secretKeyRef:
+          name: keycloak-env
+          key: ANALYTICS_REALM_API_CLIENT_SECRET
+    - name: ANALYTICS_HOST
+      value: analytics.13.41.28.169.nip.io

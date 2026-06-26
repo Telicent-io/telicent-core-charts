@@ -1,0 +1,214 @@
+{
+    "title": "Chart Values",
+    "type": "object",
+    "properties": {
+        "enabled": {
+            "type": "boolean",
+            "description": "Whether the Keycloak realm provisioning Job should be installed.",
+            "default": true
+        },
+        "nameOverride": {
+            "type": "string",
+            "description": "String to partially override the generated fullname.",
+            "default": ""
+        },
+        "fullnameOverride": {
+            "type": "string",
+            "description": "String to fully override the generated fullname.",
+            "default": ""
+        },
+        "keycloak": {
+            "type": "object",
+            "properties": {
+                "url": {
+                    "type": "string",
+                    "description": "Base URL of the Keycloak instance to configure. Defaults to the in-cluster service.",
+                    "default": "http://keycloak:8080"
+                },
+                "loginRealm": {
+                    "type": "string",
+                    "description": "The realm to authenticate the admin user against.",
+                    "default": "master"
+                },
+                "existingSecret": {
+                    "type": "string",
+                    "description": "Name of an existing Secret (in this release's namespace) holding the admin credentials.",
+                    "default": "keycloak-env"
+                },
+                "usernameKey": {
+                    "type": "string",
+                    "description": "Key within the existing Secret that holds the admin username.",
+                    "default": "KC_BOOTSTRAP_ADMIN_USERNAME"
+                },
+                "passwordKey": {
+                    "type": "string",
+                    "description": "Key within the existing Secret that holds the admin password.",
+                    "default": "KC_BOOTSTRAP_ADMIN_PASSWORD"
+                }
+            }
+        },
+        "image": {
+            "type": "object",
+            "properties": {
+                "repository": {
+                    "type": "string",
+                    "description": "keycloak-config-cli image repository.",
+                    "default": "adorsys/keycloak-config-cli"
+                },
+                "tag": {
+                    "type": "string",
+                    "description": "Image tag. Adorsys publishes only Keycloak-suffixed tags (e.g. \"6.5.1-26\" or \"6.5.1-26.1.0\"); set to match the target Keycloak version.",
+                    "default": "6.5.1-26"
+                },
+                "pullPolicy": {
+                    "type": "string",
+                    "description": "Image pull policy.",
+                    "default": "IfNotPresent"
+                }
+            }
+        },
+        "imagePullSecrets": {
+            "type": "array",
+            "description": "Secrets for pulling the image from a private registry.",
+            "default": [],
+            "items": {}
+        },
+        "configCli": {
+            "type": "object",
+            "properties": {
+                "varSubstitution": {
+                    "type": "boolean",
+                    "description": "Enable variable substitution (e.g. $(env:VAR)) within realm files. The bundled core.json relies on this; every referenced variable must be supplied via configCli.extraEnv.",
+                    "default": true
+                },
+                "importValidate": {
+                    "type": "boolean",
+                    "description": "Validate realm files before importing.",
+                    "default": true
+                },
+                "availabilityCheck": {
+                    "type": "object",
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean",
+                            "description": "Wait for Keycloak to be reachable before importing.",
+                            "default": true
+                        },
+                        "timeout": {
+                            "type": "string",
+                            "description": "How long to wait for Keycloak availability.",
+                            "default": "120s"
+                        }
+                    }
+                },
+                "logLevel": {
+                    "type": "string",
+                    "description": "Optional log level for keycloak-config-cli (e.g. info, debug). Empty uses the image default.",
+                    "default": ""
+                },
+                "extraEnv": {
+                    "type": "array",
+                    "description": "Additional environment variables to pass to the container.",
+                    "default": [],
+                    "items": {}
+                }
+            }
+        },
+        "job": {
+            "type": "object",
+            "properties": {
+                "useHelmHooks": {
+                    "type": "boolean",
+                    "description": "Run the Job as a post-install/post-upgrade Helm hook so realms are reconciled on every release.",
+                    "default": true
+                },
+                "backoffLimit": {
+                    "type": "number",
+                    "description": "Number of retries before the Job is considered failed.",
+                    "default": 3
+                },
+                "activeDeadlineSeconds": {
+                    "type": "number",
+                    "description": "Maximum duration the Job may run before being terminated.",
+                    "default": 600
+                },
+                "restartPolicy": {
+                    "type": "string",
+                    "description": "Pod restart policy for the Job.",
+                    "default": "Never"
+                },
+                "annotations": {
+                    "type": "object",
+                    "description": "Additional annotations to add to the Job.",
+                    "default": {}
+                },
+                "labels": {
+                    "type": "object",
+                    "description": "Additional labels to add to the Job.",
+                    "default": {}
+                }
+            }
+        },
+        "serviceAccount": {
+            "type": "object",
+            "properties": {
+                "create": {
+                    "type": "boolean",
+                    "description": "Whether to create a ServiceAccount for the Job.",
+                    "default": true
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of the ServiceAccount to use. Generated from the fullname when empty.",
+                    "default": ""
+                },
+                "annotations": {
+                    "type": "object",
+                    "description": "Additional ServiceAccount annotations.",
+                    "default": {}
+                }
+            }
+        },
+        "podAnnotations": {
+            "type": "object",
+            "description": "Additional annotations for the Job pod.",
+            "default": {}
+        },
+        "podLabels": {
+            "type": "object",
+            "description": "Additional labels for the Job pod.",
+            "default": {}
+        },
+        "podSecurityContext": {
+            "type": "object",
+            "description": "Pod-level security context for the Job pod.",
+            "default": {}
+        },
+        "securityContext": {
+            "type": "object",
+            "description": "Container-level security context for the keycloak-config-cli container.",
+            "default": {}
+        },
+        "resources": {
+            "type": "object",
+            "description": "Resource requests and limits for the container.",
+            "default": {}
+        },
+        "nodeSelector": {
+            "type": "object",
+            "description": "Node selector for scheduling the Job pod.",
+            "default": {}
+        },
+        "tolerations": {
+            "type": "array",
+            "description": "Tolerations for scheduling the Job pod.",
+            "default": [],
+            "items": {}
+        },
+        "affinity": {
+            "type": "object",
+            "description": "Affinity rules for scheduling the Job pod.",
+            "default": {}
+        }
+    }
+}
