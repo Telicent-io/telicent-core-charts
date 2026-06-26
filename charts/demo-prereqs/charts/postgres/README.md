@@ -112,21 +112,27 @@ Service account configuration
 
 Authentication configuration for Istio AuthorizationPolicy
 
-| Name                      | Description                                                 | Value                |
-| ------------------------- | ----------------------------------------------------------- | -------------------- |
-| `auth.enabled`            | Enable Istio AuthorizationPolicy for PostgreSQL connections | `true`               |
-| `auth.namespace`          | Namespace of the service account allowed to connect         | `tc-core-dev`        |
-| `auth.serviceAccountName` | Service account name allowed to connect to PostgreSQL       | `telicent-core-auth` |
+| Name                             | Description                                                            | Value                |
+| -------------------------------- | ---------------------------------------------------------------------- | -------------------- |
+| `auth.enabled`                   | Enable Istio AuthorizationPolicy for PostgreSQL connections            | `true`               |
+| `auth.namespace`                 | Namespace of the service account allowed to connect                    | `tc-core-dev`        |
+| `auth.serviceAccountName`        | Service account name allowed to connect to PostgreSQL                  | `telicent-core-auth` |
+| `auth.dbUser`                    | Database role created for the auth database                            | `auth`               |
+| `auth.dbPassword`                | Password for the auth database role (ignored if existingSecret is set) | `auth`               |
+| `auth.existingSecretPasswordKey` | Key in the existing secret containing the auth db password             | `auth-db-password`   |
 
 ### User Preferences
 
 Authentication configuration for Istio AuthorizationPolicy
 
-| Name                                 | Description                                                 | Value                            |
-| ------------------------------------ | ----------------------------------------------------------- | -------------------------------- |
-| `userPreferences.enabled`            | Enable Istio AuthorizationPolicy for PostgreSQL connections | `true`                           |
-| `userPreferences.namespace`          | Namespace of the service account allowed to connect         | `tc-core-dev`                    |
-| `userPreferences.serviceAccountName` | Service account name allowed to connect to PostgreSQL       | `telicent-core-user-preferences` |
+| Name                                        | Description                                                                        | Value                            |
+| ------------------------------------------- | ---------------------------------------------------------------------------------- | -------------------------------- |
+| `userPreferences.enabled`                   | Enable Istio AuthorizationPolicy for PostgreSQL connections                        | `true`                           |
+| `userPreferences.namespace`                 | Namespace of the service account allowed to connect                                | `tc-core-dev`                    |
+| `userPreferences.serviceAccountName`        | Service account name allowed to connect to PostgreSQL                              | `telicent-core-user-preferences` |
+| `userPreferences.dbUser`                    | Database role created for the user_preferences database                            | `user_preferences`               |
+| `userPreferences.dbPassword`                | Password for the user_preferences database role (ignored if existingSecret is set) | `user_preferences`               |
+| `userPreferences.existingSecretPasswordKey` | Key in the existing secret containing the user_preferences db password             | `user-prefs-db-password`         |
 
 ## License
 

@@ -207,6 +207,21 @@
                     "type": "string",
                     "description": "Service account name allowed to connect to PostgreSQL",
                     "default": "telicent-core-auth"
+                },
+                "dbUser": {
+                    "type": "string",
+                    "description": "Database role created for the auth database",
+                    "default": "auth"
+                },
+                "dbPassword": {
+                    "type": "string",
+                    "description": "Password for the auth database role (ignored if existingSecret is set)",
+                    "default": "auth"
+                },
+                "existingSecretPasswordKey": {
+                    "type": "string",
+                    "description": "Key in the existing secret containing the auth db password",
+                    "default": "auth-db-password"
                 }
             }
         },
@@ -227,6 +242,21 @@
                     "type": "string",
                     "description": "Service account name allowed to connect to PostgreSQL",
                     "default": "telicent-core-user-preferences"
+                },
+                "dbUser": {
+                    "type": "string",
+                    "description": "Database role created for the user_preferences database",
+                    "default": "user_preferences"
+                },
+                "dbPassword": {
+                    "type": "string",
+                    "description": "Password for the user_preferences database role (ignored if existingSecret is set)",
+                    "default": "user_preferences"
+                },
+                "existingSecretPasswordKey": {
+                    "type": "string",
+                    "description": "Key in the existing secret containing the user_preferences db password",
+                    "default": "user-prefs-db-password"
                 }
             }
         }

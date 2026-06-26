@@ -93,11 +93,25 @@ Resolve the key in the secret containing the postgres password.
 {{- end }}
 
 {{/*
+Resolve the key in the secret containing the auth db password.
+*/}}
+{{- define "demo-prereqs-postgres.authSecretPasswordKey" -}}
+{{- default "auth-db-password" .Values.auth.existingSecretPasswordKey }}
+{{- end }}
+
+{{/*
+Resolve the key in the secret containing the user_preferences db password.
+*/}}
+{{- define "demo-prereqs-postgres.userPreferencesSecretPasswordKey" -}}
+{{- default "user-prefs-db-password" .Values.userPreferences.existingSecretPasswordKey }}
+{{- end }}
+
+{{/*
 Service principals
 */}}
 {{- define "demo-prereqs-postgres.authPrincipal" -}}
 {{- printf "cluster.local/ns/%s/sa/%s" .Values.auth.namespace .Values.auth.serviceAccountName }}
 {{- end }}
 {{- define "demo-prereqs-postgres.userPreferencesPrincipal" -}}
-{{- printf "cluster.local/ns/%s/sa/%s" .Values.auth.namespace .Values.userPreferences.serviceAccountName }}
+{{- printf "cluster.local/ns/%s/sa/%s" .Values.userPreferences.namespace .Values.userPreferences.serviceAccountName }}
 {{- end }}
