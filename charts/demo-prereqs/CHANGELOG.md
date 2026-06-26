@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.4](https://github.com/Telicent-io/telicent-core-charts/compare/demo-prereqs-v0.1.3...demo-prereqs-v0.1.4) (2026-06-26)
+
+
+### Bug Fixes
+
+* initdb now assigns schema ownership ([#626](https://github.com/Telicent-io/telicent-core-charts/issues/626)) ([f68c0d2](https://github.com/Telicent-io/telicent-core-charts/commit/f68c0d2444ea70216e6ba7b1d651fc308e6a26fb))
+
 ## [0.1.3](https://github.com/Telicent-io/telicent-core-charts/compare/demo-prereqs-v0.1.2...demo-prereqs-v0.1.3) (2026-06-26)
 
 
