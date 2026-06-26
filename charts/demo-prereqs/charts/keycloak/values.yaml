@@ -18,6 +18,17 @@ authGateway: istio-system/gateways-authn
 # @key authHost The Istio virtual service host for Keycloak.
 authHost: auth.127.0.0.1.nip.io
 
+# @key args Extra arguments to pass to the Keycloak container.
+args:
+- --proxy-headers=xforwarded
+
+# @key extraEnvVars Array with extra environment variables to add to the Keycloak container.
+# Example:
+# extraEnvVars:
+# - name: FOO
+#   value: instance
+extraEnvVars: []
+
 # @key resources Set container requests and limits for different resources like CPU or memory.
 resources: {}
 
