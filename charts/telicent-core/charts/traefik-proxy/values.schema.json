@@ -608,6 +608,11 @@
                     "type": "string",
                     "description": "Catalogue API default host value, as defined by 'service/serviceAccount:port'",
                     "default": "catalogue-api:8080"
+                },
+                "apiBuilder": {
+                    "type": "string",
+                    "description": "API Builder API default host value, as defined by 'service/serviceAccount:port'",
+                    "default": "api-builder:8000"
                 }
             }
         }

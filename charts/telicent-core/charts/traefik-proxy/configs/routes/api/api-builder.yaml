@@ -1,0 +1,23 @@
+# Declare routers / services / middlewares
+http:
+  routers:
+    api-builder:
+      rule: {{ printf "Host(`%s`) && PathPrefix(`/gateway`)" .Values.global.apiHostDomain }}
+      service: api-builder
+      entryPoints:
+        - web-api
+      middleWares:
+        - host-api-builder
+
+  services:
+    api-builder:
+      loadBalancer:
+        servers:
+          - url: {{ printf "http://%s"  (include "traefik-proxy.hostAPIBuilder" .) }}
+
+  middlewares:
+
+    host-ai-builder:
+      headers:
+        customRequestHeaders:
+          host: {{ include "traefik-proxy.hostAPIBuilder" . }}

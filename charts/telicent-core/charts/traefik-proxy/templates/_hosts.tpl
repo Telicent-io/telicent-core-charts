@@ -126,3 +126,12 @@ application relies on. For a full explanation please view '_hosts.tlp' file in t
 {{- define "traefik-proxy.serviceAccountApicurio" -}}
 {{- printf "%s" (include "common.discoverServiceAccountPreview" (list . .Values.hostsPreview.apicurio )) -}}
 {{- end -}}
+
+
+{{/* apiBuilder | preview - returns host ('service:port') and serviceAccount */}}
+{{- define "traefik-proxy.hostAPIBuilder" -}}
+{{- printf "%s" (include "common.discoverHostPreview" (list . .Values.hostsPreview.apiBuilder )) -}}
+{{- end -}}
+{{- define "traefik-proxy.serviceAccountAPIBuilder" -}}
+{{- printf "%s" (include "common.discoverServiceAccountPreview" (list . .Values.hostsPreview.apiBuilder )) -}}
+{{- end -}}
