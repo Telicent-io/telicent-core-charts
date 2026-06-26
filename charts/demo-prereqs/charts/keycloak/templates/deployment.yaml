@@ -33,6 +33,7 @@ spec:
         {{- range .Values.extraArgs }}
         - {{ . | quote }}
         {{- end }}
+
         env:
         - name: KC_HTTP_ENABLED
           value: "true"
