@@ -88,3 +88,4 @@ Returns the principal used for Catalogue API traffic by the Istio AuthorizationP
 {{- printf "- cluster.local/ns/%s/sa/%s" .Release.Namespace ( include "auth.serviceAccountCatalogue" .) -}}
 {{- end -}}
 {{- end -}}
+

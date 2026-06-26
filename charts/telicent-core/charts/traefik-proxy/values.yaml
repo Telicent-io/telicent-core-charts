@@ -338,3 +338,7 @@ hostsPreview:
   apicurio: "apicurio:8080"
   # @key hostsPreview.catalogue Catalogue API default host value, as defined by 'service/serviceAccount:port'
   catalogue: "catalogue-api:8080"
+  # @key hostsPreview.apiBuilder API Builder API default host value, as defined by 'service/serviceAccount:port'
+  apiBuilder: "api-builder:8000"
+  # @key hostsPreview.theManagement The Management API default host value, as defined by 'service/serviceAccount:port'
+  theManagement: "the-management:8000"
