@@ -17,6 +17,11 @@
             "description": "String to fully override the generated fullname.",
             "default": ""
         },
+        "realms": {
+            "type": "object",
+            "description": "Inline realm definitions, keyed by filename (e.g. \"core.json\"). Each value is the raw realm JSON as a string. These are merged with any files under realms/*.json, and a value defined here clobbers a file-based realm of the same name. $(env:...) placeholders are still resolved at runtime via configCli.extraEnv.",
+            "default": {}
+        },
         "keycloak": {
             "type": "object",
             "properties": {

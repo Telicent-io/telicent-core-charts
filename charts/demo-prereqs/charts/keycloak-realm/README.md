@@ -14,15 +14,19 @@ are reconciled on every `helm install` and `helm upgrade`.
 
 ## How it works
 
-1. **Every** JSON file under `realms/*.json` is rendered into the ConfigMap (one
-   key per file) and mounted at `/config`.
+1. **Every** JSON file under `realms/*.json`, plus any inline realms supplied via
+   `realms` in values, is rendered into the ConfigMap (one key per realm) and
+   mounted at `/config`. An inline realm **clobbers** a bundled file of the same
+   name.
 2. The Job authenticates to Keycloak using admin credentials read from an
    **existing Secret** (assumed to live in the same namespace as Keycloak / this
    release).
 3. keycloak-config-cli imports `/config/*.json`, upserting **each** realm in turn.
 
-The chart manages any number of realms — add or edit them by dropping JSON files
-into [`realms/`](./realms), one realm per file. The bundled [`core.json`](./realms/core.json) was derived from an
+The chart manages any number of realms. Add or edit them either by dropping JSON
+files into [`realms/`](./realms), one realm per file, or by defining them inline
+under `realms` in your values (keyed by filename, e.g. `core.json`); the two
+sources are merged. The bundled [`core.json`](./realms/core.json) was derived from an
 existing Keycloak `core` realm, then **slimmed to only the non-default
 configuration** (realm session/token settings and the custom `dev-apps` client).
 Keycloak's built-in clients, client scopes, roles, and authentication flows are
@@ -94,6 +98,9 @@ container-global, so keep them unique. See [`examples/`](./examples):
 - [`values-multi-realm.yaml`](./examples/values-multi-realm.yaml) +
   [`realms/analytics.json`](./examples/realms/analytics.json) — adding a second
   realm with its own client secret and host.
+- [`values-inline-realm.yaml`](./examples/values-inline-realm.yaml) — defining
+  realms inline under `realms` in values (overriding the bundled `core.json` and
+  adding `analytics.json`), instead of dropping files into `realms/`.
 
 ## Notes / caveats
 
@@ -116,6 +123,12 @@ container-global, so keep them unique. See [`examples/`](./examples):
 | `enabled`          | Whether the Keycloak realm provisioning Job should be installed. | `true` |
 | `nameOverride`     | String to partially override the generated fullname.             | `""`   |
 | `fullnameOverride` | String to fully override the generated fullname.                 | `""`   |
+
+### Realms
+
+| Name     | Description                                                                                                                                                                                                                                                                                                             | Value |
+| -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| `realms` | Inline realm definitions, keyed by filename (e.g. "core.json"). Each value is the raw realm JSON as a string. These are merged with any files under realms/*.json, and a value defined here clobbers a file-based realm of the same name. $(env:...) placeholders are still resolved at runtime via configCli.extraEnv. | `{}`  |
 
 ### Keycloak Connection
 

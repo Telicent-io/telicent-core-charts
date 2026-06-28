@@ -16,10 +16,19 @@ metadata:
   {{- end }}
 data:
   {{- $files := .Files.Glob "realms/*.json" }}
-  {{- if not $files }}
-  {{- fail "No realm files found under realms/*.json" }}
+  {{- $valueRealms := .Values.realms | default dict }}
+  {{- if and (not $files) (not $valueRealms) }}
+  {{- fail "No realms found: add files under realms/*.json or define .Values.realms" }}
   {{- end }}
+  {{- /* File-based realms; skipped when a value-defined realm of the same name overrides it. */}}
   {{- range $path, $_ := $files }}
+  {{- if not (hasKey $valueRealms (base $path)) }}
   {{ base $path }}: |-
 {{ $.Files.Get $path | indent 4 }}
+  {{- end }}
+  {{- end }}
+  {{- /* Value-defined realms; these clobber any file-based realm of the same name. */}}
+  {{- range $name, $content := $valueRealms }}
+  {{ $name }}: |-
+{{ $content | indent 4 }}
   {{- end }}

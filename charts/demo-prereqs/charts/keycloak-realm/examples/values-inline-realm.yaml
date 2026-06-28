@@ -1,0 +1,89 @@
+# Example: defining realms inline in values, instead of (or alongside) the
+# bundled realms/*.json files.
+#
+# Realms are keyed by the filename they should land at under /config. Each value
+# is the raw realm JSON as a string (use a YAML block scalar, "|"). Inline realms
+# are merged with any realms/*.json files; an inline realm CLOBBERS a bundled file
+# of the same name (here, core.json overrides the chart's bundled realms/core.json).
+#
+# Prefer this file over --set: Helm splits keys on ".", so "realms.core.json"
+# would be parsed as nested keys rather than a single "core.json" filename.
+#
+# $(env:...) placeholders are resolved at runtime by keycloak-config-cli, exactly
+# as for file-based realms — supply every referenced variable via configCli.extraEnv.
+#
+# Usage:
+#   helm upgrade --install keycloak-realm . -n tc-system-dev -f examples/values-inline-realm.yaml
+
+realms:
+  # --- core realm (overrides the bundled realms/core.json) --------------------
+  core.json: |
+    {
+      "realm": "core",
+      "enabled": true,
+      "clients": [
+        {
+          "clientId": "dev-apps",
+          "enabled": true,
+          "publicClient": false,
+          "clientAuthenticatorType": "client-secret",
+          "secret": "$(env:CORE_REALM_DEV_APPS_CLIENT_SECRET)",
+          "standardFlowEnabled": true,
+          "directAccessGrantsEnabled": true,
+          "redirectUris": [
+            "https://$(env:APPS_HOST)/oauth2/callback"
+          ],
+          "webOrigins": [
+            "https://$(env:APPS_HOST)"
+          ]
+        }
+      ]
+    }
+
+  # --- analytics realm (added alongside the others) --------------------------
+  analytics.json: |
+    {
+      "realm": "analytics",
+      "enabled": true,
+      "clients": [
+        {
+          "clientId": "analytics-api",
+          "enabled": true,
+          "publicClient": false,
+          "clientAuthenticatorType": "client-secret",
+          "secret": "$(env:ANALYTICS_REALM_API_CLIENT_SECRET)",
+          "standardFlowEnabled": true,
+          "directAccessGrantsEnabled": true,
+          "redirectUris": [
+            "https://$(env:ANALYTICS_HOST)/oauth2/callback"
+          ],
+          "webOrigins": [
+            "https://$(env:ANALYTICS_HOST)"
+          ]
+        }
+      ]
+    }
+
+configCli:
+  varSubstitution: true
+
+  # One flat list covering every $(env:...) referenced by any realm above. Env var
+  # names are container-global, so keep them unique across realms/clients.
+  extraEnv:
+    # --- core realm ----------------------------------------------------------
+    - name: CORE_REALM_DEV_APPS_CLIENT_SECRET
+      valueFrom:
+        secretKeyRef:
+          name: keycloak-env
+          key: CORE_REALM_DEV_APPS_CLIENT_SECRET
+    - name: APPS_HOST
+      value: apps.13.41.28.169.nip.io
+
+    # --- analytics realm -----------------------------------------------------
+    - name: ANALYTICS_REALM_API_CLIENT_SECRET
+      valueFrom:
+        secretKeyRef:
+          name: keycloak-env
+          key: ANALYTICS_REALM_API_CLIENT_SECRET
+    - name: ANALYTICS_HOST
+      value: analytics.13.41.28.169.nip.io

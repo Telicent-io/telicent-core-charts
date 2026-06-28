@@ -6,6 +6,15 @@ nameOverride: ""
 # @key fullnameOverride String to fully override the generated fullname.
 fullnameOverride: ""
 
+# @section Realms
+# @key realms Inline realm definitions, keyed by filename (e.g. "core.json"). Each value is the raw realm JSON as a string. These are merged with any files under realms/*.json, and a value defined here clobbers a file-based realm of the same name. $(env:...) placeholders are still resolved at runtime via configCli.extraEnv.
+realms: {}
+#  core.json: |
+#    {
+#      "realm": "core",
+#      "enabled": true
+#    }
+
 # @section Keycloak Connection
 keycloak:
   # @key keycloak.url Base URL of the Keycloak instance to configure. Defaults to the in-cluster service.
