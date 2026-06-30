@@ -28,14 +28,21 @@ spec:
       - args:
         - start-dev
         - --http-enabled=true
-        - --proxy-headers=xforwarded
         - --hostname={{ .Values.authHost }}
         - --hostname-strict=false
+        {{- range .Values.extraArgs }}
+        - {{ . | quote }}
+        {{- end }}
+
         env:
         - name: KC_HTTP_ENABLED
           value: "true"
         - name: KC_HEALTH_ENABLED
           value: "true"
+        {{- range .Values.extraEnvVars }}
+        - name: {{ .name }}
+          value: {{ .value | quote }}
+        {{- end }}
         envFrom:
         - secretRef:
             name: {{ include "keycloak.envSecretName" . }}
