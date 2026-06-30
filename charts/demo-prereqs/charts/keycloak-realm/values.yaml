@@ -21,11 +21,15 @@ keycloak:
   url: "http://keycloak:8080"
   # @key keycloak.loginRealm The realm to authenticate the admin user against.
   loginRealm: master
-  # @key keycloak.existingSecret Name of an existing Secret (in this release's namespace) holding the admin credentials.
+  # @key keycloak.existingSecret Name of an existing Secret (in this release's namespace) holding the admin credentials. When empty, a Secret is created from keycloak.adminUsername/keycloak.adminPassword.
   existingSecret: keycloak-env
-  # @key keycloak.usernameKey Key within the existing Secret that holds the admin username.
+  # @key keycloak.adminUsername Admin username used to create the credentials Secret. Ignored if keycloak.existingSecret is set.
+  adminUsername: admin
+  # @key keycloak.adminPassword Admin password used to create the credentials Secret. Ignored if keycloak.existingSecret is set.
+  adminPassword: "CHANGE-ADMIN-PASSWORD"
+  # @key keycloak.usernameKey Key within the Secret that holds the admin username.
   usernameKey: KC_BOOTSTRAP_ADMIN_USERNAME
-  # @key keycloak.passwordKey Key within the existing Secret that holds the admin password.
+  # @key keycloak.passwordKey Key within the Secret that holds the admin password.
   passwordKey: KC_BOOTSTRAP_ADMIN_PASSWORD
 
 # @section Image

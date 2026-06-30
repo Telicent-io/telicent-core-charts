@@ -10,9 +10,12 @@ Realm files bundled in this release:
   - {{ base $path }}
 {{- end }}
 
-Admin credentials are read from Secret "{{ .Values.keycloak.existingSecret }}"
+Admin credentials are read from Secret "{{ include "keycloak-realm.envSecretName" . }}"
 (keys: {{ .Values.keycloak.usernameKey }} / {{ .Values.keycloak.passwordKey }}) in
 namespace "{{ .Release.Namespace }}".
+{{- if not .Values.keycloak.existingSecret }}
+This Secret is created by the chart from keycloak.adminUsername / keycloak.adminPassword.
+{{- end }}
 
 Check progress with:
 

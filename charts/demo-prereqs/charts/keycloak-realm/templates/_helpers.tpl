@@ -65,3 +65,15 @@ Resolved image tag (defaults to the chart appVersion).
 {{- define "keycloak-realm.imageTag" -}}
 {{- default .Chart.AppVersion .Values.image.tag }}
 {{- end }}
+
+{{/*
+Name of the Secret holding the Keycloak admin credentials. Uses the existing
+Secret when provided, otherwise the chart-managed "<fullname>-env" Secret.
+*/}}
+{{- define "keycloak-realm.envSecretName" -}}
+{{- if .Values.keycloak.existingSecret -}}
+{{- .Values.keycloak.existingSecret -}}
+{{- else -}}
+{{- printf "%s-%s" (include "keycloak-realm.fullname" .) "env" -}}
+{{- end -}}
+{{- end -}}

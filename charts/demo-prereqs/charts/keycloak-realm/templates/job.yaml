@@ -67,12 +67,12 @@ spec:
             - name: KEYCLOAK_USER
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.keycloak.existingSecret | quote }}
+                  name: {{ include "keycloak-realm.envSecretName" . | quote }}
                   key: {{ .Values.keycloak.usernameKey | quote }}
             - name: KEYCLOAK_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.keycloak.existingSecret | quote }}
+                  name: {{ include "keycloak-realm.envSecretName" . | quote }}
                   key: {{ .Values.keycloak.passwordKey | quote }}
             - name: IMPORT_FILES_LOCATIONS
               value: "/config/*.json"

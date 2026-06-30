@@ -37,17 +37,27 @@
                 },
                 "existingSecret": {
                     "type": "string",
-                    "description": "Name of an existing Secret (in this release's namespace) holding the admin credentials.",
+                    "description": "Name of an existing Secret (in this release's namespace) holding the admin credentials. When empty, a Secret is created from keycloak.adminUsername/keycloak.adminPassword.",
                     "default": "keycloak-env"
+                },
+                "adminUsername": {
+                    "type": "string",
+                    "description": "Admin username used to create the credentials Secret. Ignored if keycloak.existingSecret is set.",
+                    "default": "admin"
+                },
+                "adminPassword": {
+                    "type": "string",
+                    "description": "Admin password used to create the credentials Secret. Ignored if keycloak.existingSecret is set.",
+                    "default": "CHANGE-ADMIN-PASSWORD"
                 },
                 "usernameKey": {
                     "type": "string",
-                    "description": "Key within the existing Secret that holds the admin username.",
+                    "description": "Key within the Secret that holds the admin username.",
                     "default": "KC_BOOTSTRAP_ADMIN_USERNAME"
                 },
                 "passwordKey": {
                     "type": "string",
-                    "description": "Key within the existing Secret that holds the admin password.",
+                    "description": "Key within the Secret that holds the admin password.",
                     "default": "KC_BOOTSTRAP_ADMIN_PASSWORD"
                 }
             }
