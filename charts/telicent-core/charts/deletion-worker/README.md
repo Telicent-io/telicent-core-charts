@@ -161,6 +161,3 @@ If either of those details changes, you can use this section to correctly refer 
 
 ### Host(s) Preview Parameters - Contains host information for applications deployed via *telicent-preview* chart
 
-*Deletion Worker* interacts with applications deployed via *telicent-preview* using their default service/serviceAccount and port.
-If either of those details changes, you can use this section to correctly refer to those applications.
-

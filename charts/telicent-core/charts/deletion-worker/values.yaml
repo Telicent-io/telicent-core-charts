@@ -311,10 +311,7 @@ hosts:
 #
 # @section Host(s) Preview Parameters - Contains host information for applications deployed via *telicent-preview* chart
 #
-# @descStart
-# *Deletion Worker* interacts with applications deployed via *telicent-preview* using their default service/serviceAccount and port.
-# If either of those details changes, you can use this section to correctly refer to those applications.
-# @descEnd
+
 #hostsPreview:
 #  # @key hostsPreview.enableAutoCorrect Prefix 'global.releaseNameTelicentPreview' value to each host value. Alternatively, the host value will be used as it is, without any modification
 #  enableAutoCorrect: true
