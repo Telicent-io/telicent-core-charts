@@ -563,6 +563,11 @@
                     "type": "string",
                     "description": "Graph application default host value, as defined by 'service/serviceAccount:port'",
                     "default": "graph:8080"
+                },
+                "deletionWorker": {
+                    "type": "string",
+                    "description": "Deletion Worker application default host value, as defined by 'service/serviceAccount:port'",
+                    "default": "deletion-worker:8080"
                 }
             }
         },

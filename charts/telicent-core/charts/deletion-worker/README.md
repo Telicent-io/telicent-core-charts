@@ -123,7 +123,7 @@ Contains configuration parameters that configure aspects of the *Deletion Worker
 ### ConfigMap Parameters
 
 | Name                                | Description                                                                       | Value |
-| ----------------------------------- |-----------------------------------------------------------------------------------| ----- |
+| ----------------------------------- | --------------------------------------------------------------------------------- | ----- |
 | `configMap.existingEnvConfigMap`    | Name of existing configmap containing *Deletion Worker* Environment Configuration | `""`  |
 | `configMap.existingFusekiConfigMap` | Name of existing configmap containing Fuseki Configuration                        | `""`  |
 
@@ -139,7 +139,7 @@ Contains configuration parameters that configure aspects of the *Deletion Worker
 ### Statefulset Parameters
 
 | Name                   | Description                                                            | Value |
-| ---------------------- |------------------------------------------------------------------------| ----- |
+| ---------------------- | ---------------------------------------------------------------------- | ----- |
 | `replicas`             | Number of *Deletion Worker* replicas to deploy                         | `1`   |
 | `revisionHistoryLimit` | Number of controller revisions to keep                                 | `5`   |
 | `annotations`          | Add extra annotations to the Statefulset object                        | `{}`  |
@@ -153,13 +153,13 @@ Contains configuration parameters that configure aspects of the *Deletion Worker
 
 ### Statefulset Image Parameters
 
-| Name                | Description                                                            | Value                          |
-| ------------------- | ---------------------------------------------------------------------- | ------------------------------ |
+| Name                | Description                                                                      | Value                          |
+| ------------------- | -------------------------------------------------------------------------------- | ------------------------------ |
 | `image.registry`    | *Deletion Worker* image registry                                                 | `quay.io`                      |
 | `image.repository`  | *Deletion Worker* image name                                                     | `telicent/scg-deletion-worker` |
 | `image.tag`         | *Deletion Worker* image tag. If not set, a tag is generated using the appVersion | `""`                           |
 | `image.pullPolicy`  | *Deletion Worker* image pull policy                                              | `IfNotPresent`                 |
-| `image.pullSecrets` | Specify registry secret names as an array                              | `[]`                           |
+| `image.pullSecrets` | Specify registry secret names as an array                                        | `[]`                           |
 
 ### Statefulset Probe Parameters
 
@@ -177,8 +177,8 @@ Contains configuration parameters that configure aspects of the *Deletion Worker
 
 ### Statefulset Resources Parameters - Requests and Limits
 
-| Name        | Description                      | Value |
-| ----------- | -------------------------------- | ----- |
+| Name        | Description                                | Value |
+| ----------- | ------------------------------------------ | ----- |
 | `resources` | Resources for *Deletion Worker* containers | `{}`  |
 
 ### Statefulset Security Context Parameters - Default Security Context
@@ -219,8 +219,8 @@ Contains configuration parameters that configure aspects of the *Deletion Worker
 
 ### Traffic Exposure Parameters
 
-| Name           | Description                                                              | Value       |
-| -------------- | ------------------------------------------------------------------------ | ----------- |
+| Name           | Description                                                                        | Value       |
+| -------------- | ---------------------------------------------------------------------------------- | ----------- |
 | `service.name` | *Deletion Worker* service name. If not set, a name is generated using the fullname | `""`        |
 | `service.port` | *Deletion Worker* service port                                                     | `8080`      |
 | `service.type` | *Deletion Worker* service type                                                     | `ClusterIP` |
@@ -239,6 +239,10 @@ If either of those details changes, you can use this section to correctly refer 
 | `hosts.traefikProxy`      | Traefik Proxy application default host value, as defined by 'service/serviceAccount:port' | `traefik-proxy:8080` |
 
 ### Host(s) Preview Parameters - Contains host information for applications deployed via *telicent-preview* chart
+
+*Deletion Worker* interacts with applications deployed via *telicent-preview* using their default service/serviceAccount and port.
+If either of those details changes, you can use this section to correctly refer to those applications.
+
 
 *Deletion Worker* interacts with applications deployed via *telicent-preview* using their default service/serviceAccount and port.
 If either of those details changes, you can use this section to correctly refer to those applications.
