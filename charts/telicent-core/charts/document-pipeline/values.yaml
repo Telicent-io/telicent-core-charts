@@ -1,5 +1,15 @@
 # Copyright (C) 2026 Telicent Limited
-# Telicent Document Pipeline stand-alone chart
+# Telicent Document Pipeline umbrella chart
+#
+# The pipeline components are no longer templated within this chart. They are provided by the
+# following upstream Telicent dependency charts (see Chart.yaml), configured under their chart-name
+# keys below:
+#   - smart-cache-documents     -> httpIngester, contentExtractor, contentIndexer, catalogueUpdater
+#   - rdf-document-tagger-dc     -> contentTagger
+#   - pipeline-entity-extraction -> entityExtractor
+#
+# NOTE: Per-component `image` blocks are intentionally omitted so each pinned dependency supplies
+# its own tested image. Override under the relevant subchart key only if you need a specific image.
 
 # @key enabled Enable Document Pipeline chart
 enabled: false
@@ -9,6 +19,7 @@ enabled: false
 #
 # @descStart
 # Contains global parameters; these parameters are mirrored within the Telicent core umbrella chart
+# Global values are automatically propagated to every dependency (subchart).
 # Note: Only global parameters used within this chart will be listed below
 # @descEnd
 global:
@@ -50,678 +61,326 @@ global:
     mountPath: /app/config/truststore
 
 #
-# @section Deployment Resources Parameters - Default resource allocation applied to all sub-chart deployments
-#
-# @key resources Resources for *Document Pipeline* containers
-resources: {}
-#  requests:
-#    # @key resources.requests.cpu Set containers' CPU request
-#    cpu: "500m"
-#    # @key resources.requests.memory Set containers' memory request
-#    memory: "750Mi"
-#  limits:
-#    # @key resources.limits.cpu Set containers' CPU limit
-#    cpu: "1000m"
-#    # @key resources.limits.memory Set containers' memory limit
-#    memory: "1000Mi"
-
-#
-# @section Deployment Security Context Parameters - Default security context applied to all sub-chart deployments
-#
-podSecurityContext:
-  # @key podSecurityContext.runAsUser Set the provisioning pod's Security Context runAsUser User ID
-  runAsUser: 185
-  # @key podSecurityContext.runAsGroup Set the provisioning pod's Security Context runAsGroup Group ID
-  runAsGroup: 185
-  # @key podSecurityContext.runAsNonRoot Set the provisioning pod's Security Context runAsNonRoot
-  runAsNonRoot: true
-  # @key podSecurityContext.fsGroup Set the provisioning pod's Group ID for the mounted volumes' filesystem
-  fsGroup: 185
-  seccompProfile:
-    # @key podSecurityContext.seccompProfile.type Set the provisioning pod's Security Context seccomp profile
-    type: RuntimeDefault
-containerSecurityContext:
-  # @key containerSecurityContext.runAsUser Set containers' Security Context runAsUser User ID
-  runAsUser: 185
-  # @key containerSecurityContext.runAsGroup Set containers' Security Context runAsGroup Group ID
-  runAsGroup: 185
-  # @key containerSecurityContext.runAsNonRoot Set container's Security Context runAsNonRoot
-  runAsNonRoot: true
-  # @key containerSecurityContext.allowPrivilegeEscalation Set container's Security Context allowPrivilegeEscalation
-  allowPrivilegeEscalation: false
-  capabilities:
-    # @key containerSecurityContext.capabilities.drop List of capabilities to be dropped
-    drop:
-      - ALL
-  seccompProfile:
-    # @key containerSecurityContext.seccompProfile.type Set container's Security Context seccomp profile
-    type: RuntimeDefault
-
-#
-# @section Service Account - Shared by sub-chart resources
+# @section smart-cache-documents - HTTP Ingester, Content Extractor, Content Indexer & Catalogue Updater
 #
 # @descStart
-# This section builds out the service account more information can be found here: https://kubernetes.io/docs/concepts/security/service-accounts/
+# Values for the `smart-cache-documents` dependency chart. Its value layout matches the previous
+# top-level httpIngester / contentExtractor / contentIndexer / catalogueUpdater sections of this chart.
+# Unset values fall back to the dependency chart's own defaults (including container images).
 # @descEnd
-serviceAccount:
-  # @key serviceAccount.create Specifies whether a service account should be created
-  create: true
-  # @key serviceAccount.automount Automatically mount a ServiceAccount's API credentials
-  automount: true
-  # @key serviceAccount.annotations Annotations to add to the service account
-  annotations: {}
-  # @key serviceAccount.name The name of the service account to use. If not set and create is true, a name is generated using the fullname template
-  name: ""
+smart-cache-documents:
+  # @key smart-cache-documents.enabled Enable the smart-cache-documents components
+  enabled: true
 
-#
-# @section Host(s) Parameters - Contains host information for applications deployed via *telicent-core* chart
-#
-# @descStart
-# *Document Pipeline* interacts directly with other Telicent Applications using their default service/serviceAccount and port.
-# If either of those details changes, you can use this section to correctly refer to those applications.
-# @descEnd
-hosts:
-  # @key hosts.enableAutoCorrect Allow for the release name to be automatically pre-fixed to each host value when required (default behavior when installing through the parent chart). Alternatively, the host value will be used as it is, without any modification
-  enableAutoCorrect: true
-  # @key hosts.auth Auth application default host value, as defined by 'service/serviceAccount:port'
-  auth: "auth:8080"
-  # @key hosts.traefikProxy Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'
-  traefikProxy: "traefik-proxy:8080"
-
-#
-# @section *HTTP Ingester*
-#
-# @descStart
-# The *HTTP Ingester* is responsible for ingesting documents via https.
-# The application settings are defined within the 'java' & 'routes' keys
-# @descEnd
-httpIngester:
-  #
-  # @section *HTTP Ingester* - Application Parameters - Java
-  #
-  java:
-    # @key httpIngester.java.jvmOptions Java options to pass to the JVM
-    jvmOptions: "-XX:MaxRAMPercentage=80.0"
-
-  #
-  # @section *HTTP Ingester* - Application Parameters - Routes
-  #
-  routes:
-    # @key httpIngester.routes[0].name A unique name for the route
-    - name: local
-      # @key httpIngester.routes[0].topic The destination Kafka topic for the route
-      topic: document.extractrequest
-      # @key httpIngester.routes[0].securityLabel In this test configuration the label is simply test=true
-      securityLabel: dGVzdD10cnVl
-      # @key httpIngester.routes[0].namespace The Namespace URI that will be used to assign a unique URI to a document URIs are generated deterministically based on this and the ingested document content
-      namespace: https://example.org/ns#
-      headers:
-        # @key httpIngester.routes[0].headers[0].name The Owner header, configured such that even if the header is present in the request then the defaultValue here takes precedence
-        - name: Owner
-          # @key httpIngester.routes[0].headers[0].defaultValue The default value for the Owner header
-          defaultValue: Platform Team
-          # @key httpIngester.routes[0].headers[0].priority The priority for the Owner header
-          priority: CONFIGURATION
-        # @key httpIngester.routes[0].headers[1].name The (deprecated) Data-Source-Name, configured such that if the header is present in the request then the request value takes precedence
-        - name: Data-Source-Name
-          # @key httpIngester.routes[0].headers[1].defaultValue The default value for the (deprecated) Data-Source-Name header
-          defaultValue: Test Data
-          # @key httpIngester.routes[0].headers[1].priority The priority for the (deprecated) Data-Source-Name header
-          priority: REQUEST
-        # @key httpIngester.routes[0].headers[2].name The Distribution ID header. This is necessary to indicate what data catalogue details are associated to the incoming request. NOTE: marked as REQUEST for time being to make development/testing easier but should be REQUEST_ONLY when deployed.
-        - name: Data-Source-Reference
-          # @key httpIngester.routes[0].headers[2].defaultValue The default value for the Distribution ID header
-          defaultValue: Telicent Document Pipeline
-          # @key httpIngester.routes[0].headers[2].priority The priority for the Distribution ID header
-          priority: REQUEST
-        # @key httpIngester.routes[0].headers[3].name The Distribution ID header. This is necessary to indicate what data catalogue details are associated to the incoming request. NOTE: marked as REQUEST for time being to make development/testing easier but should be REQUEST_ONLY when deployed.
-        - name: Distribution-Id
-          # @key httpIngester.routes[0].headers[3].defaultValue The default value for the Distribution ID header
-          defaultValue: 13bce3bf-7edb-4efb-a54f-574327458dd7
-          # @key httpIngester.routes[0].headers[3].priority The priority for the Distribution ID header
-          priority: REQUEST
-        # @key httpIngester.routes[0].headers[4].name The EDH/IDH policy information header
-        - name: Policy-Information
-          # @key httpIngester.routes[0].headers[4].defaultValue The default value for the EDH/IDH policy information header
-          defaultValue: '{"EDH":{"classification":"O","permittedNats":["GBR"],"permittedOrgs":["Telicent"],"orGroups":[],"andGroups":[]}}'
-          # @key httpIngester.routes[0].headers[4].priority The priority for the EDH/IDH policy information header
-          priority: REQUEST
-    #
-    # @section *HTTP Ingester* - Configmap Parameters
-    #
-  configMap:
-    # @key httpIngester.configMap.existingEnvConfigMap Name of existing configmap containing *HTTP Ingester* Environment Configuration
-    # Note: When it's set it will disable configmap creation.
-    existingEnvConfigMap: ""
-    # @key httpIngester.configMap.existingRoutesConfigMap Name of existing configmap containing Routes Configuration
-    # Note: When it's set it will disable the routes configmap creation.
-    existingRoutesConfigMap: ""
-
-  #
-  # @section *HTTP Ingester* - Common Parameters
-  #
-  # @key httpIngester.nameOverride Override the chart name for the *HTTP Ingester*
-  nameOverride: ""
-  # @key httpIngester.fullnameOverride Override the full name for the *HTTP Ingester*
-  fullnameOverride: ""
-
-  #
-  # @section *HTTP Ingester* - Deployment Parameters
-  #
-  # @key httpIngester.replicas Number of replicas to deploy
-  replicas: 1
-
-  # @key httpIngester.annotations Add extra annotations to the deployment object
-  annotations: {}
-  # @key httpIngester.podLabels Labels to add to the *HTTP Ingester* pods
-  podLabels: {}
-  # @key httpIngester.podAnnotations Annotations to add to the *HTTP Ingester* pods
-  podAnnotations: {}
-  # @key httpIngester.extraEnvVars Array with extra environment variables to add
-  extraEnvVars: []
-  # @key httpIngester.extraVolumes Additional volumes on the output Deployment definition
-  extraVolumes: []
-  # @key httpIngester.extraVolumeMounts Additional volumeMounts on the output Deployment definition
-  extraVolumeMounts: []
-  # @key httpIngester.initContainers Add init containers to the pod
-  initContainers: []
-  # @key httpIngester.sidecars Add sidecars to the pod.
-  sidecars: []
-
-  #
-  # @section *HTTP Ingester* - Deployment Image Parameters
-  #
-  image:
-    # @key httpIngester.image.registry *HTTP Ingester* image registry
-    registry: quay.io
-    # @key httpIngester.image.repository The container image repository for the *HTTP Ingester*
-    repository: telicent/telicent-document-http-ingester
-    # @key httpIngester.image.tag The image tag for the *HTTP Ingester*
-    tag: "3.4.0"
-    # @key httpIngester.image.pullPolicy The image pull policy for the *HTTP Ingester*
-    pullPolicy: IfNotPresent
-    # @key httpIngester.image.pullSecrets Specify registry secret names as an array
-    pullSecrets: []
-
-  #
-  # @section *HTTP Ingester* - Deployment Resources Parameters - Requests and Limits
-  #
-  # @key httpIngester.resources Resources for *HTTP Ingester* containers
+  # @key smart-cache-documents.resources Default resources applied to the smart-cache-documents containers
   resources: {}
-  #    requests:
-  #      # @key httpIngester.resources.requests.cpu Set containers' CPU request
-  #      cpu: "500m"
-  #      # @key httpIngester.resources.requests.memory Set containers' memory request
-  #      memory: "1000Mi"
-  #    limits:
-  #      # @key httpIngester.resources.limits.cpu Set containers' CPU limit
-  #      cpu: "1000m"
-  #      # @key httpIngester.resources.limits.memory Set containers' memory limit
-  #      memory: "1500Mi"
 
-  #
-  # @section *HTTP Ingester* - Deployment Affinity Parameters
-  #
-  # @key httpIngester.affinity Affinity for pod assignment
-  affinity: {}
-  # @key httpIngester.nodeSelector Node labels for pod assignment
-  nodeSelector: {}
-  # @key httpIngester.tolerations Tolerations for pod assignment
-  tolerations: []
+  podSecurityContext:
+    # @key smart-cache-documents.podSecurityContext.runAsUser Set the pod's Security Context runAsUser User ID
+    runAsUser: 185
+    # @key smart-cache-documents.podSecurityContext.runAsGroup Set the pod's Security Context runAsGroup Group ID
+    runAsGroup: 185
+    # @key smart-cache-documents.podSecurityContext.runAsNonRoot Set the pod's Security Context runAsNonRoot
+    runAsNonRoot: true
+    # @key smart-cache-documents.podSecurityContext.fsGroup Set the pod's Group ID for the mounted volumes' filesystem
+    fsGroup: 185
+    seccompProfile:
+      # @key smart-cache-documents.podSecurityContext.seccompProfile.type Set the pod's Security Context seccomp profile
+      type: RuntimeDefault
+  containerSecurityContext:
+    # @key smart-cache-documents.containerSecurityContext.runAsUser Set containers' Security Context runAsUser User ID
+    runAsUser: 185
+    # @key smart-cache-documents.containerSecurityContext.runAsGroup Set containers' Security Context runAsGroup Group ID
+    runAsGroup: 185
+    # @key smart-cache-documents.containerSecurityContext.runAsNonRoot Set container's Security Context runAsNonRoot
+    runAsNonRoot: true
+    # @key smart-cache-documents.containerSecurityContext.allowPrivilegeEscalation Set container's Security Context allowPrivilegeEscalation
+    allowPrivilegeEscalation: false
+    capabilities:
+      # @key smart-cache-documents.containerSecurityContext.capabilities.drop List of capabilities to be dropped
+      drop:
+        - ALL
+    seccompProfile:
+      # @key smart-cache-documents.containerSecurityContext.seccompProfile.type Set container's Security Context seccomp profile
+      type: RuntimeDefault
 
-  #
-  # @section *HTTP Ingester* - Deployment Security Context Parameters - Default Security Context
-  #
-  # @key httpIngester.podSecurityContext Security context for the pod(s). Optional override, otherwise inherited from the root security context definition
-  podSecurityContext: {}
-  # @key httpIngester.containerSecurityContext Security context for the container(s). Optional override, otherwise inherited from the root security context definition
-  containerSecurityContext: {}
-
-  #
-  # @section *HTTP Ingester* - Traffic Exposure Parameters
-  #
-  service:
-    # @key httpIngester.service.name *HTTP Ingester* service name. If not set, a name is generated using the fullname
+  serviceAccount:
+    # @key smart-cache-documents.serviceAccount.create Specifies whether a service account should be created
+    create: true
+    # @key smart-cache-documents.serviceAccount.automount Automatically mount a ServiceAccount's API credentials
+    automount: true
+    # @key smart-cache-documents.serviceAccount.annotations Annotations to add to the service account
+    annotations: {}
+    # @key smart-cache-documents.serviceAccount.name The name of the service account to use. If not set and create is true, a name is generated using the fullname template
     name: ""
-    # @key httpIngester.service.port *HTTP Ingester* service port
-    port: 8080
-    # @key httpIngester.service.type *HTTP Ingester* service port
-    type: ClusterIP
+
+  hosts:
+    # @key smart-cache-documents.hosts.enableAutoCorrect Allow for the release name to be automatically pre-fixed to each host value when required
+    enableAutoCorrect: true
+    # @key smart-cache-documents.hosts.auth Auth application default host value, as defined by 'service/serviceAccount:port'
+    auth: "auth:8080"
+    # @key smart-cache-documents.hosts.traefikProxy Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'
+    traefikProxy: "traefik-proxy:8080"
+
+  #
+  # @section *HTTP Ingester*
+  #
+  httpIngester:
+    java:
+      # @key smart-cache-documents.httpIngester.java.jvmOptions Java options to pass to the JVM
+      jvmOptions: "-XX:MaxRAMPercentage=80.0"
+
+    routes:
+      # @key smart-cache-documents.httpIngester.routes[0].name A unique name for the route
+      - name: local
+        # @key smart-cache-documents.httpIngester.routes[0].topic The destination Kafka topic for the route
+        topic: document.extractrequest
+        # @key smart-cache-documents.httpIngester.routes[0].securityLabel In this test configuration the label is simply test=true
+        securityLabel: dGVzdD10cnVl
+        # @key smart-cache-documents.httpIngester.routes[0].namespace The Namespace URI that will be used to assign a unique URI to a document URIs are generated deterministically based on this and the ingested document content
+        namespace: https://example.org/ns#
+        headers:
+          # @key smart-cache-documents.httpIngester.routes[0].headers[0].name The Owner header, configured such that even if the header is present in the request then the defaultValue here takes precedence
+          - name: Owner
+            # @key smart-cache-documents.httpIngester.routes[0].headers[0].defaultValue The default value for the Owner header
+            defaultValue: Platform Team
+            # @key smart-cache-documents.httpIngester.routes[0].headers[0].priority The priority for the Owner header
+            priority: CONFIGURATION
+          # @key smart-cache-documents.httpIngester.routes[0].headers[1].name The (deprecated) Data-Source-Name, configured such that if the header is present in the request then the request value takes precedence
+          - name: Data-Source-Name
+            # @key smart-cache-documents.httpIngester.routes[0].headers[1].defaultValue The default value for the (deprecated) Data-Source-Name header
+            defaultValue: Test Data
+            # @key smart-cache-documents.httpIngester.routes[0].headers[1].priority The priority for the (deprecated) Data-Source-Name header
+            priority: REQUEST
+          # @key smart-cache-documents.httpIngester.routes[0].headers[2].name The Distribution ID header. This is necessary to indicate what data catalogue details are associated to the incoming request.
+          - name: Data-Source-Reference
+            # @key smart-cache-documents.httpIngester.routes[0].headers[2].defaultValue The default value for the Distribution ID header
+            defaultValue: Telicent Document Pipeline
+            # @key smart-cache-documents.httpIngester.routes[0].headers[2].priority The priority for the Distribution ID header
+            priority: REQUEST
+          # @key smart-cache-documents.httpIngester.routes[0].headers[3].name The Distribution ID header.
+          - name: Distribution-Id
+            # @key smart-cache-documents.httpIngester.routes[0].headers[3].defaultValue The default value for the Distribution ID header
+            defaultValue: 13bce3bf-7edb-4efb-a54f-574327458dd7
+            # @key smart-cache-documents.httpIngester.routes[0].headers[3].priority The priority for the Distribution ID header
+            priority: REQUEST
+          # @key smart-cache-documents.httpIngester.routes[0].headers[4].name The EDH/IDH policy information header
+          - name: Policy-Information
+            # @key smart-cache-documents.httpIngester.routes[0].headers[4].defaultValue The default value for the EDH/IDH policy information header
+            defaultValue: '{"EDH":{"classification":"O","permittedNats":["GBR"],"permittedOrgs":["Telicent"],"orGroups":[],"andGroups":[]}}'
+            # @key smart-cache-documents.httpIngester.routes[0].headers[4].priority The priority for the EDH/IDH policy information header
+            priority: REQUEST
+
+    configMap:
+      # @key smart-cache-documents.httpIngester.configMap.existingEnvConfigMap Name of existing configmap containing *HTTP Ingester* Environment Configuration
+      existingEnvConfigMap: ""
+      # @key smart-cache-documents.httpIngester.configMap.existingRoutesConfigMap Name of existing configmap containing Routes Configuration
+      existingRoutesConfigMap: ""
+
+    # @key smart-cache-documents.httpIngester.replicas Number of replicas to deploy
+    replicas: 1
+
+    service:
+      # @key smart-cache-documents.httpIngester.service.name *HTTP Ingester* service name. If not set, a name is generated using the fullname
+      name: ""
+      # @key smart-cache-documents.httpIngester.service.port *HTTP Ingester* service port
+      port: 8080
+      # @key smart-cache-documents.httpIngester.service.type *HTTP Ingester* service type
+      type: ClusterIP
+
+  #
+  # @section *Content Extractor*
+  #
+  contentExtractor:
+    topics:
+      # @key smart-cache-documents.contentExtractor.topics.inputTopic The Kafka topic from which the *Content Extractor* will consume messages
+      inputTopic: document.extractrequest
+      # @key smart-cache-documents.contentExtractor.topics.outputTopic The Kafka topic to which the *Content Extractor* will produce messages
+      outputTopic: document.textandmetadata
+      # @key smart-cache-documents.contentExtractor.topics.dlqTopic The Kafka topic to which the *Content Extractor* will produce dead-lettered messages
+      dlqTopic: document.extractrequest.dlq
+    # @key smart-cache-documents.contentExtractor.replicas The number of replicas for the *Content Extractor*
+    replicas: 1
+
+  #
+  # @section *Content Indexer*
+  #
+  contentIndexer:
+    java:
+      # @key smart-cache-documents.contentIndexer.java.jvmOptions JVM options for the application
+      jvmOptions: "-XX:MaxRAMPercentage=80.0"
+    elastic:
+      # @key smart-cache-documents.contentIndexer.elastic.host Elastic/OpenSearch host (include protocol, https or http)
+      host: https://your.opensearch.host
+      # @key smart-cache-documents.contentIndexer.elastic.port Elastic/OpenSearch port number
+      port: "443"
+      # @key smart-cache-documents.contentIndexer.elastic.opensearchCompatibility Enable OpenSearch compatibility
+      opensearchCompatibility: true
+      # @key smart-cache-documents.contentIndexer.elastic.index Elastic/OpenSearch index to be used
+      index: doc-content
+      # @key smart-cache-documents.contentIndexer.elastic.topic The Kafka topic(s) from which the content indexer will consume messages
+      topic: document.textandmetadata,document.entities
+      # @key smart-cache-documents.contentIndexer.elastic.dlqTopic The Kafka topic to which the content indexer will produce dead-lettered messages
+      dlqTopic: document.textandmetadata.dlq
+      # @key smart-cache-documents.contentIndexer.elastic.existingSecret Name of an existing secret. The secret must contain 2 keys: 'username', 'password'
+      existingSecret: ""
+      # @key smart-cache-documents.contentIndexer.elastic.username OpenSearch/Elastic username (prefer existingSecret)
+      username: ""
+      # @key smart-cache-documents.contentIndexer.elastic.password OpenSearch/Elastic user password (prefer existingSecret)
+      password: ""
+    # @key smart-cache-documents.contentIndexer.replicas Number of replicas to deploy
+    replicas: 1
+
+  #
+  # @section *Catalogue Updater*
+  #
+  catalogueUpdater:
+    topics:
+      # @key smart-cache-documents.catalogueUpdater.topics.inputTopic The Kafka topic from which the *Catalogue Updater* will consume messages
+      inputTopic: document.textandmetadata
+      # @key smart-cache-documents.catalogueUpdater.topics.outputTopic The Kafka topic to which the *Catalogue Updater* will produce
+      outputTopic: catalog
+      # @key smart-cache-documents.catalogueUpdater.topics.debounceWindowMs The debounce window in milliseconds
+      debounceWindowMs: 30000
+      # @key smart-cache-documents.catalogueUpdater.topics.flushIntervalMs The flush interval in milliseconds
+      flushIntervalMs: 60000
+      # @key smart-cache-documents.catalogueUpdater.topics.maxBufferSize The maximum buffer size
+      maxBufferSize: 100
+      # @key smart-cache-documents.catalogueUpdater.topics.dlqTopic The Kafka topic to which the *Catalogue Updater* will produce dead-lettered messages
+      dlqTopic: document.extractrequest.dlq
+    # @key smart-cache-documents.catalogueUpdater.replicas The number of replicas for the *Catalogue Updater*
+    replicas: 1
 
 #
-# @section *Content Extractor*
+# @section rdf-document-tagger-dc - Content Tagger
 #
 # @descStart
-# The *Content Extractor* is responsible for extracting information from the ingested documents.
-# The application settings are defined within the 'topics' key
+# Values for the `rdf-document-tagger-dc` dependency chart (previously the `contentTagger` section).
+# This chart flattens its configuration to the top level (topics, image, replicas, ...).
+# Unset values fall back to the dependency chart's own defaults (including the container image).
 # @descEnd
-contentExtractor:
-  #
-  # @section *Content Extractor* - Application Parameters - Topics
-  #
+rdf-document-tagger-dc:
+  # @key rdf-document-tagger-dc.enabled Enable the Content Tagger component
+  enabled: true
+
+  hosts:
+    # @key rdf-document-tagger-dc.hosts.enableAutoCorrect Allow for the release name to be automatically pre-fixed to each host value when required
+    enableAutoCorrect: true
+    # @key rdf-document-tagger-dc.hosts.auth Auth application default host value, as defined by 'service/serviceAccount:port'
+    auth: "auth:8080"
+    # @key rdf-document-tagger-dc.hosts.traefikProxy Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'
+    traefikProxy: "traefik-proxy:8080"
+
   topics:
-    # @key contentExtractor.topics.inputTopic The Kafka topic from which the *Content Extractor* will consume messages
-    inputTopic: document.extractrequest
-    # @key contentExtractor.topics.outputTopic The Kafka topic to which the *Content Extractor* will produce messages
-    outputTopic: document.textandmetadata
-    # @key contentExtractor.topics.dlqTopic The Kafka topic to which the *Content Extractor* will produce dead-lettered messages
-    dlqTopic: document.extractrequest.dlq
-
-  #
-  # @section *Content Extractor* - Common Parameters
-  #
-  # @key contentExtractor.nameOverride Override the chart name for the *Content Extractor*
-  nameOverride: ""
-  # @key contentExtractor.fullnameOverride Override the full name for the *Content Extractor*
-  fullnameOverride: ""
-
-  #
-  # @section *Content Extractor* - Deployment Parameters
-  #
-  # @key contentExtractor.replicas The number of replicas for the *Content Extractor*
-  replicas: 1
-
-  # @key contentExtractor.annotations Add extra annotations to the deployment object
-  annotations: {}
-  # @key contentExtractor.podLabels Labels to add to the *Content Extractor* pods
-  podLabels: {}
-  # @key contentExtractor.podAnnotations Annotations to add to the *Content Extractor* pods
-  podAnnotations: {}
-  # @key contentExtractor.extraEnvVars Array with extra environment variables to add
-  extraEnvVars: []
-  # @key contentExtractor.extraVolumes Additional volumes for the *Content Extractor*
-  extraVolumes: []
-  # @key contentExtractor.extraVolumeMounts Additional volume mounts for the *Content Extractor*
-  extraVolumeMounts: []
-  # @key contentExtractor.initContainers Add init containers to the pod
-  initContainers: []
-  # @key contentExtractor.sidecars Add sidecars to the pod.
-  sidecars: []
-
-  image:
-    # @key contentExtractor.image.registry *Content Extractor* image registry
-    registry: quay.io
-    # @key contentExtractor.image.repository The container image repository for the *Content Extractor*
-    repository: telicent/telicent-document-content-extractor
-    # @key contentExtractor.image.tag The image tag for the *Content Extractor*
-    tag: "3.4.0"
-    # @key contentExtractor.image.pullPolicy The image pull policy for the *Content Extractor*
-    pullPolicy: IfNotPresent
-    # @key contentExtractor.image.pullSecrets Secrets for pulling an image from a private repository
-    pullSecrets: []
-
-  # @key contentExtractor.affinity Affinity rules for the *Content Extractor* pods
-  affinity: {}
-  # @key contentExtractor.nodeSelector Node selector for the *Content Extractor* pods
-  nodeSelector: {}
-  # @key contentExtractor.tolerations Tolerations for the *Content Extractor* pods
-  tolerations: []
-
-  # @key contentExtractor.resources Resource requests and limits for the *Content Extractor*. Optional override, otherwise inherited from the root resource definition
-  resources: {}
-  # @key contentExtractor.podSecurityContext Security context for the pod(s). Optional override, otherwise inherited from the root security context definition
-  podSecurityContext: {}
-  # @key contentExtractor.containerSecurityContext Security context for the container(s). Optional override, otherwise inherited from the root security context definition
-  containerSecurityContext: {}
-
-#
-# @section *Content Indexer*
-#
-# @descStart
-# The *Content Indexer* is responsible for indexing documents.
-# The application settings are defined within the 'java' & 'elastic' keys
-# @descEnd
-contentIndexer:
-  #
-  # @section *Content Indexer* - Application Parameters - Java
-  #
-  java:
-    # @key contentIndexer.java.jvmOptions JVM options for the application
-    jvmOptions: "-XX:MaxRAMPercentage=80.0"
-
-  #
-  # @section *Content Indexer* Application Parameters - Elastic/OpenSearch and Secret
-  #
-  # @descStart
-  # The following contains connection details to an Elastic/OpenSearch service, on which the application relies.
-  # It is recommended to store sensitive information including passwords in a Kubernetes secret and not in Helm values.
-  # For Quick Start purposes, a secret named `tc-auth-usr-elastic-document-pipeline-content-indexer` will be created if one is not set.
-  # @descEnd
-  elastic:
-    # @key contentIndexer.elastic.host Elastic/OpenSearch host
-    # Note: This should be the URL of your Elastic/OpenSearch service, including protocol (https or http)
-    host: https://your.opensearch.host
-    # @key contentIndexer.elastic.port Elastic/OpenSearch port number
-    port: "443"
-    # @key contentIndexer.elastic.opensearchCompatibility Enable OpenSearch compatibility
-    opensearchCompatibility: true
-    # @key contentIndexer.elastic.index Elastic/OpenSearch index to be used
-    index: doc-content
-    # @key contentIndexer.elastic.topic The Kafka topic from which the content indexer will consume messages
-    topic:
-      document.textandmetadata,document.entities
-      # @key contentIndexer.elastic.dlqTopic The Kafka topic to which the content indexer will produce dead-lettered messages
-    dlqTopic: document.textandmetadata.dlq
-
-    # @key contentIndexer.elastic.existingSecret Name of an existing secret. The secret must contain 2 keys: 'username', 'password'
-    # Note: Left unset, it will create a secret named: tc-auth-usr-elastic-document-pipeline-content-indexer
-    existingSecret: ""
-    # @key contentIndexer.elastic.username OpenSearch/Elastic username
-    # Note: For additional security, the username is read from the secret, as defined by 'existingSecret' and not from this value!
-    username: ""
-    # @key contentIndexer.elastic.password OpenSearch/Elastic user password
-    password: ""
-
-  #
-  # @section *Content Indexer* - Common Parameters
-  #
-  # @key contentIndexer.nameOverride Override the chart name for the *Content Indexer*
-  nameOverride: ""
-  # @key contentIndexer.fullnameOverride Override the full name for the *Content Indexer*
-  fullnameOverride: ""
-
-  #
-  # @section *Content Indexer* - Deployment Parameters
-  #
-  # @key contentIndexer.replicas Number of replicas to deploy
-  replicas: 1
-
-  # @key contentIndexer.annotations Add extra annotations to the deployment object
-  annotations: {}
-  # @key contentIndexer.podLabels Labels to add to the *Content Indexer* pods
-  podLabels: {}
-  # @key contentIndexer.podAnnotations Annotations to add to the *Content Indexer* pods
-  podAnnotations: {}
-  # @key contentIndexer.extraEnvVars Array with extra environment variables to add
-  extraEnvVars: []
-  # @key contentIndexer.extraVolumes Additional volumes for the *Content Indexer*
-  extraVolumes: []
-  # @key contentIndexer.extraVolumeMounts Additional volume mounts for the *Content Indexer*
-  extraVolumeMounts: []
-  # @key contentIndexer.initContainers Add init containers to the pod
-  initContainers: []
-  # @key contentIndexer.sidecars Add sidecars to the pod.
-  sidecars: []
-
-  image:
-    # @key contentIndexer.image.registry  *Content Indexer* image registry
-    registry: quay.io
-    # @key contentIndexer.image.repository The container image repository for the *Content Indexer*
-    repository: telicent/telicent-document-content-indexer
-    # @key contentIndexer.image.pullPolicy The image pull policy for the *Content Indexer*
-    # @key contentIndexer.image.tag The image tag for the *Content Indexer*
-    tag: "3.4.0"
-    pullPolicy: IfNotPresent
-    # @key contentIndexer.image.pullSecrets Secrets for pulling an image from a private repository
-    pullSecrets: []
-
-  # @key contentIndexer.affinity Affinity rules for the *Content Indexer* pods
-  affinity: {}
-  # @key contentIndexer.nodeSelector Node selector for the *Content Indexer* pods
-  nodeSelector: {}
-  # @key contentIndexer.tolerations Tolerations for the *Content Indexer* pods
-  tolerations: []
-
-  # @key contentIndexer.resources Resource requests and limits for the *Content Indexer*. Optional override, otherwise inherited from the root resource definition
-  resources: {}
-  # @key contentIndexer.podSecurityContext Security context for the pod(s). Optional override, otherwise inherited from the root security context definition
-  podSecurityContext: {}
-  # @key contentIndexer.containerSecurityContext Security context for the container(s). Optional override, otherwise inherited from the root security context definition
-  containerSecurityContext: {}
-
-#
-# @section *Catalogue Updater*
-#
-# @descStart
-# The *Catalogue Updater* is responsible for updating the catalogue store.
-# The application settings are defined within the 'topics' key
-# @descEnd
-catalogueUpdater:
-  #
-  # @section *Catalogue Updater* - Application Parameters - Topics
-  #
-  topics:
-    # @key catalogueUpdater.topics.inputTopic The Kafka topic from which the *Catalogue Updater* will consume messages
+    # @key rdf-document-tagger-dc.topics.inputTopic The Kafka topic from which the *Content Tagger* will consume messages
     inputTopic: document.textandmetadata
-    # @key catalogueUpdater.topics.outputTopic The Kafka topic to which the *Catalogue Updater* will produce
-    outputTopic: catalog
-    # @key catalogueUpdater.topics.debounceWindowMs The debounce window in milliseconds
-    debounceWindowMs: 30000
-    # @key catalogueUpdater.topics.flushIntervalMs The flush interval in milliseconds
-    flushIntervalMs: 60000
-    # @key catalogueUpdater.topics.maxBufferSize The maximum buffer size
-    maxBufferSize: 100
-    # @key catalogueUpdater.topics.dlqTopic The Kafka topic to which the *Catalogue Updater* will produce dead-lettered messages
-    dlqTopic: document.extractrequest.dlq
-
-  #
-  # @section *Catalogue Updater* - Common Parameters
-  #
-  # @key catalogueUpdater.nameOverride Override the chart name for the *Catalogue Updater*
-  nameOverride: ""
-  # @key catalogueUpdater.fullnameOverride Override the full name for the *Catalogue Updater*
-  fullnameOverride: ""
-
-  #
-  # @section *Catalogue Updater* - Deployment Parameters
-  #
-  # @key catalogueUpdater.replicas The number of replicas for the *Catalogue Updater*
-  replicas: 1
-
-  # @key catalogueUpdater.annotations Add extra annotations to the deployment object
-  annotations: {}
-  # @key catalogueUpdater.podAnnotations Annotations to add to the *Catalogue Updater* pods
-  podAnnotations: {}
-  # @key catalogueUpdater.podLabels Labels to add to the *Catalogue Updater* pods
-  podLabels: {}
-    # @key catalogueUpdater.extraEnvVars Array with extra environment variables to add
-  extraEnvVars: []
-  # @key catalogueUpdater.extraVolumes Additional volumes for the *Catalogue Updater*
-  extraVolumes: []
-  # @key catalogueUpdater.extraVolumeMounts Additional volume mounts for the *Catalogue Updater*
-  extraVolumeMounts: []
-  # @key catalogueUpdater.initContainers Add init containers to the pod
-  initContainers: []
-  # @key catalogueUpdater.sidecars Add sidecars to the pod.
-  sidecars: []
-
-  image:
-    # @key catalogueUpdater.image.registry  *Catalogue Updater* image registry
-    registry: quay.io
-    # @key catalogueUpdater.image.repository The container image repository for the *Catalogue Updater*
-    repository: telicent/telicent-document-catalogue-updater
-    # @key catalogueUpdater.image.tag The image tag for the *Catalogue Updater*
-    tag: "3.4.0"
-    # @key catalogueUpdater.image.pullPolicy The image pull policy for the *Catalogue Updater*
-    pullPolicy: IfNotPresent
-    # @key catalogueUpdater.image.pullSecrets Secrets for pulling an image from a private repository
-    pullSecrets: []
-
-  # @key catalogueUpdater.affinity Affinity rules for the *Catalogue Updater* pods
-  affinity: {}
-  # @key catalogueUpdater.nodeSelector Node selector for the *Catalogue Updater* pods
-  nodeSelector: {}
-  # @key catalogueUpdater.tolerations Tolerations for the *Catalogue Updater* pods
-  tolerations: []
-
-  # @key catalogueUpdater.resources Resource requests and limits for the *Catalogue Updater*. Optional override, otherwise inherited from the root resource definition
-  resources: {}
-  # @key catalogueUpdater.podSecurityContext Security context for the pod(s). Optional override, otherwise inherited from the root security context definition
-  podSecurityContext: {}
-  # @key catalogueUpdater.containerSecurityContext Security context for the container(s). Optional override, otherwise inherited from the root security context definition
-  containerSecurityContext: {}
-
-#
-# @section *Content Tagger*
-#
-# @descStart
-# The *Content Tagger* is responsible for tagging documents that have been ingested.
-# The application settings are defined within the 'topics' key
-# @descEnd
-contentTagger:
-  #
-  # @section *Content Tagger* - Application Parameters - Topics
-  #
-  topics:
-    # @key contentTagger.topics.inputTopic The Kafka topic from which the *Content Tagger* will consume messages
-    inputTopic: document.textandmetadata
-    # @key contentTagger.topics.outputTopic The Kafka topic to which the *Content Tagger* will produce
+    # @key rdf-document-tagger-dc.topics.outputTopic The Kafka topic to which the *Content Tagger* will produce
     outputTopic: knowledge
-    # @key contentTagger.topics.rdfTaggerDataUriStub The URI for the RDF Tagger service
+    # @key rdf-document-tagger-dc.topics.rdfTaggerDataUriStub The URI for the RDF Tagger service
     rdfTaggerDataUriStub: http://telicent.io/data#
-    # @key contentTagger.topics.dctUri The URI for Dublin Core Terms
+    # @key rdf-document-tagger-dc.topics.dctUri The URI for Dublin Core Terms
     dctUri: http://purl.org/dc/terms/
-    # @key contentTagger.topics.iesUri The URI for the IES Ontology
+    # @key rdf-document-tagger-dc.topics.iesUri The URI for the IES Ontology
     iesUri: http://ies.data.gov.uk/ontology/ies4#
-    # @key contentTagger.topics.tontUri The URI for the Telicent Ontology
+    # @key rdf-document-tagger-dc.topics.tontUri The URI for the Telicent Ontology
     tontUri: "http://telicent.io/ontology/"
-    # @key contentTagger.topics.iso3166Uri The URI for the ISO 3166 standard
+    # @key rdf-document-tagger-dc.topics.iso3166Uri The URI for the ISO 3166 standard
     iso3166Uri: "http://iso.org/iso3166/country#"
-    # @key contentTagger.topics.loggingLevel The logging level for the *Content Tagger*, e.g., DEBUG, INFO, WARN, ERROR
+    # @key rdf-document-tagger-dc.topics.loggingLevel The logging level for the *Content Tagger*, e.g., DEBUG, INFO, WARN, ERROR
     loggingLevel: INFO
-    # @key contentTagger.topics.kafkaConfigMode The configuration mode for Kafka, either 'basic' or 'toml'
+    # @key rdf-document-tagger-dc.topics.kafkaConfigMode The configuration mode for Kafka, either 'basic' or 'toml'
     kafkaConfigMode: toml
 
-  #
-  # @section *Content Tagger* - Common Parameters
-  #
-  # @key contentTagger.nameOverride Override the chart name for the *Content Tagger*
-  nameOverride: ""
-  # @key contentTagger.fullnameOverride Override the full name for the *Content Tagger*
-  fullnameOverride: ""
-
-  #
-  # @section *Content Tagger* - Deployment Parameters
-  #
-  # @key contentTagger.replicas The number of replicas for the *Content Tagger*
+  # @key rdf-document-tagger-dc.replicas The number of replicas for the *Content Tagger*
   replicas: 1
 
-  # @key contentTagger.annotations Add extra annotations to the deployment object
-  annotations: {}
-  # @key contentTagger.podLabels Labels to add to the *Content Tagger* pods
-  podLabels: {}
-  # @key contentTagger.podAnnotations Annotations to add to the *Content Tagger* pods
-  podAnnotations: {}
-  # @key contentTagger.extraEnvVars Array with extra environment variables to add
-  extraEnvVars: []
-  # @key contentTagger.extraVolumes Additional volumes for the *Content Tagger*
-  extraVolumes: []
-  # @key contentTagger.extraVolumeMounts Additional volume mounts for the *Content Tagger*
-  extraVolumeMounts: []
-  # @key contentTagger.initContainers Add init containers to the pod
-  initContainers: []
-  # @key contentTagger.sidecars Add sidecars to the pod
-  sidecars: []
-
-  image:
-    # @key contentTagger.image.registry *Content Tagger* image registry
-    registry: quay.io
-    # @key contentTagger.image.repository The container image repository for the *Content Tagger*
-    repository: telicent/telicent-rdf-document-tagger-dc
-    # @key contentTagger.image.tag The image tag for the *Content Tagger*
-    tag: "3.0.1"
-    # @key contentTagger.image.pullPolicy The image pull policy for the *Content Tagger*
-    pullPolicy: IfNotPresent
-    # @key contentTagger.image.pullSecrets Secrets for pulling an image from a private repository
-    pullSecrets: []
-
-  # @key contentTagger.affinity Affinity rules for the *Content Tagger* pods
-  affinity: {}
-  # @key contentTagger.nodeSelector Node selector for the *Content Tagger* pods
-  nodeSelector: {}
-  # @key contentTagger.tolerations Tolerations for the *Content Tagger* pods
-  tolerations: []
-
-  # @key contentTagger.resources Resource requests and limits for the *Content Tagger*
-  # Note: Optional override, otherwise inherited from the root resource definition
-  resources: {}
-  # @key contentTagger.podSecurityContext Security context for the pod(s). Optional override, otherwise inherited from the root security context definition
-  podSecurityContext: {}
-  # @key contentTagger.containerSecurityContext Security context for the container(s). Optional override, otherwise inherited from the root security context definition
-  containerSecurityContext: {}
+  # Preserve the hardened security context (the dependency chart defaults these to empty).
+  podSecurityContext:
+    # @key rdf-document-tagger-dc.podSecurityContext.runAsUser Set the pod's Security Context runAsUser User ID
+    runAsUser: 185
+    # @key rdf-document-tagger-dc.podSecurityContext.runAsGroup Set the pod's Security Context runAsGroup Group ID
+    runAsGroup: 185
+    # @key rdf-document-tagger-dc.podSecurityContext.runAsNonRoot Set the pod's Security Context runAsNonRoot
+    runAsNonRoot: true
+    # @key rdf-document-tagger-dc.podSecurityContext.fsGroup Set the pod's Group ID for the mounted volumes' filesystem
+    fsGroup: 185
+    seccompProfile:
+      # @key rdf-document-tagger-dc.podSecurityContext.seccompProfile.type Set the pod's Security Context seccomp profile
+      type: RuntimeDefault
+  containerSecurityContext:
+    # @key rdf-document-tagger-dc.containerSecurityContext.runAsUser Set containers' Security Context runAsUser User ID
+    runAsUser: 185
+    # @key rdf-document-tagger-dc.containerSecurityContext.runAsGroup Set containers' Security Context runAsGroup Group ID
+    runAsGroup: 185
+    # @key rdf-document-tagger-dc.containerSecurityContext.runAsNonRoot Set container's Security Context runAsNonRoot
+    runAsNonRoot: true
+    # @key rdf-document-tagger-dc.containerSecurityContext.allowPrivilegeEscalation Set container's Security Context allowPrivilegeEscalation
+    allowPrivilegeEscalation: false
+    capabilities:
+      # @key rdf-document-tagger-dc.containerSecurityContext.capabilities.drop List of capabilities to be dropped
+      drop:
+        - ALL
+    seccompProfile:
+      # @key rdf-document-tagger-dc.containerSecurityContext.seccompProfile.type Set container's Security Context seccomp profile
+      type: RuntimeDefault
 
 #
-# @section *Entity Extractor*
+# @section pipeline-entity-extraction - Entity Extractor
 #
 # @descStart
-# The *Entity Extractor* is responsible for extracting entities from the ingested documents.
-# The application settings are defined within the 'topics' key
+# Values for the `pipeline-entity-extraction` dependency chart (previously the `entityExtractor` section).
+# This chart flattens its configuration to the top level (topics, image, replicas, ...).
+# Unset values fall back to the dependency chart's own defaults (including the container image).
 # @descEnd
-entityExtractor:
-  #
-  # @section *Entity Extractor* - Application Parameters - Topics
-  #
+pipeline-entity-extraction:
+  # @key pipeline-entity-extraction.enabled Enable the Entity Extractor component
+  enabled: true
+
+  hosts:
+    # @key pipeline-entity-extraction.hosts.enableAutoCorrect Allow for the release name to be automatically pre-fixed to each host value when required
+    enableAutoCorrect: true
+    # @key pipeline-entity-extraction.hosts.auth Auth application default host value, as defined by 'service/serviceAccount:port'
+    auth: "auth:8080"
+    # @key pipeline-entity-extraction.hosts.traefikProxy Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'
+    traefikProxy: "traefik-proxy:8080"
+
   topics:
-    # @key entityExtractor.topics.inputTopic The Kafka topic from which the content tagger will consume messages
+    # @key pipeline-entity-extraction.topics.inputTopic The Kafka topic from which the entity extractor will consume messages
     inputTopic: document.textandmetadata
-    # @key entityExtractor.topics.outputTopic The Kafka topic to which the content tagger will produce
+    # @key pipeline-entity-extraction.topics.outputTopic The Kafka topic to which the entity extractor will produce
     outputTopic: document.entities
-    # @key entityExtractor.topics.kafkaConfigMode The configuration mode for Kafka, either 'basic' or 'toml'
+    # @key pipeline-entity-extraction.topics.kafkaConfigMode The configuration mode for Kafka, either 'basic' or 'toml'
     kafkaConfigMode: toml
 
-  #
-  # @section *Entity Extractor* - Common Parameters
-  #
-  # @key entityExtractor.nameOverride Override the chart name for the *Entity Extractor*
-  nameOverride: ""
-  # @key entityExtractor.fullnameOverride Override the full name for the *Entity Extractor*
-  fullnameOverride: ""
-
-  #
-  # @section *Entity Extractor* - Deployment Parameters
-  #
-  # @key entityExtractor.replicas Number of replicas to deploy
+  # @key pipeline-entity-extraction.replicas Number of replicas to deploy
   replicas: 1
 
-  # @key entityExtractor.annotations Add extra annotations to the deployment object
-  annotations: {}
-  # @key entityExtractor.podLabels Labels to add to the *Entity Extractor* pods
-  podLabels: {}
-  # @key entityExtractor.podAnnotations Annotations to add to the *Entity Extractor* pods
-  podAnnotations: {}
-  # @key entityExtractor.extraEnvVars Array with extra environment variables to add
-  extraEnvVars: []
-  # @key entityExtractor.extraVolumes Additional volumes for the *Entity Extractor*
-  extraVolumes: []
-  # @key entityExtractor.extraVolumeMounts Additional volume mounts for the *Entity Extractor*
-  extraVolumeMounts: []
-    # @key entityExtractor.initContainers Add init containers to the pod
-  initContainers: []
-  # @key entityExtractor.sidecars Add sidecars to the pod.
-  sidecars: []
-
-  image:
-    # @key entityExtractor.image.registry *Entity Extractor* image registry
-    registry: quay.io
-    # @key entityExtractor.image.repository The container image repository for the *Entity Extractor*
-    repository: telicent/telicent-pipeline-entity-extraction
-    # @key entityExtractor.image.tag The image tag for the *Entity Extractor*
-    tag: "3.0.2"
-    # @key entityExtractor.image.pullPolicy The image pull policy for the *Entity Extractor*
-    pullPolicy: IfNotPresent
-    # @key entityExtractor.image.pullSecrets Secrets for pulling an image from a private repository
-    pullSecrets: []
-
-  # @key entityExtractor.affinity Affinity rules for the *Entity Extractor* pods
-  affinity: {}
-  # @key entityExtractor.nodeSelector Node selector for the *Entity Extractor* pods
-  nodeSelector: {}
-  # @key entityExtractor.tolerations Tolerations for the *Entity Extractor* pods
-  tolerations: []
-
-  # @key entityExtractor.resources Resources for *Entity Extractor* containers
-  resources: {}
-  #    requests:
-  #      # @key entityExtractor.resources.requests.cpu Set containers' CPU request
-  #      cpu: "1100m"
-  #      # @key entityExtractor.resources.requests.memory Set containers' memory request
-  #      memory: "2048Mi"
-  #    limits:
-  #      # @key entityExtractor.resources.limits.cpu Set containers' CPU limit
-  #      cpu: "1800m"
-  #      # @key entityExtractor.resources.limits.memory Set containers' memory limit
-  #      memory: "4000Mi"
-  # @key entityExtractor.podSecurityContext Security context for the pod(s). Optional override, otherwise inherited from the root security context definition
-  podSecurityContext: {}
-  # @key entityExtractor.containerSecurityContext Security context for the container(s). Optional override, otherwise inherited from root security context definition
-  containerSecurityContext: {}
+  # Preserve the hardened security context (the dependency chart defaults these to empty).
+  podSecurityContext:
+    # @key pipeline-entity-extraction.podSecurityContext.runAsUser Set the pod's Security Context runAsUser User ID
+    runAsUser: 185
+    # @key pipeline-entity-extraction.podSecurityContext.runAsGroup Set the pod's Security Context runAsGroup Group ID
+    runAsGroup: 185
+    # @key pipeline-entity-extraction.podSecurityContext.runAsNonRoot Set the pod's Security Context runAsNonRoot
+    runAsNonRoot: true
+    # @key pipeline-entity-extraction.podSecurityContext.fsGroup Set the pod's Group ID for the mounted volumes' filesystem
+    fsGroup: 185
+    seccompProfile:
+      # @key pipeline-entity-extraction.podSecurityContext.seccompProfile.type Set the pod's Security Context seccomp profile
+      type: RuntimeDefault
+  containerSecurityContext:
+    # @key pipeline-entity-extraction.containerSecurityContext.runAsUser Set containers' Security Context runAsUser User ID
+    runAsUser: 185
+    # @key pipeline-entity-extraction.containerSecurityContext.runAsGroup Set containers' Security Context runAsGroup Group ID
+    runAsGroup: 185
+    # @key pipeline-entity-extraction.containerSecurityContext.runAsNonRoot Set container's Security Context runAsNonRoot
+    runAsNonRoot: true
+    # @key pipeline-entity-extraction.containerSecurityContext.allowPrivilegeEscalation Set container's Security Context allowPrivilegeEscalation
+    allowPrivilegeEscalation: false
+    capabilities:
+      # @key pipeline-entity-extraction.containerSecurityContext.capabilities.drop List of capabilities to be dropped
+      drop:
+        - ALL
+    seccompProfile:
+      # @key pipeline-entity-extraction.containerSecurityContext.seccompProfile.type Set container's Security Context seccomp profile
+      type: RuntimeDefault
