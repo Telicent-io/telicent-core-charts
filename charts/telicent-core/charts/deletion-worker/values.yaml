@@ -1,5 +1,5 @@
 # Copyright (C) 2026 Telicent Limited
-# Telicent *Graph* stand-alone chart
+# Telicent *Deletion Worker* stand-alone chart
 
 #
 # @section Global Parameters
@@ -58,23 +58,19 @@ global:
 # @section Application Parameters - Java
 #
 # @descStart
-# Contains Java configuration parameters to be used by the *Graph* application
+# Contains Java configuration parameters to be used by the *Deletion Worker* application
 # @descEnd
 java:
   # @key java.jvmOptions JVM options for the application
   jvmOptions: "-XX:MaxRAMPercentage=80.0"
 
 #
-# @section Application Parameters - Graph
+# @section Application Parameters - Deletion Worker
 #
 # @descStart
-# Contains configuration parameters that configure aspects of the *Graph* application behaviour.
+# Contains configuration parameters that configure aspects of the *Deletion Worker* application behaviour.
 # @descEnd
-#graph:
-#  # @key graph.routeToNamedGraphs Enable or disable routing to named graphs. When set to true, data will be routed into named graphs based on the Distribution-ID header set on the incoming Kafka events.
-#  routeToNamedGraphs: false
-#  # @key graph.legacyLabels Enable or disable legacy label store format.  When set to false then the new label store format will be used, which allows for more efficient storage and querying of labels.  If a pre-existing store exists in the legacy format it will be automatically migrated forwards to the new format.
-#  legacyLabels: true
+
 
 deletionWorker:
   # @key deletionWorker.topic Kafka topic for deletion events
@@ -83,7 +79,7 @@ deletionWorker:
 # @section ConfigMap Parameters
 #
 configMap:
-  # @key configMap.existingEnvConfigMap Name of existing configmap containing *Graph* Environment Configuration
+  # @key configMap.existingEnvConfigMap Name of existing configmap containing *Deletion Worker* Environment Configuration
   # Note: When it's set it will disable configmap creation.
   existingEnvConfigMap: ""
   # @key configMap.existingFusekiConfigMap Name of existing configmap containing Fuseki Configuration
@@ -105,18 +101,18 @@ commonLabels: {}
 #
 # @section Statefulset Parameters
 #
-# @key replicas Number of *Graph* replicas to deploy
+# @key replicas Number of *Deletion Worker* replicas to deploy
 replicas: 1
 # @key revisionHistoryLimit Number of controller revisions to keep
 revisionHistoryLimit: 5
 
 # @key annotations Add extra annotations to the Statefulset object
 annotations: {}
-# @key podLabels Add extra labels to the *Graph* pod
+# @key podLabels Add extra labels to the *Deletion Worker* pod
 podLabels: {}
-# @key podAnnotations Add extra annotations to the *Graph* pod
+# @key podAnnotations Add extra annotations to the *Deletion Worker* pod
 podAnnotations: {}
-# @key extraEnvVars Array with extra environment variables to add to *Graph* pod
+# @key extraEnvVars Array with extra environment variables to add to *Deletion Worker* pod
 # Example:
 # extraEnvVars:
 # - name: FOO
@@ -142,13 +138,13 @@ sidecars: []
 # @section Statefulset Image Parameters
 #
 image:
-  # @key image.registry *Graph* image registry
+  # @key image.registry *Deletion Worker* image registry
   registry: quay.io
-  # @key image.repository *Graph* image name
+  # @key image.repository *Deletion Worker* image name
   repository: telicent/scg-deletion-worker
-  # @key image.tag *Graph* image tag. If not set, a tag is generated using the appVersion
+  # @key image.tag *Deletion Worker* image tag. If not set, a tag is generated using the appVersion
   tag: ""
-  # @key image.pullPolicy *Graph* image pull policy
+  # @key image.pullPolicy *Deletion Worker* image pull policy
   pullPolicy: IfNotPresent
   # @key image.pullSecrets Specify registry secret names as an array
   pullSecrets: []
@@ -181,7 +177,7 @@ livenessProbe:
 #
 # @section Statefulset Resources Parameters - Requests and Limits
 #
-# @key resources Resources for *Graph* containers
+# @key resources Resources for *Deletion Worker* containers
 resources: {}
 #  requests:
 #    # @key resources.requests.cpu Set containers' CPU request
@@ -249,9 +245,9 @@ tolerations: []
 #    # @key persistentVolumeClaims.backupsVolume.storageClass PVC Storage Class for the Backup data volume
 #    storageClass: gp3
 #  datasetsVolume:
-#    # @key persistentVolumeClaims.datasetsVolume.size PVC Storage Request for the *Graph* volume
+#    # @key persistentVolumeClaims.datasetsVolume.size PVC Storage Request for the *Deletion Worker* volume
 #    size: 25Gi
-#    # @key persistentVolumeClaims.datasetsVolume.storageClass PVC Storage Class for the *Graph* data volume
+#    # @key persistentVolumeClaims.datasetsVolume.storageClass PVC Storage Class for the *Deletion Worker* data volume
 #    storageClass: gp3
 
 #
@@ -271,11 +267,11 @@ serviceAccount:
 # @section Traffic Exposure Parameters
 #
 service:
-  # @key service.name *Graph* service name. If not set, a name is generated using the fullname
+  # @key service.name *Deletion Worker* service name. If not set, a name is generated using the fullname
   name: ""
-  # @key service.port *Graph* service port
+  # @key service.port *Deletion Worker* service port
   port: 8080
-  # @key service.type *Graph* service type
+  # @key service.type *Deletion Worker* service type
   type: ClusterIP
 
 #
@@ -294,7 +290,7 @@ service:
 # @section Host(s) Parameters - Contains host information for applications deployed via *telicent-core* chart.
 #
 # @descStart
-# *Graph* interacts directly with other Telicent Applications using their default service/serviceAccount and port.
+# *Deletion Worker* interacts directly with other Telicent Applications using their default service/serviceAccount and port.
 # If either of those details changes, you can use this section to correctly refer to those applications.
 # @descEnd
 #hosts:
@@ -316,7 +312,7 @@ hosts:
 # @section Host(s) Preview Parameters - Contains host information for applications deployed via *telicent-preview* chart
 #
 # @descStart
-# *Graph* interacts with applications deployed via *telicent-preview* using their default service/serviceAccount and port.
+# *Deletion Worker* interacts with applications deployed via *telicent-preview* using their default service/serviceAccount and port.
 # If either of those details changes, you can use this section to correctly refer to those applications.
 # @descEnd
 #hostsPreview:
