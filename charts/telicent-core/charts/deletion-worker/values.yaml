@@ -307,16 +307,3 @@ hosts:
   enableAutoCorrect: true
   # @key hosts.traefikProxy Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'
   traefikProxy: "traefik-proxy:8080"
-
-#
-# @section Host(s) Preview Parameters - Contains host information for applications deployed via *telicent-preview* chart
-#
-
-#hostsPreview:
-#  # @key hostsPreview.enableAutoCorrect Prefix 'global.releaseNameTelicentPreview' value to each host value. Alternatively, the host value will be used as it is, without any modification
-#  enableAutoCorrect: true
-#  # @key hostsPreview.paperbackWriter Paperback Writer application host value, as defined by 'service/serviceAccount:port'
-#  paperbackWriter: "paperback-writer:8080"
-#  # @key hostsPreview.aiSparqlBuilder AI SPARQL Builder application host value, as defined by 'service/serviceAccount:port'
-#  aiSparqlBuilder: "ai-sparql-builder:8080"
-

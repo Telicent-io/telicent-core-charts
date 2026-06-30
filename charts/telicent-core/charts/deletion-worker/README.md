@@ -158,7 +158,3 @@ If either of those details changes, you can use this section to correctly refer 
 | ------------------------- | ----------------------------------------------------------------------------------------- | -------------------- |
 | `hosts.enableAutoCorrect` | Allow for the release name to be automatically pre-fixed to each host value               | `true`               |
 | `hosts.traefikProxy`      | Traefik Proxy application default host value, as defined by 'service/serviceAccount:port' | `traefik-proxy:8080` |
-
-### Host(s) Preview Parameters - Contains host information for applications deployed via *telicent-preview* chart
-
-
