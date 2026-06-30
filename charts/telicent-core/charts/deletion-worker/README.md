@@ -17,7 +17,7 @@ the [Helm](https://helm.sh) package manager.
 To install the chart with the release name `my-release`:
 
 ```console
-helm install my-release ./charts/telicent-core/charts/graph
+helm install my-release ./charts/telicent-core/charts/deletion-worker
 ```
 
 ## Uninstalling the Chart
@@ -33,9 +33,9 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ```bash
 .dev/readme-generator-for-helm --config=charts/telicent-core/readme.config \
- --values=charts/telicent-core/charts/graph/values.yaml \
- --readme=charts/telicent-core/charts/graph/README.md \
- --schema=charts/telicent-core/charts/graph/values.schema.json
+ --values=charts/telicent-core/charts/deletion-worker/values.yaml \
+ --readme=charts/telicent-core/charts/deletion-worker/README.md \
+ --schema=charts/telicent-core/charts/deletion-worker/values.schema.json
 ```
 
 ## Configuration and installation details
@@ -106,7 +106,7 @@ Note: Only global parameters used within this chart will be listed below.
 
 ### Application Parameters - Java
 
-Contains Java configuration parameters to be used by the *Graph* application
+Contains Java configuration parameters to be used by the *Deletion Worker* application
 
 | Name              | Description                     | Value                       |
 | ----------------- | ------------------------------- | --------------------------- |
@@ -122,10 +122,10 @@ Contains configuration parameters that configure aspects of the *Deletion Worker
 
 ### ConfigMap Parameters
 
-| Name                                | Description                                                             | Value |
-| ----------------------------------- | ----------------------------------------------------------------------- | ----- |
-| `configMap.existingEnvConfigMap`    | Name of existing configmap containing *Graph* Environment Configuration | `""`  |
-| `configMap.existingFusekiConfigMap` | Name of existing configmap containing Fuseki Configuration              | `""`  |
+| Name                                | Description                                                                       | Value |
+| ----------------------------------- |-----------------------------------------------------------------------------------| ----- |
+| `configMap.existingEnvConfigMap`    | Name of existing configmap containing *Deletion Worker* Environment Configuration | `""`  |
+| `configMap.existingFusekiConfigMap` | Name of existing configmap containing Fuseki Configuration                        | `""`  |
 
 ### Common Parameters
 
@@ -138,27 +138,27 @@ Contains configuration parameters that configure aspects of the *Deletion Worker
 
 ### Statefulset Parameters
 
-| Name                   | Description                                                  | Value |
-| ---------------------- | ------------------------------------------------------------ | ----- |
-| `replicas`             | Number of *Graph* replicas to deploy                         | `1`   |
-| `revisionHistoryLimit` | Number of controller revisions to keep                       | `5`   |
-| `annotations`          | Add extra annotations to the Statefulset object              | `{}`  |
-| `podLabels`            | Add extra labels to the *Graph* pod                          | `{}`  |
-| `podAnnotations`       | Add extra annotations to the *Graph* pod                     | `{}`  |
-| `extraEnvVars`         | Array with extra environment variables to add to *Graph* pod | `[]`  |
-| `extraVolumes`         | Optionally specify extra list of additional volumes          | `[]`  |
-| `extraVolumeMounts`    | Optionally specify extra list of additional volumeMounts     | `[]`  |
-| `initContainers`       | Add init containers to the pod                               | `[]`  |
-| `sidecars`             | Add sidecars to the pod                                      | `[]`  |
+| Name                   | Description                                                            | Value |
+| ---------------------- |------------------------------------------------------------------------| ----- |
+| `replicas`             | Number of *Deletion Worker* replicas to deploy                         | `1`   |
+| `revisionHistoryLimit` | Number of controller revisions to keep                                 | `5`   |
+| `annotations`          | Add extra annotations to the Statefulset object                        | `{}`  |
+| `podLabels`            | Add extra labels to the *Deletion Worker* pod                          | `{}`  |
+| `podAnnotations`       | Add extra annotations to the *Deletion Worker* pod                     | `{}`  |
+| `extraEnvVars`         | Array with extra environment variables to add to *Deletion Worker* pod | `[]`  |
+| `extraVolumes`         | Optionally specify extra list of additional volumes                    | `[]`  |
+| `extraVolumeMounts`    | Optionally specify extra list of additional volumeMounts               | `[]`  |
+| `initContainers`       | Add init containers to the pod                                         | `[]`  |
+| `sidecars`             | Add sidecars to the pod                                                | `[]`  |
 
 ### Statefulset Image Parameters
 
 | Name                | Description                                                            | Value                          |
 | ------------------- | ---------------------------------------------------------------------- | ------------------------------ |
-| `image.registry`    | *Graph* image registry                                                 | `quay.io`                      |
-| `image.repository`  | *Graph* image name                                                     | `telicent/scg-deletion-worker` |
-| `image.tag`         | *Graph* image tag. If not set, a tag is generated using the appVersion | `""`                           |
-| `image.pullPolicy`  | *Graph* image pull policy                                              | `IfNotPresent`                 |
+| `image.registry`    | *Deletion Worker* image registry                                                 | `quay.io`                      |
+| `image.repository`  | *Deletion Worker* image name                                                     | `telicent/scg-deletion-worker` |
+| `image.tag`         | *Deletion Worker* image tag. If not set, a tag is generated using the appVersion | `""`                           |
+| `image.pullPolicy`  | *Deletion Worker* image pull policy                                              | `IfNotPresent`                 |
 | `image.pullSecrets` | Specify registry secret names as an array                              | `[]`                           |
 
 ### Statefulset Probe Parameters
@@ -179,7 +179,7 @@ Contains configuration parameters that configure aspects of the *Deletion Worker
 
 | Name        | Description                      | Value |
 | ----------- | -------------------------------- | ----- |
-| `resources` | Resources for *Graph* containers | `{}`  |
+| `resources` | Resources for *Deletion Worker* containers | `{}`  |
 
 ### Statefulset Security Context Parameters - Default Security Context
 
@@ -221,9 +221,9 @@ Contains configuration parameters that configure aspects of the *Deletion Worker
 
 | Name           | Description                                                              | Value       |
 | -------------- | ------------------------------------------------------------------------ | ----------- |
-| `service.name` | *Graph* service name. If not set, a name is generated using the fullname | `""`        |
-| `service.port` | *Graph* service port                                                     | `8080`      |
-| `service.type` | *Graph* service type                                                     | `ClusterIP` |
+| `service.name` | *Deletion Worker* service name. If not set, a name is generated using the fullname | `""`        |
+| `service.port` | *Deletion Worker* service port                                                     | `8080`      |
+| `service.type` | *Deletion Worker* service type                                                     | `ClusterIP` |
 
 ### Metrics (Prometheus) Exposure Parameters
 
