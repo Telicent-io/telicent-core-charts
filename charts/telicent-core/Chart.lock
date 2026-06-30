@@ -3,14 +3,14 @@ dependencies:
   repository: oci://quay.io/telicent/charts
   version: 1.5.0
 - name: auth
-  repository: file://./charts/auth
-  version: 0.1.11
+  repository: oci://quay.io/telicent/charts
+  version: 0.2.9
 - name: document-pipeline
   repository: file://./charts/document-pipeline
-  version: 0.1.5
+  version: 0.2.3
 - name: graph
-  repository: file://./charts/graph
-  version: 0.2.2
+  repository: oci://quay.io/telicent/charts
+  version: 1.0.9
 - name: graph-ui
   repository: oci://quay.io/telicent/charts
   version: 1.37.3
@@ -18,11 +18,11 @@ dependencies:
   repository: oci://quay.io/telicent/charts
   version: 1.5.4
 - name: search
-  repository: file://./charts/search
-  version: 0.2.3
+  repository: oci://quay.io/telicent/charts
+  version: 2.2.0
 - name: search-projector
-  repository: file://./charts/search-projector
-  version: 0.2.2
+  repository: oci://quay.io/telicent/charts
+  version: 2.2.0
 - name: search-ui
   repository: oci://quay.io/telicent/charts
   version: 4.19.8
@@ -31,6 +31,6 @@ dependencies:
   version: 0.1.1
 - name: user-preferences
   repository: file://./charts/user-preferences
-  version: 0.2.1
-digest: sha256:e4c27ff85c4f8dc79cbdd4273ea0ce06681fb67b2465076f9b43e762d629d765
-generated: "2026-05-28T11:15:50.579538+01:00"
+  version: 0.2.2
+digest: sha256:182c178e65fb652cedc644156ab4f66585162ba3422a8ec1fbfadbda439d19a8
+generated: "2026-06-30T18:50:24.359349+01:00"

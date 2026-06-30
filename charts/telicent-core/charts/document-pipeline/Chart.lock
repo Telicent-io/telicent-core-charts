@@ -1,0 +1,12 @@
+dependencies:
+- name: smart-cache-documents
+  repository: oci://quay.io/telicent/charts
+  version: 3.5.1
+- name: rdf-document-tagger-dc
+  repository: oci://quay.io/telicent/charts
+  version: 3.0.7
+- name: pipeline-entity-extraction
+  repository: oci://quay.io/telicent/charts
+  version: 3.0.8
+digest: sha256:fab3a13f2591c1825778ebbfb010fc77feeaa922fdd47b12977d5721574d0624
+generated: "2026-06-30T17:24:40.902962+01:00"

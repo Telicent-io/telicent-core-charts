@@ -15,10 +15,30 @@ type: application
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 0.1.5
+version: 0.2.3
 
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application. Versions are not expected to
 # follow Semantic Versioning. They should reflect the version the application is using.
 # It is recommended to use it with quotes.
-appVersion: "0.2.1"
+appVersion: "0.2.3"
+
+# The chart's dependencies. The Document Pipeline components are now delivered by the
+# upstream Telicent component charts rather than by templates within this chart:
+#   - smart-cache-documents     -> httpIngester, contentExtractor, contentIndexer, catalogueUpdater
+#   - rdf-document-tagger-dc     -> contentTagger
+#   - pipeline-entity-extraction -> entityExtractor
+# Each dependency is gated on this chart's top-level `enabled` flag.
+dependencies:
+  - name: smart-cache-documents
+    version: "3.5.1"
+    repository: oci://quay.io/telicent/charts
+    condition: enabled
+  - name: rdf-document-tagger-dc
+    version: "3.0.7"
+    repository: oci://quay.io/telicent/charts
+    condition: enabled
+  - name: pipeline-entity-extraction
+    version: "3.0.8"
+    repository: oci://quay.io/telicent/charts
+    condition: enabled
