@@ -1,5 +1,38 @@
 # Changelog
 
+## [0.6.1](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-preview-v0.5.1...telicent-preview-v0.6.1) (2026-06-30)
+
+
+### Features
+
+* Adds AI model provider Chart ([4884f24](https://github.com/Telicent-io/telicent-core-charts/commit/4884f24b8259d2dd388a0107a38166b8cb96c79e))
+* adds sparql AI builder ([27fcf7b](https://github.com/Telicent-io/telicent-core-charts/commit/27fcf7b8c996d6ed0622292e426d9e8fa1ab0617))
+* **apicurio:** Add chart and route for Apicurio ([6ffc32d](https://github.com/Telicent-io/telicent-core-charts/commit/6ffc32d21d7ec1f73621ae1bd394334838474f2e))
+* **apicurio:** Add chart and route for Apicurio ([d0adf4b](https://github.com/Telicent-io/telicent-core-charts/commit/d0adf4bc987a6c5a1845ac29a085ff5397bd0f53))
+* archive ai-model-provider ([3e11d4d](https://github.com/Telicent-io/telicent-core-charts/commit/3e11d4dd200cf1a9caf3703eeee00dc9a9fccb42))
+* upversion paperback writer to 0.8.2 ([bef401f](https://github.com/Telicent-io/telicent-core-charts/commit/bef401f4cd03fceb74bc3e51d92477d7e2f85cd9))
+* upversion paperback writer to 0.8.2 ([4be76bc](https://github.com/Telicent-io/telicent-core-charts/commit/4be76bc26ce1370c9bcb20a82e928a5702af2f05))
+
+
+### Bug Fixes
+
+* adds required default value for Apicurio ([#591](https://github.com/Telicent-io/telicent-core-charts/issues/591)) ([e7744c0](https://github.com/Telicent-io/telicent-core-charts/commit/e7744c0e7d4bd054446f583fbabebc998ec3199e))
+* **apicurio:** Add management port and correct URIs ([2308256](https://github.com/Telicent-io/telicent-core-charts/commit/23082567650a29405b77e824bebdf236839da643))
+* **apicurio:** Add management port and correct URIs ([8858852](https://github.com/Telicent-io/telicent-core-charts/commit/885885294fe130cbb8fdc7dd6b9bd325fbdce15b))
+* **auth:** enable client secret from env vars ([a025631](https://github.com/Telicent-io/telicent-core-charts/commit/a025631b0e8ab0dd2f7877651b931c9cd2757538))
+* **chart:** Fix missing configuration ([3b069a7](https://github.com/Telicent-io/telicent-core-charts/commit/3b069a71ad1c32fa91305e84e5a092e9b1bd1d05))
+* **chart:** Fix missing configuration ([7dabd73](https://github.com/Telicent-io/telicent-core-charts/commit/7dabd738851d66425003403c962676aa7b0b94af))
+* move front end charts to code repositories ([#590](https://github.com/Telicent-io/telicent-core-charts/issues/590)) ([c1fbfce](https://github.com/Telicent-io/telicent-core-charts/commit/c1fbfce96b3991452b0b5f4b6302a13dd698a546))
+* postgres config + tidy ([4e2f502](https://github.com/Telicent-io/telicent-core-charts/commit/4e2f5024c324ad5ec3a386e1a8ad1144627c11fe))
+* postgres config + tidy ([5cc33ee](https://github.com/Telicent-io/telicent-core-charts/commit/5cc33ee0982126497d70064d31af54a864dc4b45))
+* update FE versions for june release ([#630](https://github.com/Telicent-io/telicent-core-charts/issues/630)) ([cc13435](https://github.com/Telicent-io/telicent-core-charts/commit/cc13435c65ca59a3e88beec607d5529f3ba1ba3b))
+* use single demo-prereqs chart ([98a5531](https://github.com/Telicent-io/telicent-core-charts/commit/98a55316a5a7102fd9b0f13a3a9fbefa1e4e8e0b))
+
+
+### Miscellaneous Chores
+
+* relase 0.6.1 ([#537](https://github.com/Telicent-io/telicent-core-charts/issues/537)) ([fd6b083](https://github.com/Telicent-io/telicent-core-charts/commit/fd6b0838cd3ac0608f8d24f68c24c127e7590220))
+
 ## [0.6.0](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-preview-v0.5.1...telicent-preview-v0.6.0) (2026-03-04)
 
 
