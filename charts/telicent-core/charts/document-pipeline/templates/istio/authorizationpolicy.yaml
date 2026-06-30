@@ -1,5 +1,5 @@
 {{- if .Values.enabled -}}
-apiVersion: security.istio.io/v1
+apiVersion: {{ .Values.global.istioSecurityApiVersion }}
 kind: AuthorizationPolicy
 
 metadata:

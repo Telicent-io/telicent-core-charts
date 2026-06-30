@@ -283,6 +283,8 @@ istio:
   virtualService:
     # @key istio.virtualService.enabled Enable Istio traffic into *Traefik Proxy*
     enabled: true
+    # @key istio.virtualService.apiVersion API version for VirtualService resources (e.g. networking.istio.io/v1 or networking.istio.io/v1beta1)
+    apiVersion: networking.istio.io/v1
     # @key istio.virtualService.extraHosts Additional hosts (excluding appHostDomain) to be managed by *Traefik Proxy*
     extraHosts: []
 

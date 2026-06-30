@@ -2,7 +2,7 @@
 Copyright (C) 2026 Telicent Limited
 */}}
 {{- if .Values.istio.virtualService.enabled  }}
-apiVersion: networking.istio.io/v1
+apiVersion: {{ .Values.istio.virtualService.apiVersion }}
 kind: VirtualService
 
 metadata:

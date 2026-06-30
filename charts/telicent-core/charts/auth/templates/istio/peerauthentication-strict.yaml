@@ -2,7 +2,7 @@
 Copyright (C) 2026 Telicent Limited
 */}}
 
-apiVersion: security.istio.io/v1
+apiVersion: {{ .Values.global.istioSecurityApiVersion }}
 kind: PeerAuthentication
 
 metadata:

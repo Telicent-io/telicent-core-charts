@@ -43,6 +43,8 @@ global:
   istioGatewayNamespace: istio-system
   # @key global.istioGatewayName Name of the Istio Gateway resource
   istioGatewayName: ingress-gateway
+  # @key global.istioSecurityApiVersion API version for security.istio.io resources (PeerAuthentication, AuthorizationPolicy). Use v1beta1 for older Istio installations.
+  istioSecurityApiVersion: security.istio.io/v1
 
   #
   # @section Global Parameters - Kafka
