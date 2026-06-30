@@ -27,7 +27,7 @@ appVersion: "1.16.0"
 
 dependencies:
   - name: data-catalog-ui
-    version: "1.15.3"
+    version: "1.15.4"
     repository: oci://quay.io/telicent/charts
     condition: data-catalog-ui.enabled
   - name: notifications
@@ -43,7 +43,7 @@ dependencies:
     repository: file://./charts/paperback-writer
     condition: global.enterprise, paperback-writer.enabled
   - name: user-portal-ui
-    version: "1.9.0"
+    version: "1.10.0"
     repository: oci://quay.io/telicent/charts
     condition: user-portal-ui.enabled
   - name: apicurio
