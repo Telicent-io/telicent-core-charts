@@ -45,8 +45,8 @@ dependencies:
     version: "^0.2.2"
     repository: file://./charts/graph
   - name: deletion-worker
-    version: "^0.2.0"
-    repository: file://./charts/deletion-worker
+    version: "^1.0.10-SNAPSHOT"
+    repository: oci://098669589541.dkr.ecr.eu-west-2.amazonaws.com/charts
   - name: graph-ui
     version: "1.37.3"
     repository: oci://quay.io/telicent/charts
