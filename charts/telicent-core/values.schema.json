@@ -56,6 +56,11 @@
                     "description": "Name of the Istio Gateway resource",
                     "default": "ingress-gateway"
                 },
+                "istioSecurityApiVersion": {
+                    "type": "string",
+                    "description": "API version for security.istio.io resources (PeerAuthentication, AuthorizationPolicy). Use v1beta1 for older Istio installations.",
+                    "default": "security.istio.io/v1"
+                },
                 "kafka": {
                     "type": "object",
                     "properties": {

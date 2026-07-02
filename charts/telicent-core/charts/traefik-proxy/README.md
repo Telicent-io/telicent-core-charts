@@ -234,14 +234,15 @@ For Quick Start purposes, a secret named `tc-auth-gen-forward-traefik-proxy` wil
 
 ### Istio Parameters
 
-| Name                              | Description                                                                 | Value             |
-| --------------------------------- | --------------------------------------------------------------------------- | ----------------- |
-| `istio.ingress.namespace`         | Namespace in which the Istio Ingress resource is deployed                   | `istio-system`    |
-| `istio.ingress.serviceAccount`    | ServiceAccount associated with Istio ingress deployment                     | `istio-ingress`   |
-| `istio.gateway.namespace`         | Namespace in which the Istio Gateway resource is deployed                   | `istio-system`    |
-| `istio.gateway.name`              | Name of the Istio Gateway resource                                          | `ingress-gateway` |
-| `istio.virtualService.enabled`    | Enable Istio traffic into *Traefik Proxy*                                   | `true`            |
-| `istio.virtualService.extraHosts` | Additional hosts (excluding appHostDomain) to be managed by *Traefik Proxy* | `[]`              |
+| Name                              | Description                                                                                           | Value                    |
+| --------------------------------- | ----------------------------------------------------------------------------------------------------- | ------------------------ |
+| `istio.ingress.namespace`         | Namespace in which the Istio Ingress resource is deployed                                             | `istio-system`           |
+| `istio.ingress.serviceAccount`    | ServiceAccount associated with Istio ingress deployment                                               | `istio-ingress`          |
+| `istio.gateway.namespace`         | Namespace in which the Istio Gateway resource is deployed                                             | `istio-system`           |
+| `istio.gateway.name`              | Name of the Istio Gateway resource                                                                    | `ingress-gateway`        |
+| `istio.virtualService.enabled`    | Enable Istio traffic into *Traefik Proxy*                                                             | `true`                   |
+| `istio.virtualService.apiVersion` | API version for VirtualService resources (e.g. networking.istio.io/v1 or networking.istio.io/v1beta1) | `networking.istio.io/v1` |
+| `istio.virtualService.extraHosts` | Additional hosts (excluding appHostDomain) to be managed by *Traefik Proxy*                           | `[]`                     |
 
 ### Host(s) Parameters - Contains host information for applications deployed via *telicent-core* chart
 

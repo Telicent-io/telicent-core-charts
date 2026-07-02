@@ -506,6 +506,11 @@
                             "description": "Enable Istio traffic into *Traefik Proxy*",
                             "default": true
                         },
+                        "apiVersion": {
+                            "type": "string",
+                            "description": "API version for VirtualService resources (e.g. networking.istio.io/v1 or networking.istio.io/v1beta1)",
+                            "default": "networking.istio.io/v1"
+                        },
                         "extraHosts": {
                             "type": "array",
                             "description": "Additional hosts (excluding appHostDomain) to be managed by *Traefik Proxy*",

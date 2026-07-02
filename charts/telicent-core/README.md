@@ -69,12 +69,13 @@ Contains global parameters, these parameters are mirrored across all Telicent Co
 
 These settings will be used by all Telicent Core components using Istio resources.
 
-| Name                                | Description                                               | Value             |
-| ----------------------------------- | --------------------------------------------------------- | ----------------- |
-| `global.istioIngressNamespace`      | Namespace in which the Istio Ingress resource is deployed | `istio-system`    |
-| `global.istioIngressServiceAccount` | ServiceAccount associated with Istio ingress deployment   | `istio-ingress`   |
-| `global.istioGatewayNamespace`      | Namespace in which the Istio Gateway resource is deployed | `istio-system`    |
-| `global.istioGatewayName`           | Name of the Istio Gateway resource                        | `ingress-gateway` |
+| Name                                | Description                                                                                                                       | Value                  |
+| ----------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | ---------------------- |
+| `global.istioIngressNamespace`      | Namespace in which the Istio Ingress resource is deployed                                                                         | `istio-system`         |
+| `global.istioIngressServiceAccount` | ServiceAccount associated with Istio ingress deployment                                                                           | `istio-ingress`        |
+| `global.istioGatewayNamespace`      | Namespace in which the Istio Gateway resource is deployed                                                                         | `istio-system`         |
+| `global.istioGatewayName`           | Name of the Istio Gateway resource                                                                                                | `ingress-gateway`      |
+| `global.istioSecurityApiVersion`    | API version for security.istio.io resources (PeerAuthentication, AuthorizationPolicy). Use v1beta1 for older Istio installations. | `security.istio.io/v1` |
 
 ### Global Parameters - Kafka
 
