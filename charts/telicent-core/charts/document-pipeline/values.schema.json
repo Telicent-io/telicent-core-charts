@@ -88,7 +88,7 @@
                 }
             }
         },
-        "smart-cache-documents": {
+        "doc-pipeline-sc-docs": {
             "type": "object",
             "properties": {
                 "enabled": {
@@ -479,7 +479,7 @@
                 }
             }
         },
-        "rdf-document-tagger-dc": {
+        "doc-pipeline-rdf-document-tagger-dc": {
             "type": "object",
             "properties": {
                 "enabled": {
@@ -649,7 +649,7 @@
                 }
             }
         },
-        "pipeline-entity-extraction": {
+        "doc-pipeline-entity-extraction": {
             "type": "object",
             "properties": {
                 "enabled": {
