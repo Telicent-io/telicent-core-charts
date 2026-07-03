@@ -69,57 +69,57 @@ global:
 # Unset values fall back to the dependency chart's own defaults (including container images).
 # @descEnd
 doc-pipeline-sc-docs:
-  # @key smart-cache-documents.enabled Enable the smart-cache-documents components
+  # @key doc-pipeline-sc-docs.enabled Enable the smart-cache-documents components
   enabled: true
 
-  # @key smart-cache-documents.resources Default resources applied to the smart-cache-documents containers
+  # @key doc-pipeline-sc-docs.resources Default resources applied to the smart-cache-documents containers
   resources: {}
 
   podSecurityContext:
-    # @key smart-cache-documents.podSecurityContext.runAsUser Set the pod's Security Context runAsUser User ID
+    # @key doc-pipeline-sc-docs.podSecurityContext.runAsUser Set the pod's Security Context runAsUser User ID
     runAsUser: 185
-    # @key smart-cache-documents.podSecurityContext.runAsGroup Set the pod's Security Context runAsGroup Group ID
+    # @key doc-pipeline-sc-docs.podSecurityContext.runAsGroup Set the pod's Security Context runAsGroup Group ID
     runAsGroup: 185
-    # @key smart-cache-documents.podSecurityContext.runAsNonRoot Set the pod's Security Context runAsNonRoot
+    # @key doc-pipeline-sc-docs.podSecurityContext.runAsNonRoot Set the pod's Security Context runAsNonRoot
     runAsNonRoot: true
-    # @key smart-cache-documents.podSecurityContext.fsGroup Set the pod's Group ID for the mounted volumes' filesystem
+    # @key doc-pipeline-sc-docs.podSecurityContext.fsGroup Set the pod's Group ID for the mounted volumes' filesystem
     fsGroup: 185
     seccompProfile:
-      # @key smart-cache-documents.podSecurityContext.seccompProfile.type Set the pod's Security Context seccomp profile
+      # @key doc-pipeline-sc-docs.podSecurityContext.seccompProfile.type Set the pod's Security Context seccomp profile
       type: RuntimeDefault
   containerSecurityContext:
-    # @key smart-cache-documents.containerSecurityContext.runAsUser Set containers' Security Context runAsUser User ID
+    # @key doc-pipeline-sc-docs.containerSecurityContext.runAsUser Set containers' Security Context runAsUser User ID
     runAsUser: 185
-    # @key smart-cache-documents.containerSecurityContext.runAsGroup Set containers' Security Context runAsGroup Group ID
+    # @key doc-pipeline-sc-docs.containerSecurityContext.runAsGroup Set containers' Security Context runAsGroup Group ID
     runAsGroup: 185
-    # @key smart-cache-documents.containerSecurityContext.runAsNonRoot Set container's Security Context runAsNonRoot
+    # @key doc-pipeline-sc-docs.containerSecurityContext.runAsNonRoot Set container's Security Context runAsNonRoot
     runAsNonRoot: true
-    # @key smart-cache-documents.containerSecurityContext.allowPrivilegeEscalation Set container's Security Context allowPrivilegeEscalation
+    # @key doc-pipeline-sc-docs.containerSecurityContext.allowPrivilegeEscalation Set container's Security Context allowPrivilegeEscalation
     allowPrivilegeEscalation: false
     capabilities:
-      # @key smart-cache-documents.containerSecurityContext.capabilities.drop List of capabilities to be dropped
+      # @key doc-pipeline-sc-docs.containerSecurityContext.capabilities.drop List of capabilities to be dropped
       drop:
         - ALL
     seccompProfile:
-      # @key smart-cache-documents.containerSecurityContext.seccompProfile.type Set container's Security Context seccomp profile
+      # @key doc-pipeline-sc-docs.containerSecurityContext.seccompProfile.type Set container's Security Context seccomp profile
       type: RuntimeDefault
 
   serviceAccount:
-    # @key smart-cache-documents.serviceAccount.create Specifies whether a service account should be created
+    # @key doc-pipeline-sc-docs.serviceAccount.create Specifies whether a service account should be created
     create: true
-    # @key smart-cache-documents.serviceAccount.automount Automatically mount a ServiceAccount's API credentials
+    # @key doc-pipeline-sc-docs.serviceAccount.automount Automatically mount a ServiceAccount's API credentials
     automount: true
-    # @key smart-cache-documents.serviceAccount.annotations Annotations to add to the service account
+    # @key doc-pipeline-sc-docs.serviceAccount.annotations Annotations to add to the service account
     annotations: {}
-    # @key smart-cache-documents.serviceAccount.name The name of the service account to use. If not set and create is true, a name is generated using the fullname template
+    # @key doc-pipeline-sc-docs.serviceAccount.name The name of the service account to use. If not set and create is true, a name is generated using the fullname template
     name: ""
 
   hosts:
-    # @key smart-cache-documents.hosts.enableAutoCorrect Allow for the release name to be automatically pre-fixed to each host value when required
+    # @key doc-pipeline-sc-docs.hosts.enableAutoCorrect Allow for the release name to be automatically pre-fixed to each host value when required
     enableAutoCorrect: true
-    # @key smart-cache-documents.hosts.auth Auth application default host value, as defined by 'service/serviceAccount:port'
+    # @key doc-pipeline-sc-docs.hosts.auth Auth application default host value, as defined by 'service/serviceAccount:port'
     auth: "auth:8080"
-    # @key smart-cache-documents.hosts.traefikProxy Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'
+    # @key doc-pipeline-sc-docs.hosts.traefikProxy Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'
     traefikProxy: "traefik-proxy:8080"
 
   #
@@ -127,65 +127,65 @@ doc-pipeline-sc-docs:
   #
   httpIngester:
     java:
-      # @key smart-cache-documents.httpIngester.java.jvmOptions Java options to pass to the JVM
+      # @key doc-pipeline-sc-docs.httpIngester.java.jvmOptions Java options to pass to the JVM
       jvmOptions: "-XX:MaxRAMPercentage=80.0"
 
     routes:
-      # @key smart-cache-documents.httpIngester.routes[0].name A unique name for the route
+      # @key doc-pipeline-sc-docs.httpIngester.routes[0].name A unique name for the route
       - name: local
-        # @key smart-cache-documents.httpIngester.routes[0].topic The destination Kafka topic for the route
+        # @key doc-pipeline-sc-docs.httpIngester.routes[0].topic The destination Kafka topic for the route
         topic: document.extractrequest
-        # @key smart-cache-documents.httpIngester.routes[0].securityLabel In this test configuration the label is simply test=true
+        # @key doc-pipeline-sc-docs.httpIngester.routes[0].securityLabel In this test configuration the label is simply test=true
         securityLabel: dGVzdD10cnVl
-        # @key smart-cache-documents.httpIngester.routes[0].namespace The Namespace URI that will be used to assign a unique URI to a document URIs are generated deterministically based on this and the ingested document content
+        # @key doc-pipeline-sc-docs.httpIngester.routes[0].namespace The Namespace URI that will be used to assign a unique URI to a document URIs are generated deterministically based on this and the ingested document content
         namespace: https://example.org/ns#
         headers:
-          # @key smart-cache-documents.httpIngester.routes[0].headers[0].name The Owner header, configured such that even if the header is present in the request then the defaultValue here takes precedence
+          # @key doc-pipeline-sc-docs.httpIngester.routes[0].headers[0].name The Owner header, configured such that even if the header is present in the request then the defaultValue here takes precedence
           - name: Owner
-            # @key smart-cache-documents.httpIngester.routes[0].headers[0].defaultValue The default value for the Owner header
+            # @key doc-pipeline-sc-docs.httpIngester.routes[0].headers[0].defaultValue The default value for the Owner header
             defaultValue: Platform Team
-            # @key smart-cache-documents.httpIngester.routes[0].headers[0].priority The priority for the Owner header
+            # @key doc-pipeline-sc-docs.httpIngester.routes[0].headers[0].priority The priority for the Owner header
             priority: CONFIGURATION
-          # @key smart-cache-documents.httpIngester.routes[0].headers[1].name The (deprecated) Data-Source-Name, configured such that if the header is present in the request then the request value takes precedence
+          # @key doc-pipeline-sc-docs.httpIngester.routes[0].headers[1].name The (deprecated) Data-Source-Name, configured such that if the header is present in the request then the request value takes precedence
           - name: Data-Source-Name
-            # @key smart-cache-documents.httpIngester.routes[0].headers[1].defaultValue The default value for the (deprecated) Data-Source-Name header
+            # @key doc-pipeline-sc-docs.httpIngester.routes[0].headers[1].defaultValue The default value for the (deprecated) Data-Source-Name header
             defaultValue: Test Data
-            # @key smart-cache-documents.httpIngester.routes[0].headers[1].priority The priority for the (deprecated) Data-Source-Name header
+            # @key doc-pipeline-sc-docs.httpIngester.routes[0].headers[1].priority The priority for the (deprecated) Data-Source-Name header
             priority: REQUEST
-          # @key smart-cache-documents.httpIngester.routes[0].headers[2].name The Distribution ID header. This is necessary to indicate what data catalogue details are associated to the incoming request.
+          # @key doc-pipeline-sc-docs.httpIngester.routes[0].headers[2].name The Distribution ID header. This is necessary to indicate what data catalogue details are associated to the incoming request.
           - name: Data-Source-Reference
-            # @key smart-cache-documents.httpIngester.routes[0].headers[2].defaultValue The default value for the Distribution ID header
+            # @key doc-pipeline-sc-docs.httpIngester.routes[0].headers[2].defaultValue The default value for the Distribution ID header
             defaultValue: Telicent Document Pipeline
-            # @key smart-cache-documents.httpIngester.routes[0].headers[2].priority The priority for the Distribution ID header
+            # @key doc-pipeline-sc-docs.httpIngester.routes[0].headers[2].priority The priority for the Distribution ID header
             priority: REQUEST
-          # @key smart-cache-documents.httpIngester.routes[0].headers[3].name The Distribution ID header.
+          # @key doc-pipeline-sc-docs.httpIngester.routes[0].headers[3].name The Distribution ID header.
           - name: Distribution-Id
-            # @key smart-cache-documents.httpIngester.routes[0].headers[3].defaultValue The default value for the Distribution ID header
+            # @key doc-pipeline-sc-docs.httpIngester.routes[0].headers[3].defaultValue The default value for the Distribution ID header
             defaultValue: 13bce3bf-7edb-4efb-a54f-574327458dd7
-            # @key smart-cache-documents.httpIngester.routes[0].headers[3].priority The priority for the Distribution ID header
+            # @key doc-pipeline-sc-docs.httpIngester.routes[0].headers[3].priority The priority for the Distribution ID header
             priority: REQUEST
-          # @key smart-cache-documents.httpIngester.routes[0].headers[4].name The EDH/IDH policy information header
+          # @key doc-pipeline-sc-docs.httpIngester.routes[0].headers[4].name The EDH/IDH policy information header
           - name: Policy-Information
-            # @key smart-cache-documents.httpIngester.routes[0].headers[4].defaultValue The default value for the EDH/IDH policy information header
+            # @key doc-pipeline-sc-docs.httpIngester.routes[0].headers[4].defaultValue The default value for the EDH/IDH policy information header
             defaultValue: '{"EDH":{"classification":"O","permittedNats":["GBR"],"permittedOrgs":["Telicent"],"orGroups":[],"andGroups":[]}}'
-            # @key smart-cache-documents.httpIngester.routes[0].headers[4].priority The priority for the EDH/IDH policy information header
+            # @key doc-pipeline-sc-docs.httpIngester.routes[0].headers[4].priority The priority for the EDH/IDH policy information header
             priority: REQUEST
 
     configMap:
-      # @key smart-cache-documents.httpIngester.configMap.existingEnvConfigMap Name of existing configmap containing *HTTP Ingester* Environment Configuration
+      # @key doc-pipeline-sc-docs.httpIngester.configMap.existingEnvConfigMap Name of existing configmap containing *HTTP Ingester* Environment Configuration
       existingEnvConfigMap: ""
-      # @key smart-cache-documents.httpIngester.configMap.existingRoutesConfigMap Name of existing configmap containing Routes Configuration
+      # @key doc-pipeline-sc-docs.httpIngester.configMap.existingRoutesConfigMap Name of existing configmap containing Routes Configuration
       existingRoutesConfigMap: ""
 
-    # @key smart-cache-documents.httpIngester.replicas Number of replicas to deploy
+    # @key doc-pipeline-sc-docs.httpIngester.replicas Number of replicas to deploy
     replicas: 1
 
     service:
-      # @key smart-cache-documents.httpIngester.service.name *HTTP Ingester* service name. If not set, a name is generated using the fullname
+      # @key doc-pipeline-sc-docs.httpIngester.service.name *HTTP Ingester* service name. If not set, a name is generated using the fullname
       name: ""
-      # @key smart-cache-documents.httpIngester.service.port *HTTP Ingester* service port
+      # @key doc-pipeline-sc-docs.httpIngester.service.port *HTTP Ingester* service port
       port: 8080
-      # @key smart-cache-documents.httpIngester.service.type *HTTP Ingester* service type
+      # @key doc-pipeline-sc-docs.httpIngester.service.type *HTTP Ingester* service type
       type: ClusterIP
 
   #
@@ -193,13 +193,13 @@ doc-pipeline-sc-docs:
   #
   contentExtractor:
     topics:
-      # @key smart-cache-documents.contentExtractor.topics.inputTopic The Kafka topic from which the *Content Extractor* will consume messages
+      # @key doc-pipeline-sc-docs.contentExtractor.topics.inputTopic The Kafka topic from which the *Content Extractor* will consume messages
       inputTopic: document.extractrequest
-      # @key smart-cache-documents.contentExtractor.topics.outputTopic The Kafka topic to which the *Content Extractor* will produce messages
+      # @key doc-pipeline-sc-docs.contentExtractor.topics.outputTopic The Kafka topic to which the *Content Extractor* will produce messages
       outputTopic: document.textandmetadata
-      # @key smart-cache-documents.contentExtractor.topics.dlqTopic The Kafka topic to which the *Content Extractor* will produce dead-lettered messages
+      # @key doc-pipeline-sc-docs.contentExtractor.topics.dlqTopic The Kafka topic to which the *Content Extractor* will produce dead-lettered messages
       dlqTopic: document.extractrequest.dlq
-    # @key smart-cache-documents.contentExtractor.replicas The number of replicas for the *Content Extractor*
+    # @key doc-pipeline-sc-docs.contentExtractor.replicas The number of replicas for the *Content Extractor*
     replicas: 1
 
   #
@@ -207,28 +207,28 @@ doc-pipeline-sc-docs:
   #
   contentIndexer:
     java:
-      # @key smart-cache-documents.contentIndexer.java.jvmOptions JVM options for the application
+      # @key doc-pipeline-sc-docs.contentIndexer.java.jvmOptions JVM options for the application
       jvmOptions: "-XX:MaxRAMPercentage=80.0"
     elastic:
-      # @key smart-cache-documents.contentIndexer.elastic.host Elastic/OpenSearch host (include protocol, https or http)
+      # @key doc-pipeline-sc-docs.contentIndexer.elastic.host Elastic/OpenSearch host (include protocol, https or http)
       host: https://your.opensearch.host
-      # @key smart-cache-documents.contentIndexer.elastic.port Elastic/OpenSearch port number
+      # @key doc-pipeline-sc-docs.contentIndexer.elastic.port Elastic/OpenSearch port number
       port: "443"
-      # @key smart-cache-documents.contentIndexer.elastic.opensearchCompatibility Enable OpenSearch compatibility
+      # @key doc-pipeline-sc-docs.contentIndexer.elastic.opensearchCompatibility Enable OpenSearch compatibility
       opensearchCompatibility: true
-      # @key smart-cache-documents.contentIndexer.elastic.index Elastic/OpenSearch index to be used
+      # @key doc-pipeline-sc-docs.contentIndexer.elastic.index Elastic/OpenSearch index to be used
       index: doc-content
-      # @key smart-cache-documents.contentIndexer.elastic.topic The Kafka topic(s) from which the content indexer will consume messages
+      # @key doc-pipeline-sc-docs.contentIndexer.elastic.topic The Kafka topic(s) from which the content indexer will consume messages
       topic: document.textandmetadata,document.entities
-      # @key smart-cache-documents.contentIndexer.elastic.dlqTopic The Kafka topic to which the content indexer will produce dead-lettered messages
+      # @key doc-pipeline-sc-docs.contentIndexer.elastic.dlqTopic The Kafka topic to which the content indexer will produce dead-lettered messages
       dlqTopic: document.textandmetadata.dlq
-      # @key smart-cache-documents.contentIndexer.elastic.existingSecret Name of an existing secret. The secret must contain 2 keys: 'username', 'password'
+      # @key doc-pipeline-sc-docs.contentIndexer.elastic.existingSecret Name of an existing secret. The secret must contain 2 keys: 'username', 'password'
       existingSecret: ""
-      # @key smart-cache-documents.contentIndexer.elastic.username OpenSearch/Elastic username (prefer existingSecret)
+      # @key doc-pipeline-sc-docs.contentIndexer.elastic.username OpenSearch/Elastic username (prefer existingSecret)
       username: ""
-      # @key smart-cache-documents.contentIndexer.elastic.password OpenSearch/Elastic user password (prefer existingSecret)
+      # @key doc-pipeline-sc-docs.contentIndexer.elastic.password OpenSearch/Elastic user password (prefer existingSecret)
       password: ""
-    # @key smart-cache-documents.contentIndexer.replicas Number of replicas to deploy
+    # @key doc-pipeline-sc-docs.contentIndexer.replicas Number of replicas to deploy
     replicas: 1
 
   #
@@ -236,19 +236,19 @@ doc-pipeline-sc-docs:
   #
   catalogueUpdater:
     topics:
-      # @key smart-cache-documents.catalogueUpdater.topics.inputTopic The Kafka topic from which the *Catalogue Updater* will consume messages
+      # @key doc-pipeline-sc-docs.catalogueUpdater.topics.inputTopic The Kafka topic from which the *Catalogue Updater* will consume messages
       inputTopic: document.textandmetadata
-      # @key smart-cache-documents.catalogueUpdater.topics.outputTopic The Kafka topic to which the *Catalogue Updater* will produce
+      # @key doc-pipeline-sc-docs.catalogueUpdater.topics.outputTopic The Kafka topic to which the *Catalogue Updater* will produce
       outputTopic: catalog
-      # @key smart-cache-documents.catalogueUpdater.topics.debounceWindowMs The debounce window in milliseconds
+      # @key doc-pipeline-sc-docs.catalogueUpdater.topics.debounceWindowMs The debounce window in milliseconds
       debounceWindowMs: 30000
-      # @key smart-cache-documents.catalogueUpdater.topics.flushIntervalMs The flush interval in milliseconds
+      # @key doc-pipeline-sc-docs.catalogueUpdater.topics.flushIntervalMs The flush interval in milliseconds
       flushIntervalMs: 60000
-      # @key smart-cache-documents.catalogueUpdater.topics.maxBufferSize The maximum buffer size
+      # @key doc-pipeline-sc-docs.catalogueUpdater.topics.maxBufferSize The maximum buffer size
       maxBufferSize: 100
-      # @key smart-cache-documents.catalogueUpdater.topics.dlqTopic The Kafka topic to which the *Catalogue Updater* will produce dead-lettered messages
+      # @key doc-pipeline-sc-docs.catalogueUpdater.topics.dlqTopic The Kafka topic to which the *Catalogue Updater* will produce dead-lettered messages
       dlqTopic: document.extractrequest.dlq
-    # @key smart-cache-documents.catalogueUpdater.replicas The number of replicas for the *Catalogue Updater*
+    # @key doc-pipeline-sc-docs.catalogueUpdater.replicas The number of replicas for the *Catalogue Updater*
     replicas: 1
 
 #
@@ -260,68 +260,68 @@ doc-pipeline-sc-docs:
 # Unset values fall back to the dependency chart's own defaults (including the container image).
 # @descEnd
 doc-pipeline-rdf-document-tagger-dc:
-  # @key rdf-document-tagger-dc.enabled Enable the Content Tagger component
+  # @key doc-pipeline-rdf-document-tagger-dc.enabled Enable the Content Tagger component
   enabled: true
 
   hosts:
-    # @key rdf-document-tagger-dc.hosts.enableAutoCorrect Allow for the release name to be automatically pre-fixed to each host value when required
+    # @key doc-pipeline-rdf-document-tagger-dc.hosts.enableAutoCorrect Allow for the release name to be automatically pre-fixed to each host value when required
     enableAutoCorrect: true
-    # @key rdf-document-tagger-dc.hosts.auth Auth application default host value, as defined by 'service/serviceAccount:port'
+    # @key doc-pipeline-rdf-document-tagger-dc.hosts.auth Auth application default host value, as defined by 'service/serviceAccount:port'
     auth: "auth:8080"
-    # @key rdf-document-tagger-dc.hosts.traefikProxy Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'
+    # @key doc-pipeline-rdf-document-tagger-dc.hosts.traefikProxy Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'
     traefikProxy: "traefik-proxy:8080"
 
   topics:
-    # @key rdf-document-tagger-dc.topics.inputTopic The Kafka topic from which the *Content Tagger* will consume messages
+    # @key doc-pipeline-rdf-document-tagger-dc.topics.inputTopic The Kafka topic from which the *Content Tagger* will consume messages
     inputTopic: document.textandmetadata
-    # @key rdf-document-tagger-dc.topics.outputTopic The Kafka topic to which the *Content Tagger* will produce
+    # @key doc-pipeline-rdf-document-tagger-dc.topics.outputTopic The Kafka topic to which the *Content Tagger* will produce
     outputTopic: knowledge
-    # @key rdf-document-tagger-dc.topics.rdfTaggerDataUriStub The URI for the RDF Tagger service
+    # @key doc-pipeline-rdf-document-tagger-dc.topics.rdfTaggerDataUriStub The URI for the RDF Tagger service
     rdfTaggerDataUriStub: http://telicent.io/data#
-    # @key rdf-document-tagger-dc.topics.dctUri The URI for Dublin Core Terms
+    # @key doc-pipeline-rdf-document-tagger-dc.topics.dctUri The URI for Dublin Core Terms
     dctUri: http://purl.org/dc/terms/
-    # @key rdf-document-tagger-dc.topics.iesUri The URI for the IES Ontology
+    # @key doc-pipeline-rdf-document-tagger-dc.topics.iesUri The URI for the IES Ontology
     iesUri: http://ies.data.gov.uk/ontology/ies4#
-    # @key rdf-document-tagger-dc.topics.tontUri The URI for the Telicent Ontology
+    # @key doc-pipeline-rdf-document-tagger-dc.topics.tontUri The URI for the Telicent Ontology
     tontUri: "http://telicent.io/ontology/"
-    # @key rdf-document-tagger-dc.topics.iso3166Uri The URI for the ISO 3166 standard
+    # @key doc-pipeline-rdf-document-tagger-dc.topics.iso3166Uri The URI for the ISO 3166 standard
     iso3166Uri: "http://iso.org/iso3166/country#"
-    # @key rdf-document-tagger-dc.topics.loggingLevel The logging level for the *Content Tagger*, e.g., DEBUG, INFO, WARN, ERROR
+    # @key doc-pipeline-rdf-document-tagger-dc.topics.loggingLevel The logging level for the *Content Tagger*, e.g., DEBUG, INFO, WARN, ERROR
     loggingLevel: INFO
-    # @key rdf-document-tagger-dc.topics.kafkaConfigMode The configuration mode for Kafka, either 'basic' or 'toml'
+    # @key doc-pipeline-rdf-document-tagger-dc.topics.kafkaConfigMode The configuration mode for Kafka, either 'basic' or 'toml'
     kafkaConfigMode: toml
 
-  # @key rdf-document-tagger-dc.replicas The number of replicas for the *Content Tagger*
+  # @key doc-pipeline-rdf-document-tagger-dc.replicas The number of replicas for the *Content Tagger*
   replicas: 1
 
   # Preserve the hardened security context (the dependency chart defaults these to empty).
   podSecurityContext:
-    # @key rdf-document-tagger-dc.podSecurityContext.runAsUser Set the pod's Security Context runAsUser User ID
+    # @key doc-pipeline-rdf-document-tagger-dc.podSecurityContext.runAsUser Set the pod's Security Context runAsUser User ID
     runAsUser: 185
-    # @key rdf-document-tagger-dc.podSecurityContext.runAsGroup Set the pod's Security Context runAsGroup Group ID
+    # @key doc-pipeline-rdf-document-tagger-dc.podSecurityContext.runAsGroup Set the pod's Security Context runAsGroup Group ID
     runAsGroup: 185
-    # @key rdf-document-tagger-dc.podSecurityContext.runAsNonRoot Set the pod's Security Context runAsNonRoot
+    # @key doc-pipeline-rdf-document-tagger-dc.podSecurityContext.runAsNonRoot Set the pod's Security Context runAsNonRoot
     runAsNonRoot: true
-    # @key rdf-document-tagger-dc.podSecurityContext.fsGroup Set the pod's Group ID for the mounted volumes' filesystem
+    # @key doc-pipeline-rdf-document-tagger-dc.podSecurityContext.fsGroup Set the pod's Group ID for the mounted volumes' filesystem
     fsGroup: 185
     seccompProfile:
-      # @key rdf-document-tagger-dc.podSecurityContext.seccompProfile.type Set the pod's Security Context seccomp profile
+      # @key doc-pipeline-rdf-document-tagger-dc.podSecurityContext.seccompProfile.type Set the pod's Security Context seccomp profile
       type: RuntimeDefault
   containerSecurityContext:
-    # @key rdf-document-tagger-dc.containerSecurityContext.runAsUser Set containers' Security Context runAsUser User ID
+    # @key doc-pipeline-rdf-document-tagger-dc.containerSecurityContext.runAsUser Set containers' Security Context runAsUser User ID
     runAsUser: 185
-    # @key rdf-document-tagger-dc.containerSecurityContext.runAsGroup Set containers' Security Context runAsGroup Group ID
+    # @key doc-pipeline-rdf-document-tagger-dc.containerSecurityContext.runAsGroup Set containers' Security Context runAsGroup Group ID
     runAsGroup: 185
-    # @key rdf-document-tagger-dc.containerSecurityContext.runAsNonRoot Set container's Security Context runAsNonRoot
+    # @key doc-pipeline-rdf-document-tagger-dc.containerSecurityContext.runAsNonRoot Set container's Security Context runAsNonRoot
     runAsNonRoot: true
-    # @key rdf-document-tagger-dc.containerSecurityContext.allowPrivilegeEscalation Set container's Security Context allowPrivilegeEscalation
+    # @key doc-pipeline-rdf-document-tagger-dc.containerSecurityContext.allowPrivilegeEscalation Set container's Security Context allowPrivilegeEscalation
     allowPrivilegeEscalation: false
     capabilities:
-      # @key rdf-document-tagger-dc.containerSecurityContext.capabilities.drop List of capabilities to be dropped
+      # @key doc-pipeline-rdf-document-tagger-dc.containerSecurityContext.capabilities.drop List of capabilities to be dropped
       drop:
         - ALL
     seccompProfile:
-      # @key rdf-document-tagger-dc.containerSecurityContext.seccompProfile.type Set container's Security Context seccomp profile
+      # @key doc-pipeline-rdf-document-tagger-dc.containerSecurityContext.seccompProfile.type Set container's Security Context seccomp profile
       type: RuntimeDefault
 
 #
@@ -333,54 +333,54 @@ doc-pipeline-rdf-document-tagger-dc:
 # Unset values fall back to the dependency chart's own defaults (including the container image).
 # @descEnd
 doc-pipeline-entity-extraction:
-  # @key pipeline-entity-extraction.enabled Enable the Entity Extractor component
+  # @key doc-pipeline-entity-extraction.enabled Enable the Entity Extractor component
   enabled: true
 
   hosts:
-    # @key pipeline-entity-extraction.hosts.enableAutoCorrect Allow for the release name to be automatically pre-fixed to each host value when required
+    # @key doc-pipeline-entity-extraction.hosts.enableAutoCorrect Allow for the release name to be automatically pre-fixed to each host value when required
     enableAutoCorrect: true
-    # @key pipeline-entity-extraction.hosts.auth Auth application default host value, as defined by 'service/serviceAccount:port'
+    # @key doc-pipeline-entity-extraction.hosts.auth Auth application default host value, as defined by 'service/serviceAccount:port'
     auth: "auth:8080"
-    # @key pipeline-entity-extraction.hosts.traefikProxy Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'
+    # @key doc-pipeline-entity-extraction.hosts.traefikProxy Traefik Proxy application default host value, as defined by 'service/serviceAccount:port'
     traefikProxy: "traefik-proxy:8080"
 
   topics:
-    # @key pipeline-entity-extraction.topics.inputTopic The Kafka topic from which the entity extractor will consume messages
+    # @key doc-pipeline-entity-extraction.topics.inputTopic The Kafka topic from which the entity extractor will consume messages
     inputTopic: document.textandmetadata
-    # @key pipeline-entity-extraction.topics.outputTopic The Kafka topic to which the entity extractor will produce
+    # @key doc-pipeline-entity-extraction.topics.outputTopic The Kafka topic to which the entity extractor will produce
     outputTopic: document.entities
-    # @key pipeline-entity-extraction.topics.kafkaConfigMode The configuration mode for Kafka, either 'basic' or 'toml'
+    # @key doc-pipeline-entity-extraction.topics.kafkaConfigMode The configuration mode for Kafka, either 'basic' or 'toml'
     kafkaConfigMode: toml
 
-  # @key pipeline-entity-extraction.replicas Number of replicas to deploy
+  # @key doc-pipeline-entity-extraction.replicas Number of replicas to deploy
   replicas: 1
 
   # Preserve the hardened security context (the dependency chart defaults these to empty).
   podSecurityContext:
-    # @key pipeline-entity-extraction.podSecurityContext.runAsUser Set the pod's Security Context runAsUser User ID
+    # @key doc-pipeline-entity-extraction.podSecurityContext.runAsUser Set the pod's Security Context runAsUser User ID
     runAsUser: 185
-    # @key pipeline-entity-extraction.podSecurityContext.runAsGroup Set the pod's Security Context runAsGroup Group ID
+    # @key doc-pipeline-entity-extraction.podSecurityContext.runAsGroup Set the pod's Security Context runAsGroup Group ID
     runAsGroup: 185
-    # @key pipeline-entity-extraction.podSecurityContext.runAsNonRoot Set the pod's Security Context runAsNonRoot
+    # @key doc-pipeline-entity-extraction.podSecurityContext.runAsNonRoot Set the pod's Security Context runAsNonRoot
     runAsNonRoot: true
-    # @key pipeline-entity-extraction.podSecurityContext.fsGroup Set the pod's Group ID for the mounted volumes' filesystem
+    # @key doc-pipeline-entity-extraction.podSecurityContext.fsGroup Set the pod's Group ID for the mounted volumes' filesystem
     fsGroup: 185
     seccompProfile:
-      # @key pipeline-entity-extraction.podSecurityContext.seccompProfile.type Set the pod's Security Context seccomp profile
+      # @key doc-pipeline-entity-extraction.podSecurityContext.seccompProfile.type Set the pod's Security Context seccomp profile
       type: RuntimeDefault
   containerSecurityContext:
-    # @key pipeline-entity-extraction.containerSecurityContext.runAsUser Set containers' Security Context runAsUser User ID
+    # @key doc-pipeline-entity-extraction.containerSecurityContext.runAsUser Set containers' Security Context runAsUser User ID
     runAsUser: 185
-    # @key pipeline-entity-extraction.containerSecurityContext.runAsGroup Set containers' Security Context runAsGroup Group ID
+    # @key doc-pipeline-entity-extraction.containerSecurityContext.runAsGroup Set containers' Security Context runAsGroup Group ID
     runAsGroup: 185
-    # @key pipeline-entity-extraction.containerSecurityContext.runAsNonRoot Set container's Security Context runAsNonRoot
+    # @key doc-pipeline-entity-extraction.containerSecurityContext.runAsNonRoot Set container's Security Context runAsNonRoot
     runAsNonRoot: true
-    # @key pipeline-entity-extraction.containerSecurityContext.allowPrivilegeEscalation Set container's Security Context allowPrivilegeEscalation
+    # @key doc-pipeline-entity-extraction.containerSecurityContext.allowPrivilegeEscalation Set container's Security Context allowPrivilegeEscalation
     allowPrivilegeEscalation: false
     capabilities:
-      # @key pipeline-entity-extraction.containerSecurityContext.capabilities.drop List of capabilities to be dropped
+      # @key doc-pipeline-entity-extraction.containerSecurityContext.capabilities.drop List of capabilities to be dropped
       drop:
         - ALL
     seccompProfile:
-      # @key pipeline-entity-extraction.containerSecurityContext.seccompProfile.type Set container's Security Context seccomp profile
+      # @key doc-pipeline-entity-extraction.containerSecurityContext.seccompProfile.type Set container's Security Context seccomp profile
       type: RuntimeDefault
