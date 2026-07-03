@@ -68,7 +68,7 @@ global:
 # top-level httpIngester / contentExtractor / contentIndexer / catalogueUpdater sections of this chart.
 # Unset values fall back to the dependency chart's own defaults (including container images).
 # @descEnd
-smart-cache-documents:
+doc-pipeline-sc-docs:
   # @key smart-cache-documents.enabled Enable the smart-cache-documents components
   enabled: true
 
@@ -259,7 +259,7 @@ smart-cache-documents:
 # This chart flattens its configuration to the top level (topics, image, replicas, ...).
 # Unset values fall back to the dependency chart's own defaults (including the container image).
 # @descEnd
-rdf-document-tagger-dc:
+doc-pipeline-rdf-document-tagger-dc:
   # @key rdf-document-tagger-dc.enabled Enable the Content Tagger component
   enabled: true
 
@@ -332,7 +332,7 @@ rdf-document-tagger-dc:
 # This chart flattens its configuration to the top level (topics, image, replicas, ...).
 # Unset values fall back to the dependency chart's own defaults (including the container image).
 # @descEnd
-pipeline-entity-extraction:
+doc-pipeline-entity-extraction:
   # @key pipeline-entity-extraction.enabled Enable the Entity Extractor component
   enabled: true
 
