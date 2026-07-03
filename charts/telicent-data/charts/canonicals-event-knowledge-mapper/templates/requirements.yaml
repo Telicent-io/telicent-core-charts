@@ -1,2 +1,0 @@
-{{- $_ := required ".Values.global.appHostDomain is required" .Values.global.appHostDomain }}
-{{- $_ := required ".Values.global.authHostDomain is required" .Values.global.authHostDomain }}

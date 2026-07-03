@@ -1,0 +1,50 @@
+# Copyright (C) 2026 Telicent Limited
+# Telicent Canonicals Event umbrella chart
+#
+# The pipeline components are not templated within this chart. They are provided by upstream
+# Telicent dependency charts (see Chart.yaml), configured under their alias keys:
+#   - canonicals-event-document-mapper
+#   - canonicals-event-geo-mapper
+#   - canonicals-event-knowledge-mapper
+#   - canonicals-event-region-resolver-mapper
+#   - canonicals-event-json-validation-mapper
+#
+# Unset values fall back to each dependency chart's own defaults (including container images),
+# so each pinned dependency supplies its own tested image. Override under the relevant subchart
+# key only if you need a specific configuration.
+
+# @key enabled Enable Canonicals Event chart
+enabled: true
+
+#
+# @section Global Parameters
+#
+# @descStart
+# Contains global parameters; these parameters are mirrored within the Telicent data umbrella chart
+# Global values are automatically propagated to every dependency (subchart).
+# Note: Only global parameters used within this chart will be listed below
+# @descEnd
+global:
+  ## Current available global image parameters: imageRegistry and imagePullSecrets
+  ## Please, note that this will override the image parameters
+  # @key global.imageRegistry Global image registry
+  imageRegistry: ""
+  # E.g.
+  # imagePullSecrets:
+  #   - myRegistryKeySecretName
+  # @key global.imagePullSecrets Global registry secret names as an array
+  imagePullSecrets: []
+
+  kafka:
+    # @key global.kafka.bootstrapServers Comma separated list containing Kafka bootstrap servers
+    bootstrapServers: "kafka-bootstrap.kafka.svc.cluster.local:9092"
+    # @key global.kafka.existingConfigSecretName Name of an existing secret containing Kafka configuration (preferred over individual settings below for security)
+    existingConfigSecretName: ""
+    # @key global.kafka.username Username for Kafka authentication
+    username: ""
+    # @key global.kafka.password Password for Kafka authentication
+    password: ""
+    # @key global.kafka.protocol Protocol used for Kafka communication
+    protocol: "SASL_SSL"
+    # @key global.kafka.mechanism SASL mechanism used for Kafka authentication
+    mechanism: "SCRAM-SHA-512"
