@@ -33,22 +33,12 @@ maintainers:
     url: https://github.com/Telicent-IO
 
 dependencies:
-  - name: ies-ontology-producer
-    version: ^0.2.0
-    repository: "file://./charts/ies-ontology-producer"
   - name: ies-regions-ontology-adapter
     version: ^0.1.0
     repository: "file://./charts/ies-regions-ontology-adapter"
   - name: ies-regions-producer
     version: ^0.1.0
     repository: "file://./charts/ies-regions-producer"
-  - name: ontologies-rdf-rdfs-owl-producer
-    version: ^0.1.0
-    repository: "file://./charts/ontologies-rdf-rdfs-owl-producer"
-  - name: producer-acled-ontology
-    version: ^0.1.0
-    repository: "file://./charts/producer-acled-ontology"
-    condition: global.enterprise
   - name: canonicals-event-validation-mapper
     version: ^0.1.0
     repository: "file://./charts/canonicals-event-validation-mapper"
