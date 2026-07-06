@@ -7,6 +7,6 @@ dependencies:
   version: 3.0.7
 - name: pipeline-entity-extraction
   repository: oci://quay.io/telicent/charts
-  version: 3.0.8
-digest: sha256:fab3a13f2591c1825778ebbfb010fc77feeaa922fdd47b12977d5721574d0624
-generated: "2026-06-30T17:24:40.902962+01:00"
+  version: 3.0.9
+digest: sha256:b145e9abc47ca56c3d489c59e85edeb69c0e778b43e127c41f9d7c83acd88fc5
+generated: "2026-07-03T14:05:46.70751+01:00"

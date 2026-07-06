@@ -1,0 +1,25 @@
+# Dependabot configuration
+version: 2
+
+updates:
+  - package-ecosystem: "helm"
+    directory: "/charts/telicent-core"
+    schedule:
+      interval: "daily"
+    open-pull-requests-limit: 10
+    commit-message:
+      prefix: "deps: "
+    labels:
+      - "dependencies"
+      - "helm"
+
+  - package-ecosystem: "helm"
+    directory: "/charts/telicent-preview"
+    schedule:
+      interval: "daily"
+    open-pull-requests-limit: 10
+    commit-message:
+      prefix: "deps: "
+    labels:
+      - "dependencies"
+      - "helm"

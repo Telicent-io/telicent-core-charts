@@ -7,7 +7,7 @@ dependencies:
   version: 0.2.9
 - name: document-pipeline
   repository: file://./charts/document-pipeline
-  version: 0.2.3
+  version: 0.2.4
 - name: graph
   repository: oci://quay.io/telicent/charts
   version: 1.0.9
@@ -35,5 +35,5 @@ dependencies:
 - name: user-preferences
   repository: file://./charts/user-preferences
   version: 0.2.2
-digest: sha256:60e0e4eb14487934a4431234b703d1a1694fec7fc42e06a4b95962d3e0ebb411
-generated: "2026-07-02T13:36:35.999295+01:00"
+digest: sha256:7e2a8a46404beecd205a7cb260eab1d5cc4f4ea6873f680375721ec531e44765
+generated: "2026-07-03T14:06:00.600713+01:00"
