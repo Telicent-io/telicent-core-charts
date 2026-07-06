@@ -12,6 +12,10 @@
 # Unset values fall back to each dependency chart's own defaults (including container images),
 # so each pinned dependency supplies its own tested image. Override under the relevant subchart
 # key only if you need a specific configuration.
+#
+# The only resource templated by this chart itself is the ConfigMap carrying the canonical
+# events JSON schema (templates/schema-configmap.yaml), sourced from
+# files/canonical-events.schema.json.
 
 # @key enabled Enable Canonicals Event chart
 enabled: true
@@ -48,3 +52,18 @@ global:
     protocol: "SASL_SSL"
     # @key global.kafka.mechanism SASL mechanism used for Kafka authentication
     mechanism: "SCRAM-SHA-512"
+
+#
+# @section JSON Validation Mapper Parameters
+#
+# @descStart
+# The canonical events JSON schema is shipped with this chart in
+# `files/canonical-events.schema.json` and delivered to the mapper via a ConfigMap templated by
+# this chart (see `templates/schema-configmap.yaml`). Subchart values cannot be templated, so the
+# ConfigMap uses the fixed name referenced below; override this value to supply a schema from
+# your own ConfigMap instead, in which case this chart's ConfigMap is not created.
+# @descEnd
+canonicals-event-json-validation-mapper:
+  schema:
+    # @key canonicals-event-json-validation-mapper.schema.existingConfigMapName Name of the ConfigMap containing the JSON validation schema; defaults to the ConfigMap created by this chart from `files/canonical-events.schema.json`
+    existingConfigMapName: canonicals-event-schema

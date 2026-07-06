@@ -51,22 +51,20 @@ The command removes all the Kubernetes components associated with the chart and 
 ### JSON validation schema
 
 The `telicent-json-validation-mapper` dependency requires a JSON schema to validate canonical event messages against.
-No schema is shipped with this chart, so one must be provided at deployment time, either inline or by referencing an
-existing ConfigMap. The Kafka source/target topics should be set alongside it, for example:
+The canonical events schema is shipped with this chart in `files/canonical-events.schema.json` and delivered to the
+mapper via a ConfigMap templated by this chart (`templates/schema-configmap.yaml`), which the mapper is pointed at
+through `canonicals-event-json-validation-mapper.schema.existingConfigMapName`.
+
+To use a different schema, reference your own ConfigMap instead; this chart's schema ConfigMap is then not created.
+The ConfigMap must contain exactly one key whose name ends in `.schema.json`:
 
 ```yaml
 canonicals-event-json-validation-mapper:
-  configuration:
-    sourceTopic: canonical.event.raw
-    targetTopic: canonical.event.validated
-    componentOf: canonical-events
   schema:
-    name: canonical-event.schema.json
-    content: |-
-      { ... }
+    existingConfigMapName: my-schema-configmap
 ```
 
-See the `telicent-json-validation-mapper` chart README for the full schema requirements and an example schema.
+See the `telicent-json-validation-mapper` chart README for the full schema requirements.
 
 ## Automating README and schema generation
 
@@ -95,6 +93,18 @@ Note: Only global parameters used within this chart will be listed below
 | `global.kafka.password`                 | Password for Kafka authentication                                                                                 | `""`                                           |
 | `global.kafka.protocol`                 | Protocol used for Kafka communication                                                                             | `SASL_SSL`                                     |
 | `global.kafka.mechanism`                | SASL mechanism used for Kafka authentication                                                                      | `SCRAM-SHA-512`                                |
+
+### JSON Validation Mapper Parameters
+
+The canonical events JSON schema is shipped with this chart in
+`files/canonical-events.schema.json` and delivered to the mapper via a ConfigMap templated by
+this chart (see `templates/schema-configmap.yaml`). Subchart values cannot be templated, so the
+ConfigMap uses the fixed name referenced below; override this value to supply a schema from
+your own ConfigMap instead, in which case this chart's ConfigMap is not created.
+
+| Name                                                                   | Description                                                                                                                                            | Value                     |
+| ---------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------- |
+| `canonicals-event-json-validation-mapper.schema.existingConfigMapName` | Name of the ConfigMap containing the JSON validation schema; defaults to the ConfigMap created by this chart from `files/canonical-events.schema.json` | `canonicals-event-schema` |
 
 ## License
 

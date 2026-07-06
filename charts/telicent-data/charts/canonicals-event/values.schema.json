@@ -57,6 +57,21 @@
                     }
                 }
             }
+        },
+        "canonicals-event-json-validation-mapper": {
+            "type": "object",
+            "properties": {
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "existingConfigMapName": {
+                            "type": "string",
+                            "description": "Name of the ConfigMap containing the JSON validation schema; defaults to the ConfigMap created by this chart from `files/canonical-events.schema.json`",
+                            "default": "canonicals-event-schema"
+                        }
+                    }
+                }
+            }
         }
     }
 }
