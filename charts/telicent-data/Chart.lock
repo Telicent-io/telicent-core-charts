@@ -1,28 +1,4 @@
 dependencies:
-- name: ies-ontology-producer
-  repository: file://./charts/ies-ontology-producer
-  version: 0.2.0
-- name: ies-regions-ontology-adapter
-  repository: file://./charts/ies-regions-ontology-adapter
-  version: 0.1.3
-- name: ies-regions-producer
-  repository: file://./charts/ies-regions-producer
-  version: 0.1.4
-- name: ontologies-rdf-rdfs-owl-producer
-  repository: file://./charts/ontologies-rdf-rdfs-owl-producer
-  version: 0.1.0
-- name: producer-acled-ontology
-  repository: file://./charts/producer-acled-ontology
-  version: 0.1.0
-- name: canonicals-event-validation-mapper
-  repository: file://./charts/canonicals-event-validation-mapper
-  version: 0.1.2
-- name: canonicals-event-geo-mapper
-  repository: file://./charts/canonicals-event-geo-mapper
-  version: 0.1.2
-- name: canonicals-event-knowledge-mapper
-  repository: file://./charts/canonicals-event-knowledge-mapper
-  version: 0.1.3
 - name: acled-locations-mapper
   repository: file://./charts/acled-locations-mapper
   version: 0.1.0
@@ -35,8 +11,23 @@ dependencies:
 - name: canonicals-event-document-mapper
   repository: file://./charts/canonicals-event-document-mapper
   version: 0.1.3
+- name: canonicals-event-geo-mapper
+  repository: file://./charts/canonicals-event-geo-mapper
+  version: 0.1.2
+- name: canonicals-event-knowledge-mapper
+  repository: file://./charts/canonicals-event-knowledge-mapper
+  version: 0.1.3
+- name: canonicals-event-validation-mapper
+  repository: file://./charts/canonicals-event-validation-mapper
+  version: 0.1.2
 - name: canonicals-ontology
   repository: file://./charts/canonicals-ontology
   version: 0.1.1
-digest: sha256:710cc8bb509b769cd9a9949681c76bea8580922c92ff89451498062345ca5ba0
-generated: "2026-03-04T17:33:53.292031Z"
+- name: ies-regions-ontology-producer
+  repository: oci://quay.io/telicent/charts
+  version: 0.13.6
+- name: ies-regions-producer
+  repository: oci://quay.io/telicent/charts
+  version: 0.13.6
+digest: sha256:4c37c1f5df60e2e242173e98fbe371a3d0b5d138e40e8d977d0020392832e12d
+generated: "2026-07-06T14:44:09.641158+01:00"
