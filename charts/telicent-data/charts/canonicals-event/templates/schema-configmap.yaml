@@ -1,0 +1,27 @@
+{{/*
+Copyright (C) 2026 Telicent Limited
+*/}}
+
+{{/*
+Delivers the canonical events JSON schema (files/canonical-events.schema.json) to the
+json-validation-mapper dependency. Subchart values cannot be templated, so the ConfigMap name is
+fixed and must match canonicals-event-json-validation-mapper.schema.existingConfigMapName in
+values.yaml. Not rendered when that value points at a user-supplied ConfigMap.
+*/}}
+{{- $mapper := index .Values "canonicals-event-json-validation-mapper" }}
+{{- if and .Values.enabled (eq $mapper.schema.existingConfigMapName "canonicals-event-schema") }}
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: canonicals-event-schema
+  labels:
+    helm.sh/chart: {{ printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
+    app.kubernetes.io/name: {{ .Chart.Name }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+
+data:
+  canonical-events.schema.json: |
+    {{- .Files.Get "files/canonical-events.schema.json" | nindent 4 }}
+{{- end }}

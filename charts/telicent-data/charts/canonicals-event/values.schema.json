@@ -1,0 +1,77 @@
+{
+    "title": "Chart Values",
+    "type": "object",
+    "properties": {
+        "enabled": {
+            "type": "boolean",
+            "description": "Enable Canonicals Event chart",
+            "default": true
+        },
+        "global": {
+            "type": "object",
+            "properties": {
+                "imageRegistry": {
+                    "type": "string",
+                    "description": "Global image registry",
+                    "default": ""
+                },
+                "imagePullSecrets": {
+                    "type": "array",
+                    "description": "Global registry secret names as an array",
+                    "default": [],
+                    "items": {}
+                },
+                "kafka": {
+                    "type": "object",
+                    "properties": {
+                        "bootstrapServers": {
+                            "type": "string",
+                            "description": "Comma separated list containing Kafka bootstrap servers",
+                            "default": "kafka-bootstrap.kafka.svc.cluster.local:9092"
+                        },
+                        "existingConfigSecretName": {
+                            "type": "string",
+                            "description": "Name of an existing secret containing Kafka configuration (preferred over individual settings below for security)",
+                            "default": ""
+                        },
+                        "username": {
+                            "type": "string",
+                            "description": "Username for Kafka authentication",
+                            "default": ""
+                        },
+                        "password": {
+                            "type": "string",
+                            "description": "Password for Kafka authentication",
+                            "default": ""
+                        },
+                        "protocol": {
+                            "type": "string",
+                            "description": "Protocol used for Kafka communication",
+                            "default": "SASL_SSL"
+                        },
+                        "mechanism": {
+                            "type": "string",
+                            "description": "SASL mechanism used for Kafka authentication",
+                            "default": "SCRAM-SHA-512"
+                        }
+                    }
+                }
+            }
+        },
+        "canonicals-event-json-validation-mapper": {
+            "type": "object",
+            "properties": {
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "existingConfigMapName": {
+                            "type": "string",
+                            "description": "Name of the ConfigMap containing the JSON validation schema; defaults to the ConfigMap created by this chart from `files/canonical-events.schema.json`",
+                            "default": "canonicals-event-schema"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

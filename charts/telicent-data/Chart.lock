@@ -8,18 +8,9 @@ dependencies:
 - name: acled-validation-mapper
   repository: file://./charts/acled-validation-mapper
   version: 0.1.0
-- name: canonicals-event-document-mapper
-  repository: file://./charts/canonicals-event-document-mapper
-  version: 0.1.3
-- name: canonicals-event-geo-mapper
-  repository: file://./charts/canonicals-event-geo-mapper
-  version: 0.1.2
-- name: canonicals-event-knowledge-mapper
-  repository: file://./charts/canonicals-event-knowledge-mapper
-  version: 0.1.3
-- name: canonicals-event-validation-mapper
-  repository: file://./charts/canonicals-event-validation-mapper
-  version: 0.1.2
+- name: canonicals-event
+  repository: file://./charts/canonicals-event
+  version: 0.1.0
 - name: canonicals-ontology
   repository: file://./charts/canonicals-ontology
   version: 0.1.1
@@ -29,5 +20,5 @@ dependencies:
 - name: ies-regions-producer
   repository: oci://quay.io/telicent/charts
   version: 0.13.6
-digest: sha256:4c37c1f5df60e2e242173e98fbe371a3d0b5d138e40e8d977d0020392832e12d
-generated: "2026-07-06T14:44:09.641158+01:00"
+digest: sha256:951011b8598eeeded8133f38cdb35c291283d097131f3512e3caf70143d6d8b4
+generated: "2026-07-06T15:09:52.868871+01:00"

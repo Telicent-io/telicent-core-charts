@@ -1,8 +1,8 @@
 apiVersion: v2
-name: telicent-data
+name: canonicals-event
 description: |
-  Supplementary chart containing adapters and mappers for specific datasets and
-  ontologies.
+  Umbrella chart for the Telicent Canonicals Event pipeline, deploying the
+  mappers that validate and process canonical events.
 
 # A chart can be either an 'application' or a 'library' chart.
 #
@@ -17,13 +17,13 @@ type: application
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 0.3.7
+version: 0.1.0
 
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application. Versions are not expected to
 # follow Semantic Versioning. They should reflect the version the application is using.
 # It is recommended to use it with quotes.
-appVersion: "1.16.0"
+appVersion: "0.1.0"
 
 icon: "https://avatars.githubusercontent.com/u/65304240?s=200&v=4"
 
@@ -32,30 +32,32 @@ maintainers:
   - name: telicent
     url: https://github.com/Telicent-IO
 
+# The chart's dependencies. The Canonicals Event pipeline components are delivered by the
+# upstream Telicent component charts rather than by templates within this chart.
+# Each dependency is gated on this chart's top-level `enabled` flag.
 dependencies:
-  - name: acled-locations-mapper
-    version: ^0.1.0
-    repository: "file://./charts/acled-locations-mapper"
-    condition: global.enterprise
-  - name: acled-participants-mapper
-    version: ^0.1.0
-    repository: "file://./charts/acled-participants-mapper"
-    condition: global.enterprise
-  - name: acled-validation-mapper
-    version: ^0.1.0
-    repository: "file://./charts/acled-validation-mapper"
-    condition: global.enterprise
-  - name: canonicals-event
-    version: ^0.1.0
-    repository: "file://./charts/canonicals-event"
-    condition: global.enterprise
-  - name: canonicals-ontology
-    version: ^0.1.0
-    repository: "file://./charts/canonicals-ontology"
-    condition: global.enterprise
-  - name: ies-regions-ontology-producer
-    version: 0.13.6
+  - name: telicent-canonicals-event-document-mapper
+    alias: canonicals-event-document-mapper
+    version: "0.9.11"
     repository: oci://quay.io/telicent/charts
-  - name: ies-regions-producer
-    version: 0.13.6
+    condition: enabled
+  - name: telicent-canonicals-event-geo-mapper
+    alias: canonicals-event-geo-mapper
+    version: "0.9.11"
     repository: oci://quay.io/telicent/charts
+    condition: enabled
+  - name: telicent-canonicals-event-knowledge-mapper
+    alias: canonicals-event-knowledge-mapper
+    version: "0.9.11"
+    repository: oci://quay.io/telicent/charts
+    condition: enabled
+  - name: telicent-canonicals-region-resolver-mapper
+    alias: canonicals-event-region-resolver-mapper
+    version: "0.1.3"
+    repository: oci://quay.io/telicent/charts
+    condition: enabled
+  - name: telicent-json-validation-mapper
+    alias: canonicals-event-json-validation-mapper
+    version: "0.2.6"
+    repository: oci://quay.io/telicent/charts
+    condition: enabled
