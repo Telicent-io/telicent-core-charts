@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.7](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-data-v0.3.6...telicent-data-v0.3.7) (2026-07-06)
+
+
+### Bug Fixes
+
+* Add a new `canonicals-event` umbrella chart. ([#637](https://github.com/Telicent-io/telicent-core-charts/issues/637)) ([45f0475](https://github.com/Telicent-io/telicent-core-charts/commit/45f0475f0281b7221b28f0cb46f7f156899b1855))
+* use single demo-prereqs chart ([98a5531](https://github.com/Telicent-io/telicent-core-charts/commit/98a55316a5a7102fd9b0f13a3a9fbefa1e4e8e0b))
+
 ## [0.3.6](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-data-v0.3.5...telicent-data-v0.3.6) (2026-03-24)
 
 
