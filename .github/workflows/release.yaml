@@ -54,10 +54,10 @@ jobs:
       - name: Package changed charts
         run: |
           helm repo add telicent-core-charts 'https://charts.telicent.io'
-          helm dependency update ./charts/telicent-core
-          helm dependency update ./charts/demo-prereqs/charts/kafka-ui
-          helm dependency update ./charts/demo-prereqs/charts/opensearch
-          for chart in $(find . -type f -name 'Chart.yaml' -print0 -maxdepth 3 | xargs -0 -n1 dirname | sort -u); do echo "packaging chart - $chart" && helm package -u -d .cr-release-packages $chart; done
+          # helm dependency update is not recursive, so update every chart individually.
+          # Deepest-first (sort -r) so nested charts are vendored before their parents package them.
+          for chart in $(find ./charts -type f -name 'Chart.yaml' | xargs -n1 dirname | sort -ru); do echo "updating dependencies - $chart" && helm dependency update $chart; done
+          for chart in $(find . -type f -name 'Chart.yaml' -print0 -maxdepth 3 | xargs -0 -n1 dirname | sort -u); do echo "packaging chart - $chart" && helm package -d .cr-release-packages $chart; done
       - name: Log in to Quay.io
         uses: docker/login-action@v3
         with:
