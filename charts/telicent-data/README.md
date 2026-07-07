@@ -43,26 +43,29 @@ The chart includes several pre-configured data producers that can be enabled/dis
 
 ### Available Producers
 
-| Producer | Description | Default Status |
-|----------|-------------|----------------|
-| `ies-ontology-producer` | Ingests core IES ontology definitions | Enabled |
-| `ies-regions-producer` | Processes geographical region data | Enabled |
-| `ies-regions-ontology-adapter` | Adapts region data to IES format | Enabled |
-| `ontologies-rdf-rdfs-owl-producer` | Ingests RDF/RDFS/OWL ontologies | Enabled |
+| Producer                           | Description                           | Default Status |
+|------------------------------------|---------------------------------------|----------------|
+| `ies-ontology-producer`            | Ingests core IES ontology definitions | Enabled        |
+| `ies-regions-producer`             | Processes geographical region data    | Enabled        |
+| `ies-regions-ontology-adapter`     | Adapts region data to IES format      | Enabled        |
+| `ontologies-rdf-rdfs-owl-producer` | Ingests RDF/RDFS/OWL ontologies       | Enabled        |
 
 ### Managing Producers
 
 Enable a specific producer:
+
 ```console
 helm upgrade telicent-data ./charts/telicent-data --set producers.ies-regions-producer.enabled=true
 ```
 
 Disable a producer:
+
 ```console
 helm upgrade telicent-data ./charts/telicent-data --set producers.ies-ontology-producer.enabled=false
 ```
 
 Configure producer resources:
+
 ```console
 helm upgrade telicent-data ./charts/telicent-data --set producers.ies-regions-producer.resources.requests.memory=512Mi
 ```
@@ -72,11 +75,13 @@ helm upgrade telicent-data ./charts/telicent-data --set producers.ies-regions-pr
 ### Job Status
 
 Check the status of all data ingestion jobs:
+
 ```console
 kubectl get jobs -l app.kubernetes.io/name=telicent-data
 ```
 
 View logs for a specific producer:
+
 ```console
 kubectl logs -l app.kubernetes.io/producer=ies-regions-producer
 ```
@@ -84,12 +89,14 @@ kubectl logs -l app.kubernetes.io/producer=ies-regions-producer
 ### Job Management
 
 Re-run a failed job:
+
 ```console
 kubectl delete job telicent-data-ies-regions-producer
 helm upgrade telicent-data ./charts/telicent-data
 ```
 
 Clean up completed jobs:
+
 ```console
 kubectl delete jobs -l app.kubernetes.io/name=telicent-data --field-selector status.successful=1
 ```
