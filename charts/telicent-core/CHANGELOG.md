@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.1](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v1.3.0...telicent-core-v1.3.1) (2026-07-07)
+
+
+### Bug Fixes
+
+* Use an alias for Document Pipeline umbrella chart dependencies. ([#638](https://github.com/Telicent-io/telicent-core-charts/issues/638)) ([641cc33](https://github.com/Telicent-io/telicent-core-charts/commit/641cc33e72b3cb0f6cd8e5134cd944a12849fe9a))
+
 ## [1.3.0](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v1.2.1...telicent-core-v1.3.0) (2026-06-30)
 
 
