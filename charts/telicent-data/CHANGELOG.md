@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.1](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-data-v0.3.7...telicent-data-v1.3.1) (2026-07-07)
+
+
+### Miscellaneous Chores
+
+* Release telicent-data 1.3.1 ([#648](https://github.com/Telicent-io/telicent-core-charts/issues/648)) ([ef2a24c](https://github.com/Telicent-io/telicent-core-charts/commit/ef2a24c2cfb9dcab1f00f845b02af14c23ea2fbf))
+
 ## [0.3.7](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-data-v0.3.7...telicent-data-v0.3.7) (2026-07-07)
 
 
