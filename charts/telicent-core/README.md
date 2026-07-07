@@ -128,7 +128,7 @@ They are addressed by their names, and each subchart has its own set of configur
 
 | Name              | Description | Link                                                      |
 |-------------------|-------------|-----------------------------------------------------------|
-| Admin UI          | Administrative interface for managing Telicent Core components | [admin-ui](./charts/admin-ui/README.md)                   |
+| Admin UI          | Administrative interface for managing Telicent Core components | [admin-ui](./charts/admin-ui/README.md)                    |
 | Auth              | Authentication broker providing OAuth/OIDC integration | [auth](./charts/auth/README.md)                           |
 | Document Pipeline | Document processing and ingestion pipeline | [document-pipeline](./charts/document-pipeline/README.md) |
 | Graph             | RDF graph database and SPARQL query engine | [graph](./charts/graph/README.md)                         |
