@@ -3,6 +3,13 @@
 ## [0.3.7](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-data-v0.3.7...telicent-data-v0.3.7) (2026-07-07)
 
 
+### Miscellaneous Chores
+
+* Release telicent-data 0.3.7 ([#645](https://github.com/Telicent-io/telicent-core-charts/issues/645)) ([184290d](https://github.com/Telicent-io/telicent-core-charts/commit/184290d41d67eac270be61315de60556d5f85cba))
+
+## [0.3.7](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-data-v0.3.7...telicent-data-v0.3.7) (2026-07-07)
+
+
 ### Bug Fixes
 
 * Add a new `canonicals-event` umbrella chart. ([#637](https://github.com/Telicent-io/telicent-core-charts/issues/637)) ([45f0475](https://github.com/Telicent-io/telicent-core-charts/commit/45f0475f0281b7221b28f0cb46f7f156899b1855))
