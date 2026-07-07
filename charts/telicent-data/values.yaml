@@ -14,7 +14,7 @@ global:
   imageRegistry: ""
   # E.g.
   # imagePullSecrets:
-  #   - myRegistryKeySecretName
+  #   - registryKeySecretName
   # @key global.imagePullSecrets Global registry secret names as an array
   imagePullSecrets: []
 
