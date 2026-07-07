@@ -1,5 +1,28 @@
 # Changelog
 
+## [0.3.7](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-data-v0.3.7...telicent-data-v0.3.7) (2026-07-07)
+
+
+### Bug Fixes
+
+* Add a new `canonicals-event` umbrella chart. ([#637](https://github.com/Telicent-io/telicent-core-charts/issues/637)) ([45f0475](https://github.com/Telicent-io/telicent-core-charts/commit/45f0475f0281b7221b28f0cb46f7f156899b1855))
+* add enableSourceRefMode to mapper ([e439d94](https://github.com/Telicent-io/telicent-core-charts/commit/e439d940eb7cb9cd2a21a4fc7c581c09f034ddc4))
+* add enableSourceRefMode to mapper ([3b77660](https://github.com/Telicent-io/telicent-core-charts/commit/3b77660721cd02ba9c71c49116d6528c5b48d0a4))
+* add new environment variables ([da9510e](https://github.com/Telicent-io/telicent-core-charts/commit/da9510e981b227caecb8782c043731a9fdff48c4))
+* bump data chart ([04dd4b9](https://github.com/Telicent-io/telicent-core-charts/commit/04dd4b9b00b7a1fccee8f06311debe86f2ae9573))
+* make host domain values required ([69ac812](https://github.com/Telicent-io/telicent-core-charts/commit/69ac812caf209346986d38997cc27391cc61d46d))
+* removes all default resources and limits ([0a5d96d](https://github.com/Telicent-io/telicent-core-charts/commit/0a5d96dd5060c6c35ead510a3dc7daadf8bd095a))
+* removes all default resources and limits ([033bdc7](https://github.com/Telicent-io/telicent-core-charts/commit/033bdc7998cbe455d91fbf9849fa07e23ce16fbb))
+* update app versions ([42620d6](https://github.com/Telicent-io/telicent-core-charts/commit/42620d61d9f5c20ef48c165c37f1ca31531496cd))
+* update app versions ([9ff9491](https://github.com/Telicent-io/telicent-core-charts/commit/9ff9491c733d6e961f3f75453abf01a0112ab17e))
+* use single demo-prereqs chart ([98a5531](https://github.com/Telicent-io/telicent-core-charts/commit/98a55316a5a7102fd9b0f13a3a9fbefa1e4e8e0b))
+
+
+### Miscellaneous Chores
+
+* relase 0.3.6 ([#538](https://github.com/Telicent-io/telicent-core-charts/issues/538)) ([434d75c](https://github.com/Telicent-io/telicent-core-charts/commit/434d75c915cae340e0296e8ccac60b69a5adcf77))
+* Release telicent-data 0.3.7 ([#643](https://github.com/Telicent-io/telicent-core-charts/issues/643)) ([88142e0](https://github.com/Telicent-io/telicent-core-charts/commit/88142e0e6294b3f442cd7a0ca280ebbfbcb3cf6a))
+
 ## [0.3.7](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-data-v0.3.6...telicent-data-v0.3.7) (2026-07-06)
 
 
