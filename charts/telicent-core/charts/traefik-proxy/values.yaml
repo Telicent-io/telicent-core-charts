@@ -312,6 +312,8 @@ hosts:
   search: "search:8080"
   # @key hosts.graph Graph application default host value, as defined by 'service/serviceAccount:port'
   graph: "graph:8080"
+  # @key hosts.deletionWorker Deletion Worker application default host value, as defined by 'service/serviceAccount:port'
+  deletionWorker: "deletion-worker:8080"
   
 
 #
