@@ -9,7 +9,7 @@ Native documents, such as Microsoft Word or PDF files, are ingested into the pip
 This chart bootstraps Telicent Document Pipeline deployment on a [Kubernetes](https://kubernetes.io) cluster using
 the [Helm](https://helm.sh) package manager.
 
-## Umbrella chart 
+## Umbrella chart
 
 To enable this chart as part of the umbrella chart, please set the key: `.Values.document-pipeline.enabled: true`
 
