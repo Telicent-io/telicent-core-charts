@@ -51,6 +51,12 @@ jobs:
         uses: helm/chart-testing-action@v2.7.0
       - name: Install CoSign
         uses: sigstore/cosign-installer@v3
+      - name: Log in to Quay.io
+        uses: docker/login-action@v3
+        with:
+          registry: quay.io
+          username: ${{ secrets.QUAY_USERNAME }}
+          password: ${{ secrets.QUAY_PASSWORD }}
       - name: Package changed charts
         run: |
           helm repo add telicent-core-charts 'https://charts.telicent.io'
@@ -58,12 +64,6 @@ jobs:
           # Deepest-first (sort -r) so nested charts are vendored before their parents package them.
           for chart in $(find ./charts -type f -name 'Chart.yaml' | xargs -n1 dirname | sort -ru); do echo "updating dependencies - $chart" && helm dependency update $chart; done
           for chart in $(find . -type f -name 'Chart.yaml' -print0 -maxdepth 3 | xargs -0 -n1 dirname | sort -u); do echo "packaging chart - $chart" && helm package -d .cr-release-packages $chart; done
-      - name: Log in to Quay.io
-        uses: docker/login-action@v3
-        with:
-          registry: quay.io
-          username: ${{ secrets.QUAY_USERNAME }}
-          password: ${{ secrets.QUAY_PASSWORD }}
       - name: Checkout gh-pages branch
         uses: actions/checkout@v4
         with:
