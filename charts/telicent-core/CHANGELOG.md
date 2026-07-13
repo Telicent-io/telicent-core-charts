@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.3.2](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v1.3.1...telicent-core-v1.3.2) (2026-07-13)
+
+
+### Bug Fixes
+
+* traefik path ([#663](https://github.com/Telicent-io/telicent-core-charts/issues/663)) ([0509596](https://github.com/Telicent-io/telicent-core-charts/commit/0509596f0251088edab79c23ebd9178220a25f7d))
+
+
+### Dependencies
+
+* upversion traefik to 3.7.7 ([#658](https://github.com/Telicent-io/telicent-core-charts/issues/658)) ([eff360c](https://github.com/Telicent-io/telicent-core-charts/commit/eff360c7d9d525745657b0a4c66d6e8745d9811e))
+
 ## [1.3.1](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v1.3.1...telicent-core-v1.3.1) (2026-07-07)
 
 
