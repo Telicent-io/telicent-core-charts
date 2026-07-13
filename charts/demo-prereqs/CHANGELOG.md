@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.5](https://github.com/Telicent-io/telicent-core-charts/compare/demo-prereqs-v0.1.4...demo-prereqs-v0.1.5) (2026-07-13)
+
+
+### Dependencies
+
+* upversion postgres to 16.14 (alpine) ([#659](https://github.com/Telicent-io/telicent-core-charts/issues/659)) ([436aeb0](https://github.com/Telicent-io/telicent-core-charts/commit/436aeb0f4b2bd1f7c99983974a9144d8168fab19))
+
 ## [0.1.4](https://github.com/Telicent-io/telicent-core-charts/compare/demo-prereqs-v0.1.3...demo-prereqs-v0.1.4) (2026-06-26)
 
 
