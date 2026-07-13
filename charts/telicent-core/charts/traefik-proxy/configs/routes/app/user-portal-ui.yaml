@@ -18,7 +18,7 @@ http:
   middlewares:
     path-user-portal-ui:
       replacePathRegex:
-        regex: "^/user-portal(.*)"
+        regex: "^/user-portal/?(.*)"
         replacement: "/user-portal/$1"
     host-user-portal-ui:
       headers:

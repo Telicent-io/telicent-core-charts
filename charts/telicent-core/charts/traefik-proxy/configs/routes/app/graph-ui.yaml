@@ -19,7 +19,7 @@ http:
   middlewares:
     path-graph-ui:
       replacePathRegex:
-        regex: "^/graph(.*)"
+        regex: "^/graph/?(.*)"
         replacement: "/graph/$1"
     host-graph-ui:
       headers:
