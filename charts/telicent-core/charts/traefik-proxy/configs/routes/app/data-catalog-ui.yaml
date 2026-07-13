@@ -19,7 +19,7 @@ http:
   middlewares:
     path-data-catalog-ui:
       replacePathRegex:
-        regex: "^/data-catalog(.*)"
+        regex: "^/data-catalog/?(.*)"
         replacement: "/data-catalog/$1"
 
     host-data-catalog-ui:

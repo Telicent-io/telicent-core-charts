@@ -19,7 +19,7 @@ http:
   middlewares:
     path-query-ui:
       replacePathRegex:
-        regex: "^/query(.*)"
+        regex: "^/query/?(.*)"
         replacement: "/query/$1"
 
     host-query-ui:

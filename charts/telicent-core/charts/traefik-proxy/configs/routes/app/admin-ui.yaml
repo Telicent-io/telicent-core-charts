@@ -19,7 +19,7 @@ http:
   middlewares:
     path-admin-ui:
       replacePathRegex:
-        regex: "^/admin(.*)"
+        regex: "^/admin/?(.*)"
         replacement: "/admin/$1"
     host-admin-ui:
       headers:

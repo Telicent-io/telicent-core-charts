@@ -19,7 +19,7 @@ http:
   middlewares:
     path-search-ui:
       replacePathRegex:
-        regex: "^/search(.*)"
+        regex: "^/search/?(.*)"
         replacement: "/search/$1"
 
     host-search-ui:
