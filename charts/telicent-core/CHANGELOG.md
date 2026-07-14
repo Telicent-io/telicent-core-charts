@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.3](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v1.3.2...telicent-core-v1.3.3) (2026-07-14)
+
+
+### Dependencies
+
+* upversion user-preferences to 2.0.8 ([#664](https://github.com/Telicent-io/telicent-core-charts/issues/664)) ([d000216](https://github.com/Telicent-io/telicent-core-charts/commit/d00021638609560909ff69a8674e0b19bf2d2418))
+
 ## [1.3.2](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v1.3.1...telicent-core-v1.3.2) (2026-07-13)
 
 
