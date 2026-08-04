@@ -11,15 +11,12 @@ dependencies:
 - name: graph
   repository: oci://quay.io/telicent/charts
   version: 1.0.9
-- name: deletion-worker
-  repository: oci://098669589541.dkr.ecr.eu-west-2.amazonaws.com/charts
-  version: 1.0.10-SNAPSHOT
 - name: graph-ui
   repository: oci://quay.io/telicent/charts
   version: 1.38.1
 - name: query-ui
   repository: oci://quay.io/telicent/charts
-  version: 1.5.4
+  version: 1.6.0
 - name: search
   repository: oci://quay.io/telicent/charts
   version: 2.2.0
@@ -34,6 +31,6 @@ dependencies:
   version: 0.1.1
 - name: user-preferences
   repository: file://./charts/user-preferences
-  version: 0.2.2
-digest: sha256:7e2a8a46404beecd205a7cb260eab1d5cc4f4ea6873f680375721ec531e44765
-generated: "2026-07-03T14:06:00.600713+01:00"
+  version: 0.2.3
+digest: sha256:7cd2c3d3ba04134e29b9850823806f0615f1fc943455892d0b733bd7898a4362
+generated: "2026-07-20T14:36:24.063413207Z"
