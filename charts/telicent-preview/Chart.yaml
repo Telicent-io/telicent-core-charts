@@ -43,7 +43,7 @@ dependencies:
     repository: file://./charts/paperback-writer
     condition: global.enterprise, paperback-writer.enabled
   - name: user-portal-ui
-    version: "1.10.0"
+    version: 1.10.5
     repository: oci://quay.io/telicent/charts
     condition: user-portal-ui.enabled
   - name: apicurio
