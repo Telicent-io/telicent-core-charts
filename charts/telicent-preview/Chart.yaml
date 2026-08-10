@@ -27,7 +27,7 @@ appVersion: "1.16.0"
 
 dependencies:
   - name: data-catalog-ui
-    version: "1.15.5"
+    version: 1.16.0
     repository: oci://quay.io/telicent/charts
     condition: data-catalog-ui.enabled
   - name: notifications
