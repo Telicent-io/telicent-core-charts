@@ -62,7 +62,7 @@ global:
 # @section data-catalog-ui Parameters
 data-catalog-ui:
   # @key data-catalog-ui.enabled Enable or disable the data-catalog-ui component
-  enabled: true
+  enabled: false
 
 #
 # @section Notifications Parameters
@@ -83,4 +83,9 @@ apicurio:
 # @section paperback-writer Parameters
 paperback-writer:
   # @key paperback-writer.enabled Enable or disable the paperback-writer component
-  enabled: true
+  enabled: false
+
+# @section catalog-api Parameters
+catalog-api:
+  # @key catalog-api.enabled Enable or disable the catalog-api component
+  enabled: false
