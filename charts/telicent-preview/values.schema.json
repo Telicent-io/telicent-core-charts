@@ -119,7 +119,7 @@
                 "enabled": {
                     "type": "boolean",
                     "description": "Enable or disable the data-catalog-ui component",
-                    "default": true
+                    "default": false
                 }
             }
         },
@@ -159,7 +159,17 @@
                 "enabled": {
                     "type": "boolean",
                     "description": "Enable or disable the paperback-writer component",
-                    "default": true
+                    "default": false
+                }
+            }
+        },
+        "catalog-api": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable or disable the catalog-api component",
+                    "default": false
                 }
             }
         }

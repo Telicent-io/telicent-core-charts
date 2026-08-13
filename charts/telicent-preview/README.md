@@ -72,9 +72,9 @@ Contains global parameters, these parameters are mirrored across all Telicent Pr
 
 ### data-catalog-ui Parameters
 
-| Name                      | Description                                     | Value  |
-| ------------------------- | ----------------------------------------------- | ------ |
-| `data-catalog-ui.enabled` | Enable or disable the data-catalog-ui component | `true` |
+| Name                      | Description                                     | Value   |
+| ------------------------- | ----------------------------------------------- | ------- |
+| `data-catalog-ui.enabled` | Enable or disable the data-catalog-ui component | `false` |
 
 ### Notifications Parameters
 
@@ -91,9 +91,15 @@ Contains global parameters, these parameters are mirrored across all Telicent Pr
 
 ### paperback-writer Parameters
 
-| Name                       | Description                                      | Value  |
-| -------------------------- | ------------------------------------------------ | ------ |
-| `paperback-writer.enabled` | Enable or disable the paperback-writer component | `true` |
+| Name                       | Description                                      | Value   |
+| -------------------------- | ------------------------------------------------ | ------- |
+| `paperback-writer.enabled` | Enable or disable the paperback-writer component | `false` |
+
+### catalog-api Parameters
+
+| Name                  | Description                                 | Value   |
+| --------------------- | ------------------------------------------- | ------- |
+| `catalog-api.enabled` | Enable or disable the catalog-api component | `false` |
 
 ## Subchart configurations
 
