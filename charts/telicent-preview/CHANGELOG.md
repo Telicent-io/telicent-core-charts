@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.3](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-preview-v0.6.2...telicent-preview-v0.6.3) (2026-08-13)
+
+
+### Bug Fixes
+
+* data catalog ([#675](https://github.com/Telicent-io/telicent-core-charts/issues/675)) ([220b80b](https://github.com/Telicent-io/telicent-core-charts/commit/220b80bcac68154c52ffc9b431ae4c157e7ba261))
+
 ## [0.6.2](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-preview-v0.6.1...telicent-preview-v0.6.2) (2026-08-13)
 
 
