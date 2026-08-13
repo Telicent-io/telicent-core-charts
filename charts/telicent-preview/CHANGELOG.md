@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.2](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-preview-v0.6.1...telicent-preview-v0.6.2) (2026-08-13)
+
+
+### Features
+
+* adds catalog api ([#673](https://github.com/Telicent-io/telicent-core-charts/issues/673)) ([22271f3](https://github.com/Telicent-io/telicent-core-charts/commit/22271f3799d0fe3745286965f1d482010ba7a2a5))
+
 ## [0.6.1](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-preview-v0.5.1...telicent-preview-v0.6.1) (2026-06-30)
 
 
