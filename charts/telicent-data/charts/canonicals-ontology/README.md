@@ -87,7 +87,7 @@ Global values are automatically propagated to every dependency (subchart).
 Note: Only global parameters used within this chart will be listed below
 
 | Name                                    | Description                                                                                                       | Value                                          |
-| ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
+| --------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
 | `global.imageRegistry`                  | Global image registry                                                                                             | `""`                                           |
 | `global.imagePullSecrets`               | Global registry secret names as an array                                                                          | `[]`                                           |
 | `global.kafka.bootstrapServers`         | Comma separated list containing Kafka bootstrap servers                                                           | `kafka-bootstrap.kafka.svc.cluster.local:9092` |
@@ -106,7 +106,7 @@ ConfigMap uses the fixed name referenced below; override this value to supply a 
 your own ConfigMap instead, in which case this chart's ConfigMap is not created.
 
 | Name                                                                      | Description                                                                                                                                              | Value                          |
-| --------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
+| ------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------ |
 | `canonicals-ontology-json-validation-mapper.schema.existingConfigMapName` | Name of the ConfigMap containing the JSON validation schema; defaults to the ConfigMap created by this chart from `files/canonical-ontology.schema.json` | `canonicals-ontology-schema`   |
 | `canonicals-ontology-json-validation-mapper.configuration.sourceTopic`    | Topic the validation mapper reads raw canonical ontology messages from                                                                                   | `canonical.ontology.raw`       |
 | `canonicals-ontology-json-validation-mapper.configuration.targetTopic`    | Topic the validation mapper writes validated canonical ontology messages to                                                                              | `canonical.ontology.validated` |
