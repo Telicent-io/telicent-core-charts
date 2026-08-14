@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.8](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-data-v0.3.7...telicent-data-v0.3.8) (2026-08-14)
+
+
+### Features
+
+* new canonicals ontology chart ([#678](https://github.com/Telicent-io/telicent-core-charts/issues/678)) ([5e1369a](https://github.com/Telicent-io/telicent-core-charts/commit/5e1369a86c9241008f7fdd22e4c3385ec7158c69))
+
 ## [0.3.7](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-data-v0.3.7...telicent-data-v0.3.7) (2026-07-07)
 
 
