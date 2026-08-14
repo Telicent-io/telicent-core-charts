@@ -25,6 +25,14 @@ http:
       middleWares:
         - path-graph-shacl
         - host-graph
+    graph-version-info:
+      rule: {{ printf "Host(`%s`) && PathPrefix(`/graph/version-info`)" .Values.global.apiHostDomain }}
+      service: graph
+      entryPoints:
+        - web-api
+      middleWares:
+        - path-graph-version-info
+        - host-graph
   services:
     graph:
       loadBalancer:
@@ -44,6 +52,10 @@ http:
       replacePathRegex:
         regex: "^/shacl/(.*)"
         replacement: "/$1"
+    path-graph-version-info:
+      replacePathRegex:
+        regex: "^/graph/version-info"
+        replacement: "/version-info"
     host-graph:
       headers:
         customRequestHeaders:
