@@ -1,0 +1,111 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "CanonicalOntologyBatch",
+    "title": "Array of Canonical Ontology Schema",
+    "copyright": "Copyright © 2026 Telicent Ltd",
+    "description": "A schema for an array of canonical ontology objects",
+    "type": "array",
+    "minItems": 1,
+    "items": {
+        "$ref": "#/definitions/canonical_ontology"
+    },
+    "definitions": {
+        "canonical_ontology": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "$id": "CanonicalOntology",
+            "title": "Canonical Ontology Schema",
+            "description": "The canonical schema for getting ontology definitions into Telicent Core",
+            "oneOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "schema_version": {
+                            "type": "string",
+                            "const": "v0.1.0"
+                        },
+                        "uri": {
+                            "type": "string",
+                            "pattern": "^[a-zA-Z][a-zA-Z0-9+.-]*:(\\/\\/)?[^\\s<>\"{}|\\\\^`\\[\\]]+$"
+                        },
+                        "types": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "http://www.w3.org/2002/07/owl#ObjectProperty",
+                                    "http://www.w3.org/2002/07/owl#DataTypeProperty",
+                                    "http://www.w3.org/1999/02/22-rdf-syntax-ns#property"
+                                ]
+                            }
+                        },
+                        "display_label": {
+                            "type": "string"
+                        },
+                        "super_properties": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "pattern": "^[a-zA-Z][a-zA-Z0-9+.-]*:(\\/\\/)?[^\\s<>\"{}|\\\\^`\\[\\]]+$"
+                            },
+                            "minItems": 1
+                        }
+                    },
+                    "required": ["schema_version", "uri", "types", "display_label", "super_properties"],
+                    "additionalProperties": false
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "schema_version": {
+                            "type": "string",
+                            "const": "v0.1.0"
+                        },
+                        "uri": {
+                            "type": "string",
+                            "pattern": "^[a-zA-Z][a-zA-Z0-9+.-]*:(\\/\\/)?[^\\s<>\"{}|\\\\^`\\[\\]]+$"
+                        },
+                        "types": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "http://www.w3.org/2000/01/rdf-schema#Class", 
+                                    "http://www.w3.org/2002/07/owl#Class"
+                                ]
+                            }
+                        },
+                        "display_label": {
+                            "type": "string"
+                        },
+                        "super_classes": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "pattern": "^[a-zA-Z][a-zA-Z0-9+.-]*:(\\/\\/)?[^\\s<>\"{}|\\\\^`\\[\\]]+$"
+                            },
+                            "minItems": 1
+                        },
+                        "style": {
+                            "type": "object",
+                            "properties": {
+                                "icon_class": {"type": "string"},
+                                "icon_unicode": {"type": "string"},
+                                "icon_class_free": {"type": "string"},
+                                "icon_unicode_free": {"type": "string"},
+                                "line_color": {"type": "string"},
+                                "fill_color": {"type": "string"},
+                                "icon_color": {"type": "string"},
+                                "dark_mode_line_color": {"type": "string"},
+                                "dark_mode_fill_color": {"type": "string"},
+                                "dark_mode_icon_color": {"type": "string"}
+                            },
+                            "required": ["icon_class", "icon_unicode", "icon_class_free", "icon_unicode_free", "line_color", "fill_color", "icon_color", "dark_mode_line_color", "dark_mode_fill_color", "dark_mode_icon_color"]
+                        }
+                    },
+                    "required": ["schema_version", "uri", "types", "display_label", "super_classes"],
+                    "additionalProperties": false
+                }
+            ]
+        }
+    }
+}

@@ -1,12 +1,30 @@
 # Copyright (C) 2026 Telicent Limited
-# Canonicals Event Validation Mapper stand-alone chart
+# Telicent Canonicals Ontology umbrella chart
+#
+# The pipeline components are not templated within this chart. They are provided by upstream
+# Telicent dependency charts (see Chart.yaml), configured under their alias keys:
+#   - canonicals-ontology-json-validation-mapper
+#   - canonicals-ontology-mapper
+#
+# Unset values fall back to each dependency chart's own defaults (including container images),
+# so each pinned dependency supplies its own tested image. Override under the relevant subchart
+# key only if you need a specific configuration.
+#
+# The only resource templated by this chart itself is the ConfigMap carrying the canonical
+# ontology JSON schema (templates/schema-configmap.yaml), sourced from
+# files/canonical-ontology.schema.json.
 
+# @key enabled Enable Canonicals Ontology chart
+enabled: true
+
+#
 # @section Global Parameters
+#
 # @descStart
-# Contains global parameters. Not explicitly used in this chart, added to maintain consistency across Telicent charts.
-# These parameters can be referenced in sub-charts as `.Values.global.<parameter-name>`.
+# Contains global parameters; these parameters are mirrored within the Telicent data umbrella chart
+# Global values are automatically propagated to every dependency (subchart).
+# Note: Only global parameters used within this chart will be listed below
 # @descEnd
-
 global:
   ## Current available global image parameters: imageRegistry and imagePullSecrets
   ## Please, note that this will override the image parameters
@@ -18,28 +36,6 @@ global:
   # @key global.imagePullSecrets Global registry secret names as an array
   imagePullSecrets: []
 
-  # @key global.enterprise Enable enterprise mode, adding additional features and configurations
-  enterprise: false
-
-  # @key global.appHostDomain Domain associated with Telicent application services. This value cannot be changed after it is set
-  appHostDomain: ""
-  # @key global.authHostDomain Domain associated with Telicent authentication services, including OIDC providers. This value cannot be changed after it is set
-  authHostDomain: ""
-  # @key global.groupsClaim Key used to retrieve groups from the OIDC provider
-  groupsClaim: "groups"
-  # @key global.jwksUrl Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)
-  # Note: For Dex the endpoint would be https://{yourDexDomain}/keys
-  jwksUrl: "https://{yourAuthdomain}/.well-known/jwks.json"
-
-  # @key global.istioNamespace Namespace in which Istio is deployed
-  # Note: By default, Istio namespace is set to 'istio-system'
-  istioNamespace: istio-system
-  # @key global.istioServiceAccountName Name of the Istio service account
-  istioServiceAccountName: istio-ingress
-  # @key global.istioGatewayName Name of the Istio Gateway Resource (LB operating at the edge of the mesh)
-  istioGatewayName: ingress-gateway
-
-  # @section Kafka Parameters
   kafka:
     # @key global.kafka.bootstrapServers Comma separated list containing Kafka bootstrap servers
     bootstrapServers: "kafka-bootstrap.kafka.svc.cluster.local:9092"
@@ -54,138 +50,24 @@ global:
     # @key global.kafka.mechanism SASL mechanism used for Kafka authentication
     mechanism: "SCRAM-SHA-512"
 
-  truststore:
-    # @key global.truststore.existingSecret Name of an existing secret containing the truststore
-    existingSecret: ""
-    # @key global.truststore.mountPath The mount path for the truststore in the container
-    mountPath: /app/config/truststore
-
-# @section Deployment Parameters
-# @key replicaCount Number of replicas to deploy
-replicaCount: 1
-
-# This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
-# @section Image Parameters
-image:
-  # @key image.registry Container image registry
-  registry: quay.io
-  # @key image.mapperRepository Container image name
-  mapperRepository: telicent/telicent-canonicals-ontology-mapper
-  # @key image.mapperTag Container image tag. If not set, a tag is generated using the appVersion
-  mapperTag: ""
-  # @key image.validationRepository Container image name
-  validationRepository: telicent/telicent-canonicals-ontology-validation-mapper
-  # @key image.validationTag Container image tag. If not set, a tag is generated using the appVersion
-  validationTag: ""
-  # @key image.pullPolicy Container image pull policy
-  pullPolicy: IfNotPresent
-  # @key image.pullSecrets Specify registry secret names as an array
-  pullSecrets: []
-
-# @section Common Parameters
-# @key imagePullSecrets Global Docker registry secret names as an array
-imagePullSecrets: []
-# @key nameOverride String to partially override fullname (will maintain the release name)
-nameOverride: ""
-# @key fullnameOverride String to fully override the generated release name
-fullnameOverride: ""
-
-# @section Service Account Parameters
-serviceAccount:
-  # @key serviceAccount.create Specifies whether a service account should be created
-  create: true
-  # @key serviceAccount.automount Automatically mount a ServiceAccount's API credentials?
-  automount: true
-  # @key serviceAccount.annotations Additional custom annotations for the ServiceAccount
-  annotations: {}
-  # @key serviceAccount.name Name of the ServiceAccount to use. If not set and create is true, a name is generated using the fullname template
-  # If not set and create is true, a name is generated using the fullname template
-  name: ""
-
-# @section Pod Parameters
-# @key podAnnotations Additional custom annotations for pods
-# For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
-podAnnotations: {}
-# @key podLabels Additional custom labels for pods
-# For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
-podLabels: {}
-
-# @key podSecurityContext Set pods' Security Context
-podSecurityContext: {}
-  # fsGroup: 2000
-
-# @key securityContext Set containers' Security Context
-securityContext: {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
-
-# @section Traffic Exposure Parameters
-service:
-  # @key service.type Service type
-  type: ClusterIP
-  # @key service.port Service port
-  port: 8000
-
-# @section Resource Parameters
-# @key resources Resources for *Canonicals Ontology* containers
-resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
-
-# @section Autoscaling Parameters
-autoscaling:
-  # @key autoscaling.enabled Enable Horizontal Pod Autoscaler
-  enabled: false
-  # @key autoscaling.minReplicas Minimum number of replicas
-  minReplicas: 1
-  # @key autoscaling.maxReplicas Maximum number of replicas
-  maxReplicas: 100
-  # @key autoscaling.targetCPUUtilizationPercentage Target CPU utilization percentage
-  targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
-
-# @section Volume Parameters
-# @key volumes Additional volumes on the output Deployment definition
-volumes: []
-# - name: foo
-#   secret:
-#     secretName: mysecret
-#     optional: false
-
-# @key volumeMounts Additional volumeMounts on the output Deployment definition
-volumeMounts: []
-# - name: foo
-#   mountPath: "/etc/foo"
-#   readOnly: true
-
-# @section Node Selection Parameters
-# @key nodeSelector Node labels for pods assignment
-nodeSelector: {}
-
-# @key tolerations Tolerations for pods assignment
-tolerations: []
-
-# @key affinity Affinity for pods assignment
-affinity: {}
-
-# @section Configuration Parameters
+#
+# @section JSON Validation Mapper Parameters
+#
 # @descStart
-# Contains configuration parameters specific to the application
+# The canonical ontology JSON schema is shipped with this chart in
+# `files/canonical-ontology.schema.json` and delivered to the mapper via a ConfigMap templated by
+# this chart (see `templates/schema-configmap.yaml`). Subchart values cannot be templated, so the
+# ConfigMap uses the fixed name referenced below; override this value to supply a schema from
+# your own ConfigMap instead, in which case this chart's ConfigMap is not created.
 # @descEnd
-configuration:
-  # @key configuration.dataNamespace Data namespace URI for RDF data
-  dataNamespace: "http://telicent.io/data#"
-  # @key configuration.kafkaConfigMode Kafka configuration mode (toml, json, properties)
-  kafkaConfigMode: "toml"
+canonicals-ontology-json-validation-mapper:
+  schema:
+    # @key canonicals-ontology-json-validation-mapper.schema.existingConfigMapName Name of the ConfigMap containing the JSON validation schema; defaults to the ConfigMap created by this chart from `files/canonical-ontology.schema.json`
+    existingConfigMapName: canonicals-ontology-schema
+  configuration:
+    # @key canonicals-ontology-json-validation-mapper.configuration.sourceTopic Topic the validation mapper reads raw canonical ontology messages from
+    sourceTopic: "canonical.ontology.raw"
+    # @key canonicals-ontology-json-validation-mapper.configuration.targetTopic Topic the validation mapper writes validated canonical ontology messages to
+    targetTopic: "canonical.ontology.validated"
+    # @key canonicals-ontology-json-validation-mapper.configuration.componentOf Pipeline this instance of the validation mapper belongs to
+    componentOf: "canonicals-ontology"
