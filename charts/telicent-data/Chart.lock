@@ -13,7 +13,7 @@ dependencies:
   version: 0.1.0
 - name: canonicals-ontology
   repository: file://./charts/canonicals-ontology
-  version: 0.1.1
+  version: 0.2.0
 - name: ies-regions-ontology-producer
   repository: oci://quay.io/telicent/charts
   version: 0.13.6
@@ -23,5 +23,5 @@ dependencies:
 - name: telicent-ontology-adapter
   repository: oci://quay.io/telicent/charts
   version: 0.1.4
-digest: sha256:e56be3ae34abf83ed4309664a673ee163ad498212e429c1038aa827d26712f50
-generated: "2026-07-06T17:17:06.742448+01:00"
+digest: sha256:32b28699c30a3ecb092c1ed712cfe80d5d1b296455f627512a5f76afd988ca7a
+generated: "2026-08-14T12:20:10.428671+01:00"

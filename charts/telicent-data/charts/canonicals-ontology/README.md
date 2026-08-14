@@ -1,160 +1,117 @@
-# Canonicals Event Validation Mapper
+# Telicent Package for Canonicals Ontology
 
-A Kafka-based component that operates as part of the Telicent Data parent chart, designed to validate and process canonical event data for data quality assurance and consistency.
+Canonicals Ontology is a data processing pipeline made up of loosely coupled mapper microservices, each performing a different function but sharing data via Kafka topics.
 
-## Overview
+Canonical ontology messages are validated against the canonical ontology JSON schema and then mapped into the ontology used by Telicent Core.
 
-This chart deploys the Canonicals Event Validation Mapper, which processes canonical event data from Kafka topics and validates it against defined schemas and business rules within the Telicent data ecosystem. The mapper ensures event data quality and consistency before further processing and analysis.
+## Introduction
+
+This chart bootstraps the Telicent Canonicals Ontology pipeline deployment on a [Kubernetes](https://kubernetes.io) cluster using
+the [Helm](https://helm.sh) package manager.
+
+It is an umbrella chart; all components are provided by upstream Telicent dependency charts, configured under their alias keys:
+
+- `canonicals-ontology-json-validation-mapper` (`telicent-json-validation-mapper`)
+- `canonicals-ontology-mapper` (`telicent-canonicals-ontology-mapper`)
+
+Unset values fall back to each dependency chart's own defaults (including container images). Refer to each dependency chart for its full set of parameters.
+
+## Umbrella chart
+
+To enable this chart as part of the umbrella chart, please set the key: `.Values.canonicals-ontology.enabled: true`
 
 ## Prerequisites
 
-- Kubernetes cluster
-- Helm 3.x
-- Access to Kafka cluster
-- Telicent Data parent chart deployed
+- Kubernetes 1.23+
+- Helm 3.9+
 
-## Installation
+## Installing the Chart
 
-This chart is typically installed as a dependency of the `telicent-data` parent chart
+To install the chart with the release name `my-release`:
 
-```bash
-helm dependency update ../telicent-data
+```console
+helm install my-release ./charts/telicent-data/charts/canonicals-ontology
 ```
 
-```bash
-helm install telicent-data ../telicent-data
+## Uninstalling the Chart
+
+To uninstall/delete the `my-release` deployment:
+
+```console
+helm delete my-release
 ```
 
-To install this chart independently:
+The command removes all the Kubernetes components associated with the chart and deletes the release.
 
-```bash
-helm install canonicals-ontology-mapper .
+## Configuration and installation details
+
+### Pipeline topics
+
+The validation mapper reads raw canonical ontology messages from `canonical.ontology.raw` and writes the messages that pass
+validation to `canonical.ontology.validated`, which the canonicals ontology mapper consumes. Override the topics under
+`canonicals-ontology-json-validation-mapper.configuration` if your deployment uses different topic names.
+
+### JSON validation schema
+
+The `telicent-json-validation-mapper` dependency requires a JSON schema to validate canonical ontology messages against.
+The canonical ontology schema is shipped with this chart in `files/canonical-ontology.schema.json` and delivered to the
+mapper via a ConfigMap templated by this chart (`templates/schema-configmap.yaml`), which the mapper is pointed at
+through `canonicals-ontology-json-validation-mapper.schema.existingConfigMapName`.
+
+To use a different schema, reference your own ConfigMap instead; this chart's schema ConfigMap is then not created.
+The ConfigMap must contain exactly one key whose name ends in `.schema.json`:
+
+```yaml
+canonicals-ontology-json-validation-mapper:
+  schema:
+    existingConfigMapName: my-schema-configmap
 ```
 
-## Dependencies
+See the `telicent-json-validation-mapper` chart README for the full schema requirements.
 
-- Kafka cluster (configured via parent chart)
-- Telicent Core components
+## Automating README and schema generation
+
+```bash
+.dev/readme-generator-for-helm --config=charts/telicent-data/charts/canonicals-ontology/readme.config \
+ --values=charts/telicent-data/charts/canonicals-ontology/values.yaml \
+ --readme=charts/telicent-data/charts/canonicals-ontology/README.md \
+ --schema=charts/telicent-data/charts/canonicals-ontology/values.schema.json
+```
 
 ## Parameters
 
 ### Global Parameters
 
-Contains global parameters. Not explicitly used in this chart, added to maintain consistency across Telicent charts.
-These parameters can be referenced in sub-charts as `.Values.global.<parameter-name>`.
-
-| Name                             | Description                                                                                                                     | Value                                            |
-| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
-| `global.imageRegistry`           | Global image registry                                                                                                           | `""`                                             |
-| `global.imagePullSecrets`        | Global registry secret names as an array                                                                                        | `[]`                                             |
-| `global.enterprise`              | Enable enterprise mode, adding additional features and configurations                                                           | `false`                                          |
-| `global.appHostDomain`           | Domain associated with Telicent application services. This value cannot be changed after it is set                              | `""`                                             |
-| `global.authHostDomain`          | Domain associated with Telicent authentication services, including OIDC providers. This value cannot be changed after it is set | `""`                                             |
-| `global.groupsClaim`             | Key used to retrieve groups from the OIDC provider                                                                              | `groups`                                         |
-| `global.jwksUrl`                 | Endpoint exposing multiple public keys represented as JWKs (JSON Web Key Set)                                                   | `https://{yourAuthdomain}/.well-known/jwks.json` |
-| `global.istioNamespace`          | Namespace in which Istio is deployed                                                                                            | `istio-system`                                   |
-| `global.istioServiceAccountName` | Name of the Istio service account                                                                                               | `istio-ingress`                                  |
-| `global.istioGatewayName`        | Name of the Istio Gateway Resource (LB operating at the edge of the mesh)                                                       | `ingress-gateway`                                |
-
-### Kafka Parameters
+Contains global parameters; these parameters are mirrored within the Telicent data umbrella chart
+Global values are automatically propagated to every dependency (subchart).
+Note: Only global parameters used within this chart will be listed below
 
 | Name                                    | Description                                                                                                       | Value                                          |
 | --------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| `global.imageRegistry`                  | Global image registry                                                                                             | `""`                                           |
+| `global.imagePullSecrets`               | Global registry secret names as an array                                                                          | `[]`                                           |
 | `global.kafka.bootstrapServers`         | Comma separated list containing Kafka bootstrap servers                                                           | `kafka-bootstrap.kafka.svc.cluster.local:9092` |
 | `global.kafka.existingConfigSecretName` | Name of an existing secret containing Kafka configuration (preferred over individual settings below for security) | `""`                                           |
 | `global.kafka.username`                 | Username for Kafka authentication                                                                                 | `""`                                           |
 | `global.kafka.password`                 | Password for Kafka authentication                                                                                 | `""`                                           |
 | `global.kafka.protocol`                 | Protocol used for Kafka communication                                                                             | `SASL_SSL`                                     |
 | `global.kafka.mechanism`                | SASL mechanism used for Kafka authentication                                                                      | `SCRAM-SHA-512`                                |
-| `global.truststore.existingSecret`      | Name of an existing secret containing the truststore                                                              | `""`                                           |
-| `global.truststore.mountPath`           | The mount path for the truststore in the container                                                                | `/app/config/truststore`                       |
 
-### Deployment Parameters
+### JSON Validation Mapper Parameters
 
-| Name           | Description                  | Value |
-| -------------- | ---------------------------- | ----- |
-| `replicaCount` | Number of replicas to deploy | `1`   |
+The canonical ontology JSON schema is shipped with this chart in
+`files/canonical-ontology.schema.json` and delivered to the mapper via a ConfigMap templated by
+this chart (see `templates/schema-configmap.yaml`). Subchart values cannot be templated, so the
+ConfigMap uses the fixed name referenced below; override this value to supply a schema from
+your own ConfigMap instead, in which case this chart's ConfigMap is not created.
 
-### Image Parameters
+| Name                                                                      | Description                                                                                                                                              | Value                          |
+| ------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------ |
+| `canonicals-ontology-json-validation-mapper.schema.existingConfigMapName` | Name of the ConfigMap containing the JSON validation schema; defaults to the ConfigMap created by this chart from `files/canonical-ontology.schema.json` | `canonicals-ontology-schema`   |
+| `canonicals-ontology-json-validation-mapper.configuration.sourceTopic`    | Topic the validation mapper reads raw canonical ontology messages from                                                                                   | `canonical.ontology.raw`       |
+| `canonicals-ontology-json-validation-mapper.configuration.targetTopic`    | Topic the validation mapper writes validated canonical ontology messages to                                                                              | `canonical.ontology.validated` |
+| `canonicals-ontology-json-validation-mapper.configuration.componentOf`    | Pipeline this instance of the validation mapper belongs to                                                                                               | `canonicals-ontology`          |
 
-| Name                         | Description                                                              | Value                                                     |
-| ---------------------------- | ------------------------------------------------------------------------ | --------------------------------------------------------- |
-| `image.registry`             | Container image registry                                                 | `quay.io`                                                 |
-| `image.mapperRepository`     | Container image name                                                     | `telicent/telicent-canonicals-ontology-mapper`            |
-| `image.mapperTag`            | Container image tag. If not set, a tag is generated using the appVersion | `""`                                                      |
-| `image.validationRepository` | Container image name                                                     | `telicent/telicent-canonicals-ontology-validation-mapper` |
-| `image.validationTag`        | Container image tag. If not set, a tag is generated using the appVersion | `""`                                                      |
-| `image.pullPolicy`           | Container image pull policy                                              | `IfNotPresent`                                            |
-| `image.pullSecrets`          | Specify registry secret names as an array                                | `[]`                                                      |
+## License
 
-### Common Parameters
-
-| Name               | Description                                                            | Value |
-| ------------------ | ---------------------------------------------------------------------- | ----- |
-| `imagePullSecrets` | Global Docker registry secret names as an array                        | `[]`  |
-| `nameOverride`     | String to partially override fullname (will maintain the release name) | `""`  |
-| `fullnameOverride` | String to fully override the generated release name                    | `""`  |
-
-### Service Account Parameters
-
-| Name                         | Description                                                                                                       | Value  |
-| ---------------------------- | ----------------------------------------------------------------------------------------------------------------- | ------ |
-| `serviceAccount.create`      | Specifies whether a service account should be created                                                             | `true` |
-| `serviceAccount.automount`   | Automatically mount a ServiceAccount's API credentials?                                                           | `true` |
-| `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount                                                              | `{}`   |
-| `serviceAccount.name`        | Name of the ServiceAccount to use. If not set and create is true, a name is generated using the fullname template | `""`   |
-
-### Pod Parameters
-
-| Name                 | Description                            | Value |
-| -------------------- | -------------------------------------- | ----- |
-| `podAnnotations`     | Additional custom annotations for pods | `{}`  |
-| `podLabels`          | Additional custom labels for pods      | `{}`  |
-| `podSecurityContext` | Set pods' Security Context             | `{}`  |
-| `securityContext`    | Set containers' Security Context       | `{}`  |
-
-### Traffic Exposure Parameters
-
-| Name           | Description  | Value       |
-| -------------- | ------------ | ----------- |
-| `service.type` | Service type | `ClusterIP` |
-| `service.port` | Service port | `8000`      |
-
-### Resource Parameters
-
-| Name        | Description                                    | Value |
-| ----------- | ---------------------------------------------- | ----- |
-| `resources` | Resources for *Canonicals Ontology* containers | `{}`  |
-
-### Autoscaling Parameters
-
-| Name                                         | Description                       | Value   |
-| -------------------------------------------- | --------------------------------- | ------- |
-| `autoscaling.enabled`                        | Enable Horizontal Pod Autoscaler  | `false` |
-| `autoscaling.minReplicas`                    | Minimum number of replicas        | `1`     |
-| `autoscaling.maxReplicas`                    | Maximum number of replicas        | `100`   |
-| `autoscaling.targetCPUUtilizationPercentage` | Target CPU utilization percentage | `80`    |
-
-### Volume Parameters
-
-| Name           | Description                                                 | Value |
-| -------------- | ----------------------------------------------------------- | ----- |
-| `volumes`      | Additional volumes on the output Deployment definition      | `[]`  |
-| `volumeMounts` | Additional volumeMounts on the output Deployment definition | `[]`  |
-
-### Node Selection Parameters
-
-| Name           | Description                     | Value |
-| -------------- | ------------------------------- | ----- |
-| `nodeSelector` | Node labels for pods assignment | `{}`  |
-| `tolerations`  | Tolerations for pods assignment | `[]`  |
-| `affinity`     | Affinity for pods assignment    | `{}`  |
-
-### Configuration Parameters
-
-Contains configuration parameters specific to the application
-
-| Name                            | Description                                       | Value                      |
-| ------------------------------- | ------------------------------------------------- | -------------------------- |
-| `configuration.dataNamespace`   | Data namespace URI for RDF data                   | `http://telicent.io/data#` |
-| `configuration.kafkaConfigMode` | Kafka configuration mode (toml, json, properties) | `toml`                     |
+Copyright &copy; 2026 Telicent Limited
