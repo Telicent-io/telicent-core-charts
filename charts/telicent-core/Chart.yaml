@@ -45,7 +45,7 @@ dependencies:
     version: "1.0.9"
     repository: oci://quay.io/telicent/charts
   - name: graph-ui
-    version: "1.38.2"
+    version: 1.39.0
     repository: oci://quay.io/telicent/charts
     condition: global.enterprise
   - name: query-ui
