@@ -1,7 +1,7 @@
 dependencies:
 - name: data-catalog-ui
   repository: oci://quay.io/telicent/charts
-  version: 1.15.3
+  version: 1.17.0
 - name: notifications
   repository: file://./charts/notifications
   version: 0.1.0
@@ -13,9 +13,12 @@ dependencies:
   version: 0.1.3
 - name: user-portal-ui
   repository: oci://quay.io/telicent/charts
-  version: 1.9.0
+  version: 1.11.0
 - name: apicurio
   repository: file://./charts/apicurio
   version: 0.1.0
-digest: sha256:c76168a9df9d49ec33d1a060682ca4577c4d7eca10d35cc739e9b32b586e99b6
-generated: "2026-05-28T11:17:33.217667+01:00"
+- name: catalogue-api
+  repository: oci://quay.io/telicent/charts
+  version: 0.2.5
+digest: sha256:94fececb815a932cafb3b8d2a416deb3267bdc64505ca9e6484c868cb4dc6766
+generated: "2026-08-19T08:03:25.771295+01:00"
