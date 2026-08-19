@@ -41,7 +41,7 @@ entries:
   demo-prereqs:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2026-08-19T14:31:11.852024966Z"
+    created: "2026-08-19T14:31:24.51450532Z"
     dependencies:
     - condition: gateways.enabled
       name: gateways
@@ -69,7 +69,7 @@ entries:
       version: ^0.x
     description: 'Telicent demo cluster prerequisites. This chart is used to install
       all of the required dependencies for the Telicent demo cluster. '
-    digest: 799116387d970963db0eab4156f564b64fcbafa0c7706c24ea29bea8076ae522
+    digest: 1752033ba3bb82cc1b0bbb5c187b1363ebc0861d06460a1d0cdd966016c242d6
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: Telicent
@@ -685,7 +685,7 @@ entries:
   telicent-core:
   - apiVersion: v2
     appVersion: 2.0.0
-    created: "2026-08-19T14:31:11.871483939Z"
+    created: "2026-08-19T14:31:24.53283976Z"
     dependencies:
     - condition: global.enterprise
       name: admin-ui
@@ -729,7 +729,7 @@ entries:
       version: ^0.2.0
     description: 'Telicent CORE Platform, for all essential services and applications
       for our secure data integration and knowledge graph platform. '
-    digest: f4bdc60f45d8ecb261fcdf62ebced784e19b602451524da80bac717185bd9575
+    digest: b20946452057d8084794d441d322c80743ed9bf57b513c41f5fbe206ba8f6a61
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -2518,6 +2518,51 @@ entries:
   telicent-data:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2026-08-19T14:31:24.548213878Z"
+    dependencies:
+    - condition: acled-locations-mapper.enabled,global.enterprise
+      name: acled-locations-mapper
+      repository: file://./charts/acled-locations-mapper
+      version: ^0.1.0
+    - condition: acled-participants-mapper.enabled,global.enterprise
+      name: acled-participants-mapper
+      repository: file://./charts/acled-participants-mapper
+      version: ^0.1.0
+    - condition: acled-validation-mapper.enabled,global.enterprise
+      name: acled-validation-mapper
+      repository: file://./charts/acled-validation-mapper
+      version: ^0.1.0
+    - condition: global.enterprise
+      name: canonicals-event
+      repository: file://./charts/canonicals-event
+      version: ^0.1.0
+    - condition: global.enterprise
+      name: canonicals-ontology
+      repository: file://./charts/canonicals-ontology
+      version: ^0.2.0
+    - name: ies-regions-ontology-producer
+      repository: oci://quay.io/telicent/charts
+      version: 0.13.7
+    - name: ies-regions-producer
+      repository: oci://quay.io/telicent/charts
+      version: 0.13.7
+    - name: telicent-ontology-adapter
+      repository: oci://quay.io/telicent/charts
+      version: 0.1.5
+    description: 'Supplementary chart containing adapters and mappers for specific
+      datasets and ontologies. '
+    digest: 62749ca2199feec0072e6efac8d20c28650627077a8c410bdd0c2406094e5bfa
+    icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
+    maintainers:
+    - name: telicent
+      url: https://github.com/Telicent-IO
+    name: telicent-data
+    type: application
+    urls:
+    - telicent-data-1.0.0.tgz
+    version: 1.0.0
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2026-08-19T14:31:11.885663568Z"
     dependencies:
     - condition: acled-locations-mapper.enabled,global.enterprise
@@ -3198,7 +3243,7 @@ entries:
   telicent-preview:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2026-08-19T14:31:11.893952693Z"
+    created: "2026-08-19T14:31:24.555582557Z"
     dependencies:
     - condition: data-catalog-ui.enabled
       name: data-catalog-ui
@@ -3232,7 +3277,7 @@ entries:
     description: 'Secondary chart containing products that are still under active
       development, and not yet part of CORE. Can be used to try new or preview features
       early. '
-    digest: e9d7d62e2df824370b4de3fe938d0a5e261d607d144fdb871460adfdc8da490e
+    digest: d1cfbb2e62334edd61f422330aad00ab1137f773a93316ed1b9fdda1c80e5edd
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -3495,4 +3540,4 @@ entries:
     urls:
     - telicent-preview-0.2.0.tgz
     version: 0.2.0
-generated: "2026-08-19T14:31:11.841830721Z"
+generated: "2026-08-19T14:31:24.504371753Z"
