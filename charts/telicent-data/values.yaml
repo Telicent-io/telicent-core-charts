@@ -60,6 +60,24 @@ global:
     # @key global.truststore.mountPath The mount path for the truststore in the container
     mountPath: /app/config/truststore
 
+## ACLED mappers
+##
+# The ACLED mappers (`acled-locations-mapper`, `acled-participants-mapper` and
+# `acled-validation-mapper`) are gated on `global.enterprise` by default. Each one also
+# accepts its own `enabled` toggle which, when set, takes precedence over
+# `global.enterprise` for that chart:
+#
+#   --set acled-locations-mapper.enabled=false   # off, even with enterprise enabled
+#   --set acled-locations-mapper.enabled=true    # on, even without enterprise enabled
+#
+# The toggles are deliberately absent from this file rather than defaulted here. Helm
+# resolves a dependency's comma-separated condition to the *first* path present in the
+# values, so setting them here would permanently shadow the `global.enterprise` fallback
+# declared in Chart.yaml. For the same reason those conditions must not contain a space
+# after the comma - Helm trims the condition string as a whole and not each element, so
+# ` global.enterprise` would never resolve.
+##
+
 # @section Kafka Topics Parameters
 kafkaTopics:
   # @key kafkaTopics.enabled Enable or disable the creation of Kafka topics during installation

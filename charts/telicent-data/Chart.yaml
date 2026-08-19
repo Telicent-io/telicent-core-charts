@@ -36,15 +36,15 @@ dependencies:
   - name: acled-locations-mapper
     version: ^0.1.0
     repository: "file://./charts/acled-locations-mapper"
-    condition: global.enterprise
+    condition: acled-locations-mapper.enabled,global.enterprise
   - name: acled-participants-mapper
     version: ^0.1.0
     repository: "file://./charts/acled-participants-mapper"
-    condition: global.enterprise
+    condition: acled-participants-mapper.enabled,global.enterprise
   - name: acled-validation-mapper
     version: ^0.1.0
     repository: "file://./charts/acled-validation-mapper"
-    condition: global.enterprise
+    condition: acled-validation-mapper.enabled,global.enterprise
   - name: canonicals-event
     version: ^0.1.0
     repository: "file://./charts/canonicals-event"

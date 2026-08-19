@@ -23,5 +23,5 @@ dependencies:
 - name: telicent-ontology-adapter
   repository: oci://quay.io/telicent/charts
   version: 0.1.4
-digest: sha256:32b28699c30a3ecb092c1ed712cfe80d5d1b296455f627512a5f76afd988ca7a
-generated: "2026-08-14T12:20:10.428671+01:00"
+digest: sha256:b5981abb03a03b8395653b4927346be35bd553740011545b1a2a4f636708c6f9
+generated: "2026-08-19T08:41:24.201472+01:00"
