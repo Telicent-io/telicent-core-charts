@@ -25,42 +25,42 @@ version: 1.3.3
 # incremented each time you make changes to the application. Versions are not expected to
 # follow Semantic Versioning. They should reflect the version the application is using.
 # It is recommended to use it with quotes.
-appVersion: "1.16.0"
+appVersion: "2.0.0"
 
 #  The chart's dependencies. These are other charts that this chart depends on
 # The dependencies will be fetched and installed when the chart is installed.
 dependencies:
   - name: admin-ui
-    version: "1.6.0"
+    version: "1.7.1"
     repository: oci://quay.io/telicent/charts
     condition: global.enterprise
   - name: auth
-    version: "0.2.9"
+    version: "0.3.1"
     repository: oci://quay.io/telicent/charts
   - name: document-pipeline
     version: "^0.2.3"
     repository: file://./charts/document-pipeline
     condition: global.enterprise
   - name: graph
-    version: "1.0.9"
+    version: "1.1.4"
     repository: oci://quay.io/telicent/charts
   - name: graph-ui
-    version: "1.38.2"
+    version: "1.39.0"
     repository: oci://quay.io/telicent/charts
     condition: global.enterprise
   - name: query-ui
     version: 1.6.0
     repository: oci://quay.io/telicent/charts
   - name: search
-    version: "2.2.0"
+    version: "2.2.6"
     repository: oci://quay.io/telicent/charts
     condition: global.enterprise
   - name: search-projector
-    version: "2.2.0"
+    version: "2.2.6"
     repository: oci://quay.io/telicent/charts
     condition: global.enterprise
   - name: search-ui
-    version: "4.21.0"
+    version: "4.22.1"
     repository: oci://quay.io/telicent/charts
     condition: global.enterprise
   - name: traefik-proxy

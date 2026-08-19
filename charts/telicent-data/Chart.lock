@@ -16,12 +16,12 @@ dependencies:
   version: 0.2.0
 - name: ies-regions-ontology-producer
   repository: oci://quay.io/telicent/charts
-  version: 0.13.6
+  version: 0.13.7
 - name: ies-regions-producer
   repository: oci://quay.io/telicent/charts
-  version: 0.13.6
+  version: 0.13.7
 - name: telicent-ontology-adapter
   repository: oci://quay.io/telicent/charts
-  version: 0.1.4
-digest: sha256:b5981abb03a03b8395653b4927346be35bd553740011545b1a2a4f636708c6f9
-generated: "2026-08-19T08:41:24.201472+01:00"
+  version: 0.1.5
+digest: sha256:664e2add9775a7a3a1d0c4f7fcabb5126fd2702d4d41d8523f668062eb30f218
+generated: "2026-08-19T14:55:47.159619+01:00"

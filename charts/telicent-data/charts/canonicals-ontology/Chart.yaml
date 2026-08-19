@@ -38,7 +38,7 @@ maintainers:
 dependencies:
   - name: telicent-json-validation-mapper
     alias: canonicals-ontology-json-validation-mapper
-    version: "0.2.6"
+    version: "0.2.7"
     repository: oci://quay.io/telicent/charts
     condition: enabled
   - name: telicent-canonicals-ontology-mapper
