@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.0.0](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-data-v0.3.9...telicent-data-v1.0.0) (2026-08-19)
+
+
+### ⚠ BREAKING CHANGES
+
+* first stable release; mapper and producer subcharts move to their Telicent Core 2.0.0 versions.
+
+### Features
+
+* release telicent-data 1.0.0 ([#689](https://github.com/Telicent-io/telicent-core-charts/issues/689)) ([9d53491](https://github.com/Telicent-io/telicent-core-charts/commit/9d5349198d59a24dbd10e1e54ee4ca122df3c80f))
+
 ## [0.3.9](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-data-v0.3.8...telicent-data-v0.3.9) (2026-08-19)
 
 
