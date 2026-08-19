@@ -1,6 +1,6 @@
 {
   "charts/telicent-core": "2.0.0",
   "charts/telicent-preview": "0.6.3",
-  "charts/telicent-data": "0.3.9",
+  "charts/telicent-data": "1.0.0",
   "charts/demo-prereqs": "0.1.5"
 }
