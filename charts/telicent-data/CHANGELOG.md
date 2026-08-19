@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.9](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-data-v0.3.8...telicent-data-v0.3.9) (2026-08-19)
+
+
+### Bug Fixes
+
+* make acled togglable ([#686](https://github.com/Telicent-io/telicent-core-charts/issues/686)) ([548da8d](https://github.com/Telicent-io/telicent-core-charts/commit/548da8dfd565e010be37068d031c7953133a97cf))
+
 ## [0.3.8](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-data-v0.3.7...telicent-data-v0.3.8) (2026-08-14)
 
 
