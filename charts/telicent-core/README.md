@@ -24,6 +24,28 @@ helm install my-release ./charts/telicent-core
 
 The chart will fail validation if placeholder values are detected or required credentials are missing.
 
+## Upgrading
+
+### To 2.0.0
+
+This release bumps the platform and front-end subcharts to their 2.0.0 platform
+versions. Review the individual subchart changelogs before upgrading:
+
+| Subchart | From | To |
+| --- | --- | --- |
+| `admin-ui` | 1.6.0 | 1.7.1 |
+| `auth` | 0.2.9 | 0.3.1 |
+| `graph` | 1.0.9 | 1.1.4 |
+| `graph-ui` | 1.38.2 | 1.39.0 |
+| `search` | 2.2.0 | 2.2.6 |
+| `search-projector` | 2.2.0 | 2.2.6 |
+| `search-ui` | 4.21.0 | 4.22.1 |
+| `document-pipeline` | 0.2.4 | 0.2.5 |
+| `user-preferences` | 0.2.3 | 0.2.4 |
+
+`document-pipeline` additionally moves its own dependency from 3.5.1 to 4.0.2, and
+`user-preferences` moves its `appVersion` from 2.0.8 to 2.0.10.
+
 ## Uninstalling the Chart
 
 To uninstall/delete the `my-release` deployment:
