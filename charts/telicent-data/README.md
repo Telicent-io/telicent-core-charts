@@ -27,6 +27,27 @@ To install with custom configuration:
 helm install telicent-data ./charts/telicent-data -f custom-values.yaml
 ```
 
+## Upgrading
+
+### To 1.0.0
+
+First stable release of the chart. This release brings the mapper and producer
+subcharts up to the versions shipped with Telicent Core 2.0.0:
+
+| Subchart | From | To |
+| --- | --- | --- |
+| `ies-regions-ontology-producer` | 0.13.6 | 0.13.7 |
+| `ies-regions-producer` | 0.13.6 | 0.13.7 |
+| `telicent-ontology-adapter` | 0.1.4 | 0.1.5 |
+| `telicent-canonicals-event-document-mapper` | 0.9.11 | 0.9.12 |
+| `telicent-canonicals-event-geo-mapper` | 0.9.11 | 0.9.12 |
+| `telicent-canonicals-event-knowledge-mapper` | 0.9.11 | 0.9.12 |
+| `telicent-canonicals-region-resolver-mapper` | 0.1.3 | 0.1.4 |
+| `telicent-json-validation-mapper` | 0.2.6 | 0.2.7 |
+
+The `telicent-json-validation-mapper` bump applies to both the `canonicals-event`
+and `canonicals-ontology` umbrella charts.
+
 ## Uninstalling the Chart
 
 To uninstall/delete the `telicent-data` deployment:
