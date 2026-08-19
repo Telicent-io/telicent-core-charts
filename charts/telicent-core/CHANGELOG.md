@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.3.4](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v1.3.3...telicent-core-v1.3.4) (2026-08-19)
+
+
+### Bug Fixes
+
+* add version info endpoint ([#677](https://github.com/Telicent-io/telicent-core-charts/issues/677)) ([6443534](https://github.com/Telicent-io/telicent-core-charts/commit/644353410118cd48b8e1964d9d58e845c5f85c51))
+
+
+### Dependencies
+
+* bump query-ui from 1.5.4 to 1.6.0 in /charts/telicent-core ([904522d](https://github.com/Telicent-io/telicent-core-charts/commit/904522df771552f918f79c3b3a8a5963c9c19630))
+* bump search-ui from 4.20.0 to 4.21.0 in /charts/telicent-core ([3df0e50](https://github.com/Telicent-io/telicent-core-charts/commit/3df0e50548250519cb14fdda89990e833675a6fd))
+
 ## [1.3.3](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v1.3.2...telicent-core-v1.3.3) (2026-07-14)
 
 
