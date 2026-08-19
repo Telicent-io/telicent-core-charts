@@ -1,36 +1,36 @@
 dependencies:
 - name: admin-ui
   repository: oci://quay.io/telicent/charts
-  version: 1.6.0
+  version: 1.7.1
 - name: auth
   repository: oci://quay.io/telicent/charts
-  version: 0.2.9
+  version: 0.3.1
 - name: document-pipeline
   repository: file://./charts/document-pipeline
-  version: 0.2.4
+  version: 0.2.5
 - name: graph
   repository: oci://quay.io/telicent/charts
-  version: 1.0.9
+  version: 1.1.4
 - name: graph-ui
   repository: oci://quay.io/telicent/charts
-  version: 1.38.1
+  version: 1.39.0
 - name: query-ui
   repository: oci://quay.io/telicent/charts
   version: 1.6.0
 - name: search
   repository: oci://quay.io/telicent/charts
-  version: 2.2.0
+  version: 2.2.6
 - name: search-projector
   repository: oci://quay.io/telicent/charts
-  version: 2.2.0
+  version: 2.2.6
 - name: search-ui
   repository: oci://quay.io/telicent/charts
-  version: 4.20.0
+  version: 4.22.1
 - name: traefik-proxy
   repository: file://./charts/traefik-proxy
   version: 0.1.1
 - name: user-preferences
   repository: file://./charts/user-preferences
-  version: 0.2.3
-digest: sha256:7cd2c3d3ba04134e29b9850823806f0615f1fc943455892d0b733bd7898a4362
-generated: "2026-07-20T14:36:24.063413207Z"
+  version: 0.2.4
+digest: sha256:9a54967e307e4d3728404e209434a3887213d88765b79ee11a2c65b3249d449d
+generated: "2026-08-19T08:02:40.134863+01:00"
