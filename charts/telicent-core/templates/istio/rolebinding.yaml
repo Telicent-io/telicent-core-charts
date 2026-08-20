@@ -1,3 +1,4 @@
+{{- if .Values.istioInjectionLabelJobEnabled }} 
 {{- /*
 Copyright (C) 2026 Telicent Limited
 */}}
@@ -23,3 +24,4 @@ roleRef:
   kind: Role
   name: label-namespace-role
   apiGroup: rbac.authorization.k8s.io
+{{- end }}
