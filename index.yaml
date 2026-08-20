@@ -41,7 +41,7 @@ entries:
   demo-prereqs:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2026-08-19T14:31:24.51450532Z"
+    created: "2026-08-20T12:27:36.591034102Z"
     dependencies:
     - condition: gateways.enabled
       name: gateways
@@ -69,7 +69,7 @@ entries:
       version: ^0.x
     description: 'Telicent demo cluster prerequisites. This chart is used to install
       all of the required dependencies for the Telicent demo cluster. '
-    digest: 1752033ba3bb82cc1b0bbb5c187b1363ebc0861d06460a1d0cdd966016c242d6
+    digest: 407148c7770b34aa68a5937b7b96d1bb563f357922937df3aed489e2dd21afc4
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: Telicent
@@ -683,6 +683,62 @@ entries:
     - smart-cache-search-0.1.1.tgz
     version: 0.1.1
   telicent-core:
+  - apiVersion: v2
+    appVersion: 2.0.0
+    created: "2026-08-20T12:27:36.610790649Z"
+    dependencies:
+    - condition: global.enterprise
+      name: admin-ui
+      repository: oci://quay.io/telicent/charts
+      version: 1.7.1
+    - name: auth
+      repository: oci://quay.io/telicent/charts
+      version: 0.3.1
+    - condition: global.enterprise
+      name: document-pipeline
+      repository: file://./charts/document-pipeline
+      version: ^0.2.3
+    - name: graph
+      repository: oci://quay.io/telicent/charts
+      version: 1.1.4
+    - condition: global.enterprise
+      name: graph-ui
+      repository: oci://quay.io/telicent/charts
+      version: 1.39.0
+    - name: query-ui
+      repository: oci://quay.io/telicent/charts
+      version: 1.6.0
+    - condition: global.enterprise
+      name: search
+      repository: oci://quay.io/telicent/charts
+      version: 2.2.6
+    - condition: global.enterprise
+      name: search-projector
+      repository: oci://quay.io/telicent/charts
+      version: 2.2.6
+    - condition: global.enterprise
+      name: search-ui
+      repository: oci://quay.io/telicent/charts
+      version: 4.22.1
+    - name: traefik-proxy
+      repository: file://./charts/traefik-proxy
+      version: ^0.1.0
+    - condition: global.enterprise
+      name: user-preferences
+      repository: file://./charts/user-preferences
+      version: ^0.2.0
+    description: 'Telicent CORE Platform, for all essential services and applications
+      for our secure data integration and knowledge graph platform. '
+    digest: 1f5d453ef96539d8b7dcb3d166be0a539652ba1ac7b0d30b3a712ebb333871e0
+    icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
+    maintainers:
+    - name: telicent
+      url: https://github.com/Telicent-IO
+    name: telicent-core
+    type: application
+    urls:
+    - telicent-core-2.0.1.tgz
+    version: 2.0.1
   - apiVersion: v2
     appVersion: 2.0.0
     created: "2026-08-19T14:31:24.53283976Z"
@@ -2518,7 +2574,7 @@ entries:
   telicent-data:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2026-08-19T14:31:24.548213878Z"
+    created: "2026-08-20T12:27:36.624981638Z"
     dependencies:
     - condition: acled-locations-mapper.enabled,global.enterprise
       name: acled-locations-mapper
@@ -2551,7 +2607,7 @@ entries:
       version: 0.1.5
     description: 'Supplementary chart containing adapters and mappers for specific
       datasets and ontologies. '
-    digest: 62749ca2199feec0072e6efac8d20c28650627077a8c410bdd0c2406094e5bfa
+    digest: 115f1e7f9285f486d05421e6701ea5aa0d8d0bb6cd2aaa7be9b541c43a3eed25
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -3243,7 +3299,7 @@ entries:
   telicent-preview:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2026-08-19T14:31:24.555582557Z"
+    created: "2026-08-20T12:27:36.633240878Z"
     dependencies:
     - condition: data-catalog-ui.enabled
       name: data-catalog-ui
@@ -3277,7 +3333,7 @@ entries:
     description: 'Secondary chart containing products that are still under active
       development, and not yet part of CORE. Can be used to try new or preview features
       early. '
-    digest: d1cfbb2e62334edd61f422330aad00ab1137f773a93316ed1b9fdda1c80e5edd
+    digest: 8a3ff5db646858c5ffe2937abcd1ae61be3711c71d2f5eb4f38ae323d7c1778c
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -3540,4 +3596,4 @@ entries:
     urls:
     - telicent-preview-0.2.0.tgz
     version: 0.2.0
-generated: "2026-08-19T14:31:24.504371753Z"
+generated: "2026-08-20T12:27:36.581305601Z"
