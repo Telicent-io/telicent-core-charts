@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.1](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v2.0.0...telicent-core-v2.0.1) (2026-08-20)
+
+
+### Bug Fixes
+
+* guard istio label-namespace RBAC ([#693](https://github.com/Telicent-io/telicent-core-charts/issues/693)) ([8a81e92](https://github.com/Telicent-io/telicent-core-charts/commit/8a81e92da6a5bfcc169592d319e6f0a44959d84f))
+
 ## [2.0.0](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v1.3.3...telicent-core-v2.0.0) (2026-08-19)
 
 
