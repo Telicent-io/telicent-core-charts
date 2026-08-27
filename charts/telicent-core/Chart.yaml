@@ -49,7 +49,7 @@ dependencies:
     repository: oci://quay.io/telicent/charts
     condition: deletion-worker.enabled
   - name: graph-ui
-    version: "1.39.0"
+    version: 1.39.2
     repository: oci://quay.io/telicent/charts
     condition: global.enterprise
   - name: query-ui
