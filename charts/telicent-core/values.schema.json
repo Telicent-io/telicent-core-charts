@@ -148,6 +148,16 @@
             "type": "boolean",
             "description": "Enable automatically labelling a namespace for Istio injection via a job. Useful when namespace is created via Helm",
             "default": true
+        },
+        "deletion-worker": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable or disable the deletion worker subchart",
+                    "default": false
+                }
+            }
         }
     }
 }

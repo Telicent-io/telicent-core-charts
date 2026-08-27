@@ -103,3 +103,10 @@ kafkaTopics:
 
 # @key istioInjectionLabelJobEnabled Enable automatically labelling a namespace for Istio injection via a job. Useful when namespace is created via Helm
 istioInjectionLabelJobEnabled: true
+
+#
+# @section Deletion Worker Parameters
+#
+deletion-worker:
+  # @key deletion-worker.enabled Enable or disable the deletion worker subchart
+  enabled: false
