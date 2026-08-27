@@ -142,6 +142,12 @@ Contains global truststore parameters, these parameters are mirrored across Teli
 | `kafkaTopics.topics`            | List of Kafka topics to be created                                                                                  | `[]`    |
 | `istioInjectionLabelJobEnabled` | Enable automatically labelling a namespace for Istio injection via a job. Useful when namespace is created via Helm | `true`  |
 
+### Deletion Worker Parameters
+
+| Name                      | Description                                    | Value   |
+| ------------------------- | ---------------------------------------------- | ------- |
+| `deletion-worker.enabled` | Enable or disable the deletion worker subchart | `false` |
+
 ## Subchart configurations
 
 This section contains configurations for the various subcharts included in the Telicent Core chart.
