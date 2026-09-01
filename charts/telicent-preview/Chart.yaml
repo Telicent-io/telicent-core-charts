@@ -51,7 +51,7 @@ dependencies:
     repository: file://./charts/apicurio
     condition: apicurio.enabled
   - name: catalogue-api
-    version: "0.2.5"
+    version: 0.2.7
     repository: oci://quay.io/telicent/charts
     condition: catalog-api.enabled
     alias: catalog-api
