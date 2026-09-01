@@ -1,1 +1,8 @@
 *   @Telicent-io/infrafolks
+
+# Chart changelogs are the release notes for the published charts, so QA and
+# product review them alongside the default owners. release-please writes these
+# files, so its release PRs will also require a review from the team.
+/charts/telicent-core/CHANGELOG.md      @Telicent-io/infrafolks @Telicent-io/qa-and-product
+/charts/telicent-data/CHANGELOG.md      @Telicent-io/infrafolks @Telicent-io/qa-and-product
+/charts/telicent-preview/CHANGELOG.md   @Telicent-io/infrafolks @Telicent-io/qa-and-product
