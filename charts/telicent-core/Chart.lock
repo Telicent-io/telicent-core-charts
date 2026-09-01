@@ -33,7 +33,7 @@ dependencies:
   repository: oci://quay.io/telicent/charts
   version: 0.1.3
 - name: user-preferences
-  repository: file://./charts/user-preferences
-  version: 0.2.4
-digest: sha256:88da723f5a2e463bf08193c3353bfcc4489a0be69f652a73344b35310e6f5766
-generated: "2026-08-27T16:17:39.03428457Z"
+  repository: oci://quay.io/telicent/charts
+  version: 2.0.13
+digest: sha256:a06d56fb1e8495425aa0282bbad7f5e2c0f7389ec07dd5a07de73af47bbc478d
+generated: "2026-09-01T09:22:07.907248429Z"
