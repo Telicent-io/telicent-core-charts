@@ -13,12 +13,12 @@ dependencies:
   version: 0.1.3
 - name: user-portal-ui
   repository: oci://quay.io/telicent/charts
-  version: 1.11.0
+  version: 1.11.1
 - name: apicurio
   repository: file://./charts/apicurio
   version: 0.1.0
 - name: catalogue-api
   repository: oci://quay.io/telicent/charts
   version: 0.2.7
-digest: sha256:c6a86b396cac1f5511f53f4460407e6330ad2f98dca7033fbac6f137ea969b10
-generated: "2026-09-01T10:37:25.464531189Z"
+digest: sha256:f5ac177eff93e2aa9fb97a3551e52bc1bbacb7034f682b617fcf06a3a859a8a9
+generated: "2026-09-01T11:23:25.895119971Z"
