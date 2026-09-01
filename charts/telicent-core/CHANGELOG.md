@@ -1,5 +1,23 @@
 # Changelog
 
+## [2.1.0](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v2.0.1...telicent-core-v2.1.0) (2026-09-01)
+
+
+### Features
+
+* adds deletion worker ([#700](https://github.com/Telicent-io/telicent-core-charts/issues/700)) ([7720974](https://github.com/Telicent-io/telicent-core-charts/commit/7720974a104084892a92c1b49ea1a6e6e9ac6aa3))
+* user preferences moved to standalone chart ([#703](https://github.com/Telicent-io/telicent-core-charts/issues/703)) ([377ef04](https://github.com/Telicent-io/telicent-core-charts/commit/377ef045bcce0c5c7ff43480aaeb8bafb774b3ec))
+
+
+### Dependencies
+
+* bump admin-ui from 1.7.1 to 1.7.2 in /charts/telicent-core ([#699](https://github.com/Telicent-io/telicent-core-charts/issues/699)) ([dc9a994](https://github.com/Telicent-io/telicent-core-charts/commit/dc9a9940bd63db2566bb39d5a820416b2eab5853))
+* bump graph-ui from 1.39.0 to 1.39.2 in /charts/telicent-core ([#698](https://github.com/Telicent-io/telicent-core-charts/issues/698)) ([d7617a2](https://github.com/Telicent-io/telicent-core-charts/commit/d7617a2c58c48b73e0b9b5b2ee3c62fa35f8ec31))
+* bump query-ui from 1.6.0 to 1.6.1 in /charts/telicent-core ([#672](https://github.com/Telicent-io/telicent-core-charts/issues/672)) ([8206f3a](https://github.com/Telicent-io/telicent-core-charts/commit/8206f3a82148f49eec2c7f4cbe2c4e42f9b7feac))
+* bump search-ui from 4.22.1 to 4.22.2 in /charts/telicent-core ([#697](https://github.com/Telicent-io/telicent-core-charts/issues/697)) ([bc69a7a](https://github.com/Telicent-io/telicent-core-charts/commit/bc69a7a1a14ee74a4c4c1d1a7f57c9fa8858fa3c))
+* bump user-preferences in /charts/telicent-core ([#706](https://github.com/Telicent-io/telicent-core-charts/issues/706)) ([32552c0](https://github.com/Telicent-io/telicent-core-charts/commit/32552c0034639660ad801f3fde0f0a6e14b1ee14))
+* move traefik to standalone chart ([#702](https://github.com/Telicent-io/telicent-core-charts/issues/702)) ([005f480](https://github.com/Telicent-io/telicent-core-charts/commit/005f4808ea3439773d910811edfac473d4cc58be))
+
 ## [2.0.1](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v2.0.0...telicent-core-v2.0.1) (2026-08-20)
 
 
