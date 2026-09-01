@@ -17,7 +17,7 @@ type: application
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 0.1.0
+version: 0.1.1
 
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application. Versions are not expected to
@@ -53,7 +53,7 @@ dependencies:
     condition: enabled
   - name: telicent-canonicals-region-resolver-mapper
     alias: canonicals-event-region-resolver-mapper
-    version: "0.1.4"
+    version: "0.1.6"
     repository: oci://quay.io/telicent/charts
     condition: enabled
   - name: telicent-json-validation-mapper
