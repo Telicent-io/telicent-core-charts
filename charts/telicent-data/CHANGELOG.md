@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-data-v1.0.0...telicent-data-v1.0.1) (2026-09-01)
+
+
+### Dependencies
+
+* update can events ([#707](https://github.com/Telicent-io/telicent-core-charts/issues/707)) ([f380ecc](https://github.com/Telicent-io/telicent-core-charts/commit/f380ecc779218ca98a66cf317ca075558b8b5ab0))
+
 ## [1.0.0](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-data-v0.3.9...telicent-data-v1.0.0) (2026-08-19)
 
 
