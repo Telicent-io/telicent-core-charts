@@ -49,7 +49,7 @@ dependencies:
     repository: oci://quay.io/telicent/charts
     condition: deletion-worker.enabled
   - name: graph-ui
-    version: 1.39.2
+    version: 1.40.0
     repository: oci://quay.io/telicent/charts
     condition: global.enterprise
   - name: query-ui
@@ -64,7 +64,7 @@ dependencies:
     repository: oci://quay.io/telicent/charts
     condition: global.enterprise
   - name: search-ui
-    version: 4.22.2
+    version: 4.23.0
     repository: oci://quay.io/telicent/charts
     condition: global.enterprise
   - name: traefik-proxy
