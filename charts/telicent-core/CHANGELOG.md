@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.1](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v2.1.0...telicent-core-v2.1.1) (2026-09-02)
+
+
+### Dependencies
+
+* bump search-ui to 4.23.0 and graph-ui to 1.40.0 ([#714](https://github.com/Telicent-io/telicent-core-charts/issues/714)) ([875436b](https://github.com/Telicent-io/telicent-core-charts/commit/875436b4ec2092e4fb0ad87f30fb8fe232fb8f6f))
+
 ## [2.1.0](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v2.0.1...telicent-core-v2.1.0) (2026-09-01)
 
 
