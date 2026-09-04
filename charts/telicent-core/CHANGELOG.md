@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.1.2](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v2.1.1...telicent-core-v2.1.2) (2026-09-04)
+
+
+### Bug Fixes
+
+* make query conditional ([#716](https://github.com/Telicent-io/telicent-core-charts/issues/716)) ([3d56181](https://github.com/Telicent-io/telicent-core-charts/commit/3d5618172d87ecf06248314716d70c2bbfedcd7a))
+
+
+### Dependencies
+
+* update SCG-deletion worker to 1.1.8 from 1.1.4 ([#717](https://github.com/Telicent-io/telicent-core-charts/issues/717)) ([5f5b676](https://github.com/Telicent-io/telicent-core-charts/commit/5f5b67675245ab913370ceff051f04d1dcd98306))
+
 ## [2.1.1](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v2.1.0...telicent-core-v2.1.1) (2026-09-02)
 
 
