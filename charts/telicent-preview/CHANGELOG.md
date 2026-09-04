@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.6.4](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-preview-v0.6.3...telicent-preview-v0.6.4) (2026-09-04)
+
+
+### Dependencies
+
+* bump catalogue-api from 0.2.5 to 0.2.7 in /charts/telicent-preview ([#711](https://github.com/Telicent-io/telicent-core-charts/issues/711)) ([d7171fe](https://github.com/Telicent-io/telicent-core-charts/commit/d7171fe34cb6f2a5d9a021fedaa1a31478ae521f))
+* bump user-portal-ui in /charts/telicent-preview ([#710](https://github.com/Telicent-io/telicent-core-charts/issues/710)) ([ccb12e9](https://github.com/Telicent-io/telicent-core-charts/commit/ccb12e906733c6108e888da6b21f6e24a9e9ffac))
+
 ## [0.6.3](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-preview-v0.6.2...telicent-preview-v0.6.3) (2026-08-13)
 
 
