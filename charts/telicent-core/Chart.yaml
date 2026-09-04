@@ -55,6 +55,7 @@ dependencies:
   - name: query-ui
     version: 1.6.1
     repository: oci://quay.io/telicent/charts
+    condition: query-ui.enabled
   - name: search
     version: "2.2.6"
     repository: oci://quay.io/telicent/charts
