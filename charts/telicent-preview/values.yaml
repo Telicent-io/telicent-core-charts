@@ -59,11 +59,6 @@ global:
     # @key global.truststore.mountPath The mount path for the truststore in the container
     mountPath: /app/config/truststore
 
-# @section data-catalog-ui Parameters
-data-catalog-ui:
-  # @key data-catalog-ui.enabled Enable or disable the data-catalog-ui component
-  enabled: false
-
 #
 # @section Notifications Parameters
 #
@@ -83,9 +78,4 @@ apicurio:
 # @section paperback-writer Parameters
 paperback-writer:
   # @key paperback-writer.enabled Enable or disable the paperback-writer component
-  enabled: false
-
-# @section catalog-api Parameters
-catalog-api:
-  # @key catalog-api.enabled Enable or disable the catalog-api component
   enabled: false
