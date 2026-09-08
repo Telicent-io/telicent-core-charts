@@ -148,13 +148,13 @@ Contains global truststore parameters, these parameters are mirrored across Teli
 | ------------------------- | ---------------------------------------------- | ------- |
 | `deletion-worker.enabled` | Enable or disable the deletion worker subchart | `false` |
 
-### Data Catalog UI Parameters
+### data-catalog-ui Parameters
 
 | Name                      | Description                                     | Value   |
 | ------------------------- | ----------------------------------------------- | ------- |
 | `data-catalog-ui.enabled` | Enable or disable the data-catalog-ui component | `false` |
 
-### Catalog API Parameters
+### catalog-api Parameters
 
 | Name                  | Description                                 | Value   |
 | --------------------- | ------------------------------------------- | ------- |
