@@ -26,10 +26,6 @@ version: 0.6.3
 appVersion: "1.0.0"
 
 dependencies:
-  - name: data-catalog-ui
-    version: "1.17.0"
-    repository: oci://quay.io/telicent/charts
-    condition: data-catalog-ui.enabled
   - name: notifications
     version: "^0.1.0"
     repository: file://./charts/notifications
@@ -50,11 +46,6 @@ dependencies:
     version: "^0.1.0"
     repository: file://./charts/apicurio
     condition: apicurio.enabled
-  - name: catalogue-api
-    version: 0.2.7
-    repository: oci://quay.io/telicent/charts
-    condition: catalog-api.enabled
-    alias: catalog-api
 
 icon: "https://avatars.githubusercontent.com/u/65304240?s=200&v=4"
 
