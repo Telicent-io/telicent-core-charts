@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.2.0](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v2.1.2...telicent-core-v2.2.0) (2026-09-16)
+
+
+### Features
+
+* update readme for core ([b98efdf](https://github.com/Telicent-io/telicent-core-charts/commit/b98efdf2fb9d66e20f1ee22120da8febf331ea6c))
+* update readme metadata ([167ff3a](https://github.com/Telicent-io/telicent-core-charts/commit/167ff3aa2ebe821d0ce4a33ee581c99ae211265f))
+
 ## [2.1.2](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v2.1.1...telicent-core-v2.1.2) (2026-09-04)
 
 
