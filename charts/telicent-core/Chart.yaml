@@ -35,7 +35,7 @@ dependencies:
     repository: oci://quay.io/telicent/charts
     condition: global.enterprise
   - name: auth
-    version: "0.3.1"
+    version: "0.4.1"
     repository: oci://quay.io/telicent/charts
   - name: catalogue-api
     version: 0.2.7
@@ -43,7 +43,7 @@ dependencies:
     condition: catalog-api.enabled
     alias: catalog-api
   - name: data-catalog-ui
-    version: "1.17.0"
+    version: "1.17.1"
     repository: oci://quay.io/telicent/charts
     condition: data-catalog-ui.enabled
   - name: document-pipeline
