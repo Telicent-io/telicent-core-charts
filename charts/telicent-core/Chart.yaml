@@ -19,7 +19,7 @@ type: application
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 2.2.0
+version: 2.3.0
 
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application. Versions are not expected to
@@ -46,6 +46,10 @@ dependencies:
     version: "1.17.1"
     repository: oci://quay.io/telicent/charts
     condition: data-catalog-ui.enabled
+  - name: deletion-worker
+    version: "1.1.8"
+    repository: oci://quay.io/telicent/charts
+    condition: deletion-worker.enabled
   - name: document-pipeline
     version: "^0.2.3"
     repository: file://./charts/document-pipeline
@@ -53,12 +57,8 @@ dependencies:
   - name: graph
     version: "1.1.4"
     repository: oci://quay.io/telicent/charts
-  - name: deletion-worker
-    version: "1.1.8"
-    repository: oci://quay.io/telicent/charts
-    condition: deletion-worker.enabled
   - name: graph-ui
-    version: 1.40.0
+    version: 1.41.0
     repository: oci://quay.io/telicent/charts
     condition: global.enterprise
   - name: query-ui
