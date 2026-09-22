@@ -56,6 +56,7 @@ dependencies:
   - name: canonicals-entity
     version: ^0.1.0
     repository: "file://./charts/canonicals-entity"
+    condition: global.enterprise
   - name: ies-regions-ontology-producer
     version: 0.13.7
     repository: oci://quay.io/telicent/charts
