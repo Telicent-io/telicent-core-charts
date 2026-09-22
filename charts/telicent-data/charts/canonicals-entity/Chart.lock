@@ -1,0 +1,6 @@
+dependencies:
+- name: canonicals-vehicle-resolver-mapper
+  repository: oci://quay.io/telicent/charts
+  version: 1.0.0
+digest: sha256:c4f14705f6aafb8c3c607ad331fe9cf1208791f00257925d29e21fb6fbe2cd60
+generated: "2026-09-22T16:27:14.107524+01:00"

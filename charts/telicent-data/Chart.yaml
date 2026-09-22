@@ -53,9 +53,9 @@ dependencies:
     version: ^0.2.0
     repository: "file://./charts/canonicals-ontology"
     condition: global.enterprise
-  - name: canonicals-vehicle-resolver-mapper
-    version: 1.0.0
-    repository: oci://quay.io/telicent/charts
+  - name: canonicals-entity
+    version: ^0.1.0
+    repository: "file://./charts/canonicals-entity"
   - name: ies-regions-ontology-producer
     version: 0.13.7
     repository: oci://quay.io/telicent/charts
