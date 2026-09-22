@@ -10,7 +10,7 @@
 To install the chart with the release name `my-release`:
 
 ```console
-helm install my-release ./charts/telicent-data/charts/canonicals-event
+helm install my-release ./charts/telicent-data/charts/canonicals-entity
 ```
 
 ## Uninstalling the Chart
@@ -22,17 +22,6 @@ helm delete my-release
 ```
 
 The command removes all the Kubernetes components associated with the chart and deletes the release.
-
-## Configuration and installation details
-
-## Automating README and schema generation
-
-```bash
-.dev/readme-generator-for-helm --config=charts/telicent-data/charts/canonicals-event/readme.config \
- --values=charts/telicent-data/charts/canonicals-event/values.yaml \
- --readme=charts/telicent-data/charts/canonicals-event/README.md \
- --schema=charts/telicent-data/charts/canonicals-event/values.schema.json
-```
 
 ## Parameters
 
