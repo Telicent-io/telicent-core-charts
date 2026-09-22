@@ -36,7 +36,6 @@ maintainers:
 # Each dependency is gated on this chart's top-level `enabled` flag.
 dependencies:
   - name: canonicals-vehicle-resolver-mapper
-    alias: canonicals-vehicle-resolver-mapper
     version: "1.0.0"
     repository: oci://quay.io/telicent/charts
     condition: enabled
