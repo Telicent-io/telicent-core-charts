@@ -39,3 +39,11 @@ dependencies:
     version: "1.0.0"
     repository: oci://quay.io/telicent/charts
     condition: enabled
+  - name: canonicals-entity-knowledge-mapper
+    version: "0.0.5"
+    repository: oci://quay.io/telicent/charts
+    condition: enabled
+  - name: canonicals-address-resolver-mapper
+    version: "1.0.1"
+    repository: oci://quay.io/telicent/charts
+    condition: enabled
