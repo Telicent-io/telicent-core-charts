@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.1](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v2.2.0...telicent-core-v2.2.1) (2026-09-29)
+
+
+### Dependencies
+
+* bump graph to 1.1.12 from 1.1.4 ([#729](https://github.com/Telicent-io/telicent-core-charts/issues/729)) ([27fd281](https://github.com/Telicent-io/telicent-core-charts/commit/27fd281501ee102a89edc324d4baa1341f5e9ea6))
+
 ## [2.2.0](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v2.1.2...telicent-core-v2.2.0) (2026-09-16)
 
 
