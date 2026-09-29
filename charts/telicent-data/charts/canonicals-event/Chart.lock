@@ -1,18 +1,18 @@
 dependencies:
 - name: telicent-canonicals-event-document-mapper
   repository: oci://quay.io/telicent/charts
-  version: 0.9.12
+  version: 0.9.13
 - name: telicent-canonicals-event-geo-mapper
   repository: oci://quay.io/telicent/charts
-  version: 0.9.12
+  version: 0.9.13
 - name: telicent-canonicals-event-knowledge-mapper
   repository: oci://quay.io/telicent/charts
-  version: 0.9.12
+  version: 0.9.13
 - name: telicent-canonicals-region-resolver-mapper
   repository: oci://quay.io/telicent/charts
-  version: 0.1.4
+  version: 0.1.8
 - name: telicent-json-validation-mapper
   repository: oci://quay.io/telicent/charts
   version: 0.2.7
-digest: sha256:55521cf05bc01d735af2993e978049d8bfeb28b5e7f839025140e14d20eed699
-generated: "2026-08-19T14:55:21.315117+01:00"
+digest: sha256:05298b0bd8d3124ca91c3d28944440bd62aaa1787caf922974395ba66c236c39
+generated: "2026-09-29T10:38:11.500787+01:00"
