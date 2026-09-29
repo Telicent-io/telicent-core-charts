@@ -41,7 +41,7 @@ entries:
   demo-prereqs:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2026-09-16T12:27:35.433075064Z"
+    created: "2026-09-29T09:37:35.577329477Z"
     dependencies:
     - condition: gateways.enabled
       name: gateways
@@ -69,7 +69,7 @@ entries:
       version: ^0.x
     description: 'Telicent demo cluster prerequisites. This chart is used to install
       all of the required dependencies for the Telicent demo cluster. '
-    digest: 651d8e9d56d16173acfc875678877ebc597c3cd64629b9368c360c14ca0a5e76
+    digest: e73760c7ca759a03c25eca8779cb4d6d79465bdd1b3671a51dc8137db839c621
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: Telicent
@@ -683,6 +683,76 @@ entries:
     - smart-cache-search-0.1.1.tgz
     version: 0.1.1
   telicent-core:
+  - apiVersion: v2
+    appVersion: 2.0.0
+    created: "2026-09-29T09:37:35.598244977Z"
+    dependencies:
+    - condition: global.enterprise
+      name: admin-ui
+      repository: oci://quay.io/telicent/charts
+      version: 1.7.2
+    - name: auth
+      repository: oci://quay.io/telicent/charts
+      version: 0.4.1
+    - alias: catalog-api
+      condition: catalog-api.enabled
+      name: catalogue-api
+      repository: oci://quay.io/telicent/charts
+      version: 0.2.7
+    - condition: data-catalog-ui.enabled
+      name: data-catalog-ui
+      repository: oci://quay.io/telicent/charts
+      version: 1.17.1
+    - condition: global.enterprise
+      name: document-pipeline
+      repository: file://./charts/document-pipeline
+      version: ^0.2.3
+    - name: graph
+      repository: oci://quay.io/telicent/charts
+      version: 1.1.12
+    - condition: deletion-worker.enabled
+      name: deletion-worker
+      repository: oci://quay.io/telicent/charts
+      version: 1.1.8
+    - condition: global.enterprise
+      name: graph-ui
+      repository: oci://quay.io/telicent/charts
+      version: 1.40.0
+    - condition: query-ui.enabled
+      name: query-ui
+      repository: oci://quay.io/telicent/charts
+      version: 1.7.0
+    - condition: global.enterprise
+      name: search
+      repository: oci://quay.io/telicent/charts
+      version: 2.2.6
+    - condition: global.enterprise
+      name: search-projector
+      repository: oci://quay.io/telicent/charts
+      version: 2.2.6
+    - condition: global.enterprise
+      name: search-ui
+      repository: oci://quay.io/telicent/charts
+      version: 4.23.0
+    - name: traefik-proxy
+      repository: oci://quay.io/telicent/charts
+      version: 0.1.3
+    - condition: global.enterprise
+      name: user-preferences
+      repository: oci://quay.io/telicent/charts
+      version: 2.0.13
+    description: 'Telicent CORE Platform, for all essential services and applications
+      for our secure data integration and knowledge graph platform. '
+    digest: e943d09bb26f9de0349f90bbd82cf6f40e8ca55648e6dcec31cbcaada4b396d3
+    icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
+    maintainers:
+    - name: telicent
+      url: https://github.com/Telicent-IO
+    name: telicent-core
+    type: application
+    urls:
+    - telicent-core-2.2.1.tgz
+    version: 2.2.1
   - apiVersion: v2
     appVersion: 2.0.0
     created: "2026-09-16T12:27:35.449045827Z"
@@ -2899,7 +2969,7 @@ entries:
   telicent-data:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2026-09-16T12:27:35.460361572Z"
+    created: "2026-09-29T09:37:35.621515871Z"
     dependencies:
     - condition: acled-locations-mapper.enabled,global.enterprise
       name: acled-locations-mapper
@@ -2921,6 +2991,10 @@ entries:
       name: canonicals-ontology
       repository: file://./charts/canonicals-ontology
       version: ^0.2.0
+    - condition: global.enterprise
+      name: canonicals-entity
+      repository: file://./charts/canonicals-entity
+      version: ^0.1.0
     - name: ies-regions-ontology-producer
       repository: oci://quay.io/telicent/charts
       version: 0.13.7
@@ -2932,7 +3006,7 @@ entries:
       version: 0.1.5
     description: 'Supplementary chart containing adapters and mappers for specific
       datasets and ontologies. '
-    digest: b1cf9b0966f7590e42dce4c60417818fbbc92e56ac21d9becd118c05ac47abad
+    digest: 9ac4bc86236c73428e699153595ed4a36ab4cefc58835305f5d8231fa8c6eb02
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -3669,7 +3743,7 @@ entries:
   telicent-preview:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2026-09-16T12:27:35.465961836Z"
+    created: "2026-09-29T09:37:35.628056153Z"
     dependencies:
     - condition: global.enterprise
       name: notifications
@@ -3694,7 +3768,7 @@ entries:
     description: 'Secondary chart containing products that are still under active
       development, and not yet part of CORE. Can be used to try new or preview features
       early. '
-    digest: bfc13d1dab478a0758faed6a658922cdbdb74f46fffebe9af6fa5b49e2b4ebbc
+    digest: 40c2b5583cf7192e4c752ebcc28f4e160c55a97337a465d6b467520d419e55b4
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -4003,4 +4077,4 @@ entries:
     urls:
     - telicent-preview-0.2.0.tgz
     version: 0.2.0
-generated: "2026-09-16T12:27:35.424735964Z"
+generated: "2026-09-29T09:37:35.566741908Z"
