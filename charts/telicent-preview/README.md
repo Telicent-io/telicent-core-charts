@@ -70,13 +70,6 @@ Contains global parameters, these parameters are mirrored across all Telicent Pr
 | `global.truststore.existingSecret`      | Name of an existing secret containing the truststore                                                                            | `""`                                             |
 | `global.truststore.mountPath`           | The mount path for the truststore in the container                                                                              | `/app/config/truststore`                         |
 
-### Notifications Parameters
-
-| Name                              | Description                                              | Value   |
-| --------------------------------- | -------------------------------------------------------- | ------- |
-| `notifications.enabled`           | Enable or disable the notifications component.           | `false` |
-| `notifications-projector.enabled` | Enable or disable the notifications-projector component. | `false` |
-
 ### Apicurio Parameters
 
 | Name               | Description                               | Value   |
