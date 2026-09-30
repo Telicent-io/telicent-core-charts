@@ -9,6 +9,11 @@ GENERATOR_PATH=$(dirname "$(realpath "$0")")/readme-generator-for-helm
 SCRIPT_URL="https://raw.githubusercontent.com/telicent-oss/shared-workflows/refs/heads/main/.github/actions/helm-metadata-updater/metadata-updater.py"
 curl -L -s -o "$SCRIPT_PATH" "$SCRIPT_URL"
 
+# The prebuilt readme-generator-for-helm binary is macOS arm64 only; elsewhere use npx via --ci.
+if [[ "$(uname -s)-$(uname -m)" != "Darwin-arm64" && "$*" != *"--ci"* ]]; then
+    set -- "$@" --ci
+fi
+
 # Copy a fresh version of the readme-generator-for-helm binary from GitHub.
 if [[ "$*" != *"--ci"* ]]; then
     GENERATOR_URL="https://raw.githubusercontent.com/telicent-oss/shared-workflows/refs/heads/main/.github/actions/helm-metadata-updater/readme-generator-for-helm"
