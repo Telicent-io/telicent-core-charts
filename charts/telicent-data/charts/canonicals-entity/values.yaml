@@ -45,4 +45,3 @@ global:
     protocol: "SASL_SSL"
     # @key global.kafka.mechanism SASL mechanism used for Kafka authentication
     mechanism: "SCRAM-SHA-512"
-

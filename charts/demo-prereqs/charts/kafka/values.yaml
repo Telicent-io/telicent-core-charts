@@ -42,5 +42,3 @@ externalAccess:
   brokerNodePort: 30093
   # @key externalAccess.tls Whether TLS is enabled for the external listener.
   tls: false
-
-

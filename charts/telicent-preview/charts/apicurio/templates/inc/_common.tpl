@@ -73,4 +73,3 @@ Copyright (C) 2026 Telicent Limited
 {{- printf "%s" $name -}}
 {{- end -}}
 {{- end -}}
-
