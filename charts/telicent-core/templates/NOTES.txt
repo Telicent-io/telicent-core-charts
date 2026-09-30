@@ -69,7 +69,7 @@ Namespace:            {{ .Release.Namespace }}
 {{- if .Values.global.enterprise }}
 📋 Admin UI           - Administration Interface
 📋 Graph UI           - Graph Data Visualization
-📋 Search UI          - Search Interface  
+📋 Search UI          - Search Interface
 📋 User Preferences   - User Settings Management
 📋 Search Service     - Search Backend
 📋 Search Projector   - Search Data Indexing
@@ -218,7 +218,7 @@ Enterprise mode is disabled. To enable enterprise features:
 Available enterprise features include:
 - Admin UI (Administration Interface)
 - Graph UI (Graph Data Visualization)
-- Search UI (Search Interface) 
+- Search UI (Search Interface)
 - Search Service (Search Backend)
 - Search Projector (Search Data Indexing)
 - User Preferences (User Settings Management)

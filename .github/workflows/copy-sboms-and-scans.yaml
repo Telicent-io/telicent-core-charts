@@ -67,7 +67,7 @@ jobs:
         id: release
         run: |
           RELEASE_CREATED=${{ contains(github.event.head_commit.message, env.RELEASE_PREFIX) }} && \
-          echo "release-created=$RELEASE_CREATED" >> $GITHUB_OUTPUT && echo "RELEASE_CREATED: $RELEASE_CREATED"
+          echo "release-created=$RELEASE_CREATED" >> "$GITHUB_OUTPUT" && echo "RELEASE_CREATED: $RELEASE_CREATED"
 
   copy-objects:
     runs-on: ubuntu-latest
@@ -100,7 +100,7 @@ jobs:
           mask-aws-account-id: false
       - name: Configure KubeConfig
         run: |
-          mkdir -p $HOME/.kube
+          mkdir -p "$HOME/.kube"
           aws eks update-kubeconfig --region ${{ env.AWS_DEFAULT_REGION }} --name ${{ env.CLUSTER }}
         shell: bash
       - name: Install Python packages

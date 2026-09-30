@@ -26,17 +26,9 @@ version: 0.6.4
 appVersion: "1.0.0"
 
 dependencies:
-  - name: notifications
-    version: "^0.1.0"
-    repository: file://./charts/notifications
-    condition: global.enterprise
-  - name: notifications-projector
-    version: "^0.1.0"
-    repository: file://./charts/notifications-projector
-    condition: global.enterprise
   - name: paperback-writer
-    version: "^0.1.0"
-    repository: file://./charts/paperback-writer
+    version: "0.8.4"
+    repository: oci://quay.io/telicent/charts
     condition: global.enterprise, paperback-writer.enabled
   - name: user-portal-ui
     version: 1.11.2

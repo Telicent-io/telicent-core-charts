@@ -14,4 +14,3 @@ metadata:
 data:
   storage.properties: |-
   {{- tpl ($.Files.Get "configs/storage.properties") . | nindent 4 }}
-
