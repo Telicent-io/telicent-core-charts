@@ -70,12 +70,6 @@ Contains global parameters, these parameters are mirrored across all Telicent Pr
 | `global.truststore.existingSecret`      | Name of an existing secret containing the truststore                                                                            | `""`                                             |
 | `global.truststore.mountPath`           | The mount path for the truststore in the container                                                                              | `/app/config/truststore`                         |
 
-### Apicurio Parameters
-
-| Name               | Description                               | Value   |
-| ------------------ | ----------------------------------------- | ------- |
-| `apicurio.enabled` | Enable or disable the apicurio component. | `false` |
-
 ### paperback-writer Parameters
 
 | Name                       | Description                                      | Value   |

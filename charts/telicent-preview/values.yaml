@@ -59,11 +59,6 @@ global:
     # @key global.truststore.mountPath The mount path for the truststore in the container
     mountPath: /app/config/truststore
 
-# @section Apicurio Parameters
-apicurio:
-  # @key apicurio.enabled Enable or disable the apicurio component.
-  enabled: false
-
 # @section paperback-writer Parameters
 paperback-writer:
   # @key paperback-writer.enabled Enable or disable the paperback-writer component
