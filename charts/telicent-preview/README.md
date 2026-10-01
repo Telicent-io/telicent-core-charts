@@ -76,6 +76,36 @@ Contains global parameters, these parameters are mirrored across all Telicent Pr
 | -------------------------- | ------------------------------------------------ | ------- |
 | `paperback-writer.enabled` | Enable or disable the paperback-writer component | `false` |
 
+### user-portal-ui Parameters
+
+| Name                     | Description                                    | Value   |
+| ------------------------ | ---------------------------------------------- | ------- |
+| `user-portal-ui.enabled` | Enable or disable the user-portal-ui component | `false` |
+
+### entity-resolution-api Parameters
+
+| Name                            | Description                                           | Value   |
+| ------------------------------- | ----------------------------------------------------- | ------- |
+| `entity-resolution-api.enabled` | Enable or disable the entity-resolution-api component | `false` |
+
+### entity-resolution-projector Parameters
+
+| Name                                  | Description                                                 | Value   |
+| ------------------------------------- | ----------------------------------------------------------- | ------- |
+| `entity-resolution-projector.enabled` | Enable or disable the entity-resolution-projector component | `false` |
+
+### abac-pdp Parameters
+
+| Name               | Description                                             | Value   |
+| ------------------ | ------------------------------------------------------- | ------- |
+| `abac-pdp.enabled` | Enable or disable the abac-pdp (telicent-pdp) component | `false` |
+
+### map-monkey Parameters
+
+| Name                 | Description                                                      | Value   |
+| -------------------- | ---------------------------------------------------------------- | ------- |
+| `map-monkey.enabled` | Enable or disable the map-monkey (telicent-map-monkey) component | `false` |
+
 ## Subchart configurations
 
 This section contains configurations for the various preview subcharts included in the Telicent Preview chart.

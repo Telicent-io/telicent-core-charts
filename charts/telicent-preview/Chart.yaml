@@ -38,6 +38,24 @@ dependencies:
     version: "^0.1.0"
     repository: file://./charts/apicurio
     condition: apicurio.enabled
+  - name: entity-resolution-api
+    version: 0.1.0
+    repository: oci://quay.io/telicent/charts
+    condition: entity-resolution-api.enabled
+  - name: entity-resolution-projector
+    version: 0.1.0
+    repository: oci://quay.io/telicent/charts
+    condition: entity-resolution-projector.enabled
+  - name: telicent-pdp
+    alias: abac-pdp
+    version: 0.1.0
+    repository: oci://quay.io/telicent/charts
+    condition: abac-pdp.enabled
+  - name: telicent-map-monkey
+    alias: map-monkey
+    version: 0.1.0
+    repository: oci://quay.io/telicent/charts
+    condition: map-monkey.enabled
 
 icon: "https://avatars.githubusercontent.com/u/65304240?s=200&v=4"
 

@@ -122,6 +122,56 @@
                     "default": false
                 }
             }
+        },
+        "user-portal-ui": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable or disable the user-portal-ui component",
+                    "default": false
+                }
+            }
+        },
+        "entity-resolution-api": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable or disable the entity-resolution-api component",
+                    "default": false
+                }
+            }
+        },
+        "entity-resolution-projector": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable or disable the entity-resolution-projector component",
+                    "default": false
+                }
+            }
+        },
+        "abac-pdp": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable or disable the abac-pdp (telicent-pdp) component",
+                    "default": false
+                }
+            }
+        },
+        "map-monkey": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable or disable the map-monkey (telicent-map-monkey) component",
+                    "default": false
+                }
+            }
         }
     }
 }
