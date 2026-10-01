@@ -63,3 +63,28 @@ global:
 paperback-writer:
   # @key paperback-writer.enabled Enable or disable the paperback-writer component
   enabled: false
+
+# @section user-portal-ui Parameters
+user-portal-ui:
+  # @key user-portal-ui.enabled Enable or disable the user-portal-ui component
+  enabled: false
+
+# @section entity-resolution-api Parameters
+entity-resolution-api:
+  # @key entity-resolution-api.enabled Enable or disable the entity-resolution-api component
+  enabled: false
+
+# @section entity-resolution-projector Parameters
+entity-resolution-projector:
+  # @key entity-resolution-projector.enabled Enable or disable the entity-resolution-projector component
+  enabled: false
+
+# @section abac-pdp Parameters
+abac-pdp:
+  # @key abac-pdp.enabled Enable or disable the abac-pdp (telicent-pdp) component
+  enabled: false
+
+# @section map-monkey Parameters
+map-monkey:
+  # @key map-monkey.enabled Enable or disable the map-monkey (telicent-map-monkey) component
+  enabled: false
