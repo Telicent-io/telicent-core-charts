@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.5](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-preview-v0.6.4...telicent-preview-v0.6.5) (2026-10-02)
+
+
+### Features
+
+* add entity resolution, abac-pdp and map-monkey to telicent-preview ([#734](https://github.com/Telicent-io/telicent-core-charts/issues/734)) ([48deb46](https://github.com/Telicent-io/telicent-core-charts/commit/48deb46e7f68a4d0dee2a63865ea2a32ac510c07))
+
 ## [0.6.4](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-preview-v0.6.3...telicent-preview-v0.6.4) (2026-09-16)
 
 
