@@ -41,7 +41,7 @@ entries:
   demo-prereqs:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2026-09-29T09:37:35.577329477Z"
+    created: "2026-10-05T15:02:29.411270387Z"
     dependencies:
     - condition: gateways.enabled
       name: gateways
@@ -69,7 +69,7 @@ entries:
       version: ^0.x
     description: 'Telicent demo cluster prerequisites. This chart is used to install
       all of the required dependencies for the Telicent demo cluster. '
-    digest: e73760c7ca759a03c25eca8779cb4d6d79465bdd1b3671a51dc8137db839c621
+    digest: b078d1cb16c147a5caa78357b50b5a70c34201470ba21fa78f6757754c9266b3
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: Telicent
@@ -685,7 +685,7 @@ entries:
   telicent-core:
   - apiVersion: v2
     appVersion: 2.0.0
-    created: "2026-09-29T09:37:35.598244977Z"
+    created: "2026-10-05T15:02:29.431164332Z"
     dependencies:
     - condition: global.enterprise
       name: admin-ui
@@ -743,7 +743,7 @@ entries:
       version: 2.0.13
     description: 'Telicent CORE Platform, for all essential services and applications
       for our secure data integration and knowledge graph platform. '
-    digest: e943d09bb26f9de0349f90bbd82cf6f40e8ca55648e6dcec31cbcaada4b396d3
+    digest: 67d08b7e3dc92cbfb7fc95d181574545ac3b84ec537e88e4886476e262255815
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -2969,7 +2969,7 @@ entries:
   telicent-data:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2026-09-29T09:37:35.621515871Z"
+    created: "2026-10-05T15:02:29.450048627Z"
     dependencies:
     - condition: acled-locations-mapper.enabled,global.enterprise
       name: acled-locations-mapper
@@ -2997,16 +2997,16 @@ entries:
       version: ^0.1.0
     - name: ies-regions-ontology-producer
       repository: oci://quay.io/telicent/charts
-      version: 0.13.7
+      version: 0.13.9
     - name: ies-regions-producer
       repository: oci://quay.io/telicent/charts
-      version: 0.13.7
+      version: 0.13.9
     - name: telicent-ontology-adapter
       repository: oci://quay.io/telicent/charts
-      version: 0.1.5
+      version: 0.1.6
     description: 'Supplementary chart containing adapters and mappers for specific
       datasets and ontologies. '
-    digest: 9ac4bc86236c73428e699153595ed4a36ab4cefc58835305f5d8231fa8c6eb02
+    digest: 08645872f1e18d8e5ecb8ee2e13ba52dac461fd34ad3d786bbda53c37800de2e
     icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
     maintainers:
     - name: telicent
@@ -3743,6 +3743,49 @@ entries:
   telicent-preview:
   - apiVersion: v2
     appVersion: 1.0.0
+    created: "2026-10-05T15:02:29.455236666Z"
+    dependencies:
+    - condition: global.enterprise, paperback-writer.enabled
+      name: paperback-writer
+      repository: oci://quay.io/telicent/charts
+      version: 0.8.4
+    - condition: user-portal-ui.enabled
+      name: user-portal-ui
+      repository: oci://quay.io/telicent/charts
+      version: 1.11.2
+    - condition: entity-resolution-api.enabled
+      name: entity-resolution-api
+      repository: oci://quay.io/telicent/charts
+      version: 0.1.0
+    - condition: entity-resolution-projector.enabled
+      name: entity-resolution-projector
+      repository: oci://quay.io/telicent/charts
+      version: 0.1.0
+    - alias: abac-pdp
+      condition: abac-pdp.enabled
+      name: telicent-pdp
+      repository: oci://quay.io/telicent/charts
+      version: 0.1.0
+    - alias: map-monkey
+      condition: map-monkey.enabled
+      name: telicent-map-monkey
+      repository: oci://quay.io/telicent/charts
+      version: 0.1.0
+    description: 'Secondary chart containing products that are still under active
+      development, and not yet part of CORE. Can be used to try new or preview features
+      early. '
+    digest: ba403ada1f827c9f39fc3321ecba725de03c032ac10bf51faeffd3c0de3053fc
+    icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
+    maintainers:
+    - name: telicent
+      url: https://github.com/Telicent-IO
+    name: telicent-preview
+    type: application
+    urls:
+    - telicent-preview-0.6.6.tgz
+    version: 0.6.6
+  - apiVersion: v2
+    appVersion: 1.0.0
     created: "2026-09-29T09:37:35.628056153Z"
     dependencies:
     - condition: global.enterprise
@@ -4077,4 +4120,4 @@ entries:
     urls:
     - telicent-preview-0.2.0.tgz
     version: 0.2.0
-generated: "2026-09-29T09:37:35.566741908Z"
+generated: "2026-10-05T15:02:29.40101873Z"
