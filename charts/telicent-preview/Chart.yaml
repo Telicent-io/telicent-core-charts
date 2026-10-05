@@ -34,10 +34,6 @@ dependencies:
     version: 1.11.2
     repository: oci://quay.io/telicent/charts
     condition: user-portal-ui.enabled
-  - name: apicurio
-    version: "^0.1.0"
-    repository: file://./charts/apicurio
-    condition: apicurio.enabled
   - name: entity-resolution-api
     version: 0.1.0
     repository: oci://quay.io/telicent/charts
