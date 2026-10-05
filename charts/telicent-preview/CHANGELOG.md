@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.6](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-preview-v0.6.5...telicent-preview-v0.6.6) (2026-10-05)
+
+
+### Bug Fixes
+
+* remove Apicurio ([16b63fd](https://github.com/Telicent-io/telicent-core-charts/commit/16b63fd7dddd4c703095d982ace6c3090d2232cb))
+
 ## [0.6.5](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-preview-v0.6.4...telicent-preview-v0.6.5) (2026-10-02)
 
 
