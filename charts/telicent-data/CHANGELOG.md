@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.1.0](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-data-v1.0.1...telicent-data-v1.1.0) (2026-10-05)
+
+
+### Features
+
+* add canonicals-entity umbrella chart ([#724](https://github.com/Telicent-io/telicent-core-charts/issues/724)) ([0284582](https://github.com/Telicent-io/telicent-core-charts/commit/0284582eb67d8f2d6f449b24ba9e8b3ba895e11a))
+* add charts to canonicals-entity umbrella chart ([#727](https://github.com/Telicent-io/telicent-core-charts/issues/727)) ([a016d9c](https://github.com/Telicent-io/telicent-core-charts/commit/a016d9c7ae5b77de387cfe5446c3bc85fcd42a2b))
+* update telicent-data chart versions ([#731](https://github.com/Telicent-io/telicent-core-charts/issues/731)) ([e2d5767](https://github.com/Telicent-io/telicent-core-charts/commit/e2d57670f9f092bf7fc088b92e7e2fd0020417d3))
+
 ## [1.0.1](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-data-v1.0.0...telicent-data-v1.0.1) (2026-09-01)
 
 
