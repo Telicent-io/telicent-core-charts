@@ -7,7 +7,7 @@ dependencies:
   version: 0.4.1
 - name: catalogue-api
   repository: oci://quay.io/telicent/charts
-  version: 0.2.7
+  version: 0.3.0
 - name: data-catalog-ui
   repository: oci://quay.io/telicent/charts
   version: 1.17.1
@@ -41,5 +41,5 @@ dependencies:
 - name: user-preferences
   repository: oci://quay.io/telicent/charts
   version: 2.0.13
-digest: sha256:976cdadd45d2cab5280b18bee0d59d3a2c3c6ebe3f54b290bc84084fdd2a8d0f
-generated: "2026-09-29T10:13:31.237529+01:00"
+digest: sha256:c0b17e089a636ca97d546558e827f863c76527092ada3d6381b858332252eaae
+generated: "2026-09-29T09:26:23.628230757Z"
