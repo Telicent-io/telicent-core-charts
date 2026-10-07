@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.2.2](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v2.2.1...telicent-core-v2.2.2) (2026-10-07)
+
+
+### Dependencies
+
+* bump auth ([8860133](https://github.com/Telicent-io/telicent-core-charts/commit/886013357341bd15c46a982234128105cb7d44a3))
+* bump traefik ([#743](https://github.com/Telicent-io/telicent-core-charts/issues/743)) ([491159c](https://github.com/Telicent-io/telicent-core-charts/commit/491159cad39254dd0505d2a191c1db540026592e))
+* update graph ui ([126459d](https://github.com/Telicent-io/telicent-core-charts/commit/126459d1b4e9f66b8d05ab9c7f945892a19e8c8e))
+
 ## [2.2.1](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v2.2.0...telicent-core-v2.2.1) (2026-09-29)
 
 
