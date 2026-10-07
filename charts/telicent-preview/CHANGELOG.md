@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.7](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-preview-v0.6.6...telicent-preview-v0.6.7) (2026-10-07)
+
+
+### Dependencies
+
+* update abac-pdp from 0.1.0 to 0.1.1 ([#741](https://github.com/Telicent-io/telicent-core-charts/issues/741)) ([fef9e7f](https://github.com/Telicent-io/telicent-core-charts/commit/fef9e7f68953b401f96fb61c7faaba88fa5ec522))
+
 ## [0.6.6](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-preview-v0.6.5...telicent-preview-v0.6.6) (2026-10-05)
 
 
