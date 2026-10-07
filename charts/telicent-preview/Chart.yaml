@@ -44,7 +44,7 @@ dependencies:
     condition: entity-resolution-projector.enabled
   - name: telicent-pdp
     alias: abac-pdp
-    version: 0.1.0
+    version: 0.1.1
     repository: oci://quay.io/telicent/charts
     condition: abac-pdp.enabled
   - name: telicent-map-monkey
