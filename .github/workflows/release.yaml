@@ -23,6 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       releases_created: ${{ steps.release.outputs.releases_created }}
+      paths_released: ${{ steps.release.outputs.paths_released }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -57,13 +58,16 @@ jobs:
           registry: quay.io
           username: ${{ secrets.QUAY_USERNAME }}
           password: ${{ secrets.QUAY_PASSWORD }}
-      - name: Package changed charts
+      - name: Package released charts
+        env:
+          PATHS_RELEASED: ${{ needs.create-release-pr-or-tag-release.outputs.paths_released }}
         run: |
           helm repo add telicent-core-charts 'https://charts.telicent.io'
           # helm dependency update is not recursive, so update every chart individually.
           # Deepest-first (sort -r) so nested charts are vendored before their parents package them.
           while IFS= read -r chart; do echo "updating dependencies - $chart" && helm dependency update "$chart"; done < <(find ./charts -type f -name 'Chart.yaml' -exec dirname {} \; | sort -ru)
-          while IFS= read -r chart; do echo "packaging chart - $chart" && helm package -d .cr-release-packages "$chart"; done < <(find . -maxdepth 3 -type f -name 'Chart.yaml' -exec dirname {} \; | sort -u)
+          # Only package the charts release-please released on this run, never every chart on main.
+          while IFS= read -r chart; do echo "packaging chart - $chart" && helm package -d .cr-release-packages "./$chart"; done < <(jq -r '.[]' <<< "$PATHS_RELEASED")
       - name: Checkout gh-pages branch
         uses: actions/checkout@v4
         with:
@@ -85,9 +89,11 @@ jobs:
           git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com"
       - name: Commit and push changes
         working-directory: deploy
+        env:
+          PATHS_RELEASED: ${{ needs.create-release-pr-or-tag-release.outputs.paths_released }}
         run: |
           git add -A
-          git commit -m "Update Helm charts: $(ct list-changed --config .github/ct.yaml | tr , '\n')"
+          git commit -m "Update Helm charts: $(jq -r '.[]' <<< "$PATHS_RELEASED" | tr '\n' ' ')"
           git branch -a
           git push origin gh-pages
       - name: Push charts on Quay.io
