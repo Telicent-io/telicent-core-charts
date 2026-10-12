@@ -43,6 +43,6 @@ dependencies:
     condition: enabled
   - name: telicent-canonicals-ontology-mapper
     alias: canonicals-ontology-mapper
-    version: "0.2.5"
+    version: "0.2.7"
     repository: oci://quay.io/telicent/charts
     condition: enabled

@@ -32,4 +32,3 @@ Persistence is enabled with a {{ .Values.persistence.size }} volume.
 
 WARNING: Persistence is disabled. Data will be lost when the pod is restarted!
 {{- end }}
-

@@ -272,4 +272,3 @@ serviceAccount:
   annotations: {}
   # @key serviceAccount.automount Automatically mount a ServiceAccount's API credentials
   automount: true
-

@@ -4,22 +4,28 @@ dependencies:
   version: 1.7.2
 - name: auth
   repository: oci://quay.io/telicent/charts
-  version: 0.3.1
+  version: 0.4.1
+- name: catalogue-api
+  repository: oci://quay.io/telicent/charts
+  version: 0.2.7
+- name: data-catalog-ui
+  repository: oci://quay.io/telicent/charts
+  version: 1.17.1
 - name: document-pipeline
   repository: file://./charts/document-pipeline
   version: 0.2.5
 - name: graph
   repository: oci://quay.io/telicent/charts
-  version: 1.1.4
+  version: 1.1.12
 - name: deletion-worker
   repository: oci://quay.io/telicent/charts
-  version: 1.1.4
+  version: 1.1.8
 - name: graph-ui
   repository: oci://quay.io/telicent/charts
   version: 1.40.0
 - name: query-ui
   repository: oci://quay.io/telicent/charts
-  version: 1.6.1
+  version: 1.7.0
 - name: search
   repository: oci://quay.io/telicent/charts
   version: 2.2.6
@@ -35,5 +41,5 @@ dependencies:
 - name: user-preferences
   repository: oci://quay.io/telicent/charts
   version: 2.0.13
-digest: sha256:2acaa79e08b7f5f7a9f84f627e67ab635f03aec85b9ae0220e7000fc9cb963ac
-generated: "2026-09-02T16:17:31.692622+01:00"
+digest: sha256:976cdadd45d2cab5280b18bee0d59d3a2c3c6ebe3f54b290bc84084fdd2a8d0f
+generated: "2026-09-29T10:13:31.237529+01:00"

@@ -1,0 +1,35 @@
+name: Pre-Commit
+run-name: Pre-Commit
+
+on:
+  pull_request:
+
+# Revoke almost all permissions by default and grant only those needed to each job.
+# https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax#permissions
+permissions:
+  contents: read
+
+jobs:
+  pre-commit:
+    name: Run pre-commit hooks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+      # Helm and Node.js are required by the local Helm lint and metadata
+      # updater hooks.
+      - uses: azure/setup-helm@v5
+        with:
+          version: latest
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - name: Cache pre-commit environments
+        uses: actions/cache@v6
+        with:
+          path: ~/.cache/pre-commit
+          key: pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}
+      - name: Run pre-commit
+        run: |
+          pipx install pre-commit
+          pre-commit run --all-files --show-diff-on-failure

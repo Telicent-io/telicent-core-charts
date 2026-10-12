@@ -1,4 +1,4 @@
-{{- if .Values.istioInjectionLabelJobEnabled }} 
+{{- if .Values.istioInjectionLabelJobEnabled }}
 {{- /*
 Copyright (C) 2026 Telicent Limited
 */}}

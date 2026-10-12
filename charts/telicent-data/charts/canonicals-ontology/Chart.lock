@@ -4,6 +4,6 @@ dependencies:
   version: 0.2.7
 - name: telicent-canonicals-ontology-mapper
   repository: oci://quay.io/telicent/charts
-  version: 0.2.5
-digest: sha256:5ea14e907416af35294ea7d80e3a6253e2b864e2861a9ee5a44e7545d9b0edda
-generated: "2026-08-19T14:55:36.715146+01:00"
+  version: 0.2.7
+digest: sha256:23993467eefa9636a55286e898d400eadf0160e8321a28f48455f49b3a687493
+generated: "2026-09-29T10:36:00.708591+01:00"

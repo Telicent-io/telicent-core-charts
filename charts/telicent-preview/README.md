@@ -70,24 +70,41 @@ Contains global parameters, these parameters are mirrored across all Telicent Pr
 | `global.truststore.existingSecret`      | Name of an existing secret containing the truststore                                                                            | `""`                                             |
 | `global.truststore.mountPath`           | The mount path for the truststore in the container                                                                              | `/app/config/truststore`                         |
 
-### Notifications Parameters
-
-| Name                              | Description                                              | Value   |
-| --------------------------------- | -------------------------------------------------------- | ------- |
-| `notifications.enabled`           | Enable or disable the notifications component.           | `false` |
-| `notifications-projector.enabled` | Enable or disable the notifications-projector component. | `false` |
-
-### Apicurio Parameters
-
-| Name               | Description                               | Value   |
-| ------------------ | ----------------------------------------- | ------- |
-| `apicurio.enabled` | Enable or disable the apicurio component. | `false` |
-
 ### paperback-writer Parameters
 
 | Name                       | Description                                      | Value   |
 | -------------------------- | ------------------------------------------------ | ------- |
 | `paperback-writer.enabled` | Enable or disable the paperback-writer component | `false` |
+
+### user-portal-ui Parameters
+
+| Name                     | Description                                    | Value   |
+| ------------------------ | ---------------------------------------------- | ------- |
+| `user-portal-ui.enabled` | Enable or disable the user-portal-ui component | `false` |
+
+### entity-resolution-api Parameters
+
+| Name                            | Description                                           | Value   |
+| ------------------------------- | ----------------------------------------------------- | ------- |
+| `entity-resolution-api.enabled` | Enable or disable the entity-resolution-api component | `false` |
+
+### entity-resolution-projector Parameters
+
+| Name                                  | Description                                                 | Value   |
+| ------------------------------------- | ----------------------------------------------------------- | ------- |
+| `entity-resolution-projector.enabled` | Enable or disable the entity-resolution-projector component | `false` |
+
+### abac-pdp Parameters
+
+| Name               | Description                                             | Value   |
+| ------------------ | ------------------------------------------------------- | ------- |
+| `abac-pdp.enabled` | Enable or disable the abac-pdp (telicent-pdp) component | `false` |
+
+### map-monkey Parameters
+
+| Name                 | Description                                                      | Value   |
+| -------------------- | ---------------------------------------------------------------- | ------- |
+| `map-monkey.enabled` | Enable or disable the map-monkey (telicent-map-monkey) component | `false` |
 
 ## Subchart configurations
 

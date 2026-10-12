@@ -1323,7 +1323,7 @@
                                     }
                                 }
                             }
-                        }            
+                        }
                     },
                     "required": ["participation_types"]
                 }

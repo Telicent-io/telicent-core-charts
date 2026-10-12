@@ -59,4 +59,3 @@ spec:
       watchedNamespace: {{ .Release.Namespace }}
     userOperator:
       watchedNamespace: {{ .Release.Namespace }}
-

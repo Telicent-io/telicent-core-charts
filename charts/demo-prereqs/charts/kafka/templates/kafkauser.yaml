@@ -13,9 +13,9 @@ metadata:
 spec:
   authentication:
     type: scram-sha-512
-    password: 
+    password:
       valueFrom:
-        secretKeyRef: 
+        secretKeyRef:
           name: {{ include "kafka.userPwdSecretName" . }}
           key: pipeline
   authorization:
@@ -45,9 +45,9 @@ metadata:
 spec:
   authentication:
     type: scram-sha-512
-    password: 
+    password:
       valueFrom:
-        secretKeyRef: 
+        secretKeyRef:
           name: {{ include "kafka.userPwdSecretName" . }}
           key: smart-cache
   authorization:
@@ -77,9 +77,9 @@ metadata:
 spec:
   authentication:
     type: scram-sha-512
-    password: 
+    password:
       valueFrom:
-        secretKeyRef: 
+        secretKeyRef:
           name: {{ include "kafka.userPwdSecretName" . }}
           key: external
   authorization:
@@ -97,5 +97,3 @@ spec:
           patternType: literal
         operations:
           - All
-
-
