@@ -38,7 +38,7 @@ dependencies:
     version: "0.4.6"
     repository: oci://quay.io/telicent/charts
   - name: catalogue-api
-    version: 0.2.7
+    version: 0.4.1
     repository: oci://quay.io/telicent/charts
     condition: catalog-api.enabled
     alias: catalog-api
@@ -74,7 +74,7 @@ dependencies:
     repository: oci://quay.io/telicent/charts
     condition: global.enterprise
   - name: search-ui
-    version: 4.23.0
+    version: 4.24.0
     repository: oci://quay.io/telicent/charts
     condition: global.enterprise
   - name: traefik-proxy
