@@ -27,11 +27,11 @@ appVersion: "1.0.0"
 
 dependencies:
   - name: paperback-writer
-    version: "0.8.4"
+    version: 0.8.5
     repository: oci://quay.io/telicent/charts
     condition: global.enterprise, paperback-writer.enabled
   - name: user-portal-ui
-    version: 1.11.2
+    version: 1.12.0
     repository: oci://quay.io/telicent/charts
     condition: user-portal-ui.enabled
   - name: entity-resolution-api
