@@ -46,6 +46,10 @@ dependencies:
     version: "1.17.1"
     repository: oci://quay.io/telicent/charts
     condition: data-catalog-ui.enabled
+  - name: deletion-worker
+    version: "1.1.8"
+    repository: oci://quay.io/telicent/charts
+    condition: deletion-worker.enabled
   - name: document-pipeline
     version: "^0.2.3"
     repository: file://./charts/document-pipeline
@@ -53,10 +57,6 @@ dependencies:
   - name: graph
     version: "1.1.12"
     repository: oci://quay.io/telicent/charts
-  - name: deletion-worker
-    version: "1.1.8"
-    repository: oci://quay.io/telicent/charts
-    condition: deletion-worker.enabled
   - name: graph-ui
     version: 1.40.0
     repository: oci://quay.io/telicent/charts
