@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.6.8](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-preview-v0.6.7...telicent-preview-v0.6.8) (2026-10-14)
+
+
+### Dependencies
+
+* bump apicurio from removed ([a894adf](https://github.com/Telicent-io/telicent-core-charts/commit/a894adf7d107c2beba0dfad9f39c1a9847c2fafd))
+* bump catalogue-api from removed ([a894adf](https://github.com/Telicent-io/telicent-core-charts/commit/a894adf7d107c2beba0dfad9f39c1a9847c2fafd))
+* bump data-catalog-ui from removed ([a894adf](https://github.com/Telicent-io/telicent-core-charts/commit/a894adf7d107c2beba0dfad9f39c1a9847c2fafd))
+* bump entity-resolution-api from 0.1.0 ([a894adf](https://github.com/Telicent-io/telicent-core-charts/commit/a894adf7d107c2beba0dfad9f39c1a9847c2fafd))
+* bump entity-resolution-projector from 0.1.0 ([a894adf](https://github.com/Telicent-io/telicent-core-charts/commit/a894adf7d107c2beba0dfad9f39c1a9847c2fafd))
+* bump notifications from removed ([a894adf](https://github.com/Telicent-io/telicent-core-charts/commit/a894adf7d107c2beba0dfad9f39c1a9847c2fafd))
+* bump notifications-projector from removed ([a894adf](https://github.com/Telicent-io/telicent-core-charts/commit/a894adf7d107c2beba0dfad9f39c1a9847c2fafd))
+* bump paperback-writer from 0.1.3 to 0.8.5 ([a894adf](https://github.com/Telicent-io/telicent-core-charts/commit/a894adf7d107c2beba0dfad9f39c1a9847c2fafd))
+* bump telicent-map-monkey from 0.1.0 ([a894adf](https://github.com/Telicent-io/telicent-core-charts/commit/a894adf7d107c2beba0dfad9f39c1a9847c2fafd))
+* bump telicent-pdp from 0.1.1 ([a894adf](https://github.com/Telicent-io/telicent-core-charts/commit/a894adf7d107c2beba0dfad9f39c1a9847c2fafd))
+* bump user-portal-ui from 1.11.1 to 1.12.0 ([a894adf](https://github.com/Telicent-io/telicent-core-charts/commit/a894adf7d107c2beba0dfad9f39c1a9847c2fafd))
+
 ## [0.6.7](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-preview-v0.6.6...telicent-preview-v0.6.7) (2026-10-07)
 
 
