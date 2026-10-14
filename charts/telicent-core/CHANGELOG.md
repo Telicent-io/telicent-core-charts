@@ -1,5 +1,15 @@
 # Changelog
 
+## [2.2.3](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v2.2.2...telicent-core-v2.2.3) (2026-10-14)
+
+
+### Dependencies
+
+* bump auth from 0.4.1 to 0.4.6 ([47e950c](https://github.com/Telicent-io/telicent-core-charts/commit/47e950c4e6a8ebcc849845116790bc5cc8fa853e))
+* bump catalogue-api from 0.2.7 to 0.4.1 ([47e950c](https://github.com/Telicent-io/telicent-core-charts/commit/47e950c4e6a8ebcc849845116790bc5cc8fa853e))
+* bump search-ui from 4.23.0 to 4.24.0 ([47e950c](https://github.com/Telicent-io/telicent-core-charts/commit/47e950c4e6a8ebcc849845116790bc5cc8fa853e))
+* bump traefik-proxy from 0.1.3 to 0.1.5 ([47e950c](https://github.com/Telicent-io/telicent-core-charts/commit/47e950c4e6a8ebcc849845116790bc5cc8fa853e))
+
 ## [2.2.2](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v2.2.1...telicent-core-v2.2.2) (2026-10-07)
 
 
