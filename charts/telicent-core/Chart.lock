@@ -4,7 +4,7 @@ dependencies:
   version: 1.7.2
 - name: auth
   repository: oci://quay.io/telicent/charts
-  version: 0.4.1
+  version: 0.4.6
 - name: catalogue-api
   repository: oci://quay.io/telicent/charts
   version: 0.2.7
@@ -37,9 +37,9 @@ dependencies:
   version: 4.23.0
 - name: traefik-proxy
   repository: oci://quay.io/telicent/charts
-  version: 0.1.3
+  version: 0.2.0
 - name: user-preferences
   repository: oci://quay.io/telicent/charts
   version: 2.0.13
-digest: sha256:976cdadd45d2cab5280b18bee0d59d3a2c3c6ebe3f54b290bc84084fdd2a8d0f
-generated: "2026-09-29T10:13:31.237529+01:00"
+digest: sha256:01486c2f821a7e8896b7f8aaff73a1feb5b5e80ca12d76ebecc63c86f99289fc
+generated: "2026-10-23T16:41:37.643821+01:00"
