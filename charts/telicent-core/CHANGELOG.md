@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.3](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v2.2.2...telicent-core-v2.2.3) (2026-10-23)
+
+
+### Dependencies
+
+* bump traefik-proxy from 0.1.5 to 0.2.0 ([bb61abb](https://github.com/Telicent-io/telicent-core-charts/commit/bb61abbb24277bd4d8597478bfe6d291cc69b352))
+
 ## [2.2.2](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v2.2.1...telicent-core-v2.2.2) (2026-10-07)
 
 
