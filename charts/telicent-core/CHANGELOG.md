@@ -1,5 +1,119 @@
 # Changelog
 
+## [2.0.0](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v2.2.3...telicent-core-v2.0.0) (2026-10-23)
+
+
+### ⚠ BREAKING CHANGES
+
+* platform and front-end subcharts move to their 2.0.0 versions.
+
+### Features
+
+* add catalogue api to hosts preview and traefik routes ([234f534](https://github.com/Telicent-io/telicent-core-charts/commit/234f534d5472b931e1f2152bf3fe5cdb76e4574a))
+* Add new SC-Graph feature flags (CORE-1149) ([de76fad](https://github.com/Telicent-io/telicent-core-charts/commit/de76fada2cecca24c3a40c22722f1d89d0453198))
+* Add new SC-Graph feature flags (CORE-1149) ([1826787](https://github.com/Telicent-io/telicent-core-charts/commit/1826787b7ef6af07f2f80d6953a3d03b13f2f81a))
+* adds deletion worker ([#700](https://github.com/Telicent-io/telicent-core-charts/issues/700)) ([7720974](https://github.com/Telicent-io/telicent-core-charts/commit/7720974a104084892a92c1b49ea1a6e6e9ac6aa3))
+* **apicurio:** Add chart and route for Apicurio ([6ffc32d](https://github.com/Telicent-io/telicent-core-charts/commit/6ffc32d21d7ec1f73621ae1bd394334838474f2e))
+* **apicurio:** Add chart and route for Apicurio ([d0adf4b](https://github.com/Telicent-io/telicent-core-charts/commit/d0adf4bc987a6c5a1845ac29a085ff5397bd0f53))
+* **graph:** Add SHACL validation endpoints ([b99eed9](https://github.com/Telicent-io/telicent-core-charts/commit/b99eed96beec7bc34488bd0a74f5ed9c3368d5b7))
+* **graph:** Add SHACL validation endpoints ([0db40da](https://github.com/Telicent-io/telicent-core-charts/commit/0db40da58d685adefa5d24c8622cbadd93f4f474))
+* release telicent-core 2.0.0 ([#688](https://github.com/Telicent-io/telicent-core-charts/issues/688)) ([204fa55](https://github.com/Telicent-io/telicent-core-charts/commit/204fa553703001a219bbad81b0c1889b92caa5f4))
+* update readme for core ([b98efdf](https://github.com/Telicent-io/telicent-core-charts/commit/b98efdf2fb9d66e20f1ee22120da8febf331ea6c))
+* update readme metadata ([167ff3a](https://github.com/Telicent-io/telicent-core-charts/commit/167ff3aa2ebe821d0ce4a33ee581c99ae211265f))
+* user preferences moved to standalone chart ([#703](https://github.com/Telicent-io/telicent-core-charts/issues/703)) ([377ef04](https://github.com/Telicent-io/telicent-core-charts/commit/377ef045bcce0c5c7ff43480aaeb8bafb774b3ec))
+* **user-preferences:** Postgres storage ([6441171](https://github.com/Telicent-io/telicent-core-charts/commit/64411718738aa095d30f0cc117234834be260148))
+* **user-preferences:** Postgres storage ([5d11d78](https://github.com/Telicent-io/telicent-core-charts/commit/5d11d7887754703ccaaf8d2f31ed4aec92ae70e9))
+
+
+### Bug Fixes
+
+* add backup envs ([#564](https://github.com/Telicent-io/telicent-core-charts/issues/564)) ([63c0f9d](https://github.com/Telicent-io/telicent-core-charts/commit/63c0f9d209cc8642502b9bc5ee1f051079cf7c4a))
+* add feature flag for mapv2 ([19ca319](https://github.com/Telicent-io/telicent-core-charts/commit/19ca3196783befb69531fbb47e2809f0f5817b82))
+* add version info endpoint ([#677](https://github.com/Telicent-io/telicent-core-charts/issues/677)) ([6443534](https://github.com/Telicent-io/telicent-core-charts/commit/644353410118cd48b8e1964d9d58e845c5f85c51))
+* adds required default value for Apicurio ([#591](https://github.com/Telicent-io/telicent-core-charts/issues/591)) ([e7744c0](https://github.com/Telicent-io/telicent-core-charts/commit/e7744c0e7d4bd054446f583fbabebc998ec3199e))
+* allow graph traffic in OSS ([2e24bde](https://github.com/Telicent-io/telicent-core-charts/commit/2e24bde160869d325f3a76a0a049631810912273))
+* allows the backup endpoint to be hit for SCS ([630dd7b](https://github.com/Telicent-io/telicent-core-charts/commit/630dd7b14c0a36ccfac15816d4d250e0e0afd2a1))
+* allows the backup endpoint to be hit for SCS ([63b8c4e](https://github.com/Telicent-io/telicent-core-charts/commit/63b8c4e939143526d79309e5c7ed8b96050c23e2))
+* **apicurio:** removing hard-coded apicurio client secret ([e1f467b](https://github.com/Telicent-io/telicent-core-charts/commit/e1f467bfbb3a077fc7ebc2920580e3130c458c5a))
+* **apicurio:** removing hard-coded apicurio client secret ([99a765d](https://github.com/Telicent-io/telicent-core-charts/commit/99a765d6139551cfc6a7a199b335de64b965d389))
+* auth policy ([7e220e7](https://github.com/Telicent-io/telicent-core-charts/commit/7e220e7a68fa81083f7e6c71b2346fd730b1aa4c))
+* **auth:** enable client secret from env vars ([a025631](https://github.com/Telicent-io/telicent-core-charts/commit/a025631b0e8ab0dd2f7877651b931c9cd2757538))
+* bump graph-ui ([8d555af](https://github.com/Telicent-io/telicent-core-charts/commit/8d555af5548f014f03b9b79b4d94580f9709b885))
+* **chart:** Fix missing configuration ([3b069a7](https://github.com/Telicent-io/telicent-core-charts/commit/3b069a71ad1c32fa91305e84e5a092e9b1bd1d05))
+* **chart:** Fix missing configuration ([7dabd73](https://github.com/Telicent-io/telicent-core-charts/commit/7dabd738851d66425003403c962676aa7b0b94af))
+* configurable probes ([#601](https://github.com/Telicent-io/telicent-core-charts/issues/601)) ([c52fd2e](https://github.com/Telicent-io/telicent-core-charts/commit/c52fd2eb6acf4f190f5a6fae4780e09b58f4b10c))
+* core + preview ([8ad6e7f](https://github.com/Telicent-io/telicent-core-charts/commit/8ad6e7ff8346b9325e1f03d4fd3536132f11df76))
+* core + preview release ([8506964](https://github.com/Telicent-io/telicent-core-charts/commit/85069644df88461ffa5b375e1f46a492de89a1de))
+* **docs:** Upgrade to 3.4.0 ([ba2d75f](https://github.com/Telicent-io/telicent-core-charts/commit/ba2d75f8af365f255b733cd605b656a5dedca52e))
+* **docs:** Upgrade to 3.4.0 ([ff15724](https://github.com/Telicent-io/telicent-core-charts/commit/ff15724bea59e43c94263e0d9d340966d01d7658))
+* failed checks ([4f17673](https://github.com/Telicent-io/telicent-core-charts/commit/4f176737d0140b7658ab0312ff34a8b06fef71d2))
+* **graph:** Disable legacy labels store by default (CORE-1149) ([8d5557b](https://github.com/Telicent-io/telicent-core-charts/commit/8d5557bcbafb06f9dc769f0799981c803cbb7765))
+* **graph:** Disable legacy labels store by default (CORE-1149) ([7beccc4](https://github.com/Telicent-io/telicent-core-charts/commit/7beccc481ccb41a78f65e40f0f51d7341869fcb0))
+* guard istio label-namespace RBAC ([#693](https://github.com/Telicent-io/telicent-core-charts/issues/693)) ([8a81e92](https://github.com/Telicent-io/telicent-core-charts/commit/8a81e92da6a5bfcc169592d319e6f0a44959d84f))
+* invalid field ([f76966b](https://github.com/Telicent-io/telicent-core-charts/commit/f76966b942c40405ed527a0cb047a805abe82a6e))
+* invalid field ([d8c44c9](https://github.com/Telicent-io/telicent-core-charts/commit/d8c44c9787a417b12c4d14fb7d7519f51c7fe0a7))
+* make query conditional ([#716](https://github.com/Telicent-io/telicent-core-charts/issues/716)) ([3d56181](https://github.com/Telicent-io/telicent-core-charts/commit/3d5618172d87ecf06248314716d70c2bbfedcd7a))
+* make unset confidential clients an empty list rather than null ([#595](https://github.com/Telicent-io/telicent-core-charts/issues/595)) ([25b7c02](https://github.com/Telicent-io/telicent-core-charts/commit/25b7c028e25251a0077af9b046942923153f6f1f))
+* move front end charts to code repositories ([#590](https://github.com/Telicent-io/telicent-core-charts/issues/590)) ([c1fbfce](https://github.com/Telicent-io/telicent-core-charts/commit/c1fbfce96b3991452b0b5f4b6302a13dd698a546))
+* **notifications:** typo in config ([5a258f2](https://github.com/Telicent-io/telicent-core-charts/commit/5a258f26b96caa9cc9dab292c039f3e3e98e1456))
+* **notifications:** typo in config ([8b29568](https://github.com/Telicent-io/telicent-core-charts/commit/8b295685a74354391eef692346fa1444d8c0d682))
+* postgres config + tidy ([4e2f502](https://github.com/Telicent-io/telicent-core-charts/commit/4e2f5024c324ad5ec3a386e1a8ad1144627c11fe))
+* postgres config + tidy ([5cc33ee](https://github.com/Telicent-io/telicent-core-charts/commit/5cc33ee0982126497d70064d31af54a864dc4b45))
+* postgres no longer assumed as default in error ([7d6d460](https://github.com/Telicent-io/telicent-core-charts/commit/7d6d4606aaa6b443d0292326d2159fc4ac0cc80f))
+* postgres no longer assumed as default in error ([7246db4](https://github.com/Telicent-io/telicent-core-charts/commit/7246db480422034fd955525ff5e200b7a4144197))
+* remove hardcoded backup path ([#583](https://github.com/Telicent-io/telicent-core-charts/issues/583)) ([70bf679](https://github.com/Telicent-io/telicent-core-charts/commit/70bf679ca16cb8d43d0a82ff73bfc8d5e7459ee5))
+* remove ref to spatial ([74c4ed5](https://github.com/Telicent-io/telicent-core-charts/commit/74c4ed5a8fe824c2299088026eba5426324e7a10))
+* remove ref to spatial ([2f9d119](https://github.com/Telicent-io/telicent-core-charts/commit/2f9d119619a8f65b1ded71f0e7fb2003a8f521a7))
+* **search:** Bump minimum Search chart versions ([6f4a1aa](https://github.com/Telicent-io/telicent-core-charts/commit/6f4a1aa65e3ee6879c747b2f47890dbabc116eed))
+* **search:** Correct env var names ([0f5d5f6](https://github.com/Telicent-io/telicent-core-charts/commit/0f5d5f672c86ba7626035e6e30ecdd8e4fb28b7d))
+* **search:** Disable ELASTIC_LABELS_INDEX (CORE-1123) ([2707401](https://github.com/Telicent-io/telicent-core-charts/commit/2707401e15d59a7e295a3ba58a3b34853022aeb1))
+* **search:** Make Search informational APIs available ([468af2e](https://github.com/Telicent-io/telicent-core-charts/commit/468af2ee946fdeb1a3271f9872ee50da9bffe97d))
+* **search:** Make Search informational APIs available (CORE-1255) ([d284419](https://github.com/Telicent-io/telicent-core-charts/commit/d284419ff5c628b833ebbf61cff79cadc85b7ff8))
+* **search:** Re-enable labels index configuration (CORE-1120) ([c7fdab1](https://github.com/Telicent-io/telicent-core-charts/commit/c7fdab1fd84961c0aafbe261ae2becf6752c241b))
+* **search:** Re-enable labels index configuration (CORE-1120) ([f87466c](https://github.com/Telicent-io/telicent-core-charts/commit/f87466c0baa12136e4c09c95083d2bf8c1d6dc62))
+* **search:** Use SC-Search 2.0.0 ([59f455f](https://github.com/Telicent-io/telicent-core-charts/commit/59f455f613d9ec950c4a3dc69fa52541d476fd65))
+* seccomp + volumes mounts now works ([#568](https://github.com/Telicent-io/telicent-core-charts/issues/568)) ([b10a626](https://github.com/Telicent-io/telicent-core-charts/commit/b10a62652459fda0dc3066f5fded9c88f0e13e9a))
+* traefik path ([#663](https://github.com/Telicent-io/telicent-core-charts/issues/663)) ([0509596](https://github.com/Telicent-io/telicent-core-charts/commit/0509596f0251088edab79c23ebd9178220a25f7d))
+* update app versions ([42620d6](https://github.com/Telicent-io/telicent-core-charts/commit/42620d61d9f5c20ef48c165c37f1ca31531496cd))
+* update app versions ([9ff9491](https://github.com/Telicent-io/telicent-core-charts/commit/9ff9491c733d6e961f3f75453abf01a0112ab17e))
+* update authorization policies in SCG and Auth for catalogue access ([f6bcbea](https://github.com/Telicent-io/telicent-core-charts/commit/f6bcbeaff7f0d2baa59b7d6da724733aa4dbfce2))
+* update authorization policies in SCG and Auth for catalogue access ([4c05eea](https://github.com/Telicent-io/telicent-core-charts/commit/4c05eead0c7503209422262c3dc2698759c0fce4))
+* update FE versions for june release ([#630](https://github.com/Telicent-io/telicent-core-charts/issues/630)) ([cc13435](https://github.com/Telicent-io/telicent-core-charts/commit/cc13435c65ca59a3e88beec607d5529f3ba1ba3b))
+* Use an alias for Document Pipeline umbrella chart dependencies. ([#638](https://github.com/Telicent-io/telicent-core-charts/issues/638)) ([641cc33](https://github.com/Telicent-io/telicent-core-charts/commit/641cc33e72b3cb0f6cd8e5134cd944a12849fe9a))
+* use single demo-prereqs chart ([98a5531](https://github.com/Telicent-io/telicent-core-charts/commit/98a55316a5a7102fd9b0f13a3a9fbefa1e4e8e0b))
+
+
+### Dependencies
+
+* bump admin-ui from 1.7.1 to 1.7.2 in /charts/telicent-core ([#699](https://github.com/Telicent-io/telicent-core-charts/issues/699)) ([dc9a994](https://github.com/Telicent-io/telicent-core-charts/commit/dc9a9940bd63db2566bb39d5a820416b2eab5853))
+* bump admin-ui from 1.7.2 to 1.8.2 ([000629d](https://github.com/Telicent-io/telicent-core-charts/commit/000629d09805a4b088a5a33b23530b031873b659))
+* bump auth ([8860133](https://github.com/Telicent-io/telicent-core-charts/commit/886013357341bd15c46a982234128105cb7d44a3))
+* bump auth from 0.4.1 to 0.4.6 ([47e950c](https://github.com/Telicent-io/telicent-core-charts/commit/47e950c4e6a8ebcc849845116790bc5cc8fa853e))
+* bump catalogue-api from 0.2.7 to 0.4.1 ([47e950c](https://github.com/Telicent-io/telicent-core-charts/commit/47e950c4e6a8ebcc849845116790bc5cc8fa853e))
+* bump graph to 1.1.12 from 1.1.4 ([#729](https://github.com/Telicent-io/telicent-core-charts/issues/729)) ([27fd281](https://github.com/Telicent-io/telicent-core-charts/commit/27fd281501ee102a89edc324d4baa1341f5e9ea6))
+* bump graph-ui from 1.39.0 to 1.39.2 in /charts/telicent-core ([#698](https://github.com/Telicent-io/telicent-core-charts/issues/698)) ([d7617a2](https://github.com/Telicent-io/telicent-core-charts/commit/d7617a2c58c48b73e0b9b5b2ee3c62fa35f8ec31))
+* bump query-ui from 1.5.4 to 1.6.0 in /charts/telicent-core ([904522d](https://github.com/Telicent-io/telicent-core-charts/commit/904522df771552f918f79c3b3a8a5963c9c19630))
+* bump query-ui from 1.6.0 to 1.6.1 in /charts/telicent-core ([#672](https://github.com/Telicent-io/telicent-core-charts/issues/672)) ([8206f3a](https://github.com/Telicent-io/telicent-core-charts/commit/8206f3a82148f49eec2c7f4cbe2c4e42f9b7feac))
+* bump search-ui from 4.20.0 to 4.21.0 in /charts/telicent-core ([3df0e50](https://github.com/Telicent-io/telicent-core-charts/commit/3df0e50548250519cb14fdda89990e833675a6fd))
+* bump search-ui from 4.22.1 to 4.22.2 in /charts/telicent-core ([#697](https://github.com/Telicent-io/telicent-core-charts/issues/697)) ([bc69a7a](https://github.com/Telicent-io/telicent-core-charts/commit/bc69a7a1a14ee74a4c4c1d1a7f57c9fa8858fa3c))
+* bump search-ui from 4.23.0 to 4.24.0 ([47e950c](https://github.com/Telicent-io/telicent-core-charts/commit/47e950c4e6a8ebcc849845116790bc5cc8fa853e))
+* bump search-ui to 4.23.0 and graph-ui to 1.40.0 ([#714](https://github.com/Telicent-io/telicent-core-charts/issues/714)) ([875436b](https://github.com/Telicent-io/telicent-core-charts/commit/875436b4ec2092e4fb0ad87f30fb8fe232fb8f6f))
+* bump traefik ([#743](https://github.com/Telicent-io/telicent-core-charts/issues/743)) ([491159c](https://github.com/Telicent-io/telicent-core-charts/commit/491159cad39254dd0505d2a191c1db540026592e))
+* bump traefik-proxy from 0.1.3 to 0.1.5 ([47e950c](https://github.com/Telicent-io/telicent-core-charts/commit/47e950c4e6a8ebcc849845116790bc5cc8fa853e))
+* bump traefik-proxy from 0.1.5 to 0.2.0 ([13ec1a2](https://github.com/Telicent-io/telicent-core-charts/commit/13ec1a24f23abcf0eb066b63604b300b5ae66f6e))
+* bump user-preferences in /charts/telicent-core ([#706](https://github.com/Telicent-io/telicent-core-charts/issues/706)) ([32552c0](https://github.com/Telicent-io/telicent-core-charts/commit/32552c0034639660ad801f3fde0f0a6e14b1ee14))
+* move traefik to standalone chart ([#702](https://github.com/Telicent-io/telicent-core-charts/issues/702)) ([005f480](https://github.com/Telicent-io/telicent-core-charts/commit/005f4808ea3439773d910811edfac473d4cc58be))
+* update graph ui ([126459d](https://github.com/Telicent-io/telicent-core-charts/commit/126459d1b4e9f66b8d05ab9c7f945892a19e8c8e))
+* update SCG-deletion worker to 1.1.8 from 1.1.4 ([#717](https://github.com/Telicent-io/telicent-core-charts/issues/717)) ([5f5b676](https://github.com/Telicent-io/telicent-core-charts/commit/5f5b67675245ab913370ceff051f04d1dcd98306))
+* upversion traefik to 3.7.7 ([#658](https://github.com/Telicent-io/telicent-core-charts/issues/658)) ([eff360c](https://github.com/Telicent-io/telicent-core-charts/commit/eff360c7d9d525745657b0a4c66d6e8745d9811e))
+* upversion user-preferences to 2.0.8 ([#664](https://github.com/Telicent-io/telicent-core-charts/issues/664)) ([d000216](https://github.com/Telicent-io/telicent-core-charts/commit/d00021638609560909ff69a8674e0b19bf2d2418))
+
+
+### Miscellaneous Chores
+
+* Release telicent-core 1.3.1 ([#656](https://github.com/Telicent-io/telicent-core-charts/issues/656)) ([eaf8b57](https://github.com/Telicent-io/telicent-core-charts/commit/eaf8b57a858e00ac9c8d7d9f0cb2e01ab83649cd))
+* Release telicent-data 1.3.1 ([#653](https://github.com/Telicent-io/telicent-core-charts/issues/653)) ([a8522c7](https://github.com/Telicent-io/telicent-core-charts/commit/a8522c7181084d0c7c0ee84e36dba5451682617c))
+
 ## [2.2.3](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v2.2.2...telicent-core-v2.2.3) (2026-10-23)
 
 
