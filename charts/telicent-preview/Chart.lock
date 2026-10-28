@@ -4,7 +4,7 @@ dependencies:
   version: 0.8.5
 - name: user-portal-ui
   repository: oci://quay.io/telicent/charts
-  version: 1.12.0
+  version: 1.12.1
 - name: entity-resolution-api
   repository: oci://quay.io/telicent/charts
   version: 0.1.0
@@ -17,5 +17,5 @@ dependencies:
 - name: telicent-map-monkey
   repository: oci://quay.io/telicent/charts
   version: 0.1.0
-digest: sha256:08825e8a35007c80c0f896a890a97df958e4c37720df723488f72d1c938db8c3
-generated: "2026-10-13T12:34:22.224174042Z"
+digest: sha256:41164af4da020d09131b64b85ab7e091f2f39e9299695979c9f89191e2b89323
+generated: "2026-10-28T13:20:07.206523024Z"
