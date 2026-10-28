@@ -1,7 +1,7 @@
 dependencies:
 - name: admin-ui
   repository: oci://quay.io/telicent/charts
-  version: 1.8.2
+  version: 1.8.3
 - name: auth
   repository: oci://quay.io/telicent/charts
   version: 0.4.6
@@ -41,5 +41,5 @@ dependencies:
 - name: user-preferences
   repository: oci://quay.io/telicent/charts
   version: 2.0.13
-digest: sha256:a7899c5ae3a2052d205998389235308929c16aa741298230cf02b9908957698b
-generated: "2026-10-23T09:17:51.394392307Z"
+digest: sha256:c2ca4f63c080917d027d3058e54b95ac2098e21aff5d52ff9d6c5adec97eba2f
+generated: "2026-10-28T14:53:31.320366615Z"
