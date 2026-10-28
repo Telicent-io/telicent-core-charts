@@ -31,7 +31,7 @@ appVersion: "2.0.0"
 # The dependencies will be fetched and installed when the chart is installed.
 dependencies:
   - name: admin-ui
-    version: 1.8.2
+    version: 1.8.3
     repository: oci://quay.io/telicent/charts
     condition: global.enterprise
   - name: auth
