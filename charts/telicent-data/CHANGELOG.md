@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.1](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-data-v1.1.0...telicent-data-v1.1.1) (2026-10-30)
+
+
+### Dependencies
+
+* bump ies-regions-ontology-producer from 0.13.9 to 0.13.11 ([ea0016d](https://github.com/Telicent-io/telicent-core-charts/commit/ea0016d7500aceb7dbfff27c38e38e18e0a8a238))
+* bump ies-regions-producer from 0.13.9 to 0.13.11 ([ea0016d](https://github.com/Telicent-io/telicent-core-charts/commit/ea0016d7500aceb7dbfff27c38e38e18e0a8a238))
+
 ## [1.1.0](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-data-v1.0.1...telicent-data-v1.1.0) (2026-10-05)
 
 
