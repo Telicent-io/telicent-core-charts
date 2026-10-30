@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.2.4](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v2.2.3...telicent-core-v2.2.4) (2026-10-30)
+
+
+### Dependencies
+
+* bump admin-ui from 1.7.2 to 1.8.2 ([97a103b](https://github.com/Telicent-io/telicent-core-charts/commit/97a103b53d5ba6fd23be3c1fe1bc8fd5a852dab6))
+* bump admin-ui from 1.8.2 to 1.8.3 ([a15163f](https://github.com/Telicent-io/telicent-core-charts/commit/a15163f4004562175fac604a5f74e24ef39a0a8d))
+* bump auth from 0.4.1 to 0.4.6 ([97a103b](https://github.com/Telicent-io/telicent-core-charts/commit/97a103b53d5ba6fd23be3c1fe1bc8fd5a852dab6))
+* bump catalogue-api from 0.2.7 to 0.4.1 ([97a103b](https://github.com/Telicent-io/telicent-core-charts/commit/97a103b53d5ba6fd23be3c1fe1bc8fd5a852dab6))
+* bump search-ui from 4.23.0 to 4.24.0 ([97a103b](https://github.com/Telicent-io/telicent-core-charts/commit/97a103b53d5ba6fd23be3c1fe1bc8fd5a852dab6))
+
 ## [2.2.3](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v2.2.2...telicent-core-v2.2.3) (2026-10-23)
 
 
