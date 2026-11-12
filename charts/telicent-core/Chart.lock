@@ -37,9 +37,9 @@ dependencies:
   version: 4.24.0
 - name: traefik-proxy
   repository: oci://quay.io/telicent/charts
-  version: 0.2.0
+  version: 0.2.1
 - name: user-preferences
   repository: oci://quay.io/telicent/charts
   version: 2.0.13
-digest: sha256:04cb22dcbd6a53ff5f13be6f781c54463f2e3889c7e7feb6c65ce0288a64948e
-generated: "2026-11-05T14:14:52.948398855Z"
+digest: sha256:c1b157a858567ac96206bc60048360babcba764085fc0733d489f30b0d2fa011
+generated: "2026-11-12T15:19:25.043695664Z"
