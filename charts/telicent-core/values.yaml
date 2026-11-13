@@ -111,9 +111,9 @@ deletion-worker:
   # @key deletion-worker.enabled Enable or disable the deletion worker subchart
   enabled: false
 
-# @section data-catalog-ui Parameters
-data-catalog-ui:
-  # @key data-catalog-ui.enabled Enable or disable the data-catalog-ui component
+# @section catalog-ui Parameters
+catalog-ui:
+  # @key catalog-ui.enabled Enable or disable the catalog-ui component
   enabled: false
 
 # @section catalog-api Parameters
