@@ -42,10 +42,10 @@ dependencies:
     repository: oci://quay.io/telicent/charts
     condition: catalog-api.enabled
     alias: catalog-api
-  - name: data-catalog-ui
-    version: "1.17.1"
+  - name: catalog-ui
+    version: "2.0.0"
     repository: oci://quay.io/telicent/charts
-    condition: data-catalog-ui.enabled
+    condition: catalog-ui.enabled
   - name: deletion-worker
     version: "1.1.8"
     repository: oci://quay.io/telicent/charts

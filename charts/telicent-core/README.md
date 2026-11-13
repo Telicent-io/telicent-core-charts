@@ -148,11 +148,11 @@ Contains global truststore parameters, these parameters are mirrored across Teli
 | ------------------------- | ---------------------------------------------- | ------- |
 | `deletion-worker.enabled` | Enable or disable the deletion worker subchart | `false` |
 
-### data-catalog-ui Parameters
+### catalog-ui Parameters
 
-| Name                      | Description                                     | Value   |
-| ------------------------- | ----------------------------------------------- | ------- |
-| `data-catalog-ui.enabled` | Enable or disable the data-catalog-ui component | `false` |
+| Name                 | Description                                | Value   |
+| -------------------- | ------------------------------------------ | ------- |
+| `catalog-ui.enabled` | Enable or disable the catalog-ui component | `false` |
 
 ### catalog-api Parameters
 
@@ -179,7 +179,7 @@ They are addressed by their names, and each subchart has its own set of configur
 | Search UI         | Search interface for discovering and exploring data | [search-ui](./charts/search-ui/README.md)                 |
 | Traefik Proxy     | Reverse proxy for internal service routing | [traefik-proxy](charts/traefik-proxy/README.md) |
 | User Preferences  | User settings and preferences management service | [user-preferences](./charts/user-preferences/README.md)   |
-| Data Catalog UI   | Provides metadata management and data discovery capabilities within Telicent CORE| [data-catalog-ui](https://github.com/telicent-oss/catalogue/blob/main/charts/data-catalog-ui/README.md) |
+| Data Catalog UI   | Provides metadata management and data discovery capabilities within Telicent CORE| [catalog-ui](https://github.com/telicent-oss/catalogue/blob/main/charts/catalog-ui/README.md) |
 | Catalog API | A read-write API for DCAT catalog metadata | [catalog-api](https://github.com/Telicent-io/catalogue-api/blob/main/charts/catalogue-api/README.md)|
 
 ## License
