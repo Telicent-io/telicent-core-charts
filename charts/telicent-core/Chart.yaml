@@ -74,7 +74,7 @@ dependencies:
     repository: oci://quay.io/telicent/charts
     condition: global.enterprise
   - name: search-ui
-    version: 4.24.0
+    version: 4.25.1
     repository: oci://quay.io/telicent/charts
     condition: global.enterprise
   - name: traefik-proxy
