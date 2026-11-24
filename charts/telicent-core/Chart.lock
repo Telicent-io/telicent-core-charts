@@ -34,12 +34,12 @@ dependencies:
   version: 2.2.6
 - name: search-ui
   repository: oci://quay.io/telicent/charts
-  version: 4.24.0
+  version: 4.25.1
 - name: traefik-proxy
   repository: oci://quay.io/telicent/charts
   version: 0.2.1
 - name: user-preferences
   repository: oci://quay.io/telicent/charts
   version: 2.0.13
-digest: sha256:c879353152d044996e771c0b8a96fdbf51b1fb26742cbef2b611296da2d751f6
-generated: "2026-11-13T12:11:20.309855Z"
+digest: sha256:f59d16bd8951ece3a300e3386bbce519bbbaf8ebae5129de0b745995966071ac
+generated: "2026-11-24T12:48:56.466587153Z"
