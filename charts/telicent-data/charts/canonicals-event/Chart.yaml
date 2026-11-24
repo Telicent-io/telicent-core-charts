@@ -38,17 +38,17 @@ maintainers:
 dependencies:
   - name: telicent-canonicals-event-document-mapper
     alias: canonicals-event-document-mapper
-    version: "0.9.13"
+    version: 0.9.14
     repository: oci://quay.io/telicent/charts
     condition: enabled
   - name: telicent-canonicals-event-geo-mapper
     alias: canonicals-event-geo-mapper
-    version: "0.9.13"
+    version: 0.9.14
     repository: oci://quay.io/telicent/charts
     condition: enabled
   - name: telicent-canonicals-event-knowledge-mapper
     alias: canonicals-event-knowledge-mapper
-    version: "0.9.13"
+    version: 0.9.14
     repository: oci://quay.io/telicent/charts
     condition: enabled
   - name: telicent-canonicals-region-resolver-mapper
