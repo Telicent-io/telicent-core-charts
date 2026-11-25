@@ -1,9 +1,9 @@
 dependencies:
 - name: telicent-json-validation-mapper
   repository: oci://quay.io/telicent/charts
-  version: 0.2.7
+  version: 0.2.8
 - name: telicent-canonicals-ontology-mapper
   repository: oci://quay.io/telicent/charts
   version: 0.2.8
-digest: sha256:acee49a7e8f6afae4efbde6391b8b66af8ad7fd3ab05c7baeb265c134adf236f
-generated: "2026-11-24T16:51:25.568897343Z"
+digest: sha256:a4cfca9b573977a4e1ddd8875a447295c3541a5f29bd027747cf658e59caf987
+generated: "2026-11-25T11:20:49.763164323Z"

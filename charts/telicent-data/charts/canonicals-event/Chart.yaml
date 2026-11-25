@@ -58,6 +58,6 @@ dependencies:
     condition: enabled
   - name: telicent-json-validation-mapper
     alias: canonicals-event-json-validation-mapper
-    version: "0.2.7"
+    version: 0.2.8
     repository: oci://quay.io/telicent/charts
     condition: enabled

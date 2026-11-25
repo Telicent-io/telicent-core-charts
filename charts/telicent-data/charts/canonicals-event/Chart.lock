@@ -13,6 +13,6 @@ dependencies:
   version: 0.1.9
 - name: telicent-json-validation-mapper
   repository: oci://quay.io/telicent/charts
-  version: 0.2.7
-digest: sha256:92bdc5bcd157db7037c49d2b5ca0ed4b3c751cc1047bcda6d402ca0a45204c6c
-generated: "2026-11-25T10:21:36.562087146Z"
+  version: 0.2.8
+digest: sha256:6f85da10403d459aa497b2f06f93ecb8cf47b00d35beceee3ce1560cc917f5a0
+generated: "2026-11-25T11:20:38.501232536Z"
