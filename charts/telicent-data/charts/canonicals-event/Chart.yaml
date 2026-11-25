@@ -53,11 +53,11 @@ dependencies:
     condition: enabled
   - name: telicent-canonicals-region-resolver-mapper
     alias: canonicals-event-region-resolver-mapper
-    version: "0.1.8"
+    version: 0.1.9
     repository: oci://quay.io/telicent/charts
     condition: enabled
   - name: telicent-json-validation-mapper
     alias: canonicals-event-json-validation-mapper
-    version: "0.2.7"
+    version: 0.2.8
     repository: oci://quay.io/telicent/charts
     condition: enabled

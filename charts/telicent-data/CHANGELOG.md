@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.1.1](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-data-v1.1.0...telicent-data-v1.1.1) (2026-11-25)
+
+
+### Dependencies
+
+* bump canonicals-address-resolver-mapper from 1.0.1 to 1.0.2 ([c2fa288](https://github.com/Telicent-io/telicent-core-charts/commit/c2fa288d4c3b1fdaa75fe8fd83c01ac7cf27b2b7))
+* bump canonicals-entity-knowledge-mapper from 0.0.5 to 0.0.6 ([1f58cdf](https://github.com/Telicent-io/telicent-core-charts/commit/1f58cdf2c8aa093b71ffd1df8ce805a2f79bce40))
+* bump canonicals-vehicle-resolver-mapper from 1.0.0 to 1.0.1 ([c2fa288](https://github.com/Telicent-io/telicent-core-charts/commit/c2fa288d4c3b1fdaa75fe8fd83c01ac7cf27b2b7))
+* bump ies-regions-ontology-producer from 0.13.11 to 0.13.12 ([fdaf74e](https://github.com/Telicent-io/telicent-core-charts/commit/fdaf74ed4e6a94419e30b3e04c827bcd00f62c9e))
+* bump ies-regions-ontology-producer from 0.13.9 to 0.13.11 ([ea0016d](https://github.com/Telicent-io/telicent-core-charts/commit/ea0016d7500aceb7dbfff27c38e38e18e0a8a238))
+* bump ies-regions-producer from 0.13.11 to 0.13.12 ([fdaf74e](https://github.com/Telicent-io/telicent-core-charts/commit/fdaf74ed4e6a94419e30b3e04c827bcd00f62c9e))
+* bump ies-regions-producer from 0.13.9 to 0.13.11 ([ea0016d](https://github.com/Telicent-io/telicent-core-charts/commit/ea0016d7500aceb7dbfff27c38e38e18e0a8a238))
+* bump telicent-canonicals-event-document-mapper from 0.9.13 to 0.9.14 ([198e55d](https://github.com/Telicent-io/telicent-core-charts/commit/198e55de743fd45ce1600e6a36913141a7ce05b7))
+* bump telicent-canonicals-event-geo-mapper from 0.9.13 to 0.9.14 ([198e55d](https://github.com/Telicent-io/telicent-core-charts/commit/198e55de743fd45ce1600e6a36913141a7ce05b7))
+* bump telicent-canonicals-event-knowledge-mapper from 0.9.13 to 0.9.14 ([198e55d](https://github.com/Telicent-io/telicent-core-charts/commit/198e55de743fd45ce1600e6a36913141a7ce05b7))
+* bump telicent-canonicals-ontology-mapper from 0.2.7 to 0.2.8 ([1f58cdf](https://github.com/Telicent-io/telicent-core-charts/commit/1f58cdf2c8aa093b71ffd1df8ce805a2f79bce40))
+* bump telicent-canonicals-region-resolver-mapper from 0.1.8 to 0.1.9 ([b14f252](https://github.com/Telicent-io/telicent-core-charts/commit/b14f2526c429177096d622609d60a695e5bd142f))
+* bump telicent-json-validation-mapper from 0.2.7 to 0.2.8 ([59cab37](https://github.com/Telicent-io/telicent-core-charts/commit/59cab37faf27d7d5ac1407454a988dceb225efbc))
+* bump telicent-ontology-adapter from 0.1.6 to 0.1.7 ([2f42027](https://github.com/Telicent-io/telicent-core-charts/commit/2f420273ce8656caece6f5d600b1c22a7393f528))
+
 ## [1.1.0](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-data-v1.0.1...telicent-data-v1.1.0) (2026-10-05)
 
 

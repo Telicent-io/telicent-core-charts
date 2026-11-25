@@ -1,5 +1,26 @@
 # Changelog
 
+## [2.2.4](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v2.2.3...telicent-core-v2.2.4) (2026-11-25)
+
+
+### Dependencies
+
+* bump admin-ui from 1.7.2 to 1.8.2 ([97a103b](https://github.com/Telicent-io/telicent-core-charts/commit/97a103b53d5ba6fd23be3c1fe1bc8fd5a852dab6))
+* bump admin-ui from 1.8.2 to 1.8.3 ([a15163f](https://github.com/Telicent-io/telicent-core-charts/commit/a15163f4004562175fac604a5f74e24ef39a0a8d))
+* bump auth from 0.4.1 to 0.4.6 ([97a103b](https://github.com/Telicent-io/telicent-core-charts/commit/97a103b53d5ba6fd23be3c1fe1bc8fd5a852dab6))
+* bump auth from 0.4.6 to 0.4.15 ([e60b891](https://github.com/Telicent-io/telicent-core-charts/commit/e60b89150ec7291f36f85edf8bd9b655c8cc5d58))
+* bump catalog-ui to 2.0.0 ([7c0b429](https://github.com/Telicent-io/telicent-core-charts/commit/7c0b429ca3e62726ad421f4b1640ebb9d02b36f8))
+* bump catalogue-api from 0.2.7 to 0.4.1 ([97a103b](https://github.com/Telicent-io/telicent-core-charts/commit/97a103b53d5ba6fd23be3c1fe1bc8fd5a852dab6))
+* bump graph from 1.1.12 to 1.2.6 ([e60b891](https://github.com/Telicent-io/telicent-core-charts/commit/e60b89150ec7291f36f85edf8bd9b655c8cc5d58))
+* bump graph-ui from 1.40.0 to 1.42.0 ([13f0140](https://github.com/Telicent-io/telicent-core-charts/commit/13f0140c22806843c9674df44859f109bd71fdf0))
+* bump pipeline-entity-extraction from 3.0.9 to 3.1.0 ([aa792a9](https://github.com/Telicent-io/telicent-core-charts/commit/aa792a9f877e51082234752facefd98f83e00aed))
+* bump search from 2.2.6 to 2.2.20 ([e60b891](https://github.com/Telicent-io/telicent-core-charts/commit/e60b89150ec7291f36f85edf8bd9b655c8cc5d58))
+* bump search-projector from 2.2.6 to 2.2.20 ([e60b891](https://github.com/Telicent-io/telicent-core-charts/commit/e60b89150ec7291f36f85edf8bd9b655c8cc5d58))
+* bump search-ui from 4.23.0 to 4.24.0 ([97a103b](https://github.com/Telicent-io/telicent-core-charts/commit/97a103b53d5ba6fd23be3c1fe1bc8fd5a852dab6))
+* bump search-ui from 4.24.0 to 4.25.1 ([dd067ef](https://github.com/Telicent-io/telicent-core-charts/commit/dd067eff832ae0ec6507c694b63f2a549f879544))
+* bump smart-cache-documents from 4.0.2 to 4.1.1 ([aa792a9](https://github.com/Telicent-io/telicent-core-charts/commit/aa792a9f877e51082234752facefd98f83e00aed))
+* bump traefik-proxy from 0.2.0 to 0.2.1 ([379420c](https://github.com/Telicent-io/telicent-core-charts/commit/379420c0aa14f931da3d6e680cfea90f174cef8d))
+
 ## [2.2.3](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v2.2.2...telicent-core-v2.2.3) (2026-10-23)
 
 

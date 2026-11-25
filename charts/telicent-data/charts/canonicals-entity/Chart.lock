@@ -1,12 +1,12 @@
 dependencies:
 - name: canonicals-vehicle-resolver-mapper
   repository: oci://quay.io/telicent/charts
-  version: 1.0.0
+  version: 1.0.1
 - name: canonicals-entity-knowledge-mapper
   repository: oci://quay.io/telicent/charts
   version: 0.0.6
 - name: canonicals-address-resolver-mapper
   repository: oci://quay.io/telicent/charts
-  version: 1.0.1
-digest: sha256:eed854af5c07111b543eec8c3bf2c9d31173ff4f89d92b1a49d5bc609216faf8
-generated: "2026-11-24T16:51:18.970161685Z"
+  version: 1.0.2
+digest: sha256:ac0f742930ed82200c466c3bda5b22000f3373ac3ecb8058fdc5afa032a42211
+generated: "2026-11-25T10:10:57.302061835Z"
