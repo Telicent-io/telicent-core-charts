@@ -4051,6 +4051,49 @@ entries:
   telicent-preview:
   - apiVersion: v2
     appVersion: 1.0.0
+    created: "2026-11-25T13:54:13.023040847Z"
+    dependencies:
+    - condition: global.enterprise, paperback-writer.enabled
+      name: paperback-writer
+      repository: oci://quay.io/telicent/charts
+      version: 0.8.5
+    - condition: user-portal-ui.enabled
+      name: user-portal-ui
+      repository: oci://quay.io/telicent/charts
+      version: 1.12.2
+    - condition: entity-resolution-api.enabled
+      name: entity-resolution-api
+      repository: oci://quay.io/telicent/charts
+      version: 0.1.0
+    - condition: entity-resolution-projector.enabled
+      name: entity-resolution-projector
+      repository: oci://quay.io/telicent/charts
+      version: 0.1.0
+    - alias: abac-pdp
+      condition: abac-pdp.enabled
+      name: telicent-pdp
+      repository: oci://quay.io/telicent/charts
+      version: 0.2.0
+    - alias: map-monkey
+      condition: map-monkey.enabled
+      name: telicent-map-monkey
+      repository: oci://quay.io/telicent/charts
+      version: 0.1.0
+    description: 'Secondary chart containing products that are still under active
+      development, and not yet part of CORE. Can be used to try new or preview features
+      early. '
+    digest: 62c5237b61edf0629e126c7a5744c9611fdb6f617a6da6b6185e5136fb3a6ec2
+    icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
+    maintainers:
+    - name: telicent
+      url: https://github.com/Telicent-IO
+    name: telicent-preview
+    type: application
+    urls:
+    - telicent-preview-0.6.8.tgz
+    version: 0.6.8
+  - apiVersion: v2
+    appVersion: 1.0.0
     created: "2026-10-07T09:32:34.718091554Z"
     dependencies:
     - condition: global.enterprise, paperback-writer.enabled
@@ -4471,4 +4514,4 @@ entries:
     urls:
     - telicent-preview-0.2.0.tgz
     version: 0.2.0
-generated: "2026-11-25T12:34:11.006499245Z"
+generated: "2026-11-25T13:54:13.016953937Z"
