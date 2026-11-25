@@ -3179,6 +3179,55 @@ entries:
   telicent-data:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2026-11-25T12:34:11.027544252Z"
+    dependencies:
+    - condition: acled-locations-mapper.enabled,global.enterprise
+      name: acled-locations-mapper
+      repository: file://./charts/acled-locations-mapper
+      version: ^0.1.0
+    - condition: acled-participants-mapper.enabled,global.enterprise
+      name: acled-participants-mapper
+      repository: file://./charts/acled-participants-mapper
+      version: ^0.1.0
+    - condition: acled-validation-mapper.enabled,global.enterprise
+      name: acled-validation-mapper
+      repository: file://./charts/acled-validation-mapper
+      version: ^0.1.0
+    - condition: global.enterprise
+      name: canonicals-event
+      repository: file://./charts/canonicals-event
+      version: ^0.1.0
+    - condition: global.enterprise
+      name: canonicals-ontology
+      repository: file://./charts/canonicals-ontology
+      version: ^0.2.0
+    - condition: global.enterprise
+      name: canonicals-entity
+      repository: file://./charts/canonicals-entity
+      version: ^0.1.0
+    - name: ies-regions-ontology-producer
+      repository: oci://quay.io/telicent/charts
+      version: 0.13.12
+    - name: ies-regions-producer
+      repository: oci://quay.io/telicent/charts
+      version: 0.13.12
+    - name: telicent-ontology-adapter
+      repository: oci://quay.io/telicent/charts
+      version: 0.1.7
+    description: 'Supplementary chart containing adapters and mappers for specific
+      datasets and ontologies. '
+    digest: 9e8e1e9bfc1932b1189705b11de3d1ce2a90ef4d133dd776882bc8867f82bcb3
+    icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
+    maintainers:
+    - name: telicent
+      url: https://github.com/Telicent-IO
+    name: telicent-data
+    type: application
+    urls:
+    - telicent-data-1.1.1.tgz
+    version: 1.1.1
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2026-10-07T09:32:34.711827077Z"
     dependencies:
     - condition: acled-locations-mapper.enabled,global.enterprise
@@ -4422,4 +4471,4 @@ entries:
     urls:
     - telicent-preview-0.2.0.tgz
     version: 0.2.0
-generated: "2026-11-25T12:33:38.325856362Z"
+generated: "2026-11-25T12:34:11.006499245Z"
