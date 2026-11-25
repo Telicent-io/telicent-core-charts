@@ -10,9 +10,9 @@ dependencies:
   version: 0.9.14
 - name: telicent-canonicals-region-resolver-mapper
   repository: oci://quay.io/telicent/charts
-  version: 0.1.8
+  version: 0.1.9
 - name: telicent-json-validation-mapper
   repository: oci://quay.io/telicent/charts
   version: 0.2.7
-digest: sha256:eb5d63d3ba3f2dd7fb3d1c0ab3f67f3c2d715cdd0f87f643604c0863fe085e28
-generated: "2026-11-24T17:07:13.135549311Z"
+digest: sha256:92bdc5bcd157db7037c49d2b5ca0ed4b3c751cc1047bcda6d402ca0a45204c6c
+generated: "2026-11-25T10:21:36.562087146Z"
