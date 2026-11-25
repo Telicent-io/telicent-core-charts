@@ -685,6 +685,76 @@ entries:
   telicent-core:
   - apiVersion: v2
     appVersion: 2.0.0
+    created: "2026-11-25T12:33:38.351401529Z"
+    dependencies:
+    - condition: global.enterprise
+      name: admin-ui
+      repository: oci://quay.io/telicent/charts
+      version: 1.8.3
+    - name: auth
+      repository: oci://quay.io/telicent/charts
+      version: 0.4.15
+    - alias: catalog-api
+      condition: catalog-api.enabled
+      name: catalogue-api
+      repository: oci://quay.io/telicent/charts
+      version: 0.4.1
+    - condition: catalog-ui.enabled
+      name: catalog-ui
+      repository: oci://quay.io/telicent/charts
+      version: 2.0.0
+    - condition: deletion-worker.enabled
+      name: deletion-worker
+      repository: oci://quay.io/telicent/charts
+      version: 1.1.8
+    - condition: global.enterprise
+      name: document-pipeline
+      repository: file://./charts/document-pipeline
+      version: ^0.2.3
+    - name: graph
+      repository: oci://quay.io/telicent/charts
+      version: 1.2.6
+    - condition: global.enterprise
+      name: graph-ui
+      repository: oci://quay.io/telicent/charts
+      version: 1.42.0
+    - condition: query-ui.enabled
+      name: query-ui
+      repository: oci://quay.io/telicent/charts
+      version: 1.7.0
+    - condition: global.enterprise
+      name: search
+      repository: oci://quay.io/telicent/charts
+      version: 2.2.20
+    - condition: global.enterprise
+      name: search-projector
+      repository: oci://quay.io/telicent/charts
+      version: 2.2.20
+    - condition: global.enterprise
+      name: search-ui
+      repository: oci://quay.io/telicent/charts
+      version: 4.25.1
+    - name: traefik-proxy
+      repository: oci://quay.io/telicent/charts
+      version: 0.2.1
+    - condition: global.enterprise
+      name: user-preferences
+      repository: oci://quay.io/telicent/charts
+      version: 2.0.13
+    description: 'Telicent CORE Platform, for all essential services and applications
+      for our secure data integration and knowledge graph platform. '
+    digest: e9ddaf2eae48b536d19e686bdf33eab63a1461207a2187bf2d5cc2759283c99b
+    icon: https://avatars.githubusercontent.com/u/65304240?s=200&v=4
+    maintainers:
+    - name: telicent
+      url: https://github.com/Telicent-IO
+    name: telicent-core
+    type: application
+    urls:
+    - telicent-core-2.2.4.tgz
+    version: 2.2.4
+  - apiVersion: v2
+    appVersion: 2.0.0
     created: "2026-10-23T15:50:25.90904536Z"
     dependencies:
     - condition: global.enterprise
@@ -4352,4 +4422,4 @@ entries:
     urls:
     - telicent-preview-0.2.0.tgz
     version: 0.2.0
-generated: "2026-10-23T15:50:25.892040867Z"
+generated: "2026-11-25T12:33:38.325856362Z"
