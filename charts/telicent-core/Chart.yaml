@@ -62,7 +62,7 @@ dependencies:
     repository: oci://quay.io/telicent/charts
     condition: global.enterprise
   - name: query-ui
-    version: 1.7.0
+    version: 1.8.0
     repository: oci://quay.io/telicent/charts
     condition: query-ui.enabled
   - name: search
