@@ -1,5 +1,25 @@
 # Changelog
 
+## [0.6.8](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-preview-v0.6.7...telicent-preview-v0.6.8) (2026-11-27)
+
+
+### Dependencies
+
+* bump apicurio from removed ([a894adf](https://github.com/Telicent-io/telicent-core-charts/commit/a894adf7d107c2beba0dfad9f39c1a9847c2fafd))
+* bump catalogue-api from removed ([a894adf](https://github.com/Telicent-io/telicent-core-charts/commit/a894adf7d107c2beba0dfad9f39c1a9847c2fafd))
+* bump data-catalog-ui from removed ([a894adf](https://github.com/Telicent-io/telicent-core-charts/commit/a894adf7d107c2beba0dfad9f39c1a9847c2fafd))
+* bump entity-resolution-api from 0.1.0 ([a894adf](https://github.com/Telicent-io/telicent-core-charts/commit/a894adf7d107c2beba0dfad9f39c1a9847c2fafd))
+* bump entity-resolution-projector from 0.1.0 ([a894adf](https://github.com/Telicent-io/telicent-core-charts/commit/a894adf7d107c2beba0dfad9f39c1a9847c2fafd))
+* bump notifications from removed ([a894adf](https://github.com/Telicent-io/telicent-core-charts/commit/a894adf7d107c2beba0dfad9f39c1a9847c2fafd))
+* bump notifications-projector from removed ([a894adf](https://github.com/Telicent-io/telicent-core-charts/commit/a894adf7d107c2beba0dfad9f39c1a9847c2fafd))
+* bump paperback-writer from 0.1.3 to 0.8.5 ([a894adf](https://github.com/Telicent-io/telicent-core-charts/commit/a894adf7d107c2beba0dfad9f39c1a9847c2fafd))
+* bump telicent-map-monkey from 0.1.0 ([a894adf](https://github.com/Telicent-io/telicent-core-charts/commit/a894adf7d107c2beba0dfad9f39c1a9847c2fafd))
+* bump telicent-pdp from 0.1.1 ([a894adf](https://github.com/Telicent-io/telicent-core-charts/commit/a894adf7d107c2beba0dfad9f39c1a9847c2fafd))
+* bump telicent-pdp from 0.1.1 to 0.2.0 ([cbf1736](https://github.com/Telicent-io/telicent-core-charts/commit/cbf1736be8fe5138af183ff047a7ecb328e72fa7))
+* bump user-portal-ui from 1.11.1 to 1.12.0 ([a894adf](https://github.com/Telicent-io/telicent-core-charts/commit/a894adf7d107c2beba0dfad9f39c1a9847c2fafd))
+* bump user-portal-ui from 1.12.0 to 1.12.1 ([6e8e3f0](https://github.com/Telicent-io/telicent-core-charts/commit/6e8e3f04a19a088b574f20db700fffc00fd51dd9))
+* bump user-portal-ui from 1.12.1 to 1.12.2 ([c5212ce](https://github.com/Telicent-io/telicent-core-charts/commit/c5212ce13fb4ddbc73f4f5c1d132976fba0cd591))
+
 ## [0.6.8](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-preview-v0.6.7...telicent-preview-v0.6.8) (2026-11-25)
 
 
