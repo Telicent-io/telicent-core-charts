@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.2.5](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v2.2.4...telicent-core-v2.2.5) (2026-11-27)
+
+
+### Dependencies
+
+* bump catalog-ui from 2.0.0 to 2.1.0 ([030b0c3](https://github.com/Telicent-io/telicent-core-charts/commit/030b0c30d5dbc2e7b08c6d99f391ddbf94f8ba85))
+* bump query-ui from 1.7.0 to 1.8.0 ([3ff05e6](https://github.com/Telicent-io/telicent-core-charts/commit/3ff05e6b3de0e9f1e748085f84eae9b981707ebf))
+
 ## [2.2.4](https://github.com/Telicent-io/telicent-core-charts/compare/telicent-core-v2.2.3...telicent-core-v2.2.4) (2026-11-25)
 
 
